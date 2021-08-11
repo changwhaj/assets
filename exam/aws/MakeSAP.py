@@ -129,7 +129,7 @@ def save_html(driver, fname):
 if __name__ == "__main__":
     driver = webdriver.Chrome('c:/temp/chromedriver.exe')
 
-    for i in reversed(range(len(ArraySAP))[450:551]):
+    for i in reversed(range(len(ArraySAP))[350:451]):
         qSAP = ArraySAP[i]
         qid = qSAP.get('QID')
         did = qSAP.get('DID')
