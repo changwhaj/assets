@@ -121,12 +121,15 @@ def remove_discuss_element(driver):
         for (var i=0; i < divs.length; i++) {
             divs[i].querySelectorAll("a")[0].removeAttribute("href");
         }
-        var divs = document.getElementsByClassName('comment-control');
+        var spans = document.getElementsByClassName('comment-control-buttons');
 
-        for (var i=0; i < divs.length; i++) {
-            divs[i].querySelectorAll("a")[0].removeAttribute("href");
+        for (var i=0; i < spans.length; i++) {
+            alinks = spans[i].querySelectorAll("a");
+            for (var j=0; j < alinks.length; j++) {
+                alinks[j].removeAttribute("href");
+            }
         }
-    """)    
+    """)
     
 def open_discuss(driver, discuss_id):
     if (len(discuss_id) <= 0):
@@ -162,6 +165,7 @@ def replace_duscuss(driver, discuss_id):
             div_discuss.append(div_full_discuss)
     else:
         remove_discuss_element(driver)
+        bs = BeautifulSoup(driver.page_source, 'html.parser')
 
     return bs
 
@@ -172,9 +176,11 @@ def save_html(driver, fname):
         file.write('<!DOCTYPE html>\n' + str(bs))
 
 if __name__ == "__main__":
-    driver = webdriver.Chrome('c:/temp/chromedriver.exe')
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    driver = webdriver.Chrome('c:/temp/chromedriver.exe', options=options)
 
-    for i in reversed(range(len(ArraySAP))[:151]):
+    for i in reversed(range(len(ArraySAP))[740:750]):
         qSAP = ArraySAP[i]
         qid = qSAP.get('QID')
         did = qSAP.get('DID')
