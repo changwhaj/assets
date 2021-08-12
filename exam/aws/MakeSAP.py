@@ -89,6 +89,11 @@ def remove_exam_element(driver):
                 element.remove();
             }
         }
+        function removeElemAttr(element, attr) {
+            if (element !== undefined && element !== null) {
+                element.removeAttribute(attr);
+            }
+        }
         removeElement(document.getElementById('bN015htcoyT__google-cache-hdr'));
         removeElement(getElementByXpath("/html/head/style"));
         removeElement(document.getElementsByClassName('full-width-header')[0]);
@@ -97,8 +102,8 @@ def remove_exam_element(driver):
         removeElement(document.getElementsByClassName('create-comment-base d-print-none')[0]);
         removeElement(document.getElementsByClassName('all-questions-link')[0]);
         //getElementByXpath("/html/head/base").setAttribute('href','https://changwhaj.github.io/assets/');
-        getElementByXpath("/html").removeAttribute("class");
-        document.getElementsByClassName('discussion-link')[0].removeAttribute("href");
+        removeElemAttr(getElementByXpath("/html"), "class");
+        removeElemAttr(document.getElementsByClassName('discussion-link')[0], "href");
         return;
     """)
 
@@ -110,8 +115,13 @@ def remove_discuss_element(driver):
                 element.remove();
             }
         }
+        function removeElemAttr(element, attr) {
+            if (element !== undefined && element !== null) {
+                element.removeAttribute(attr);
+            }
+        }
         removeElement(document.getElementsByClassName('create-comment-base d-print-none')[0]);
-        document.getElementsByClassName('title-username')[0].removeAttribute("href");
+        removeElemAttr(document.getElementsByClassName('title-username')[0], "href");
     """)
     
     # remove user a link
@@ -180,7 +190,7 @@ if __name__ == "__main__":
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome('c:/temp/chromedriver.exe', options=options)
 
-    for i in reversed(range(len(ArraySAP))[740:750]):
+    for i in reversed(range(len(ArraySAP))[600:610]):
         qSAP = ArraySAP[i]
         qid = qSAP.get('QID')
         did = qSAP.get('DID')
@@ -189,6 +199,7 @@ if __name__ == "__main__":
 
         my_file = Path(fname)
         if my_file.is_file():
+            #if (len(did) <= 0):
             continue
 
         open_exam(driver, did)
