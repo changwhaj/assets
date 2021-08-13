@@ -104,6 +104,7 @@ def remove_exam_element(driver):
         //getElementByXpath("/html/head/base").setAttribute('href','https://changwhaj.github.io/assets/');
         removeElemAttr(getElementByXpath("/html"), "class");
         removeElemAttr(document.getElementsByClassName('discussion-link')[0], "href");
+        removeElemAttr(document.getElementsByClassName('title-username')[0], "href");
         return;
     """)
 
@@ -190,7 +191,7 @@ if __name__ == "__main__":
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome('c:/temp/chromedriver.exe', options=options)
 
-    for i in reversed(range(len(ArraySAP))[600:610]):
+    for i in reversed(range(len(ArraySAP))[:547]):
         qSAP = ArraySAP[i]
         qid = qSAP.get('QID')
         did = qSAP.get('DID')
@@ -198,8 +199,8 @@ if __name__ == "__main__":
         print(fname)
 
         my_file = Path(fname)
-        if my_file.is_file():
-            #if (len(did) <= 0):
+        #if my_file.is_file():
+        if (len(did) <= 0):
             continue
 
         open_exam(driver, did)
