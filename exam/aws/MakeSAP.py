@@ -191,7 +191,7 @@ if __name__ == "__main__":
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome('c:/temp/chromedriver.exe', options=options)
 
-    for i in reversed(range(len(ArraySAP))[:547]):
+    for i in reversed(range(len(ArraySAP))[547:750]):
         qSAP = ArraySAP[i]
         qid = qSAP.get('QID')
         did = qSAP.get('DID')
