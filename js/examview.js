@@ -33,7 +33,7 @@
         });
 
         let question_id = question_jquery_object.find(".question-body").addBack('.question-body').data("id");
-        let discussion_object = getDiscussionObjectByQuestionId(question_id);
+        // let discussion_object = getDiscussionObjectByQuestionId(question_id);
 
-        set_voted_comment_config(discussion_object, choice_letters, choice_limit);
+        // set_voted_comment_config(discussion_object, choice_letters, choice_limit);
     }
