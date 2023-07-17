@@ -1,10 +1,3 @@
-// Comments include validation:
-$(document).ready(function() {
-    if (!$('#report-comment-modal').length) {
-        alert("Comment system is missing its report modal.")
-    }
-});
-
 // Handle collapse & expand comments
 $('body').on('click', '.comment-toggle', function(e){
     e.preventDefault();
