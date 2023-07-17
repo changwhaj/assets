@@ -160,6 +160,56 @@ reportCommentConfirm(function(confirmed){
 
 // ** END Report comments handling
 
+/* START Answer vote mechanism */
+
+function set_voted_comment_config(discussion_container_jquery_object, choices, limit){
+    // Create new checkboxes:
+    let root_vote_box = discussion_container_jquery_object.find(".choice-vote-box");
+    let checkbox_container = root_vote_box.find('.vote-checkboxes').first();
+    checkbox_container.empty();
+    for (let i = 0; i < choices.length; i++) {
+        checkbox_container.append(`<input id="answer_${choices[i]}" type="checkbox" value="${choices[i]}"><label for="answer_${choices[i]}">${choices[i]}</label>`);
+    }
+
+    // Limit the checkbox "checked" count.
+    root_vote_box.find('input').on('change', function(evt) {
+        if($(this).siblings(':checked').length >= limit) {
+            this.checked = false;
+        }
+    });
+
+    init_voting_tooltip();
+    // Mark that the discussion has a configured voting settings.
+    discussion_container_jquery_object.find(".non-voting-comment-box").addClass("configured").show();
+}
+
+function enable_voted_comment(discussion_container_jquery_object) {
+    if (!discussion_container_jquery_object) {
+        discussion_container_jquery_object = $(this).closest(".outer-discussion-container");
+    }
+    discussion_container_jquery_object.find(".choice-vote-box").first().show();
+    $(".non-voting-comment-box").hide();
+    // Change the placeholder and mark the new-comment as a voting comment:
+    discussion_container_jquery_object.find(".new-comment-textarea").first().attr("placeholder", "Please explain your answer").closest(".new-comment-box").attr("data-vote-comment", 1);
+}
+
+
+function init_voting_tooltip() {
+    $(".voting-comment-questionmark").tooltip(
+        {
+            html: true,
+            title: $('#voting-comment-tooltip').html(),
+            placement: 'right'
+        });
+}
+
+function revert_to_simple_comment(discussion_jquery_object){
+    discussion_jquery_object.find(".choice-vote-box").hide();
+    discussion_jquery_object.find(".non-voting-comment-box.configured").show();
+    discussion_jquery_object.find(".new-comment-textarea").attr("placeholder", "Type your comment...").closest(".new-comment-box").removeAttr("data-vote-comment");
+}
+
+/* END Answer vote mechanism */
 
 // ==== Utility functions
 function getDataAttributes ( node ) {
