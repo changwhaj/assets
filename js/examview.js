@@ -15,6 +15,10 @@
         $(this).addClass('d-none');
     });
 
+    function is_question_mcq(question_jquery_object){
+        return question_jquery_object.find(".multi-choice-letter").length > 0;
+    }
+
     function set_voting_configuration_by_question(question_jquery_object) {
         // Voted comments are only for MCQ questions, this function has nothing to do on other questions
         if (!is_question_mcq(question_jquery_object))
