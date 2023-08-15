@@ -347,16 +347,29 @@ def save_html(driver, did, fname):
 
     header = bs.find("div", {"class": "discussion-list-header"})
     header.contents = [BeautifulSoup(header_contents, 'html.parser')]
+    header = bs.find("div", {"class": "discussion-list-header-kr"})
+    header.contents = [BeautifulSoup(header_contents, 'html.parser')]
 
     container = bs.find("div", {"class": "discussion-header-container"})
     container.contents = [BeautifulSoup(container_contents, 'html.parser')]
+    container = bs.find("div", {"class": "discussion-header-container-kr"})
+    container.contents = [BeautifulSoup(container_contents, 'html.parser')]
 
-    discussion = bs.find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs.find("div", {"class": "comment-container"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
+    discussion["data-discussion-question-id"] = did
+    discussion = bs.find("div", {"class": "comment-container-kr"}).find("div", {"class": "discussion-page-comments-section"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
     discussion["data-discussion-question-id"] = did
 
+    dir = os.path.dirname(fname)
+    if not os.path.exists(dir):
+        # Create the directory
+        os.makedirs(dir)
+
     with open(fname, "w", encoding='utf-8') as file:
-        file.write(bs.prettify())
+        file.write('<!DOCTYPE html>\n' + str(bs))
+        # file.write(bs.prettify())
     
     return question_data_id
 
@@ -408,11 +421,13 @@ def make_question_file(driver, fname, url, did):
     return data_id
 
 def translate_page_to_kr(driver, fname):
-    url = f'file:///C:/Users/Changwha/MyProjects/assets/assets/exam/aws/{fname}'
+    url = f'file:///E:/MyProjects/ExamTopics/assets/exam/aws/{fname}'
     driver.get(url)
     driver.switch_to.window(driver.window_handles[0])
 
+    driver.find_element(By.CSS_SELECTOR, 'a.badge.show-korean').click()
     driver.find_element(By.CSS_SELECTOR, 'a.btn.btn-primary.reveal-solution').click()
+    driver.find_element(By.CSS_SELECTOR, 'a.badge.reveal-comment').click()
     set_translate_to_kr(driver)
     driver.find_element(By.CSS_SELECTOR, 'a.btn.btn-primary.hide-solution').click()
     scroll_page(driver)
@@ -421,6 +436,10 @@ def translate_page_to_kr(driver, fname):
     except Exception as e:
         pass
     time.sleep(1)
+
+    driver.find_element(By.CSS_SELECTOR, 'a.badge.hide-comment').click()
+    driver.find_element(By.CSS_SELECTOR, 'a.badge.show-english').click()
+    
     try:
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, '#goog-gt-tt'))
     except Exception as e:
@@ -441,9 +460,8 @@ if __name__ == "__main__":
 
     fn = "forum.txt"
     idx_from = 0
-    with open(fn, "r") as file:
-        idx_from = int(file.read())
-
+    # with open(fn, "r") as file:
+    #     idx_from = int(file.read())
     found = False
     for p in range(1000)[idx_from:]:
         my_file = Path(fn)
