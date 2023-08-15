@@ -435,9 +435,8 @@ def translate_page_to_kr(driver, fname):
     except Exception as e:
         pass
     time.sleep(1)
-
     driver.find_element(By.CSS_SELECTOR, 'a.badge.hide-comment').click()
-    
+
     try:
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, '#goog-gt-tt'))
     except Exception as e:
@@ -448,6 +447,36 @@ def translate_page_to_kr(driver, fname):
     except Exception as e:
         print(f"*** Error translate_page_to_kr !!! {e}")
         pass
+
+def save_kr(driver, fname):
+    bs = BeautifulSoup(driver.page_source, 'html.parser')
+    header_contents = bs.find("div", {"class": "discussion-list-header"}).decode_contents()
+    container_contents = bs.find("div", {"class": "discussion-header-container"}).decode_contents()
+    discussion_contents = bs.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
+
+    with open(fname, "r", encoding='utf-8') as file:
+        html = file.read()
+        file.close()
+            
+    #print(html)
+    bs_en = BeautifulSoup(html, 'html.parser')
+    header = bs_en.find("div", {"class": "discussion-list-header"})
+    header.contents = [BeautifulSoup(header_contents, 'html.parser')]
+
+    container = bs_en.find("div", {"class": "discussion-header-container"})
+    container.contents = [BeautifulSoup(container_contents, 'html.parser')]
+
+    discussion_contents_en = bs_en.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
+    discussion = bs_en.find("div", {"class": "comment-container-en"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion.contents = [BeautifulSoup(discussion_contents_en, 'html.parser')]
+
+    discussion = bs_en.find("div", {"class": "comment-container"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
+
+    fname_kr = fname[:-5] + '-KR.html'
+    fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
+    with open(fname_kr, "w", encoding='utf-8') as file:
+        file.write('<!DOCTYPE html>\n' + str(bs_en))
 
 if __name__ == "__main__":
     DISCUSS_LIST_FILE = 'AmazonDiscuss.txt'
@@ -523,6 +552,7 @@ if __name__ == "__main__":
                 fname_kr = fname[:-5] + '-KR.html'
                 fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
                 save_page(driver, fname_kr)
+                save_kr(driver, fname)
 
             # except Exception as e:
             #     print("Error:", str(e))

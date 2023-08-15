@@ -41,8 +41,10 @@
     /* Hide & Show comment */
     $('body').on('click', '.badge.reveal-comment', function (e) {
         e.preventDefault();
-        $(this).parent('.comment-container').find('.comment-body').fadeIn(100);
-        $(this).parent('.comment-container-en').find('.comment-body').fadeIn(100);
+        // $(this).parent('.comment-container').find('.comment-body').fadeIn(100);
+        // $(this).parent('.comment-container-en').find('.comment-body').fadeIn(100);
+        $(this).parent('.comment-container').fadeIn(100);
+        $(this).parent('.comment-container-en').fadeIn(100);
         $(this).parent('.comment-container').find('.hide-comment').removeClass('d-none');
         $(this).parent('.comment-container-en').find('.hide-comment').removeClass('d-none');
         $(this).addClass('d-none');
@@ -50,8 +52,13 @@
 
     $('body').on('click', '.badge.hide-comment', function (e) {
         e.preventDefault();
-        $(this).parent('.comment-container').find('.comment-body').fadeOut(100);
-        $(this).parent('.comment-container-en').find('.comment-body').fadeOut(100);
+        // $(this).parent('.comment-container').find('.comment-body').fadeOut(100);
+        // $(this).parent('.comment-container-en').find('.comment-body').fadeOut(100);
+        // $(this).parent('.comment-container').find('.reveal-comment').removeClass('d-none');
+        // $(this).parent('.comment-container-en').find('.reveal-comment').removeClass('d-none');
+
+        $(this).parent('.comment-container').fadeOut(100);
+        $(this).parent('.comment-container-en').fadeOut(100);
         $(this).parent('.comment-container').find('.reveal-comment').removeClass('d-none');
         $(this).parent('.comment-container-en').find('.reveal-comment').removeClass('d-none');
         $(this).addClass('d-none');
