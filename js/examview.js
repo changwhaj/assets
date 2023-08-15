@@ -37,3 +37,28 @@
 
         // set_voted_comment_config(discussion_object, choice_letters, choice_limit);
     }
+
+    /* Hide & Show comment */
+    $('body').on('click', '.badge.reveal-comment', function (e) {
+        e.preventDefault();
+        $(this).parent('.comment-container').find('.comment-body').fadeIn(100);
+        $(this).parent('.comment-container').find('.hide-comment').removeClass('d-none');
+        $(this).addClass('d-none');
+    });
+
+    $('body').on('click', '.badge.hide-comment', function (e) {
+        e.preventDefault();
+        $(this).parent('.comment-container').find('.comment-body').fadeOut(100);
+        $(this).parent('.comment-container').find('.reveal-comment').removeClass('d-none');
+        $(this).addClass('d-none');
+    });
+
+	function togglePage(dirPath) {
+		var dirSegment = window.location.pathname.split('/');
+		var fileName = dirSegment[dirSegment.length - 1];
+		if (dirSegment[dirSegment.length - 2] == "kr") {
+			window.location.href = dirPath + fileName.replace('-KR.html', '.html');
+		} else {
+			window.location.href = dirPath + 'kr/' + fileName.replace('.html', '-KR.html');
+		}
+	}
