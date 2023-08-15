@@ -347,18 +347,18 @@ def save_html(driver, did, fname):
 
     header = bs.find("div", {"class": "discussion-list-header"})
     header.contents = [BeautifulSoup(header_contents, 'html.parser')]
-    header = bs.find("div", {"class": "discussion-list-header-kr"})
+    header = bs.find("div", {"class": "discussion-list-header-en"})
     header.contents = [BeautifulSoup(header_contents, 'html.parser')]
 
     container = bs.find("div", {"class": "discussion-header-container"})
     container.contents = [BeautifulSoup(container_contents, 'html.parser')]
-    container = bs.find("div", {"class": "discussion-header-container-kr"})
+    container = bs.find("div", {"class": "discussion-header-container-en"})
     container.contents = [BeautifulSoup(container_contents, 'html.parser')]
 
     discussion = bs.find("div", {"class": "comment-container"}).find("div", {"class": "discussion-page-comments-section"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
     discussion["data-discussion-question-id"] = did
-    discussion = bs.find("div", {"class": "comment-container-kr"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs.find("div", {"class": "comment-container-en"}).find("div", {"class": "discussion-page-comments-section"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
     discussion["data-discussion-question-id"] = did
 
@@ -425,7 +425,6 @@ def translate_page_to_kr(driver, fname):
     driver.get(url)
     driver.switch_to.window(driver.window_handles[0])
 
-    driver.find_element(By.CSS_SELECTOR, 'a.badge.show-korean').click()
     driver.find_element(By.CSS_SELECTOR, 'a.btn.btn-primary.reveal-solution').click()
     driver.find_element(By.CSS_SELECTOR, 'a.badge.reveal-comment').click()
     set_translate_to_kr(driver)
@@ -438,7 +437,6 @@ def translate_page_to_kr(driver, fname):
     time.sleep(1)
 
     driver.find_element(By.CSS_SELECTOR, 'a.badge.hide-comment').click()
-    driver.find_element(By.CSS_SELECTOR, 'a.badge.show-english').click()
     
     try:
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, '#goog-gt-tt'))
