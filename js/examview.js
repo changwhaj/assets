@@ -42,7 +42,7 @@
     $('body').on('click', '.badge.reveal-comment', function (e) {
         e.preventDefault();
         $(this).parent('.comments-wrapper').find('.discussion-page-comments-section').fadeIn(100);
-        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section').fadeIn(100);
+        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section-en').fadeIn(100);
         $(this).parent('.comments-wrapper').find('.hide-comment').removeClass('d-none');
         $(this).parent('.comments-wrapper-en').find('.hide-comment').removeClass('d-none');
         $(this).addClass('d-none');
@@ -51,7 +51,7 @@
     $('body').on('click', '.badge.hide-comment', function (e) {
         e.preventDefault();
         $(this).parent('.comments-wrapper').find('.discussion-page-comments-section').fadeOut(100);
-        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section').fadeOut(100);
+        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section-en').fadeOut(100);
         $(this).parent('.comments-wrapper').find('.reveal-comment').removeClass('d-none');
         $(this).parent('.comments-wrapper-en').find('.reveal-comment').removeClass('d-none');
         $(this).addClass('d-none');
