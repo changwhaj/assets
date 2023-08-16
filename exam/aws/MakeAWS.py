@@ -368,7 +368,8 @@ def save_html(driver, did, fname):
         os.makedirs(dir)
 
     with open(fname, "w", encoding='utf-8') as file:
-        file.write('<!DOCTYPE html>\n' + str(bs))
+        file.write(str(bs))
+        # file.write('<!DOCTYPE html>\n' + str(bs))
         # file.write(bs.prettify())
     
     return question_data_id
@@ -450,9 +451,13 @@ def translate_page_to_kr(driver, fname):
 
 def save_kr(driver, fname):
     bs = BeautifulSoup(driver.page_source, 'html.parser')
+    pattern = r'</*font[^<]*>'
     header_contents = bs.find("div", {"class": "discussion-list-header"}).decode_contents()
+    header_contents = re.sub(pattern, '', header_contents)
     container_contents = bs.find("div", {"class": "discussion-header-container"}).decode_contents()
+    container_contents = re.sub(pattern, '', container_contents)
     discussion_contents = bs.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
+    discussion_contents = re.sub(pattern, '', discussion_contents)
 
     with open(fname, "r", encoding='utf-8') as file:
         html = file.read()
@@ -476,8 +481,8 @@ def save_kr(driver, fname):
 
     fname_kr = fname[:-5] + '-KR.html'
     fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
-    with open(fname_kr, "w", encoding='utf-8') as file:
-        file.write('<!DOCTYPE html>\n' + str(bs_en))
+    with open(fname, "w", encoding='utf-8') as file:
+        file.write(str(bs_en))
 
 if __name__ == "__main__":
     DISCUSS_LIST_FILE = 'AmazonDiscuss.txt'
@@ -552,7 +557,7 @@ if __name__ == "__main__":
                 translate_page_to_kr(driver, fname)
                 fname_kr = fname[:-5] + '-KR.html'
                 fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
-                save_page(driver, fname_kr)
+                # save_page(driver, fname_kr)
                 save_kr(driver, fname)
 
             # except Exception as e:
