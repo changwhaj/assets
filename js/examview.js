@@ -41,19 +41,19 @@
     /* Hide & Show comment */
     $('body').on('click', '.badge.reveal-comment', function (e) {
         e.preventDefault();
-        $(this).parent('.comments-container').find('.comment-body').fadeIn(100);
-        $(this).parent('.comments-container-en').find('.comment-body').fadeIn(100);
-        $(this).parent('.comments-container').find('.hide-comment').removeClass('d-none');
-        $(this).parent('.comments-container-en').find('.hide-comment').removeClass('d-none');
+        $(this).parent('.comments-wrapper').find('.discussion-page-comments-section').fadeIn(100);
+        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section').fadeIn(100);
+        $(this).parent('.comments-wrapper').find('.hide-comment').removeClass('d-none');
+        $(this).parent('.comments-wrapper-en').find('.hide-comment').removeClass('d-none');
         $(this).addClass('d-none');
     });
 
     $('body').on('click', '.badge.hide-comment', function (e) {
         e.preventDefault();
-        $(this).parent('.comments-container').find('.comment-body').fadeOut(100);
-        $(this).parent('.comments-container-en').find('.comment-body').fadeOut(100);
-        $(this).parent('.comments-container').find('.reveal-comment').removeClass('d-none');
-        $(this).parent('.comments-container-en').find('.reveal-comment').removeClass('d-none');
+        $(this).parent('.comments-wrapper').find('.discussion-page-comments-section').fadeOut(100);
+        $(this).parent('.comments-wrapper-en').find('.discussion-page-comments-section').fadeOut(100);
+        $(this).parent('.comments-wrapper').find('.reveal-comment').removeClass('d-none');
+        $(this).parent('.comments-wrapper-en').find('.reveal-comment').removeClass('d-none');
         $(this).addClass('d-none');
     });
 
@@ -74,8 +74,8 @@
         $(this).parent('.container').find('.discussion-list-header-en').fadeIn(0);
         $(this).parent('.container').find('.discussion-header-container').fadeOut(0);
         $(this).parent('.container').find('.discussion-header-container-en').fadeIn(0);
-        $(this).parent('.container').find('.comment-container').fadeOut(0);
-        $(this).parent('.container').find('.comment-container-en').fadeIn(0);
+        $(this).parent('.container').find('.comments-wrapper').fadeOut(0);
+        $(this).parent('.container').find('.comments-wrapper-en').fadeIn(0);
         $(this).parent('.container').find('.show-korean').removeClass('d-none');
         $(this).addClass('d-none');
     });
@@ -86,8 +86,8 @@
         $(this).parent('.container').find('.discussion-list-header').fadeIn(0);
         $(this).parent('.container').find('.discussion-header-container-en').fadeOut(0);
         $(this).parent('.container').find('.discussion-header-container').fadeIn(0);
-        $(this).parent('.container').find('.comment-container-en').fadeOut(0);
-        $(this).parent('.container').find('.comment-container').fadeIn(0);
+        $(this).parent('.container').find('.comments-wrapper-en').fadeOut(0);
+        $(this).parent('.container').find('.comments-wrapper').fadeIn(0);
         $(this).parent('.container').find('.show-english').removeClass('d-none');
         $(this).addClass('d-none');
     });
