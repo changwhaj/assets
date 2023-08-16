@@ -355,10 +355,10 @@ def save_html(driver, did, fname):
     container = bs.find("div", {"class": "discussion-header-container-en"})
     container.contents = [BeautifulSoup(container_contents, 'html.parser')]
 
-    discussion = bs.find("div", {"class": "comments-container"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs.find("div", {"class": "discussion-page-comments-section"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
     discussion["data-discussion-question-id"] = did
-    discussion = bs.find("div", {"class": "comments-container-en"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs.find("div", {"class": "discussion-page-comments-section-en"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
     discussion["data-discussion-question-id"] = did
 
@@ -460,6 +460,7 @@ def save_kr(driver, fname):
             
     #print(html)
     bs_en = BeautifulSoup(html, 'html.parser')
+
     header = bs_en.find("div", {"class": "discussion-list-header"})
     header.contents = [BeautifulSoup(header_contents, 'html.parser')]
 
@@ -467,10 +468,10 @@ def save_kr(driver, fname):
     container.contents = [BeautifulSoup(container_contents, 'html.parser')]
 
     discussion_contents_en = bs_en.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
-    discussion = bs_en.find("div", {"class": "comments-container-en"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs_en.find("div", {"class": "discussion-page-comments-section-en"})
     discussion.contents = [BeautifulSoup(discussion_contents_en, 'html.parser')]
 
-    discussion = bs_en.find("div", {"class": "comments-container"}).find("div", {"class": "discussion-page-comments-section"})
+    discussion = bs_en.find("div", {"class": "discussion-page-comments-section"})
     discussion.contents = [BeautifulSoup(discussion_contents, 'html.parser')]
 
     fname_kr = fname[:-5] + '-KR.html'
