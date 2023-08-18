@@ -28,7 +28,7 @@ def sleep_random_sec(sec):
     for t in reversed(range(randint(1, sec))):
         print(str(t), end='', flush=True)
         time.sleep(1)
-    print('')
+    print('\r', end='')
 
 def set_chrome_driver():
     service = Service(executable_path=r'c:/temp/chromedriver.exe')
@@ -484,7 +484,7 @@ def save_kr(driver, fname):
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs_en))
 
-if __name__ == "__main__":
+if __name__ == "__main1__":
     DISCUSS_LIST_FILE = 'AmazonDiscuss.txt'
     df = read_discuss_list(DISCUSS_LIST_FILE)
     refresh = False
@@ -591,20 +591,53 @@ def read_SAP_list(fname):
 
     return df
 
-if __name__ == "__main1__":
-    df = read_SAP_list('SAP_Exam.csv')
+if __name__ == "__main__":
+    # df = read_SAP_list('DBS_Exam.csv')
+
+    # driver = set_chrome_driver()
+    # # driver.set_window_position(1800,10)
+
+    # qtitle = 'Exam AWS Certified Database - Specialty topic 1'
+    # for i in range(len(df)):
+    #     qid = int(df.at[i, 'ExamNo'])
+    #     did = int(df.at[i, 'DiscussNo'])
+    #     url = str(df.at[i, 'DiscussURL'])
+    #     print(qtitle+"\t"+str(qid)+"\t"+url, flush=True)
+    #     try:
+    #         fname = make_filename(qtitle, qid)
+    #         if (len(fname) <= 0): 
+    #             new_data_id = 0
+    #         else:
+    #             new_data_id = make_question_file(driver, fname, url, did)
+    #             translate_page_to_kr(driver, fname)
+    #             save_kr(driver, fname)
+
+    #     except Exception as e:
+    #         print("Error:", str(e))
+    #         print(f"*** Make question error !!! {e}")
+    #         pass
+
+    # driver.quit()
+
+    df = read_SAP_list('SAA_Exam.csv')
 
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    qtitle = 'Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2'
+    qtitle = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
     for i in range(len(df)):
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
         url = str(df.at[i, 'DiscussURL'])
         print(qtitle+"\t"+str(qid)+"\t"+url, flush=True)
         try:
-            new_data_id = make_question_file(driver, qtitle, url, qid, did)
+            fname = make_filename(qtitle, qid)
+            if (len(fname) <= 0): 
+                new_data_id = 0
+            else:
+                new_data_id = make_question_file(driver, fname, url, did)
+                translate_page_to_kr(driver, fname)
+                save_kr(driver, fname)
 
         except Exception as e:
             print("Error:", str(e))
@@ -612,4 +645,3 @@ if __name__ == "__main1__":
             pass
 
     driver.quit()
-
