@@ -613,7 +613,7 @@ if __name__ == "__main__":
 
     ISACA_DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'
-
-    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
-    refresh_all_exam('CISA_Exam.csv', CISA)
-    refresh_all_exam('CISM_Exam.csv', CISA)
+    refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    
+    # refresh_all_exam('CISA_Exam.csv', CISA)
+    # refresh_all_exam('CISM_Exam.csv', CISA)
