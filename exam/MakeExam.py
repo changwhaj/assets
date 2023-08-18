@@ -605,8 +605,8 @@ def refresh_all_exam(exam_list_file, qtitle):
 if __name__ == "__main__":
     # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
     # DBS = 'Exam AWS Certified Database - Specialty topic 1'
-    # CISM = 'Exam CISM topic 1'
-    # CISA = 'Exam CISA topic 1'
+    CISM = 'Exam CISM topic 1'
+    CISA = 'Exam CISA topic 1'
 
     # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
     # FORUM_NAME = 'amazon'
@@ -614,6 +614,6 @@ if __name__ == "__main__":
     ISACA_DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'
 
-    refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
-    # refresh_all_exam('CISA_Exam.csv', CISA)
-    # refresh_all_exam('SAA_Exam.csv', SAA_C03)
+    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    refresh_all_exam('CISA_Exam.csv', CISA)
+    refresh_all_exam('CISM_Exam.csv', CISA)
