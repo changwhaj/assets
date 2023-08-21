@@ -388,7 +388,11 @@ def make_filename(qtitle, qid):
         fname = 'aws/SAP_C02/SAP-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
         fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
-    
+    elif qtitle == 'Exam AWS Certified Developer - Associate DVA-C02 topic 1':
+        fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
+    elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
+        fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
+
     return fname
 
 def make_question_file(driver, fname, url, did):
@@ -608,12 +612,16 @@ if __name__ == "__main__":
     CISM = 'Exam CISM topic 1'
     CISA = 'Exam CISA topic 1'
 
+
     # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
     # FORUM_NAME = 'amazon'
+    # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
 
-    ISACA_DISCUSS = 'IsacaDiscuss.txt'
-    FORUM_NAME = 'isaca'
-    refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    # ISACA_DISCUSS = 'IsacaDiscuss.txt'
+    # FORUM_NAME = 'isaca'
+    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     
-    # refresh_all_exam('CISA_Exam.csv', CISA)
-    # refresh_all_exam('CISM_Exam.csv', CISA)
+    DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
+    DVA = 'Exam AWS Certified Developer Associate topic 1'
+    refresh_all_exam('DVA2_Exam.csv', DVA2)
+    refresh_all_exam('DVA_Exam.csv', DVA)
