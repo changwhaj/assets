@@ -92,7 +92,7 @@
         $(this).addClass('d-none');
     });
 
-    $('body').on('click', '.badge.show-english', function (e) {
+    $('body').on('click', '.btn.show-english', function (e) {
         e.preventDefault();
         var container = $(this).parent('.action-row');
         container.find('.show-korean').removeClass('d-none');
@@ -106,7 +106,7 @@
         $(this).addClass('d-none');
     });
 
-    $('body').on('click', '.badge.show-korean', function (e) {
+    $('body').on('click', '.btn.show-korean', function (e) {
         e.preventDefault();
         var container = $(this).parent('.action-row');
         container.find('.show-english').removeClass('d-none');
