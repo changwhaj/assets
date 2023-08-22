@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 66 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 문제 66 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 66 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882049">
 <p class="card-text">
 							
-								한 회사가 AWS에 중요한 애플리케이션을 가지고 있습니다. 애플리케이션은 Amazon API Gateway를 사용하여 HTTP API를 노출합니다. API는 AWS Lambda 함수와 통합됩니다. 이 애플리케이션은 2개의 가상 CPU(vCPU)와 64GB RAM이 있는 Amazon RDS for MySQL DB 인스턴스에 데이터를 저장합니다. <br/><br/>고객은 일부 API 호출이 HTTP 500 내부 서버 오류 응답을 반환한다고 보고했습니다. Amazon CloudWatch Logs는 "너무 많은 연결"에 대한 오류를 표시합니다. 예측할 수 없는 피크 사용 시간 동안 오류가 발생합니다. <br/><br/>회사는 애플리케이션을 탄력적으로 만들어야 합니다. 데이터베이스는 예약된 유지 관리 시간 외에는 다운될 수 없습니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사에는 AWS에 중요한 애플리케이션이 있습니다. 애플리케이션은 Amazon API Gateway를 사용하여 HTTP API를 노출합니다. API는 AWS Lambda 함수와 통합됩니다. 애플리케이션은 2개의 가상 CPU(vCPU)와 64GB RAM을 갖춘 Amazon RDS for MySQL DB 인스턴스에 데이터를 저장합니다. <br/><br/>고객은 일부 API 호출이 HTTP 500 내부 서버 오류 응답을 반환한다고 보고했습니다. Amazon CloudWatch Logs는 "연결이 너무 많습니다."라는 오류를 표시합니다. 예측할 수 없는 최대 사용 시간 동안 오류가 발생합니다. <br/><br/>회사는 애플리케이션을 탄력적으로 만들어야 합니다. 데이터베이스는 예정된 유지 관리 시간 외에는 다운될 수 없습니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -127,16 +190,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 4 월 <i>
-							25일, 오후 2:35 </i><a class="title-username" style="">
-								MrTee
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 25, 2023, 2:35 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 4월 25일 화요일 14:35">
-			3개월, 3주 전
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이러한 요구 사항을 충족하는 가장 좋은 솔루션은 Amazon RDS 프록시를 사용하여 DB 인스턴스에 연결하는 프록시를 생성하고 Lambda 함수를 업데이트하여 프록시에 연결하는 것입니다.</div>
+<div class="comment-content">이러한 요구 사항을 충족하는 가장 좋은 솔루션은 Amazon RDS 프록시를 사용하여 DB 인스턴스에 연결하는 프록시를 생성하고 프록시에 연결하도록 Lambda 함수를 업데이트하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -295,19 +338,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				땃땃땨
+				TTTTTTTTAM
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 15일 (토) 20:55">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 15일 토요일 20:55">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">연결 수가 아닌 CPU 소비를 기반으로 연결 수를 늘리기 때문에 D가 올바르지 않다고 생각합니다.</div>
+<div class="comment-content">D는 연결 수가 아닌 CPU 소비를 기준으로 연결 수를 늘리기 때문에 정확하지 않다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,10 +387,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Naj_64
+				나즈_64
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 09:55">
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 09:55">
 			1개월, 1주 전
 		</span>
 </div>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,7 +436,7 @@
 				csG13
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 5일 월요일 20:14">
+<span class="comment-date align-middle" title="2023년 6월 5일 (월) 20:14">
 			2개월, 2주 전
 		</span>
 </div>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -445,7 +488,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">중단 시간이 없어야 합니다. DB 인스턴스의 파라미터 그룹에서 max_connections 파라미터를 업데이트하기 위한 이벤트 브리지 규칙을 생성합니다.</div>
+<div class="comment-content">다운타임이 없어야 합니다. DB 인스턴스의 파라미터 그룹에서 max_connections 파라미터를 업데이트하는 이벤트 브리지 규칙을 생성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -509,7 +552,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 14:35">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -558,7 +601,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 15 Jul 2023 20:55">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

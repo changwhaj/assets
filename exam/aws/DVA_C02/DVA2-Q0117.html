@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 117 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 117 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 117 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882561">
 <p class="card-text">
 							
-								개발자는 Amazon DynamoDB를 기본 데이터 저장소로 사용하는 중요한 비즈니스 애플리케이션을 유지 관리합니다. DynamoDB 테이블에는 수백만 개의 문서가 포함되어 있으며 분당 30-60개의 요청을 수신합니다. 개발자는 문서가 DynamoDB 테이블에 추가되거나 업데이트될 때 거의 실시간으로 문서 처리를 수행해야 합니다. <br/><br/>개발자는 기존 애플리케이션 코드를 최소한으로 변경하면서 어떻게 이 기능을 구현할 수 있습니까?
+								개발자는 Amazon DynamoDB를 기본 데이터 저장소로 사용하는 중요한 비즈니스 애플리케이션을 유지 관리합니다. DynamoDB 테이블에는 수백만 개의 문서가 포함되어 있으며 매분 30~60개의 요청을 받습니다. 개발자는 DynamoDB 테이블에 문서가 추가되거나 업데이트될 때 거의 실시간으로 문서 처리를 수행해야 합니다. <br/><br/>개발자는 어떻게 기존 애플리케이션 코드를 최소한으로 변경하면서 이 기능을 구현할 수 있습니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Amazon EC2 인스턴스에서 cron 작업을 설정합니다. 매시간 스크립트를 실행하여 테이블에서 변경 사항을 쿼리하고 문서를 처리합니다.
+											Amazon EC2 인스턴스에서 크론 작업을 설정합니다. 매시간 스크립트를 실행하여 테이블에서 변경 사항을 쿼리하고 문서를 처리합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											PutEvents 요청을 Amazon EventBridge로 보내도록 애플리케이션을 업데이트합니다. 문서를 처리하기 위해 AWS Lambda 함수를 호출하는 EventBridge 규칙을 생성합니다.
+											Amazon EventBridge에 PutEvents 요청을 보내도록 애플리케이션을 업데이트합니다. 문서를 처리하기 위해 AWS Lambda 함수를 호출하는 EventBridge 규칙을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											DynamoDB 쓰기 직후 문서를 동기식으로 처리하도록 애플리케이션을 업데이트합니다.
+											DynamoDB 쓰기 직후에 문서를 동기식으로 처리하도록 애플리케이션을 업데이트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a> 
-							
-							시간: <i>
-							2023년 4월 22일, 오후 11:13</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 22, 2023, 11:13 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,19 +291,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 23:13">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 23:13">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">옵션 B는 개발자가 애플리케이션 코드를 수정하지 않고 거의 실시간으로 문서 수준 변경 사항을 캡처할 수 있도록 테이블에서 DynamoDB 스트림을 활성화할 것을 제안하기 때문에 최상의 솔루션입니다. 그런 다음 거의 실시간으로 문서를 처리하기 위해 AWS Lambda 함수를 호출하도록 스트림을 구성할 수 있습니다. 이 솔루션은 기존 애플리케이션 코드를 최소한으로 변경해야 하며 Lambda 함수를 별도로 개발 및 배포할 수 있어 개발자가 필요에 따라 쉽게 유지 관리하고 업데이트할 수 있습니다.</div>
+<div class="comment-content">옵션 B는 개발자가 애플리케이션 코드를 수정하지 않고도 문서 수준 변경 사항을 거의 실시간으로 캡처할 수 있도록 테이블에서 DynamoDB 스트림을 활성화할 것을 제안하므로 가장 좋은 솔루션입니다. 그런 다음 AWS Lambda 함수를 호출하여 거의 실시간으로 문서를 처리하도록 스트림을 구성할 수 있습니다. 이 솔루션은 기존 애플리케이션 코드를 최소한으로 변경해야 하며, Lambda 기능을 별도로 개발 및 배포할 수 있으므로 개발자는 필요에 따라 쉽게 유지 관리하고 업데이트할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,13 +346,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 10:21">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 10:21">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">기존 애플리케이션 코드를 최소한으로 변경하면서 DynamoDB 테이블에 추가되거나 업데이트된 문서에 대해 실시간에 가까운 처리를 구현하려면 개발자는 다음을 수행해야 합니다. B. 테이블에서 DynamoDB 스트림을 활성화하고 처리할 AWS Lambda 함수를 호출합니다. 그 문서들. 테이블에서 DynamoDB 스트림을 활성화하면 테이블에 대한 변경 사항을 거의 실시간으로 캡처하고 처리할 수 있습니다. 스트림은 AWS Lambda와 같은 다른 AWS 서비스에서 사용할 수 있는 항목 수준 수정(삽입, 업데이트 및 삭제)의 정렬된 시퀀스를 제공합니다.</div>
+<div class="comment-content">기존 애플리케이션 코드에 대한 변경을 최소화하면서 DynamoDB 테이블에 추가되거나 업데이트된 문서에 대해 거의 실시간 처리를 구현하려면 개발자는 다음을 수행해야 합니다. B. 테이블에서 DynamoDB 스트림을 활성화하고 AWS Lambda 함수를 호출하여 처리합니다. 그 문서들. 테이블에서 DynamoDB 스트림을 활성화하면 거의 실시간으로 테이블에 대한 변경 사항을 캡처하고 처리할 수 있습니다. 스트림은 AWS Lambda와 같은 다른 AWS 서비스에서 사용할 수 있는 항목 수준 수정(삽입, 업데이트 및 삭제)의 순서화된 시퀀스를 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -373,7 +416,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 23:13">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -422,7 +465,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 17 May 2023 10:21">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 33 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 33 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 33 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874605">
 <p class="card-text">
 							
-								개발자가 us-east-2 리전에서 Amazon API Gateway REST API를 포함하는 애플리케이션을 생성하고 있습니다. 개발자는 API에 대해 Amazon CloudFront 및 사용자 지정 도메인 이름을 사용하려고 합니다. 개발자가 타사 공급자로부터 도메인에 대한 SSL/TLS 인증서를 획득했습니다. <br/>개발자는 애플리케이션에 대한 사용자 정의 도메인을 어떻게 구성해야 합니까?
+								개발자가 us-east-2 리전에 Amazon API Gateway REST API가 포함된 애플리케이션을 생성 중입니다. 개발자는 API에 Amazon CloudFront와 사용자 지정 도메인 이름을 사용하려고 합니다. 개발자가 타사 공급자로부터 도메인에 대한 SSL/TLS 인증서를 획득했습니다. <br/>개발자는 애플리케이션에 대한 사용자 정의 도메인을 어떻게 구성해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											SSL/TLS 인증서를 API와 동일한 리전의 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS A 레코드를 만듭니다.
+											SSL/TLS 인증서를 API와 동일한 리전에 있는 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS A 레코드를 만듭니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,20 +162,20 @@
 													C.
 												</span> 
 											
-											SSL/TLS 인증서를 API와 동일한 리전의 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS CNAME 레코드를 만듭니다.
+											SSL/TLS 인증서를 API와 동일한 리전에 있는 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS CNAME 레코드를 만듭니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											SSL/TLS 인증서를 us-east-1 리전의 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS CNAME 레코드를 만듭니다.
+											SSL/TLS 인증서를 us-east-1 지역의 AWS Certificate Manager(ACM)로 가져옵니다. 사용자 지정 도메인에 대한 DNS CNAME 레코드를 만듭니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">디 (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">씨 (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">디 (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">C (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a> 
-							
-							시간: <i>
-							2023년 3월 23일, 오후 1:57</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a>
-							
-							at <i>
-							March 23, 2023, 1:57 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -253,12 +296,12 @@
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 4월 3일 월요일 05:19">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">최종 사용자와 CloudFront 간에 HTTPS를 요구하기 위해 AWS Certificate Manager(ACM)에서 인증서를 사용하려면 미국 동부(버지니아 북부) 리전(us-east-1)에서 인증서를 요청(또는 가져오기)해야 합니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html</div>
+<div class="comment-content">AWS Certificate Manager(ACM)의 인증서를 사용하여 최종 사용자와 CloudFront 사이에 HTTPS를 요구하려면 미국 동부(버지니아 북부) 리전(us-east-1)에서 인증서를 요청(또는 가져오기)해야 합니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,12 +345,12 @@
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 13:57">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D입니다. /import-certificate.html https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html</div>
+<div class="comment-content">정답은 D입니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html https://docs.aws.amazon.com/acm/latest/userguide /import-certificate.html https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -350,13 +393,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 10:15">
+<span class="comment-date align-middle" title="2023년 7월 18일 화 10:15">
 			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">여러 곳에서 확인했습니다 답변은 D입니다. 이유: ACM은 us-east-1에서만 인증서를 가져올 수 있으며 가져온 인증서를 us-east-2와 연결해야 합니다. 이와 관련하여 혼란이 발생한 이유는 Crux를 가져오고 연결했기 때문입니다. us-east-1에서 가져오지만 us-east-2에서 사용합니다.</div>
+<div class="comment-content">여러 곳에서 확인했습니다. 답은 D입니다. 이유: ACM은 us-east-1에서만 인증서를 가져올 수 있으며 가져온 인증서를 us-east-2와 연결해야 합니다. 이와 관련하여 발생한 혼란은 Crux 가져오기 및 연결 때문입니다. us-east-1에서 가져오고 us-east-2에서 사용하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -365,7 +408,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -396,13 +439,13 @@
 				아코르도밤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 03:54">
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 03:54">
 			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D CloudFront를 사용해야 하는 경우 ue-east-1로 가져와야 합니다. https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html</div>
+<div class="comment-content">D CloudFront를 사용해야 하는 경우 이를 ue-east-1로 가져와야 합니다. https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -411,7 +454,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -442,12 +485,12 @@
 				푸피나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 5일 수요일 00:23">
+<span class="comment-date align-middle" title="2023년 7월 5일 수 00:23">
 			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">선택한 답변: Cloudfront의 경우 DNS A가 아닌 CNMA를 생성하기 때문에 D A는 옳지 않습니다. -east-2 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html B가 맞지 않습니다. 인증서는 외부 CA용이지만 ACM에 업로드할 수 있거나 AWS 인증서 관리자 https://repost.aws/knowledge-center/install-ssl-cloudfront에서 공용 인증서를 요청해야 하지만 인증서를 CloudFront로 가져올 수 없습니다.</div>
+<div class="comment-content">선택한 답변: cloudfront의 경우 DNS A가 아닌 CNMA를 생성하기 때문에 D A는 옳지 않습니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html C는 ACM이 우리에게 인증서를 가져올 수 없기 때문에 옳지 않습니다. -east-2 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cnames-and-https-requirements.html B가 옳지 않습니다. 인증서는 외부 CA용이지만 ACM에 업로드할 수 있습니다. 또는 AWS 인증서 관리자 https://repost.aws/knowledge-center/install-ssl-cloudfront에서 퍼블릭 인증서를 요청해야 하지만 인증서를 CloudFront로 가져올 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -456,7 +499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -487,7 +530,7 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 11:27">
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 11:27">
 			2 달전
 		</span>
 </div>
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,8 +576,8 @@
 				피터페인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일 수요일 03:15">
-			2개월, 4주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수 03:15">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -594,7 +637,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,7 +665,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캬티차예드
+				카야티차제드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 08:34">
@@ -640,7 +683,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -685,7 +728,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -716,8 +759,8 @@
 				2023년 3월
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 17:40">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 17:40">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -731,7 +774,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -786,7 +829,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 03 Apr 2023 05:19">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -838,7 +881,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html</
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 13:57">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1083,7 +1126,7 @@ The first statement of the question:  A developer is creating an application tha
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 03:15">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1274,7 +1317,7 @@ Amazon CloudFront can use SSL/TLS certificates stored in AWS Certificate Manager
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 17:40">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

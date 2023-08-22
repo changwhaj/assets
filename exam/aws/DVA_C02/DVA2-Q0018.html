@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 18 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 18 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 18 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874590">
 <p class="card-text">
 							
-								한 회사가 AWS에서 서버리스 애플리케이션을 구축하고 있습니다. 이 애플리케이션은 AWS Lambda 함수를 사용하여 연중무휴로 고객 주문을 처리합니다. Lambda 함수는 외부 공급업체의 HTTP API를 호출하여 결제를 처리합니다. <br/>부하 테스트 중에 개발자는 외부 공급업체 결제 처리 API가 가끔 시간 초과되어 오류를 반환한다는 사실을 발견했습니다. 회사는 일부 결제 처리 API 호출이 오류를 반환할 것으로 예상합니다. <br/>회사는 결제 처리 외부 API 오류율이 한 시간 동안 총 거래 수의 5%를 초과하는 경우에만 지원팀이 거의 실시간으로 알림을 받기를 원합니다. 개발자는 지원 팀에 알리도록 구성된 기존 Amazon Simple Notification Service(Amazon SNS) 주제를 사용해야 합니다.<br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 AWS에서 서버리스 애플리케이션을 구축하고 있습니다. 애플리케이션은 AWS Lambda 함수를 사용하여 연중무휴 24시간 고객 주문을 처리합니다. Lambda 함수는 외부 공급업체의 HTTP API를 호출하여 결제를 처리합니다. <br/>부하 테스트 중에 개발자는 외부 공급업체 결제 처리 API가 때때로 시간 초과되어 오류를 반환한다는 사실을 발견했습니다. 회사에서는 일부 결제 처리 API 호출에서 오류가 발생할 것으로 예상합니다. <br/>회사는 결제 처리 외부 API 오류율이 1시간 동안 전체 거래 건수의 5%를 초과하는 경우에만 지원팀이 거의 실시간으로 알림을 받기를 원합니다. 개발자는 지원 팀에 알리도록 구성된 기존 Amazon Simple 알림 서비스(Amazon SNS) 주제를 사용해야 합니다.<br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon CloudWatch에 결제 처리 API 호출 결과를 씁니다. Amazon CloudWatch Logs Insights를 사용하여 CloudWatch 로그를 쿼리합니다. CloudWatch 로그를 확인하고 기존 SNS 주제에 알리도록 Lambda 함수를 예약합니다.
+											결제 처리 API 호출 결과를 Amazon CloudWatch에 기록합니다. Amazon CloudWatch Logs Insights를 사용하여 CloudWatch 로그를 쿼리합니다. CloudWatch 로그를 확인하고 기존 SNS 주제에 알리도록 Lambda 함수를 예약합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											외부 결제 처리 API 호출의 실패를 기록하는 CloudWatch에 사용자 지정 지표를 게시합니다. 오류율이 지정된 비율을 초과하면 기존 SNS 주제에 알리도록 CloudWatch 경보를 구성합니다.
+											외부 결제 처리 API 호출의 실패를 기록하는 사용자 지정 지표를 CloudWatch에 게시합니다. 오류율이 지정된 비율을 초과하면 기존 SNS 주제에 알리도록 CloudWatch 경보를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											외부 결제 처리 API 호출 결과를 새로운 Amazon SNS 주제에 게시합니다. 지원팀 구성원을 새로운 SNS 주제로 구독합니다.
+											외부 결제 처리 API 호출 결과를 새로운 Amazon SNS 주제에 게시합니다. 지원팀 구성원의 새 SNS 주제를 구독하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											외부 결제 처리 API 호출 결과를 Amazon S3에 씁니다. 정기적으로 실행되도록 Amazon Athena 쿼리를 예약합니다. 오류율이 지정된 비율을 초과하면 기존 SNS 주제에 알림을 보내도록 Athena를 구성합니다.
+											외부 결제 처리 API 호출 결과를 Amazon S3에 기록합니다. 정기적으로 실행되도록 Amazon Athena 쿼리를 예약합니다. 오류율이 지정된 비율을 초과하는 경우 기존 SNS 주제에 알림을 보내도록 Athena를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a> 
-							
-							시간: <i>
-							2023년 3월 21일, 오후 12:33</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a>
-							
-							at <i>
-							March 21, 2023, 12:33 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -260,7 +303,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 외부 결제 처리 API 호출의 실패를 기록하는 CloudWatch에 사용자 지정 지표를 게시합니다. 오류율이 지정된 비율을 초과할 때 기존 SNS 주제에 알리도록 CloudWatch 경보를 구성하는 것이 요구 사항을 충족하는 최상의 솔루션입니다. CloudWatch 사용자 지정 지표를 사용하여 개발자는 외부 결제 처리 API에 대한 실패한 요청 수를 포함하여 사용자 지정 데이터 포인트를 게시하고 모니터링할 수 있습니다. 오류율이 지정된 비율을 초과하면 SNS 주제에 알리도록 CloudWatch 경보를 구성하여 거의 실시간으로 지원팀에 알릴 수 있습니다. 옵션 A는 CloudWatch 로그를 확인하기 위해 Lambda 함수를 예약해야 하므로 최적이 아닙니다. 옵션 C는 지원 팀에 알리는 속도를 지정하지 않기 때문에 원하는 기능을 제공하지 않을 수 있습니다.</div>
+<div class="comment-content">B. 외부 결제 처리 API 호출의 실패를 기록하는 사용자 지정 지표를 CloudWatch에 게시합니다. 오류율이 지정된 비율을 초과할 때 기존 SNS 주제에 알리도록 CloudWatch 경보를 구성하는 것이 요구 사항을 충족하는 가장 좋은 솔루션입니다. CloudWatch 사용자 지정 지표를 사용하면 개발자는 외부 결제 처리 API에 대한 실패한 요청 수를 포함하여 사용자 지정 데이터 포인트를 게시하고 모니터링할 수 있습니다. 오류율이 지정된 비율을 초과하면 SNS 주제에 알리도록 CloudWatch 경보를 구성하여 거의 실시간으로 지원 팀에 알림을 보낼 수 있습니다. 옵션 A는 CloudWatch 로그를 확인하기 위해 Lambda 함수를 예약해야 하기 때문에 최적이 아닙니다. 옵션 C는 지원팀에 알리는 속도를 지정하지 않으므로 원하는 기능을 제공하지 못할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -269,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -303,12 +346,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 22:18">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 22:18">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B. 사용자 지정 메트릭을 사용하여 개발자는 번호와 같은 사용자 지정 데이터 포인트를 게시하고 모니터링할 수 있습니다. 외부 결제 처리 API에 대한 실패한 요청 수. CloudWatch 경보를 생성하고 오류율이 질문에 지정된 숫자를 초과할 때 트리거되도록 구성합니다.</div>
+<div class="comment-content">옵션 B. 사용자 정의 지표를 사용하여 개발자는 숫자와 같은 사용자 정의 데이터 포인트를 게시하고 모니터링할 수 있습니다. 외부 결제 처리 API에 대한 실패한 요청의 수입니다. CloudWatch 경보를 생성하고 오류 비율이 질문에 지정된 숫자를 초과할 때 트리거되도록 구성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -317,7 +360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,7 +391,7 @@
 				svrnvtr
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 21:46">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 21:46">
 			5 개월 전
 		</span>
 </div>
@@ -400,7 +443,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B입니다. 포함된 지표 형식을 사용하여 자세한 로그 이벤트 데이터와 함께 사용자 지정 지표를 포함할 수 있습니다. CloudWatch는 사용자 지정 지표를 자동으로 추출하므로 실시간 사고 감지를 위해 지표를 시각화하고 경보할 수 있습니다. https://docs.aws.amazon.com/lambda/latest/operatorguide/custom-metrics.html</div>
+<div class="comment-content">정답은 B입니다. 내장형 지표 형식을 사용하여 자세한 로그 이벤트 데이터와 함께 사용자 지정 지표를 삽입할 수 있습니다. CloudWatch는 실시간 사고 감지를 위해 사용자 지정 지표를 자동으로 추출하여 이를 시각화하고 경보할 수 있습니다. https://docs.aws.amazon.com/lambda/latest/operatorguide/custom-metrics.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -517,7 +560,7 @@ Option A is not optimal since it involves scheduling a Lambda function to check 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 22:18">
-			1 week, 3 days ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

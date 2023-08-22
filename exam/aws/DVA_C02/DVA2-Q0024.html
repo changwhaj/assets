@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 24 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 24 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 24 discussion</h1>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -127,16 +190,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a> 
-							
-							시간: <i>
-							2023년 3월 23일, 오전 8:22</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a>
-							
-							at <i>
-							March 23, 2023, 8:22 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,13 +295,13 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 08:22">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 08:22">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. AWS Amplify는 요구 사항에 대한 올인원 서비스입니다. https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html 옵션 C는 거의 정확하지만 HTTPS 구현 방법에 대해서는 언급하지 않습니다. 옵션 B와 D가 잘못되었습니다. 서버를 계속 실행해야 합니다.</div>
+<div class="comment-content">정답은 A입니다. AWS Amplify는 해당 요구 사항에 대한 올인원 서비스입니다. https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html 옵션 C는 거의 정확하지만 HTTPS 구현 방법에 대해서는 언급하지 않습니다. 옵션 B와 D가 잘못되었습니다. 계속해서 서버를 운영해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +349,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">a 최소 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 옵션 A입니다. 서버리스 백엔드와 함께 AWS Amplify를 사용하여 각 웹 사이트를 호스팅합니다. AWS Amplify는 개발자가 웹 애플리케이션 및 정적 웹 사이트를 구축하고 배포할 수 있는 완전관리형 서비스입니다. Amplify를 사용하면 개발자는 AWS CodeCommit, Bitbucket 및 GitHub와 같은 리포지토리를 쉽게 연결하여 코드 병합을 기반으로 변경 사항을 웹 사이트에 자동으로 빌드하고 배포할 수 있습니다. Amplify는 또한 리포지토리의 특정 브랜치에 연결할 수 있는 개발, 스테이징, 사용자 수용 테스트 및 프로덕션을 포함한 여러 환경에서 단계적 릴리스를 지원합니다. 또한 Amplify는 기본적으로 모든 데이터 교환에 HTTPS를 사용하고 서버리스 백엔드를 사용하므로 유지 관리할 서버가 없습니다. 전반적인,</div>
+<div class="comment-content">a 최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 옵션 A입니다. 서버리스 백엔드와 함께 AWS Amplify를 사용하여 각 웹 사이트를 호스팅합니다. AWS Amplify는 개발자가 웹 애플리케이션과 정적 웹 사이트를 구축하고 배포할 수 있는 완전관리형 서비스입니다. Amplify를 사용하면 개발자는 AWS CodeCommit, Bitbucket 및 GitHub와 같은 리포지토리를 쉽게 연결하여 코드 병합을 기반으로 웹 사이트에 대한 변경 사항을 자동으로 구축하고 배포할 수 있습니다. Amplify는 또한 리포지토리의 특정 분기에 연결될 수 있는 개발, 스테이징, 사용자 승인 테스트 및 프로덕션을 포함한 여러 환경의 단계별 릴리스를 지원합니다. 또한 Amplify는 기본적으로 모든 데이터 교환에 HTTPS를 사용하며 서버리스 백엔드를 갖추고 있습니다. 즉, 유지 관리할 서버가 없습니다. 전반적인,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -343,7 +386,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 설명에 감사드립니다!</div>
+<div class="comment-content">모든 설명에 정말 감사드립니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -352,7 +395,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,12 +437,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 23:14">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 23:14">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A가 답입니다. 물론 지금까지는 정적 웹사이트 호스팅을 위해 S3를 사용해야 한다는 사실에 익숙했습니다. 그러나 소스 코드 호스팅, 다양한 환경의 단계별 릴리스 및 모든 데이터 교환을 위한 HTTPS(S3 호스팅에서는 불가능)와 같은 질문에 설명된 많은 요구 사항이 있습니다. AWS Amplify는 최소한의 운영 오버헤드로 이 모든 작업을 수행합니다.</div>
+<div class="comment-content">선택 A가 답입니다. 물론 지금까지 우리는 정적 웹 사이트 호스팅에 S3를 사용해야 한다는 사실에 익숙해졌습니다. 그러나 질문에는 소스 코드 호스팅, 다양한 환경의 단계적 릴리스, 모든 데이터 교환을 위한 HTTPS(S3 호스팅에서는 불가능)와 같은 많은 요구 사항이 설명되어 있습니다. AWS Amplify는 최소한의 운영 오버헤드로 이 모든 작업을 수행합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -440,11 +483,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 9일 화요일 18:27">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동료 ACloudGurus의 경우 정적 웹사이트 호스팅을 S3 버킷에 연결하는 방법을 배웠습니다. 그러나 기본적으로 다양한 환경에 대한 배포를 지원하고 버전 제어 시스템과 원활하게 통합되므로 Amplify를 사용하여 "최소 운영 오버헤드"를 달성할 수 있습니다. 반면 S3는 여러 버킷을 구성하고 CodePipeline을 구성하고 각 버킷과 통합해야 합니다.</div>
+<div class="comment-content">동료 ACloudGurus의 경우 정적 웹 사이트 호스팅을 S3 버킷에 연결하는 방법을 배웠습니다. 그러나 Amplify를 사용하면 기본적으로 다양한 환경에 대한 배포를 지원하고 버전 제어 시스템과 원활하게 통합되므로 "최소 운영 오버헤드"가 달성되는 것 같습니다. 반면 S3에서는 여러 버킷을 구성하고 CodePipeline을 구성하고 각 버킷과 통합해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,13 +527,13 @@
 				Rpod
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 10:16">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 10:16">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">정적 웹 사이트는 C ..using S3여야 합니다.</div>
+<div class="comment-content">정적 웹사이트는 S3를 사용하는 C여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -519,15 +562,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아르노92
+				Arnaud92
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 15일 월요일 22:17">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">슬프게도 S3의 정적 웹 호스팅은 HTTPS를 지원하지 않습니다. 따라서 응답은 A입니다 ;-) https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html</div>
+<div class="comment-content">안타깝게도 S3의 정적 웹 호스팅은 HTTPS를 지원하지 않습니다. 따라서 응답은 A입니다. ;-) https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -560,11 +603,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 08:41">
-			2주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것은 중요한 열쇠입니다 !! 정말 감사합니다.</div>
+<div class="comment-content">그게 중요한 열쇠입니다!! 정말 감사합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -573,7 +616,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -644,7 +687,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 08:22">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -791,7 +834,7 @@ The solution that will meet these requirements with the LEAST operational overhe
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 23:14">
-			1 week, 3 days ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -840,7 +883,7 @@ AWS Amplify does all of this for you with the least operational overhead.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 09 May 2023 18:27">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -923,7 +966,7 @@ AWS Amplify does all of this for you with the least operational overhead.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 22:17">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -962,7 +1005,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 08:41">
-			2 weeks, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 135 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 135 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 135 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="893538">
 <p class="card-text">
 							
-								한 회사에서 Amazon RDS 인스턴스에서 실행되는 관계형 데이터베이스 서버에 연결하는 4개의 AWS Lambda 함수를 만들었습니다. 보안 팀은 회사가 30일마다 데이터베이스 암호를 자동으로 변경하도록 요구합니다. <br/><br/>이러한 요구 사항을 가장 안전하게 충족하는 솔루션은 무엇입니까?
+								한 회사는 Amazon RDS 인스턴스에서 실행되는 관계형 데이터베이스 서버에 연결하는 4개의 AWS Lambda 함수를 만들었습니다. 보안 팀에서는 회사에 30일마다 데이터베이스 비밀번호를 자동으로 변경하도록 요구합니다. <br/><br/>이러한 요구 사항을 가장 안전하게 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Lambda 함수의 환경 변수에 데이터베이스 자격 증명을 저장합니다. 30일마다 새 자격 증명으로 Lambda 함수를 배포합니다.
+											Lambda 함수의 환경 변수에 데이터베이스 자격 증명을 저장합니다. 30일마다 새 자격 증명을 사용하여 Lambda 함수를 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											AWS Secrets Manager에 데이터베이스 자격 증명을 저장합니다. 자격 증명에 대해 30일 순환 일정을 구성합니다.
+											AWS Secrets Manager에 데이터베이스 자격 증명을 저장합니다. 자격 증명에 대한 30일 순환 일정을 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -106,11 +169,11 @@
 													D.
 												</span> 
 											
-											고객 제공 암호화 키(SSE-C)로 서버 측 암호화를 사용하는 Amazon S3 버킷에 데이터베이스 자격 증명을 저장합니다. 고객 키에 대해 30일 키 순환 일정을 구성합니다.
+											고객 제공 암호화 키(SSE-C)와 함께 서버 측 암호화를 사용하는 Amazon S3 버킷에 데이터베이스 자격 증명을 저장합니다. 고객 키에 대한 30일 키 순환 일정을 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +183,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cloudenthusiast
-							</a> 
-							
-							시간: <i>
-							2023년 8월 4일 오후 1:41</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cloudenthusiast
-							</a>
-							
-							at <i>
-							Aug. 4, 2023, 1:41 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -247,13 +290,13 @@
 				라이덴쿠로사키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 5일 (토) 04:53">
-			2주 전
+<span class="comment-date align-middle" title="2023년 8월 5일 토요일 04:53">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Secrets Manager는 자동 회전을 지원합니다. Systems Manager는 그렇게 하지 않습니다.</div>
+<div class="comment-content">Secrets Manager는 자동 교체를 지원합니다. Systems Manager는 그렇게 하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,7 +337,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 21:40">
-			2주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,16 +379,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				구름 애호가
+				클라우드 매니아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 13:41">
-			2주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Secrets Manager는 기본 제공 또는 사용자 지정 Lambda 함수를 사용하여 암호 자동 교체를 지원합니다.</div>
+<div class="comment-content">Secrets Manager는 내장 또는 사용자 지정 Lambda 함수를 사용하여 비밀 자동 교체를 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -378,11 +421,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 5일 토요일 17:47">
-			2주 전
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최근에 시험을 보셨습니까? 그렇다면 여기에서 몇 개의 질문이 나왔습니까?</div>
+<div class="comment-content">최근에 시험을 보셨나요? 그렇다면 여기에서 몇 개의 질문이 나왔나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -391,7 +434,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -451,7 +494,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Aug 2023 04:53">
-			2 weeks ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -497,7 +540,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 21:40">
-			2 weeks, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -544,7 +587,7 @@ Keyword: "automatically change the database password every 30 days"</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 13:41">
-			2 weeks, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -582,7 +625,7 @@ Keyword: "automatically change the database password every 30 days"</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Aug 2023 17:47">
-			2 weeks ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

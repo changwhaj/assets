@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 58 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 58 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 58 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874630">
 <p class="card-text">
 							
-								개발자가 Amazon CloudFront 배포를 사용하여 Amazon S3 버킷의 콘텐츠를 제공하는 새로운 파일 스토리지 애플리케이션을 테스트하고 있습니다. 배포는 원본 액세스 ID(OAI)를 사용하여 S3 버킷에 액세스합니다. S3 버킷의 권한은 다른 모든 사용자에 대한 액세스를 명시적으로 거부합니다. <br/>이 응용 프로그램은 사용자에게 로그인 페이지에서 인증하라는 메시지를 표시한 다음 서명된 쿠키를 사용하여 사용자가 개인 저장소 디렉토리에 액세스할 수 있도록 합니다. 개발자는 뷰어 액세스가 제한된 기본 캐시 동작을 사용하도록 배포를 구성하고 원본이 S3 버킷을 가리키도록 설정했습니다. 그러나 개발자가 로그인 페이지로 이동하려고 하면 개발자에게 403 Forbidden 오류가 표시됩니다.<br/>개발자는 로그인 페이지에 대한 인증되지 않은 액세스를 허용하는 솔루션을 구현해야 합니다. 솔루션은 또한 모든 개인 콘텐츠를 안전하게 유지해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 Amazon CloudFront 배포를 사용하여 Amazon S3 버킷의 콘텐츠를 제공하는 새로운 파일 스토리지 애플리케이션을 테스트하고 있습니다. 배포는 원본 액세스 ID(OAI)를 사용하여 S3 버킷에 액세스합니다. S3 버킷의 권한은 다른 모든 사용자의 액세스를 명시적으로 거부합니다. <br/>애플리케이션은 사용자에게 로그인 페이지에서 인증하라는 메시지를 표시한 다음 서명된 쿠키를 사용하여 사용자가 개인 저장소 디렉터리에 액세스할 수 있도록 허용합니다. 개발자는 제한된 뷰어 액세스로 기본 캐시 동작을 사용하도록 배포를 구성했으며 원본이 S3 버킷을 가리키도록 설정했습니다. 그러나 개발자가 로그인 페이지로 이동하려고 하면 403 Forbidden 오류가 발생합니다.<br/>개발자는 로그인 페이지에 대한 인증되지 않은 액세스를 허용하는 솔루션을 구현해야 합니다. 또한 솔루션은 모든 개인 콘텐츠를 안전하게 보호해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											기본 캐시 동작과 동일한 원본을 사용하여 배포에 두 번째 캐시 동작을 추가합니다. 두 번째 캐시 동작에 대한 경로 패턴을 로그인 페이지의 경로로 설정하고 뷰어 액세스를 제한하지 않도록 합니다. 기본 캐시 동작의 설정을 변경하지 않고 유지합니다.
+											기본 캐시 동작과 동일한 출처를 가진 배포판에 두 번째 캐시 동작을 추가합니다. 두 번째 캐시 동작에 대한 경로 패턴을 로그인 페이지의 경로로 설정하고 뷰어 액세스를 제한하지 않도록 설정하세요. 기본 캐시 동작의 설정을 변경하지 않고 유지합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,14 +157,14 @@
 													B.
 												</span> 
 											
-											기본 캐시 동작과 동일한 원본을 사용하여 배포에 두 번째 캐시 동작을 추가합니다. 두 번째 캐시 동작에 대한 경로 패턴을 *로 설정하고 뷰어 액세스를 제한합니다. 기본 캐시 동작의 경로 패턴을 로그인 페이지의 경로로 변경하고 뷰어 액세스를 제한하지 않도록 합니다.
+											기본 캐시 동작과 동일한 출처를 가진 배포판에 두 번째 캐시 동작을 추가합니다. 두 번째 캐시 동작에 대한 경로 패턴을 *로 설정하고 뷰어 액세스를 제한합니다. 기본 캐시 동작의 경로 패턴을 로그인 페이지의 경로로 변경하고 뷰어 액세스를 제한하지 않도록 설정하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											기본 캐시 동작에 장애 조치 원본으로 두 번째 원본을 추가합니다. 장애 조치 오리진이 S3 버킷을 가리키도록 합니다. 기본 원본의 경로 패턴을 *로 설정하고 뷰어 액세스를 제한합니다. 장애 조치 원본의 경로 패턴을 로그인 페이지의 경로로 설정하고 뷰어 액세스를 제한하지 않습니다.
+											기본 캐시 동작에 장애 조치 원본으로 두 번째 원본을 추가합니다. 장애 조치 원본을 S3 버킷으로 지정합니다. 기본 원본의 경로 패턴을 *로 설정하고 뷰어 액세스를 제한합니다. 장애 조치 원본의 경로 패턴을 로그인 페이지의 경로로 설정하고 뷰어 액세스를 제한하지 않도록 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a> 
-							
-							시간: <i>
-							2023년 3월 27일, 오전 1:24</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a>
-							
-							at <i>
-							March 27, 2023, 1:24 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -255,12 +298,12 @@
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 01:24">
-			4개월, 3주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A 추가 캐시 동작을 생성하는 경우 기본 캐시 동작은 항상 마지막으로 처리됩니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesCacheBehavior</div>
+<div class="comment-content">A 추가 캐시 동작을 생성하는 경우 기본 캐시 동작이 항상 마지막으로 처리됩니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesCacheBehavior</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,13 +346,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 13:27">
-			14시간 44분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 13:27">
+			3일 1시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">B) 기본 캐시 동작의 경로 패턴을 재정의할 수 없습니다. C) 기본 원본을 사용할 수 없을 때 원본 장애 조치가 사용됩니다. 이것은 우리의 경우가 아닙니다. D) 이 구성을 사용하면 사용자가 403 Forbidden 오류를 받은 다음 다음으로 리디렉션됩니다. 로그인 페이지의 S3 URL A는 제 생각에는 실행 가능한 접근 방식입니다.</div>
+<div class="comment-content">B) 기본 캐시 동작의 경로 패턴을 재정의할 수 없습니다. C) 기본 원본을 사용할 수 없을 때 원본 장애 조치가 사용됩니다. 이는 우리의 경우가 아닙니다. D) 이 구성을 사용하면 사용자가 403 Forbidden 오류를 받고 다음으로 리디렉션될 것 같습니다. 내 생각에는 로그인 페이지의 S3 URL A가 실행 가능한 접근 방식입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,12 +392,12 @@
 				하드다이버
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 11일 일 07:16">
+<span class="comment-date align-middle" title="2023년 6월 11일 일요일 07:16">
 			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D라고 해야 할까요? s3 버킷이 권한을 제한하는 경우 로그인을 위해 열려 있어야 합니다.</div>
+<div class="comment-content">D라고 해야 하나? s3 버킷이 권한을 제한하는 경우 로그인을 위해 해당 권한을 열어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,16 +434,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 04:58">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 04:58">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">로그인 페이지의 경로 패턴에 대한 무제한 뷰어 액세스가 있는 두 번째 캐시 동작을 추가하면 인증되지 않은 사용자가 로그인 페이지에 액세스할 수 있습니다. 동시에 기본 캐시 동작의 설정은 변경되지 않고 비공개 콘텐츠는 액세스를 위해 여전히 서명된 쿠키가 필요하기 때문에 보안이 유지됩니다.</div>
+<div class="comment-content">로그인 페이지의 경로 패턴에 대한 무제한 뷰어 액세스가 포함된 두 번째 캐시 동작을 추가하면 인증되지 않은 사용자가 로그인 페이지에 액세스할 수 있습니다. 동시에 기본 캐시 동작 설정은 변경되지 않고, 액세스하려면 서명된 쿠키가 필요하기 때문에 개인 콘텐츠는 안전하게 유지됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -464,7 +507,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 01:24">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -515,7 +558,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 13:27">
-			14 hours, 44 minutes ago
+			3 days, 1 hour ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -610,7 +653,7 @@ A is a workable approach in my opinion</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 04:58">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 72 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 72 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 72 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882055">
 <p class="card-text">
 							
-								개발자는 퍼블릭 및 프라이빗 서브넷이 있는 VPC-A라는 VPC를 생성합니다. 또한 개발자는 VPC-A의 프라이빗 서브넷 내부에 Amazon RDS 데이터베이스를 생성합니다. 일부 쿼리를 수행하기 위해 개발자는 기본 VPC에서 AWS Lambda 함수를 생성합니다. Lambda 함수에는 RDS 데이터베이스에 액세스하는 코드가 있습니다. Lambda 함수가 실행되면 함수가 RDS 데이터베이스에 연결할 수 없다는 오류 메시지가 표시됩니다. <br/><br/>개발자는 이 문제를 어떻게 해결할 수 있습니까?
+								개발자는 퍼블릭 및 프라이빗 서브넷이 있는 VPC-A라는 VPC를 생성합니다. 또한 개발자는 VPC-A의 프라이빗 서브넷 내에 Amazon RDS 데이터베이스를 생성합니다. 일부 쿼리를 수행하기 위해 개발자는 기본 VPC에 AWS Lambda 함수를 생성합니다. Lambda 함수에는 RDS 데이터베이스에 액세스하기 위한 코드가 있습니다. Lambda 함수가 실행되면 함수가 RDS 데이터베이스에 연결할 수 없다는 오류 메시지가 나타납니다. <br/><br/>개발자는 이 문제를 어떻게 해결할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											RDS 보안 그룹을 수정합니다. VPC CIDR 블록의 모든 포트에서 오는 트래픽을 허용하는 규칙을 추가합니다.
+											RDS 보안 그룹을 수정합니다. VPC CIDR 블록의 모든 포트에서 들어오는 트래픽을 허용하는 규칙을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											RDS 인스턴스와 동일한 서브넷에 Lambda 함수를 재배포합니다. RDS 보안 그룹이 Lambda 함수의 트래픽을 허용하는지 확인합니다.
+											RDS 인스턴스와 동일한 서브넷에 Lambda 함수를 재배포합니다. RDS 보안 그룹이 Lambda 함수의 트래픽을 허용하는지 확인하십시오.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											Lambda 함수에 대한 보안 그룹을 생성합니다. RDS 보안 그룹에 새 규칙을 추가하여 새 Lambda 보안 그룹의 트래픽을 허용합니다.
+											Lambda 함수에 대한 보안 그룹을 생성합니다. 새 Lambda 보안 그룹의 트래픽을 허용하려면 RDS 보안 그룹에 새 규칙을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -127,16 +190,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Fyssy
-							</a> 
-							
-							시간: <i>
-							2023년 4월 17일 오후 4:23</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Fyssy
-							</a>
-							
-							at <i>
-							April 17, 2023, 4:23 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,7 +295,7 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 16:23">
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 16:23">
 			4 개월 전에
 		</span>
 </div>
@@ -295,19 +338,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 15:27">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 15:27">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이 문제를 해결하려면 개발자는 RDS 인스턴스와 동일한 서브넷에 Lambda 함수를 재배포하고 RDS 보안 그룹이 Lambda 함수의 트래픽을 허용하는지 확인해야 합니다. 이렇게 하면 Lambda 함수가 VPC-A의 프라이빗 서브넷 내에서 RDS 데이터베이스에 액세스할 수 있습니다. 개발자는 또한 Lambda 함수가 VPC 내의 리소스에 액세스할 수 있는 적절한 네트워크 설정 및 권한으로 구성되어 있는지 확인해야 합니다.</div>
+<div class="comment-content">이 문제를 해결하려면 개발자는 RDS 인스턴스와 동일한 서브넷에 Lambda 함수를 재배포하고 RDS 보안 그룹이 Lambda 함수의 트래픽을 허용하는지 확인해야 합니다. 이렇게 하면 Lambda 함수가 VPC-A의 프라이빗 서브넷 내의 RDS 데이터베이스에 액세스할 수 있습니다. 또한 개발자는 Lambda 함수가 VPC 내 리소스에 액세스할 수 있는 적절한 네트워크 설정 및 권한으로 구성되어 있는지 확인해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -350,12 +393,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 26일 수요일 05:11">
-			3주, 3일 전
+<span class="comment-date align-middle" title="2023년 7월 26일 수 05:11">
+			3주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 'C'가 더 좋습니다. Lambda 함수를 데이터베이스의 네트워크 구성과 긴밀하게 연결하지 않고도 Lambda 함수와 RDS 데이터베이스 간의 통신을 허용하는 보다 안전하고 유연하며 확장 가능한 솔루션을 제공하기 때문입니다. 또한 보안 및 액세스 제어에 대한 모범 사례를 따릅니다.</div>
+<div class="comment-content">옵션 'C'가 더 좋습니다. Lambda 기능을 데이터베이스의 네트워크 구성과 긴밀하게 결합하지 않고도 Lambda 기능과 RDS 데이터베이스 간의 통신을 허용하기 위한 보다 안전하고 유연하며 확장 가능한 솔루션을 제공하기 때문입니다. 또한 보안 및 액세스 제어에 대한 모범 사례를 따릅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -364,7 +407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,11 +431,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 1일 화요일 14:27">
-			2주, 4일 전
+			3 주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">키는 "IAM 역할"이 아닌 "보안 그룹"입니다.</div>
+<div class="comment-content">핵심은 "IAM 역할"이 아닌 "보안 그룹"입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,16 +480,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Naj_64
+				나즈_64
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 10:26">
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 10:26">
 			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">B와 C가 맞습니다. 그래도 C로 가십시오. C는 구현하는 데 몇 분밖에 걸리지 않지만 Lambda 함수를 재배포하는 데는 완료하는 데 확실히 더 많은 시간이 걸립니다.</div>
+<div class="comment-content">B와 C가 맞습니다. 그래도 C로 가세요. C를 구현하는 데는 몇 분밖에 걸리지 않지만 Lambda 함수를 재배포하는 데는 확실히 더 많은 시간이 걸립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -486,12 +529,12 @@
 				sum_la46
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 15:37">
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 15:37">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 정답입니다</div>
+<div class="comment-content">C가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,13 +574,13 @@
 				헥시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 13:08">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 13:08">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C - 질문에서 Lambda 함수가 기본 VPC에 있어야 한다고 언급하지 않고 Lambda 함수가 특정 VPC의 RDS에만 도달한다는 것도 언급하지 않았기 때문에 이 경우 C를 선택하겠습니다. 동일한 프로젝트의 다른 VPC에 다른 RDS 인스턴스가 있는 경우 각각에 Lambda 함수를 배포해야 한다고 상상해 보십시오. Lambda 함수에 대한 보안 그룹을 생성하면 RDS 인스턴스가 있는 VPC에 보안 그룹을 할당하기만 하면 더 쉬워집니다 :)</div>
+<div class="comment-content">C - 음, 이 경우에는 C를 선택하겠습니다. 왜냐하면 질문에는 Lambda 함수가 기본 VPC에 있어야 한다는 언급이 없고 Lambda 함수가 특정 VPC의 RDS에만 도달한다는 언급도 없기 때문입니다. 동일한 프로젝트의 다른 VPC에 다른 RDS 인스턴스가 있는 경우 각 인스턴스에 Lambda 함수를 배포해야 한다고 상상해 보십시오. RDS 인스턴스가 있는 모든 VPC에 보안 그룹을 할당하기만 하면 Lambda 함수에 대한 보안 그룹을 생성하는 것이 더 쉬워집니다. :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -578,12 +621,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 8일 목요일 23:03">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 A는 VPC CIDR 블록에서 RDS 인스턴스로의 모든 트래픽을 허용합니다. 이것은 보안 구성이 아닙니다. 옵션 B는 Lambda 함수를 RDS 인스턴스와 동일한 서브넷으로 이동합니다. 이는 가능한 솔루션이지만 가장 효율적인 솔루션은 아닙니다. 옵션 D는 IAM 역할을 생성하고 RDS 데이터베이스에 대한 액세스를 허용하는 역할에 정책을 연결합니다. 이렇게 하면 Lambda 함수가 RDS 데이터베이스에 액세스할 수 있지만 Lambda 함수가 RDS 인스턴스에 연결할 수는 없습니다.</div>
+<div class="comment-content">옵션 A는 VPC CIDR 블록에서 RDS 인스턴스로의 모든 트래픽을 허용합니다. 이것은 보안 구성이 아닙니다. 옵션 B는 Lambda 함수를 RDS 인스턴스와 동일한 서브넷으로 이동합니다. 이는 가능한 솔루션이지만 가장 효율적인 솔루션은 아닙니다. 옵션 D는 IAM 역할을 생성하고 RDS 데이터베이스에 대한 액세스를 허용하는 역할에 정책을 연결합니다. 이렇게 하면 Lambda 함수가 RDS 데이터베이스에 액세스할 수 있지만 Lambda 함수가 RDS 인스턴스에 연결하는 것은 허용되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -623,12 +666,12 @@
 				프렘28
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수 13:25">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수요일 13:25">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">c는 정확합니다. 옵션 A는 VPC CIDR 블록에서 RDS 인스턴스로의 모든 트래픽을 허용합니다. 이것은 보안 구성이 아닙니다. 옵션 B는 Lambda 함수를 RDS 인스턴스와 동일한 서브넷으로 이동합니다. 이는 가능한 솔루션이지만 가장 효율적인 솔루션은 아닙니다. 옵션 D는 IAM 역할을 생성하고 RDS 데이터베이스에 대한 액세스를 허용하는 역할에 정책을 연결합니다. 이렇게 하면 Lambda 함수가 RDS 데이터베이스에 액세스할 수 있지만 Lambda 함수가 RDS 인스턴스에 연결할 수는 없습니다.</div>
+<div class="comment-content">c가 정확합니다. 옵션 A는 VPC CIDR 블록에서 RDS 인스턴스로의 모든 트래픽을 허용합니다. 이것은 보안 구성이 아닙니다. 옵션 B는 Lambda 함수를 RDS 인스턴스와 동일한 서브넷으로 이동합니다. 이는 가능한 솔루션이지만 가장 효율적인 솔루션은 아닙니다. 옵션 D는 IAM 역할을 생성하고 RDS 데이터베이스에 대한 액세스를 허용하는 역할에 정책을 연결합니다. 이렇게 하면 Lambda 함수가 RDS 데이터베이스에 액세스할 수 있지만 Lambda 함수가 RDS 인스턴스에 연결하는 것은 허용되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -660,12 +703,12 @@
 				프렘28
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수 13:29">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수요일 13:29">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">우리는 Lambda 함수가 퍼블릭 VPC인 기본 VPC에서 실행되고 있음을 알고 있습니다. RDS 인스턴스가 퍼블릭 인터넷에서 액세스할 수 없는 프라이빗 서브넷에서 실행 중입니다. Lambda 함수가 RDS 인스턴스에 연결하려면 Lambda 함수가 프라이빗 서브넷에 액세스할 수 있어야 합니다. 이는 Lambda 함수에 대한 보안 그룹을 생성하고 Lambda 보안 그룹의 트래픽을 허용하도록 RDS 보안 그룹에 규칙을 추가하여 수행할 수 있습니다.</div>
+<div class="comment-content">우리는 Lambda 함수가 퍼블릭 VPC인 기본 VPC에서 실행되고 있음을 알고 있습니다. RDS 인스턴스는 퍼블릭 인터넷에서 액세스할 수 없는 프라이빗 서브넷에서 실행되고 있습니다. Lambda 함수가 RDS 인스턴스에 연결하려면 Lambda 함수가 프라이빗 서브넷에 액세스할 수 있어야 합니다. Lambda 함수에 대한 보안 그룹을 생성하고 RDS 보안 그룹에 규칙을 추가하여 Lambda 보안 그룹의 트래픽을 허용하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -674,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -710,16 +753,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잠쉬프01
+				Jamshif01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 03:54">
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 03:54">
 			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">a - 서로 다른 vpc의 rds 및 lambda 때문에 아니요 c - 광고와 동일 - a 및 c와 동일 b가 정답입니다.</div>
+<div class="comment-content">a - 아니요. rds와 람다는 서로 다른 vpc에 있기 때문입니다. c - ad와 동일 - a 및 c와 동일 b가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -728,7 +771,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -832,7 +875,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 15:27">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -881,7 +924,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 26 Jul 2023 05:11">
-			3 weeks, 3 days ago
+			3 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -918,7 +961,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 01 Aug 2023 14:27">
-			2 weeks, 4 days ago
+			3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1062,7 +1105,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 13:08">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1109,7 +1152,7 @@ Imagine if there are other RDS instances on other VPCs on the same project, he w
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 08 Jun 2023 23:03">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1157,7 +1200,7 @@ Option D would create an IAM role and attach a policy to the role that allows ac
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 13:25">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1198,7 +1241,7 @@ Option D would create an IAM role and attach a policy to the role that allows ac
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 13:29">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

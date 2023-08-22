@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 21 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 21 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 21 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874593">
 <p class="card-text">
 							
-								개발자는 Amazon API Gateway REST API를 유지 관리합니다. 고객은 프런트엔드 UI 및 Amazon Cognito 인증을 통해 API를 사용합니다. <br/>개발자는 새 엔드포인트와 이전 버전과 호환되지 않는 인터페이스 변경 사항이 포함된 새 버전의 API를 가지고 있습니다. 개발자는 고객에게 영향을 미치지 않으면서 팀의 다른 개발자에게 베타 액세스 권한을 제공해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 Amazon API Gateway REST API를 유지 관리합니다. 고객은 프런트엔드 UI 및 Amazon Cognito 인증을 통해 API를 사용합니다. <br/>개발자는 새로운 엔드포인트와 이전 버전과 호환되지 않는 인터페이스 변경 사항을 포함하는 새로운 버전의 API를 보유하고 있습니다. 개발자는 고객에게 영향을 주지 않고 팀의 다른 개발자에게 베타 액세스 권한을 제공해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											새 API 애플리케이션 코드를 가리키는 새 API Gateway API를 정의합니다. 다른 개발자에게 엔드포인트가 새 API를 가리키도록 지시합니다.
+											새 API 애플리케이션 코드를 가리키는 새 API 게이트웨이 API를 정의합니다. 다른 개발자에게 엔드포인트가 새 API를 가리키도록 지시합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											API 애플리케이션 코드에서 호출할 코드 버전을 결정하는 쿼리 매개변수를 구현합니다.
+											호출할 코드 버전을 결정하는 API 애플리케이션 코드에 쿼리 매개변수를 구현합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											개발자가 추가하려는 API 끝점에 대한 새 API 게이트웨이 끝점을 지정합니다.
+											개발자가 추가하려는 API 엔드포인트에 대해 새 API 게이트웨이 엔드포인트를 지정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								aragon_saa
-							</a> 
-							
-							시간: <i>
-							2023년 3월 17일, 오전 9:46</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								aragon_saa
-							</a>
-							
-							at <i>
-							March 17, 2023, 9:46 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,12 +294,12 @@
 				제이바르마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 22:50">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 22:50">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A가 정답입니다. API Gateway API에서 개발 단계를 정의하면 제품에 영향을 주지 않고 API의 최신 버전을 테스트할 수 있는 방법을 다른 개발자에게 제공할 수 있습니다. 나머지 옵션은 많은 운영 오버헤드를 발생시킵니다.</div>
+<div class="comment-content">보기 A가 정답입니다. API Gateway API에서 개발 단계를 정의하면 다른 개발자에게 제품에 영향을 주지 않고 최신 버전의 API를 테스트할 수 있는 방법이 제공됩니다. 나머지 옵션은 많은 운영 오버헤드를 발생시킵니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,7 +345,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 최소한의 운영 오버헤드로 요구 사항을 충족하는 올바른 솔루션입니다. API Gateway API에서 개발 단계를 정의하면 다른 개발자가 프로덕션 환경에 영향을 주지 않고 API의 새 버전을 테스트할 수 있습니다. 이 접근 방식을 통해 개발자는 API의 새 버전에서 독립적으로 작업하고 프로덕션 환경과의 충돌을 피할 수 있습니다. 다른 옵션에는 새 API 또는 새 엔드포인트를 생성하는 작업이 포함되며, 이로 인해 여러 API 또는 엔드포인트 관리, 액세스 제어 구성, 새 엔드포인트 또는 API를 가리키도록 프런트엔드 UI 업데이트와 같은 추가 운영 오버헤드가 발생할 수 있습니다. 옵션 C는 또한 호출할 코드 버전을 결정하기 위해 쿼리 매개 변수를 구현해야 하므로 추가 복잡성이 발생합니다.</div>
+<div class="comment-content">옵션 A는 최소한의 운영 오버헤드로 요구 사항을 충족하는 올바른 솔루션입니다. API Gateway API에서 개발 단계를 정의하면 다른 개발자가 프로덕션 환경에 영향을 주지 않고 API의 새 버전을 테스트할 수 있습니다. 이 접근 방식을 통해 개발자는 새 버전의 API를 독립적으로 작업하고 프로덕션 환경과의 충돌을 피할 수 있습니다. 다른 옵션에는 여러 API 또는 엔드포인트 관리, 액세스 제어 구성, 새 엔드포인트 또는 API를 가리키도록 프런트엔드 UI 업데이트 등 추가 운영 오버헤드가 발생할 수 있는 새 API 또는 새 엔드포인트 생성이 포함됩니다. 또한 옵션 C는 호출할 코드 버전을 결정하기 위해 쿼리 매개변수의 구현을 요구함으로써 추가적인 복잡성을 초래합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,16 +382,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 03:32">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 03:32">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">개발자는 API Gateway API에서 개발 단계를 정의해야 합니다. 그런 다음 다른 개발자에게 엔드포인트가 개발 단계를 가리키도록 지시해야 합니다. 이 솔루션은 최소한의 운영 오버헤드로 요구 사항을 충족합니다.</div>
+<div class="comment-content">개발자는 API Gateway API에 개발 단계를 정의해야 합니다. 그런 다음 다른 개발자에게 엔드포인트가 개발 단계를 가리키도록 지시해야 합니다. 이 솔루션은 최소한의 운영 오버헤드로 요구 사항을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,7 +431,7 @@
 				길들일 수 없는 것
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 13:51">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 13:51">
 			5 개월 전
 		</span>
 </div>
@@ -435,7 +478,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 09:46">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -500,7 +543,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 22:50">
-			1 week, 3 days ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -597,7 +640,7 @@ The other options involve creating a new API or new endpoints, which could intro
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 03:32">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -691,7 +734,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 09:46">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

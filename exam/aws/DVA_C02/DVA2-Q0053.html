@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 53 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 53 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 53 discussion</h1>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon Simple Notification Service(Amazon SNS) 주제를 생성합니다. 아바타 생성기 Lambda 함수에 대한 실패 조건이 있는 대상으로 SNS 주제를 설정합니다. 이미지 크기 조정 Lambda 함수를 SNS 주제에 구독합니다.
+											Amazon Simple 알림 서비스(Amazon SNS) 주제를 생성합니다. 아바타 생성기 Lambda 함수에 대한 실패 조건이 있는 대상으로 SNS 주제를 설정합니다. 이미지 크기 조정 Lambda 함수를 SNS 주제에 구독합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="20 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">씨 (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="20 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">C (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								2023년
-							</a> 
-							
-							3 <i>
-							월 24일, 오전 3:27</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								March2023
-							</a>
-							
-							at <i>
-							March 24, 2023, 3:27 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,13 +293,13 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 24일 금요일 03:27">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 24일 금 03:27">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 최소한의 노력이 아닐까</div>
+<div class="comment-content">A는 최소한의 노력이 아닐까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -299,8 +342,8 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 03:55">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 03:55">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -348,13 +391,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 12:39">
-			15시간 31분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 12:39">
+			3일 1시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 가장 쉬운 옵션입니다 https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations</div>
+<div class="comment-content">A가 가장 쉬운 옵션입니다 https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -395,11 +438,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 11일 금요일 00:52">
-			1주, 2일 전
+			1주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B가 정답입니다. 누군가 B가 이 질문에 대한 정답이 될 수 없는 이유를 말할 수 있습니까? 람다 함수에 엄청난 양의 요청이 들어오는 경우 옵션 A가 실패합니다. 제한 문제로 인해 람다가 ProvisionedThrougputExceeded 예외를 발생시킬 모든 기회가 있습니다. 옵션 C도 어느 시점에서 실패하는 것과 거의 유사한 이유입니다. 그러나 SNS를 사용할 수는 있지만 최선의 해결책은 아닙니다. 확실히 옵션 B.</div>
+<div class="comment-content">옵션 B가 정답입니다. 왜 B가 이 질문에 대한 정답이 될 수 없는지 누군가 말할 수 있습니까? 람다 함수에 엄청난 양의 요청이 들어오면 옵션 A가 실패합니다. 제한 문제로 인해 람다가 ProvisionedThrougputExceeded 예외를 발생시킬 가능성이 있습니다. 이는 옵션 C도 어느 시점에서 실패하는 이유와 거의 비슷합니다. 그러나 SNS를 사용할 수도 있지만 이것이 최선의 해결책은 아닙니다. 물론 옵션 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,12 +483,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 27일 목요일 03:17">
-			3주, 3일 전
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Lambda 크기를 조정하기 위해 실패 이벤트에서 대상을 설정하기 위한 최소한의 노력</div>
+<div class="comment-content">Lambda 크기를 조정하기 위해 실패 이벤트에 대한 대상을 설정하는 데 최소한의 노력</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,8 +528,8 @@
 				AWSdeveloper08
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 12:49">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 12:49">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,16 +571,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				LSDemian
+				LS데미안
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 20:58">
+<span class="comment-date align-middle" title="2023년 7월 18일 화 20:58">
 			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 가장 간단한 솔루션입니다. .html#invocation-async-destinations</div>
+<div class="comment-content">A는 가장 간단한 솔루션입니다 https://aws.amazon.com/ru/blogs/compute/introducing-aws-lambda-destinations/ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async .html#invocation-async-destinations</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -570,11 +613,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 30일 일 11:25">
-			2주, 6일 전
+			3주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">귀하의 설명이 정확해 보입니다. Lambda "Denstination"이 이에 대한 정확한 해결책으로 보입니다. 성공, 실패 사례를 처리하는 방법을 설명합니다.</div>
+<div class="comment-content">당신의 설명이 맞는 것 같습니다. Lambda "Denstination"은 이에 대한 정확한 해결책인 것 같습니다. 성공, 실패 사례를 처리하는 방법을 설명합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -583,7 +626,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,12 +665,12 @@
 				umer1998
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 18:27">
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 18:27">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동시에 수천/수백만 개의 요청이 있는 경우 확장성을 염두에 두고 있기 때문에 B에 동의합니다. 할당량 제한으로 인해 두 개의 함수(단계 함수)를 함께 계속 호출하면 람다가 실패할 수 있으며, 이로 인해 다른 함수가 조절 문제를 일으킬 수 있습니다. 메시지를 SQS에 전달하면 기능이 조절과 관련된 문제에 직면하지 않습니다. 그리고 그 질문은 우리에게 최소한의 개발 노력을 요구하기 때문입니다. 관심사를 분리하면 개발이 더 쉬워집니다.</div>
+<div class="comment-content">동시에 수천/수백만 개의 요청이 있을 경우 확장성을 고려하고 있기 때문에 B의 의견에 동의합니다. 할당량 제한으로 인해 두 함수(단계 함수)를 함께 지속적으로 호출하면 람다가 실패할 수 있으며, 이로 인해 다른 함수에서 조절 문제가 발생할 수 있습니다. 메시지를 SQS에 전달하면 우리 함수는 제한으로 인해 이 문제에 직면하지 않습니다. 그리고 그 질문은 우리에게 최소한의 개발 노력을 요구하기 때문입니다. 관심사를 분리하면 개발이 더 쉬워집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,15 +707,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Scherbakov마이크
+				셰르바코프마이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수 16:36">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수요일 16:36">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS 또는 SNS는 'DeadLetterConfig'에서 'TargetArn'으로 할당할 수 있습니다. 제 생각에는 D 변형이 더 적절하다고 생각합니다. 시간 초과(이미지가 너무 큼)의 경우 SNS 및 구독 중인 크기 조정 기능에 대한 푸시가 있을 것입니다. 구독한 크기 조정 기능은 크기 조정된 이미지를 S3에 쓰고 원본 Lambda 함수는 크기 조정된 이미지를 다시 처리합니다.</div>
+<div class="comment-content">SQS 또는 SNS는 'DeadLetterConfig'에서 'TargetArn'으로 할당될 수 있습니다. 내 생각에는 D 변형이 더 적절하다고 생각합니다. 시간 초과(이미지가 너무 큼)의 경우 SNS 및 구독된 크기 조정 기능으로 푸시됩니다. 구독된 크기 조정 함수는 크기가 조정된 이미지를 S3에 기록하고 원래 Lambda 함수는 크기가 조정된 이미지를 다시 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -712,13 +755,13 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 21일 일 13:31">
+<span class="comment-date align-middle" title="2023년 5월 21일 일요일 13:31">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 제 생각에는 최선의 선택입니다. 저는 Nagendhar와 junrun3 설명에 동의하며 SQS를 사용한 분리가 모범 사례이기 때문에 AWS의 모범 사례를 따르는 것을 의미하는 최소한의 개발 노력으로 ...라고 말할 때 생각합니다.</div>
+<div class="comment-content">제 생각에는 B가 최선의 선택입니다. 저는 Nagendhar 및 junrun3의 설명에 동의하며 SQS를 사용한 분리가 모범 사례이기 때문에 AWS의 모범 사례를 따르는 것을 의미하는 최소한의 개발 노력으로 그들이 말할 때 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -764,7 +807,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">질문의 핵심은 "최소한의 개발 노력"이며, 이는 단계 기능을 선택해야 함을 나타냅니다.</div>
+<div class="comment-content">질문의 핵심은 "최소 개발 노력"입니다. 이는 단계 기능을 선택해야 함을 나타냅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,12 +847,12 @@
 				나겐다르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 04:27">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 04:27">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: B 옵션 B에는 Amazon SQS 대기열을 생성하고 SQS 대기열을 아바타 생성기 Lambda 함수에 대한 실패 조건이 있는 대상으로 설정하는 작업이 포함됩니다. 그러면 이미지 크기 조정 Lambda 함수가 SQS 대기열에서 폴링하도록 구성됩니다. 이 접근 방식은 시간 초과 시 이미지 크기 조정 Lambda 함수가 호출되도록 하며 SQS 대기열을 사용하는 것이 서비스 분리를 ​​위한 일반적인 패턴입니다. 이 접근 방식은 SQS 대기열을 설정하고 이를 사용하도록 Lambda 함수를 구성하는 작업이 포함되기 때문에 최소한의 개발 노력이 필요합니다. 이는 간단한 프로세스입니다.</div>
+<div class="comment-content">답변: B 옵션 B에는 Amazon SQS 대기열을 생성하고 SQS 대기열을 아바타 생성기 Lambda 함수에 대한 실패 조건이 있는 대상으로 설정하는 작업이 포함됩니다. 그런 다음 이미지 크기 조정 Lambda 함수가 SQS 대기열에서 폴링하도록 구성됩니다. 이 접근 방식을 사용하면 시간 초과 시 이미지 크기 조정 Lambda 함수가 호출되며 SQS 대기열을 사용하는 것이 서비스 분리를 ​​위한 일반적인 패턴입니다. 이 접근 방식에는 SQS 대기열을 설정하고 이를 사용하도록 Lambda 함수를 구성하는 간단한 프로세스가 포함되므로 최소한의 개발 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -849,13 +892,13 @@
 				준룬3
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 13일 (토) 22:40">
+<span class="comment-date align-middle" title="2023년 5월 13일 토요일 22:40">
 			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B의 경우 SQS 대기열을 사용하여 아바타 생성기 Lambda 함수에 대한 실패 조건이 포함된 메시지를 보낼 수 있습니다. 그런 다음 SQS 대기열을 폴링하도록 이미지 크기 조정 Lambda 함수를 구성할 수 있습니다. 이렇게 하면 이미지 크기 조정 Lambda 함수가 필요에 따라 재시도되어 비용이 절감됩니다.</div>
+<div class="comment-content">B의 경우 SQS 대기열을 사용하여 아바타 생성기 Lambda 함수에 대한 실패 조건이 포함된 메시지를 보낼 수 있습니다. 그런 다음 SQS 대기열을 폴링하도록 이미지 크기 조정 Lambda 함수를 구성할 수 있습니다. 이렇게 하면 필요에 따라 이미지 크기 조정 Lambda 함수가 다시 시도되어 비용이 절감됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -864,7 +907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -895,13 +938,13 @@
 				Rpod
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 15:31">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 15:31">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Chatgpt는 A라고 말합니다.</div>
+<div class="comment-content">Chatgpt가 A라고 말함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -910,7 +953,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -933,12 +976,12 @@
 				이헤브초르피
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 09:11">
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 09:11">
 			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 말은 B</div>
+<div class="comment-content">내 건 B라고 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -947,7 +990,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -983,7 +1026,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 18일 화요일 14:58">
@@ -992,7 +1035,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 처리에 실패한 이벤트에 대한 아바타 생성기 Lambda 함수의 대상으로 이미지 크기 조정 Lambda 함수를 설정합니다. 이를 통해 개발자는 최소한의 개발 노력으로 프로필 사진의 크기를 조정하는 다른 Lambda 함수를 사용하여 폴백 메커니즘을 구현할 수 있습니다.</div>
+<div class="comment-content">A. 이미지 크기 조정 Lambda 함수를 처리에 실패한 이벤트에 대한 아바타 생성기 Lambda 함수의 대상으로 설정합니다. 이를 통해 개발자는 최소한의 개발 노력으로 프로필 사진의 크기를 조정하는 다른 Lambda 함수를 사용하여 폴백 메커니즘을 구현할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1033,12 +1076,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 24일 금요일 12:30">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">SQS를 사용하려고 생각했는데 DLQ로 갈 수 있습니다.</div>
+<div class="comment-content">SQS를 사용하려고 생각했는데 DLQ로 이동할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1102,7 +1145,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 24 Mar 2023 03:27">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1151,7 +1194,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 03:55">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1202,7 +1245,7 @@ https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.htm
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 12:39">
-			15 hours, 31 minutes ago
+			3 days, 1 hour ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1249,7 +1292,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 11 Aug 2023 00:52">
-			1 week, 2 days ago
+			1 week, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1300,7 +1343,7 @@ Definitely Option B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Jul 2023 03:17">
-			3 weeks, 3 days ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1346,7 +1389,7 @@ Definitely Option B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 12:49">
-			4 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1432,7 +1475,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Jul 2023 11:25">
-			2 weeks, 6 days ago
+			3 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1535,7 +1578,7 @@ Separation of concerns will make development easier.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 16:36">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1673,7 +1716,7 @@ I think, D variant is more appropriate: in case of timeout (image is too large),
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 04:27">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1903,7 +1946,7 @@ Option B involves creating an Amazon SQS queue and setting the SQS queue as a de
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Mar 2023 12:30">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

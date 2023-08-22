@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 111 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 111 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 111 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882555">
 <p class="card-text">
 							
-								회사에는 AWS에서 실행되는 이미지 스토리지 웹 애플리케이션이 있습니다. 회사는 Auto Scaling 그룹의 Amazon EC2 인스턴스에서 애플리케이션을 호스팅합니다. Auto Scaling 그룹은 ALB(Application Load Balancer)의 대상 그룹 역할을 하며 Amazon S3 버킷을 사용하여 판매용 이미지를 저장합니다. <br/><br/>회사는 시스템 요청을 테스트하는 기능을 개발하려고 합니다. 이 기능은 애플리케이션의 새 베타 버전을 호스팅하는 별도의 대상 그룹으로 요청을 보냅니다. <br/><br/>최소한의 노력으로 이 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사에는 AWS에서 실행되는 이미지 스토리지 웹 애플리케이션이 있습니다. 회사는 Auto Scaling 그룹의 Amazon EC2 인스턴스에서 애플리케이션을 호스팅합니다. Auto Scaling 그룹은 ALB(Application Load Balancer)의 대상 그룹 역할을 하며 Amazon S3 버킷을 사용하여 판매용 이미지를 저장합니다. <br/><br/>회사는 시스템 요청을 테스트하는 기능을 개발하려고 합니다. 이 기능은 애플리케이션의 새로운 베타 버전을 호스팅하는 별도의 대상 그룹으로 요청을 보냅니다. <br/><br/>최소한의 노력으로 이 요구 사항을 충족할 수 있는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											애플리케이션의 베타 버전에 대한 새 Auto Scaling 그룹 및 대상 그룹을 생성합니다. 값이 beta인 version이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트합니다. 이 쿠키를 사용하여 애플리케이션의 베타 버전을 테스트하도록 테스트 시스템 코드를 업데이트하십시오.
+											베타 버전의 애플리케이션에 대한 새로운 Auto Scaling 그룹과 대상 그룹을 생성합니다. beta 값을 갖는 version이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트합니다. 이 쿠키를 사용하여 애플리케이션의 베타 버전을 테스트하려면 테스트 시스템 코드를 업데이트하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											애플리케이션의 베타 버전에 대한 새 ALB, Auto Scaling 그룹 및 대상 그룹을 생성합니다. 새 ALB 엔드포인트에 대한 대체 Amazon Route 53 레코드를 구성합니다. 테스트 시스템 요청에서 대체 Route 53 엔드포인트를 사용하여 애플리케이션의 베타 버전을 테스트합니다.
+											애플리케이션 베타 버전에 대한 새 ALB, Auto Scaling 그룹 및 대상 그룹을 생성합니다. 새 ALB 엔드포인트에 대한 대체 Amazon Route 53 레코드를 구성합니다. 테스트 시스템 요청에 대체 Route 53 엔드포인트를 사용하여 애플리케이션의 베타 버전을 테스트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											애플리케이션의 베타 버전에 대한 새 Auto Scaling 그룹 및 대상 그룹을 생성합니다. 값이 beta인 version이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트합니다. Lambda@Edge와 함께 Amazon CloudFront를 사용하여 요청이 ALB로 이동할 때 필요한 쿠키를 추가하도록 테스트 시스템 요청을 업데이트합니다.
+											베타 버전의 애플리케이션에 대한 새로운 Auto Scaling 그룹과 대상 그룹을 생성합니다. beta 값을 갖는 version이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트합니다. 요청이 ALB로 이동할 때 필요한 쿠키를 추가하도록 Lambda@Edge와 함께 Amazon CloudFront를 사용하여 테스트 시스템 요청을 업데이트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 56%; display: flex;" title="">A (56%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">B (44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 56%; display: flex;" title="">A (56%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">B (44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 4 월 <i>
-							22일, 오후 8:49 </i><a class="title-username" style="">
-								MrTee
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 22, 2023, 8:49 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 20:49">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 20:49">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 솔루션을 통해 회사는 새로운 ALB를 생성하거나 Amazon Route 53 또는 Amazon CloudFront와 같은 추가 서비스를 사용하지 않고도 애플리케이션의 새로운 베타 버전을 호스팅하는 별도의 대상 그룹으로 요청을 보낼 수 있습니다. 옵션 D는 옵션 A에 비해 복잡성과 노력이 더 추가됩니다. ALB 라우팅 규칙은 베타 값이 있는 버전이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트하고 이 쿠키를 사용하여 베타를 테스트하도록 테스트 시스템 코드를 업데이트합니다. 응용 프로그램의 버전.</div>
+<div class="comment-content">이 솔루션을 사용하면 회사는 새 ALB를 생성하거나 Amazon Route 53 또는 Amazon CloudFront와 같은 추가 서비스를 사용할 필요 없이 애플리케이션의 새 베타 버전을 호스팅하는 별도의 대상 그룹으로 요청을 전달할 수 있습니다. 옵션 D는 옵션 A에 비해 복잡성과 노력을 더 추가합니다. 이는 단순히 베타 값을 갖는 버전이라는 쿠키를 찾는 조건으로 ALB 라우팅 규칙을 업데이트하고 이 쿠키를 사용하여 베타를 테스트하도록 테스트 시스템 코드를 업데이트하는 작업을 포함합니다. 응용 프로그램의 버전입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -295,19 +338,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				백프린지
+				뒷줄
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 31일 (월) 03:39">
-			2주, 6일 전
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">옵션 B는 애플리케이션의 베타 버전을 테스트하기 위한 가장 간단하고 노력이 덜 드는 솔루션을 제공합니다. 베타 버전에 대한 신규 ALB, Auto Scaling 그룹, 대상 그룹을 생성함으로써 회사는 프로덕션 버전과 별도로 새 버전의 애플리케이션을 배포할 수 있습니다. 새 ALB 엔드포인트에 대한 대체 Amazon Route 53 레코드를 구성하면 테스트 시스템 요청을 베타 버전으로 보낼 수 있습니다.</div>
+<div class="comment-content">옵션 B는 애플리케이션의 베타 버전을 테스트하기 위한 가장 간단하고 최소한의 노력을 기울이는 솔루션을 제공합니다. 베타 버전에 대한 새로운 ALB, Auto Scaling 그룹, 대상 그룹을 생성함으로써 회사는 프로덕션 버전과 별도로 애플리케이션의 새 버전을 배포할 수 있습니다. 새로운 ALB 엔드포인트에 대한 대체 Amazon Route 53 레코드를 구성하면 테스트 시스템 요청이 베타 버전으로 전달될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -347,13 +390,13 @@
 				에보엠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 06:12">
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 06:12">
 			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">코드를 업데이트하는 것이 새 경로 항목을 만드는 것보다 노동 집약적이기 때문에 B도 함께 가겠습니다.</div>
+<div class="comment-content">코드를 업데이트하는 것이 새로운 경로 항목을 만드는 것보다 훨씬 더 노동 집약적이기 때문에 B도 함께 갈 예정입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -390,16 +433,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예아쿠즈
+				응
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 16일 화요일 17:17">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 최소한의 노력입니다. 옵션 B를 사용하면 새 ALB *및* 새 Route 53 레코드를 추가로 생성해야 합니다. 옵션 A를 사용하면 HTTP 헤더(https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-update-rules.html)를 기반으로 새 리스너를 생성할 수 있으며 요구 사항을 충족합니다. 옵션 A가 포함된 새 Auto Scaling 그룹 및 대상 그룹도 필요하지만 옵션 B도 필요하므로 옵션 A가 가장 적은 노력을 기울입니다.</div>
+<div class="comment-content">옵션 A는 최소한의 노력입니다. 옵션 B를 사용하면 새 ALB *및* 새 Route 53 레코드도 추가로 생성해야 합니다. 옵션 A를 사용하면 HTTP 헤더(https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-update-rules.html)를 기반으로 새 리스너를 생성할 수 있으며 이는 요구 사항을 충족합니다. 또한 옵션 A를 사용하는 새로운 Auto Scaling 그룹 및 대상 그룹이 필요합니다. 그러나 옵션 B에도 이 그룹이 필요하므로 옵션 A가 가장 적은 노력입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -445,7 +488,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">문제는 "최소한의 노력으로 이 요구 사항을 충족하는 솔루션은 무엇입니까?"입니다. 문제는 최소한의 노력으로 이 요구 사항을 충족하는 솔루션은 무엇입니까? 대답은 B입니다. A는 ALB 라우팅 규칙을 업데이트해야 하고 테스트 시스템 코드를 업데이트해야 하기 때문에 구현하는 데 더 많은 노동 집약적입니다.</div>
+<div class="comment-content">문제는 "최소한의 노력으로 이 요구 사항을 충족하는 솔루션은 무엇입니까?"입니다. 문제는 어떤 솔루션이 최소한의 노력으로 이 요구 사항을 충족하는가입니다. 대답은 B입니다. A는 ALB 라우팅 규칙을 업데이트해야 하고 테스트 시스템 코드를 업데이트해야 하기 때문에 구현하는 데 더 노동 집약적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -509,7 +552,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 20:49">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -559,7 +602,7 @@ Option D adds additional complexity and effort compared to option A, which simpl
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 31 Jul 2023 03:39">
-			2 weeks, 6 days ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -651,7 +694,7 @@ Option D adds additional complexity and effort compared to option A, which simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 16 May 2023 17:17">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

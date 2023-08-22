@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 6 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 질문 6 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 6 discussion</h1>
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								aragon_saa
-							</a> 
-							
-							2023 <i>
-							년 3월 16일, 오전 9:59</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								aragon_saa
-							</a>
-							
-							at <i>
-							March 16, 2023, 9:59 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -259,7 +302,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">시험에서 이 문제를 얻었습니다. 정답은 D입니다.</div>
+<div class="comment-content">시험에서 이 문제가 나왔습니다. 정답은 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -307,7 +350,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 C가 아닌 B인가? 각 AWS SDK는 재시도 논리를 자동으로 구현합니다. 이제 대부분의 AWS SDK는 재시도 동작의 일부로 지수 백오프 및 지터를 지원합니다. 그런 다음 용량을 늘리려면 D https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TroubleshootingThrottling.html C&amp;D</div>
+<div class="comment-content">왜 C 대신 B인가요? 각 AWS SDK는 재시도 로직을 자동으로 구현합니다. 대부분의 AWS SDK는 이제 재시도 동작의 일부로 지수 백오프 및 지터를 지원합니다. 그런 다음 D를 사용하여 용량을 늘립니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TroubleshootingThrottling.html C&amp;D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,7 +387,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 답변은 6번이 아닌 7번 질문에 대한 것입니다.</div>
+<div class="comment-content">이 답변은 6번이 아닌 7번 질문에 대한 답변입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -353,7 +396,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -398,7 +441,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D가 정답입니다. CloudFormation 템플릿에서 개발자는 승인된 EC2 인스턴스 유형 목록이 AllowedValues인 매개변수를 생성해야 합니다. 이렇게 하면 사용자는 CloudFormation 스택을 시작할 때 사용하려는 인스턴스 유형을 승인된 목록에서만 선택할 수 있습니다. 옵션 A는 각 EC2 인스턴스 유형에 대해 별도의 CloudFormation 템플릿을 생성해야 하므로 확장 가능한 솔루션이 아닙니다. 이는 승인된 인스턴스 유형의 수가 증가함에 따라 번거롭고 관리하기 어려울 수 있습니다. 목록의 각 EC2 인스턴스 유형에 대한 리소스를 생성하면 승인된 목록에서만 선택하라는 요구 사항이 적용되지 않으므로 옵션 B는 필요하지 않습니다. 또한 템플릿의 복잡성을 증가시키고 관리하기 어렵게 만듭니다. 옵션 C는 승인된 인스턴스 유형의 수가 증가함에 따라 관리하기 어려워질 수 있는 각 EC2 인스턴스 유형에 대해 별도의 매개변수를 생성해야 하므로 이상적이지 않습니다. 또한 승인된 목록에서만 선택하라는 요구 사항을 강제하지 않습니다.</div>
+<div class="comment-content">보기 D가 정답입니다. CloudFormation 템플릿에서 개발자는 승인된 EC2 인스턴스 유형 목록을 AllowedValues로 사용하여 매개변수를 생성해야 합니다. 이렇게 하면 사용자는 CloudFormation 스택을 시작할 때 사용하려는 인스턴스 유형을 선택할 수 있지만 승인된 목록에서만 가능합니다. 옵션 A는 각 EC2 인스턴스 유형에 대해 별도의 CloudFormation 템플릿을 생성해야 하므로 확장 가능한 솔루션이 아닙니다. 이는 승인된 인스턴스 유형의 수가 늘어남에 따라 관리가 번거롭고 어려워질 수 있습니다. 목록의 각 EC2 인스턴스 유형에 대한 리소스를 생성하면 승인된 목록에서만 선택하라는 요구 사항이 적용되지 않으므로 옵션 B는 필요하지 않습니다. 또한 템플릿의 복잡성이 증가하고 관리가 어려워집니다. 옵션 C는 각 EC2 인스턴스 유형에 대해 별도의 매개변수를 생성해야 하기 때문에 이상적이지 않습니다. 승인된 인스턴스 유형의 수가 늘어남에 따라 관리가 어려워질 수 있습니다. 또한 승인된 목록에서만 선택하라는 요구 사항을 적용하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -431,11 +474,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 03:49">
-			2주, 2일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아주 명확한 설명!!!</div>
+<div class="comment-content">아주 명확한 설명 !!!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -489,7 +532,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞는 것 같다</div>
+<div class="comment-content">D가 딱 맞는 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,7 +569,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프라바이786
+				prabhay786
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 11:34">
@@ -534,7 +577,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D여야 합니다.</div>
+<div class="comment-content">D여야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,7 +618,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 16일 목요일 09:59">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -827,7 +870,7 @@ Option C is not ideal as it would require creating a separate parameter for each
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 03:49">
-			2 weeks, 2 days ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -971,7 +1014,7 @@ Option C is not ideal as it would require creating a separate parameter for each
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 09:59">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

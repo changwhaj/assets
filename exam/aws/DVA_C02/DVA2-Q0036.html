@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 36 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 36 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 36 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874608">
 <p class="card-text">
 							
-								개발 팀은 단일 AWS CloudFormation 템플릿을 사용하여 웹 애플리케이션을 유지 관리합니다. 템플릿은 웹 서버와 Amazon RDS 데이터베이스를 정의합니다. 팀은 Cloud Formation 템플릿을 사용하여 Cloud Formation 스택을 다른 환경에 배포합니다. <br/>최근 애플리케이션 배포 중에 개발자가 기본 개발 데이터베이스를 삭제하고 다시 생성했습니다. 이 사건의 결과는 데이터 손실이었습니다. 팀은 나중에 우발적인 데이터베이스 삭제를 방지해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까? (두 가지를 선택하세요.)
+								개발 팀은 단일 AWS CloudFormation 템플릿을 사용하여 웹 애플리케이션을 유지 관리합니다. 템플릿은 웹 서버와 Amazon RDS 데이터베이스를 정의합니다. 팀은 Cloud Formation 템플릿을 사용하여 Cloud Formation 스택을 다양한 환경에 배포합니다. <br/>최근 애플리케이션 배포 중에 개발자가 기본 개발 데이터베이스를 삭제하고 다시 생성했습니다. 이 사건의 결과는 데이터 손실이었습니다. 팀은 앞으로 실수로 데이터베이스가 삭제되는 것을 방지해야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족합니까? (두 가지를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											유지 값이 있는 CloudFormation 삭제 정책 속성을 데이터베이스 리소스에 추가합니다.
+											Retain 값을 사용하여 CloudFormation 삭제 정책 속성을 데이터베이스 리소스에 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,36 +180,26 @@
 													E.
 												</span> 
 											
-											Retain 값이 있는 Cloud Formation DeletionPolicy 속성을 스택에 추가합니다.
+											Retain 값을 사용하여 Cloud Formation DeletionPolicy 속성을 스택에 추가합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
-<span class="correct-answer">AD </span>
+<span class="correct-answer">광고 </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">AB(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">AB (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 3월 21일, 오후 10:35</i> 
-							
-							의 <a class="title-username" style="">
-								svrnvtr
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -229,16 +282,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								svrnvtr
-							</a>
-							
-							at <i>
-							March 21, 2023, 10:35 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -272,7 +315,7 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 22:35">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 22:35">
 			5 개월 전
 		</span>
 </div>
@@ -321,8 +364,8 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 16일 일 10:01">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 16일 일요일 10:01">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -336,7 +379,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -367,12 +410,12 @@
 				Mtho96
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 18:45">
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 18:45">
 			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. Retain 값이 있는 CloudFormation 삭제 정책 속성을 데이터베이스 리소스에 추가: Retain 값이 있는 DeletionPolicy 속성을 CloudFormation 템플릿의 데이터베이스 리소스에 추가하면 CloudFormation 스택이 삭제되더라도 데이터베이스가 삭제되지 않습니다. 이는 스택 삭제 중에 우발적인 데이터베이스 손실을 방지하는 데 도움이 됩니다. B. CloudFormation 스택 정책을 업데이트하여 데이터베이스 업데이트 방지: 개발 팀은 CloudFormation 스택 정책을 업데이트하여 데이터베이스 리소스에 대한 업데이트를 제한할 수 있습니다. 이렇게 하면 스택 업데이트 중에 데이터베이스가 실수로 수정되거나 다시 생성되는 것을 방지할 수 있습니다. 스택 정책은 허용되거나 거부되는 특정 작업을 정의하여 의도하지 않은 데이터베이스 변경에 대한 추가 보호 계층을 제공할 수 있습니다.</div>
+<div class="comment-content">A. Retain 값이 있는 CloudFormation 삭제 정책 속성을 데이터베이스 리소스에 추가합니다. CloudFormation 템플릿의 데이터베이스 리소스에 Retain 값이 있는 DeletionPolicy 속성을 추가하면 CloudFormation 스택이 삭제되더라도 데이터베이스가 삭제되지 않습니다. 이는 스택 삭제 중에 우발적인 데이터베이스 손실을 방지하는 데 도움이 됩니다. B. CloudFormation 스택 정책을 업데이트하여 데이터베이스 업데이트를 방지합니다. CloudFormation 스택 정책을 업데이트하여 개발 팀은 데이터베이스 리소스에 대한 업데이트를 제한할 수 있습니다. 이렇게 하면 스택 업데이트 중에 데이터베이스가 실수로 수정되거나 재생성되는 것을 방지할 수 있습니다. 스택 정책은 허용 또는 거부되는 특정 작업을 정의하여 의도하지 않은 데이터베이스 변경에 대한 추가 보호 계층을 제공할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -412,12 +455,12 @@
 				마블21
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 11일 일 05:06">
+<span class="comment-date align-middle" title="2023년 6월 11일 일요일 05:06">
 			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A&amp;B 정답</div>
+<div class="comment-content">A &amp; B 정답</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -426,7 +469,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -457,7 +500,7 @@
 				s50600822
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 6일 화요일 03:38">
+<span class="comment-date align-middle" title="2023년 6월 6일 (화) 03:38">
 			2개월, 2주 전
 		</span>
 </div>
@@ -471,7 +514,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -499,15 +542,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				일본조트
+				재팬조트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 3일 수요일 12:17">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AB 정확</div>
+<div class="comment-content">AB 맞음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -516,7 +559,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -547,13 +590,13 @@
 				이헤브초르피
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 07:15">
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 07:15">
 			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">D는 실수로 DB를 삭제하는 것을 방지하지 못하기 때문에 잘못되었습니다.</div>
+<div class="comment-content">D는 실수로 DB를 삭제하는 것을 방지하지 못하기 때문에 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -562,7 +605,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -585,12 +628,12 @@
 				이헤브초르피
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 07:17">
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 07:17">
 			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">고민 끝에 A&amp;D 조합이 정답이니 AD로 가겠습니다.</div>
+<div class="comment-content">좀 더 생각해보면 A와 D를 합치는 것이 정답이므로 AD로 가겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -599,7 +642,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -638,13 +681,13 @@
 				길들일 수 없는 것
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 01:49">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 01:49">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">A 및 B https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack- resources.html</div>
+<div class="comment-content">A 및 B https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack- 리소스.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -653,7 +696,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -685,12 +728,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 18:55">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">동의합니다 AB</div>
+<div class="comment-content">나는 그것이 AB라는 것에 동의한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -804,7 +847,7 @@ https://aws.amazon.com/ru/premiumsupport/knowledge-center/cloudformation-acciden
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 16 Jul 2023 10:01">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -987,7 +1030,7 @@ B. Update the CloudFormation stack policy to prevent updates to the database: By
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 03 May 2023 12:17">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1123,7 +1166,7 @@ B. Update the CloudFormation stack policy to prevent updates to the database: By
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 01:49">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1171,7 +1214,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-res
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 18:55">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

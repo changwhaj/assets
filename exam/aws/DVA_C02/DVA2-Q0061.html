@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 1문제 61토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 문제 61 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 61 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874633">
 <p class="card-text">
 							
-								한 회사가 AWS에서 웹 애플리케이션을 구축하고 있습니다. 고객이 요청을 보내면 애플리케이션이 보고서를 생성한 다음 1시간 이내에 고객이 보고서를 사용할 수 있도록 합니다. 보고서는 고객이 8시간 동안 액세스할 수 있어야 합니다. 일부 보고서는 1MB보다 큽니다. 각 보고서는 고객에게 고유합니다. 애플리케이션은 2일보다 오래된 모든 보고서를 삭제해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 AWS에서 웹 애플리케이션을 구축하고 있습니다. 고객이 요청을 보내면 애플리케이션은 보고서를 생성한 다음 1시간 이내에 고객이 보고서를 사용할 수 있도록 합니다. 보고서는 고객이 8시간 동안 액세스할 수 있어야 합니다. 일부 보고서는 1MB보다 큽니다. 각 보고서는 고객별로 고유합니다. 애플리케이션은 2일보다 오래된 모든 보고서를 삭제해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											보고서를 생성한 다음 서버 측 암호화를 사용하는 Amazon S3 버킷에 보고서를 저장합니다. 보고서를 Amazon Simple Notification Service(Amazon SNS) 메시지에 첨부합니다. 고객에게 Amazon SNS의 이메일 알림을 구독합니다.
+											보고서를 생성한 다음 서버 측 암호화를 사용하는 Amazon S3 버킷에 보고서를 저장합니다. Amazon Simple 알림 서비스(Amazon SNS) 메시지에 보고서를 첨부합니다. 고객이 Amazon SNS의 이메일 알림을 구독하도록 하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											보고서를 생성한 다음 서버 측 암호화를 사용하는 Amazon S3 버킷에 보고서를 저장합니다. 만료 날짜가 포함된 미리 서명된 URL을 생성합니다. 웹 애플리케이션을 통해 고객에게 URL을 제공합니다. 오래된 보고서를 삭제하려면 S3 버킷에 S3 수명 주기 구성 규칙을 추가하십시오.
+											보고서를 생성한 다음 서버 측 암호화를 사용하는 Amazon S3 버킷에 보고서를 저장합니다. 만료일이 포함된 미리 서명된 URL을 생성합니다. 웹 애플리케이션을 통해 고객에게 URL을 제공합니다. 오래된 보고서를 삭제하려면 S3 버킷에 S3 수명 주기 구성 규칙을 추가하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											보고서를 생성한 다음 날짜 스탬프가 있는 Amazon RDS 데이터베이스에 보고서를 저장합니다. RDS 데이터베이스에서 보고서를 검색하는 URL을 생성합니다. 웹 애플리케이션을 통해 고객에게 URL을 제공합니다. 날짜 스탬프가 만료된 데이터베이스 레코드를 삭제하도록 매시간 AWS Lambda 함수를 예약합니다.
+											보고서를 생성한 다음 날짜 스탬프와 함께 Amazon RDS 데이터베이스에 보고서를 저장합니다. RDS 데이터베이스에서 보고서를 검색하는 URL을 생성합니다. 웹 애플리케이션을 통해 고객에게 URL을 제공합니다. 날짜 스탬프가 만료된 데이터베이스 레코드를 삭제하도록 시간별 AWS Lambda 함수를 예약합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								2023년
-							</a> 
-							
-							3 <i>
-							월 25일, 오후 11:52</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								March2023
-							</a>
-							
-							at <i>
-							March 25, 2023, 11:52 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -254,8 +297,8 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 23:52">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 23:52">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -269,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -303,12 +346,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 14:03">
-			14시간 8분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 14:03">
+			3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A) DynamoDB는 400K보다 큰 객체를 저장할 수 없습니다. B) SNS는 첨부 파일이 있는 이메일을 보낼 수 없습니다. 그러나 RDS는 큰 문서 파일을 저장하기에 좋은 장소처럼 보이지 않습니다. 또한 RDS 데이터베이스에서 보고서에 대한 URL을 생성하려면 S3의 기본 기능인 동안 약간의 작업이 필요합니다. 개체 만료를 허용하는 관리 규칙</div>
+<div class="comment-content">A) DynamoDB는 400K보다 큰 객체를 저장할 수 없습니다. B) SNS는 첨부 파일이 포함된 이메일을 보낼 수 없습니다 - https://repost.aws/questions/QUOvaKJVb3QzOqVENONBZUag/sns-send-file-attachment D) 보고서의 성격이나 형식이 지정되지 않았습니다. 그러나 RDS는 대용량 문서 파일을 저장하기에 좋은 장소처럼 보이지 않습니다. 또한 RDS 데이터베이스에서 보고서에 대한 URL을 생성하려면 S3의 기본 기능인 동안 약간의 작업이 필요합니다. C)는 S3가 파일 객체를 저장하도록 설계되었기 때문에 실행 가능한 솔루션이며, 미리 서명된 URL을 쉽게 생성하고 수명 주기를 제공할 수 있습니다. 객체 만료를 허용하는 관리 규칙</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -317,7 +360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,13 +391,13 @@
 				imvb88
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일 수 19:43">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 19:43">
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Dynamo DB는 객체 &gt; 400KB를 저장할 수 없습니다. -&gt; 옵션 A가 즉시 종료됩니다. 옵션 C인 미리 서명된 URL에 대한 S3 호출에 대한 제한된 액세스. C는 또한 오래된 객체를 삭제하는 수명 주기 구성이 있지만 B에는 없습니다. D는 가능하지만 C의 디자인 패턴에 비해 너무 많은 노력이 필요합니다.</div>
+<div class="comment-content">Dynamo DB는 400KB 이상의 객체를 저장할 수 없습니다. -&gt; 옵션 A가 즉시 종료됩니다. 옵션 C인 미리 서명된 URL에 대한 S3 호출에 대한 제한된 액세스. C에는 이전 객체를 삭제하는 수명 주기 구성도 있지만 B에는 없습니다. D는 가능하지만 C의 디자인 패턴에 비해 너무 많은 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,13 +437,13 @@
 				gpt_test
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 01:44">
+<span class="comment-date align-middle" title="2023년 4월 4일 화 01:44">
 			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">설명: Amazon S3 버킷에 보고서를 저장하면 1MB보다 큰 파일을 처리하기 위한 비용 효율적이고 확장 가능한 솔루션을 제공합니다. 서버 측 암호화는 데이터 보안을 보장합니다. 만료 날짜가 있는 미리 서명된 URL을 생성하면 고객이 8시간 동안 보고서에 액세스할 수 있으며 S3 수명 주기 구성 규칙은 2일보다 오래된 보고서를 자동으로 삭제하여 운영 오버헤드를 줄입니다.</div>
+<div class="comment-content">설명: Amazon S3 버킷에 보고서를 저장하면 1MB보다 큰 파일을 처리하기 위한 비용 효율적이고 확장 가능한 솔루션이 제공됩니다. 서버 측 암호화는 데이터 보안을 보장합니다. 만료 날짜가 포함된 미리 서명된 URL을 생성하면 고객은 8시간 동안 보고서에 액세스할 수 있으며, S3 수명 주기 구성 규칙은 2일보다 오래된 보고서를 자동으로 삭제하여 운영 오버헤드를 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -441,7 +484,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 02:10">
-			4개월, 3주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -510,7 +553,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 23:52">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -559,7 +602,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 14:03">
-			14 hours, 8 minutes ago
+			3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -608,7 +651,7 @@ C) is a workable solution as S3 is designed to store file objects, it allows to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 19:43">
-			2 months, 3 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -702,7 +745,7 @@ D is possible but too much effort compared to design pattern in C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 02:10">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

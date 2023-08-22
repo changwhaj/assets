@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 31 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 31 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 31 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874603">
 <p class="card-text">
 							
-								개발자에게는 Amazon S3 버킷에 데이터를 저장하는 애플리케이션이 있습니다. 애플리케이션은 HTTP API를 사용하여 개체를 저장하고 검색합니다. PutObject API 작업이 객체를 S3 버킷에 추가할 때 개발자는 Amazon S3 관리형 키(SSE-S3)로 서버 측 암호화를 사용하여 유휴 객체를 암호화해야 합니다. <br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 Amazon S3 버킷에 데이터를 저장하는 애플리케이션을 가지고 있습니다. 애플리케이션은 HTTP API를 사용하여 객체를 저장하고 검색합니다. PutObject API 작업이 S3 버킷에 객체를 추가할 때 개발자는 Amazon S3 관리형 키(SSE-S3)를 사용한 서버 측 암호화를 사용하여 이러한 저장 객체를 암호화해야 합니다. <br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -127,16 +190,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 3월 21일, 오후 10:20</i> 
-							
-							의 <a class="title-username" style="">
-								svrnvtr
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								svrnvtr
-							</a>
-							
-							at <i>
-							March 21, 2023, 10:20 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,7 +295,7 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 22:20">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 22:20">
 			5 개월 전
 		</span>
 </div>
@@ -295,13 +338,13 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				LSDemian
+				LS데미안
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 16일 일 23:19">
+<span class="comment-date align-middle" title="2023년 7월 16일 일요일 23:19">
 			1 개월 전
 		</span>
 </div>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,16 +387,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				땃땃땨
+				TTTTTTTTAM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 15일 (토) 07:45">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 15일 토요일 07:45">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">C는 S3 관리 키가 아닌 고객 제공 키를 사용하는 방법입니다.</div>
+<div class="comment-content">C는 S3 관리형 키가 아닌 고객 제공 키를 사용하는 방법입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,13 +436,13 @@
 				CisconAWSGURU
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 18:25">
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 18:25">
 			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 정확하고 듣기는 AWS 문서의 이유입니다. ACM의 리전 가용성을 확인하려면 AWS General Reference 또는 AWS 리전 표에서 AWS 리전 및 엔드포인트를 방문하십시오. ACM의 인증서는 리전 리소스입니다. 둘 이상의 AWS 리전에서 동일한 FQDN(정규화된 도메인 이름) 또는 FQDN 세트에 대해 Elastic Load Balancing과 함께 인증서를 사용하려면 각 리전에 대한 인증서를 요청하거나 가져와야 합니다. ACM에서 제공하는 인증서의 경우 이는 각 지역에 대한 인증서의 각 도메인 이름을 재검증해야 함을 의미합니다. 지역 간에는 인증서를 복사할 수 없습니다. Amazon CloudFront에서 ACM 인증서를 사용하려면 미국 동부(버지니아 북부) 리전에서 인증서를 요청하거나 가져와야 합니다.</div>
+<div class="comment-content">C가 정확하고 AWS 문서의 이유를 들었습니다. ACM의 지역별 가용성을 확인하려면 AWS General Reference 또는 AWS 지역 표에서 AWS 지역 및 엔드포인트를 방문하십시오. ACM의 인증서는 지역 리소스입니다. 둘 이상의 AWS 리전에서 동일한 FQDN(정규화된 도메인 이름) 또는 FQDN 집합에 대해 Elastic Load Balancing과 함께 인증서를 사용하려면 각 리전에 대한 인증서를 요청하거나 가져와야 합니다. ACM에서 제공하는 인증서의 경우 이는 각 지역에 대한 인증서의 각 도메인 이름을 재검증해야 함을 의미합니다. 지역 간에 인증서를 복사할 수 없습니다. Amazon CloudFront에서 ACM 인증서를 사용하려면 미국 동부(버지니아 북부) 지역에서 인증서를 요청하거나 가져와야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -444,7 +487,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. PutObject API 작업을 호출할 때 x-amz-server-side-encryption 헤더를 설정합니다. PutObject API 작업을 사용하여 객체를 S3 버킷에 저장할 때 객체를 암호화하는 데 사용되는 서버 측 암호화 알고리즘을 지정하도록 x-amz-server-side-encryption 헤더를 설정할 수 있습니다. 이 헤더를 "AES256" 또는 "aws:kms"로 설정하면 각각 SSE-S3 또는 SSE-KMS로 서버 측 암호화가 활성화됩니다. S3 버킷에 KMS 키를 할당하면 SSE-S3 암호화가 활성화되지 않기 때문에 옵션 A는 올바르지 않습니다. 모든 요청의 HTTP 헤더에 암호화 키를 제공하는 것은 SSE-S3 암호화를 활성화하는 유효한 방법이 아니기 때문에 옵션 C는 올바르지 않습니다. S3 버킷에 대한 트래픽에 TLS 암호화를 적용하면 전송 중인 데이터만 암호화되고 버킷에 저장된 객체는 암호화되지 않기 때문에 옵션 D는 올바르지 않습니다.</div>
+<div class="comment-content">B. PutObject API 작업을 호출할 때 x-amz-server-side-encryption 헤더를 설정합니다. PutObject API 작업을 사용하여 S3 버킷에 객체를 저장할 때 x-amz-server-side-encryption 헤더를 설정하여 객체를 암호화하는 데 사용되는 서버 측 암호화 알고리즘을 지정할 수 있습니다. 이 헤더를 "AES256" 또는 "aws:kms"로 설정하면 각각 SSE-S3 또는 SSE-KMS를 사용한 서버 측 암호화가 활성화됩니다. S3 버킷에 KMS 키를 할당하면 SSE-S3 암호화가 활성화되지 않으므로 옵션 A는 올바르지 않습니다. 모든 요청의 HTTP 헤더에 암호화 키를 제공하는 것은 SSE-S3 암호화를 활성화하는 유효한 방법이 아니기 때문에 옵션 C는 올바르지 않습니다. S3 버킷에 대한 트래픽에 TLS 암호화를 적용하면 전송 중인 데이터만 암호화되고 버킷에 저장된 객체는 암호화되지 않기 때문에 옵션 D는 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -477,7 +520,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 09:08">
-			2주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -648,7 +691,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Jul 2023 07:45">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -790,7 +833,7 @@ Option D is incorrect because applying TLS encryption to the traffic to the S3 b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 09:08">
-			2 weeks, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,8 +41,71 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882572">
 <p class="card-text">
 							
-								회사에는 AWS Elastic Beanstalk에서 프로비저닝하는 프로덕션 환경의 Elastic Load Balancer(ELB) 뒤에 있는 4개의 Amazon EC2 인스턴스에서 실행되는 프런트 엔드 애플리케이션이 있습니다. 개발자는 Elastic Beanstalk 플랫폼을 현재 버전에서 최신 버전의 Node.js로 업데이트하는 동안 새 애플리케이션 코드를 배포하고 테스트해야 합니다. 솔루션은 애플리케이션의 다운타임이 없어야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
+								회사에는 AWS Elastic Beanstalk에서 프로비저닝하는 프로덕션 환경의 Elastic Load Balancer(ELB) 뒤에 있는 4개의 Amazon EC2 인스턴스에서 실행되는 프런트 엔드 애플리케이션이 있습니다. 개발자는 Elastic Beanstalk 플랫폼을 현재 버전에서 최신 버전의 Node.js로 업데이트하는 동안 새로운 애플리케이션 코드를 배포하고 테스트해야 합니다. 솔루션은 애플리케이션의 다운타임이 없어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="882572" type="application/json">[{"voted_answers": "A", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="882572" type="application/json">[{"voted_answers": "A", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -94,14 +157,14 @@
 													B.
 												</span> 
 											
-											새 애플리케이션 코드를 기존 EC2 인스턴스에 한꺼번에 배포합니다. 코드를 테스트합니다. 확인에 실패하면 이전 코드를 재배포합니다.
+											기존 EC2 인스턴스에 대한 일괄 배포로 새 애플리케이션 코드를 배포합니다. 코드를 테스트합니다. 확인에 실패하면 이전 코드를 다시 배포하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											새 애플리케이션 코드를 새 EC2 인스턴스에 배포하기 위해 불변 업데이트를 수행합니다. 상태 확인을 통과한 후 새 인스턴스에 트래픽을 제공합니다.
+											불변 업데이트를 수행하여 새 애플리케이션 코드를 새 EC2 인스턴스에 배포합니다. 상태 확인을 통과한 후 새 인스턴스에 트래픽을 제공합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,11 +173,11 @@
 													D.
 												</span> 
 											
-											새 애플리케이션 코드에 대해 롤링 배포를 사용합니다. 테스트를 통과할 때까지 EC2 인스턴스의 하위 집합에 코드를 적용합니다. 테스트가 실패하면 이전 코드를 재배포합니다.
+											새 애플리케이션 코드에 롤링 배포를 사용합니다. 테스트가 통과할 때까지 EC2 인스턴스의 하위 집합에 코드를 적용합니다. 테스트가 실패하면 이전 코드를 다시 배포합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">A (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">A (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">씨 (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">D (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 4 <i>
-							월 23일, 오전 12:45 </i><a class="title-username" style="">
-								MrTee
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="882572" type="application/json">[{"voted_answers": "A", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="882572" type="application/json">[{"voted_answers": "A", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -207,20 +260,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">A (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">A (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">C (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">D (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 23, 2023, 12:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,14 +291,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 4월 23일 일요일 00:45">
-			3개월, 4주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -289,7 +332,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예아쿠즈
+				응
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 19일 금요일 00:51">
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -334,7 +377,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsdummie
+				으악
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 4일 목요일 22:08">
@@ -351,7 +394,101 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985802" id="comment-985802">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				나즈_64
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 20일 일요일 15:22">
+			2일 6시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
+<div class="comment-content">링크에 있는 방법 1의 4단계 스크린샷: https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platform.upgrade.html#using-features.platform.upgrade.config ". ..업데이트 중에는 애플리케이션을 사용할 수 없습니다. 업데이트 중에 하나 이상의 인스턴스를 서비스 상태로 유지하려면 롤링 업데이트를 활성화하세요."</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985812" id="comment-985812">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				나즈_64
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 20일 일요일 15:29">
+			2일 6시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">나는 이것을 다시 가져갑니다. A "그러나 새 버전을 별도의 환경에 배포하면 이러한 다운타임을 피할 수 있습니다. 기존 환경의 구성이 복사되어 새 버전의 애플리케이션으로 그린 ​​환경을 시작하는 데 사용됩니다. 새로운 그린 환경은 고유한 URL이 있습니다. 프로덕션 트래픽을 제공하기 위해 친환경 환경을 홍보해야 할 때가 되면 Elastic Beanstalk의 환경 URL 교환 기능을 사용할 수 있습니다." https://docs.aws.amazon.com/whitepapers/latest/blue-green-deployments/swap-the-environment-of-an-elastic-beanstalk-application.html</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,11 +527,8 @@
 				MG1407
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 20:12">
-			2일, 8시간 전
+			5일 1시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,7 +574,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 20:10">
-			2일, 8시간 전
+			5일 1시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -454,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -486,7 +620,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 27일 목요일 07:10">
-			3주, 2일 전
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -500,7 +634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,7 +666,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 25일 화요일 20:01">
-			3주, 4일 전
+			4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -546,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -590,15 +724,60 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985798" id="comment-985798">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				나즈_64
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 20일 일요일 15:20">
+			2일 6시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">+1 "...업데이트 중에 애플리케이션을 사용할 수 없습니다. 업데이트 중에 하나 이상의 인스턴스를 서비스 상태로 유지하려면 롤링 업데이트를 활성화하세요."</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -666,7 +845,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예아쿠즈
+				응
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 19일 금요일 00:52">
@@ -675,7 +854,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 Blue/Green 배포를 참조하며 질문의 요구 사항을 충족합니다(https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html).</div>
+<div class="comment-content">옵션 A는 블루/그린 배포를 참조하며 질문의 요구 사항을 충족합니다(https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -716,7 +895,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 17일 수 10:28">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -730,7 +909,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,7 +937,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsdummie
+				으악
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 4일 목요일 22:09">
@@ -775,7 +954,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,11 +982,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 23일 일 00:48">
-			3개월, 4주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -820,7 +999,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -857,7 +1036,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -920,7 +1099,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 00:45">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1042,6 +1221,107 @@ Option A would work but cloning the production environment to a different platfo
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985802" id="comment-985802">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Naj_64
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Sun 20 Aug 2023 15:22">
+			2 days, 6 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">Screenshot of Step 4 of Method 1 in the link:
+https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platform.upgrade.html#using-features.platform.upgrade.config
+
+"...your application is unavailable during the update. To keep at least one instance in service during the update, enable rolling updates"</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985812" id="comment-985812">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Naj_64
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Sun 20 Aug 2023 15:29">
+			2 days, 6 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">I take this back. I'm going with A
+
+"However, you can avoid this downtime by deploying the new version to a separate environment. The existing environment’s configuration is copied and used to launch the green environment with the new version of the application. The new green environment will have its own URL. When it’s time to promote the green environment to serve production traffic, you can use Elastic Beanstalk's Swap Environment URLs feature."
+
+https://docs.aws.amazon.com/whitepapers/latest/blue-green-deployments/swap-the-environment-of-an-elastic-beanstalk-application.html</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="983902" id="comment-983902">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1057,11 +1337,8 @@ Option A would work but cloning the production environment to a different platfo
 				MG1407
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 20:12">
-			2 days, 8 hours ago
+			5 days, 1 hour ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1108,7 +1385,7 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 20:10">
-			2 days, 8 hours ago
+			5 days, 1 hour ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1154,7 +1431,7 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Jul 2023 07:10">
-			3 weeks, 2 days ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1200,7 +1477,7 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Jul 2023 20:01">
-			3 weeks, 4 days ago
+			4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1261,6 +1538,45 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985798" id="comment-985798">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Naj_64
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Sun 20 Aug 2023 15:20">
+			2 days, 6 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">+1
+
+"...your application is unavailable during the update. To keep at least one instance in service during the update, enable rolling updates"</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
 				upvoted <span class="upvote-count">1</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
@@ -1269,6 +1585,14 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -1386,7 +1710,7 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 17 May 2023 10:28">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1477,7 +1801,7 @@ https://docs.amazonaws.cn/en_us/elasticbeanstalk/latest/dg/using-features.platfo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 00:48">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

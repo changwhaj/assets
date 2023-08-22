@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 40 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 40 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 40 discussion</h1>
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874612">
 <p class="card-text">
 							
-								한 회사가 AWS에 인프라를 배포했습니다. 개발 팀은 Amazon Aurora 데이터베이스에서 데이터를 검색할 AWS Lambda 함수를 생성하려고 합니다. Amazon Aurora 데이터베이스는 회사 VPC의 프라이빗 서브넷에 있습니다. VPC의 이름은 VPC1입니다. 데이터는 관계형입니다. Lambda 함수는 데이터에 안전하게 액세스해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 AWS에 인프라를 배포했습니다. 개발 팀은 Amazon Aurora 데이터베이스에서 데이터를 검색하는 AWS Lambda 함수를 생성하려고 합니다. Amazon Aurora 데이터베이스는 회사 VPC의 프라이빗 서브넷에 있습니다. VPC의 이름은 VPC1입니다. 데이터는 본질적으로 관계형입니다. Lambda 함수는 데이터에 안전하게 액세스해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="874612" type="application/json">[{"voted_answers": "A", "vote_count": 21, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": false}]</script>
+<script id="874612" type="application/json">[{"voted_answers": "A", "vote_count": 21, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 12, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Lambda 함수를 생성합니다. 함수에 대한 VPC1 액세스를 구성합니다. SG1이라는 보안 그룹을 Lambda 함수에 할당합니다. SG2라는 두 번째 보안 그룹을 데이터베이스에 할당합니다. SG1에 인바운드 규칙을 추가하여 포트 3306에서 TCP 트래픽을 허용합니다.
+											Lambda 함수를 생성합니다. 함수에 대한 VPC1 액세스를 구성합니다. SG1이라는 보안 그룹을 Lambda 함수에 할당합니다. SG2라는 두 번째 보안 그룹을 데이터베이스에 할당합니다. 포트 3306의 TCP 트래픽을 허용하도록 SG1에 인바운드 규칙을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Aurora 데이터베이스에서 Amazon S3로 데이터를 내보냅니다. VPC1에서 Lambda 함수를 생성하고 시작합니다. Amazon S3에서 데이터를 쿼리하는 Lambda 함수를 구성합니다.
+											Aurora 데이터베이스의 데이터를 Amazon S3로 내보냅니다. VPC1에서 Lambda 함수를 생성하고 시작합니다. Amazon S3에서 데이터를 쿼리하는 Lambda 함수를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">A (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 32%; display: flex;" title="">씨 (32%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 64%; display: flex;" title="">A (64%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 36%; display: flex;" title="">C (36%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 3월 21일, 오후 10:47</i> 
-							
-							의 <a class="title-username" style="">
-								svrnvtr
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="874612" type="application/json">[{"voted_answers": "A", "vote_count": 21, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 10, "is_most_voted": false}]</script>
+<script id="874612" type="application/json">[{"voted_answers": "A", "vote_count": 21, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 12, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">A (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 32%; display: flex;" title="">C (32%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 64%; display: flex;" title="">A (64%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 36%; display: flex;" title="">C (36%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								svrnvtr
-							</a>
-							
-							at <i>
-							March 21, 2023, 10:47 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,8 +295,8 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 13:51">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 13:51">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -302,12 +345,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 19일 토요일 09:21">
-			18시간 47분 전
+			3일, 5시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 중 사용 사례에 대한 이상적인 솔루션은 없습니다. B) 새 VPC를 생성할 필요가 없으며 작동하도록 경로 테이블을 추가하고 SG를 구성해야 합니다. C) SG1의 규칙이 인바운드가 아닌 아웃바운드인 경우 작동할 수 있습니다(연결은 Lambda에서 Aurora로 시작됨). D ) S3로 데이터를 내보내는 것은 과잉이며 그렇게 하면 더 이상 VPC에 람다를 배포할 필요가 없습니다. 또한 3306의 인바운드 규칙(Aurora가 Lambda에서 연결을 수락하도록 허용). Lambda와 Aurora 모두에 대해 동일한 SG1을 사용하고 싶지 않습니다.</div>
+<div class="comment-content">옵션 중에는 사용 사례에 대한 이상적인 솔루션이 없습니다. B) 새 VPC를 생성할 필요가 없으며 라우팅 테이블을 추가하고 작동하도록 SG를 구성해야 합니다. C) SG1의 규칙이 인바운드가 아닌 아웃바운드인 경우 작동할 수 있습니다(연결은 Lambda에서 Aurora로 시작됨) D ) S3로 데이터를 내보내는 것은 과도하며 그렇게 하면 더 이상 VPC에 람다를 배포할 필요가 없습니다. A) 작동합니다. SG1이 Lambda와 Aurora 모두에 연결되어 있으므로 3306에 대한 아웃바운드 규칙이 필요합니다(Lambda가 Aurora와 통신 시작). 또한 3306의 인바운드 규칙(Aurora가 Lambda의 연결을 허용하도록 허용) 나는 Lambda와 Aurora 모두에 동일한 SG1을 갖고 싶지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,8 +390,8 @@
 				AWSdeveloper08
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 11:25">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 11:25">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -360,9 +403,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,20 +436,20 @@
 				코미디언
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 10:23">
+<span class="comment-date align-middle" title="2023년 7월 18일 화 10:23">
 			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">정답은 C https://www.youtube.com/watch?v=UgWjbSixRg4</div>
+<div class="comment-content">정답은 C https://www.youtube.com/watch?v=UgWjbSixRg4 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -444,7 +487,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A인 것 같지만 반환할 때 아웃바운드 규칙을 만들 필요가 없다는 것을 알고 있습니다. 그렇다면 왜 A입니까?</div>
+<div class="comment-content">A인 것 같지만, 내가 알기로는 무언가를 반환할 때 아웃바운드 규칙을 만들 필요가 없습니다. 그렇다면 왜 A일까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,11 +520,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 7일 금요일 19:19">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">괜찮아요. Lambda가 아웃바운드 요청을 할 수 있도록 하기 위해 필요합니다.</div>
+<div class="comment-content">괜찮아요. Lambda가 아웃바운드 요청을 할 수 있도록 하려면 이 정보가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -534,7 +577,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A인 것 같지만 반환할 때 아웃바운드 규칙을 만들 필요가 없다는 것을 알고 있습니다. 그렇다면 왜 A입니까?</div>
+<div class="comment-content">A인 것 같지만, 내가 알기로는 무언가를 반환할 때 아웃바운드 규칙을 만들 필요가 없습니다. 그렇다면 왜 A일까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,12 +617,12 @@
 				umer1998
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 16:54">
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 16:54">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C https://www.youtube.com/watch?v=UgWjbSixRg4</div>
+<div class="comment-content">정답은 C https://www.youtube.com/watch?v=UgWjbSixRg4 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -611,12 +654,12 @@
 				umer1998
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 16:58">
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 16:58">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B의 경우(프라이빗 서브넷이 있는 VPC에 람다를 추가하기만 하면 되므로 다른 VPC를 생성할 필요가 없음) A의 경우(SG(보안 그룹)는 상태 비저장입니다. NACL을 사용하여 아웃바운드 및 인바운드 규칙 수정 + SG를 수행할 수 있습니다. 액세스 권한을 부여하는 데 사용됩니다. 동일한 SG에 Lambda와 DB를 모두 유지하고 다른 리소스에 람다 액세스 권한을 부여하려고 하면 다른 리소스가 자동으로 RDS 액세스 권한을 얻습니다. 이는 의문의 여지가 없습니다.)</div>
+<div class="comment-content">B의 경우(프라이빗 서브넷이 있는 VPC에 람다를 추가하기만 하면 되므로 다른 VPC를 생성할 필요가 없습니다.) A의 경우(SG(보안 그룹)는 상태 비저장입니다. NACL을 사용하면 아웃바운드 및 인바운드 규칙 수정 + SG를 수행할 수 있습니다. 액세스 권한을 부여하는 데 사용됩니다. 동일한 SG에 Lambda와 DB를 모두 유지하는 경우 다른 리소스에 람다 액세스 권한을 부여하려고 하면 해당 다른 리소스가 자동으로 RDS 액세스 권한을 얻게 됩니다. 이는 의문의 여지가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -625,7 +668,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,7 +707,7 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 12:36">
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 12:36">
 			2 달전
 		</span>
 </div>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -711,11 +754,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 14일 수요일 09:21">
-			2 달전
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B라고 생각합니다. https://repost.aws/en/knowledge-center/connect-lambda-to-an-rds-instance#:~:text=Lambda%27s%20subnets%27%20CIDRs를 확인하십시오. -,%20Lambda%20function%20and%20RDS%20instance%20in%20different%20VPCs,function%20in%20one%20VPC%20to%20the%20RDS%20instance%20in%20the%20other,-%3A</div>
+<div class="comment-content">제 생각에는 B라고 생각합니다. https://repost.aws/en/knowledge-center/connect-lambda-to-an-rds-instance#:~:text=Lambda%27s%20subnets%27%20CIDRs에서 이 사람을 확인하세요. -,A%20Lambda%20function%20and%20RDS%20instance%20in%20다른%20VPCs,function%20in%20one%20VPC%20to%20the%20RDS%20instance%20in%20the%20other,-%3A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -756,11 +799,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 15일 월요일 05:34">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C VPC1의 프라이빗 서브넷에 있는 Amazon Aurora 데이터베이스에 액세스하려면 Lambda 함수가 동일한 VPC1 내에서 시작되고 해당 VPC에 대한 액세스 권한이 있어야 합니다.</div>
+<div class="comment-content">답변: C VPC1의 프라이빗 서브넷에 있는 Amazon Aurora 데이터베이스에 액세스하려면 Lambda 함수가 동일한 VPC1 내에서 시작되어야 하며 해당 VPC에 액세스할 수 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -769,7 +812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,7 +849,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답 B와 D는 명백히 오답입니다. A는 보안 그룹에 대한 아웃바운드 규칙을 구성할 필요가 없기 때문에 틀렸습니다. 보안 그룹은 상태 저장이므로 반환 규칙을 추가할 필요가 없습니다. 따라서 정답은 C입니다.</div>
+<div class="comment-content">답변 B와 D는 분명히 틀린 것입니다. A는 틀렸습니다. 보안 그룹에 대한 아웃바운드 규칙을 구성할 필요가 없기 때문입니다. 보안 그룹은 상태 저장되어 있으므로 반환 규칙을 추가할 필요가 없습니다. 따라서 정답은 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -815,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -835,15 +878,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예아쿠즈
+				응
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 19:49">
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 19:49">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Answer C는 Lambda 함수에 연결된 SG1에 대한 인바운드 트래픽을 허용합니다. Lambda 함수에는 포트 3306에서 인바운드가 허용되는 인바운드 트래픽이 필요하지 않습니다. 데이터베이스가 필요합니다. 또한 *반환* 트래픽에 대한 아웃바운드 규칙을 구성할 필요는 없지만 Lambda 함수가 트래픽을 *시작*하는 경우(이 경우에는 해당) 아웃바운드 규칙을 구성해야 합니다. 따라서 답은 A입니다.</div>
+<div class="comment-content">답변 C는 Lambda 함수에 연결된 SG1에 대한 인바운드 트래픽을 허용합니다. Lambda 함수에는 포트 3306에서 인바운드가 허용되는 인바운드 트래픽이 필요하지 않습니다. 데이터베이스에서는 필요합니다. 또한 *반환* 트래픽에 대한 아웃바운드 규칙을 구성할 필요는 없지만 Lambda 함수가 트래픽을 *시작*하는 경우(이 경우에는) 아웃바운드 규칙을 구성해야 합니다. 그러므로 답은 A이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -852,7 +895,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -884,11 +927,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 26일 금요일 04:50">
-			2개월, 3주 전
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문에 대해 더 조사한 결과 답변 A가 정답이라는 데 동의합니다. 이 질문에 설명된 시나리오는 이 리포스트의 예제 설명과 유사합니다. , 답변 C가 잘못되었습니다.</div>
+<div class="comment-content">이 질문에 대해 더 자세히 조사한 결과 답변 A가 정답이라는 데 동의합니다. 이 질문에 설명된 시나리오는 이 재게시물의 예시 설명과 유사합니다: https://repost.aws/knowledge-center/connect-lambda-to-an-rds-instance 이 상황에서는 실제로 아웃바운드 규칙이 필요합니다. , 대답 C는 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -897,7 +940,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -936,13 +979,13 @@
 				awsdummie
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 23:25">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 23:25">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">C는 올바르지 않습니다. 두 보안 그룹이 서로 액세스를 허용해야 하는 단계가 없기 때문입니다.</div>
+<div class="comment-content">C는 올바르지 않습니다. 두 보안 그룹이 서로에 대한 액세스를 허용해야 하는 단계가 없기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -951,7 +994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -982,13 +1025,13 @@
 				Rpod
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 14:02">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 14:02">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 정답 A</div>
+<div class="comment-content">정답은 A입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -997,7 +1040,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1028,13 +1071,13 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 11일 화요일 21:47">
+<span class="comment-date align-middle" title="2023년 4월 11일 (화) 21:47">
 			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">두 개의 보안 그룹을 생성해야 합니다. 하나는 lambda ENI용이고 다른 하나는 RDS용입니다. 둘 다에 대해 동일한 SG가 작동하지 않습니다. https://repost.aws/knowledge-center/connect-lambda-to-an-rds-instance https://medium.com/@Oldmanyellingatcloud/how-to-connect-your-lambda-function-securely-to- your-private-rds-instances-in-your-vpc-29789220a33</div>
+<div class="comment-content">두 개의 보안 그룹을 생성해야 합니다. 하나는 람다 ENI용이고 다른 하나는 RDS용입니다. 둘 모두에 대해 동일한 SG는 작동하지 않습니다. https://repost.aws/knowledge-center/connect-lambda-to-an-rds-instance https://medium.com/@Oldmanyellingatcloud/how-to-connect-your-lambda-function-securely-to- your-private-rds-instances-in-your-vpc-29789220a33</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1071,7 +1114,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C가 틀렸다고 생각한다. 아웃바운드 규칙을 설정하지 않기 때문에</div>
+<div class="comment-content">내 생각엔 C가 틀린 것 같아. 아웃바운드 규칙을 설정하지 않았기 때문에</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1080,7 +1123,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1116,16 +1159,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 06:53">
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 06:53">
 			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 답변 A입니다. B의 경우 람다용 새 VPC를 생성하는 것은 적합한 솔루션이 아닌 것 같습니다. C의 경우 서로 다른 보안 그룹을 둘 다 할당하면 작동하지 않습니다. 옵션 D는 관계형 데이터에 적합하지 않으며 솔루션에 S3를 포함합니다.</div>
+<div class="comment-content">정답은 A입니다. B의 경우 람다용 새 VPC를 생성하는 것은 적합한 솔루션이 아닌 것 같습니다. C의 경우 둘 다에 서로 다른 보안 그룹을 할당하면 작동하지 않습니다. 옵션 D는 관계형 데이터에 적합하지 않으며 솔루션에 S3가 포함됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1134,7 +1177,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1165,8 +1208,8 @@
 				길들일 수 없는 것
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 01:56">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 01:56">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1180,7 +1223,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1211,12 +1254,12 @@
 				덴마슬로프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 22:32">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 22:32">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Lambda 함수에서 Amazon Aurora 데이터베이스에 안전하게 액세스하기 위한 요구 사항에 따라 올바른 솔루션은 A입니다. Lambda 함수는 데이터베이스가 있는 VPC1의 리소스에 액세스하도록 구성해야 합니다. 보안 그룹(SG1)은 Lambda 함수와 데이터베이스 모두에 연결되어야 하며 SG1의 인바운드 및 아웃바운드 규칙은 포트 3306에서 TCP 트래픽을 허용하여 Lambda 함수와 데이터베이스 간의 통신을 활성화해야 합니다. 이 접근 방식은 Lambda 함수와 데이터베이스 간의 연결이 안전하고 데이터가 허용된 포트를 통해서만 액세스되도록 합니다.</div>
+<div class="comment-content">Lambda 함수에서 Amazon Aurora 데이터베이스에 안전하게 액세스해야 한다는 요구 사항에 따라 올바른 솔루션은 A입니다. 데이터베이스가 있는 VPC1의 리소스에 액세스하도록 Lambda 함수를 구성해야 합니다. 보안 그룹(SG1)은 Lambda 함수와 데이터베이스 모두에 연결되어야 하며 SG1의 인바운드 및 아웃바운드 규칙은 Lambda 함수와 데이터베이스 간의 통신을 활성화하기 위해 포트 3306의 TCP 트래픽을 허용해야 합니다. 이 접근 방식을 사용하면 Lambda 함수와 데이터베이스 간의 연결이 안전하고 허용된 포트를 통해서만 데이터에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1257,12 +1300,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 19:12">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C도 그런 것 같아요</div>
+<div class="comment-content">내 생각엔 C도 마찬가지인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1271,7 +1314,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1302,13 +1345,13 @@
 				svrnvtr
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 22:47">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 22:47">
 			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 일 수 있습니다</div>
+<div class="comment-content">C일 수도 있다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1317,7 +1360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1340,12 +1383,12 @@
 				던6
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 00:03">
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 00:03">
 			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나도 C라고 생각했는데 두 번째 보안 그룹이 날 버려</div>
+<div class="comment-content">나도 C라고 생각했는데 두 번째 보안그룹이 날 쫓아냈어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1354,7 +1397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1417,7 +1460,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 13:51">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1467,7 +1510,7 @@ https://repost.aws/en/knowledge-center/connect-lambda-to-an-rds-instance</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 09:21">
-			18 hours, 47 minutes ago
+			3 days, 5 hours ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1519,7 +1562,7 @@ A) works, as SG1 is attached to both Lambda and Aurora we need outbound rule to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 11:25">
-			4 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1532,7 +1575,7 @@ A) works, as SG1 is attached to both Lambda and Aurora we need outbound rule to 
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1579,7 +1622,7 @@ https://www.youtube.com/watch?v=UgWjbSixRg4</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1649,7 +1692,7 @@ https://www.youtube.com/watch?v=UgWjbSixRg4</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 19:19">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1886,7 +1929,7 @@ A is a wrong choice, how to config outbound rules in SG? :)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Jun 2023 09:21">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1935,7 +1978,7 @@ https://repost.aws/en/knowledge-center/connect-lambda-to-an-rds-instance#:~:text
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 05:34">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2069,7 +2112,7 @@ Therefore, the correct answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 26 May 2023 04:50">
-			2 months, 3 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2360,7 +2403,7 @@ Option D will not be suitable for relational data and involve S3 in solution</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 01:56">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2407,7 +2450,7 @@ I agree with Watascript.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 22:32">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2452,7 +2495,7 @@ I agree with Watascript.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 19:12">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

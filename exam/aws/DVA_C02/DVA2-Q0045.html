@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 45 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 45 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 45 discussion</h1>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -127,16 +190,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								2023년
-							</a> 
-							
-							3 <i>
-							월 23일 오후 11:34</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								March2023
-							</a>
-							
-							at <i>
-							March 23, 2023, 11:34 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,13 +295,13 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 02:07">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 02:07">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A https://docs.aws.amazon.com/lambda/latest/dg/nodejs-context.html https://docs.aws.amazon.com/lambda/latest/dg/nodejs-logging.html 없음 런타임에 대한 명시적 정보, 코드는 Node.js로 작성됩니다.</div>
+<div class="comment-content">A https://docs.aws.amazon.com/lambda/latest/dg/nodejs-context.html https://docs.aws.amazon.com/lambda/latest/dg/nodejs-logging.html 런타임에 대한 명시적인 정보가 포함되어 있으며 코드는 Node.js로 작성되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -295,7 +338,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">• https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/lambda-logging-metrics.html • Lambda는 Lambda 함수에서 CloudWatch로 표준 출력 및 표준 오류 메시지를 자동으로 스트리밍합니다. 로깅 드라이버가 필요 없는 로그.</div>
+<div class="comment-content">• https://docs.aws.amazon.com/prescriptive-guidance/latest/implementing-logging-monitoring-cloudwatch/lambda-logging-metrics.html • Lambda는 Lambda 함수에서 CloudWatch로 표준 출력 및 표준 오류 메시지를 자동으로 스트리밍합니다. 로깅 드라이버 없이 로그를 기록합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -346,13 +389,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 10:20">
-			17시간 48분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 10:20">
+			3일 4시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A와 D는 둘 다 실행 ID https://docs.aws.amazon.com/us_en/lambda/latest/dg/python-context.html에 대한 액세스 권한을 얻기 위해 컨텍스트 개체에 의존하므로 여기서 작동할 수 있습니다. 반면 A는 staud를 사용합니다. CloudWatch Log에 로그를 보내려면 D가 파일에 기록합니다. D는 덜 구체적이고(파일이 저장되는 위치? 각 실행에 대한 단일 파일?) 더 복잡해 보입니다(파일 관리, 파일에 대한 동시 액세스 관리 ...). 따라서 A를 선택하겠습니다.</div>
+<div class="comment-content">A와 D는 둘 다 실행 ID https://docs.aws.amazon.com/us_en/lambda/latest/dg/python-context.html에 액세스하기 위해 컨텍스트 객체에 의존하기 때문에 여기에서 작동할 수 있습니다. A는 Stoud를 사용합니다. CloudWatch Log로 로그를 보내기 위해 D는 파일에 씁니다. D는 덜 구체적이고(파일은 어디에 저장되어 있습니까? 각 실행마다 단일 파일이 있습니까?) 더 복잡해 보입니다(파일 관리, 파일에 대한 동시 액세스 관리 ...). 따라서 A를 선택하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,13 +480,13 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 19일 (월) 21:53">
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 21:53">
 			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">제 생각에는 옵션 A와 D 모두 요구 사항을 충족할 수 있습니다. 특정 로깅 및 모니터링 도구에 대한 요구 사항이 없기 때문에 기본값(A)을 사용하겠습니다. 단순한 것이 복잡한 것보다 낫기 때문입니다 :)</div>
+<div class="comment-content">제 생각에는 옵션 A와 D 모두 요구 사항을 충족할 수 있습니다. 특정 로깅 및 모니터링 도구에 대한 요구 사항이 없기 때문에 기본값(A)을 사용하겠습니다. 왜냐하면 단순한 것이 복잡한 것보다 낫기 때문입니다. :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -489,7 +532,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">애플리케이션은 로그를 표준 출력 또는 파일에 쓸 수 있습니다. 표준 출력은 로그의 기본 대상입니다. 표준 출력에 기록된 로그는 Amazon CloudWatch Logs로 전송됩니다. 파일에 기록된 로그는 Lambda 함수의 실행 환경에 저장됩니다.</div>
+<div class="comment-content">애플리케이션은 표준 출력이나 파일에 로그를 쓸 수 있습니다. 표준 출력은 로그의 기본 대상입니다. 표준 출력에 기록된 로그는 Amazon CloudWatch Logs로 전송됩니다. 파일에 기록된 로그는 Lambda 함수의 실행 환경에 저장됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -534,7 +577,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: D 질문에 제공된 코드 조각은 Lambda 함수 핸들러에 제공된 컨텍스트 개체에서 사용할 수 있는 context.awsRequestId 속성에서 요청 식별자를 가져옵니다. 따라서 올바른 옵션은 다음과 같습니다. D. 컨텍스트 객체의 AWS 요청 ID 필드에서 요청 식별자를 얻습니다. 파일에 로그를 쓰도록 애플리케이션을 구성합니다. 이 옵션은 키 이벤트 로깅 요구 사항을 충족하고 이벤트를 특정 함수 호출과 연결하는 고유 식별자를 포함합니다.</div>
+<div class="comment-content">답변: D 질문에 제공된 코드 조각은 Lambda 함수 핸들러에 제공된 컨텍스트 객체에서 사용할 수 있는 context.awsRequestId 속성에서 요청 식별자를 가져오는 것입니다. 따라서 올바른 옵션은 다음과 같습니다. D. 컨텍스트 객체의 AWS 요청 ID 필드에서 요청 식별자를 얻습니다. 파일에 로그를 쓰도록 애플리케이션을 구성합니다. 이 옵션은 키 이벤트를 로깅하고 이벤트를 특정 함수 호출과 연결하는 고유 식별자를 포함해야 한다는 요구 사항을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,13 +617,13 @@
 				Rpod
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 14:24">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 14:24">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 아닌 이유는 무엇입니까? 파일에 로그를 쓰는 것이 stdout보다 더 적절해 보입니다.</div>
+<div class="comment-content">D가 아닌 이유는 무엇입니까? 파일에 로그를 작성하는 것이 stdout보다 더 적합한 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -620,8 +663,8 @@
 				와타스크립트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 14:30">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 14:30">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -667,12 +710,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 24일 금요일 12:24">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">그렇군요</div>
+<div class="comment-content">ㅇ 그렇군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -713,12 +756,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 23:34">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A라고 생각합니다</div>
+<div class="comment-content">나는 대답이 A라고 생각한다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -782,7 +825,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 02:07">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -880,7 +923,7 @@ There is no explicit information for the runtime, the code is written in Node.js
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 10:20">
-			17 hours, 48 minutes ago
+			3 days, 4 hours ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1163,7 +1206,7 @@ This option meets the requirement of logging key events and including a unique i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 14:30">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1210,7 +1253,7 @@ https://docs.aws.amazon.com/us_en/lambda/latest/dg/python-logging.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Mar 2023 12:24">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1256,7 +1299,7 @@ https://docs.aws.amazon.com/us_en/lambda/latest/dg/python-logging.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 23:34">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

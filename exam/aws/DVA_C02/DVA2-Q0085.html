@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 85 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 85 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 85 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882529">
 <p class="card-text">
 							
-								회사에는 AWS에 배포된 웹 애플리케이션이 있습니다. 애플리케이션은 Amazon API Gateway API 및 AWS Lambda 함수를 백엔드로 사용합니다. <br/><br/>응용 프로그램이 최근 예기치 않은 동작을 보여 주었습니다. 개발자는 Lambda 함수 코드를 검사하고 오류를 찾은 다음 코드를 수정하여 문제를 해결합니다. 프로덕션에 변경 사항을 배포하기 전에 개발자는 테스트를 실행하여 애플리케이션이 제대로 작동하는지 확인해야 합니다. <br/><br/>애플리케이션에는 사용 가능한 프로덕션 환경만 있습니다. 개발자는 코드 변경 사항을 테스트하기 위해 새로운 개발 환경을 만들어야 합니다. 또한 개발자는 테스트 주기 동안 다른 개발자가 이러한 변경 사항을 덮어쓰지 못하도록 해야 합니다.<br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								회사에 AWS에 배포된 웹 애플리케이션이 있습니다. 애플리케이션은 Amazon API Gateway API와 AWS Lambda 함수를 백엔드로 사용합니다. <br/><br/>최근 애플리케이션에서 예상치 못한 동작이 나타났습니다. 개발자는 Lambda 함수 코드를 검사하고 오류를 찾은 후 코드를 수정하여 문제를 해결합니다. 변경 사항을 프로덕션에 배포하기 전에 개발자는 테스트를 실행하여 애플리케이션이 제대로 작동하는지 확인해야 합니다. <br/><br/>애플리케이션에는 프로덕션 환경만 사용 가능합니다. 개발자는 코드 변경 사항을 테스트하기 위해 새로운 개발 환경을 만들어야 합니다. 또한 개발자는 테스트 주기 동안 다른 개발자가 이러한 변경 사항을 덮어쓰는 것을 방지해야 합니다.<br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											현재 단계에서 새로운 리소스를 생성합니다. Lambda 프록시 통합으로 새 메서드를 생성합니다. Lambda 함수를 선택합니다. 핫픽스 별칭을 추가합니다. 현재 단계를 재배포합니다. 백엔드를 테스트합니다.
+											현재 단계에서 새 리소스를 생성합니다. Lambda 프록시 통합을 사용하여 새 메서드를 생성합니다. Lambda 함수를 선택합니다. 핫픽스 별칭을 추가합니다. 현재 단계를 다시 배포합니다. 백엔드를 테스트합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											핫픽스 별칭을 사용하도록 API Gateway API 통합 요청에서 Lambda 함수를 업데이트합니다. hotfix라는 새 단계에 API Gateway API를 배포합니다. 백엔드를 테스트합니다.
+											핫픽스 별칭을 사용하도록 API Gateway API 통합 요청의 Lambda 함수를 업데이트합니다. hotfix라는 새 단계에 API Gateway API를 배포합니다. 백엔드를 테스트합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,14 +164,14 @@
 													C.
 												</span> 
 											
-											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. 별칭 핫픽스를 만듭니다. 별칭을 $LATEST 버전으로 지정하십시오.
+											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. 별칭 핫픽스를 만듭니다. 별칭이 $LATEST 버전을 가리키도록 합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. Lambda 함수가 예상대로 작동하면 Lambda 함수를 새 버전으로 게시합니다. 별칭 핫픽스를 만듭니다. 별명을 새 버전으로 지정하십시오.
+											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. Lambda 함수가 예상대로 작동하면 Lambda 함수를 새 버전으로 게시합니다. 별칭 핫픽스를 만듭니다. 별칭이 새 버전을 가리키도록 합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,11 +180,11 @@
 													E.
 												</span> 
 											
-											개발 환경을 위한 새로운 API Gateway API를 생성합니다. Lambda 통합으로 리소스 및 메서드를 추가합니다. Lambda 함수와 핫픽스 별칭을 선택합니다. 새 단계에 배포합니다. 백엔드를 테스트합니다.
+											개발 환경을 위한 새로운 API Gateway API를 생성합니다. Lambda 통합을 통해 리소스 및 메서드를 추가합니다. Lambda 함수와 핫픽스 별칭을 선택합니다. 새로운 단계에 배포합니다. 백엔드를 테스트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,22 +194,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">BD(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">BD(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 5월 8일 오후</i> 
-							
-							1:28 <a class="title-username" style="">
-								zodraz
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -229,16 +282,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zodraz
-							</a>
-							
-							at <i>
-							May 8, 2023, 1:28 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -270,11 +313,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 26일 수 20:12">
-			3주, 3일 전
+			3주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C - D. C 대 B: 프로덕션 환경에 직접 영향을 주지 않고 핫픽스를 테스트하기 위해 보다 격리되고 제어된 환경을 제공하기 때문에 옵션 C가 옵션 B보다 선호됩니다. 필요한 경우 핫픽스를 반복할 수 있는 유연성을 제공하고 더 안전한 개발 및 테스트 프로세스를 촉진합니다. D 대 E: 옵션 E는 핫픽스 테스트를 위한 보다 격리되고 제어된 환경을 제공하기 때문에 옵션 D보다 선호됩니다. 전용 개발 환경을 만들어 버전 관리 복잡성을 피하고 안전한 개발 및 테스트 프로세스를 촉진합니다.</div>
+<div class="comment-content">C - D. C 대 B: 옵션 C는 프로덕션 환경에 직접적인 영향을 주지 않고 핫픽스를 테스트하기 위한 보다 격리되고 제어된 환경을 제공하므로 옵션 B보다 선호됩니다. 필요한 경우 핫픽스를 반복할 수 있는 유연성을 제공하고 보다 안전한 개발 및 테스트 프로세스를 촉진합니다. D 대 E: 옵션 E는 핫픽스 테스트를 위해 보다 격리되고 제어된 환경을 제공하므로 옵션 D보다 선호됩니다. 버전 관리의 복잡성을 피하고 전용 개발 환경을 생성하여 보다 안전한 개발 및 테스트 프로세스를 촉진합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -283,7 +326,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -311,16 +354,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				땃땃땨
+				TTTTTTTTAM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 15일 (토) 23:23">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 15일 토요일 23:23">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">D ==&gt; 람다 함수를 변경합니다. B ==&gt; 업데이트된 람다 함수를 사용하도록 API 게이트웨이를 업데이트하고 다른(새) 단계에 배포합니다. 개발자가 새로 배포된 API 끝점을 사용할 수 있도록 합니다.</div>
+<div class="comment-content">D ==&gt; 람다 함수를 변경합니다. B ==&gt; 업데이트된 람다 함수를 사용하도록 API 게이트웨이를 업데이트하고 이를 다른(새) 단계에 배포합니다. 개발자가 새로 배포된 API 엔드포인트를 사용할 수 있도록 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -329,7 +372,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -366,7 +409,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">B &amp; D입니다. 분명히 E는 운영상 효율적이지 않습니다. 그래서 우리는 A &amp; B 하나, C &amp; D 두 번째 중에서 선택해야 했습니다. A와 B 사이에서 B를 선택해야 합니다. 질문에서 기존 솔루션을 건드리고 싶지 않다고 분명히 명시되어 있기 때문입니다. C &amp; D와 관련하여 D가 더 철저하고 문제를 해결할 때 $LATEST를 가리키는 것이 충분히 명시적이지 않은 것 같습니다.</div>
+<div class="comment-content">그것은 B &amp; D입니다. 분명히 E는 운영상 효율적이지 않습니다. 그래서 우리는 A와 B 중 하나를 선택하고, C와 D를 두 번째로 선택해야 합니다. A와 B 중에서 B를 선택해야 합니다. 질문에서 기존 솔루션을 건드리고 싶지 않다는 것이 명확하게 명시되어 있기 때문입니다. C &amp; D와 관련하여 D가 더 철저하고 문제 해결 시 $LATEST를 가리키는 것만으로는 충분하지 않은 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -375,7 +418,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -407,7 +450,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 8일 월요일 13:28">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -421,7 +464,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,7 +516,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Jul 2023 20:12">
-			3 weeks, 3 days ago
+			3 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -521,7 +564,7 @@ D vs E : Option E is preferred over option D because it provides a more isolated
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Jul 2023 23:23">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -620,7 +663,7 @@ Regarding C &amp; D, seems like D is more thorough and also pointing to $LATEST 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 08 May 2023 13:28">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

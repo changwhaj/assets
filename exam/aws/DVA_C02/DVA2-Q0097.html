@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 97 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 97 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 97 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882541">
 <p class="card-text">
 							
-								개발자는 수신 데이터를 Amazon S3 객체에 JSON 파일로 저장하는 애플리케이션을 설계했습니다. AWS Lambda 함수의 사용자 지정 비즈니스 로직은 객체를 변환하고 Lambda 함수는 데이터를 Amazon DynamoDB 테이블로 로드합니다. 최근에 워크로드에 갑작스럽고 상당한 트래픽 변화가 발생했습니다. DynamoDB 테이블로의 데이터 흐름이 제한되고 있습니다. <br/><br/>개발자는 스로틀링을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하는 솔루션을 구현해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 수신 데이터를 Amazon S3 객체에 JSON 파일로 저장하는 애플리케이션을 설계했습니다. 그러면 AWS Lambda 함수의 사용자 지정 비즈니스 로직이 객체를 변환하고, Lambda 함수는 데이터를 Amazon DynamoDB 테이블에 로드합니다. 최근 워크로드의 트래픽에 갑작스럽고 큰 변화가 발생했습니다. DynamoDB 테이블로의 데이터 흐름이 제한되고 있습니다. <br/><br/>개발자는 조절을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하는 솔루션을 구현해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Lambda 함수를 두 개의 함수로 리팩터링합니다. 데이터를 변환하는 함수 하나와 데이터를 DynamoDB 테이블로 로드하는 함수 하나를 구성합니다. 함수 사이에 Amazon Simple Queue Service(Amazon SQS) 대기열을 생성하여 항목을 메시지로 보관하고 두 번째 함수를 호출합니다.
+											Lambda 함수를 두 개의 함수로 리팩터링합니다. 데이터를 변환하는 함수 하나와 데이터를 DynamoDB 테이블에 로드하는 함수 하나를 구성합니다. 항목을 메시지로 보관하고 두 번째 함수를 호출하기 위해 함수 사이에 Amazon Simple Queue Service(Amazon SQS) 대기열을 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,27 +157,27 @@
 													B.
 												</span> 
 											
-											DynamoDB 테이블에 대한 자동 조정을 켭니다. Amazon CloudWatch를 사용하여 테이블의 읽기 및 쓰기 용량 메트릭을 모니터링하고 소비된 용량을 추적합니다.
+											DynamoDB 테이블에 대한 자동 조정을 활성화합니다. Amazon CloudWatch를 사용하여 테이블의 읽기 및 쓰기 용량 지표를 모니터링하고 소비된 용량을 추적합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Lambda 함수에 대한 별칭을 생성합니다. 애플리케이션이 사용할 프로비저닝된 동시성을 구성합니다.
+											Lambda 함수에 대한 별칭을 생성합니다. 사용할 애플리케이션에 대해 프로비저닝된 동시성을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Lambda 함수를 두 개의 함수로 리팩터링합니다. DynamoDB 테이블에 데이터를 저장하도록 하나의 함수를 구성합니다. 데이터를 DynamoDB에 저장한 후 데이터를 처리하고 항목을 업데이트하도록 두 번째 함수를 구성합니다. 데이터가 저장된 후 두 번째 함수를 호출할 DynamoDB 스트림을 생성합니다.
+											Lambda 함수를 두 개의 함수로 리팩터링합니다. DynamoDB 테이블에 데이터를 저장하는 함수 하나를 구성합니다. 데이터가 DynamoDB에 저장된 후 데이터를 처리하고 항목을 업데이트하도록 두 번째 함수를 구성합니다. 데이터가 저장된 후 두 번째 함수를 호출하는 DynamoDB 스트림을 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 45%; display: flex;" title="">A (45%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">디 (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 45%; display: flex;" title="">A (45%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">D (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a> 
-							
-							시간: <i>
-							2023년 4월 21일, 오후 9:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 21, 2023, 9:02 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -254,13 +297,13 @@
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 11:12">
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 11:12">
 			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Lambda 함수를 두 개의 함수로 리팩터링합니다. 데이터를 변환하는 함수 하나와 데이터를 DynamoDB 테이블로 로드하는 함수 하나를 구성합니다. 함수 사이에 Amazon Simple Queue Service(Amazon SQS) 대기열을 생성하여 항목을 메시지로 보관하고 두 번째 함수를 호출합니다. Lambda 함수를 두 개의 개별 함수로 나누고 SQS 대기열을 사용하여 변환된 데이터를 메시지로 보관하면 데이터 변환과 로드 프로세스를 분리할 수 있습니다. 이를 통해 DynamoDB 테이블로의 데이터 로드를 보다 제어할 수 있고 제한 문제를 제거하는 데 도움이 됩니다.</div>
+<div class="comment-content">A. Lambda 함수를 두 개의 함수로 리팩터링합니다. 데이터를 변환하는 함수 하나와 데이터를 DynamoDB 테이블에 로드하는 함수 하나를 구성합니다. 항목을 메시지로 보관하고 두 번째 함수를 호출하기 위해 함수 사이에 Amazon Simple Queue Service(Amazon SQS) 대기열을 생성합니다. Lambda 함수를 두 개의 개별 함수로 나누고 SQS 대기열을 사용하여 변환된 데이터를 메시지로 보관함으로써 데이터 변환과 로드 프로세스를 분리할 수 있습니다. 이를 통해 DynamoDB 테이블에 대한 데이터 로드를 보다 효과적으로 제어할 수 있으며 조절 문제를 제거하는 데 도움이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -297,19 +340,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="badge badge-primary">
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 21:02">
+<span class="comment-date align-middle" title="2023년 4월 21일 금 21:02">
 			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이 솔루션을 통해 개발자는 수신 데이터를 스로틀링 없이 보다 일관성 있게 DynamoDB 테이블에 저장할 수 있습니다. Lambda 함수를 두 개의 함수로 분할함으로써 첫 번째 함수는 데이터를 DynamoDB 테이블에 저장하고 신속하게 종료하여 제한 문제를 방지할 수 있습니다. 그러면 DynamoDB 스트림을 사용하여 데이터가 DynamoDB에 저장된 후 두 번째 함수가 데이터를 처리하고 항목을 업데이트하여 두 번째 함수를 호출할 수 있습니다. 옵션 A도 좋은 옵션이지만 Amazon SQS 대기열을 사용하면 추가 복잡성과 비용이 발생하기 때문에 최상의 솔루션은 아닙니다.</div>
+<div class="comment-content">이 솔루션을 사용하면 개발자는 제한 없이 들어오는 데이터를 DynamoDB 테이블에 보다 일관되게 저장할 수 있습니다. Lambda 함수를 두 개의 함수로 분할하면 첫 번째 함수가 데이터를 DynamoDB 테이블에 저장하고 빠르게 종료하여 조절 문제를 피할 수 있습니다. 그런 다음 두 번째 함수는 DynamoDB 스트림을 사용하여 데이터가 DynamoDB에 저장된 후 데이터를 처리하고 항목을 업데이트하여 두 번째 함수를 호출할 수 있습니다. 옵션 A도 좋은 옵션이지만 Amazon SQS 대기열을 사용하면 추가적인 복잡성과 비용이 발생하므로 최상의 솔루션은 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,11 +385,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 2일 금요일 15:59">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송하지만 "첫 번째 함수는 데이터를 DynamoDB 테이블에 저장하고 빠르게 종료하여 제한 문제를 피할 수 있습니다"라고 말씀하실 때 귀하의 요점을 이해하지 못합니다.</div>
+<div class="comment-content">죄송합니다. "첫 번째 함수는 데이터를 DynamoDB 테이블에 저장하고 빠르게 종료하여 조절 문제를 피할 수 있습니다"라고 말씀하셨는데, 요점을 이해하지 못합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,12 +441,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 3일 목요일 08:14">
-			2주, 2일 전
+			2주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">요구 사항은 DynamoDB에 대한 Lambda 함수 로드 데이터입니다. D가 올바르지 않음: "DynamoDB 스트림 호출 Lambda" - 순서가 반대입니다.</div>
+<div class="comment-content">요구 사항은 DynamoDB에 대한 Lambda 함수 로드 데이터입니다. D가 올바르지 않습니다. "DynamoDB 스트림이 Lambda를 호출합니다." - 순서가 반대입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -412,7 +455,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,16 +483,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				baboopan18
+				바보판18
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 15:35">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 15:35">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">관건은 "쓰로틀링 제거" A보다 B를 선호</div>
+<div class="comment-content">핵심은 "스로틀링 해소" A보다 B를 선호</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -489,13 +532,13 @@
 				콴
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 4일 화요일 22:06">
+<span class="comment-date align-middle" title="2023년 7월 4일 (화) 22:06">
 			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-architecture.html 이것은 SQS 메시지의 수명 주기입니다. 내 이해를 위해 옵션 A가 잘못되었습니다. SQS는 거기에 명시된 것처럼 기능을 호출할 수 없습니다. 그래서 D가 정답입니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-architecture.html 이는 SQS 메시지의 수명 주기입니다. 내 이해로는 옵션 A가 잘못되었습니다. SQS는 거기에 명시된 것처럼 기능을 호출할 수 없습니다. 그럼 D가 정답이군요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -504,7 +547,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,11 +567,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				땃땃땨
+				TTTTTTTTAM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 16일 일 00:24">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 16일 일요일 00:24">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -586,7 +629,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">개발자는 스로틀링을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하는 솔루션을 구현해야 합니다. 문제는 DynamoDB가 람바다와 연결되지 않는다는 것입니다. 그렇다면 더 나은 솔루션은 DynamoDB의 테이블을 자동으로 확장하는 것입니다.</div>
+<div class="comment-content">개발자는 조절을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하는 솔루션을 구현해야 합니다. 문제는 DynamoDB가 람바다와 연결되지 않는다는 것입니다. 그렇다면 더 나은 솔루션은 DynamoDB 테이블을 자동으로 확장하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -641,7 +684,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -672,13 +715,13 @@
 				가골14
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 19일 (월) 19:28">
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 19:28">
 			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 솔루션은 DynamoDB 테이블에 더 일관되게 데이터를 로드하지 않기 때문에 요구 사항을 충족하지 않습니다. DynamoDB 스트림을 사용하여 Lambda 함수를 트리거하여 DynamoDB 테이블의 데이터 변경 사항을 처리할 수 있습니다. 그러나 이것은 모든 데이터 변경이 순서대로 처리되거나 중복이 발생하지 않는다는 것을 보장하지 않습니다. 따라서 이 솔루션은 DynamoDB 테이블에 일관되지 않거나 잘못된 데이터를 생성할 수 있습니다. 가장 좋은 솔루션은 A입니다. 조절을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하기 때문입니다.</div>
+<div class="comment-content">이 솔루션은 데이터를 DynamoDB 테이블에 더 일관되게 로드하지 않기 때문에 요구 사항을 충족하지 않습니다. DynamoDB 스트림을 사용하면 Lambda 함수를 트리거하여 DynamoDB 테이블의 데이터 변경 사항을 처리할 수 있습니다. 그러나 이는 모든 데이터 변경 사항이 순서대로 처리되거나 중복이 발생하지 않는다는 것을 보장하지 않습니다. 따라서 이 솔루션을 사용하면 DynamoDB 테이블에 일관되지 않거나 잘못된 데이터가 발생할 수 있습니다. 가장 좋은 솔루션은 A입니다. A는 조절을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -715,15 +758,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				몽곤블랑
+				몽곤블란
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 2일 금요일 15:33">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">람다(A 또는 D)를 리팩토링하면 도움이 될 수 있지만 DynamoDB 테이블에는 도움이 되지 않기 때문에 B에 투표합니다. C는 람다에 예약된 동시성을 제공하고 성능을 향상시키지만 DynamoDB 계층에는 도움이 되지 않습니다. 따라서 가장 좋은 옵션은 B) AutoScaling을 설정하고 테이블에 사용해야 하는 RCU 및 WCU를 모니터링하도록 CloudWatch를 구성하기 때문입니다.</div>
+<div class="comment-content">람다(A 또는 D)를 리팩토링하면 도움이 될 수 있지만 DynamoDB 테이블에는 도움이 되지 않기 때문에 저는 B에 투표합니다. C는 람다에 예약된 동시성을 제공하고 성능을 향상시키지만 DynamoDB 계층에는 도움이 되지 않습니다. 따라서 가장 좋은 옵션은 B) 자동 크기 조정을 안정화하고 Cloudwatch를 구성하여 테이블에 사용해야 하는 RCU 및 WCU를 모니터링하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -732,7 +775,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -760,10 +803,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				펑키 프레스코
+				펑키프레스코
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 27일 (토) 18:13">
+<span class="comment-date align-middle" title="2023년 5월 27일 토요일 18:13">
 			2개월, 3주 전
 		</span>
 </div>
@@ -778,7 +821,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -815,7 +858,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 참이다</div>
+<div class="comment-content">D는 사실이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -824,7 +867,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -861,7 +904,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">스로틀링을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하려면 Lambda 함수를 두 개의 함수로 리팩터링하고 DynamoDB 스트림을 활용할 수 있습니다.</div>
+<div class="comment-content">조절을 제거하고 데이터를 DynamoDB 테이블에 보다 일관되게 로드하려면 Lambda 함수를 두 개의 함수로 리팩터링하고 DynamoDB 스트림을 활용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -870,7 +913,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -907,7 +950,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 Lambda 함수를 두 개의 함수로 리팩터링할 것을 제안합니다. 하나는 데이터를 변환하고 다른 하나는 데이터를 DynamoDB 테이블로 로드하고 함수 사이에 Amazon SQS 대기열을 추가하여 항목을 메시지로 보관하고 두 번째 함수를 호출하는 것입니다. . 이 접근 방식은 처리 단계와 로딩 단계를 분리하여 Lambda 함수가 독립적으로 확장할 수 있도록 하고 제한 가능성을 줄입니다.</div>
+<div class="comment-content">옵션 A는 Lambda 함수를 두 개의 함수로 리팩터링하는 것을 제안합니다. 하나는 데이터를 변환하고 다른 하나는 데이터를 DynamoDB 테이블에 로드하고, 함수 사이에 Amazon SQS 대기열을 추가하여 항목을 메시지로 보관하고 두 번째 함수를 호출하는 것입니다. . 이 접근 방식은 처리 단계와 로드 단계를 분리하여 Lambda 함수가 독립적으로 확장되고 조절 가능성을 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -947,13 +990,13 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 14일 일 15:04">
+<span class="comment-date align-middle" title="2023년 5월 14일 일요일 15:04">
 			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B =&gt; 여기서 문제는 "...트래픽의 갑작스럽고 상당한 변화..."라고 생각합니다. DynamoDB의 현재 쓰기 용량이 들어오는 모든 데이터를 삽입하기에 충분하지 않습니다. 분리는 좋은 방법이지만 문제를 해결하지는 못합니다. 이 경우 질문에 트래픽 증가가 일시적이라는 언급이 없기 때문에 쓰기 용량을 늘리지 않는 솔루션은 병목 현상을 일으킬 수 있습니다.</div>
+<div class="comment-content">B =&gt; 여기서 문제는 "...트래픽의 갑작스럽고 중요한 변화..."라고 생각합니다. DynamoDB의 현재 쓰기 용량은 들어오는 데이터를 모두 삽입하기에 충분하지 않습니다. 디커플링은 좋은 습관이지만 문제를 해결하지는 못합니다. 이 경우 트래픽 증가가 일시적이라는 점을 질문에 언급하지 않았기 때문에 쓰기 용량을 늘리지 않는 솔루션은 병목 현상을 발생시킵니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -962,7 +1005,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -982,7 +1025,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				몽곤블랑
+				몽곤블란
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 30일 화요일 16:04">
@@ -990,7 +1033,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB 테이블을 자동 확장하고 읽기를 모니터링하면 DyynamoDB 데이터베이스의 RCU를 수정할 수 있기 때문에 저도 B와 함께 있습니다. Lambdas를 리팩터링하는 것은 그다지 도움이 되지 않습니다.</div>
+<div class="comment-content">저는 B.에도 동의합니다. DynamoDB 테이블을 자동 확장하고 읽기를 모니터링하면 DyynamoDB 데이터베이스의 RCU를 수정할 수 있기 때문입니다. Lambda를 리팩토링하는 것은 별로 도움이 되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -999,7 +1042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1031,11 +1074,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 15일 월요일 13:09">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. A로 변경합니다. DynamoDB에 문제가 없습니다. =&gt; ...DynamoDB 테이블로의 데이터 흐름이 제한되고 있습니다... 데이터 흐름입니다. A로 갑니다.</div>
+<div class="comment-content">죄송합니다. A로 변경했습니다. 문제는 DynamoDB에 없습니다. =&gt; ...DynamoDB 테이블로의 데이터 흐름이 제한되고 있습니다..., 데이터 흐름입니다. A로 갑니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1197,7 +1240,7 @@ Option A is also a good option but not the best solution because it introduces a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Jun 2023 15:59">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1253,7 +1296,7 @@ Option A is also a good option but not the best solution because it introduces a
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 03 Aug 2023 08:14">
-			2 weeks, 2 days ago
+			2 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1300,7 +1343,7 @@ D is incorrect : "DynamoDB stream invoke Lambda" - the order is reversed.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 15:35">
-			4 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1388,7 +1431,7 @@ So D it's the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Jul 2023 00:24">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1581,7 +1624,7 @@ The best solution is A, because it will eliminate the throttling and load the da
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Jun 2023 15:33">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1895,7 +1938,7 @@ Refactoring the Lambdas would not help very much.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 13:09">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

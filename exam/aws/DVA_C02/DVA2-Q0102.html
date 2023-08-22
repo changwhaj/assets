@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 102 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 질문 102 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 102 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882546">
 <p class="card-text">
 							
-								소셜 미디어 애플리케이션은 프런트엔드에서 JavaScript용 AWS SDK를 사용하여 AWS Security Token Service(AWS STS)에서 사용자 자격 증명을 가져옵니다. 애플리케이션은 자산을 Amazon S3 버킷에 저장합니다. 애플리케이션은 오리진이 S3 버킷으로 설정된 Amazon CloudFront 배포를 사용하여 콘텐츠를 제공합니다. <br/><br/>애플리케이션이 SDK 호출을 수행하기 위해 가정하는 역할에 대한 자격 증명은 애플리케이션 코드 내의 JSON 파일에 일반 텍스트로 저장됩니다. 개발자는 응용 프로그램 코드에 자격 증명을 하드코딩하지 않고도 응용 프로그램이 사용자 자격 증명을 얻을 수 있도록 하는 솔루션을 구현해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								소셜 미디어 애플리케이션은 프런트엔드에서 JavaScript용 AWS SDK를 사용하여 AWS Security Token Service(AWS STS)에서 사용자 자격 증명을 얻습니다. 애플리케이션은 해당 자산을 Amazon S3 버킷에 저장합니다. 애플리케이션은 원본이 S3 버킷으로 설정된 Amazon CloudFront 배포를 사용하여 콘텐츠를 제공합니다. <br/><br/>SDK 호출을 위해 애플리케이션이 가정하는 역할에 대한 자격 증명은 애플리케이션 코드 내의 JSON 파일에 일반 텍스트로 저장됩니다. 개발자는 애플리케이션 코드에 자격 증명을 하드코딩하지 않고도 애플리케이션이 사용자 자격 증명을 얻을 수 있도록 하는 솔루션을 구현해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											분포에 Lambda@Edge 함수를 추가합니다. 뷰어 요청 시 함수를 호출합니다. 함수가 AWS STS에 액세스할 수 있도록 함수의 실행 역할에 권한을 추가합니다. 프런트엔드에서 함수로 모든 SDK 호출을 이동합니다.
+											배포에 Lambda@Edge 함수를 추가합니다. 뷰어 요청 시 함수를 호출합니다. 함수가 AWS STS에 액세스할 수 있도록 함수의 실행 역할에 권한을 추가합니다. 프런트엔드의 모든 SDK 호출을 함수로 이동합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											CloudFront 함수를 배포에 추가합니다. 뷰어 요청 시 함수를 호출합니다. 함수가 AWS STS에 액세스할 수 있도록 함수의 실행 역할에 권한을 추가합니다. 프런트엔드에서 함수로 모든 SDK 호출을 이동합니다.
+											배포판에 CloudFront 기능을 추가합니다. 뷰어 요청 시 함수를 호출합니다. 함수가 AWS STS에 액세스할 수 있도록 함수의 실행 역할에 권한을 추가합니다. 프런트엔드의 모든 SDK 호출을 함수로 이동합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											분포에 Lambda@Edge 함수를 추가합니다. 뷰어 요청 시 함수를 호출합니다. JSON 파일의 자격 증명을 함수로 이동합니다. 프런트엔드에서 함수로 모든 SDK 호출을 이동합니다.
+											배포에 Lambda@Edge 함수를 추가합니다. 뷰어 요청 시 함수를 호출합니다. JSON 파일의 자격 증명을 함수로 이동합니다. 프런트엔드의 모든 SDK 호출을 함수로 이동합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											CloudFront 함수를 배포에 추가합니다. 뷰어 요청 시 함수를 호출합니다. JSON 파일의 자격 증명을 함수로 이동합니다. 프런트엔드에서 함수로 모든 SDK 호출을 이동합니다.
+											배포판에 CloudFront 기능을 추가합니다. 뷰어 요청 시 함수를 호출합니다. JSON 파일의 자격 증명을 함수로 이동합니다. 프런트엔드의 모든 SDK 호출을 함수로 이동합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 69%; display: flex;" title="">A (69%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">B (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 69%; display: flex;" title="">A (69%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">B (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 4 월 <i>
-							22일, 오후 3:30 </i><a class="title-username" style="">
-								MrTee
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MrTee
-							</a>
-							
-							at <i>
-							April 22, 2023, 3:30 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -253,12 +296,12 @@
 				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 8일 목요일 13:16">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">대답은 A입니다. 다음은 AWS 문서에서 직접 참조한 내용입니다. 콘텐츠가 CloudFront에 의해 캐싱되기 전과 후의 에지." 요구 사항은 STS 서비스에 액세스하는 것이므로 네트워크 액세스가 필요합니다. 따라서 Cloudfront 기능이 될 수 없습니다. 또한 참고로 Cloudfront 기능은 최대 1ms 동안만 실행할 수 있다는 점을 언급할 가치가 있습니다. 분명히 이것은 STS에서 사용자 자격 증명(토큰)을 가져오기에 충분하지 않습니다. 다음 링크의 표에는 Cloudfront 함수와 Lambda@edge 간의 차이점이 요약되어 있습니다. https://aws.amazon.com/blogs/aws/introducing-cloudfront-functions-run-your-code-at-the-edge-with- 모든 규모에서 낮은 대기 시간/</div>
+<div class="comment-content">대답은 A입니다. 다음은 AWS 문서에서 직접 참조한 내용입니다. "네트워크 액세스 또는 더 긴 실행 시간과 같이 CloudFront Functions에서 사용할 수 없는 Lambda@Edge의 일부 기능이 필요한 경우에도 Lambda@를 사용할 수 있습니다. CloudFront에서 콘텐츠를 캐시하기 전후의 엣지입니다." 요구 사항은 STS 서비스에 액세스하는 것이므로 네트워크 액세스가 필요합니다. 따라서 Cloudfront 기능이 될 수 없습니다. 또한 참고로 Cloudfront 기능은 최대 1ms 동안만 실행될 수 있다는 점을 언급할 가치가 있습니다. 분명히 이것은 STS에서 사용자 자격 증명(토큰)을 가져오기에는 충분하지 않습니다. 다음 링크의 표에는 Cloudfront 함수와 Lambda@edge https://aws.amazon.com/blogs/aws/introducing-cloudfront-functions-run-your-code-at-the-edge-with- 간의 차이점이 요약되어 있습니다. 모든 규모에서 짧은 지연 시간/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,11 +345,11 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 11일 금요일 14:57">
-			1주, 1일 전
+			1주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 B입니다. JavaScript SDK 및 STS에 대한 추가 연구 전까지 csG13에 동의했습니다. https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudfront/classes/stsclient.html을 찾았습니다. 질문에 Js SDK 및 STS가 명시되어 있으므로 대답은 B입니다.</div>
+<div class="comment-content">대답은 B입니다. 저는 JavaScript SDK 및 STS에 대한 추가 조사가 있을 때까지 csG13에 동의했습니다. 다음을 찾았습니다: https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-cloudfront/classes/stsclient.html. 질문에 Js SDK 및 STS가 나와 있으므로 대답은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -315,7 +358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,7 +386,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				펑키 프레스코
+				펑키프레스코
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 29일 월요일 20:43">
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,7 +436,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 8일 월요일 20:28">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,16 +478,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				vic614
+				피해자614
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 20:50">
+<span class="comment-date align-middle" title="2023년 4월 28일 금 20:50">
 			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">클라우드 프런트 기능은 네트워크 액세스 권한이 없으므로 lambda @ edge I l이어야 합니다.</div>
+<div class="comment-content">클라우드 프런트 기능에는 네트워크 액세스 권한이 없으며, 람다 @ 엣지 I l이어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -481,16 +524,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 15:30">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 15:30">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A와 B의 차이점은 여기에서 사용하는 Javascript용 SDK입니다. Lambda@Edge 함수는 Node.js, Python 및 Java를 비롯한 다양한 프로그래밍 언어로 작성할 수 있으며 CloudFront 함수는 JavaScript로 작성됩니다.</div>
+<div class="comment-content">A와 B의 차이점은 여기서 사용하는 Javascript용 SDK입니다. Lambda@Edge 함수는 Node.js, Python, Java를 포함한 다양한 프로그래밍 언어로 작성될 수 있는 반면, CloudFront 함수는 JavaScript로 작성됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,8 +565,8 @@
 				클라우드_클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 23일 일 17:57">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 23일 일요일 17:57">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -564,7 +607,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문의 마지막 부분을 다시 읽은 후. Javascript로 작성된 상태로 유지되어야 한다고 언급하지는 않지만 AWS STS를 사용하는 것이 요구 사항인 것 같으므로 A를 답으로 고수할 것 같습니다.</div>
+<div class="comment-content">질문의 마지막 부분을 다시 읽은 후. Javascript로 계속 작성되어야 한다는 언급은 없지만 AWS STS를 사용하는 것이 요구 사항인 것 같으므로 A를 답으로 고수할 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -573,7 +616,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -644,7 +687,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 08 Jun 2023 13:16">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -701,7 +744,7 @@ https://aws.amazon.com/blogs/aws/introducing-cloudfront-functions-run-your-code-
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 11 Aug 2023 14:57">
-			1 week, 1 day ago
+			1 week, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -793,7 +836,7 @@ Since the question states Js SDK and STS the answer is B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 08 May 2023 20:28">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -887,7 +930,7 @@ Since the question states Js SDK and STS the answer is B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 15:30">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -925,7 +968,7 @@ Since the question states Js SDK and STS the answer is B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 17:57">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

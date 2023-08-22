@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 20 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer – Associate 시험 DVA-C02 주제 1 질문 20 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 20 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874592">
 <p class="card-text">
 							
-								개발자가 영화에 대한 정보를 저장하려고 합니다. 각 영화에는 제목, 개봉 연도 및 장르가 있습니다. 영화 정보에는 출연진 및 제작진에 대한 추가 속성도 포함될 수 있습니다. 이 추가 정보는 영화 간에 일치하지 않습니다. 예를 들어 어떤 영화에는 조감독이 있고 다른 영화에는 동물 조련사가 있을 수 있습니다. <br/>개발자는 다음 사용 사례를 지원하는 솔루션을 구현해야 합니다. <br/>지정된 제목 및 개봉 연도에 대해 해당 제목 및 개봉 연도가 있는 영화에 대한 모든 세부 정보를 가져옵니다. <br/>지정된 제목에 대해 해당 제목이 있는 모든 영화에 대한 모든 세부 정보를 가져옵니다. <br/>주어진 장르에 대해 해당 장르의 모든 영화에 대한 모든 세부 정보를 가져옵니다. <br/>이러한 요구 사항을 충족하는 데이터 저장소 구성은 무엇입니까?
+								개발자가 영화에 대한 정보를 저장하려고 합니다. 각 영화에는 제목, 개봉 연도, 장르가 있습니다. 영화 정보에는 출연진과 제작진에 대한 추가 속성도 포함될 수 있습니다. 이 추가 정보는 영화마다 일치하지 않습니다. 예를 들어, 한 영화에는 조감독이 있고 다른 영화에는 동물 조련사가 있을 수 있습니다. <br/>개발자는 다음 사용 사례를 지원하는 솔루션을 구현해야 합니다. <br/>특정 제목과 개봉 연도에 대해 해당 제목과 개봉 연도가 포함된 영화에 대한 모든 세부정보를 가져옵니다. <br/>특정 제목에 대해 해당 제목이 있는 모든 영화에 대한 모든 세부정보를 가져옵니다. <br/>특정 장르에 대해 해당 장르의 모든 영화에 대한 모든 세부정보를 확인하세요. <br/>이러한 요구 사항을 충족하는 데이터 저장소 구성은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Amazon DynamoDB 테이블을 생성합니다. 제목을 파티션 키로, 릴리스 연도를 정렬 키로 구성하는 기본 키로 테이블을 구성합니다. 장르를 파티션 키로 사용하고 제목을 정렬 키로 사용하는 글로벌 보조 인덱스를 생성합니다.
+											Amazon DynamoDB 테이블을 생성합니다. 제목을 파티션 키로, 출시 연도를 정렬 키로 구성하는 기본 키를 사용하여 테이블을 구성합니다. 장르를 파티션 키로, 제목을 정렬 키로 사용하는 글로벌 보조 인덱스를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a> 
-							
-							시간: <i>
-							2023년 3월 21일, 오후 1:30</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Untamables
-							</a>
-							
-							at <i>
-							March 21, 2023, 1:30 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,12 +294,12 @@
 				제이바르마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 22:43">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 22:43">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">데이터베이스에 입력되는 각 데이터의 스키마가 항상 동일하지 않기 때문에 NoSQL 데이터베이스가 필요합니다. 따라서 RDS DB 인스턴스는 제외됩니다. 답은 A와 B 사이에 있습니다. 가능한 한 고유한 파티션 키가 필요하므로 영화 제목을 파티션 키로 사용하고 싶습니다. 파티션 키를 장르로 사용하면 핫 파티션 문제가 발생하고 DynamoDB에 저장된 데이터가 왜곡되기 때문입니다. 따라서 옵션 A가 답입니다.</div>
+<div class="comment-content">데이터베이스에 입력되는 각 데이터의 스키마가 항상 동일하지 않기 때문에 NoSQL 데이터베이스가 필요합니다. 따라서 RDS DB 인스턴스는 제외됩니다. 답은 A와 B 사이에 있습니다. 파티션 키는 최대한 고유해야 하므로 영화 제목을 파티션 키로 사용하고 싶습니다. 파티션 키를 장르로 사용하면 핫 파티션 문제가 발생하고 DynamoDB에 저장된 데이터가 왜곡되기 때문입니다. 따라서 선택 A가 답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,7 +345,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Amazon DynamoDB 테이블을 생성합니다. 제목을 파티션 키로, 릴리스 연도를 정렬 키로 구성하는 기본 키로 테이블을 구성합니다. 장르를 파티션 키로 사용하고 제목을 정렬 키로 사용하는 글로벌 보조 인덱스를 생성합니다. 이 옵션은 주어진 요구 사항에 가장 적합한 선택입니다. 개발자는 DynamoDB를 사용하여 영화 정보를 유연하고 확장 가능한 NoSQL 데이터베이스에 저장할 수 있습니다. 기본 키는 제목과 개봉 연도로 설정할 수 있어 특정 영화에 대한 정보를 효율적으로 검색할 수 있습니다. global secondary index는 장르를 파티션 키로 사용하여 생성할 수 있으므로 특정 장르의 모든 영화에 대한 정보를 효율적으로 검색할 수 있습니다. 추가적으로,</div>
+<div class="comment-content">A. Amazon DynamoDB 테이블을 생성합니다. 제목을 파티션 키로, 출시 연도를 정렬 키로 구성하는 기본 키를 사용하여 테이블을 구성합니다. 장르를 파티션 키로, 제목을 정렬 키로 사용하는 글로벌 보조 인덱스를 생성합니다. 이 옵션은 주어진 요구 사항에 가장 적합한 선택입니다. 개발자는 DynamoDB를 사용하여 유연하고 확장 가능한 NoSQL 데이터베이스에 영화 정보를 저장할 수 있습니다. 기본 키를 제목과 개봉 연도로 설정할 수 있어 특정 영화에 대한 정보를 효율적으로 검색할 수 있습니다. 장르를 파티션 키로 사용하여 글로벌 보조 인덱스를 생성할 수 있으므로 특정 장르의 모든 영화에 대한 정보를 효율적으로 검색할 수 있습니다. 추가적으로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,13 +385,13 @@
 				크록
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수 10:34">
+<span class="comment-date align-middle" title="2023년 4월 5일 수요일 10:34">
 			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A입니다. 전적으로 동의합니다. 하나의 적절한 솔루션입니다. 그러나 제 생각에는 장르는 GSI 파티션 키로서 그다지 좋은 옵션이 아닙니다. 높은 분포가 아니며 핫 파티션을 얻을 수 있습니다.</div>
+<div class="comment-content">A입니다. 전적으로 동의합니다. 하나의 적절한 솔루션입니다. 하지만 제 생각에는 장르는 GSI 파티션 키만큼 좋은 옵션은 아닙니다. 이는 배포 수준이 높지 않으며 핫 파티션을 얻을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,7 +428,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 15:08">
@@ -394,7 +437,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 제목을 기준으로 검색해야 하므로 제목으로 분할하는 것이 더 낫기 때문입니다. 또한 장르별로 검색해야 하므로 장르를 파티션 키로 사용하여 GSI를 만드는 것이 좋습니다.</div>
+<div class="comment-content">옵션 A는 제목을 기준으로 검색해야 하므로 제목별로 구분하는 것이 더 낫기 때문입니다. 또한 장르별로 검색해야 하므로 장르를 파티션 키로 사용하여 GSI를 만드는 것이 좋은 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,13 +477,13 @@
 				길들일 수 없는 것
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 13:30">
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 13:30">
 			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. Amazon DynamoDB는 항목 간에 일관성 없는 속성 데이터를 저장하는 데 적합합니다. 옵션 B가 잘못되었습니다. 이 솔루션은 조합, 제목 및 출시 연도의 조건으로 항목을 가져오는 데 도움이 되지 않습니다.</div>
+<div class="comment-content">정답은 A입니다. Amazon DynamoDB는 항목 전체에 걸쳐 일관되지 않은 속성 데이터를 저장하는 데 적합합니다. 옵션 B가 잘못되었습니다. 이 솔루션은 조합, 제목 및 출시 연도 조건의 항목을 얻는 데 도움이 되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 22:43">
-			1 week, 3 days ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

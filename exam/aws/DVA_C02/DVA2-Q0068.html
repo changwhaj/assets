@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 142;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 1 문제 68 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Developer - Associate DVA-C02 시험 주제 1 문제 68 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 68 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="882051">
 <p class="card-text">
 							
-								회사에서 AWS Lambda 기능을 사용하는 서버리스 애플리케이션을 구축하고 있습니다. 회사는 개발 환경에서 Lambda 함수를 테스트하기 위해 일련의 테스트 이벤트를 생성해야 합니다. 테스트 이벤트는 한 번 생성된 다음 IAM 개발자 그룹의 모든 개발자가 사용합니다. 테스트 이벤트는 IAM 개발자 그룹의 모든 IAM 사용자가 편집할 수 있어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 AWS Lambda 기능을 사용하는 서버리스 애플리케이션을 구축하고 있습니다. 회사는 개발 환경에서 Lambda 기능을 테스트하기 위해 일련의 테스트 이벤트를 생성해야 합니다. 테스트 이벤트는 한 번 생성되면 IAM 개발자 그룹의 모든 개발자가 사용하게 됩니다. 테스트 이벤트는 IAM 개발자 그룹의 모든 IAM 사용자가 편집할 수 있어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Amazon S3에서 JSON 객체로 테스트 이벤트를 생성하고 저장합니다. 모든 IAM 사용자에게 S3 버킷 액세스를 허용합니다.
+											Amazon S3에서 테스트 이벤트를 JSON 객체로 생성하고 저장합니다. 모든 IAM 사용자에게 S3 버킷 액세스를 허용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -114,7 +177,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -128,16 +191,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Fyssy
-							</a> 
-							
-							시간: <i>
-							2023년 4월 17일 오후 3:33</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Fyssy
-							</a>
-							
-							at <i>
-							April 17, 2023, 3:33 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -260,7 +303,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">"테스트" 탭 아래에 옵션이 있습니다. (공유 가능) 이 이벤트는 공유 가능한 이벤트에 액세스하고 사용할 수 있는 권한이 있는 동일한 계정 내 IAM 사용자가 사용할 수 있습니다. Lambda에서 직접 확인할 수 있습니다. 또한 https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating-shareable-events 설명서도 있습니다.</div>
+<div class="comment-content">"테스트" 탭 아래에 옵션이 있습니다. (공유 가능) 이 이벤트는 공유 가능한 이벤트에 액세스하고 사용할 권한이 있는 동일한 계정 내 IAM 사용자가 사용할 수 있습니다. 이를 Lambda에서 직접 확인할 수 있습니다. 또한 여기에 문서 https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating-shareable-events가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -297,14 +340,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				뒤버스
+				듀베르
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 31일 월요일 06:05">
-			2주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 31일 (월) 06:05">
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -317,7 +360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,12 +392,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 22일 월요일 22:54">
-			2개월, 4주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">올해 3월부터 동일한 계정 내에서 다른 사용자와 테스트 이벤트를 공유할 수 있습니다.</div>
+<div class="comment-content">올해 3월부터 동일한 계정 내에서 다른 사용자와 테스트 이벤트를 공유하는 것이 가능해졌습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -394,13 +437,13 @@
 				클라우드_클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 23일 일 17:10">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 23일 일요일 17:10">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">람다 콘솔에는 다른 사용자와 이벤트를 공유할 수 있는 옵션이 있습니다.</div>
+<div class="comment-content">람다 콘솔에는 다른 사용자와 이벤트를 공유하는 옵션이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,7 +480,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 20일 목요일 15:57">
@@ -483,7 +526,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 20일 목요일 15:56">
@@ -492,7 +535,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">IAM 개발자 그룹의 모든 개발자가 사용할 수 있고 그룹의 모든 IAM 사용자가 편집할 수 있는 일련의 테스트 이벤트를 생성하려면 회사는 테스트 이벤트를 생성하여 Amazon S3에 JSON 객체로 저장하고 허용해야 합니다. 모든 IAM 사용자에 대한 S3 버킷 액세스(옵션 A). 이렇게 하면 IAM 개발자 그룹의 모든 개발자가 필요에 따라 테스트 이벤트에 액세스하고 편집할 수 있습니다. 다른 옵션은 여러 개발자가 테스트 이벤트에 액세스하고 편집할 수 있는 방법을 제공하지 않습니다.</div>
+<div class="comment-content">IAM 개발자 그룹의 모든 개발자가 사용할 수 있고 그룹의 모든 IAM 사용자가 편집할 수 있는 테스트 이벤트 세트를 생성하려면 회사는 Amazon S3에 테스트 이벤트를 JSON 객체로 생성 및 저장하고 허용해야 합니다. 모든 IAM 사용자에 대한 S3 버킷 액세스(옵션 A). 이렇게 하면 IAM 개발자 그룹의 모든 개발자가 필요에 따라 테스트 이벤트에 액세스하고 편집할 수 있습니다. 다른 옵션은 여러 개발자가 테스트 이벤트에 액세스하고 편집할 수 있는 방법을 제공하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,7 +575,7 @@
 				피시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 19일 수 10:19">
+<span class="comment-date align-middle" title="2023년 4월 19일 수요일 10:19">
 			4 개월 전에
 		</span>
 </div>
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -578,7 +621,7 @@
 				피시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 15:33">
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 15:33">
 			4 개월 전에
 		</span>
 </div>
@@ -593,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -613,15 +656,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Naj_64
+				나즈_64
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 10:07">
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 10:07">
 			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 틀렸다. 테스트를 편집하려면 IAM 권한만 있으면 됩니다. "공유 가능한 테스트 이벤트를 보고, 공유하고, 편집하려면 다음 모두에 대한 권한이 있어야 합니다..." https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating -shareable-events 나는 B와 함께 갈 것이다.</div>
+<div class="comment-content">A는 틀렸다. 테스트를 편집하려면 IAM 권한만 있으면 됩니다. "공유 가능한 테스트 이벤트를 보고, 공유하고, 편집하려면 다음 모두에 대한 권한이 있어야 합니다..." https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating -shareable-events 저는 B와 함께 가겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -747,7 +790,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating-sha
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 31 Jul 2023 06:05">
-			2 weeks, 5 days ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -792,7 +835,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating-sha
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 22:54">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -838,7 +881,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#creating-sha
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 17:10">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
