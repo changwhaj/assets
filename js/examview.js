@@ -96,7 +96,7 @@
         e.preventDefault();
         var container = $(this).parent('.action-row');
         container.find('.show-korean').removeClass('d-none');
-        container = container.parent('.action-row-container').parent('.container')
+        container = $(this).parent('.action-row').parent('.action-row-container').parent('.container')
         container.find('.discussion-list-header').fadeOut(0);
         container.find('.discussion-list-header-en').fadeIn(0);
         container.find('.discussion-header-container').fadeOut(0);
@@ -110,7 +110,7 @@
         e.preventDefault();
         var container = $(this).parent('.action-row');
         container.find('.show-english').removeClass('d-none');
-        container = container.parent('.action-row-container').parent('.container')
+        container = $(this).parent('.action-row').parent('.action-row-container').parent('.container')
         container.find('.discussion-list-header-en').fadeOut(0);
         container.find('.discussion-list-header').fadeIn(0);
         container.find('.discussion-header-container-en').fadeOut(0);
