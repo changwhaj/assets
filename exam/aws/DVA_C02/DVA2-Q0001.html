@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
@@ -42,11 +43,76 @@
 <div class="container">
 <a class="badge show-english" href="#">English</a>
 <a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>언어선택
+<a class="badge show-english1" href="#">English</a>
+<a class="badge show-korean1 d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script>
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
+	var totalPages = 11;  // Adjust this to the total number of pages
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 1 discussion</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer - Associate DVA-C02 주제 1 문제 1 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer - Associate DVA-C02 topic 1 question 1 discussion</h1>
@@ -61,19 +127,17 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Exam question from
-						
-						Amazon's
-						<a class="discussion-link">AWS Certified Developer - Associate DVA-C02</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer - Associate DVA-C02 시험 문제</a>
 <div>
-							Question #: 1<br/>
-							Topic #: 1
+							질문 #: 1 <br/>
+							주제 #: 1
 						</div>
 </div>
 <div class="question-body mt-3 pt-3 border-top" data-id="874573">
 <p class="card-text">
 							
-								A company is implementing an application on Amazon EC2 instances. The application needs to process incoming transactions. When the application detects a transaction that is not valid, the application must send a chat message to the company's support team. To send the message, the application needs to retrieve the access token to authenticate by using the chat API.<br/>A developer needs to implement a solution to store the access token. The access token must be encrypted at rest and in transit. The access token must also be accessible from other AWS accounts.<br/>Which solution will meet these requirements with the LEAST management overhead?
+								한 회사가 Amazon EC2 인스턴스에 애플리케이션을 구현하고 있습니다. 애플리케이션은 들어오는 트랜잭션을 처리해야 합니다. 애플리케이션이 유효하지 않은 트랜잭션을 감지하면 애플리케이션은 회사의 지원 팀에 채팅 메시지를 보내야 합니다. 메시지를 보내려면 애플리케이션이 채팅 API를 사용하여 인증할 액세스 토큰을 검색해야 합니다. <br/>개발자는 액세스 토큰을 저장하는 솔루션을 구현해야 합니다. 액세스 토큰은 저장 및 전송 중에 암호화되어야 합니다. 액세스 토큰은 다른 AWS 계정에서도 액세스할 수 있어야 합니다. <br/>최소한의 관리 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -84,60 +148,50 @@
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="A">
 													A.
-												</span>
+												</span> 
 											
-											Use an AWS Systems Manager Parameter Store SecureString parameter that uses an AWS Key Management Service (AWS KMS) AWS managed key to store the access token. Add a resource-based policy to the parameter to allow access from other accounts. Update the IAM role of the EC2 instances with permissions to access Parameter Store. Retrieve the token from Parameter Store with the decrypt flag enabled. Use the decrypted access token to send the message to the chat.
+											AWS KMS(AWS Key Management Service) AWS 관리형 키를 사용하는 AWS Systems Manager Parameter Store SecureString 매개변수를 사용하여 액세스 토큰을 저장합니다. 다른 계정의 액세스를 허용하려면 매개변수에 리소스 기반 정책을 추가하세요. Parameter Store에 액세스할 수 있는 권한으로 EC2 인스턴스의 IAM 역할을 업데이트합니다. 암호 해독 플래그가 활성화된 상태로 Parameter Store에서 토큰을 검색합니다. 해독된 액세스 토큰을 사용하여 메시지를 채팅에 보냅니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
-												</span>
+												</span> 
 											
-											Encrypt the access token by using an AWS Key Management Service (AWS KMS) customer managed key. Store the access token in an Amazon DynamoDB table. Update the IAM role of the EC2 instances with permissions to access DynamoDB and AWS KMS. Retrieve the token from DynamoDDecrypt the token by using AWS KMS on the EC2 instances. Use the decrypted access token to send the message to the chat.
+											AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 액세스 토큰을 암호화합니다. Amazon DynamoDB 테이블에 액세스 토큰을 저장합니다. DynamoDB 및 AWS KMS에 액세스할 수 있는 권한으로 EC2 인스턴스의 IAM 역할을 업데이트합니다. DynamoD에서 토큰 검색EC2 인스턴스에서 AWS KMS를 사용하여 토큰을 해독합니다. 해독된 액세스 토큰을 사용하여 메시지를 채팅에 보냅니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
-												</span>
+												</span> 
 											
-											Use AWS Secrets Manager with an AWS Key Management Service (AWS KMS) customer managed key to store the access token. Add a resource-based policy to the secret to allow access from other accounts. Update the IAM role of the EC2 instances with permissions to access Secrets Manager. Retrieve the token from Secrets Manager. Use the decrypted access token to send the message to the chat.
+											AWS Key Management Service(AWS KMS) 고객 관리형 키와 함께 AWS Secrets Manager를 사용하여 액세스 토큰을 저장합니다. 다른 계정의 액세스를 허용하려면 보안 비밀에 리소스 기반 정책을 추가하세요. Secrets Manager에 액세스할 수 있는 권한으로 EC2 인스턴스의 IAM 역할을 업데이트합니다. Secrets Manager에서 토큰을 검색합니다. 해독된 액세스 토큰을 사용하여 메시지를 채팅에 보냅니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
-                Most Voted
+                최다 투표
             </span></li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
-												</span>
+												</span> 
 											
-											Encrypt the access token by using an AWS Key Management Service (AWS KMS) AWS managed key. Store the access token in an Amazon S3 bucket. Add a bucket policy to the S3 bucket to allow access from other accounts. Update the IAM role of the EC2 instances with permissions to access Amazon S3 and AWS KMS. Retrieve the token from the S3 bucket. Decrypt the token by using AWS KMS on the EC2 instances. Use the decrypted access token to send the massage to the chat.
+											AWS Key Management Service(AWS KMS) AWS 관리형 키를 사용하여 액세스 토큰을 암호화합니다. Amazon S3 버킷에 액세스 토큰을 저장합니다. 다른 계정의 액세스를 허용하려면 S3 버킷에 버킷 정책을 추가하세요. Amazon S3 및 AWS KMS에 액세스할 수 있는 권한으로 EC2 인스턴스의 IAM 역할을 업데이트합니다. S3 버킷에서 토큰을 검색합니다. EC2 인스턴스에서 AWS KMS를 사용하여 토큰을 해독합니다. 해독된 액세스 토큰을 사용하여 메시지를 채팅에 보냅니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">Show Suggested Answer</a>
-<a class="btn btn-primary hide-solution d-none" href="#">Hide Answer</a>
-<div class="card-text question-answer bg-light white-text">
-<span class="correct-answer-box"><strong>Suggested Answer:</strong>
-<span class="correct-answer">D</span>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
+<a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
+<div class="card-text question-answer bg-light white-text" style="display: none;">
+<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer">D </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="28 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">C (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">Other</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="28 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">씨 (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								good_
-							</a>
-							
-							at <i>
-							March 16, 2023, 9:21 a.m.</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -210,22 +264,12 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								good_
-							</a>
-							
-							at <i>
-							March 16, 2023, 9:21 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
 <a class="badge hide-comment d-none" href="#">댓글 숨기기</a>
 <div class="discussion-page-comments-section" data-discussion-question-id="102778" style="display: none">
-<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">Comments</h4></div>
+<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">코멘트</h4></div>
 <!-- discussion.html -->
 <!-- Discussion start -->
 <div class="container outer-discussion-container">
@@ -247,31 +291,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Untamables
+				길들일 수 없는 것
 			</h5>
 </a>
 <span class="badge badge-primary">
-				Highly Voted <i class="fa fa-thumbs-up"></i>
+				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="Tue 21 Mar 2023 00:40">
-			5 months ago
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 00:40">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">The correct answer is C.
-https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/
-https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html
-Option A is wrong. It seems to be a good solution. However, AWS managed keys cannot be used for cross account accessing.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">정답은 C입니다. https://aws.amazon.com/premiumsupport/knowledge-center/secrets-manager-share-between-accounts/ auth-and-access_examples_cross.html 옵션 A가 잘못되었습니다. 좋은 해결책인 것 같습니다. 그러나 AWS 관리 키는 교차 계정 액세스에 사용할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">13</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">13</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -291,24 +332,24 @@ Option A is wrong. It seems to be a good solution. However, AWS managed keys can
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				jipark
+				지파크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Fri 04 Aug 2023 03:25">
-			2 weeks, 3 days ago
+<span class="comment-date align-middle" title="2023년 8월 4일 금요일 03:25">
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">cross account, rotate is key for 'Security Manager'</div>
+<div class="comment-content">교차 계정, 회전은 '보안 관리자'의 핵심입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,24 +377,24 @@ Option A is wrong. It seems to be a good solution. However, AWS managed keys can
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				CyberBaby803
+				사이버베이비803
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Fri 24 Mar 2023 22:00">
-			4 months, 4 weeks ago
+<span class="comment-date align-middle" title="2023년 3월 24일 금요일 22:00">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Based on this AWS managed keys can be used for cross account accessing. https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html</div>
+<div class="comment-content">이 AWS 관리 키를 기반으로 교차 계정 액세스에 사용할 수 있습니다. https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -373,26 +414,24 @@ Option A is wrong. It seems to be a good solution. However, AWS managed keys can
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AgboolaKun
+				아그볼라쿤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 17 Jun 2023 18:35">
-			2 months ago
+<span class="comment-date align-middle" title="2023년 6월 17일 (토) 18:35">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">I am not sure if the documentation you provided specifically say that AWS managed keys can be used for cross account accessing. 
-
-However, @Untamables explanation is on point. Please see this Stack Overflow thread - https://stackoverflow.com/questions/63420732/sharing-an-aws-managed-kms-key-with-another-account</div>
+<div class="comment-content">귀하가 제공한 문서에 AWS 관리형 키를 교차 계정 액세스에 사용할 수 있다고 구체적으로 명시되어 있는지 잘 모르겠습니다. 그러나 @Untamables 설명이 중요합니다. 이 스택 오버플로 스레드를 참조하십시오 - https://stackoverflow.com/questions/63420732/sharing-an-aws-managed-kms-key-with-another-account</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,27 +475,27 @@ However, @Untamables explanation is on point. Please see this Stack Overflow thr
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				geekdamsel
+				괴짜 아가씨
 			</h5>
 </a>
 <span class="badge badge-primary">
-				Highly Voted <i class="fa fa-thumbs-up"></i>
+				높은 투표<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="Sat 06 May 2023 18:18">
-			3 months, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 6일 토요일 18:18">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">The questions came in my exam.Correct answer is C.</div>
+<div class="comment-content">내 시험에 문제가 나왔어요.정답은 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">5</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,28 +523,27 @@ However, @Untamables explanation is on point. Please see this Stack Overflow thr
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				meadow
+				목초지
 			</h5>
 </a>
 <span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
+				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="Thu 17 Aug 2023 02:14">
-			4 days, 8 hours ago
+<span class="comment-date align-middle" title="가을 2023년 8월 17일 02:14">
+			5일 10시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Is it possible by any chance to get the full pdf exam to my email, pls?
-amandah1992@outlook.com</div>
+<div class="comment-content">혹시 내 이메일로 전체 PDF 시험을 받을 수 있나요? amandah1992@outlook.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -536,21 +574,21 @@ amandah1992@outlook.com</div>
 				RBKBCT
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 14 Aug 2023 04:58">
-			1 week ago
+<span class="comment-date align-middle" title="2023년 8월 14일 월요일 04:58">
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Can someone send me the pdf at rb.kommavarapu@gmail.com?</div>
+<div class="comment-content">누군가 rb.kommavarapu@gmail.com으로 PDF를 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -578,25 +616,24 @@ amandah1992@outlook.com</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				irukandji
+				이루칸지
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 07 Aug 2023 19:46">
-			1 week, 6 days ago
+<span class="comment-date align-middle" title="2023년 8월 7일 월요일 19:46">
+			2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Is it possible to get the full pdf exam to my email, please?
-elohimimmanu@gmail.com   thank you</div>
+<div class="comment-content">내 이메일로 전체 pdf 시험을 받을 수 있습니까? elohimimmanu@gmail.com 감사합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,24 +661,24 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AnkitArora
+				안킷아로라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 06 Aug 2023 05:45">
-			2 weeks, 1 day ago
+<span class="comment-date align-middle" title="2023년 8월 6일 일요일 05:45">
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Can someone send me the pdf at ankit.arora00767@gmail.com?</div>
+<div class="comment-content">누군가 ankit.arora00767@gmail.com으로 PDF를 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -669,24 +706,24 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				brunolleschi1740
+				브루놀레스키1740
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 06 Aug 2023 01:56">
-			2 weeks, 1 day ago
+<span class="comment-date align-middle" title="2023년 8월 6일 일요일 01:56">
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">can someone send me the entire PDF brunolleschi1740@gmail.com</div>
+<div class="comment-content">누군가 나에게 전체 PDF를 보낼 수 있습니까 brunolleschi1740@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,24 +751,24 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				sumaiyaahm
+				수마이야암
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Wed 26 Jul 2023 18:27">
-			3 weeks, 4 days ago
+<span class="comment-date align-middle" title="2023년 7월 26일 수 18:27">
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Hi, can anyone send me the entire pdf to sumaiyaahmed0488@gmail.com</div>
+<div class="comment-content">안녕하세요, 누구든지 sumaiyaahmed0488@gmail.com으로 전체 PDF를 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -759,25 +796,25 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Zeus_
+				제우스_
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 25 Jul 2023 10:29">
-			3 weeks, 6 days ago
+<span class="comment-date align-middle" title="2023년 7월 25일 (화) 10:29">
+			4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">Correct Answer is C. Stephen Marek practice test on udemy has this question.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">정답은 C입니다. udemy의 Stephen Marek 연습 시험에 이 질문이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,24 +842,24 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				backfringe
+				백프린지
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 20 Jul 2023 05:07">
-			1 month ago
+<span class="comment-date align-middle" title="가을 2023년 7월 20일 05:07">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">vote for C.</div>
+<div class="comment-content">C에게 투표하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -850,24 +887,24 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				monkeyjuthu
+				원숭이주투
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Wed 12 Jul 2023 09:01">
-			1 month, 1 week ago
+<span class="comment-date align-middle" title="2023년 7월 12일 수요일 09:01">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. Not A because resource based access policy is not allowed for parameter store in KMS. Only supports Identity Based. Whereas secret manager supports both</div>
+<div class="comment-content">C. 리소스 기반 액세스 정책이 KMS의 매개 변수 저장소에 허용되지 않기 때문에 A가 아닙니다. ID 기반만 지원합니다. 비밀 관리자는 둘 다 지원하지만</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -895,30 +932,25 @@ elohimimmanu@gmail.com   thank you</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				eberhe900
+				에버헤900
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 06 Jul 2023 06:10">
-			1 month, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 06:10">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
-<div class="comment-content">Access from Other AWS Accounts:
-
-Create a cross-account IAM role in the AWS account where the access token is stored.
-Define the necessary permissions for the IAM role to allow access to the encrypted token.
-Share the encrypted token with the other AWS accounts by granting the IAM role access to those accounts.
-The receiving accounts can then assume the IAM role to access the encrypted token securely.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
+<div class="comment-content">다른 AWS 계정에서 액세스: 액세스 토큰이 저장된 AWS 계정에서 교차 계정 IAM 역할을 생성합니다. 암호화된 토큰에 대한 액세스를 허용하기 위해 IAM 역할에 필요한 권한을 정의합니다. 해당 계정에 대한 IAM 역할 액세스 권한을 부여하여 다른 AWS 계정과 암호화된 토큰을 공유합니다. 그러면 수신 계정이 IAM 역할을 맡아 암호화된 토큰에 안전하게 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -949,22 +981,22 @@ The receiving accounts can then assume the IAM role to access the encrypted toke
 				Tee400
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 19 Jun 2023 00:26">
-			2 months ago
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 00:26">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
-<div class="comment-content">Use an AWS Systems Manager Parameter Store SecureString parameter that uses an AWS Key Management Service (AWS KMS) AWS managed key to store the access token. This option allows you to securely store the access token in the Parameter Store, which automatically encrypts the data at rest and in transit. By adding a resource-based policy, you can also grant access to the access token from other AWS accounts. The IAM role of the EC2 instances can be updated to allow permissions to access the Parameter Store, and the access token can be retrieved with the decrypt flag enabled for use in sending the chat message. This option requires minimal setup and management compared to the other choices.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">AWS Key Management Service(AWS KMS) AWS 관리형 키를 사용하는 AWS Systems Manager Parameter Store SecureString 파라미터를 사용하여 액세스 토큰을 저장합니다. 이 옵션을 사용하면 저장 및 전송 중인 데이터를 자동으로 암호화하는 Parameter Store에 액세스 토큰을 안전하게 저장할 수 있습니다. 리소스 기반 정책을 추가하면 다른 AWS 계정에서 액세스 토큰에 대한 액세스 권한을 부여할 수도 있습니다. Parameter Store에 대한 액세스 권한을 허용하도록 EC2 인스턴스의 IAM 역할을 업데이트할 수 있으며 채팅 메시지 전송에 사용할 수 있도록 활성화된 암호 해독 플래그로 액세스 토큰을 검색할 수 있습니다. 이 옵션은 다른 선택 항목에 비해 최소한의 설정 및 관리가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -992,27 +1024,25 @@ The receiving accounts can then assume the IAM role to access the encrypted toke
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AgboolaKun
+				아그볼라쿤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 17 Jun 2023 21:50">
-			2 months ago
+<span class="comment-date align-middle" title="2023년 6월 17일 (토) 21:50">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">The argument should be between A and C. However, the AWS owned keys in option A disqualifies it. 
-
-This is because AWS owned keys cannot be used fro cross-accounts accessing. Therefore, correct answer is C. Please read the following Stack Overflow thread - https://stackoverflow.com/questions/63420732/sharing-an-aws-managed-kms-key-with-another-account</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">인수는 A와 C 사이에 있어야 합니다. 그러나 옵션 A의 AWS 소유 키는 이를 무효화합니다. AWS 소유 키는 교차 계정 액세스에 사용할 수 없기 때문입니다. 따라서 정답은 C입니다. 다음 스택 오버플로 스레드를 읽으십시오 - https://stackoverflow.com/questions/63420732/sharing-an-aws-managed-kms-key-with-another-account</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1040,24 +1070,24 @@ This is because AWS owned keys cannot be used fro cross-accounts accessing. Ther
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				poojakv
+				푸자크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Fri 16 Jun 2023 08:13">
-			2 months ago
+<span class="comment-date align-middle" title="2023년 6월 16일 금요일 08:13">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Hi, can anyone send me the entire pdf to 11poojakuthnikar@gmail.com</div>
+<div class="comment-content">안녕하세요, 누구든지 전체 PDF를 11poojakuthnikar@gmail.com으로 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1085,24 +1115,24 @@ This is because AWS owned keys cannot be used fro cross-accounts accessing. Ther
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Agniva
+				아그니바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 11 Jun 2023 06:46">
-			2 months, 1 week ago
+<span class="comment-date align-middle" title="2023년 6월 11일 일 06:46">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Can someone send me the pdf at agnivacosmics@gmail.com?</div>
+<div class="comment-content">agnivacosmics@gmail.com으로 pdf를 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1130,25 +1160,24 @@ This is because AWS owned keys cannot be used fro cross-accounts accessing. Ther
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				[Removed]
+				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 08 Jun 2023 03:59">
-			2 months, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 6월 8일 목요일 03:59">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Can someone send me PDF of the questions on manishgoyal1590@gmail.com.
-Thanks in advance ! :)</div>
+<div class="comment-content">manishgoyal1590@gmail.com으로 질문 PDF를 보내주실 수 있나요? 미리 감사드립니다! :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1176,26 +1205,24 @@ Thanks in advance ! :)</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ScherbakovMike
+				셰르바코프 마이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 30 May 2023 15:48">
-			2 months, 3 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 30일 화요일 15:48">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Definitely, it's not A, because the AWS Systems manager parameter store doesn't support cross account access. 
-I guess, C is not correct, because there will be many saved tokens.
-D, yes, why not, S3 access is possible from different accounts.</div>
+<div class="comment-content">확실히 A가 아닙니다. AWS 시스템 관리자 파라미터 스토어는 교차 계정 액세스를 지원하지 않기 때문입니다. 저장된 토큰이 많기 때문에 C가 정확하지 않은 것 같습니다. D, 예, 다른 계정에서 S3 액세스가 가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1223,25 +1250,25 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ezredame
+				에즈레 아가씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 30 May 2023 11:27">
-			2 months, 3 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 30일 화요일 11:27">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">The question is tricky, I thought it was A but you can't use the AWS KMS default key for the account. The AWS KMS default key is created, managed, and used on your behalf by an AWS service that runs on AWS Key Management Service. The AWS KMS default key is unique to your AWS account and AWS Region. Only the service that created the AWS managed key can use it. So the answer should be C</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">질문이 까다롭습니다. A인 줄 알았는데 계정에 AWS KMS 기본 키를 사용할 수 없습니다. AWS KMS 기본 키는 AWS Key Management Service에서 실행되는 AWS 서비스가 사용자를 대신하여 생성, 관리 및 사용합니다. AWS KMS 기본 키는 AWS 계정 및 AWS 리전에 고유합니다. AWS 관리형 키를 생성한 서비스만 사용할 수 있습니다. 따라서 답은 C여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1269,24 +1296,24 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				iamjwala
+				임즈왈라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 27 May 2023 19:50">
-			2 months, 3 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 27일 (토) 19:50">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">can someone send me the entire PDF jwalachaubey@gmail.com ?</div>
+<div class="comment-content">누군가 나에게 전체 PDF jwalachaubey@gmail.com을 보낼 수 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1306,24 +1333,24 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				jayvarma
+				제이바르마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Wed 09 Aug 2023 03:59">
-			1 week, 5 days ago
+<span class="comment-date align-middle" title="2023년 8월 9일 수 03:59">
+			1주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">can someone please send the pdf to jayanthgorinta1@gmail.com</div>
+<div class="comment-content">누군가 jayanthgorinta1@gmail.com으로 pdf를 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1354,21 +1381,21 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 				alice31
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 05 Jun 2023 05:19">
-			2 months, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 6월 5일 월요일 05:19">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">can you send me please jyotijha31998@gmail.com</div>
+<div class="comment-content">저에게 jyotijha31998@gmail.com을 보내주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1396,24 +1423,24 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				MayGirl
+				메이걸
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 30 May 2023 12:59">
-			2 months, 3 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 30일 화요일 12:59">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">check your email</div>
+<div class="comment-content">이메일을 확인</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1433,24 +1460,24 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				priya2224
+				프리야2224
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 24 Jul 2023 09:46">
-			4 weeks ago
+<span class="comment-date align-middle" title="2023년 7월 24일 월요일 09:46">
+			4주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">please send the full pdf priyapadhi022@gmail.com</div>
+<div class="comment-content">전체 PDF를 priyapadhi022@gmail.com으로 보내주십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1481,22 +1508,21 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 				nireesha78
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Mon 10 Jul 2023 12:20">
-			1 month, 1 week ago
+<span class="comment-date align-middle" title="2023년 7월 10일 (월) 12:20">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Hey MayGirl,
-Could you please send me the PDF challanireesha1996@gmail.com</div>
+<div class="comment-content">Hey MayGirl, PDF를 보내주세요 challanireesha1996@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1527,21 +1553,21 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 				xoxo28
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 11 Jun 2023 18:24">
-			2 months, 1 week ago
+<span class="comment-date align-middle" title="2023년 6월 11일 일 18:24">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">can you please send me the pdf too? pmdlovely@gmail.com</div>
+<div class="comment-content">pdf도 보내주실 수 있나요? pmdlovely@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1561,24 +1587,24 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				chickyZiKo
+				병아리ZiKo
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 15 Jun 2023 18:25">
-			2 months ago
+<span class="comment-date align-middle" title="2023년 6월 15일 목요일 18:25">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Hi, please also send me the pdf file. hi.its.cloudy@gmail.com</div>
+<div class="comment-content">안녕하세요, pdf 파일도 보내주세요. hi.its.cloudy@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1630,25 +1656,25 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				peterpain
+				피터페인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 23 May 2023 14:42">
-			2 months, 4 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 23일 화요일 14:42">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">Use Secrets Manager to store credentials and rotate it</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">Secrets Manager를 사용하여 자격 증명 저장 및 교체</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1676,24 +1702,24 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Sidoho
+				키스해
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 21 May 2023 19:42">
-			3 months ago
+<span class="comment-date align-middle" title="2023년 5월 21일 일 19:42">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">I took my exam yesterday, still waiting for the results. Some of the questions appear in the exam but some of them have variations in question and answers, a few of them are still accurate. So don't rely only on this source for your exam. I guess AWS surely updates the question pool due to leaked exams. Still good source but not worth to pay $$$</div>
+<div class="comment-content">나는 어제 시험을 치렀고, 여전히 결과를 기다리고 있었다. 일부 문제는 시험에 나오지만 일부는 질문과 답이 다양하고 일부는 여전히 정확합니다. 따라서 시험을 위해 이 소스에만 의존하지 마십시오. 유출된 시험으로 인해 AWS가 확실히 질문 풀을 업데이트한다고 생각합니다. 여전히 좋은 출처이지만 $$$를 지불할 가치가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1721,29 +1747,25 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Bibay
+				비가 온다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 06 May 2023 11:55">
-			3 months, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 6일 토요일 11:55">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">C. The Lambda function does not have IAM permissions to write to DynamoDB is the most likely cause of this issue.
-
-When a Lambda function is unable to write to a DynamoDB table, it is usually because it lacks the necessary IAM permissions to perform the action. To resolve this issue, the developer needs to grant the Lambda function's execution role permissions to write to the DynamoDB table. The execution role should have the necessary policies attached to it. The developer can use the AWS Identity and Access Management (IAM) console to add the necessary policies to the execution role.
-
-The other options may cause issues in different scenarios, but they are not the most likely causes in this specific situation.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">C. Lambda 함수에 DynamoDB에 쓸 수 있는 IAM 권한이 없는 것이 이 문제의 가장 큰 원인입니다. Lambda 함수가 DynamoDB 테이블에 쓸 수 없는 경우는 일반적으로 작업을 수행하는 데 필요한 IAM 권한이 없기 때문입니다. 이 문제를 해결하려면 개발자가 DynamoDB 테이블에 쓸 수 있는 Lambda 함수의 실행 역할 권한을 부여해야 합니다. 실행 역할에는 필요한 정책이 연결되어 있어야 합니다. 개발자는 AWS Identity and Access Management(IAM) 콘솔을 사용하여 필요한 정책을 실행 역할에 추가할 수 있습니다. 다른 옵션은 다른 시나리오에서 문제를 일으킬 수 있지만 이 특정 상황에서 가장 가능성이 높은 원인은 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1771,26 +1793,25 @@ The other options may cause issues in different scenarios, but they are not the 
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ihebchorfi
+				이헵코르피
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Fri 28 Apr 2023 19:36">
-			3 months, 3 weeks ago
+<span class="comment-date align-middle" title="2023년 4월 28일 금요일 19:36">
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">A is wrong, you can't share a parameter-store secureString to an external AWS Account.
-This is only possible with Secrets Manager : https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">A가 틀렸습니다. 파라미터 저장소 secureString을 외부 AWS 계정과 공유할 수 없습니다. 이는 Secrets Manager에서만 가능합니다. https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">4</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1818,25 +1839,25 @@ This is only possible with Secrets Manager : https://docs.aws.amazon.com/kms/lat
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Duponator
+				사기꾼
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Tue 18 Apr 2023 22:46">
-			4 months ago
+<span class="comment-date align-middle" title="2023년 4월 18일 화요일 22:46">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">Option A is wrong becuase you cant use AWS managed keys for cross-account access</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">교차 계정 액세스에 AWS 관리 키를 사용할 수 없기 때문에 옵션 A가 잘못되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1864,28 +1885,25 @@ This is only possible with Secrets Manager : https://docs.aws.amazon.com/kms/lat
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Syre
+				산
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sun 16 Apr 2023 06:37">
-			4 months, 1 week ago
+<span class="comment-date align-middle" title="2023년 4월 16일 일 06:37">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
-<div class="comment-content">Answer here is A people.
-Option C uses AWS Secrets Manager to store the access token, which is similar to Parameter Store but designed specifically for secrets. However, Secrets Manager has a higher cost and is better suited for complex secrets that require rotation or integration with AWS services. Parameter Store is a better fit for a simple access token. Additionally, retrieving the token from Secrets Manager requires more code and maintenance than retrieving the token directly from Parameter Store.
-
-Option D stores the access token in an Amazon S3 bucket, which requires more setup and management overhead than Parameter Store. Although S3 provides robust storage and access control features, it is not the best choice for a simple access token</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">여기에 대답은 A 사람입니다. 옵션 C는 AWS Secrets Manager를 사용하여 Parameter Store와 유사하지만 비밀을 위해 특별히 설계된 액세스 토큰을 저장합니다. 그러나 Secrets Manager는 비용이 더 높으며 교체 또는 AWS 서비스와의 통합이 필요한 복잡한 암호에 더 적합합니다. Parameter Store는 단순 액세스 토큰에 더 적합합니다. 또한 Secrets Manager에서 토큰을 검색하려면 Parameter Store에서 직접 토큰을 검색하는 것보다 더 많은 코드와 유지 관리가 필요합니다. 옵션 D는 액세스 토큰을 Amazon S3 버킷에 저장하므로 Parameter Store보다 더 많은 설정 및 관리 오버헤드가 필요합니다. S3는 강력한 스토리지 및 액세스 제어 기능을 제공하지만 단순한 액세스 토큰에는 최선의 선택이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1908,21 +1926,21 @@ Option D stores the access token in an Amazon S3 bucket, which requires more set
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Wed 03 May 2023 19:16">
-			3 months, 2 weeks ago
+<span class="comment-date align-middle" title="2023년 5월 3일 수요일 19:16">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">with option A how you make possible =&gt; ...The access token must also be accessible from other AWS accounts.</div>
+<div class="comment-content">옵션 A를 사용하여 가능하게 하는 방법 =&gt; ...다른 AWS 계정에서도 액세스 토큰에 액세스할 수 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1958,29 +1976,25 @@ Option D stores the access token in an Amazon S3 bucket, which requires more set
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				clarksu
+				클락스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 18 Mar 2023 01:17">
-			5 months ago
+<span class="comment-date align-middle" title="2023년 3월 18일 (토) 01:17">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
-<div class="comment-content">Should be C.
-
-Option A is a valid solution that meets the requirements of encrypting the access token at rest and in transit, as well as allowing access from other AWS accounts. However, it requires an additional step of retrieving the token with the decrypt flag enabled, which adds some management overhead when compared to other options.
-
-Option C uses AWS Secrets Manager, which eliminates the need for explicitly enabling the decryption flag. It also has more granular permissions for accessing the secrets, making it slightly more secure. DynamoDB in Option B and S3 in Option D are also options for storing the access token, but they require additional steps for encryption and decryption, adding more management overhead. Overall, Option A is a valid solution, but the other options have less management overhead while still meeting the requirements.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">C여야 합니다. 옵션 A는 저장 및 전송 중인 액세스 토큰을 암호화하고 다른 AWS 계정의 액세스를 허용하는 요구 사항을 충족하는 유효한 솔루션입니다. 그러나 암호 해독 플래그가 활성화된 상태에서 토큰을 검색하는 추가 단계가 필요하므로 다른 옵션과 비교할 때 약간의 관리 오버헤드가 추가됩니다. 옵션 C는 암호 해독 플래그를 명시적으로 활성화할 필요가 없는 AWS Secrets Manager를 사용합니다. 또한 비밀에 액세스할 수 있는 보다 세분화된 권한이 있어 약간 더 안전합니다. 옵션 B의 DynamoDB와 옵션 D의 S3도 액세스 토큰을 저장하기 위한 옵션이지만 암호화 및 암호 해독을 위한 추가 단계가 필요하므로 관리 오버헤드가 추가됩니다. 전반적으로 옵션 A는 유효한 솔루션이지만 다른 옵션은 여전히 ​​요구 사항을 충족하면서 관리 오버헤드가 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2008,26 +2022,24 @@ Option C uses AWS Secrets Manager, which eliminates the need for explicitly enab
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				haaris786
+				하리스7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 16 Mar 2023 10:00">
-			5 months, 1 week ago
+<span class="comment-date align-middle" title="2023년 3월 16일 목요일 10:00">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">As per this doc it should be A:
-
-https://aws.amazon.com/blogs/mt/use-parameter-store-to-securely-access-secrets-and-config-data-in-aws-codedeploy/</div>
+<div class="comment-content">이 문서에 따라 A: https://aws.amazon.com/blogs/mt/use-parameter-store-to-securely-access-secrets-and-config-data-in-aws-codedeploy/여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2055,24 +2067,24 @@ https://aws.amazon.com/blogs/mt/use-parameter-store-to-securely-access-secrets-a
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				good_
+				좋은_
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 16 Mar 2023 09:21">
-			5 months, 1 week ago
+<span class="comment-date align-middle" title="2023년 3월 16일 목요일 09:21">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">What's the answer? Isn't it A?</div>
+<div class="comment-content">무엇이 정답인가요? A 아닌가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
-			</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+			 
+				찬성</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2168,7 +2180,7 @@ Option A is wrong. It seems to be a good solution. However, AWS managed keys can
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 03:25">
-			2 weeks, 3 days ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2213,7 +2225,7 @@ Option A is wrong. It seems to be a good solution. However, AWS managed keys can
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Mar 2023 22:00">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2364,7 +2376,7 @@ However, @Untamables explanation is on point. Please see this Stack Overflow thr
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 02:14">
-			4 days, 8 hours ago
+			5 days, 10 hours ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2410,7 +2422,7 @@ amandah1992@outlook.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 14 Aug 2023 04:58">
-			1 week ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2455,7 +2467,7 @@ amandah1992@outlook.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 07 Aug 2023 19:46">
-			1 week, 6 days ago
+			2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2501,7 +2513,7 @@ elohimimmanu@gmail.com   thank you</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 06 Aug 2023 05:45">
-			2 weeks, 1 day ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2546,7 +2558,7 @@ elohimimmanu@gmail.com   thank you</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 06 Aug 2023 01:56">
-			2 weeks, 1 day ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2591,7 +2603,7 @@ elohimimmanu@gmail.com   thank you</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Jul 2023 18:27">
-			3 weeks, 4 days ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2636,7 +2648,7 @@ elohimimmanu@gmail.com   thank you</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Jul 2023 10:29">
-			3 weeks, 6 days ago
+			4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2917,7 +2929,7 @@ This is because AWS owned keys cannot be used fro cross-accounts accessing. Ther
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Jun 2023 08:13">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3183,7 +3195,7 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 03:59">
-			1 week, 5 days ago
+			1 week, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3310,7 +3322,7 @@ D, yes, why not, S3 access is possible from different accounts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 09:46">
-			4 weeks ago
+			4 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3438,7 +3450,7 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Jun 2023 18:25">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3507,7 +3519,7 @@ Could you please send me the PDF challanireesha1996@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 14:42">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3835,7 +3847,7 @@ Option D stores the access token in an Amazon S3 bucket, which requires more set
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Mar 2023 01:17">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

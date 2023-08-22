@@ -164,11 +164,10 @@ def open_template_exam():
     return bs
 
 def remove_exam_element(driver):
-    # try:
-    #     driver.execute_script("arguments[0].remove();", driver.find_element(By.ID, 'bN015htcoyT__google-cache-hdr'))
-    # except Exception as e:
-    #     print(f"*** Error !!! {e}")
-    #     pass
+    try:
+        driver.execute_script("arguments[0].remove();", driver.find_element(By.ID, 'bN015htcoyT__google-cache-hdr'))
+    except Exception as e:
+        pass
 
     try:
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.disclaimer-box.mt-2'));
@@ -182,6 +181,7 @@ def remove_exam_element(driver):
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.row'));
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.action-row-container.mb-4'))
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'all-questions-link'));
+        driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'discussion-meta-data'));
         driver.execute_script("arguments[0].removeAttribute('class');", driver.find_element(By.TAG_NAME, 'html'))
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'discussion-link'))
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'title-username'))
@@ -585,7 +585,7 @@ def refresh_all_exam(exam_list_file, qtitle):
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    for i in range(len(df)):
+    for i in range(len(df))[:5]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
         url = str(df.at[i, 'DiscussURL'])
@@ -609,9 +609,13 @@ def refresh_all_exam(exam_list_file, qtitle):
 if __name__ == "__main__":
     # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
     # DBS = 'Exam AWS Certified Database - Specialty topic 1'
-    CISM = 'Exam CISM topic 1'
-    CISA = 'Exam CISA topic 1'
+    # CISM = 'Exam CISM topic 1'
+    # CISA = 'Exam CISA topic 1'
 
+    DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
+    DVA = 'Exam AWS Certified Developer Associate topic 1'
+    refresh_all_exam('DVA2_Exam.csv', DVA2)
+    # refresh_all_exam('DVA_Exam.csv', DVA)
 
     # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
     # FORUM_NAME = 'amazon'
@@ -621,7 +625,3 @@ if __name__ == "__main__":
     # FORUM_NAME = 'isaca'
     # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     
-    DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
-    DVA = 'Exam AWS Certified Developer Associate topic 1'
-    refresh_all_exam('DVA2_Exam.csv', DVA2)
-    refresh_all_exam('DVA_Exam.csv', DVA)

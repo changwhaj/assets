@@ -43,25 +43,17 @@
 <div class="container">
 <!--a class="badge show-english" href="#">English</a>
 <a class="badge show-korean d-none" href="#">한국어</a-->
-<div class="container action-row-container mb-4">
-	<div class="container action-row clearfix d-flex">
-		<i class="fa fm fa-language mr-2"></i>언어선택
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="action-row-container mb-4">
+	<div class="action-row clearfix d-flex">
+	<i class="fa fm fa-language mr-2"></i>언어선택
+	<a class="badge show-english" href="#">English</a>
+	<a class="badge show-korean d-none" href="#">한국어</a>
 	<span class="pagination-container ml-auto">
-		<span class="discussion-list-page-indicator">
-			<span class="mr-4 d-none d-md-inline-block"> 5441 Questions</span>
-			Question <strong>2</strong> of <strong>273</strong>
-		</span>	
+		<span id="page-indicator"><strong></strong></span>
+		<!--p id="page-indicator"></p-->
 		<span class="pagination-nav ml-4">				
 			<a id="prevLink" href="#" class="btn btn-sm"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
 			<select id="pageSelect" class="discussion-list-page-select form-control form-control-sm">				
-				<!--option value="1">1</option>				
-				<option value="2" selected="">2</option>				
-				<option value="3">3</option>				
-				<option value="4">4</option>				
-				<option value="5">5</option>				
-				<option value="273">273</option-->				
 			</select>
 			<a id="nextLink" href="#" class="btn btn-sm">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>			
 		</span>
@@ -69,49 +61,51 @@
 	</div>
 </div>
 <script>
-	function getCurrentPageNumber() {
-		var currentPagePath = window.location.pathname; // Get the current page's path
-		var currentPageName = currentPagePath.substring(currentPagePath.lastIndexOf('/') + 1); // Extract the page name
-		var pageNumber = parseInt(currentPageName.match(/DVA-Q(\d+)\.html/)[1]); // Extract the page number using a regular expression
-		return pageNumber;
-	}
-	var currentPageNumber = getCurrentPageNumber();
+	var curPagePath = window.location.pathname;
+	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
+	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
+	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
+	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
 	var totalPages = 11;  // Adjust this to the total number of pages
 
-	var prevPageNumber = currentPageNumber - 1;
-	var nextPageNumber = currentPageNumber + 1;
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
 
 	var prevLink = document.getElementById('prevLink');
 	var pageSelect = document.getElementById('pageSelect');
 	var nextLink = document.getElementById('nextLink');
-
-	if (prevPageNumber >= 1) {
-		prevLink.href = './DVA-Q' + prevPageNumber.toString().padStart(4, '0') + '.html';
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
 	} else {
 		prevLink.style.display = 'none';
 	}
 
-	if (nextPageNumber <= totalPages) {
-		nextLink.href = './DVA-Q' + nextPageNumber.toString().padStart(4, '0') + '.html';
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
 	} else {
 		nextLink.style.display = 'none';
 	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
 
 	// Dynamically populate the page selection dropdown
 	for (var i = 1; i <= totalPages; i++) {
 		var option = document.createElement('option');
 		option.value = i;
-		option.text = 'Page ' + i;
+		option.text = i;
 		pageSelect.appendChild(option);
 	}
 
 	// Set the default selected option
-	pageSelect.value = currentPageNumber;
+	pageSelect.value = curPageNo;
 
 	// Event listener for page selection
 	pageSelect.addEventListener('change', function() {
 		var selectedPage = parseInt(this.value);
-		window.location.href = './DVA-Q' + selectedPage.toString().padStart(4, '0') + '.html';
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
 	});
 </script>
 <!-- BEGIN Discussions header / title -->
