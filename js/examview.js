@@ -68,7 +68,7 @@
 	}
 
     /* English & Korean toggle */
-    $('body').on('click', '.badge.show-english1', function (e) {
+    $('body').on('click', '.badge.show-english', function (e) {
         e.preventDefault();
         $(this).parent('.container').find('.discussion-list-header').fadeOut(0);
         $(this).parent('.container').find('.discussion-list-header-en').fadeIn(0);
@@ -76,11 +76,11 @@
         $(this).parent('.container').find('.discussion-header-container-en').fadeIn(0);
         $(this).parent('.container').find('.comments-wrapper').fadeOut(0);
         $(this).parent('.container').find('.comments-wrapper-en').fadeIn(0);
-        $(this).parent('.container').find('.show-korean1').removeClass('d-none');
+        $(this).parent('.container').find('.show-korean').removeClass('d-none');
         $(this).addClass('d-none');
     });
 
-    $('body').on('click', '.badge.show-korean1', function (e) {
+    $('body').on('click', '.badge.show-korean', function (e) {
         e.preventDefault();
         $(this).parent('.container').find('.discussion-list-header-en').fadeOut(0);
         $(this).parent('.container').find('.discussion-list-header').fadeIn(0);
@@ -88,7 +88,7 @@
         $(this).parent('.container').find('.discussion-header-container').fadeIn(0);
         $(this).parent('.container').find('.comments-wrapper-en').fadeOut(0);
         $(this).parent('.container').find('.comments-wrapper').fadeIn(0);
-        $(this).parent('.container').find('.show-english1').removeClass('d-none');
+        $(this).parent('.container').find('.show-english').removeClass('d-none');
         $(this).addClass('d-none');
     });
 
