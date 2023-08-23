@@ -585,7 +585,7 @@ def refresh_all_exam(exam_list_file, qtitle):
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    for i in range(len(df)):
+    for i in range(len(df))[138:139]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
         url = str(df.at[i, 'DiscussURL'])
