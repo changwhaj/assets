@@ -361,6 +361,87 @@ def save_html(driver, did, fname):
 def make_filename(qtitle, qid):
     fname = ""
 
+    exams = [
+        { 
+            "qtitle": "Exam CISM topic 1",
+            "prefname": "isaca/CISM/CISM-Q",
+            "qlength": 920,
+        },
+        {
+            "qtitle": "Exam CISM topic 2",
+            "prefname": "isaca/CISM2/CISM-Q",
+            "qlength": 50,
+        },
+        { 
+            "qtitle": "Exam CISA topic 1",
+            "prefname": "isaca/CISA/CISA-Q",
+            "qlength": 1195,
+        },
+        {
+            "qtitle": "Exam CISA topic 2",
+            "prefname": "isaca/CISA2/CISA-Q",
+            "qlength": 50,
+        },
+        {
+            "qtitle": "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1",
+            "prefname": "aws/ANS_C01/ANS-Q",
+            "qlength": 167,
+        },
+        {
+            "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
+            "prefname": "aws/DAS-C01/DAS",
+            "qlength": 164,
+        },
+        {
+            "qtitle": "Exam AWS Certified Database - Specialty topic 1",
+            "prefname": "aws/DBS/DBS-Q",
+            "qlength": 327,
+        },
+        {
+            "qtitle": "Exam AWS Certified Developer Associate topic 1",
+            "prefname": "aws/DVA/DVA-Q",
+            "qlength": 443,
+        },
+        {
+            "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
+            "prefname": "aws/DVA_C02/DVA2-Q",
+            "qlength": 142,
+        },
+        {
+            "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
+            "prefname": "aws/DOP_C02/DOP2-Q",
+            "qlength": 134,
+        },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1",
+            "prefname": "aws/SAA_C02/SAA2-Q",
+            "qlength": 822,
+        },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
+            "prefname": "aws/SAA_C03/SAA3-Q",
+            "qlength": 583,
+        },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Professional topic 1",
+            "prefname": "aws/SAP/SAP-Q",
+            "qlength": 1019,
+        },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
+            "prefname": "aws/SAP_C02/SAP2-Q",
+            "qlength": 298,
+        },
+        {
+            "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
+            "prefname": "aws/SOA_C02/SOA2-Q",
+            "qlength": 377,
+        },
+        # aws/MLS_C01/MLS-Q	Exam AWS Certified Machine Learning - Specialty topic 1
+        # aws/SES/SES-Q	Exam AWS Certified Security - Specialty topic 1
+        # aws/DOP_C01/DOP-Q	Exam AWS DevOps Engineer Professional topic 1
+    ]
+
     if qtitle == "Exam CISM topic 1":
         fname = 'isaca/CISM/CISM-Q'  + format(int(qid), '04') + '.html'
     elif qtitle == "Exam CISM topic 2":
@@ -370,20 +451,20 @@ def make_filename(qtitle, qid):
     elif qtitle == "Exam CISA topic 2":
         fname = 'isaca/CISA2/CISA-Q' + format(int(qid), '04') + '.html'
     
-    elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
-        fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
-        fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
+    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
+    #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
+    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
+    #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
         fname = 'aws/SAA_C02/SAA-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
-        fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
+    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
+    #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
         fname = 'aws/SAA_C03/SAA-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
         fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
-        fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
+    # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
+    #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
         fname = 'aws/SAP_C02/SAP-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
@@ -571,6 +652,92 @@ def refresh_from_forum(discuss_list, forum_name):
 
     write_discuss_list(df, discuss_list)
 
+def refresh_forum_list(discuss_list, forum_name):
+
+    df = read_discuss_list(discuss_list)
+    refresh = False
+    driver = set_chrome_driver()
+    # driver.set_window_position(1800,10)
+
+    fn = "forum.txt"
+    idx_from = 0
+    with open(fn, "r") as file:
+        idx_from = int(file.read())
+    found = False
+    try:
+        for p in range(1000)[idx_from:600]:
+            my_file = Path(fn)
+            # file does not exists. Okay to overwrite
+            if not my_file.is_file(): found = True
+
+            if found == True: break
+            pageno = p + 1
+
+            open_forum(driver, forum_name, pageno)
+
+            driver.switch_to.window(driver.window_handles[0])
+
+            print(driver.title + "-" + str(pageno))
+            if (driver.title == '404 - Page not found'): break
+
+            bs = BeautifulSoup(driver.page_source, 'html.parser')
+            a = bs.find_all("a", {"class": "discussion-link"})
+            span = bs.find_all("span", {"class": "recent-post-time"})
+        
+            for i in range(len(a)):
+                if found == True: break
+                
+                last_post = parser.parse(str(span[i*2+1]["title"]).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m."))
+
+                split_text = str(a[i].text.strip()).split()
+
+                qtitle = ' '.join(split_text[:len(split_text)-3])
+                qid = int(split_text[-2])
+                url = str(a[i]["href"])
+                did = int(url.split('/')[4].split('-')[0])
+                replace = False    
+                print(qtitle+"\t"+str(qid)+"\t"+str(did)+"\t"+str(last_post)+"\t"+url, end=' ', flush=True)
+                if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
+                    print("Same question found !!!")
+
+                    LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
+                    if LastPost == last_post:
+                        print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
+
+                    # Old post found. Skip this.
+                    if LastPost > last_post: continue
+
+                    # Recent discussion post found. Remove old discussion list and add new discussion
+                    if LastPost < last_post:
+                        replace = True
+                        # print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
+                        # df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
+                else:
+                    print("New question found !!!")
+
+                if (replace == True):    
+                    data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
+                    if (LastPost < last_post):
+                        print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
+                        df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
+
+                new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': 0, 'LastPost': last_post, 'DiscussURL': url }]
+                df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)            
+    except Exception as e:
+        print("Error:", str(e))
+        print(f"*** Make question error !!! {e}")
+        pass
+
+    finally:
+        write_discuss_list(df, discuss_list)
+
+    with open(fn, 'w') as file:
+        # Write data rows
+        file.write(str(p) + '\n')
+
+    driver.quit()
+
+
 def read_Exam_list(fname):
     df = pd.read_csv(fname, delimiter='\t', encoding='utf-8', header=None,
                     names=['ExamNo', 'DiscussNo', 'DiscussURL'], 
@@ -614,10 +781,10 @@ if __name__ == "__main__":
 
     DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
     DVA = 'Exam AWS Certified Developer Associate topic 1'
-    refresh_all_exam('DVA2_Exam.csv', DVA2)
+    # refresh_all_exam('DVA2_Exam.csv', DVA2)
     # refresh_all_exam('DVA_Exam.csv', DVA)
 
-    # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
+    AMAZON_DISCUSS = 'AmazonDiscuss.txt'
     # FORUM_NAME = 'amazon'
     # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
 
@@ -625,3 +792,6 @@ if __name__ == "__main__":
     # FORUM_NAME = 'isaca'
     # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     
+    df = read_discuss_list(AMAZON_DISCUSS)
+    write_discuss_list(df, AMAZON_DISCUSS)
+    # refresh_forum_list('AmazonDiscussNew.txt', 'amazon')

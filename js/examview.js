@@ -57,16 +57,6 @@
         $(this).addClass('d-none');
     });
 
-	function togglePage(dirPath) {
-		var dirSegment = window.location.pathname.split('/');
-		var fileName = dirSegment[dirSegment.length - 1];
-		if (dirSegment[dirSegment.length - 2] == "kr") {
-			window.location.href = dirPath + fileName.replace('-KR.html', '.html');
-		} else {
-			window.location.href = dirPath + 'kr/' + fileName.replace('.html', '-KR.html');
-		}
-	}
-
     /* English & Korean toggle */
     $('body').on('click', '.badge.show-english', function (e) {
         e.preventDefault();
