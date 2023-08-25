@@ -2,7 +2,10 @@
 
 // Define the associative array for question details
 var questionDetails = {
-    'ANS-Q': { qLength: 167, qDirectory: 'aws/ANS_C01' },
+    'CISM-Q': { qLength: 913, qDirectory: 'isaca/CISM' },
+    'CISA-Q': { qLength: 1188, qDirectory: 'isaca/CISA' },
+    
+     'ANS-Q': { qLength: 167, qDirectory: 'aws/ANS_C01' },
     'DAS-Q': { qLength: 164, qDirectory: 'aws/DAS_C01' },
     'DBS-Q': { qLength: 327, qDirectory: 'aws/DBS' },
     'DVA-Q': { qLength: 443, qDirectory: 'aws/DVA' },
