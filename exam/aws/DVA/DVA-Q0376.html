@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 376 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 376 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 376 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 376 <br/>
 							주제 #: 1
@@ -76,7 +139,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="866085" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="866085" type="application/json">[{"voted_answers": "A", "vote_count": 17, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											개발자가 KMS 키에 대한 적절한 액세스를 허용하는 IAM 정책을 설정합니다.
+											개발자가 KMS 키에 적절하게 액세스할 수 있도록 허용하는 IAM 정책을 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Lambda 함수가 KMS 키에 대한 적절한 액세스 권한을 갖도록 허용하는 IAM 정책을 설정합니다.
+											Lambda 함수가 KMS 키에 적절하게 액세스할 수 있도록 허용하는 IAM 정책을 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">A (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">A (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a> 
-							
-							2023 <i>
-							년 1월 20일 오후 4:23</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="866085" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="866085" type="application/json">[{"voted_answers": "A", "vote_count": 17, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">A (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">A (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 4:23 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -234,7 +277,7 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="895373" id="comment-895373">
+<div class="media comment-container" data-comment-id="798146" id="comment-798146">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
 </a>
@@ -246,24 +289,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Suraj_7
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 11일 목요일 21:36">
-			3개월, 1주 전
+<span class="badge badge-primary">
+				높은 투표율<i class="fa fa-thumbs-up"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 2월 4일 토요일 17:04">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B는 Lambda 함수가 환경 변수를 암호화하기 위해 KMS 키에 액세스해야 하는 엔터티이기 때문에 정답입니다. 따라서 개발자는 Lambda 함수가 KMS 키에 대한 적절한 액세스 권한을 갖도록 허용하는 IAM 정책을 설정해야 합니다. Lambda 함수의 환경 변수와 함께 사용하기 위해 AWS KMS 고객 관리형 키를 구성할 때 Lambda 함수의 실행 역할에서 키에 액세스할 수 있어야 합니다. 기본적으로 Lambda 함수의 실행 역할에는 KMS 키를 사용할 수 있는 권한이 없습니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">대답은 A입니다. 오류는 Lambda가 KMS 키에 액세스하려고 할 때가 아니라 개발자가 액세스할 때 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -279,7 +326,7 @@
 </div>
 </div>
 <!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="798146" id="comment-798146">
+<div class="media comment-container" data-comment-id="895373" id="comment-895373">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
 </a>
@@ -291,25 +338,27 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				수라즈_7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 4일 토요일 17:04">
-			6개월, 2주 전
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 5월 11일 목요일 21:36">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A입니다. 오류는 Lambda가 KMS 키에 액세스하려고 할 때가 아니라 DEVELOPER가 액세스할 때 발생합니다.</div>
+<div class="comment-content">옵션 B가 정답입니다. Lambda 함수는 환경 변수를 암호화하기 위해 KMS 키에 액세스해야 하는 엔터티이기 때문입니다. 따라서 개발자는 Lambda 함수가 KMS 키에 적절하게 액세스할 수 있도록 허용하는 IAM 정책을 설정해야 합니다. Lambda 함수의 환경 변수와 함께 사용하기 위해 AWS KMS 고객 관리형 키를 구성할 때 Lambda 함수의 실행 역할을 통해 키에 액세스할 수 있어야 합니다. 기본적으로 Lambda 함수의 실행 역할에는 KMS 키를 사용할 수 있는 권한이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,21 +390,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 23:47">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">개발자가 kms와 상호 작용하려고 할 때 문제가 발생합니다. 그것의 A.</div>
+<div class="comment-content">개발자가 kms와 상호 작용을 시도할 때 문제가 발생합니다. A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,16 +432,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 25일 수 01:19">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. Lambda 함수가 KMS 키에 대한 적절한 액세스 권한을 갖도록 허용하는 IAM 정책을 설정합니다. 개발자는 KMS 키에 액세스할 수 있는 적절한 권한을 Lambda 함수에 부여하는 IAM 정책을 설정해야 합니다. 이는 필요한 권한이 있는 IAM 역할을 생성한 다음 이를 Lambda 함수와 연결하여 수행할 수 있습니다. 정책에는 특정 KMS 키에 대한 "kms:Encrypt" 및 "kms:Decrypt" 권한과 같은 작업이 포함되어야 합니다. 정책이 설정되면 개발자는 환경 변수에 대한 KMS 키 구성을 다시 시도해야 합니다.</div>
+<div class="comment-content">B. Lambda 함수가 KMS 키에 적절하게 액세스할 수 있도록 허용하는 IAM 정책을 설정합니다. 개발자는 KMS 키에 액세스할 수 있는 적절한 권한을 Lambda 함수에 부여하는 IAM 정책을 설정해야 합니다. 필요한 권한이 있는 IAM 역할을 생성한 다음 이를 Lambda 함수와 연결하면 됩니다. 정책에는 특정 KMS 키에 대한 "kms:Encrypt" 및 "kms:Decrypt" 권한과 같은 작업이 포함되어야 합니다. 정책이 설정되면 개발자는 환경 변수에 대한 KMS 키 구성을 다시 시도해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -429,7 +478,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JulietHsu
+				줄리엣수
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 18:26">
@@ -438,16 +487,16 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이것은 람다 실행과 관련이 없습니다. 키워드 - '개발자가 환경변수에 KMS 키를 설정하려고 할 때' 그래서 A입니다.</div>
+<div class="comment-content">이는 람다 실행과 관련이 없습니다. 키워드 - '개발자가 환경 변수에 대해 KMS 키를 구성하려고 할 때' 그래서 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,16 +533,16 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변: KMS 예외: AccessDeniedException KMS 메시지 https://aws.amazon.com/premiumsupport/knowledge-center/lambda-kmsaccessdeniedexception-errors/</div>
+<div class="comment-content">답변: KMS 예외: AccessDeniedException KMS 메시지 https://aws.amazon.com/premiumsupport/knowledge-center/lambda-kmsaccessdeniedException-errors/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,7 +578,7 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="895373" id="comment-895373">
+<div class="media comment-container" data-comment-id="798146" id="comment-798146">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
 </a>
@@ -541,17 +590,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Suraj_7
+				pancman
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Thu 11 May 2023 21:36">
-			3 months, 1 week ago
+<span class="badge badge-primary">
+				Highly Voted <i class="fa fa-thumbs-up"></i>
+</span>
+<span class="comment-date align-middle" title="Sat 04 Feb 2023 17:04">
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Option B is the correct answer because the Lambda function is the entity that needs access to the KMS key in order to encrypt its environment variables. Therefore, the developer needs to set an IAM policy that allows the Lambda function to have appropriate access to the KMS key.
-
-When configuring an AWS KMS customer managed key for use with a Lambda function's environment variables, the key must be accessible by the Lambda function's execution role. By default, the Lambda function's execution role does not have permissions to use any KMS keys.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">Answer is A. The error occurs not when Lambda tries to access KMS key, but when the DEVELOPER does.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
@@ -559,7 +610,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">5</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -576,7 +627,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 </div>
 </div>
 <!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="798146" id="comment-798146">
+<div class="media comment-container" data-comment-id="895373" id="comment-895373">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
 </a>
@@ -588,16 +639,20 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				pancman
+				Suraj_7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="Sat 04 Feb 2023 17:04">
-			6 months, 2 weeks ago
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Thu 11 May 2023 21:36">
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
-<div class="comment-content">Answer is A. The error occurs not when Lambda tries to access KMS key, but when the DEVELOPER does.</div>
+<div class="comment-content">Option B is the correct answer because the Lambda function is the entity that needs access to the KMS key in order to encrypt its environment variables. Therefore, the developer needs to set an IAM policy that allows the Lambda function to have appropriate access to the KMS key.
+
+When configuring an AWS KMS customer managed key for use with a Lambda function's environment variables, the key must be accessible by the Lambda function's execution role. By default, the Lambda function's execution role does not have permissions to use any KMS keys.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
@@ -605,7 +660,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">4</span> times
+				upvoted <span class="upvote-count">1</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -638,7 +693,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 23:47">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -651,7 +706,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -684,7 +739,7 @@ When configuring an AWS KMS customer managed key for use with a Lambda function'
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 01:19">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -747,7 +802,7 @@ So, it's A.</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -795,7 +850,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/lambda-kmsaccessdeniedexc
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>

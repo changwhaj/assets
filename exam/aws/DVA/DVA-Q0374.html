@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 374 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 374 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 374 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 374 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866083">
 <p class="card-text">
 							
-								회사에서 공개적으로 액세스할 수 있는 단일 페이지 애플리케이션을 개발하고 있습니다. 애플리케이션은 클라이언트 웹 브라우저에서 백엔드 서비스를 호출하여 고객에게 사용자 인터페이스를 제공합니다. 애플리케이션은 HTTP API로 노출된 타사 웹 서비스에 의존합니다. 웹 클라이언트는 HTTP 헤더를 HTTP 요청의 일부로 사용하여 타사 웹 서비스에 API 키를 제공해야 합니다. 회사의 API 키는 웹 애플리케이션 사용자에게 노출되어서는 안됩니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								한 회사에서 공개적으로 액세스 가능한 단일 페이지 애플리케이션을 개발 중입니다. 애플리케이션은 클라이언트 웹 브라우저에서 백엔드 서비스를 호출하여 고객에게 사용자 인터페이스를 제공합니다. 애플리케이션은 HTTP API로 노출되는 타사 웹 서비스에 의존합니다. 웹 클라이언트는 HTTP 요청의 일부로 HTTP 헤더를 사용하여 타사 웹 서비스에 API 키를 제공해야 합니다. 회사의 API 키는 웹 애플리케이션 사용자에게 노출되어서는 안 됩니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											Amazon API Gateway를 사용하여 프라이빗 REST API를 생성합니다. 타사 HTTP API와 통합할 HTTP 통합을 만듭니다. 통합 요청 구성의 HTTP 헤더 목록에 회사의 API 키를 추가합니다.
+											Amazon API Gateway를 사용하여 프라이빗 REST API를 생성하십시오. 타사 HTTP API와 통합할 HTTP 통합을 생성합니다. 통합 요청 구성의 HTTP 헤더 목록에 회사의 API 키를 추가합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon API Gateway를 사용하여 프라이빗 REST API를 생성합니다. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다.
+											Amazon API Gateway를 사용하여 개인 REST API를 생성하십시오. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon API Gateway를 사용하여 REST API를 생성합니다. 타사 HTTP API와 통합할 HTTP 통합을 만듭니다. 통합 요청 구성의 HTTP 헤더 목록에 회사의 API 키를 추가합니다.
+											Amazon API Gateway를 사용하여 REST API를 생성하십시오. 타사 HTTP API와 통합할 HTTP 통합을 생성합니다. 통합 요청 구성의 HTTP 헤더 목록에 회사의 API 키를 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon API Gateway를 사용하여 REST API를 생성합니다. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다.
+											Amazon API Gateway를 사용하여 REST API를 생성하십시오. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">씨 (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">C (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JulietHsu
-							</a> 
-							
-							2023 <i>
-							년 1월 20일 오후 6:21</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JulietHsu
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 6:21 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,19 +287,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 01:36">
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 01:36">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞습니다. A가 잘못된 이유가 궁금할 수 있습니다. 비공개 REST API가 필요하지 않습니다. 프라이빗 API는 동일한 VPC에서 시작된 요청만 허용합니다. 이것은 공개 웹 사이트용이므로 필요하지 않습니다.</div>
+<div class="comment-content">C가 맞습니다. A가 왜 잘못된지 궁금할 수도 있습니다. 비공개 REST API가 필요하지 않기 때문입니다. 프라이빗 API는 동일한 VPC에서 발생하는 요청만 허용합니다. 이는 공개 웹사이트용이므로 그럴 필요는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -293,14 +336,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 20:07">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 20:07">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,16 +385,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스다파드파
+				sdafadsfa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 07:39">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 07:39">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,16 +431,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 31일 화요일 21:13">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">HTTP_PROXY 통합이 더 좋겠지만 목록에는 없습니다.</div>
+<div class="comment-content">HTTP_PROXY 통합이 더 좋을 것 같지만 목록에는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,16 +477,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				michele_scar
+				Michele_scar
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 30일 (월) 17:14">
+<span class="comment-date align-middle" title="2023년 1월 30일 월요일 17:14">
 			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">비용 효율적 = "메서드 요청" HTTP 헤더에 API 키를 통합하고 D로 작동하지만 Lambda 없이 작동할 수 있는 유일한 API 게이트웨이</div>
+<div class="comment-content">비용 효율적 = "메소드 요청" HTTP 헤더에 API 키를 통합하고 Lambda 없이 D로 작동할 수 있는 API 게이트웨이만 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,16 +523,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 25일 수 01:17">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Amazon API Gateway를 사용하여 REST API를 생성합니다. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다. 이 솔루션은 Amazon API Gateway를 사용하여 공개적으로 액세스 가능한 REST API를 생성하지만 타사 웹 서비스에 대한 실제 호출은 AWS Lambda 함수에서 이루어집니다. 회사는 Lambda 함수의 환경 변수에 API 키를 안전하게 저장하고 Lambda 함수에서 생성된 요청의 헤더에 키를 전달할 수 있습니다. 이렇게 하면 키가 웹 애플리케이션 사용자에게 노출되지 않습니다. 이 솔루션은 Amazon API Gateway 비용이 요청 및 데이터 전송 수로 계산되므로 비용 효율적입니다. 그리고 Lambda는 종량제 서비스이므로 사용한 만큼만 비용을 지불하면 됩니다.</div>
+<div class="comment-content">Amazon API Gateway를 사용하여 REST API를 생성합니다. AWS Lambda 프록시 통합을 생성합니다. Lambda 함수에서 타사 HTTP API를 호출합니다. 회사의 API 키를 HTTP 요청 헤더로 전달합니다. 이 솔루션은 Amazon API Gateway를 사용하여 공개적으로 액세스 가능한 REST API를 생성하지만, 타사 웹 서비스에 대한 실제 호출은 AWS Lambda 함수에서 이루어집니다. 회사는 Lambda 함수의 환경 변수에 API 키를 안전하게 저장하고 Lambda 함수에서 이루어진 요청 헤더에 키를 전달할 수 있습니다. 이렇게 하면 키가 웹 애플리케이션 사용자에게 노출되지 않습니다. 이 솔루션은 Amazon API Gateway 비용이 요청 수와 데이터 전송 수에 따라 계산되므로 비용 효율적입니다. Lambda는 종량제 서비스이므로 사용한 만큼만 비용을 지불하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -518,15 +561,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 17:00">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그렇게 하면 효과가 있지만 람다가 관련되어 불필요한 비용이 발생하므로 비용 효율적이지 않습니다.</div>
+<div class="comment-content">그것은 효과가 있지만 람다가 관련되어 불필요한 비용이 발생하므로 비용 효율적이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -535,7 +578,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -555,15 +598,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 06일 월요일 03:34">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 03:34">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">좋은 지적, 감사합니다</div>
+<div class="comment-content">좋은 지적이야, 고마워</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -572,7 +615,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,7 +659,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JulietHsu
+				줄리엣수
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 18:21">
@@ -625,7 +668,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">왜 D와 함께 가지 않습니까? 비공개 REST API를 만들 필요가 없습니다.</div>
+<div class="comment-content">D랑 같이 가는 게 어때? 개인 REST API를 만들 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -654,15 +697,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 16:59">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그렇게 하면 효과가 있지만 람다가 관련되어 불필요한 비용이 발생하므로 비용 효율적이지 않습니다.</div>
+<div class="comment-content">그것은 효과가 있지만 람다가 관련되어 불필요한 비용이 발생하므로 비용 효율적이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -671,7 +714,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -783,7 +826,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 20:07">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -829,7 +872,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 07:39">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -875,7 +918,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 21:13">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -967,7 +1010,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 01:17">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1007,7 +1050,7 @@ This solution uses Amazon API Gateway to create a publicly accessible REST API, 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 17:00">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1144,7 +1187,7 @@ No need to create private REST Api.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 16:59">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

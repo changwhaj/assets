@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 956 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 956 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 956 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 956 <br/>
 							주제 #: 1
@@ -76,7 +139,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="851130" type="application/json">[{"voted_answers": "C", "vote_count": 3, "is_most_voted": false}, {"voted_answers": "B", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="851130" type="application/json">[{"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "B", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											방문자는 도착 시 프런트 데스크에서 서명합니다.
+											방문객은 도착 시 프런트 데스크에서 서명합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,18 +162,18 @@
 													C.
 												</span> 
 											
-											방문자는 승인된 직원의 에스코트를 받습니다.
+											방문객은 승인된 직원의 안내를 받습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
-													D.
+													라.
 												</span> 
 											
-											폐쇄회로텔레비전(CCTV)으로 시설물 감시
+											폐쇄회로텔레비전(CCTV)을 이용하여 시설물을 감시한다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,21 +183,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 60%; display: flex;" title="">씨 (60%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">B (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">C (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">B (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								csionis
-							</a> 
-							
-							2023 <i>
-							년 2월 3일, 오전 10:16</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -156,7 +209,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="851130" type="application/json">[{"voted_answers": "C", "vote_count": 3, "is_most_voted": false}, {"voted_answers": "B", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="851130" type="application/json">[{"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "B", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -200,21 +253,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 60%; display: flex;" title="">C (60%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 40%; display: flex;" title="">B (40%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">C (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">B (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								csionis
-							</a>
-							
-							at <i>
-							Feb. 3, 2023, 10:16 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -245,22 +288,22 @@
 				3008
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 13:03">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 13:03">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">c는 답이다</div>
+<div class="comment-content">c가 답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -283,8 +326,8 @@
 				3008
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 15일 화요일 01:51">
-			2일, 20시간 전
+<span class="comment-date align-middle" title="2023년 8월 15일 화 01:51">
+			1주 전, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -295,9 +338,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,13 +379,13 @@
 				007조지오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 14:34">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 14:34">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B입니다. 입장 요청의 사전 승인은 방문자가 사전에 액세스를 요청하도록 하는 것을 포함하므로 조직은 그들의 신원을 확인하고 그들이 입장에 필요한 기준을 충족하는지 판단할 수 있습니다. 이 프로세스는 보안 담당자가 신원 조사를 수행하고 방문 목적을 검토하며 승인된 개인에게만 액세스 권한이 부여되도록 할 수 있는 기회를 제공합니다. 사전 승인은 승인되지 않은 방문자가 데이터 센터에 들어오는 위험을 최소화하는 데 도움이 됩니다. 그리고 C. 방문자는 인가된 직원의 에스코트: 인가된 직원이 방문객을 에스코트하도록 하는 것은 방문자 액세스에 대한 제어를 강화할 수 있는 추가 보안 조치입니다. 그러나 이 접근 방식은 자원 집약적일 수 있으므로 직원이 방문자를 에스코트할 수 있도록 항상 있어야 합니다.</div>
+<div class="comment-content">정답은 B입니다. 입장 요청 사전 승인은 방문객이 사전에 입장을 요청하도록 하는 것이므로 해당 기관에서 자신의 신원을 확인하고 입장에 필요한 기준을 충족하는지 확인할 수 있기 때문입니다. 이 프로세스는 보안 담당자가 신원 조사를 수행하고, 방문 목적을 검토하고, 승인된 개인에게만 액세스 권한이 부여되었는지 확인할 수 있는 기회를 제공합니다. 사전 승인은 승인되지 않은 방문자가 데이터 센터에 들어올 위험을 최소화하는 데 도움이 됩니다. C. 방문자는 승인된 직원에 의해 안내됩니다. 승인된 직원이 방문자를 안내하도록 하는 것은 방문자 접근에 대한 통제를 강화할 수 있는 추가적인 보안 조치입니다. 그러나 이 접근 방식은 자원 집약적일 수 있으므로 직원이 항상 방문객을 안내할 수 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,16 +422,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				csionis
+				시오니스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 10:16">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">에스코트 방문자는 방문자가 데이터 처리 시설에 액세스할 수 있는 권한이 있음을 가장 확실하게 보장합니다.</div>
+<div class="comment-content">방문자를 안내하는 것은 방문자가 데이터 처리 시설에 접근할 수 있는 권한을 가지고 있다는 최상의 확신을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -397,7 +440,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -417,15 +460,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				진긴긴
+				긴긴인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 19일 수 09:57">
-			4주, 1일 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다음과 같이 이해할 수 있습니다. 승인을 받은 후 방문자는 데이터 센터로 에스코트됩니다. 그래서 답은 B라고 생각합니다. C는 추가 연습입니다.</div>
+<div class="comment-content">다음과 같이 이해할 수 있습니다. 승인을 받은 후 방문자는 데이터 센터로 안내됩니다. 그래서 답은 B라고 생각합니다. C는 추가 연습입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -434,7 +477,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -465,12 +508,12 @@
 				007조지오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 14:33">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 14:33">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 B입니다. 입장 요청의 사전 승인은 방문자가 사전에 액세스를 요청하도록 하는 것을 포함하므로 조직은 그들의 신원을 확인하고 그들이 입장에 필요한 기준을 충족하는지 판단할 수 있습니다. 이 프로세스는 보안 담당자가 신원 조사를 수행하고 방문 목적을 검토하며 승인된 개인에게만 액세스 권한이 부여되도록 할 수 있는 기회를 제공합니다. 사전 승인은 승인되지 않은 방문자가 데이터 센터에 들어오는 위험을 최소화하는 데 도움이 됩니다. C의 경우. 방문자는 승인된 직원의 에스코트: 승인된 직원이 방문자를 에스코트하도록 하는 것은 방문자 액세스 제어를 강화할 수 있는 추가 보안 조치입니다. 그러나 이 접근 방식은 자원 집약적일 수 있으므로 직원이 방문자를 에스코트할 수 있도록 항상 있어야 합니다.</div>
+<div class="comment-content">정답은 B입니다. 입장 요청 사전 승인은 방문객이 사전에 입장을 요청하도록 하는 것이므로 해당 기관에서 자신의 신원을 확인하고 입장에 필요한 기준을 충족하는지 확인할 수 있기 때문입니다. 이 프로세스는 보안 담당자가 신원 조사를 수행하고, 방문 목적을 검토하고, 승인된 개인에게만 액세스 권한이 부여되었는지 확인할 수 있는 기회를 제공합니다. 사전 승인은 승인되지 않은 방문자가 데이터 센터에 들어올 위험을 최소화하는 데 도움이 됩니다. C의 경우. 방문자는 승인된 직원의 안내를 받습니다. 승인된 직원이 방문자를 안내하도록 하는 것은 방문자 접근에 대한 통제를 강화할 수 있는 추가적인 보안 조치입니다. 그러나 이 접근 방식은 자원 집약적일 수 있으므로 직원이 항상 방문객을 안내할 수 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -479,7 +522,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -539,7 +582,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 17 May 2023 13:03">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -552,7 +595,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -577,7 +620,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 15 Aug 2023 01:51">
-			2 days, 20 hours ago
+			1 week, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -589,7 +632,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -630,7 +673,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 14:34">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -677,7 +720,7 @@ And for C. Visitors are escorted by an authorized employee: Having authorized em
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 10:16">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -715,7 +758,7 @@ And for C. Visitors are escorted by an authorized employee: Having authorized em
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 09:57">
-			4 weeks, 1 day ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -760,7 +803,7 @@ And for C. Visitors are escorted by an authorized employee: Having authorized em
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 14:33">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

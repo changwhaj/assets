@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 66 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 66 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 66 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 66 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807566">
 <p class="card-text">
 							
-								개발자는 유지 관리를 수행하는 동안 일시적으로 AWS 서비스에 액세스하기 위해 온프레미스 개발 서버에서 AWS CLI를 사용해야 합니다. 개발자는 몇 시간 동안 ID로 AWS에 인증해야 합니다. <br/>개발자의 IAM 자격 증명으로 AWS CLI 명령을 호출하는 가장 안전한 방법은 무엇입니까?<br/>
+								개발자는 유지 관리를 수행하는 동안 일시적으로 AWS 서비스에 액세스하기 위해 온프레미스 개발 서버에서 AWS CLI를 사용해야 합니다. 개발자는 몇 시간 동안 자신의 ID로 AWS에 인증해야 합니다. <br/>개발자의 IAM 자격 증명으로 AWS CLI 명령을 호출하는 가장 안전한 방법은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807566" type="application/json">[{"voted_answers": "D", "vote_count": 9, "is_most_voted": true}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											각 CLI 명령에 대한 매개변수로 개발자의 IAM 액세스 키 ID 및 보안 액세스 키를 지정합니다.
+											개발자의 IAM 액세스 키 ID와 보안 액세스 키를 각 CLI 명령의 매개변수로 지정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											aws configure CLI 명령을 실행합니다. 개발자의 IAM 액세스 키 ID와 보안 액세스 키를 제공합니다.
+											awsconfigure CLI 명령을 실행합니다. 개발자의 IAM 액세스 키 ID와 보안 액세스 키를 제공합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											각 CLI 명령에 대한 매개 변수로 개발자의 IAM 프로필을 지정합니다.
+											개발자의 IAM 프로필을 각 CLI 명령의 매개변수로 지정합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a> 
-							
-							시간: <i>
-							2022년 9월 1일 오후 3:11</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 3:11 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,11 +289,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 15:11">
 			11개월, 3주 전
@@ -287,7 +330,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Sirikou_0922
+				시리쿠_0922
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 2일 금요일 09:43">
@@ -295,7 +338,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 아닌 이유를 말씀해 주시겠습니까?</div>
+<div class="comment-content">왜 B가 아닌지 말해줄 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -327,7 +370,7 @@
 				m_t_kd
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 03일 (토) 01:07">
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 01:07">
 			11개월, 3주 전
 		</span>
 </div>
@@ -341,7 +384,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,13 +434,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 13:50">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 13:50">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">A와 B가 모두 유효한 옵션이더라도 온프레미스에서 aws cli를 사용하는 가장 안전한 방법은 get-session-token을 호출하여 임시 자격 증명을 얻는 것입니다. 따라서 D가 정답입니다.</div>
+<div class="comment-content">A와 B가 모두 유효한 옵션이더라도 전제 조건에서 aws cli를 사용하는 가장 안전한 방법은 get-session-token을 호출하여 임시 자격 증명을 얻는 것입니다. 그럼 D가 정답이군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -442,7 +485,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C라고 생각합니다. 각 개발자의 프로필을 사용하십시오. -- 프로필 옵션은 각 cli 명령에 대한 access_key 및 토큰 추가를 대체하는 데 사용됩니다. get-acess_token은 MFA가 활성화된 사용자와 MFA 인증이 필요한 일부 API 작업을 호출하는 경우에만 필요합니다. MFA 지원 IAM 사용자는 GetSessionToken을 호출하고 MFA 디바이스와 연결된 MFA 코드를 제출해야 합니다. 호출에서 반환된 임시 보안 자격 증명을 사용하여 IAM 사용자는 MFA 인증이 필요한 API 작업을 프로그래밍 방식으로 호출할 수 있습니다.</div>
+<div class="comment-content">C. 각 개발자의 프로필을 사용하는 것이 정답이라고 생각합니다. -- 프로필 옵션은 각 cli 명령에 대해 access_key 및 토큰 추가를 대체하는 데 사용됩니다. get-acess_token은 MFA가 활성화된 사용자와 MFA 인증이 필요한 일부 API 작업을 호출하는 경우에만 필요합니다. MFA 지원 IAM 사용자는 GetSessionToken을 호출하고 MFA 디바이스와 연결된 MFA 코드를 제출해야 합니다. IAM 사용자는 호출에서 반환된 임시 보안 자격 증명을 사용하여 MFA 인증이 필요한 API 작업을 프로그래밍 방식으로 호출할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,7 +526,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 12:53">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,11 +571,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 17일 목요일 21:59">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 A로 하려고 했는데 A와 D는 같은 것 같고 D는 임시 자격 증명일 뿐</div>
+<div class="comment-content">A를 선택하려고 했는데 A와 D가 동일한 것 같습니다. D는 임시 자격 증명입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,13 +615,13 @@
 				하브로스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 8일 (토) 14:49">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 8일 토요일 14:49">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html 오래된 키가 재사용되지 않도록 하여 보안 계층 ​​추가</div>
+<div class="comment-content">https://docs.aws.amazon.com/STS/latest/APIReference/API_GetSessionToken.html 오래된 키가 재사용되지 않도록 보장하여 보안 계층을 추가했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,12 +653,12 @@
 				하브로스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 8일 (토) 14:50">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 8일 토요일 14:50">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"가장 안전한" 구현이 아니라면 B에 동의합니다.</div>
+<div class="comment-content">"가장 안전한" 구현이 아니라면 B의 의견에 동의하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -624,7 +667,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -828,7 +871,7 @@ https://docs.aws.amazon.com/cli/latest/reference/sts/get-session-token.html</div
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 13:50">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -920,7 +963,7 @@ MFA-enabled IAM users would need to call GetSessionToken and submit an MFA code 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 12:53">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -965,7 +1008,7 @@ MFA-enabled IAM users would need to call GetSessionToken and submit an MFA code 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 21:59">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1010,7 +1053,7 @@ MFA-enabled IAM users would need to call GetSessionToken and submit an MFA code 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Oct 2022 14:49">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1050,7 +1093,7 @@ Added layer of security by ensuring stale keys are not reused</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Oct 2022 14:50">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

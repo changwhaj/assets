@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 356 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 356 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 356 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 356 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850063">
 <p class="card-text">
 							
-								개발자가 Amazon EC2 인스턴스에 배포된 애플리케이션에서 작업하고 있습니다. 애플리케이션은 파일을 Amazon S3 버킷으로 전송해야 합니다. <br/><br/>개발자는 가장 안전한 방식으로 S3 버킷에 대한 애플리케이션의 액세스를 인증하기 위해 무엇을 해야 합니까?
+								개발자가 Amazon EC2 인스턴스에 배포된 애플리케이션을 작업하고 있습니다. 애플리케이션은 파일을 Amazon S3 버킷으로 전송해야 합니다. <br/><br/>가장 안전한 방법으로 S3 버킷에 대한 애플리케이션의 액세스를 인증하려면 개발자는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850063" type="application/json">[{"voted_answers": "D", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": true}]</script>
+<script id="850063" type="application/json">[{"voted_answers": "D", "vote_count": 7, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -108,13 +171,13 @@
 													D.
 												</span> 
 											
-											S3 버킷에 대한 버킷 정책을 구성합니다. 버킷 정책에서 EC2 인스턴스 ID의 액세스를 허용합니다.
+											S3 버킷에 대한 버킷 정책을 구성합니다. 버킷 정책의 EC2 인스턴스 ID에서 액세스를 허용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,21 +187,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 55%; display: flex;" title="">D (55%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 45%; display: flex;" title="">씨 (45%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">D (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 42%; display: flex;" title="">C (42%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 27일 
-							
-							오전 <i>
-							10:44</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -160,7 +213,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850063" type="application/json">[{"voted_answers": "D", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": true}]</script>
+<script id="850063" type="application/json">[{"voted_answers": "D", "vote_count": 7, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -208,21 +261,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 55%; display: flex;" title="">D (55%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 45%; display: flex;" title="">C (45%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">D (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 42%; display: flex;" title="">C (42%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 27, 2022, 10:44 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,16 +293,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빵빵
+				빵집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 14일 (월) 06:19">
-			5일, 23시간 전
+<span class="comment-date align-middle" title="2023년 8월 14일 월요일 06:19">
+			1주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">사람들이 왜 C라고 생각하는지 모르겠습니다. EC2 인스턴스 메타데이터는 S3 또는 다른 서비스에 대한 액세스를 제공하는 데 사용할 수 없습니다. EC2 인스턴스 메타데이터 서비스가 무엇인지 빠르게 읽어보면 무지가 행복하다는 것을 알 수 있습니다.</div>
+<div class="comment-content">사람들이 왜 C. EC2 인스턴스 메타데이터를 사용하여 S3 또는 기타 서비스에 대한 액세스를 제공할 수 없다고 생각하는지 모르겠습니다. EC2 인스턴스 메타데이터 서비스가 무엇인지 빠르게 읽어보면 무지가 행복이라는 것을 알 수 있을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -268,7 +311,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -299,12 +342,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 21:54">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 21:54">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C EC2 인스턴스에서 S3 버킷에 대한 애플리케이션 액세스를 인증하는 가장 안전한 방법은 IAM 역할을 EC2 인스턴스와 연결하는 것입니다. 그런 다음 EC2 인스턴스에서 실행되는 애플리케이션은 인스턴스 메타데이터 서비스를 사용하여 역할과 연결된 임시 보안 자격 증명을 검색할 수 있습니다. 이렇게 하면 애플리케이션의 환경 변수에 장기 액세스 키 또는 자격 증명을 생성하고 저장할 필요가 없습니다. 따라서 보기 C가 정답입니다.</div>
+<div class="comment-content">C EC2 인스턴스에서 S3 버킷에 대한 애플리케이션의 액세스를 인증하는 가장 안전한 방법은 IAM 역할을 EC2 인스턴스와 연결하는 것입니다. 그러면 EC2 인스턴스에서 실행되는 애플리케이션은 인스턴스 메타데이터 서비스를 사용하여 역할과 연결된 임시 보안 자격 증명을 검색할 수 있습니다. 이렇게 하면 애플리케이션의 환경 변수에 장기 액세스 키나 자격 증명을 생성하고 저장할 필요가 없습니다. 따라서 보기 C가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -313,7 +356,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,12 +379,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 21:54">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 21:54">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A는 액세스 키가 AWS 리소스에 대한 장기 액세스를 제공하고 이를 애플리케이션의 환경 변수에 저장하면 권한이 없는 사용자에게 노출될 수 있기 때문에 보안 접근 방식이 아닙니다. IAM 역할에 대한 액세스 키를 생성하면 관리 또는 교체할 필요가 없는 임시 보안 자격 증명을 제공하는 역할 사용의 목적에 어긋나기 때문에 옵션 B도 안전한 접근 방식이 아닙니다. 버킷 정책의 EC2 인스턴스 ID를 기반으로 액세스 권한을 부여하면 공격자가 인스턴스 또는 여기에 저장된 자격 증명에 대한 액세스 권한을 얻을 수 있기 때문에 옵션 D도 안전한 접근 방식이 아닙니다.</div>
+<div class="comment-content">옵션 A는 액세스 키가 AWS 리소스에 대한 장기간 액세스를 제공하고 이를 애플리케이션의 환경 변수에 저장하면 승인되지 않은 사용자에게 노출될 수 있으므로 안전한 접근 방식이 아닙니다. IAM 역할에 대한 액세스 키를 생성하면 관리하거나 교체할 필요가 없는 임시 보안 자격 증명을 제공하는 역할 사용 목적이 무산되기 때문에 옵션 B도 안전한 접근 방식이 아닙니다. 또한 옵션 D는 안전한 접근 방식이 아닙니다. 버킷 정책의 EC2 인스턴스 ID를 기반으로 액세스 권한을 부여하면 인스턴스 또는 인스턴스에 저장된 자격 증명에 대한 액세스 권한을 얻는 공격자가 우회할 수 있기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -350,7 +393,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,7 +433,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 19:38">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -427,12 +470,12 @@
 				미스트랄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 02일 목요일 19:39">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 2일 목요일 19:39">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">EC2 인스턴스와 연결된 IAM 역할을 노래하는 것(옵션 C)은 버킷 정책 구성(옵션 D)과 비교할 때 S3 버킷에 대한 애플리케이션의 액세스를 인증하는 가장 안전한 방법입니다. 버킷 정책은 EC2 인스턴스 ID의 액세스를 허용하지만 인스턴스 ID를 식별자로 사용하므로 액세스를 관리하는 안전한 방법이 아닙니다. 대신 특정 권한이 있고 EC2 인스턴스와 같은 AWS 서비스에서 AWS 리소스에 액세스할 수 있는 AWS 자격 증명인 IAM 역할을 사용하는 것이 좋습니다. 이 접근 방식은 환경에 자격 증명을 저장하지 않고도 리소스에 대한 액세스를 관리할 수 있는 안전하고 유연한 방법을 제공합니다.</div>
+<div class="comment-content">EC2 인스턴스와 연결된 IAM 역할을 지정하는 방법(옵션 C)은 버킷 정책을 구성하는 방법(옵션 D)에 비해 S3 버킷에 대한 애플리케이션의 액세스를 인증하는 가장 안전한 방법입니다. 버킷 정책은 EC2 인스턴스 ID로부터의 액세스를 허용하지만 인스턴스 ID를 식별자로 사용하므로 액세스를 관리하는 안전한 방법이 아닙니다. 대신, 특정 권한이 있고 AWS 리소스에 액세스하기 위해 EC2 인스턴스와 같은 AWS 서비스에서 가정할 수 있는 AWS 자격 증명인 IAM 역할을 사용하는 것이 더 좋습니다. 이 접근 방식은 환경에 자격 증명을 저장하지 않고도 리소스에 대한 액세스를 관리하는 안전하고 유연한 방법을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -441,7 +484,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -464,12 +507,12 @@
 				미스트랄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 02일 목요일 19:39">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 2일 목요일 19:39">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">인스턴스 메타데이터 서비스는 연결된 IAM 역할과 같은 인스턴스에 대한 정보를 제공하는 Amazon EC2 인스턴스의 기능입니다. IAM 역할은 AWS 서비스 및 리소스에 액세스하는 데 사용할 수 있습니다. IAM 역할을 EC2 인스턴스와 연결할 때 인스턴스 메타데이터 서비스를 사용하여 역할에 대한 임시 자격 증명을 검색할 수 있습니다. 이러한 자격 증명은 S3 버킷에 액세스하기 위해 인스턴스에서 실행 중인 애플리케이션에서 사용할 수 있습니다. 임시 자격 증명은 자동으로 교체되어 추가 보안 계층을 제공합니다. 인스턴스 메타데이터 서비스를 사용하여 자격 증명을 검색하면 애플리케이션이 환경 또는 구성 파일에 자격 증명을 저장할 필요가 없습니다. 이렇게 하면 자격 증명이 손상되거나 유출될 위험이 줄어듭니다. 대신에,</div>
+<div class="comment-content">인스턴스 메타데이터 서비스는 인스턴스와 관련된 IAM 역할 등 인스턴스에 대한 정보를 제공하는 Amazon EC2 인스턴스의 기능입니다. IAM 역할을 사용하여 AWS 서비스 및 리소스에 액세스할 수 있습니다. IAM 역할을 EC2 인스턴스와 연결하면 인스턴스 메타데이터 서비스를 사용하여 역할에 대한 임시 자격 증명을 검색할 수 있습니다. 이러한 자격 증명은 인스턴스에서 실행되는 애플리케이션에서 S3 버킷에 액세스하는 데 사용될 수 있습니다. 임시 자격 증명은 자동으로 교체되어 추가 보안 계층을 제공합니다. 인스턴스 메타데이터 서비스를 사용하여 자격 증명을 검색하면 애플리케이션이 환경 또는 구성 파일에 자격 증명을 저장할 필요가 없습니다. 이렇게 하면 자격 증명이 손상되거나 유출될 위험이 줄어듭니다. 대신에,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -478,7 +521,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -502,11 +545,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 20:52">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">인스턴스 자체 내에서만 인스턴스 메타데이터 및 사용자 데이터에 액세스할 수 있지만 데이터는 인증 또는 암호화 방법으로 보호되지 않습니다. 인스턴스 및 잠재적으로 인스턴스에서 실행 중인 모든 소프트웨어에 직접 액세스할 수 있는 사람은 누구나 해당 메타데이터를 볼 수 있습니다. 따라서 암호나 수명이 긴 암호화 키와 같은 민감한 데이터를 사용자 데이터로 저장하면 안 됩니다.https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html</div>
+<div class="comment-content">인스턴스 자체 내에서만 인스턴스 메타데이터 및 사용자 데이터에 액세스할 수 있지만 데이터는 인증 또는 암호화 방법으로 보호되지 않습니다. 인스턴스에 직접 액세스할 수 있는 사람은 물론 인스턴스에서 실행 중인 모든 소프트웨어가 해당 메타데이터를 볼 수 있습니다. 따라서 비밀번호나 장기 암호화 키와 같은 민감한 데이터를 사용자 데이터로 저장해서는 안 됩니다.https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -515,7 +558,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,13 +613,13 @@
 				미엔솔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 18일 수 19:39">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 18일 수요일 19:39">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 그것이 C라고 말하고 싶습니다. EC2 인스턴스 ID 제한으로 버킷 정책을 정의하는 것이 가능한지조차 모르겠습니다.</div>
+<div class="comment-content">C라고 말하고 싶습니다. EC2 인스턴스 ID 제한을 사용하여 버킷 정책을 정의하는 것이 가능한지조차 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -613,25 +656,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 17:49">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 17:49">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문: "MOST" 안전한 방법 제거: A, B, C</div>
+<div class="comment-content">질문: "가장 안전한" 방법 제거: A, B, C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,13 +705,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 10:44">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 10:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">동의</div>
+<div class="comment-content">동의함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -677,7 +720,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -729,7 +772,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 14 Aug 2023 06:19">
-			5 days, 23 hours ago
+			1 week, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -777,7 +820,7 @@ A quick read on what EC2 instance metadata service is will show you that, ignora
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 21:54">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -816,7 +859,7 @@ The most secure way to authenticate an application's access to an S3 bucket from
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 21:54">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -873,7 +916,7 @@ Option D is also not a secure approach because granting access based on the EC2 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 19:38">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -911,7 +954,7 @@ Option D is also not a secure approach because granting access based on the EC2 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 19:39">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -948,7 +991,7 @@ Option D is also not a secure approach because granting access based on the EC2 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 19:39">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -987,7 +1030,7 @@ By using the instance metadata service to retrieve the credentials, the applicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 20:52">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1056,7 +1099,7 @@ By using the instance metadata service to retrieve the credentials, the applicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 19:39">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1103,7 +1146,7 @@ I don't even know if it's possible to define a bucket policy with an EC2 instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 17:49">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1117,7 +1160,7 @@ Eliminate: A, B, C</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1150,7 +1193,7 @@ Eliminate: A, B, C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 10:44">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

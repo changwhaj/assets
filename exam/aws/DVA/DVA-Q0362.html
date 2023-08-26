@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 362 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 362 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 362 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 362 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850069">
 <p class="card-text">
 							
-								회사에 전자상거래 애플리케이션이 있습니다. 제품 리뷰를 추적하기 위해 회사의 개발 팀은 Amazon DynamoDB 테이블을 사용합니다. <br/><br/>모든 레코드에는 다음이 포함됩니다. <br/><br/>• 리뷰 ID, 16자리 범용 고유 식별자(UUID) <br/>• 제품 ID 및 사용자 ID, 다른 테이블을 참조하는 16자리 UUID <br/>• 1-5 등급의 제품 등급 <br/>• 선택적 사용자 의견 <br/><br/>테이블 파티션 키는 검토 ID입니다. 테이블에 대해 가장 많이 수행되는 쿼리는 지정된 제품에 대해 가장 높은 평점을 받은 10개의 리뷰를 찾는 것입니다. <br/><br/>이 쿼리에 대해 가장 빠른 응답을 제공하는 인덱스는 무엇입니까?
+								회사에 전자상거래 애플리케이션이 있습니다. 제품 리뷰를 추적하기 위해 회사 개발 팀은 Amazon DynamoDB 테이블을 사용합니다. <br/><br/>모든 기록에는 다음이 포함됩니다. <br/><br/>• 리뷰 ID, 16자리 UUID(범용 고유 식별자) <br/>• 제품 ID 및 사용자 ID, 다른 테이블을 참조하는 16자리 UUID <br/>• 1~5점 척도의 제품 등급 <br/>• 사용자의 선택적 설명 <br/><br/>테이블 파티션 키는 검토 ID입니다. 테이블에 대해 가장 많이 수행되는 쿼리는 특정 제품에 대해 가장 높은 평가를 받은 10개의 리뷰를 찾는 것입니다. <br/><br/>이 쿼리에 대해 가장 빠른 응답을 제공하는 인덱스는 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Product ID가 파티션 키이고 Product Rating이 정렬 키인 GSI(Global Secondary Index)
+											제품 ID가 파티션 키이고 제품 등급이 정렬 키인 글로벌 보조 인덱스(GSI)
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Product ID가 파티션 키이고 Product Rating이 정렬 키인 LSI(local secondary index)
+											제품 ID가 파티션 키이고 제품 등급이 정렬 키인 LSI(로컬 보조 인덱스)
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											리뷰 ID가 파티션 키이고 제품 ID가 정렬 키인 로컬 보조 인덱스(LSI)
+											리뷰 ID를 파티션 키로, 제품 ID를 정렬 키로 사용하는 LSI(로컬 보조 인덱스)
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							시간: <i>
-							2022년 11월 27일, 오후 10:18</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 27, 2022, 10:18 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,19 +291,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 22:18">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 22:18">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">질문: (1) 주어진 제품에 대해 가장 높은 평점을 받은 10개의 리뷰를 찾습니다. - 파티션 키로 제품 ID가 필요하고 정렬 키로 제품 등급이 필요합니다. - 제거, LSI (2) FASTEST ==&gt; GSI - 글로벌 보조에는 테이블과는 별개인 읽기 및 쓰기 활동에 대한 자체 프로비저닝된 처리량 설정이 있습니다. - local secondary index는 인덱싱 중인 테이블과 읽기 및 쓰기 활동에 대해 프로비저닝된 처리량 설정을 공유합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-indexes-general.html</div>
+<div class="comment-content">질문: (1) 특정 제품에 대해 가장 높은 평점을 받은 리뷰 10개를 찾으세요. - 파티션 키로 제품 ID, 정렬 키로 제품 등급이 필요합니다. - LSI 제거(2) FASTEST ==&gt; GSI - 글로벌 보조에는 테이블의 설정과 별개인 읽기 및 쓰기 활동에 대한 자체 프로비저닝된 처리량 설정이 있습니다. - 로컬 보조 인덱스는 인덱싱 중인 테이블과 읽기 및 쓰기 활동에 대해 프로비저닝된 처리량 설정을 공유합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-indexes-general.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,13 +346,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 10:09">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 10:09">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. Product ID가 파티션 키이고 Product Rating이 정렬 키인 GSI(Global Secondary Index)입니다. GSI(Global Secondary Index)는 테이블과 다른 파티션 키가 있는 DynamoDB의 인덱스 유형입니다. 이 경우 GSI에는 제품 ID가 파티션 키로, 제품 평가가 정렬 키로 있어야 합니다. 이렇게 하면 주어진 제품에 대해 가장 높은 평점을 받은 10개의 리뷰에 대해 GSI를 효율적으로 쿼리할 수 있습니다. 옵션 B는 쿼리에 필요한 정렬 키로 제품 평가를 포함하지 않기 때문에 올바르지 않습니다. 옵션 C는 테이블의 파티션 키와 LSI의 정렬 키로만 쿼리할 수 있는 LSI(local secondary index)를 사용하기 때문에 올바르지 않습니다. 옵션 D는 검토 ID를 쿼리와 관련이 없는 파티션 키로 사용하기 때문에 올바르지 않습니다.</div>
+<div class="comment-content">정답은 A입니다. 제품 ID가 파티션 키이고 제품 등급이 정렬 키인 글로벌 보조 인덱스(GSI)입니다. GSI(글로벌 보조 인덱스)는 테이블과 다른 파티션 키를 갖는 DynamoDB의 인덱스 유형입니다. 이 경우 GSI에는 제품 ID가 파티션 키로, 제품 등급이 정렬 키로 있어야 합니다. 이렇게 하면 특정 제품에 대해 가장 높은 평점을 받은 10개의 리뷰에 대해 GSI를 효율적으로 쿼리할 수 있습니다. 옵션 B는 쿼리에 필요한 정렬 키로 제품 등급을 포함하지 않기 때문에 올바르지 않습니다. 옵션 C는 테이블의 파티션 키와 LSI의 정렬 키로만 쿼리할 수 있는 LSI(로컬 보조 인덱스)를 사용하기 때문에 올바르지 않습니다. 옵션 D는 리뷰 ID를 쿼리와 관련 없는 파티션 키로 사용하기 때문에 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,13 +392,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 3일 (토) 13:31">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 13:31">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A와 함께 가기</div>
+<div class="comment-content">A와 함께 가다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -364,7 +407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,16 +435,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 19:10">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 19:10">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AAAAAA</div>
+<div class="comment-content">아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -410,7 +453,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -465,7 +508,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 22:18">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -523,7 +566,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-indexes-gene
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 10:09">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -573,7 +616,7 @@ Option B is incorrect because it does not include the Product Rating as the sort
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 13:31">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -619,7 +662,7 @@ Option B is incorrect because it does not include the Product Rating as the sort
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 19:10">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

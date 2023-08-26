@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 247 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 247 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 247 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 247 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849925">
 <p class="card-text">
 							
-								개발자가 Auto Scaling 그룹의 Amazon EC2 인스턴스에서 실행되는 애플리케이션을 작성하고 있습니다. 애플리케이션 데이터는 Amazon DynamoDB 테이블에 저장되고 레코드는 모든 인스턴스에서 지속적으로 업데이트됩니다. 인스턴스는 때때로 이전 데이터를 검색합니다. 개발자는 읽기가 강력한 일관성을 갖도록 하여 이를 수정하려고 합니다. <br/><br/>개발자는 이를 어떻게 수행할 수 있습니까?
+								개발자는 Auto Scaling 그룹의 Amazon EC2 인스턴스에서 실행되는 애플리케이션을 작성하고 있습니다. 애플리케이션 데이터는 Amazon DynamoDB 테이블에 저장되고 레코드는 모든 인스턴스에서 지속적으로 업데이트됩니다. 인스턴스는 때때로 오래된 데이터를 검색합니다. 개발자는 읽기의 일관성을 유지하여 이 문제를 해결하려고 합니다. <br/><br/>개발자는 이를 어떻게 달성할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849925" type="application/json">[{"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="849925" type="application/json">[{"voted_answers": "A", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,21 +148,23 @@
 													A.
 												</span> 
 											
-											GetItem 호출 시 ConsistentRead를 true로 설정합니다.
-										</li>
+											GetItem을 호출할 때 ConsistencyRead를 true로 설정합니다.
+										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
+                최다 투표
+            </span></li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											새 DynamoDB Accelerator(DAX) 테이블 생성
+											새로운 DynamoDB Accelerator(DAX) 테이블 생성
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											UpdateTable 호출 시 Consistency를 strong으로 설정합니다.
+											UpdateTable을 호출할 때 Consistency를 Strong으로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -110,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 11월 25일 
-							
-							오전 <i>
-							11:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -157,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849925" type="application/json">[{"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="849925" type="application/json">[{"voted_answers": "A", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -167,7 +222,9 @@
 												</span>
 											
 											Set ConsistentRead to true when calling GetItem.
-										</li>
+										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
+                Most Voted
+            </span></li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
@@ -201,22 +258,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 11:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -253,16 +300,16 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">읽기 작업 중에 강력한 일관성 읽기(더 비싸고 더 많은 RCU가 필요함)를 설정할 수 있지만 새 데이터만 얻도록 보장할 수 있습니다. (대체 솔루션이지만 옵션에 작성되지 않은 경우 쓰기 전략을 사용하여 캐시가 항상 업데이트되도록 보장하므로 읽기가 강력한 일관성이 없는 경우에도 캐시에 항상 업데이트된 값이 포함됩니다.) A가 정답이다</div>
+<div class="comment-content">읽기 작업 중에 강력하게 일관된 읽기를 설정할 수 있지만(비용이 더 많이 들고 더 많은 RCU가 필요함) 새 데이터만 가져오도록 보장할 수 있습니다. (옵션에 기록되지 않은 대체 솔루션은 캐시가 항상 업데이트되도록 보장하는 연속 쓰기 전략을 사용하는 것입니다. 따라서 읽기가 강력하게 일관되지 않더라도 캐시에는 항상 업데이트된 값이 포함됩니다.) A가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,16 +337,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 17일 금요일 01:17">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 17일 금 01:17">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">DynamoDB Query API를 사용하여 데이터를 읽을 때 ConsistentRead 파라미터를 true로 설정하고 매우 일관된 결과를 얻을 수 있습니다.</div>
+<div class="comment-content">DynamoDB Query API를 사용하여 데이터를 읽을 때 ConsistencyRead 파라미터를 true로 설정하면 강력하게 일관된 결과를 얻을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,15 +383,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 20:48">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 Kinesis 스트림 샤드를 참조하고 질문에 Kinesis에 대한 언급이 없기 때문에 D가 될 수 없습니다. 샤드 반복자는 데이터 읽기를 시작할 샤드 위치를 지정합니다. 순차적으로 기록합니다. 위치는 샤드에 있는 데이터 레코드의 시퀀스 번호를 사용하여 지정됩니다. 시퀀스 번호는 스트림에서 수집된 모든 레코드와 연결된 식별자이며 레코드가 스트림에 배치될 때 할당됩니다. 각 스트림에는 하나 이상의 샤드가 있습니다. DAX는 읽기를 강력하게 일관되게 만드는 것과 아무 관련이 없습니다. Left with A: - ConsistentRead o 읽기 일관성 모델을 결정합니다. true로 설정하면 작업에서 강력하게 일관된 읽기를 사용합니다. 그렇지 않으면 작업에서 최종적으로 일관된 읽기를 사용합니다. o 강력한 일관된 읽기는 글로벌 보조 인덱스에서 지원되지 않습니다. ConsistentRead가 true로 설정된 글로벌 보조 인덱스를 쿼리하면 ValidationException이 발생합니다. https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html</div>
+<div class="comment-content">이는 DB에 쓰기를 의미하므로 DB에서 읽지 않음을 의미하므로 C일 수 없습니다. 이는 Kinesis 스트림 샤드를 의미하고 질문에 Kinesis에 대한 언급이 없으므로 D일 수 없습니다. 샤드 반복자는 데이터 읽기를 시작할 샤드 위치를 지정합니다. 순차적으로 기록합니다. 위치는 샤드에 있는 데이터 레코드의 시퀀스 번호를 사용하여 지정됩니다. 시퀀스 번호는 스트림에 수집된 모든 레코드와 연결된 식별자이며 레코드가 스트림에 입력될 때 할당됩니다. 각 스트림에는 하나 이상의 샤드가 있습니다. DAX는 강력한 일관성 읽기를 만드는 것과 아무 관련이 없습니다. 왼쪽 A: - ConsistencyRead o 읽기 일관성 모델을 결정합니다. true로 설정하면 작업에서 강력한 일관성 읽기를 사용합니다. 그렇지 않으면 작업에서 최종적 일관된 읽기를 사용합니다. o 글로벌 보조 인덱스에서는 Strongly Consistency 읽기가 지원되지 않습니다. ConsistencyRead가 true로 설정된 글로벌 보조 인덱스를 쿼리하면 ValidationException이 발생합니다. https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -353,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,11 +428,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 07:23">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -399,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,8 +477,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 16:53">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 16:53">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -445,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,11 +520,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 11:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 11:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -490,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -555,7 +602,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -588,7 +635,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 01:17">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -634,7 +681,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 01 Jan 2023 20:48">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -690,7 +737,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 07:23">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -736,7 +783,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 16:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -782,7 +829,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 11:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

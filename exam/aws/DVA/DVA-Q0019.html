@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 19 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 19 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 19 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 19 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807519">
 <p class="card-text">
 							
-								회사는 Amazon API Gateway를 사용하는 마이크로서비스 애플리케이션을 호스팅합니다. AWS Lambda, Amazon Simple Queue Service(Amazon SQS) 및 Amazon <br/>DynamoDB. Lambda 함수 중 하나는 SQS FIFO 대기열에 메시지를 추가합니다. <br/>개발자가 애플리케이션 로그를 확인할 때 개발자는 DynamoDB 테이블에서 몇 가지 중복된 항목을 찾습니다. 큐에서 메시지를 처리하는 다른 폴링 기능에 의해 항목이 삽입되었습니다. <br/>이 문제의 가장 가능성 있는 원인은 무엇입니까?<br/>
+								한 회사가 Amazon API Gateway를 사용하는 마이크로서비스 애플리케이션을 호스팅합니다. AWS Lambda, Amazon Simple Queue Service(Amazon SQS) 및 Amazon <br/>DynamoDB. Lambda 함수 중 하나가 SQS FIFO 대기열에 메시지를 추가합니다. <br/>개발자는 애플리케이션 로그를 확인할 때 DynamoDB 테이블에서 몇 가지 중복된 항목을 발견합니다. 큐의 메시지를 처리하는 다른 폴링 기능에 의해 항목이 삽입되었습니다. <br/>이 문제의 가장 가능성 있는 원인은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807519" type="application/json">[{"voted_answers": "D", "vote_count": 22, "is_most_voted": true}]</script>
@@ -84,34 +147,34 @@
 													A.
 												</span> 
 											
-											DynamoDB 테이블에 대한 쓰기 작업이 조절되고 있습니다.
+											DynamoDB 테이블에 대한 쓰기 작업이 제한되고 있습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											SQS 대기열이 메시지를 기능에 두 번 이상 전달했습니다.
+											SQS 대기열은 메시지를 함수에 두 번 이상 전달했습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											API Gateway가 SQS 대기열에 메시지를 복제했습니다.
+											API 게이트웨이가 SQS 대기열에 메시지를 복제했습니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											폴링 기능 시간 초과가 대기열 가시성 시간 초과보다 큽니다.
+											폴링 기능 시간 초과가 대기열 표시 시간 초과보다 깁니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2022년 9월 3일, 오전 9:45</i> 
-							
-							에 <a class="title-username" style="">
-								sidvic
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sidvic
-							</a>
-							
-							at <i>
-							Sept. 3, 2022, 9:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,14 +289,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시드빅
+				시빅
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 3일 (토) 09:45">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 09:45">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -265,9 +308,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,7 +345,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 18:54">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,13 +390,13 @@
 				수탉
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 06:35">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 06:35">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이는 메시지가 더 오랜 시간 동안 대기열에 남아 있고 폴링 함수의 동일한 인스턴스 또는 다른 인스턴스로 다시 전달될 수 있기 때문에 발생할 수 있으며, 이로 인해 DynamoDB 테이블에 항목이 중복될 수 있습니다. 이 문제를 해결하기 위해 개발자는 시간 초과 설정을 조정하고 대기열 가시성 시간 초과가 폴링 함수의 시간 초과보다 낮도록 할 ​​수 있습니다. 이렇게 하면 메시지가 원하는 시간 동안 대기열에 보이지 않고 해당 기간 동안 다시 배달되지 않습니다.</div>
+<div class="comment-content">이는 메시지가 오랫동안 대기열에 남아 있고 폴링 기능의 동일하거나 다른 인스턴스로 다시 전달될 수 있어 DynamoDB 테이블에 중복 항목이 발생할 수 있기 때문에 발생할 수 있습니다. 이 문제를 해결하기 위해 개발자는 시간 초과 설정을 조정하고 대기열 가시성 시간 초과가 폴링 기능의 시간 초과보다 낮은지 확인할 수 있습니다. 이렇게 하면 원하는 시간 동안 메시지가 대기열에 표시되지 않고 해당 기간 동안 다시 전달되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,11 +433,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 02:05">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 02:05">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,15 +479,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				may2021_r
+				2021년 5월
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 02:53">
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 02:53">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS FIFO 대기열에서 각 메시지는 정확히 한 번만 처리되며 대기열에 추가된 정확한 순서대로 처리됩니다. 그러나 드물게 FIFO 대기열을 사용하는 경우에도 메시지가 두 번 이상 배달될 수 있습니다. 이는 메시지 확인이 지연되거나 메시지가 삭제되기 전에 시간 초과된 경우에 발생할 수 있습니다. 이러한 경우 메시지가 대기열로 반환되고 소비자가 다시 처리할 수 있으므로 동일한 메시지가 중복 처리됩니다. 옵션 BI 생각</div>
+<div class="comment-content">SQS FIFO 대기열에서 각 메시지는 대기열에 추가된 정확한 순서대로 정확히 한 번 처리됩니다. 그러나 드문 경우지만 FIFO 대기열을 사용하는 경우에도 메시지가 두 번 이상 전달될 수 있습니다. 메시지 확인이 지연되거나 메시지가 삭제되기 전에 시간이 초과된 경우 이런 일이 발생할 수 있습니다. 이러한 경우 메시지는 큐로 반환되고 소비자에 의해 다시 처리될 수 있으므로 동일한 메시지가 중복 처리됩니다. 옵션 BI 생각</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,7 +528,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:30">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,13 +573,13 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 17일 목요일 01:55">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 17일 (목) 01:55">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">" 가시성 제한 시간을 올바르게 설정하지 않으면 메시지가 다시 처리될 수 있습니다." https://tomgregory.com/3-surprising-facts-about-aws-sqs-fifo-queues/</div>
+<div class="comment-content">" 공개 제한 시간을 올바르게 설정하지 않으면 메시지가 다시 처리될 수 있습니다." https://tomgregory.com/3-surising-facts-about-aws-sqs-fifo-queues/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -582,7 +625,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">기능이 가시성 제한 시간이 만료되기 전에 SQS에서 메시지를 삭제하지 않으면 다른 기능이 동일한 메시지를 두 번 처리합니다.</div>
+<div class="comment-content">표시 제한 시간이 만료되기 전에 함수가 SQS에서 메시지를 삭제하지 않으면 다른 함수가 동일한 메시지를 두 번 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -591,7 +634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -623,11 +666,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 22일 목요일 00:12">
-			11개월 전
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D 요청이 제한 시간보다 빨리 처리되지 않으면 대기열에서 다시 표시되고 다른 서비스에서 선택되어 다시 처리되기 때문에 가시성 제한 시간을 더 긴 시간으로 설정하는 것이 매우 중요합니다. 이로 인해 중복 프로세스가 발생합니다.</div>
+<div class="comment-content">D 요청이 시간 초과보다 빨리 처리되지 않으면 대기열에 다시 표시되고 다른 서비스에서 선택되어 재처리되기 때문에 표시 시간 초과를 더 길게 설정하는 것이 매우 중요합니다. 이로 인해 프로세스가 중복됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,16 +707,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자볼
+				야볼
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 14일 수 10:35">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 14일 수요일 10:35">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"표준 대기열과 달리 FIFO 대기열은 중복 메시지를 도입하지 않습니다. FIFO 대기열은 대기열에 중복 메시지를 보내지 않도록 도와줍니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html</div>
+<div class="comment-content">"표준 대기열과 달리 FIFO 대기열은 중복 메시지를 도입하지 않습니다. FIFO 대기열을 사용하면 대기열에 중복 메시지를 보내는 것을 방지할 수 있습니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -682,7 +725,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -737,7 +780,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 09:45">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -786,7 +829,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 18:54">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -832,7 +875,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 06:35">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -878,7 +921,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 02:05">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -971,7 +1014,7 @@ Option B I think</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:30">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1017,7 +1060,7 @@ Option B I think</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 01:55">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1111,7 +1154,7 @@ https://tomgregory.com/3-surprising-facts-about-aws-sqs-fifo-queues/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Sep 2022 00:12">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1157,7 +1200,7 @@ It is very important to set the visibility timeout to a longer time because if t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Sep 2022 10:35">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 191 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 191 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 191 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 191 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849869">
 <p class="card-text">
 							
-								회사에서 Amazon API Gateway REST API를 통해 액세스할 애플리케이션을 개발하고 있습니다. 등록된 사용자만 이 API의 특정 리소스에 액세스할 수 있어야 합니다. 사용 중인 토큰은 자동으로 만료되며 주기적으로 새로 고쳐야 합니다. <br/><br/>개발자는 어떻게 이러한 요구 사항을 충족할 수 있습니까?
+								한 회사가 Amazon API Gateway REST API를 통해 액세스할 애플리케이션을 개발 중입니다. 등록된 사용자는 이 API의 특정 리소스에 액세스할 수 있는 유일한 사용자여야 합니다. 사용 중인 토큰은 자동으로 만료되어야 하며 주기적으로 새로 고쳐야 합니다. <br/><br/>개발자는 어떻게 이러한 요구 사항을 충족할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											해당 토큰으로 각 사용자에 대한 데이터베이스 레코드를 생성 및 유지 관리하고 API Gateway에서 AWS Lambda 권한 부여자를 사용합니다.
+											해당 토큰을 사용하여 각 사용자에 대한 데이터베이스 레코드를 생성 및 유지하고 API Gateway에서 AWS Lambda 권한 부여자를 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon Cognito 사용자 풀을 생성하고, API Gateway에서 Cognito Authorizer를 구성하고, 자격 증명 또는 액세스 토큰을 사용합니다.
+											Amazon Cognito 사용자 풀을 생성하고, API 게이트웨이에서 Cognito Authorizer를 구성하고, 자격 증명 또는 액세스 토큰을 사용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">씨 (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">A (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">C (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">A (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 
-							
-							11 <i>
-							월 24일 오후 3:18</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 3:18 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -255,7 +298,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">이것이 사실입니다. 자격 증명 풀은 서비스에 액세스하도록 설계되었습니다. 그러나 인증을 위해 cognito 사용자 풀을 사용하고 이를 API 게이트웨이와 통합할 수 있습니다. 이를 위해서는 API Gateway에서 cognito 권한 부여자를 생성하고 권한 부여자를 참조하여 보호하려는 API를 재배포해야 합니다. 나는 C로 갈 것이다</div>
+<div class="comment-content">그것은 사실입니다. ID 풀은 서비스에 액세스하도록 설계되었습니다. 그러나 인증을 위해 cognito 사용자 풀을 사용하고 이를 API 게이트웨이와 통합할 수 있습니다. 그러기 위해서는 API Gateway에서 Cognito Authorizer를 생성하고, Authorizer를 참조하여 보호하려는 API를 재배포해야 합니다. 나는 C로 갈거야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -295,13 +338,13 @@
 				엠마퀴스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 15:38">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 15:38">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. Amazon Cognito 사용자 풀을 생성하고, API Gateway에서 Cognito Authorizer를 구성하고, 자격 증명 또는 액세스 토큰을 사용합니다. 이 옵션은 질문의 모든 요구 사항을 충족합니다. 개발자는 Amazon Cognito 사용자 풀을 생성하여 확장 가능하고 안전한 방식으로 사용자 인증 및 권한 부여를 관리할 수 있습니다. API Gateway의 Cognito Authorizer를 사용하면 사용자 인증을 기반으로 REST API 엔드포인트에 대한 액세스를 제어할 수 있으며 액세스 또는 자격 증명 토큰을 사용하여 사용자를 인증하고 권한을 부여할 수 있습니다. 또한 Cognito 사용자 풀은 토큰 만료 및 새로 고침을 지원하므로 API에 대한 액세스가 안전하고 사용자가 인증되도록 토큰 수명 및 새로 고침 토큰을 주기적으로 구성할 수 있습니다. 따라서 옵션 C는 이 시나리오에 가장 적합한 선택입니다.</div>
+<div class="comment-content">C. Amazon Cognito 사용자 풀을 생성하고, API 게이트웨이에서 Cognito Authorizer를 구성하고, 자격 증명 또는 액세스 토큰을 사용합니다. 이 옵션은 질문의 모든 요구 사항을 충족합니다. Amazon Cognito 사용자 풀을 생성함으로써 개발자는 확장 가능하고 안전한 방식으로 사용자 인증 및 권한 부여를 관리할 수 있습니다. API Gateway의 Cognito Authorizer를 사용하면 사용자 인증을 기반으로 REST API 엔드포인트에 대한 액세스를 제어할 수 있으며 액세스 또는 ID 토큰을 사용하여 사용자를 인증하고 권한을 부여할 수 있습니다. 또한 Cognito 사용자 풀은 토큰 만료 및 새로 고침을 지원하므로 토큰 수명 및 새로 고침 토큰을 주기적으로 구성하여 API에 대한 액세스가 안전하고 사용자가 인증되도록 할 수 있습니다. 따라서 옵션 C가 이 시나리오에 가장 적합한 선택입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,11 +381,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 18:01">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 18:01">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,16 +427,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 15:56">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 15:56">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 경우 사용자 풀이 아니라 자격 증명 풀이 필요하므로 대답은 A입니다. 이 페이지를 참조하십시오: https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/</div>
+<div class="comment-content">이 경우 사용자 풀이 아닌 자격 증명 풀이 필요하므로 대답은 A입니다. 이 페이지를 참조하십시오: https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,16 +473,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ShriniW
+				슈리니W
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 20:32">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">.... 자격 증명은 일시적이어야 하며 자격 증명 풀이 이 목적을 수행합니다.</div>
+<div class="comment-content">.... 자격 증명은 임시적이어야 하며 자격 증명 풀이 이 목적을 수행합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,7 +523,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:17">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,16 +565,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				태어나지 않은
+				아직 태어나지 않은
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 30일 (월) 05:46">
+<span class="comment-date align-middle" title="2023년 1월 30일 월요일 05:46">
 			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">C. API Gateway에 대한 권한 부여자는 사용자 풀이 아닌 Cognito 자격 증명 풀이어야 하므로 Amazon Cognito 사용자 풀을 생성하고, API Gateway에서 Cognito 권한 부여자를 구성하고, 자격 증명 또는 액세스 토큰을 사용하는 것이 올바르지 않습니다. 사용자 풀은 사용자 가입 및 로그인을 위해 설계되었으며 자격 증명 풀은 사용자가 다른 AWS 서비스에 액세스할 수 있도록 임시 AWS 자격 증명을 제공합니다.</div>
+<div class="comment-content">C. Amazon Cognito 사용자 풀을 생성하고, API Gateway에서 Cognito 권한 부여자를 구성하고, API 게이트웨이에 대한 권한 부여자가 사용자 풀이 아닌 Cognito 자격 증명 풀이어야 하기 때문에 ID 또는 액세스 토큰을 사용하는 것이 올바르지 않습니다. 사용자 풀은 사용자 가입 및 로그인을 위해 설계되었으며, 자격 증명 풀은 사용자가 다른 AWS 서비스에 액세스할 수 있도록 임시 AWS 자격 증명을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,12 +614,12 @@
 				시칠람
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 13:11">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 13:11">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C라면 임시 토큰은 어떨까?</div>
+<div class="comment-content">C라면 임시 토큰은 어떤가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -608,12 +651,12 @@
 				엠마퀴스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 15:39">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 15:39">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Cognito 사용자 풀은 토큰 만료 및 갱신을 지원합니다.</div>
+<div class="comment-content">Cognito 사용자 풀은 토큰 만료 및 새로 고침을 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -622,7 +665,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -645,12 +688,12 @@
 				엠마퀴스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 15:42">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 15:42">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html#amazon-cognito-user-pools-using-id- and-access-tokens-token-expiration</div>
+<div class="comment-content">https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html#amazon-cognito-user-pools-using-id- 및 액세스 토큰 토큰 만료</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -659,7 +702,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -698,12 +741,12 @@
 				비시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 24일 화요일 01:33">
-			6개월, 4주 전
+<span class="comment-date align-middle" title="2023년 1월 24일 (화) 01:33">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동의한다, A여야 한다</div>
+<div class="comment-content">동의합니다. A여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -712,7 +755,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -748,16 +791,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 08:56">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 08:56">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">ccccccc</div>
+<div class="comment-content">ㅋㅋㅋㅋㅋㅋ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -766,7 +809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,8 +840,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 09:56">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 09:56">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -812,7 +855,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,7 +892,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -888,12 +931,12 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 23:36">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 23:36">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C입니다.</div>
+<div class="comment-content">답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -902,7 +945,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -930,15 +973,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 15:18">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 15:18">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 토큰 유효성 검사와 함께 cognito 사용자 풀 권한 부여자를 사용합니다.</div>
+<div class="comment-content">C에서는 토큰 유효성 검사와 함께 cognito 사용자 풀 권한 부여자를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -947,7 +990,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1045,7 +1088,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 15:38">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1097,7 +1140,7 @@ So, Option C is the most appropriate choice for this scenario.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 18:01">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1192,7 +1235,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 20:32">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1238,7 +1281,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:17">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1367,7 +1410,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 15:39">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1404,7 +1447,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 15:42">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1457,7 +1500,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 01:33">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1510,7 +1553,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 08:56">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1556,7 +1599,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 09:56">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1647,7 +1690,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 23:36">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1692,7 +1735,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 15:18">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

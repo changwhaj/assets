@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 298 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 298 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 298 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 298 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849976">
 <p class="card-text">
 							
-								개발자가 회사의 애플리케이션을 Amazon EC2 인스턴스에 배포하고 있습니다. 이 애플리케이션은 매일 기가바이트의 데이터 파일을 생성합니다. 파일은 거의 액세스되지 않지만 파일은 저장 첫 해 동안 요청 후 몇 분 이내에 애플리케이션 사용자가 사용할 수 있어야 합니다. 회사는 파일을 7년 동안 보관해야 합니다. <br/><br/>개발자는 이러한 요구 사항을 가장 비용 효율적으로 충족하기 위해 애플리케이션을 어떻게 구현할 수 있습니까?
+								개발자가 회사의 애플리케이션을 Amazon EC2 인스턴스에 배포하고 있습니다. 이 애플리케이션은 매일 기가바이트의 데이터 파일을 생성합니다. 파일은 거의 액세스되지 않지만 저장 첫 해 동안 요청 후 몇 분 이내에 애플리케이션 사용자가 파일을 사용할 수 있어야 합니다. 회사는 해당 파일을 7년간 보관해야 합니다. <br/><br/>개발자는 이러한 요구 사항을 가장 비용 효율적으로 충족하기 위해 애플리케이션을 어떻게 구현할 수 있습니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											파일을 Amazon S3 버킷에 저장합니다. S3 Glacier Instant Retrieval 스토리지 클래스를 사용합니다. 파일을 1년 후 S3 Glacier Deep Archive 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성합니다.
+											Amazon S3 버킷에 파일을 저장합니다. S3 Glacier Instant Retrieval 스토리지 클래스를 사용합니다. 1년 후에 파일을 S3 Glacier Deep Archive 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											파일을 Amazon S3 버킷에 저장합니다. S3 Standard 스토리지 클래스를 사용합니다. 파일을 1년 후 S3 Glacier Flexible Retrieval 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성합니다.
+											Amazon S3 버킷에 파일을 저장합니다. S3 Standard 스토리지 클래스를 사용합니다. 1년 후에 파일을 S3 Glacier 유연한 검색 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon Elastic Block Store(Amazon EBS) 볼륨에 파일을 저장합니다. Amazon DLM(Amazon Data Lifecycle Manager)을 사용하여 EBS 볼륨의 스냅샷을 생성하고 해당 스냅샷을 Amazon S3에 저장합니다.
+											Amazon Elastic Block Store(Amazon EBS) 볼륨에 파일을 저장합니다. Amazon Data Lifecycle Manager(Amazon DLM)를 사용하여 EBS 볼륨의 스냅샷을 생성하고 해당 스냅샷을 Amazon S3에 저장합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon Elastic File System(Amazon EFS) 마운트에 파일을 저장합니다. 1년 후 파일을 EFS Standard-Infrequent Access(Standard-IA) 스토리지 클래스로 전환하도록 EFS 수명 주기 관리를 구성합니다.
+											Amazon Elastic File System(Amazon EFS) 마운트에 파일을 저장합니다. 1년 후에 파일을 EFS Standard-Infrequent Access(Standard-IA) 스토리지 클래스로 전환하도록 EFS 수명 주기 관리를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 
-							
-							2022 <i>
-							년 11월 26일 오후 1:57</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 1:57 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,13 +294,13 @@
 				mrbig00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:07">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:07">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">올바른 솔루션은 옵션 A입니다. 파일을 Amazon S3 버킷에 저장하고 S3 Glacier Instant Retrieval 스토리지 클래스를 사용하면 애플리케이션 사용자가 요청 후 몇 분 안에 파일에 빠르게 액세스할 수 있습니다. 1년 후 파일을 S3 Glacier Deep Archive 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성하면 스토리지 비용이 절감되고 회사에서 파일을 7년 동안 유지할 수 있습니다. 이 솔루션은 요구 사항을 충족하고 가장 비용 효율적입니다.</div>
+<div class="comment-content">올바른 솔루션은 옵션 A입니다. Amazon S3 버킷에 파일을 저장하고 S3 Glacier Instant Retrieval 스토리지 클래스를 사용하면 애플리케이션 사용자가 요청 후 몇 분 내에 파일에 빠르게 액세스할 수 있습니다. 1년 후에 파일을 S3 Glacier Deep Archive 스토리지 클래스로 전환하는 S3 수명 주기 정책을 생성하면 스토리지 비용이 절감되고 회사에서 7년 동안 파일을 보관할 수 있습니다. 이 솔루션은 요구 사항을 충족하며 가장 비용 효율적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,16 +337,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 18:34">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 18:34">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Amazon S3 Glacier Instant Retrieval은 거의 액세스하지 않고 밀리초 단위로 검색해야 하는 수명이 긴 데이터를 위한 가장 저렴한 스토리지를 제공하는 아카이브 스토리지 클래스입니다. S3 Glacier Instant Retrieval을 사용하면 분기당 한 번 데이터에 액세스할 때 S3 Standard-Infrequent Access(S3 Standard-IA) 스토리지 클래스를 사용할 때보다 스토리지 비용을 최대 68% 절약할 수 있습니다. https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/</div>
+<div class="comment-content">Amazon S3 Glacier Instant Retrieval은 거의 액세스하지 않고 밀리초 단위로 검색해야 하는 장기 데이터에 대해 가장 저렴한 스토리지를 제공하는 아카이브 스토리지 클래스입니다. S3 Glacier Instant Retrieval을 사용하면 분기당 한 번 데이터에 액세스할 때 S3 Standard-Infrequent Access(S3 Standard-IA) 스토리지 클래스를 사용하는 경우에 비해 스토리지 비용을 최대 68% 절약할 수 있습니다. https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,11 +383,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 27일 일요일 07:29">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:57">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:57">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">동의</div>
+<div class="comment-content">동의함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -456,7 +499,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:07">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -502,7 +545,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 18:34">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -550,7 +593,7 @@ https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 07:29">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -596,7 +639,7 @@ https://aws.amazon.com/s3/storage-classes/glacier/instant-retrieval/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:57">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

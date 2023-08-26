@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 88 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 88 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 88 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 88 <br/>
 							주제 #: 1
@@ -72,10 +135,10 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807588">
 <p class="card-text">
 							
-								개발자가 전자상거래 웹 사이트를 위한 서버리스 애플리케이션을 설계하고 있습니다. Amazon API Gateway API는 청구, 결제 및 사용자 작업을 위한 AWS Lambda 함수를 노출합니다. 웹 사이트에는 사용자를 위한 쇼핑 카트가 있습니다. 쇼핑 카트는 장기간 보관해야 하며 프런트 엔드 애플리케이션에서 자주 검색합니다. <br/>응용 프로그램의 부하는 웹 사이트에서 제공되는 판촉 판매 시간과 시간에 따라 크게 달라집니다. 애플리케이션은 이러한 변화하는 요구 사항을 충족하도록 자동으로 확장될 수 있어야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?<br/>
+								개발자가 전자상거래 웹사이트용 서버리스 애플리케이션을 설계하고 있습니다. Amazon API Gateway API는 청구, 결제 및 사용자 작업을 위한 AWS Lambda 함수를 공개합니다. 웹사이트에는 사용자를 위한 장바구니 기능이 있습니다. 장바구니는 장기간 보관해야 하며 프런트엔드 애플리케이션에서 자주 검색됩니다. <br/>애플리케이션의 부하는 하루 중 시간과 웹사이트에서 제공되는 프로모션 판매에 따라 크게 달라집니다. 애플리케이션은 이러한 변화하는 요구 사항을 충족하기 위해 자동으로 확장할 수 있어야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807588" type="application/json">[{"voted_answers": "D", "vote_count": 26, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="807588" type="application/json">[{"voted_answers": "D", "vote_count": 27, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -91,14 +154,14 @@
 													B.
 												</span> 
 											
-											Application Load Balancer 뒤의 Amazon EC2 인스턴스에 데이터 객체를 저장합니다. 각 사용자의 장바구니에 대해 세션 선호도(고정 세션)를 사용합니다.
+											Application Load Balancer 뒤의 Amazon EC2 인스턴스에 데이터 객체를 저장합니다. 각 사용자의 장바구니에 대해 세션 어피니티(고정 세션)를 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											데이터 개체를 Amazon S3 버킷에 저장합니다. 최대 TTL로 Amazon CloudFront를 사용하여 데이터 객체를 캐시합니다.
+											Amazon S3 버킷에 데이터 객체를 저장합니다. 최대 TTL로 Amazon CloudFront를 사용하여 데이터 객체를 캐시합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="26 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">D (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">D (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a> 2022년 8월 31 
-							
-							일 <i>
-							오후 10:22</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -156,7 +209,7 @@
 								A developer is designing a serverless application for an ecommerce website. An Amazon API Gateway API exposes AWS Lambda functions for billing, payment, and user operations. The website features shopping carts for the users. The shopping carts must be stored for extended periods of time and will be retrieved frequently by the front-end application.<br/>The load on the application will vary significantly based on the time of day and the promotional sales that are offered on the website. The application must be able to scale automatically to meet these changing demands.<br/>Which solution will meet these requirements?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807588" type="application/json">[{"voted_answers": "D", "vote_count": 26, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="807588" type="application/json">[{"voted_answers": "D", "vote_count": 27, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -202,21 +255,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="26 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">D (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">D (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a>
-							
-							at <i>
-							Aug. 31, 2022, 10:22 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,24 +291,24 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 8월 31일 수 22:22">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이러한 변화하는 요구 사항을 충족하도록 자동으로 확장합니다. = DynamoDB를 의미</div>
+<div class="comment-content">변화하는 요구 사항을 충족하기 위해 자동으로 확장됩니다. =는 DynamoDB를 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,9 +340,9 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 04:43">
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 04:43">
 			7개월, 1주 전
 		</span>
 </div>
@@ -348,13 +391,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 16:19">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 16:19">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">치오세는 A와 D 사이에 있습니다(확실히 B와 C는 고려해서는 안 됨). 서비스리스, 고가용성 및 자동 확장이 필요하므로 D로 가겠습니다.</div>
+<div class="comment-content">선택은 A와 D 사이에 있습니다(물론 B와 C는 고려하면 안 됩니다). 서버리스, 고가용성, 자동 확장이 필요하므로 D로 가겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,16 +434,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				온드레이츠
+				온드레이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 11일 화요일 11:48">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">S3 및 DynamoDB만 서버리스이므로 Dynamo여야 합니다.</div>
+<div class="comment-content">S3와 DynamoDB만 서버리스이므로 Dynamo여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,12 +483,12 @@
 				Dr_Chomp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 06:48">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 06:48">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A - Dynamo는 이러한 종류의 관계 기반 스키마에 대한 좋은 옵션이 아닙니다. 이 스키마의 핵심은 사용자가 있고 장바구니가 있고 주문이 있고 등등... 관계가 있다는 것입니다. 열 저장소 및 비관계형 사용 사례에 적합한 Dynamo... 그래서 저에게는 RDS입니다!</div>
+<div class="comment-content">A - Dynamo는 실제로 이러한 종류의 관계 기반 스키마에 적합한 옵션이 아닙니다. 제가 생각하기에 이 스키마의 핵심은 사용자가 있고, 장바구니가 있고, 주문 등이 있다는 것입니다. Dynamo는 열 저장소 및 비관계형 사용 사례에 적합합니다. 그래서 RDS가 저에게는 좋습니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -474,11 +517,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				온드레이츠
+				온드레이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 11일 화요일 11:47">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,11 +570,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 04:07">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -576,12 +619,12 @@
 				벵기
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 15:02">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 15:02">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D 옵션 D는 확장성이 뛰어나고 탄력적인 NoSQL 데이터베이스 서비스인 Amazon DynamoDB 테이블에 데이터 객체를 저장하도록 제안하기 때문에 최상의 옵션입니다. 캐싱은 DynamoDB에 대한 고가용성 인 메모리 캐시를 제공하는 DynamoDB Accelerator(DAX)를 사용하여 달성할 수 있습니다. 이 솔루션을 통해 개발자는 인프라 관리가 아닌 애플리케이션 논리에 집중할 수 있으며 애플리케이션에 대한 고가용성 및 자동 확장을 제공할 수 있습니다.</div>
+<div class="comment-content">D 옵션 D는 확장성과 탄력성이 뛰어난 NoSQL 데이터베이스 서비스인 Amazon DynamoDB 테이블에 데이터 객체를 저장할 것을 제안하므로 가장 좋은 옵션입니다. 캐싱은 DynamoDB에 고가용성 인 메모리 캐시를 제공하는 DynamoDB Accelerator(DAX)를 사용하여 수행할 수 있습니다. 이 솔루션을 사용하면 개발자는 인프라 관리보다는 애플리케이션 로직에 집중할 수 있으며 애플리케이션에 대한 고가용성 및 자동 확장 기능을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -613,12 +656,12 @@
 				벵기
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 15:02">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 15:02">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A는 장바구니 데이터를 Amazon RDS DB 인스턴스에 저장할 것을 제안합니다. 이는 많은 애플리케이션에 적합한 옵션이지만 트래픽 수요가 매우 가변적인 전자 상거래 웹 사이트에는 최선의 선택이 아닐 수 있습니다. Amazon RDS는 자동 확장이 가능하지만 Amazon DynamoDB 또는 Amazon S3만큼 탄력적이지는 않습니다. 또한 Amazon ElastiCache에서 데이터를 캐싱하려면 추가 관리가 필요하며 잠재적으로 애플리케이션 속도가 느려질 수 있습니다.</div>
+<div class="comment-content">옵션 A는 장바구니 데이터를 Amazon RDS DB 인스턴스에 저장하는 것을 제안합니다. 이는 많은 애플리케이션에 적합한 옵션이지만 트래픽 수요가 매우 가변적인 전자 상거래 웹사이트에는 최선의 선택이 아닐 수도 있습니다. Amazon RDS는 자동 확장이 가능하지만 Amazon DynamoDB 또는 Amazon S3만큼 탄력적이지는 않습니다. 또한 Amazon ElastiCache에서 데이터를 캐싱하려면 추가 관리가 필요하며 잠재적으로 애플리케이션 속도가 느려질 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -627,7 +670,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -650,12 +693,12 @@
 				벵기
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 15:03">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 15:03">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B는 세션 선호도(고정 세션)를 사용하여 Application Load Balancer 뒤의 Amazon EC2 인스턴스에 데이터를 저장할 것을 제안합니다. 이 솔루션은 개발자가 EC2 인스턴스를 관리해야 하며 Amazon DynamoDB 또는 Amazon S3와 같은 서버리스 솔루션만큼 탄력적이지 않습니다. 또한 개발자는 분산 시스템에서 확장 및 관리하기 어려울 수 있는 세션 데이터의 스토리지를 처리해야 합니다.</div>
+<div class="comment-content">옵션 B는 세션 선호도(고정 세션)를 사용하여 Application Load Balancer 뒤의 Amazon EC2 인스턴스에 데이터를 저장할 것을 제안합니다. 이 솔루션은 개발자가 EC2 인스턴스를 관리해야 하며 Amazon DynamoDB 또는 Amazon S3와 같은 서버리스 솔루션만큼 탄력적이지 않습니다. 또한 개발자는 분산 시스템에서 확장 및 관리가 어려울 수 있는 세션 데이터의 저장을 처리해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -664,7 +707,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -687,12 +730,12 @@
 				벵기
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 15:03">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 15:03">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C는 데이터 객체를 Amazon S3 버킷에 저장하고 Amazon CloudFront를 사용하여 캐싱할 것을 제안합니다. 이 솔루션은 작동할 수 있지만 개발자는 데이터 객체의 검색 및 업데이트와 Amazon CloudFront의 캐싱 동작을 관리해야 합니다. 또한 Amazon S3에는 최종 일관성이 있으므로 애플리케이션이 항상 최신 버전의 데이터를 볼 수는 없습니다.</div>
+<div class="comment-content">옵션 C는 Amazon S3 버킷에 데이터 객체를 저장하고 Amazon CloudFront를 사용하여 캐싱하는 것을 제안합니다. 이 솔루션은 효과가 있을 수 있지만 개발자는 Amazon CloudFront의 캐싱 동작뿐만 아니라 데이터 객체의 검색 및 업데이트도 관리해야 합니다. 또한 Amazon S3에는 최종 일관성이 있으므로 애플리케이션이 항상 최신 버전의 데이터를 볼 수는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -701,7 +744,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -753,15 +796,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언제부터
+				언제보다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 12일 목요일 04:04">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D Amazon DynamoDB Accelerator(DAX)는 Amazon DynamoDB를 위한 완전관리형 고가용성 인 메모리 캐시로, 초당 수백만 건의 요청에서도 밀리초에서 마이크로초까지 최대 10배의 성능 향상을 제공합니다.</div>
+<div class="comment-content">D Amazon DynamoDB Accelerator(DAX)는 Amazon DynamoDB를 위한 완전 관리형 고가용성 인 메모리 캐시로, 초당 수백만 건의 요청에서도 밀리초에서 마이크로초까지 최대 10배의 성능 향상을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,11 +845,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 14:41">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -815,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,15 +886,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 금요일 22:32">
+<span class="comment-date align-middle" title="2022년 12월 30일 금 22:32">
 			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">의심스러울 때는 발전기를 켜십시오! Bozo는 실생활에서 아무도 10피트짜리 장대로 만지는 것을 원하지 않기 때문에 열심히 팔려고 합니다.</div>
+<div class="comment-content">의심스러우면 발전기로 가세요! 보조는 실생활에서 아무도 10피트 길이의 기둥으로 그것을 만지고 싶어하지 않기 때문에 그 물건을 열심히 팔려고 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -860,7 +903,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -888,16 +931,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 22:56">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 22:56">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"개발자가 전자상거래 웹사이트를 위한 서버리스 애플리케이션을 설계하고 있습니다." DynamoDB는 서버리스 설계를 유지하기 위한 최선의 선택입니다.</div>
+<div class="comment-content">"개발자가 전자상거래 웹사이트용 서버리스 애플리케이션을 설계하고 있습니다." DynamoDB는 서버리스 설계를 유지하는 가장 좋은 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -906,7 +949,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,16 +977,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				겸손한_개발자
+				겸손한 개발자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 02:33">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 02:33">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">DAX가 장바구니의 세션 캐시를 D에 저장할 수 있는지 확신할 수 없기 때문에 A를 선택합니다. 하지만 ElastiCache가 사용자 세션을 캐시할 수 있고 RDS가 지금부터 자동 확장될 수 있다고 확신합니다.</div>
+<div class="comment-content">DAX가 장바구니의 세션 캐시를 D에 저장할 수 있는지 확실하지 않기 때문에 A를 선택합니다. 하지만 ElastiCache가 사용자 세션을 캐시할 수 있고 RDS가 지금부터 자동 크기 조정될 수 있다고 확신합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -952,7 +995,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -983,13 +1026,13 @@
 				이반페트로비치파블로프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 04:56">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 04:56">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">DAX는 "빈번한 읽기 용량 향상"에만 사용됩니다.</div>
+<div class="comment-content">DAX는 "자주 읽는 능력 향상"에만 사용됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -998,7 +1041,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,13 +1072,13 @@
 				G4시험
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 19일 (토) 06:17">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 19일 토요일 06:17">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Dynamo DB는 자동 확장이 필요한 이러한 종류의 쇼핑 카트 등에 가장 적합한 데이터베이스 솔루션이며 DAX는 예기치 않은 읽기 수요 급증에 대비합니다.</div>
+<div class="comment-content">Dynamo DB는 자동으로 확장해야 하는 이러한 종류의 장바구니 등에 가장 적합한 데이터베이스 솔루션이며, DAX는 예상치 못한 읽기 수요 급증에 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1072,16 +1115,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				헤지반지
+				헤이지반즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 5일 수 12:53">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 5일 수요일 12:53">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 정답입니다</div>
+<div class="comment-content">D가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1090,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1121,13 +1164,13 @@
 				david00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 24일 (토) 20:19">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 24일 토요일 20:19">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 앱이 "서버리스"로 구축되기 때문에 dynamodb가 됩니다.</div>
+<div class="comment-content">D 앱이 "서버리스"로 구축되고 있으므로 이는 dynamodb가 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1136,7 +1179,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,12 +1210,12 @@
 				szhang2004
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 7일 수요일 02:11">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 7일 수 02:11">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D여야 한다고 생각합니다.</div>
+<div class="comment-content">내 생각엔 D가 되어야 할 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1181,7 +1224,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1236,7 +1279,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 31 Aug 2022 22:22">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1249,7 +1292,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">9</span> times
+				upvoted <span class="upvote-count">10</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1380,7 +1423,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Apr 2023 11:48">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1426,7 +1469,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 06:48">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1463,7 +1506,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Apr 2023 11:47">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1516,7 +1559,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 04:07">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1562,7 +1605,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 15:02">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1600,7 +1643,7 @@ Option D is the best option because it suggests storing the data objects in Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 15:02">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1637,7 +1680,7 @@ Option D is the best option because it suggests storing the data objects in Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 15:03">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1674,7 +1717,7 @@ Option D is the best option because it suggests storing the data objects in Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 15:03">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1743,7 +1786,7 @@ Option D is the best option because it suggests storing the data objects in Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 12 Jan 2023 04:04">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1789,7 +1832,7 @@ Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 14:41">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1879,7 +1922,7 @@ Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 22:56">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1926,7 +1969,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 02:33">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1972,7 +2015,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 04:56">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2018,7 +2061,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Nov 2022 06:17">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2064,7 +2107,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Oct 2022 12:53">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2110,7 +2153,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Sep 2022 20:19">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2156,7 +2199,7 @@ DynamoDB is the best option to keep the servelress design.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Sep 2022 02:11">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

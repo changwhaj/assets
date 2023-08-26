@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 1135 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 1135 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 1135 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 1135 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="873894">
 <p class="card-text">
 							
-								다음 중 다중 테넌트 클라우드 환경에서 데이터 유출 방지를 가장 효과적으로 시행하는 방법은 무엇입니까?
+								다음 중 멀티 테넌트 클라우드 환경에서 데이터 유출 방지를 가장 효과적으로 시행하는 방법은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											모니터링 도구는 가동 중지 시 경고하도록 구성되어 있습니다.
+											모니터링 도구는 다운타임 발생 시 경고하도록 구성되어 있습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,18 +162,18 @@
 													C.
 												</span> 
 											
-											서로 다른 테넌트의 데이터는 데이터베이스 스키마로 분리됩니다.
+											다양한 테넌트의 데이터는 데이터베이스 스키마로 분리됩니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											세입자는 데이터 분류 정책을 구현해야 합니다.
+											테넌트는 데이터 분류 정책을 구현해야 합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -123,16 +186,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023 <i>
-							년 3월 27일, 오전 6:09 </i><a class="title-username" style="">
-								SRJ13
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -201,16 +254,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								SRJ13
-							</a>
-							
-							at <i>
-							March 27, 2023, 6:09 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -242,14 +285,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 06:09">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C. 여러 테넌트가 동일한 인프라를 공유하는 멀티 테넌트 클라우드 환경에서는 데이터 유출을 방지하기 위해 데이터를 분리하고 안전하게 보관하는 것이 필수적입니다. 데이터베이스 스키마별로 데이터를 분리하는 것은 다중 테넌트 클라우드 환경에서 데이터 유출 방지를 시행하는 일반적인 방법입니다. 이 방법에는 각 테넌트에 대해 별도의 데이터베이스 스키마를 생성하여 데이터가 별도로 저장 및 관리되고 액세스가 승인된 사용자로 제한되도록 합니다. 모니터링 도구, 포괄적인 보안 검토 및 데이터 분류 정책은 모두 데이터 유출 방지를 시행하는 중요한 방법이지만 다중 테넌트 클라우드 환경에서 데이터베이스 스키마별로 데이터를 분리하는 것만큼 효과적이지 않습니다. 데이터베이스 스키마로 데이터를 분리하면 데이터를 분리하고 안전하게 보관할 수 있습니다.</div>
+<div class="comment-content">옵션 C. 여러 테넌트가 동일한 인프라를 공유하는 멀티 테넌트 클라우드 환경에서는 데이터 유출을 방지하기 위해 데이터를 별도로 안전하게 보관하는 것이 필수적입니다. 데이터베이스 스키마별로 데이터를 분리하는 것은 멀티 테넌트 클라우드 환경에서 데이터 유출 방지를 강화하는 일반적인 방법입니다. 이 방법에는 각 테넌트에 대해 별도의 데이터베이스 스키마를 생성하여 데이터가 별도로 저장 및 관리되고 액세스가 승인된 사용자로 제한되도록 보장하는 작업이 포함됩니다. 모니터링 도구, 종합적인 보안 검토, 데이터 분류 정책은 모두 데이터 유출 방지를 강화하는 중요한 방법이지만, 멀티 테넌트 클라우드 환경에서 데이터베이스 스키마별로 데이터를 분리하는 것만큼 효과적이지는 않습니다. 데이터베이스 스키마별로 데이터를 분리하면 데이터를 별도로 안전하게 보관할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -258,7 +301,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,8 +335,8 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 1일 (토) 15:33">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 1일 토요일 15:33">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -361,7 +404,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 06:09">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -411,7 +454,7 @@ While monitoring tools, comprehensive security reviews, and data classification 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 01 Jul 2023 15:33">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

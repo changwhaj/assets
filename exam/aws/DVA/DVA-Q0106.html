@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 106 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 106 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 106 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 106 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807606">
 <p class="card-text">
 							
-								개발자는 단일 AWS CloudFormation 템플릿을 사용하여 애플리케이션의 테스트 환경과 프로덕션 환경을 구성합니다. 개발자는 CloudFormation 템플릿에서 환경별 요구 사항을 처리합니다. <br/>개발자는 각 환경에 대한 새로운 Amazon 머신 이미지(AMI)로 Amazon EC2 Auto Scaling 시작 템플릿을 업데이트하기로 결정합니다. 새 AMI에 대한 CloudFormation <br/>업데이트는 테스트 환경에서 성공했지만 프로덕션 환경에서는 업데이트가 실패했습니다. <br/>프로덕션 환경에서 CloudFormation 업데이트 실패의 가능한 원인은 무엇입니까? (두 가지를 선택하세요.)<br/>
+								개발자는 단일 AWS CloudFormation 템플릿을 사용하여 애플리케이션의 테스트 환경과 프로덕션 환경을 구성합니다. 개발자는 CloudFormation 템플릿에서 환경별 요구 사항을 처리합니다. <br/>개발자는 각 환경에 대한 새로운 Amazon 머신 이미지(AMI)로 Amazon EC2 Auto Scaling 시작 템플릿을 업데이트하기로 결정했습니다. 새 AMI에 대한 CloudFormation <br/>업데이트는 테스트 환경에서는 성공했지만 프로덕션 환경에서는 업데이트가 실패했습니다. <br/>프로덕션 환경에서 CloudFormation 업데이트 실패의 가능한 원인은 무엇입니까? (2개를 선택하세요.)<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807606" type="application/json">[{"voted_answers": "AE", "vote_count": 7, "is_most_voted": true}, {"voted_answers": "AC", "vote_count": 3, "is_most_voted": false}, {"voted_answers": "AB", "vote_count": 3, "is_most_voted": false}, {"voted_answers": "CE", "vote_count": 1, "is_most_voted": false}]</script>
@@ -114,13 +177,13 @@
 													E.
 												</span> 
 											
-											CloudFormation에는 변경을 수행할 수 있는 충분한 IAM 권한이 없습니다.
+											CloudFormation에 변경을 수행할 수 있는 충분한 IAM 권한이 없습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -130,19 +193,9 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">AE(50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AC (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AB (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="7%" data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">7%</div></div></div></div>
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">AE (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AC (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AB (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="7%" data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">7%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a> 
-							
-							시간: <i>
-							2022년 9월 20일 오후 4:32</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -221,16 +274,6 @@
 <div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">AE (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AC (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">AB (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="7%" data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">7%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a>
-							
-							at <i>
-							Sept. 20, 2022, 4:32 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -258,15 +301,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AswinDe
+				아스윈드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 15:32">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 15:32">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">선택됨: CE Coludformation 업데이트 스택 – 실패 이유: 1. 스택 삭제 실패 2. 목록을 전달할 때 매개변수 구문 분석 오류 3. 불충분한 IAM 권한 4. 잘못된 값 또는 지원되지 않는 리소스 속성 5. 리소스 할당량 초과 6. 중첩 스택이 UPDATE_COMPLETE_CLEANUP_IN_PROGRESS에서 멈춤 , UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS 또는 UPDATE_ROLLBACK_IN_PROGRESS 7. 수행할 업데이트 없음 8. 스택 생성, 업데이트 또는 삭제 작업 중 리소스 안정화 실패 9. VPC에 보안 그룹이 없음 10. 업데이트 롤백 실패 11. 대기 조건이 Amazon EC2 인스턴스에서 필요한 신호 수 12. 스택에서 제거되었지만 삭제되지 않은 리소스</div>
+<div class="comment-content">선택됨: CE Coludformation 업데이트 스택 – 실패 이유: 1. 스택 삭제 실패 2. 목록 전달 시 매개변수 구문 분석 오류 3. IAM 권한 부족 4. 잘못된 값 또는 지원되지 않는 리소스 속성 5. 리소스 할당량 초과 6. 중첩 스택이 UPDATE_COMPLETE_CLEANUP_IN_PROGRESS에서 멈춤 , UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS 또는 UPDATE_ROLLBACK_IN_PROGRESS 7. 수행할 업데이트가 없습니다. 8. 스택 생성, 업데이트 또는 삭제 작업 중에 리소스를 안정화하지 못했습니다. 9. 보안 그룹이 VPC에 존재하지 않습니다. 10. 업데이트 롤백에 실패했습니다. 11. 대기 조건이 Amazon EC2 인스턴스에서 필요한 신호 수 12. 스택에서 리소스가 제거되었지만 삭제되지 않았습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -275,7 +318,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -307,12 +350,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 20일 토요일 07:27">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">A. 새 AMI는 CloudFormation 템플릿에 지정된 조건을 충족하지 않습니다. CloudFormation 템플릿에는 프로덕션 환경에서 사용되는 AMI에 대한 특정 조건 또는 요구 사항이 있을 수 있습니다. 새 AMI가 이러한 조건을 충족하지 않으면 업데이트가 실패할 수 있습니다. C. CloudFormation 템플릿에 지정된 보안 그룹이 존재하지 않음: 지정된 보안 그룹이 프로덕션 환경에 존재하지 않으면 이를 참조하는 업데이트가 실패합니다.</div>
+<div class="comment-content">A. 새 AMI는 CloudFormation 템플릿에 지정된 조건을 충족하지 않습니다. CloudFormation 템플릿에는 프로덕션 환경에서 사용되는 AMI에 대한 특정 조건이나 요구 사항이 있을 수 있습니다. 새 AMI가 해당 조건을 충족하지 않으면 업데이트가 실패할 수 있습니다. C. CloudFormation 템플릿에 지정된 보안 그룹이 존재하지 않습니다. 지정된 보안 그룹이 프로덕션 환경에 없으면 이를 참조하는 업데이트가 실패합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -321,7 +364,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -345,11 +388,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 20일 토요일 07:28">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다른 옵션(B, D, E)은 새 AMI에 대한 CloudFormation 업데이트 실패와 직접적인 관련이 없다는 점에 유의해야 합니다. B. AWS 리전의 EC2 vCPU 수에 대한 서비스 할당량이 초과되었습니다. 이 할당량 제한은 새 EC2 인스턴스를 시작하는 기능에 영향을 주지만 특히 AMI 업데이트로 인해 CloudFormation 업데이트가 실패하는 원인은 아닙니다. D. CloudFormation이 템플릿 변경을 업데이트로 인식하지 않음: CloudFormation이 템플릿 변경을 인식하지 못하는 경우 실패가 아닌 작동하지 않는 업데이트가 발생합니다.</div>
+<div class="comment-content">다른 옵션(B, D, E)은 새 AMI에 대한 CloudFormation 업데이트 실패와 직접적인 관련이 없다는 점에 유의하는 것이 중요합니다. B. AWS 리전의 EC2 vCPU 수에 대한 서비스 할당량이 초과되었습니다. 이 할당량 제한은 새로운 EC2 인스턴스를 시작하는 기능에 영향을 주지만 AMI 업데이트로 인해 CloudFormation 업데이트가 특별히 실패하는 원인은 아닙니다. D. CloudFormation은 템플릿 변경을 업데이트로 인식하지 않습니다. CloudFormation이 템플릿 변경을 인식하지 못하는 경우 실패가 아닌 무작동 업데이트가 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,11 +425,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 20일 토요일 07:28">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">E. CloudFormation에 변경을 수행할 수 있는 충분한 IAM 권한이 없습니다. CloudFormation에 충분한 권한이 없으면 오류 또는 액세스 권한 부족 메시지가 표시되지만 특별히 새 AMI에 대한 업데이트가 실패하지는 않습니다.</div>
+<div class="comment-content">E. CloudFormation에 변경을 수행할 충분한 IAM 권한이 없습니다. CloudFormation에 충분한 권한이 없으면 오류나 액세스 부족 메시지가 표시되지만 새 AMI에 대한 업데이트가 특별히 실패하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -395,7 +438,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -443,12 +486,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 19일 수 04:29">
-			4 개월 전에
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">A와 C가 맞습니다. E는 매우 부정확합니다. E는 CloudFormation 업데이트가 테스트 환경에서 성공했기 때문에 CloudFormation 업데이트 실패의 가능한 원인이 아닙니다. CloudFormation에 충분한 IAM 권한이 없으면 테스트 및 프로덕션 환경 모두에서 업데이트가 실패했을 것입니다.</div>
+<div class="comment-content">A와 C가 맞습니다. E는 매우 부정확합니다. 테스트 환경에서 CloudFormation 업데이트가 성공했으므로 E는 CloudFormation 업데이트 실패의 원인일 가능성이 없습니다. CloudFormation에 충분한 IAM 권한이 없으면 테스트 환경과 프로덕션 환경 모두에서 업데이트가 실패했을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -457,7 +500,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,15 +528,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 20일 (월) 18:17">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 20일 월요일 18:17">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 및 B IMO 이 질문은 https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html을 기반으로 합니다. D는 업데이트가 실패했기 때문에 불가능합니다. 이는 변경 사항을 인식하고 업데이트가 실행되었음을 의미합니다. 스택이 처음 실행(생성)되었을 때 성공적으로 실행되었다고 가정하겠습니다. 그래서 C와 E는 처음에 SG가 작동했고 IAM 권한이 처음에 OK였기 때문에 있을 수 없습니다.</div>
+<div class="comment-content">A 및 B IMO 이 질문은 https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html을 기반으로 합니다. D는 업데이트가 실패하여 불가능합니다. 즉, 변경 사항을 인식하고 업데이트가 실행되었음을 의미합니다. 스택이 처음 실행(생성)될 때 성공적으로 실행되었다고 가정하겠습니다. 그래서 C와 E는 처음에 SG가 작동했고 처음에는 IAM 권한이 괜찮았기 때문에 그럴 수 없었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,16 +573,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 22일 수 02:54">
-			5개월, 4주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">A와 B가 맞습니다. A&amp;E라고 하시는 분들: IAM 권한으로 인한 오류였다면 테스트 환경에서도 업데이트가 성공하지 못했을 것입니다. 따라서 E는 정확할 수 없습니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">A와 B가 맞습니다. A&amp;E를 말씀하시는 분들: IAM 권한으로 인한 오류라면 테스트 환경에서도 업데이트가 성공하지 못할 것입니다. 따라서 E는 정확할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,15 +611,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 17:27">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜? 권한이 prod가 아닌 테스트 환경에서 부여되었다고 가정해 보겠습니다. 가능하지 않을까요?</div>
+<div class="comment-content">왜? prod가 아닌 테스트 환경에서 권한이 부여되었다고 가정해 보겠습니다. 그게 가능하지 않을까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -605,15 +648,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 18:10">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">마음이 바뀌었지만 "테스트 환경에서 업데이트가 성공하지 못할 것"이라는 이유로는 아닙니다. 스택이 첫 번째(생성)에 성공적으로 실행되었고 이제 이것은 단지 업데이트라는 사실로 인해 E가 될 수 없다고 생각합니다. 따라서 IAM 권한이 제대로 작동했습니다.</div>
+<div class="comment-content">마음이 바뀌었지만 "테스트 환경에서 업데이트가 성공하지 못할 것"이라는 이유는 아닙니다. 스택이 처음(생성)에 성공적으로 실행되었고 지금은 단지 업데이트일 뿐이므로 E일 수는 없다고 생각합니다. 그래서 IAM 권한이 제대로 작동했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -622,7 +665,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -670,11 +713,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 22:12">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
 <div class="comment-content">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -712,16 +755,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				michele_scar
+				Michele_scar
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 25일 수 11:43">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 25일 수요일 11:43">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">B, C, D를 제외하고 A와 E만 허용됩니다. B, C, D에는 문제에 언급되지 않은 정보가 있으므로 테스트에 쓸모가 없습니다.</div>
+<div class="comment-content">B, C, D를 제외하고 A, E만 허용됩니다. B, C, D에는 문제에 언급되지 않은 정보가 있으므로 테스트에 쓸모가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -730,7 +773,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,16 +801,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아유브엠크
+				ayoubmk
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 16:59">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">A와 B는 나에게 더 많은 논리입니다. 응용 프로그램이 이미 작동 중이고 방금 변경했으므로 SG를 사용할 수 없거나 CF에 권한이 없다는 것은 말이 되지 않습니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">나에게는 A와 B가 더 논리적입니다. 애플리케이션이 이미 작동 중이고 방금 변경했기 때문에 SG를 사용할 수 없거나 CF에 권한이 없다는 것은 말이 되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -776,7 +819,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -807,12 +850,12 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 18:01">
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 18:01">
 			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 및 B: B용: 리소스 할당량에 도달하지 않았는지 확인합니다. 예를 들어 시작할 수 있는 Amazon EC2 온디맨드 인스턴스의 기본 최대 수는 5개입니다. 계정 할당량보다 더 많은 Amazon EC2 온디맨드 인스턴스를 생성하려고 하면 인스턴스 생성이 실패하고 Status=start_failed 오류가 표시됩니다. 서비스별 기본 AWS 할당량을 보려면 AWS General Reference의 AWS 서비스 할당량을 참조하십시오. AWS CloudFormation 할당량 및 조정 전략은 AWS CloudFormation 할당량을 참조하십시오. 또한 업데이트 중에 리소스가 교체되면 AWS CloudFormation은 이전 리소스를 삭제하기 전에 새 리소스를 생성합니다. 이 교체로 인해 계정이 리소스 할당량을 초과하여 업데이트가 실패할 수 있습니다. 초과 리소스를 삭제하거나 할당량 증가를 요청할 수 있습니다. https://docs.aws.amazon.</div>
+<div class="comment-content">A 및 B: B의 경우: 리소스 할당량에 도달하지 않았는지 확인합니다. 예를 들어 시작할 수 있는 Amazon EC2 온디맨드 인스턴스의 기본 최대 개수는 5개입니다. 계정 할당량보다 더 많은 Amazon EC2 온디맨드 인스턴스를 생성하려고 하면 인스턴스 생성이 실패하고 Status=start_failed 오류가 발생합니다. 서비스별 기본 AWS 할당량을 보려면 AWS General Reference에서 AWS 서비스 할당량을 참조하십시오. AWS CloudFormation 할당량 및 조정 전략은 AWS CloudFormation 할당량을 참조하십시오. 또한 업데이트 중에 리소스가 교체되면 AWS CloudFormation은 이전 리소스를 삭제하기 전에 새 리소스를 생성합니다. 이 교체로 인해 계정이 리소스 할당량을 초과하게 되어 업데이트가 실패할 수 있습니다. 초과 리소스를 삭제하거나 할당량 증가를 요청할 수 있습니다. https://docs.aws.amazon.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -844,12 +887,12 @@
 				잇신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수요일 05:54">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수 05:54">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">일반적으로 각 환경에 대해 별도의 계정이 있습니다. 그리고 할당량은 리전별 계정당입니다.</div>
+<div class="comment-content">일반적으로 각 환경마다 별도의 계정이 있습니다. 그리고 할당량은 지역별 계정별로 적용됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -858,7 +901,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -886,11 +929,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 00:06">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -903,7 +946,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -943,7 +986,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 28일 수 02:04">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -956,7 +999,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,16 +1027,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 14:50">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
-<div class="comment-content">A는 가능성이 높지만 B가 더 큽니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
+<div class="comment-content">A는 가능성이 높지만 B는 그 이상입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1022,11 +1065,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 14:51">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1039,7 +1082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1079,7 +1122,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 7일 금요일 05:23">
-			10개월, 2주 전
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1124,13 +1167,13 @@
 				하브로스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 1일 (토) 14:54">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 1일 토요일 14:54">
+			10개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">A 및 E. AMI는 특정 리전에서만 사용할 수 있습니다. 두 환경이 서로 다른 지역에서 실행 중이거나 권한이 부족합니다. IAM 액세스 거부 예외는 일반적인 문제입니다. 사용자에게 AWS 리소스를 허용하거나 거부하는 가장 쉬운 방법입니다. 따라서 사용자가 프로덕션 환경에서 템플릿을 실행할 수 있는 권한이 없는 경우 이는 명백합니다. 보안 그룹은 네트워킹(열린 포트)에 더 적합합니다. 실패하면 잘못 작성된 것을 의미합니다.</div>
+<div class="comment-content">A 및 E. AMI는 특정 지역에서만 사용할 수 있습니다. 서로 다른 지역에서 실행되는 두 환경이거나 권한이 부족합니다. IAM 액세스 거부 예외는 일반적인 문제입니다. 사용자에게 AWS 리소스를 허용하거나 거부하는 가장 쉬운 방법입니다. 따라서 사용자에게 프로덕션 환경에서 템플릿을 실행할 수 있는 권한이 없으면 이는 명백합니다. 보안 그룹은 네트워킹(개방형 포트)에 더 적합합니다. 실패하면 잘못 작성되었음을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1162,12 +1205,12 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 17:58">
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 17:58">
 			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문은 제품 및 테스트를 위해 다른 지역을 언급하지 않습니다.</div>
+<div class="comment-content">질문에는 생산 및 테스트를 위해 다른 지역이 언급되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1176,7 +1219,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1212,15 +1255,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				엑스어벤저
+				XAvenger
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 29일 목요일 16:50">
-			10개월, 3주 전
+			10개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"서비스 할당량"은 템플릿을 업데이트했기 때문에 의미가 없습니다. 인스턴스를 시작하려는 시도가 없었습니다. =&gt; B가 올바르지 않습니다. "보안 그룹"은 이전에 전혀 언급되지 않았습니다. 왜 지금 실패할까요? 나는 C가 틀렸다고 생각합니다. "템플릿 변경을 업데이트로 인식하지 못합니다" =&gt; 그럴 수 없습니다. D가 틀렸습니다. A와 E가 최선의 선택인 것 같습니다.</div>
+<div class="comment-content">템플릿을 업데이트했기 때문에 "서비스 할당량"이 의미가 없습니다. 인스턴스를 시작하려는 시도가 없었습니다 =&gt; B가 정확하지 않습니다. "보안 그룹"은 이전에 전혀 언급되지 않았습니다. 지금은 왜 실패할까요? 나는 C가 틀렸다고 생각한다. "템플릿 변경을 업데이트로 인식하지 못한다" =&gt; 그럴 수 없다. D는 틀렸습니다. A와 E가 최선의 선택인 것 같습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1229,7 +1272,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1261,11 +1304,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 28일 수 04:48">
-			10개월, 3주 전
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C&amp;E 잇입니다. 옵션 A는 올바른 옵션이 아니어야 합니다. 그렇다면 테스트 환경에서도 실패했을 것입니다.</div>
+<div class="comment-content">대답은 C &amp; E입니다. 옵션 A는 올바른 옵션이 아니어야 합니다. 그렇다면 테스트 환경에서도 실패했을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1274,7 +1317,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1302,15 +1345,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				뮌처R
+				MunzerR
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 24일 (토) 12:47">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 24일 토요일 12:47">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 B는 제 생각에 사실입니다. APP가 올바르게 작동했기 때문에 다른 대답은 말이 되지 않습니다.</div>
+<div class="comment-content">제 생각에는 A와 B가 사실입니다. 앱이 올바르게 작동했기 때문에 다른 답변은 이해가 되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1319,7 +1362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1347,15 +1390,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 20일 화요일 16:32">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 20일 화 16:32">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 확실히 옵션인 것 같지만 다른 것이 맞는지 확실하지 않습니다.</div>
+<div class="comment-content">A는 확실히 옵션인 것 같지만 다른 옵션이 맞는지 확실하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1364,7 +1407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1416,7 +1459,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 15:32">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1475,7 +1518,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 07:27">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1515,7 +1558,7 @@ C. The security group that is specified in the CloudFormation template does not 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 07:28">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1555,7 +1598,7 @@ D. CloudFormation does not recognize the template change as an update: If CloudF
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 07:28">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1616,7 +1659,7 @@ D. CloudFormation does not recognize the template change as an update: If CloudF
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 04:29">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1663,7 +1706,7 @@ E is not a likely cause of the CloudFormation update failure, as the CloudFormat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 18:17">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1711,7 +1754,7 @@ I am going to assume the the stack ran succesfully in the first time it ran (cre
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 02:54">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1750,7 +1793,7 @@ For those who are saying A&amp;E: If it was an error due to IAM permissions, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 17:27">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1787,7 +1830,7 @@ For those who are saying A&amp;E: If it was an error due to IAM permissions, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 18:10">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1848,7 +1891,7 @@ For those who are saying A&amp;E: If it was an error due to IAM permissions, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 22:12">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1895,7 +1938,7 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.ht
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 11:43">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1942,7 +1985,7 @@ In B, C and D there are information that aren't mentioned in the questions, so u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 16:59">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2035,7 +2078,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 05:54">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2080,7 +2123,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 00:06">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2133,7 +2176,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 02:04">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2179,7 +2222,7 @@ E</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 14:50">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2217,7 +2260,7 @@ E</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 14:51">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2270,7 +2313,7 @@ E</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Oct 2022 05:23">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2316,7 +2359,7 @@ E</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Oct 2022 14:54">
-			10 months, 3 weeks ago
+			10 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2410,7 +2453,7 @@ Security group is more for networking (open ports). If fail means written wrongl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Sep 2022 16:50">
-			10 months, 3 weeks ago
+			10 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2458,7 +2501,7 @@ looks like A and E is the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Sep 2022 04:48">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2505,7 +2548,7 @@ If so it should have failed in the test environment as well</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Sep 2022 12:47">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2552,7 +2595,7 @@ the other answers don't make sense as the APP was working correctly</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Sep 2022 16:32">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

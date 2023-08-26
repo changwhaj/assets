@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 205 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 205 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 205 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 205 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849883">
 <p class="card-text">
 							
-								회사의 소셜 미디어 애플리케이션은 Amazon S3 버킷에 이미지 파일을 저장합니다. 모든 이미지는 S3 Standard 스토리지에 저장됩니다. 사용자는 이미지가 업로드된 후 첫 주 동안 이미지에 자주 액세스합니다. 사용자는 1주일 이상 전에 업로드된 이미지에 거의 액세스하지 않습니다. <br/><br/>회사는 애플리케이션의 스토리지 비용을 줄이기 위한 솔루션이 필요합니다. 사용자는 이미지가 업로드된 시점에 관계없이 동일한 시간 내에 모든 이미지에 액세스할 수 있어야 합니다. <br/><br/>최소한의 노력으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사의 소셜 미디어 애플리케이션은 Amazon S3 버킷에 이미지 파일을 저장합니다. 모든 이미지는 S3 Standard 스토리지에 저장됩니다. 사용자는 이미지가 업로드된 후 첫 주 동안 이미지에 자주 액세스합니다. 사용자는 1주일 이상 전에 업로드된 이미지에 거의 액세스하지 않습니다. <br/><br/>회사는 애플리케이션의 스토리지 비용을 줄이기 위한 솔루션이 필요합니다. 사용자는 이미지가 업로드된 시점에 관계없이 동일한 시간 내에 모든 이미지에 액세스할 수 있어야 합니다. <br/><br/>최소한의 노력으로 이러한 요구 사항을 충족할 수 있는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											모든 이미지에 대해 S3 One Zone-Infrequent Access(S3 One Zone-IA)를 사용하도록 애플리케이션을 수정합니다.
+											모든 이미지에 S3 One Zone-IA(S3 One Zone-IA)를 사용하도록 애플리케이션을 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											S3 수명 주기 정책을 사용하여 1주일 이상 전에 업로드된 이미지를 S3 Glacier Flexible Retrieval로 이동합니다.
+											S3 수명 주기 정책을 사용하여 1주일 이상 전에 업로드된 이미지를 S3 Glacier 유연한 검색으로 이동합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">A (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">디 (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">A (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">D (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 
-							
-							11 <i>
-							월 24일 오후 4:20</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 4:20 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -247,13 +290,13 @@
 				카를로스C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 29일 (토) 21:03">
-			3 주 전
+<span class="comment-date align-middle" title="2023년 7월 29일 토요일 21:03">
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">처음에는 A를 생각하다가 B를 골랐습니다. 문제는 내구성이나 가용성이 아니라 비용 최적화에 관한 것입니다.</div>
+<div class="comment-content">처음에는 A를 생각했지만 B를 선택했습니다. 질문은 내구성이나 가용성이 아닌 비용 최적화에 대한 질문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,16 +333,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 13:23">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 13:23">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">S3 수명 주기 정책을 사용하여 1주일 이상 전에 업로드된 이미지를 S3 Glacier Flexible Retrieval로 이동하는 것이 요구 사항을 충족하는 가장 비용 효율적인 솔루션입니다. Glacier Flexible Retrieval은 자주 액세스하지 않는 데이터를 위해 설계되었으며 검색 시간을 구성할 수 있으므로 사용자는 이미지가 업로드된 시간에 관계없이 동일한 시간 내에 모든 이미지에 액세스할 수 있습니다. 따라서 보기 D가 정답입니다.</div>
+<div class="comment-content">S3 수명 주기 정책을 사용하여 1주일 이상 전에 업로드된 이미지를 S3 Glacier 유연한 검색으로 이동하는 것은 요구 사항을 충족하는 가장 비용 효율적인 솔루션입니다. Glacier 유연한 검색은 자주 액세스되지 않는 데이터를 위해 설계되었으며 검색 시간을 구성할 수 있으므로 사용자는 이미지가 업로드된 시점에 관계없이 동일한 시간에 모든 이미지에 액세스할 수 있습니다. 따라서 보기 D가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -331,12 +374,12 @@
 				파노스1313
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 13일 화요일 06:34">
+<span class="comment-date align-middle" title="2023년 6월 13일 (화) 06:34">
 			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 잘못된 것입니다. Glacier Flexible retrieval은 신속하게 처리할 때 1-5분의 검색 시간을 제공합니다. 검색의 밀리초를 제공하는 빙하 즉시 검색이지만 여기서는 옵션이 아닙니다.</div>
+<div class="comment-content">이것은 잘못된 것입니다. Glacier 유연한 검색은 신속하게 검색할 때 1~5분의 검색 시간을 제공합니다. 밀리초 단위의 검색을 제공하는 것은 빙하 즉시 검색이지만 여기서는 옵션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -345,7 +388,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,15 +424,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				컷미썸슬랙
+				CutMeSomeSlack
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 15:06">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 15:06">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A도 B도 아님: 1주일 후 변경되는 액세스 빈도에 대한 정보는 수명 주기 정책을 명확하게 가리킵니다. C가 아님: S3 Glacier Deep Archive의 스토리지는 액세스 속도가 느려 "사용자는 다음의 모든 이미지에 액세스할 수 있어야 합니다. 이미지가 업로드된 시점에 관계없이 동일한 시간" 요구 사항 D는 설명된 사용 사례에 완벽하게 일치합니다.</div>
+<div class="comment-content">A가 아님, B가 아님: 일주일 후 변경되는 액세스 빈도에 대한 정보는 수명 주기 정책을 분명히 나타냅니다. C가 아님: S3 Glacier Deep Archive의 스토리지에 대한 액세스 속도가 느려서 "사용자는 다음의 모든 이미지에 액세스할 수 있어야 합니다. 이미지가 업로드된 시점에 관계없이 동일한 시간" 요구 사항 D는 설명된 사용 사례와 완벽하게 일치합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,16 +469,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 04:49">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 04:49">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Amazon S3 Intelligent-Tiering 스토리지 클래스는 액세스 패턴이 변경될 때 가장 비용 효율적인 액세스 계층으로 데이터를 자동으로 이동하여 스토리지 비용을 최적화하도록 설계되었습니다. 소액의 월 객체 모니터링 및 자동화 요금으로 S3 Intelligent-Tiering은 액세스 패턴을 모니터링하고 액세스되지 않은 객체를 저렴한 액세스 계층으로 자동으로 이동합니다.</div>
+<div class="comment-content">Amazon S3 Intelligent-Tiering 스토리지 클래스는 액세스 패턴이 변경될 때 데이터를 가장 비용 효율적인 액세스 계층으로 자동으로 이동하여 스토리지 비용을 최적화하도록 설계되었습니다. 소액의 월별 객체 모니터링 및 자동화 요금의 경우 S3 Intelligent-Tiering은 액세스 패턴을 모니터링하고 액세스되지 않은 객체를 자동으로 저렴한 액세스 계층으로 이동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,13 +518,13 @@
 				A_Q
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 10:57">
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 10:57">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">"B"를 생각하고 있었는데 "S3 Intelligent-Tiering"이 최고의 성능으로 빈번한 액세스와 드문 액세스로 잘 작동한다는 것을 알게되었습니다. 그래서 "B"입니다.</div>
+<div class="comment-content">"B"를 생각하고 있었는데 "S3 Intelligent-Tiering"이 잦은 액세스와 드문 액세스에 모두 잘 작동하고 최고의 성능을 발휘한다는 것을 알게 되었습니다. 그래서 "B"입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,12 +565,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 00:34">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">확실히 A입니다. Shutterstock과 같은 회사가 지능형 계층화를 사용하는 이유입니다.</div>
+<div class="comment-content">확실히 A입니다. 이것이 바로 Shutterstock과 같은 회사가 지능형 계층화를 사용하는 이유입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -564,11 +607,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JulietHsu
+				줄리엣수
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 15:47">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 15:47">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,11 +653,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				용감한 마음22
+				브레이브하트22
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 3일 화요일 03:52">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -627,7 +670,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,11 +702,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 18:03">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 옵션, 동일한 "파일 복구 시간"인 것 같습니다.</div>
+<div class="comment-content">B 옵션인 것 같습니다. "파일 복구 시간"과 동일합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -672,7 +715,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -696,7 +739,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 00:33">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -709,7 +752,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -745,16 +788,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 14:44">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 14:44">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/s3/storage-classes/intelligent-tiering/ Amazon S3 Intelligent-Tiering은 데이터 액세스 패턴이 변경될 때 성능 영향이나 운영 오버헤드 없이 자동 스토리지 비용 절감을 제공하는 유일한 클라우드 스토리지 클래스입니다.</div>
+<div class="comment-content">https://aws.amazon.com/s3/storage-classes/intelligent-tiering/ Amazon S3 Intelligent-Tiering은 데이터 액세스 패턴이 변경될 때 성능에 영향을 주거나 운영 오버헤드 없이 자동 스토리지 비용 절감을 제공하는 유일한 클라우드 스토리지 클래스입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -791,15 +834,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				으르르르르르르1
+				rrrrrrrrrr1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 6일 화요일 00:40">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 6일 (화) 00:40">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A도 될 수 있다</div>
+<div class="comment-content">A도 될 수 있어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -808,7 +851,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -828,15 +871,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				으르르르르르르1
+				rrrrrrrrrr1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 06일 화요일 00:41">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 6일 (화) 00:41">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C나 D가 될 수 없습니다. 가장 빠른 빙하 회수는 5분입니다.</div>
+<div class="comment-content">C 또는 D일 수 없습니다. 가장 빠른 빙하 회수 시간은 5분입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -845,7 +888,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -899,7 +942,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -927,16 +970,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 11:41">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 11:41">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">glacier flexi 검색이 표준 AI만큼 빠르지 않기 때문에 이것은 D일 수 없습니다. 그러므로 왜 B</div>
+<div class="comment-content">Glacier Flexi 검색은 표준 AI만큼 빠르지 않기 때문에 D일 수 없습니다. 그러므로 왜 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -945,7 +988,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -976,8 +1019,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 10:55">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 10:55">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -991,7 +1034,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1019,11 +1062,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 16:20">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 16:20">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1036,7 +1079,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1088,7 +1131,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Jul 2023 21:03">
-			3 weeks ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1134,7 +1177,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 13:23">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1226,7 +1269,7 @@ Therefore, option D is the correct answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 15:06">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1365,7 +1408,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 00:34">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1411,7 +1454,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 15:47">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1457,7 +1500,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 03:52">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1502,7 +1545,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 18:03">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1539,7 +1582,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 00:33">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1592,7 +1635,7 @@ D is the perfect match for the described use-case</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 14:44">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1640,7 +1683,7 @@ Amazon S3 Intelligent-Tiering is the only cloud storage class that delivers auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 00:40">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1677,7 +1720,7 @@ Amazon S3 Intelligent-Tiering is the only cloud storage class that delivers auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 00:41">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1776,7 +1819,7 @@ Amazon S3 Intelligent-Tiering is the only cloud storage class that delivers auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 11:41">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1822,7 +1865,7 @@ Amazon S3 Intelligent-Tiering is the only cloud storage class that delivers auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 10:55">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1868,7 +1911,7 @@ Amazon S3 Intelligent-Tiering is the only cloud storage class that delivers auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 16:20">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

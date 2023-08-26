@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 385 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 385 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 385 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 385 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866094">
 <p class="card-text">
 							
-								물류 회사는 AWS Serverless Application Model(AWS SAM)을 사용하여 자산 추적 마이크로서비스를 구축했습니다. 마이크로서비스의 AWS Lambda 함수 중 하나는 함수가 요청을 처리하기 전에 Amazon S3에서 대규모 지리 공간 데이터 세트를 가져와야 합니다. 데이터 세트를 가져오려면 상당한 시간이 필요하며 함수 실행을 완료하는 데 너무 오래 걸립니다. 그 결과 대기 시간과 비용이 증가합니다. <br/><br/>개발자는 최소한의 비용으로 요청을 더 빠르게 처리하기 위해 기능을 최적화해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 물류 회사는 AWS Serverless Application Model(AWS SAM)을 사용하여 자산 추적 마이크로서비스를 구축했습니다. 마이크로서비스의 AWS Lambda 함수 중 하나는 함수가 요청을 처리하기 전에 Amazon S3에서 대규모 지리 공간 데이터 세트를 가져와야 합니다. 데이터 세트를 가져오려면 상당한 시간이 필요하며 함수 실행을 완료하는 데 너무 오랜 시간이 걸립니다. 그 결과 대기 시간과 비용이 증가합니다. <br/><br/>개발자는 최소한의 비용으로 더 빠르게 요청을 처리할 수 있도록 기능을 최적화해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon S3 대신 Amazon Elastic File System(Amazon EFS)에 지리 공간 데이터 세트를 저장합니다. 함수에 EFS 파일 시스템을 연결합니다. 호출할 때마다 파일 시스템에 액세스하여 데이터 세트를 검색합니다.
+											Amazon S3 대신 Amazon Elastic File System(Amazon EFS)에 지리정보 데이터세트를 저장합니다. EFS 파일 시스템을 함수에 연결합니다. 모든 호출에 대해 파일 시스템에 액세스하여 데이터세트를 검색합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon S3 대신 Amazon Elastic File System(Amazon EFS)에 지리 공간 데이터 세트를 저장합니다. 함수에 EFS 파일 시스템을 연결합니다. 모든 호출에 사용할 데이터를 /tmp 디렉토리에 캐시합니다.
+											Amazon S3 대신 Amazon Elastic File System(Amazon EFS)에 지리정보 데이터세트를 저장합니다. EFS 파일 시스템을 함수에 연결합니다. 모든 호출에 사용할 데이터를 /tmp 디렉터리에 캐시합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,11 +173,11 @@
 													D.
 												</span> 
 											
-											함수 핸들러 외부에서 Amazon S3 SDK 및 객체 요청을 선언합니다. 함수의 메모리 용량을 1,769MB로 늘립니다.
+											함수 핸들러 외부에서 Amazon S3 SDK 및 객체 요청을 선언합니다. 기능의 메모리 용량을 1,769MB로 늘립니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">B (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">B (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Phinx
-							</a> 
-							
-							시간: <i>
-							2023년 1월 22일, 오전 7:04</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Phinx
-							</a>
-							
-							at <i>
-							Jan. 22, 2023, 7:04 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,12 +295,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 7일 수요일 14:57">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">질문에 따르면 데이터 세트가 크기 때문에 세트가 &gt; 10Gb일 수 있고 많은 양의 데이터에 대해 EFS를 생성하는 것이 "...최소한의 비용으로 더 빠르게..."(핵심 요구 사항) 되지 않을 것이라고 가정합니다. . 저는 C를 사용하여 많은 호출에서 SDK 클라이언트 및 개체 요청을 재사용하고 멋지고 저렴한 모든 호출에서 SDK 및 개체 요청을 초기화하는 것을 제거합니다. :)</div>
+<div class="comment-content">질문에 따르면 데이터 세트가 크기 때문에 세트가 10Gb를 초과할 수 있다고 가정하고 대량의 데이터에 대해 EFS를 생성하는 것은 "...최소한의 비용으로 더 빠르게..."(핵심 요구 사항)는 아닙니다. . 저는 C를 사용하겠습니다. 여러 호출에서 SDK 클라이언트 및 개체 요청을 재사용하는 이점을 활용하고 모든 호출에서 SDK 및 개체 요청을 초기화하지 않아도 되므로 멋지고 저렴합니다. :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				다람쥐 집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 16:50">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 16:50">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C에는 대규모 지리 공간 데이터 세트가 있습니다. 대용량 파일에 EFS를 사용하려면 비용이 많이 듭니다.</div>
+<div class="comment-content">C에는 대규모 지리공간 데이터세트가 있습니다. 대용량 파일에 EFS를 사용하면 비용이 많이 듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,16 +383,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 16:14">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문이 좀 모호합니다. 지리 공간 데이터 세트의 크기는 얼마입니까? 512MB 미만이면 답은 B입니다. 512MB보다 크면 /tmp를 사용할 수 없습니다. 하지만 512MB 크기의 파일을 "큰 데이터 세트"라고 부를까요? 아마 아닐 겁니다.</div>
+<div class="comment-content">질문이 좀 모호하네요. 지리공간 데이터세트의 크기는 얼마나 됩니까? 512MB보다 작으면 대답은 B입니다. 512MB보다 크면 /tmp를 사용할 수 없습니다. 그런데 512MB 크기의 파일을 "큰 데이터 세트"라고 부를 수 있을까요? 아마도 그렇지 않을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -378,11 +421,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 14:24">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -395,7 +438,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,12 +478,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 14:14">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">여기서 문제는 처리하기 전에 대용량 데이터 세트를 획득하는 것이므로 C에서 메모리/cpu를 늘리는 것은 도움이 되지 않습니다. 프로비저닝은 함수가 지속적으로 실행되지 않지만 LARGE 데이터 세트에 집중해야 합니다. /tmp에는 500mb 제한이 있습니다. 데이터 세트가 더 크면 해당 옵션 B가 불가능할 수 있습니다. 옵션 A를 남겨 둡니다.</div>
+<div class="comment-content">여기서 문제는 처리하기 전에 대규모 데이터 세트를 확보하는 것입니다. 따라서 C에서 메모리/CPU를 늘리는 것은 도움이 되지 않습니다. 함수가 지속적으로 실행되지 않는 경우 프로비저닝은 가능하지만 대규모 데이터 세트에 집중해야 합니다. /tmp에는 500MB 제한이 있습니다. 데이터 세트가 더 크면 해당 옵션 B가 불가능할 수 있습니다. 옵션 A가 남습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -469,15 +512,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 08:02">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 08:02">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">감사합니다. 크기가 크면 500MB 제한으로는 충분하지 않습니다. 그래서 A가 맞다.</div>
+<div class="comment-content">감사합니다. 크면 500MB 제한으로는 충분하지 않습니다. 그럼 A가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -486,7 +529,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,16 +565,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 1일 수요일 16:53">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 더 나은 솔루션이고 기존 코드에 대한 최소한의 변경이며 트래픽에 의존하고 프로비저닝된 동시성을 낮게 유지하며 데이터는 항상 따뜻하고 사용 가능하다고 생각합니다. EFS의 문제점은 다음과 같습니다. 추가 비용이 들고 "지리 공간 데이터 세트"가 파일 시스템과 호환되지 않을 수 있습니다.</div>
+<div class="comment-content">저는 C가 더 나은 솔루션이라고 생각합니다. 기존 코드에 대한 변경을 최소화하고 트래픽에 따라 다르며 프로비저닝된 동시성을 낮게 유지하고 데이터는 항상 따뜻하고 사용 가능합니다. EFS의 문제점은 다음과 같습니다. 추가 비용이 들고 "지리 공간 데이터 세트"가 파일 시스템과 호환되지 않을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,16 +611,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 10:25">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">BBBBB .</div>
+<div class="comment-content">BBBB .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,11 +657,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 07:04">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -684,7 +727,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Jun 2023 14:57">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -778,7 +821,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 16:14">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -816,7 +859,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 14:24">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -869,7 +912,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 14:14">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -961,7 +1004,7 @@ The /tmp has a 500mb limit. If the dataset is larger then that option B might no
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 01 Feb 2023 16:53">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@ The problems with EFS are: It cost extra and "geospatial dataset" may not be com
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 10:25">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1098,7 @@ The problems with EFS are: It cost extra and "geospatial dataset" may not be com
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 07:04">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

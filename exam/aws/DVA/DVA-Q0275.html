@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 275 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 275 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 275 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 275 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849953">
 <p class="card-text">
 							
-								회사는 ALB(Application Load Balancer) 뒤의 Amazon EC2 인스턴스 플릿에 지역 뉴스 웹 사이트를 배포합니다. 이 회사는 잘 알려진 소셜 자격 증명 공급자(IdP)를 통해 시청자에 대한 인증을 구현하려고 합니다. 회사의 개발 팀은 솔루션에서 AWS 기본 서비스를 사용해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 작업 조합은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사는 ALB(Application Load Balancer) 뒤에 있는 Amazon EC2 인스턴스 집합에 지역 뉴스 웹 사이트를 배포합니다. 회사는 잘 알려진 소셜 ID 공급자(IdP)를 통해 시청자에 대한 인증을 구현하려고 합니다. 회사의 개발팀은 솔루션에서 AWS 기본 서비스를 사용해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 작업 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											ALB 대상 그룹에서 대상으로 AWS Lambda 권한 부여자를 생성합니다.
+											ALB 대상 그룹의 대상으로 AWS Lambda 권한 부여자를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -121,7 +184,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,20 +194,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">광고 (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">AB (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">광고 (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">AB (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a> 
-							
-							시간: <i>
-							2022년 11월 26일 오후 12:37</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -225,16 +278,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 12:37 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -266,23 +309,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 19:30">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 19:30">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS 네이티브 솔루션에서 소셜 자격 증명 공급자(IdP)를 통해 뷰어에 대한 인증을 구현하려면 다음 작업을 수행할 수 있습니다. 소셜 IdP로 Amazon Cognito 사용자 풀 구성: 이렇게 하면 웹 사이트에서 페이스북, 구글, 아마존. Amazon Cognito 사용자 풀은 수억 명의 사용자로 확장되는 완전 관리형 사용자 디렉터리를 제공하며 OIDC(OpenID Connect) 또는 SAML(Security Assertion Markup Language) 표준을 지원하는 모든 IdP와 통합할 수 있습니다. 인증 규칙을 추가하도록 ALB 리스너 구성: Amazon Cognito 사용자 풀을 인증 공급자로 사용하여 최종 사용자 요청을 인증하도록 ALB를 구성할 수 있습니다. 이는 ALB 리스너에서 인증 규칙을 생성하여 수행할 수 있습니다. 이 규칙은 Amazon Cognito 사용자 풀을 인증 공급자로 지정할 수 있으며 인증되지 않은 요청을 Amazon Cognito에서 호스팅하는 로그인 페이지로 리디렉션할 수 있습니다. 따라서 이러한 요구 사항을 충족하는 올바른 작업 조합은 A와 D입니다.</div>
+<div class="comment-content">AWS 기반 솔루션에서 소셜 자격 증명 공급자(IdP)를 통해 뷰어에 대한 인증을 구현하려면 다음 작업을 수행할 수 있습니다. 소셜 IdP로 Amazon Cognito 사용자 풀 구성: 이를 통해 웹 사이트는 다음과 같은 잘 알려진 소셜 자격 증명 공급자에 대해 사용자를 인증할 수 있습니다. 페이스북, 구글, 아마존처럼 말이죠. Amazon Cognito 사용자 풀은 수억 명의 사용자로 확장되는 완전관리형 사용자 디렉터리를 제공하며 OIDC(OpenID Connect) 또는 SAML(Security Assertion Markup Language) 표준을 지원하는 모든 IdP와 통합할 수 있습니다. 인증 규칙을 추가하도록 ALB 리스너 구성: Amazon Cognito 사용자 풀을 인증 공급자로 사용하여 최종 사용자 요청을 인증하도록 ALB를 구성할 수 있습니다. 이는 ALB 리스너에 대한 인증 규칙을 생성하여 수행할 수 있습니다. 규칙은 Amazon Cognito 사용자 풀을 인증 공급자로 지정할 수 있으며 인증되지 않은 요청을 Amazon Cognito에서 호스팅하는 로그인 페이지로 리디렉션할 수 있습니다. 따라서 이러한 요구 사항을 충족하는 올바른 작업 조합은 A와 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">8</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,15 +345,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지박
+				지파크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 07:37">
-			21시간 37분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 07:37">
+			6일 7시간 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Cognito는 ALB와 함께 작동합니다.</div>
+<div class="comment-content">cognito는 ALB와 함께 작동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -319,7 +362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -362,12 +405,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 09:01">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">구체적으로 "솔루션에서 AWS 기본 서비스를 사용"하라는 지시를 받았을 때 사용자 풀을 사용하는 이유는 무엇이며 이 링크는 구체적으로 자격 증명 공급자를 말합니다: https://docs.aws.amazon.com/cognito/latest/developerguide/external-identity -providers.html</div>
+<div class="comment-content">구체적으로 "솔루션에서 AWS 네이티브 서비스를 사용"하라는 메시지가 표시되고 이 링크에 ID 공급자(https://docs.aws.amazon.com/cognito/latest/developerguide/external-identity)가 명시되어 있는데 사용자 풀을 사용하는 이유는 무엇입니까? -providers.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -376,7 +419,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -408,12 +451,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 00:10">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">Cognito 사용자 풀을 ALB와 함께 사용할 수 있습니다.</div>
+<div class="comment-content">ALB와 함께 Cognito 사용자 풀을 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -422,7 +465,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -450,7 +493,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 04:38">
@@ -459,7 +502,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">기원 후. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 이 문서는 "사용자 인증 구성" 섹션에서 "사용자 인증"과 "인증" 모두를 위해 리스너에 대해 규칙을 생성해야 하는 방법을 설명합니다. -cognito" 및 "authenticate-oidc". 질문에 aws 기본 서비스 cognito를 사용하는 것이 이미 잘 알려진 소셜 자격 증명 공급자를 처리하므로 더 적합하다고 명시되어 있기 때문입니다.</div>
+<div class="comment-content">기원 후. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 이 문서에서는 "사용자 인증 구성" 섹션에서 "인증"과 "인증" 모두에 대해 리스너에 대해 규칙을 생성해야 하는 방법을 설명합니다. -cognito" 및 "authenticate-oidc". 질문에 따르면 aws 기본 서비스 cognito를 사용하는 것이 이미 잘 알려진 소셜 ID 공급자를 처리하므로 더 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -468,7 +511,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -499,7 +542,7 @@
 				벨로미오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 15일 목요일 02:40">
+<span class="comment-date align-middle" title="2022년 12월 15일 (목) 02:40">
 			8개월, 1주 전
 		</span>
 </div>
@@ -513,7 +556,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -545,12 +588,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 11:47">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 지원되는 사용 사례는 다음과 같습니다. OIDC(OpenID Connect)와 호환되는 자격 증명 공급자(IdP)를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 Amazon, Facebook 또는 Google과 같은 소셜 IdP를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 SAML, LDAP 또는 Microsoft AD를 사용하여 기업 ID를 통해 사용자를 인증합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 다음 사용 사례가 지원됩니다. OIDC(OpenID Connect)를 준수하는 ID 공급자(IdP)를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 Amazon, Facebook, Google 등의 소셜 IdP를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 SAML, LDAP 또는 Microsoft AD를 사용하여 기업 ID를 통해 사용자를 인증합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -559,7 +602,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -587,7 +630,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				올렉골
+				올렉_골
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 11:53">
@@ -595,8 +638,8 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">사용자가 애플리케이션에 액세스할 때 사용자를 안전하게 인증하도록 Application Load Balancer를 구성할 수 있습니다. 이렇게 하면 사용자 인증 작업을 로드 밸런서로 오프로드하여 애플리케이션이 비즈니스 로직에 집중할 수 있습니다. 지원되는 사용 사례는 다음과 같습니다. OpenID Connect(OIDC)를 준수하는 ID 공급자(IdP)를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 Amazon, Facebook 또는 Google과 같은 소셜 IdP를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 SAML, LDAP 또는 Microsoft AD를 사용하여 기업 ID를 통해 사용자를 인증합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">사용자가 애플리케이션에 액세스할 때 안전하게 인증하도록 Application Load Balancer를 구성할 수 있습니다. 이를 통해 애플리케이션이 비즈니스 로직에 집중할 수 있도록 사용자 인증 작업을 로드 밸런서로 오프로드할 수 있습니다. 다음 사용 사례가 지원됩니다. OIDC(OpenID Connect)를 준수하는 ID 공급자(IdP)를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 Amazon, Facebook, Google 등의 소셜 IdP를 통해 사용자를 인증합니다. Amazon Cognito에서 지원하는 사용자 풀을 통해 SAML, LDAP 또는 Microsoft AD를 사용하여 기업 ID를 통해 사용자를 인증합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -605,7 +648,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -642,7 +685,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">A&amp;D와 함께</div>
+<div class="comment-content">A&amp;D와 함께 하세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -651,7 +694,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -682,8 +725,8 @@
 				롬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 10:55">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 10:55">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -697,7 +740,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -717,7 +760,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				올렉골
+				올렉_골
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 11:53">
@@ -734,7 +777,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -770,15 +813,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 12:37">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 12:37">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 defo가 맞지만 C에 대해서는 확실하지 않습니다.</div>
+<div class="comment-content">A는 기본적으로 맞지만 C에 대해서는 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -787,7 +830,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -860,7 +903,7 @@ Therefore, the correct combination of actions to meet these requirements is A an
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">8</span> times
+				upvoted <span class="upvote-count">9</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -885,7 +928,7 @@ Therefore, the correct combination of actions to meet these requirements is A an
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 07:37">
-			21 hours, 37 minutes ago
+			6 days, 7 hours ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -941,7 +984,7 @@ Therefore, the correct combination of actions to meet these requirements is A an
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 09:01">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -988,7 +1031,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/external-identity-prov
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 00:10">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1127,7 +1170,7 @@ https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-aut
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 11:47">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1280,7 +1323,7 @@ Authenticate users through corporate identities, using SAML, LDAP, or Microsoft 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 10:55">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1371,7 +1414,7 @@ Authenticate users through corporate identities, using SAML, LDAP, or Microsoft 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 12:37">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

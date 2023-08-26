@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 145 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 145 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 145 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 145 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807645">
 <p class="card-text">
 							
-								개발자가 Amazon Simple Notification Service(Amazon SNS) 주제에 메시지를 게시하는 AWS Lambda 함수를 생성합니다. 모든 메시지 콘텐츠는 Lambda와 Amazon SNS 사이에서 전송 및 유휴 상태에서 암호화되어야 합니다. <br/>Lambda 실행 역할의 일부는 다음과 같습니다. <br/><img class="in-exam-image" src="/assets/media/exam-media/04238/0007400001.png"/><br/>개발자가 이러한 요구 사항을 충족하려면 어떤 단계 조합을 수행해야 합니까? (두 가지를 선택하세요.)<br/>
+								개발자는 Amazon SNS(Amazon SNS) 주제에 메시지를 게시하기 위해 AWS Lambda 함수를 생성합니다. 모든 메시지 콘텐츠는 Lambda와 Amazon SNS 간에 전송 중 및 저장 중 암호화되어야 합니다. <br/>Lambda 실행 역할의 일부는 다음과 같습니다. <br/><img class="in-exam-image" src="/assets/media/exam-media/04238/0007400001.png"/><br/>개발자가 이러한 요구 사항을 충족하기 위해 수행해야 하는 단계 조합은 무엇입니까? (2개를 선택하세요.)<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807645" type="application/json">[{"voted_answers": "AE", "vote_count": 16, "is_most_voted": true}, {"voted_answers": "AB", "vote_count": 2, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											SNS 주제에서 서버 측 암호화를 활성화하십시오.
+											SNS 주제에 대해 서버 측 암호화를 활성화합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -93,7 +156,7 @@
 													B.
 												</span> 
 											
-											Lambda 실행 역할에 Deny 문을 추가합니다. SNS 주제 ARN을 리소스로 지정합니다. "aws:SecureTransport": "trueג€를 조건으로 지정합니다.
+											Lambda 실행 역할에 Deny 문을 추가합니다. SNS 주제 ARN을 리소스로 지정합니다. 조건으로 "aws:SecureTransport": "trueג€를 지정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -107,20 +170,20 @@
 													D.
 												</span> 
 											
-											"sns:Protocol": "https"의 StringEquals 조건을 Lambda 실행 역할에 추가합니다.
+											Lambda 실행 역할에 "sns:Protocol": "https"의 StringEquals 조건을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											Lambda 실행 역할에 Deny 문을 추가합니다. SNS 주제 ARN을 리소스로 지정합니다. "aws:SecureTransport": "false"를 조건으로 지정합니다.
+											Lambda 실행 역할에 Deny 문을 추가합니다. SNS 주제 ARN을 리소스로 지정합니다. 조건으로 "aws:SecureTransport": "false"를 지정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -130,21 +193,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">부작용(89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">AE (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a> 
-							
-							2022 <i>
-							년 9월 1일 오전 1:05</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -225,16 +278,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 1:05 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -266,15 +309,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 6일 화요일 20:04">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">A: 유휴 암호화 강제 E: 전송 중 암호화되지 않은 모든 항목 거부</div>
+<div class="comment-content">A: 저장 시 강제 암호화 E: 전송 시 암호화되지 않은 모든 항목 거부</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -284,6 +327,54 @@
 <span class="ml-2 upvote-text"><span class="upvote-count">13</span> 번
 			 
 				찬성</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987091" id="comment-987091">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				야니스GTR
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 07:09">
+			3일 7시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">A: 저장 시 강제 암호화 D: 전송 중인 모든 암호화를 확인합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -311,14 +402,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AswinDe
+				아스윈드
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 22:44">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 22:44">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -331,7 +419,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -362,13 +450,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 19:45">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 19:45">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">서버 측 암호화도 필요한 이유를 모르겠습니다. 데이터가 전송 중에 암호화된 경우 유휴 상태에서 암호화되어야 합니다. 그렇지 않습니까? BTW는 제외에 의한 AE에 동의합니다.</div>
+<div class="comment-content">서버 측 암호화도 필요한 이유를 모르겠습니다. 데이터가 전송 중에 암호화되면 나머지도 암호화되어야 합니다. 그렇지 않습니까? BTW는 제외를 통해 AE에 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -377,7 +465,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -423,7 +511,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -451,15 +539,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 27일 월요일 05:17">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 27일 (월) 05:17">
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 문제는 오늘(2023년 2월) 시험에 있었습니다.</div>
+<div class="comment-content">오늘(2023년 2월) 시험에 나온 문제입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -468,7 +556,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -499,8 +587,8 @@
 				시칠람
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 23:53">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 23:53">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -513,7 +601,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -541,7 +629,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				해멜론
+				하멜론
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 03:49">
@@ -549,7 +637,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 왜 틀렸어? E에 대한 내 문제는 Lambda가 SNS에 의해 트리거되지 않고 SNS에 게시되므로 Lambda는 SNS에 유휴 암호화가 있는지 여부를 신경 쓰지 않는다는 것입니다.</div>
+<div class="comment-content">D가 왜 틀렸나요? E의 문제는 Lambda가 SNS에 의해 트리거되는 것이 아니라 SNS에 게시하므로 Lambda는 SNS에 저장 암호화가 있는지 여부에 신경 쓰지 않는다는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -558,7 +646,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -586,11 +674,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 05:55">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 05:55">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -604,7 +692,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -635,12 +723,12 @@
 				하브로스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 2일 일 10:46">
+<span class="comment-date align-middle" title="2022년 10월 2일 일요일 10:46">
 			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A&amp;E. 트릭 질문. 프로토콜이 HTTPS가 아닌 경우 정책을 거부해야 합니다(SHOULD).</div>
+<div class="comment-content">A&amp;E. 트릭 질문입니다. 프로토콜이 HTTPS가 아닌 경우 정책을 거부해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -649,7 +737,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -680,8 +768,8 @@
 				룩샤나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 25일 일 02:21">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 25일 일요일 02:21">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -694,7 +782,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -726,11 +814,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 14:39">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 A&amp;E</div>
+<div class="comment-content">답은 A &amp; E입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -739,7 +827,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -771,12 +859,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 01:05">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">AB 맞음</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">AB 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -785,7 +873,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,15 +893,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 06:16">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B는 연결을 거부할 것입니다. 반대입니다.</div>
+<div class="comment-content">B는 연결을 거부하고 그 반대입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -822,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -854,11 +942,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 28일 수 18:38">
-			10개월, 3주 전
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아니요, B가 암호화된 데이터를 거부하기 때문에 AE입니다.</div>
+<div class="comment-content">아니요, B가 암호화된 데이터를 거부하므로 AE입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -867,7 +955,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -930,7 +1018,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 06 Sep 2022 20:04">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -945,6 +1033,55 @@ E: deny all that are not encrypted in transit</div>
 </span>
 <span class="ml-2 upvote-text">
 				upvoted <span class="upvote-count">13</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987091" id="comment-987091">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				YanisGTR
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 07:09">
+			3 days, 7 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">A: force encryption on rest
+D: This make sure all encryption in transit</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -976,11 +1113,8 @@ E: deny all that are not encrypted in transit</div>
 				AswinDe
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 22:44">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1123,7 +1257,7 @@ BTW agree AE by exclusion</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 05:17">
-			5 months, 3 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1168,7 +1302,7 @@ BTW agree AE by exclusion</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 23:53">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1258,7 +1392,7 @@ BTW agree AE by exclusion</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 05:55">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1349,7 +1483,7 @@ BTW agree AE by exclusion</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Sep 2022 02:21">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1395,7 +1529,7 @@ https://docs.aws.amazon.com/sns/latest/dg/sns-security-best-practices.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 14:39">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1440,7 +1574,7 @@ https://docs.aws.amazon.com/sns/latest/dg/sns-security-best-practices.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 01:05">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1478,7 +1612,7 @@ https://docs.aws.amazon.com/sns/latest/dg/sns-security-best-practices.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 06:16">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1523,7 +1657,7 @@ https://docs.aws.amazon.com/sns/latest/dg/sns-security-best-practices.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Sep 2022 18:38">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

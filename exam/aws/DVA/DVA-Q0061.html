@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 61 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 61 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 61 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 61 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807561">
 <p class="card-text">
 							
-								개발자가 Amazon S3 버킷에 파일을 저장할 애플리케이션을 배포하고 있습니다. 파일은 유휴 상태에서 암호화되어야 합니다. 개발자는 재해 복구를 위해 파일을 다른 AWS 리전의 S3 버킷에 자동으로 복제하려고 합니다. <br/>개발자는 최소한의 구성으로 이 작업을 어떻게 수행할 수 있습니까?<br/>
+								개발자가 Amazon S3 버킷에 파일을 저장할 애플리케이션을 배포하고 있습니다. 파일은 저장 시 암호화되어야 합니다. 개발자는 재해 복구를 위해 파일을 다른 AWS 리전의 S3 버킷에 자동으로 복제하려고 합니다. <br/>개발자는 최소한의 구성으로 이 작업을 어떻게 수행할 수 있습니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807561" type="application/json">[{"voted_answers": "A", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용하여 파일을 암호화합니다. S3 버킷 복제를 활성화합니다.
+											S3 관리 암호화 키(SSE-S3)와 함께 서버 측 암호화를 사용하여 파일을 암호화합니다. S3 버킷 복제를 활성화합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -100,18 +163,18 @@
 													C.
 												</span> 
 											
-											s3 sync 명령을 사용하여 다른 리전의 S3 버킷에 파일을 동기화합니다.
+											s3 sync 명령을 사용하여 파일을 다른 리전의 S3 버킷에 동기화합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											파일을 다른 리전의 S3 버킷으로 자동 전송하도록 S3 수명 주기 구성을 구성합니다.
+											다른 지역의 S3 버킷으로 파일을 자동으로 전송하도록 S3 수명주기 구성을 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">A (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">A (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								icebox0e
-							</a> 
-							
-							시간: <i>
-							2022년 8월 31일, 오전 8:06</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								icebox0e
-							</a>
-							
-							at <i>
-							Aug. 31, 2022, 8:06 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,9 +291,9 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 2일 금 16:58">
+<span class="comment-date align-middle" title="2022년 9월 2일 금요일 16:58">
 			11개월, 3주 전
 		</span>
 </div>
@@ -263,9 +306,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -299,13 +342,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 13:03">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 13:03">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">확실히 A입니다. B가 맞는 것 같지만 기본적으로 SSE-S3 at rest 암호화를 직접 사용할 수 있다면 CMK를 사용하여 암호화할 방법이 없습니다.</div>
+<div class="comment-content">확실히 A입니다. B는 맞는 것 같지만 기본적으로 저장 암호화에서 SSE-S3를 직접 사용할 수 있는 경우 CMK를 사용하여 암호화할 방법이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,16 +385,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				챠오리
+				차오리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 27일 (월) 14:27">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 27일 월요일 14:27">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A와 B 모두 가능할 것이라고 생각하지만 A는 구성이 가장 적습니다.</div>
+<div class="comment-content">A와 B 모두 가능하다고 생각하지만 A의 구성이 가장 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,15 +431,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라즈다스2412
+				라즈다2412
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 25일 토요일 19:24">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 문제는 구성의 최소량에 관한 것입니다. CMK를 생성하면 추가 작업이 추가됩니다.</div>
+<div class="comment-content">A 질문은 최소한의 구성에 관한 것입니다. CMK를 생성하면 추가 작업이 추가됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,12 +480,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 22일 수 11:25">
-			5개월, 4주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">B. AWS Key Management Service(AWS KMS) 고객 마스터 키(CMK)와 함께 서버 측 암호화(SSE)를 사용하여 파일을 암호화합니다. S3 버킷 복제를 활성화합니다. AWS KMS 고객 마스터 키(CMK)와 함께 서버 측 암호화를 사용하여 S3 버킷의 파일을 암호화함으로써 개발자는 S3 버킷 복제를 쉽게 활성화하여 재해 복구를 위해 암호화된 파일을 다른 AWS 리전의 S3 버킷에 복제할 수 있습니다. . AWS KMS CMK를 사용한 SSE는 개발자가 제어할 수 있는 키로 파일을 암호화하여 추가 보안 계층을 제공합니다. 또한 이 방법은 서버 측 암호화 및 S3 버킷 복제 구성만 포함하기 때문에 최소한의 구성이 필요합니다.</div>
+<div class="comment-content">B. AWS Key Management Service(AWS KMS) 고객 마스터 키(CMK)와 함께 서버 측 암호화(SSE)를 사용하여 파일을 암호화합니다. S3 버킷 복제를 활성화합니다. AWS KMS 고객 마스터 키(CMK)와 함께 서버 측 암호화를 사용하여 S3 버킷의 파일을 암호화함으로써 개발자는 쉽게 S3 버킷 복제를 활성화하여 재해 복구를 위해 암호화된 파일을 다른 AWS 리전의 S3 버킷에 복제할 수 있습니다. . AWS KMS CMK를 사용한 SSE는 개발자가 제어할 수 있는 키를 사용하여 파일을 암호화함으로써 추가 보안 계층을 제공합니다. 또한 이 방법에는 서버 측 암호화 및 S3 버킷 복제 구성만 포함되므로 최소한의 구성이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,12 +525,12 @@
 				GD_ZH
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 18:41">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 18:41">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A여야 합니다. 기본적으로 Amazon S3는 AWS KMS에 저장된 고객 관리형 키로 서버 측 암호화를 사용하여 유휴 상태로 저장된 객체를 복제하지 않습니다. 이러한 객체를 복제하도록 Amazon S3에 지시하려면 추가 구성이 필요합니다.</div>
+<div class="comment-content">A여야 합니다. 기본적으로 Amazon S3는 AWS KMS에 저장된 고객 관리형 키와 함께 서버 측 암호화를 사용하여 저장되어 있는 객체를 복제하지 않습니다. Amazon S3에 이러한 객체를 복제하도록 지시하려면 추가 구성이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,12 +571,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 14:39">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이제 Amazon S3는 Amazon S3의 모든 버킷에 대한 기본 암호화 수준으로 Amazon S3 관리형 키(SSE-S3)를 사용하여 서버 측 암호화를 적용합니다. 지역 간 복제를 사용하면 S3 버킷에 업로드된 모든 객체가 선택한 다른 AWS 지역의 대상 버킷에 자동으로 복제됩니다.</div>
+<div class="comment-content">Amazon S3는 이제 Amazon S3 관리형 키(SSE-S3)를 사용하여 Amazon S3의 모든 버킷에 대한 기본 암호화 수준으로 서버 측 암호화를 적용합니다. 지역 간 복제를 사용하면 S3 버킷에 업로드된 모든 객체가 선택한 다른 AWS 지역의 대상 버킷에 자동으로 복제됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,7 +622,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">SSE-KMS에는 추가 구성이 필요합니다.</div>
+<div class="comment-content">SSE-KMS에는 추가 구성이 필요합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,7 +667,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,15 +704,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kratos_1324
+				크라토스_1324
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 17일 (월) 16:00">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 bcos 키워드를 선택합니다. 구성의 최소 금액입니다.</div>
+<div class="comment-content">나는 bcos 키워드를 선택합니다. 최소한의 구성입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,16 +749,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				전사예
+				전사응
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 26일 (월) 11:01">
-			10개월, 3주 전
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">기본적으로 Amazon S3는 AWS KMS에 저장된 고객 관리형 키로 서버 측 암호화를 사용하여 유휴 상태로 저장된 객체를 복제하지 않습니다.</div>
+<div class="comment-content">기본적으로 Amazon S3는 AWS KMS에 저장된 고객 관리형 키와 함께 서버 측 암호화를 사용하여 저장되어 있는 객체를 복제하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,7 +795,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				엑스어벤저
+				XAvenger
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 23일 금 13:02">
@@ -761,7 +804,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 처음에는 EBS 볼륨과 유사한 접근 방식으로 인해 "B"여야 한다고 생각했지만 https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-config-for-kms 링크를 읽은 후 -objects.html 중요 고객 제공(SSE-C) 암호화 키를 사용하여 서버 측 암호화로 생성된 개체는 복제되지 않습니다. 답은 A인 것 같다.</div>
+<div class="comment-content">A. 처음에는 EBS 볼륨과 유사한 접근 방식으로 인해 "B"여야 한다고 생각했지만 https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-config-for-kms 링크를 읽고 나니 -objects.html 중요 고객 제공(SSE-C) 암호화 키를 사용하여 서버측 암호화로 생성된 개체는 복제되지 않습니다. 대답은 A 인 것 같습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -801,13 +844,13 @@
 				해리_01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 18일 일 13:27">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 18일 일요일 13:27">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 키워드 ===&gt; 최소 구성입니다.</div>
+<div class="comment-content">A입니다. 키워드 ===&gt; 최소 구성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -816,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -844,16 +887,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라수안린
+				라쉬안린
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 11일 일 09:31">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 11일 일요일 09:31">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">사람들이 A에 투표하는 이유를 모르겠습니다. 이 가이드에서는 S3 관리 키를 전혀 언급하지 않고 복제용 KMS만 언급합니다 https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4. HTML</div>
+<div class="comment-content">사람들이 A에 투표하는 이유를 모르겠습니다. 이 가이드에서는 S3 관리 키를 전혀 언급하지 않고 복제용 KMS만 https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4에 대해 언급합니다. HTML</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -862,7 +905,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -885,12 +928,12 @@
 				마흐디톱그
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 11일 일 19:55">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 11일 일요일 19:55">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그는 최소한의 노력과 kms를 사용하는 경우 키를 관리해야 하며 aws 관리형 키는 애초에 kms에 속한다고 말했습니다.</div>
+<div class="comment-content">그는 최소한의 노력을 기울였으며 kms를 사용하는 경우 키를 관리해야 하며 우선 aws 관리 키는 kms에 속해야 한다고 말했습니다. ㅋㅋㅋ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -899,7 +942,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -939,12 +982,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 4일 일요일 23:29">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A, 가장 간단한 형태</div>
+<div class="comment-content">답은 A입니다. 가장 간단한 형태입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,13 +1027,13 @@
 				신드라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 03일 (토) 12:46">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 12:46">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저는 A에 투표합니다. SSE-KMS를 사용하여 암호화를 사용하는 경우 KMS를 새 버킷 정책으로 복제/전송하기 위해 추가 구성을 추가해야 하기 때문입니다. 참조: https://docs.aws.amazon.com/AmazonS3/ 최신/사용자 가이드/replication-walkthrough-4.html</div>
+<div class="comment-content">저는 A에 투표합니다. SSE-KMS를 사용하여 암호화를 사용하는 경우 KMS를 새 버킷 정책에 복제/전송하려면 추가 구성을 추가해야 하기 때문입니다. 여기 참조는 https://docs.aws.amazon.com/AmazonS3/입니다. 최신/사용자 가이드/replication-walkthrough-4.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -999,7 +1042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1027,15 +1070,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				페듀
+				페데오
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 14:26">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 B입니다. 원본과 대상이 다른 개인 키를 가질 수 있음을 염두에 두십시오. 복제를 활성화하려면 소스를 해독하고 대상을 암호화할 수 있는 권한이 필요한 역할을 생성해야 합니다.</div>
+<div class="comment-content">대답은 B입니다. 소스와 대상이 다른 개인 키를 가질 수 있다는 점에 유의하세요. 복제를 활성화하려면 소스를 해독하고 대상을 암호화할 수 있는 권한이 필요한 역할을 생성해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1072,16 +1115,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				icebox0e
+				아이스박스0e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 8월 31일 수 08:06">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A</div>
+<div class="comment-content">답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1090,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1194,7 +1237,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 13:03">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1240,7 +1283,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 14:27">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1286,7 +1329,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 19:24">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1332,7 +1375,7 @@ The question is about LEAST amount of configuration. Creating a CMK would add a 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 11:25">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1426,7 +1469,7 @@ By default, Amazon S3 doesn't replicate objects that are stored at rest using se
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 14:39">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1563,7 +1606,7 @@ By default, Amazon S3 doesn't replicate objects that are stored at rest using se
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 16:00">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1609,7 +1652,7 @@ By default, Amazon S3 doesn't replicate objects that are stored at rest using se
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Sep 2022 11:01">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1706,7 +1749,7 @@ looks like the answer is A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Sep 2022 13:27">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1752,7 +1795,7 @@ looks like the answer is A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Sep 2022 09:31">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1791,7 +1834,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Sep 2022 19:55">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1844,7 +1887,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Sep 2022 23:29">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1890,7 +1933,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 12:46">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1938,7 +1981,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-walkthrough-4.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 14:26">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1984,7 +2027,7 @@ To enable replication, you need to create a role which needs permission to decry
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 Aug 2022 08:06">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

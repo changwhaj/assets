@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 23 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 23 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 23 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 23 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807523">
 <p class="card-text">
 							
-								개발자는 Amazon DynamoDB를 사용하여 고객 주문을 저장해야 합니다. 개발자의 회사는 모든 고객 데이터를 회사에서 생성하는 키로 암호화할 것을 요구합니다. <br/>개발자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?<br/>
+								개발자는 Amazon DynamoDB를 사용하여 고객 주문을 저장해야 합니다. 개발자의 회사에서는 모든 고객 데이터를 회사에서 생성한 키를 사용하여 암호화하도록 요구합니다. <br/>이러한 요구 사항을 충족하려면 개발자는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807523" type="application/json">[{"voted_answers": "B", "vote_count": 22, "is_most_voted": true}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											암호화가 없음으로 설정된 DynamoDB 테이블을 생성합니다. 애플리케이션이 테이블에서 읽을 때 키를 사용하여 데이터를 해독하도록 애플리케이션을 코딩합니다. 애플리케이션이 테이블에 쓸 때 키를 사용하여 데이터를 암호화하도록 애플리케이션을 코딩합니다.
+											암호화가 없음으로 설정된 DynamoDB 테이블을 생성합니다. 애플리케이션이 테이블에서 읽을 때 데이터를 해독하는 키를 사용하도록 애플리케이션을 코딩합니다. 애플리케이션이 테이블에 쓸 때 데이터를 암호화하기 위해 키를 사용하도록 애플리케이션을 코딩합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -100,7 +163,7 @@
 													C.
 												</span> 
 											
-											AWS Key Management Service(AWS KMS)를 사용하여 키를 저장합니다. 기본 암호화로 DynamoDB 테이블을 생성합니다. DynamoDB 소프트웨어 개발 키트(SDK)를 사용할 때 AWS KMS 키의 Amazon 리소스 이름(ARN)과 함께 kms:Encrypt 파라미터를 포함합니다.
+											AWS Key Management Service(AWS KMS)를 사용하여 키를 저장합니다. 기본 암호화를 사용하여 DynamoDB 테이블을 생성합니다. DynamoDB 소프트웨어 개발 키트(SDK)를 사용할 때 AWS KMS 키의 Amazon 리소스 이름(ARN)과 함께 kms:Encrypt 파라미터를 포함합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								LEHUY
-							</a> 2022년 9월 1 
-							
-							일 <i>
-							오전 8:55</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								LEHUY
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 8:55 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,7 +293,7 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 2일 금요일 12:33">
 			11개월, 3주 전
@@ -265,9 +308,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -299,15 +342,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 3일 (토) 05:11">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 05:11">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B, 회사에서 자체적으로 키를 생성하여 KMS에 저장하기를 원하기 때문입니다.</div>
+<div class="comment-content">B, 회사에서 직접 키를 생성하여 KMS에 저장하려고 하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,12 +394,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 2일 일요일 06:14">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">고객 관리 및 AWS 관리의 두 가지 유형의 키가 있습니다. 질문에서 "회사에서 생성하는 키로 암호화"라고 되어 있으며 이는 고객/회사가 제어/생성하는 고객 관리 키가 됩니다. 반면에 고객은 aws 관리형 키로 제어할 수 있는 권한이 적거나 없습니다.</div>
+<div class="comment-content">키에는 고객 관리형과 AWS 관리형의 두 가지 유형이 있습니다. 질문에는 "회사가 생성한 키로 암호화됨"이라고 나와 있으며 이는 고객/회사가 제어/생성하는 고객 관리 키가 됩니다. 반면에 고객은 AWS 관리 키에 대한 통제력이 적거나 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -365,7 +408,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -397,12 +440,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 19:29">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">키를 가져와 KMS에 저장하면 DynamoDB 테이블을 생성하는 동안 ARN 드롭다운 목록에서 직접 KMS 키를 선택할 수 있습니다.</div>
+<div class="comment-content">키를 가져와 KMS에 저장하면 DynamoDB 테이블을 생성하는 동안 ARN 드롭다운 목록에서 KMS 키를 직접 선택할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -411,7 +454,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -443,7 +486,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:32">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -457,7 +500,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,16 +528,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				헤지반지
+				헤이지반즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 8일 (토) 19:23">
+<span class="comment-date align-middle" title="2022년 10월 8일 토요일 19:23">
 			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B입니다</div>
+<div class="comment-content">B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -503,7 +546,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -534,8 +577,8 @@
 				PVR
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 05일 월요일 12:01">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 5일 (월) 12:01">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -549,7 +592,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -585,7 +628,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B입니다</div>
+<div class="comment-content">B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -594,7 +637,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,11 +665,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				르후이
+				레후이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 08:55">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -639,7 +682,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -745,7 +788,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 05:11">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -794,7 +837,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 02 Jul 2023 06:14">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -840,7 +883,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 19:29">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -886,7 +929,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:32">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -978,7 +1021,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Sep 2022 12:01">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1069,7 +1112,7 @@ https://aws.amazon.com/blogs/database/bring-your-own-encryption-keys-to-amazon-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 08:55">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

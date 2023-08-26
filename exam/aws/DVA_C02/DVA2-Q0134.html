@@ -58,13 +58,13 @@
 </span>
 </div>
 </div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
 <script>
-	var curPagePath = window.location.pathname;
-	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
-	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
-	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
-	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
-	var totalPages = 142;  // Adjust this to the total number of pages
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
 
 	var prevPageNo = curPageNo - 1;
 	var nextPageNo = curPageNo + 1;
@@ -126,7 +126,7 @@
 <div class="question-discussion-header">
 						
 							Amazon
-						 <a class="discussion-link">AWS Certified Developer - Associate DVA-C02 시험 문제</a>
+						 <a class="discussion-link">AWS Certified Developer - Associate DVA-C02 시험문제</a>
 <div>
 							질문 #: 134 <br/>
 							주제 #: 1
@@ -135,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="893537">
 <p class="card-text">
 							
-								한 회사에서 Amazon API Gateway API 뒤에 있는 다양한 AWS Lambda 기능으로 구성된 서버리스 애플리케이션을 개발하고 있습니다. 개발자는 Lambda 함수 코드 배포를 자동화해야 합니다. 개발자는 AWS CodeDeploy를 사용하여 업데이트된 Lambda 함수를 배포합니다. 배포는 최종 사용자에게 잠재적인 오류 노출을 최소화해야 합니다. 애플리케이션이 프로덕션 상태일 때 애플리케이션은 지정된 유지 관리 기간 외에는 다운타임을 겪을 수 없습니다. <br/><br/>최소 배포 시간으로 이러한 요구 사항을 충족하는 배포 구성은 무엇입니까?
+								한 회사는 Amazon API Gateway API 뒤에 있는 다양한 AWS Lambda 기능으로 구성된 서버리스 애플리케이션을 개발하고 있습니다. 개발자는 Lambda 함수 코드 배포를 자동화해야 합니다. 개발자는 AWS CodeDeploy를 사용하여 업데이트된 Lambda 함수를 배포합니다. 배포 시 최종 사용자에게 발생할 수 있는 오류 노출을 최소화해야 합니다. 애플리케이션이 프로덕션 단계에 있는 경우 지정된 유지 관리 기간 외에 애플리케이션 가동 중지 시간이 발생할 수 없습니다. <br/><br/>가장 짧은 배포 시간으로 이러한 요구 사항을 충족하는 배포 구성은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="893537" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}]</script>
+<script id="893537" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -148,7 +148,7 @@
 													A.
 												</span> 
 											
-											Lambda 함수에 대해 AWS CodeDeploy 인플레이스 배포 구성을 사용하십시오. 배포 직후 모든 트래픽을 이동합니다.
+											Lambda 함수에는 AWS CodeDeploy 내부 배포 구성을 사용하십시오. 배포 후 즉시 모든 트래픽을 이동합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -162,14 +162,14 @@
 													C.
 												</span> 
 											
-											AWS CodeDeploy 일괄 배포 구성을 사용하여 모든 트래픽을 업데이트된 버전으로 즉시 이동합니다.
+											AWS CodeDeploy 일괄 배포 구성을 사용하여 모든 트래픽을 업데이트된 버전으로 즉시 전환합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS CodeDeploy 사전 정의된 카나리아 배포 구성을 사용하여 트래픽의 10%를 즉시 이동하고 5분 후에 나머지 트래픽을 이동합니다.
+											AWS CodeDeploy 사전 정의된 Canary 배포 구성을 사용하여 트래픽의 10%를 즉시 이동하고 나머지 트래픽은 5분 후에 이동합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -185,8 +185,7 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">A (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
@@ -212,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="893537" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}]</script>
+<script id="893537" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -258,8 +257,7 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">A (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
@@ -279,6 +277,52 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="989314" id="comment-989314">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				사랑777
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 24일 목요일 17:50">
+			1일 2시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">설명: AWS Lambda 컨텍스트에서 내부 배포 구성을 사용하면 배포 시간이 최소화되고 함수 코드에 대한 빠른 업데이트가 제공됩니다. 이 경우 애플리케이션은 Amazon API Gateway API 뒤에 있는 AWS Lambda 함수로 구성됩니다. 내부 배포 구성을 사용하면 모든 트래픽이 배포 직후 Lambda 함수의 업데이트된 버전으로 이동됩니다. 옵션 B는 매분 트래픽의 10%를 이동하는 선형 배포 구성을 제안합니다. 이는 제어된 배포 및 점진적인 롤아웃을 제공하지만 배포 시간을 최소화하려는 경우 가장 빠른 접근 방식이 아닐 수 있습니다. 옵션 C는 일괄 배포 구성을 제안합니다. 이 구성은 속도가 빠르지만 최종 사용자에게 잠재적인 오류가 한꺼번에 노출될 위험이 더 높습니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="972638" id="comment-972638">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -295,7 +339,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 5일 토요일 04:52">
-			2주, 3일 전
+			2주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -341,7 +385,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 21:44">
-			2주, 4일 전
+			2주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -387,7 +431,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 13:45">
-			2주, 4일 전
+			3 주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -437,6 +481,58 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="989314" id="comment-989314">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				love777
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Thu 24 Aug 2023 17:50">
+			1 day, 2 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">Explanation:
+
+In an AWS Lambda context, using the in-place deployment configuration minimizes deployment time and provides fast updates to the function's code. In this case, the application consists of AWS Lambda functions behind Amazon API Gateway APIs. With the in-place deployment configuration, all traffic is shifted to the updated versions of the Lambda functions immediately after deployment.
+
+Option B suggests a linear deployment configuration that shifts 10% of the traffic every minute. While this provides controlled deployment and gradual rollout, it might not be the fastest approach if you want to minimize deployment time.
+
+Option C suggests an all-at-once deployment configuration. While this configuration might be fast, it poses a higher risk of exposing potential errors to end users all at once.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="972638" id="comment-972638">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -453,7 +549,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Aug 2023 04:52">
-			2 weeks, 3 days ago
+			2 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -499,7 +595,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 21:44">
-			2 weeks, 4 days ago
+			2 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -549,7 +645,7 @@ Keyword:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 13:45">
-			2 weeks, 4 days ago
+			3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

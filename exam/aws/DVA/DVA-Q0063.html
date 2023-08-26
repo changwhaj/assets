@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 63 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 63 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 63 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 63 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807563">
 <p class="card-text">
 							
-								개발자는 AWS X-Ray를 사용하여 Amazon EC2 인스턴스에서 실행 중인 애플리케이션을 모니터링해야 합니다. 개발자는 <br/>X-Ray SDK를 사용하여 애플리케이션을 준비했습니다. <br/>개발자는 모니터링을 수행하기 위해 무엇을 해야 합니까?<br/>
+								개발자는 Amazon EC2 인스턴스에서 실행 중인 애플리케이션을 모니터링하려면 AWS X-Ray를 사용해야 합니다. 개발자는 <br/>X-Ray SDK를 사용하여 애플리케이션을 준비했습니다. <br/>모니터링을 수행하려면 개발자는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807563" type="application/json">[{"voted_answers": "B", "vote_count": 6, "is_most_voted": true}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											X-Ray SDK 샘플링 규칙 및 대상을 구성합니다. EC2 콘솔 또는 AWS CLI에서 modify-instance-attribute 명령으로 X-Ray 데몬을 활성화하여 XRayEnabled 플래그를 설정합니다.
+											X-Ray SDK 샘플링 규칙 및 대상을 구성합니다. EC2 콘솔 또는 AWS CLI에서 수정-인스턴스-속성 명령을 사용하여 X-Ray 데몬을 활성화하여 XRayEnabled 플래그를 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -100,7 +163,7 @@
 													C.
 												</span> 
 											
-											X-Ray 데몬을 설치합니다. 데이터를 Amazon EventBridge(Amazon CloudWatch Events)로 전달하도록 구성합니다. EC2 인스턴스에 Event Bridge(CloudWatch Events)에 쓸 수 있는 권한을 부여합니다.
+											X-Ray 데몬을 설치합니다. Amazon EventBridge(Amazon CloudWatch Events)로 데이터를 전달하도록 구성합니다. EC2 인스턴스에 Event Bridge(CloudWatch 이벤트)에 쓸 수 있는 권한을 부여합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 1일 오전 <i>
-							3시 32분 </i><a class="title-username" style="">
-								JAMG54
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JAMG54
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 3:32 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 13:24">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 13:24">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">X-Ray로 정보를 보내는 EC2에서 애플리케이션을 실행하려면 먼저 인스턴스에 데몬을 설치한 다음 추적 데이터를 XRay로 보낼 권한을 할당하는 인스턴스의 인스턴스 프로필 역할을 구성해야 합니다. 따라서 B가 정답이다.</div>
+<div class="comment-content">X-Ray로 정보를 보내는 애플리케이션을 EC2에서 실행하려면 먼저 인스턴스에 데몬을 설치한 다음 추적 데이터를 XRay로 보낼 수 있는 권한을 할당하는 인스턴스의 인스턴스 프로파일 역할을 구성해야 합니다. 그럼 B가 정답이군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,15 +335,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				may2021_r
+				2021년 5월
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 11일 (토) 01:41">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 11일 토요일 01:41">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS X-Ray를 사용하여 Amazon EC2 인스턴스에서 실행 중인 애플리케이션을 모니터링하려면 다음 단계를 수행해야 합니다. 1. EC2 인스턴스에 X-Ray 데몬을 설치합니다. 2. X-Ray에 쓰기를 허용하는 정책이 있는 EC2 인스턴스에 IAM 역할을 할당합니다. 이렇게 하면 X-Ray 데몬이 추적 데이터를 X-Ray로 보낼 수 있습니다. 3. X-Ray SDK를 사용하고 애플리케이션 코드를 계측하여 애플리케이션을 준비합니다. 이러한 단계가 완료되면 X-Ray는 애플리케이션에서 추적 데이터를 수집하고 시각화할 수 있습니다. X-Ray 데몬은 애플리케이션에서 추적 데이터를 자동으로 수집하여 분석을 위해 X-Ray로 보냅니다. 모니터링을 수행하기 위해 X-Ray SDK 샘플링 규칙 및 대상을 구성할 필요가 없습니다. 비슷하게,</div>
+<div class="comment-content">AWS X-Ray를 사용하여 Amazon EC2 인스턴스에서 실행 중인 애플리케이션을 모니터링하려면 다음 단계를 수행해야 합니다. 1. EC2 인스턴스에 X-Ray 데몬을 설치합니다. 2. X-Ray에 대한 쓰기를 허용하는 정책이 있는 EC2 인스턴스에 IAM 역할을 할당합니다. 이렇게 하면 X-Ray 데몬이 추적 데이터를 X-Ray로 보낼 수 있습니다. 3. X-Ray SDK를 사용하고 애플리케이션 코드를 계측하여 애플리케이션을 준비합니다. 이러한 단계가 완료되면 X-Ray는 애플리케이션에서 추적 데이터를 수집하고 시각화할 수 있습니다. X-Ray 데몬은 애플리케이션에서 추적 데이터를 자동으로 수집하고 분석을 위해 X-Ray로 보냅니다. 모니터링을 수행하기 위해 X-Ray SDK 샘플링 규칙 및 대상을 구성할 필요는 없습니다. 비슷하게,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -309,7 +352,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,12 +383,12 @@
 				aarti_k
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 09:24">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 09:24">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 맞죠? 이벤트를 구성하려는 이유는 무엇입니까?</div>
+<div class="comment-content">B 맞지? 왜 이벤트를 구성하고 싶나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,15 +425,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언제부터
+				언제보다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 12일 목요일 02:57">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html#xray-daemon-permissions 및 : B</div>
+<div class="comment-content">https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html#xray-daemon-permissions ans : B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -399,7 +442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -427,15 +470,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				alth_1995
+				althu_1995
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 17:28">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 우리가 C..plz 대신에 B로 가는지 말해 줄 사람이 있습니까?</div>
+<div class="comment-content">왜 우리가 C..plz 대신 B를 선택하는지 말해 줄 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,8 +518,8 @@
 				라미레즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 25일 화요일 02:01">
-			9개월, 4주 전
+<span class="comment-date align-middle" title="2022년 10월 25일 (화) 02:01">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -489,7 +532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -517,16 +560,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				밀러룰
+				밀러룰스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 06일 목요일 23:31">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 6일 목요일 23:31">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답이라고 생각합니다</div>
+<div class="comment-content">나는 B가 정답이라고 믿는다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -535,7 +578,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -563,16 +606,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				헤지반지
+				헤이지반즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 1일 (토) 20:04">
+<span class="comment-date align-middle" title="2022년 10월 1일 토요일 20:04">
 			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답은 B인 것 같다.</div>
+<div class="comment-content">답은 B인 것 같다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -581,7 +624,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -612,13 +655,13 @@
 				해리_01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 18일 일 13:36">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 18일 일요일 13:36">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">분명히 그 옵션 B!</div>
+<div class="comment-content">분명히 옵션 B입니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -627,7 +670,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -655,7 +698,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 15:26">
@@ -664,7 +707,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답은 B라고 생각합니다. https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html</div>
+<div class="comment-content">나는 대답이 B라고 생각합니다. https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -701,15 +744,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잼54
+				JAMG54
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 03:32">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나에게는 B</div>
+<div class="comment-content">나한테는 B야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -770,7 +813,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 13:24">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -816,7 +859,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 01:41">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -911,7 +954,7 @@ Configuring the X-Ray SDK sampling rule and target is not necessary to perform t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 12 Jan 2023 02:57">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -957,7 +1000,7 @@ ans : B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 17:28">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1002,7 +1045,7 @@ ans : B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Oct 2022 02:01">
-			9 months, 4 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1047,7 +1090,7 @@ ans : B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Oct 2022 23:31">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1139,7 +1182,7 @@ ans : B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Sep 2022 13:36">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1233,7 +1276,7 @@ https://docs.aws.amazon.com/xray/latest/devguide/xray-daemon.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 03:32">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

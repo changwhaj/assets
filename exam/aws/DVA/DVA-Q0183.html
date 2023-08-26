@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 183 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 183 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 183 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 183 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849861">
 <p class="card-text">
 							
-								개발자가 Amazon DynamoDB 테이블을 생성하고 있습니다. 전체 테이블은 유휴 상태에서 암호화되어야 합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								개발자가 Amazon DynamoDB 테이블을 생성하고 있습니다. 전체 테이블은 저장 시 암호화되어야 합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											DynamoDB 테이블을 생성하는 동안 AWS Key Management Service(AWS KMS) AWS 관리형 키를 사용하여 유휴 시 암호화를 구성합니다.
+											DynamoDB 테이블을 생성하는 동안 AWS Key Management Service(AWS KMS) AWS 관리형 키를 사용하여 저장 암호화를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											DynamoDB 테이블을 생성하는 동안 AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 유휴 시 암호화를 구성합니다.
+											DynamoDB 테이블을 생성하는 동안 AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 저장 암호화를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">A (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">씨 (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">8%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">A (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">C (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">8%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 
-							
-							11 <i>
-							월 24일 오후 12:39</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 12:39 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,18 +287,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 12:39">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 12:39">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html AWS 소유 키 – 기본 암호화 유형입니다. 키는 DynamoDB에서 소유합니다(추가 비용 없음). AWS 관리형 키 – 키는 계정에 저장되며 AWS KMS에서 관리합니다(AWS KMS 요금 적용). 고객 관리형 키 – 키는 귀하의 계정에 저장되며 귀하가 생성, 소유 및 관리합니다. KMS 키를 완전히 제어할 수 있습니다(AWS KMS 요금 적용).</div>
+<div class="comment-content">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html AWS 소유 키 – 기본 암호화 유형입니다. 키는 DynamoDB가 소유합니다(추가 비용 없음). AWS 관리형 키 – 키는 계정에 저장되며 AWS KMS에서 관리됩니다(AWS KMS 요금 부과). 고객 관리형 키 – 키는 귀하의 계정에 저장되며 귀하가 생성, 소유 및 관리합니다. KMS 키를 완전히 제어할 수 있습니다(AWS KMS 요금 부과).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -304,7 +347,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">암호화 서버 측을 구성하는 가장 간단한 방법은 기본 구성(DynamoDB용으로 예약된 KMS 키)을 사용하는 것입니다. A가 맞다</div>
+<div class="comment-content">서버 측 암호화를 구성하는 가장 간단한 방법은 기본 구성(DynamoDB용으로 예약된 KMS 키)을 사용하는 것입니다. A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -313,7 +356,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,7 +384,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. DynamoDB에서 관리하는 기본 AWS 소유 키가 KMS에서도 숨겨진 방식으로 관리되는지 100% 확신할 수 없습니다. 그러나 이것은 대답을 바꾸지 않습니다. A는 여전히 정확합니다.</div>
+<div class="comment-content">죄송합니다. DynamoDB에서 관리하는 기본 AWS 소유 키가 KMS에서도 숨겨진 방식으로 관리되는지 100% 확실하지 않습니다. 하지만 이것이 답을 바꾸지는 않습니다. A는 여전히 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -350,7 +393,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -378,7 +421,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB 테이블을 생성할 때 기본 키 아래에 "AWS KMS 키는 DynamoDB에서 소유하고 관리합니다. 이 키를 사용하는 데 추가 요금이 부과되지 않습니다."라고 쓰여 있기 때문에 의심이 듭니다. 하지만 KMS에 들어가면 "aws/dynamodb" 또는 "aws/simpletable" 같은 키가 표시되지 않습니다. 누군가 저에게 답을 알려주세요.</div>
+<div class="comment-content">DynamoDB 테이블을 생성할 때 기본 키 아래에 "AWS KMS 키는 DynamoDB가 소유하고 관리합니다. 이 키 사용에 대해 추가 요금이 부과되지 않습니다."라고 기록되기 때문에 의심스럽습니다. 하지만 KMS에 들어가면 "aws/dynamodb" 또는 "aws/simpletable"과 같은 키를 볼 수 없습니다. 누군가 제게 답을 주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -387,7 +430,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,13 +477,13 @@
 				엠마퀴스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 09:36">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 09:36">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. 기본 암호화 설정을 사용하여 DynamoDB 테이블을 생성합니다. 기본 암호화 설정을 사용하여 DynamoDB 테이블을 생성하면 추가 구성 없이 유휴 상태의 전체 테이블이 자동으로 암호화됩니다. 이 옵션은 암호화 구성 또는 추가 서비스 사용에 대한 추가 비용이 없기 때문에 가장 비용 효율적입니다. DynamoDB Encryption Client를 사용하는 옵션 B는 클라이언트 측 암호화를 제공하여 DynamoDB로 전송되기 전에 데이터를 암호화합니다. 이 옵션은 유휴 상태의 전체 테이블도 암호화하지만 구현 및 관리에 추가적인 노력과 복잡성이 필요합니다. AWS KMS AWS 관리형 키를 사용하여 저장된 암호화를 구성하는 옵션 C는 암호화 키를 더 잘 제어하고 특정 규정 준수 요구 사항을 충족하는 데 적합한 솔루션입니다. 하지만, 이 옵션은 AWS KMS를 사용하는 데 추가 비용이 발생합니다. AWS KMS 고객 관리형 키를 사용하여 유휴 시 암호화를 구성하는 옵션 D는 암호화 키를 훨씬 더 강력하게 제어할 수 있지만 AWS KMS를 사용하고 고객 관리형 키를 관리하는 데 추가 비용이 발생합니다.</div>
+<div class="comment-content">정답은 A입니다. 기본 암호화 설정을 사용하여 DynamoDB 테이블을 생성합니다. 기본 암호화 설정을 사용하여 DynamoDB 테이블을 생성하면 추가 구성 없이 전체 테이블이 자동으로 암호화됩니다. 이 옵션은 암호화 구성이나 추가 서비스 사용에 따른 추가 비용이 없으므로 가장 비용 효율적입니다. DynamoDB Encryption Client를 사용하는 옵션 B는 데이터를 DynamoDB로 전송하기 전에 암호화하기 위한 클라이언트 측 암호화를 제공합니다. 이 옵션은 저장 중인 전체 테이블도 암호화하지만 구현하고 관리하는 데 추가적인 노력과 복잡성이 필요합니다. AWS KMS AWS 관리형 키를 사용하여 저장 중 암호화를 구성하는 옵션 C는 암호화 키를 더 효과적으로 제어하고 특정 규정 준수 요구 사항을 충족하는 데 적합한 솔루션입니다. 하지만, 이 옵션을 사용하면 AWS KMS를 사용하는 데 추가 비용이 발생합니다. AWS KMS 고객 관리형 키를 사용하여 저장 중 암호화를 구성하는 옵션 D는 암호화 키에 대한 더 강력한 제어 기능을 제공하지만 AWS KMS 사용 및 고객 관리형 키 관리에 대한 추가 비용도 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,13 +523,13 @@
 				m4r0ck
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 15:36">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 15:36">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Amazon DynamoDB는 기본적으로 모든 유휴 데이터를 항상 암호화하여 DynamoDB 데이터의 보안을 강화합니다. 개발자가 할 수 있는 유일한 선택은 이 암호화가 수행되는 방법을 선택하는 것입니다. 참조: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html</div>
+<div class="comment-content">Amazon DynamoDB는 기본적으로 모든 저장 데이터를 항상 암호화하여 DynamoDB 데이터의 보안을 강화합니다. 개발자가 선택할 수 있는 유일한 것은 이 암호화가 수행되는 방법을 선택하는 것입니다. 참조: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -495,7 +538,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,7 +566,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 20일 (월) 17:00">
@@ -532,7 +575,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A입니다. 문제는 가장 비용 효율적인 옵션을 묻는 것입니다. AWS 소유 키를 사용하여 저장된 데이터를 암호화하는 기본 옵션을 선택해야 합니다. 이 옵션에는 암호화 요금이 부과되지 않습니다. KMS와 관련된 옵션을 선택하는 경우 유료 서비스이며 요금이 부과됩니다.</div>
+<div class="comment-content">대답은 A입니다. 문제는 가장 비용 효율적인 옵션을 요구하는 것입니다. AWS 소유 키를 사용하여 저장 데이터를 암호화하는 기본 옵션을 선택해야 합니다. 이 옵션에는 암호화 요금이 적용되지 않습니다. KMS와 관련된 옵션을 선택하는 경우 해당 서비스는 유료 서비스이므로 요금이 부과된다는 점을 기억하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,16 +612,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ShriniW
+				슈리니W
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 15:59">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C Amazon DynamoDB의 기본 암호화 설정은 암호화되지 않음입니다.</div>
+<div class="comment-content">C Amazon DynamoDB의 기본 암호화 설정은 암호화되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -611,11 +654,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 24일 금요일 09:46">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아닙니다. DynamoDB는 언제든지 선택할 수 있는 3가지 옵션(aws 소유 키(답변 A), 관리형 키, 고객 관리형 키)과 함께 AWS KMS를 사용하여 기본적으로 향상된 암호화를 사용합니다. C와 D는 추가 비용이 필요하므로 비용 효율적이지 않습니다. 미안 친구</div>
+<div class="comment-content">C가 아닙니다. DynamoDB는 언제든지 선택할 수 있는 3가지 옵션(aws 소유 키(답변 A), 관리형 키, 고객 관리형 키)과 함께 AWS KMS를 사용하여 기본적으로 향상된 암호화를 사용합니다. C와 D는 추가 비용이 필요하므로 비용 효율적이지 않습니다. 미안해 친구</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -624,7 +667,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -655,12 +698,12 @@
 				m4r0ck
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 15:35">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 15:35">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon DynamoDB는 기본적으로 모든 유휴 데이터를 항상 암호화하여 DynamoDB 데이터의 보안을 강화합니다. 개발자가 할 수 있는 유일한 선택은 이 암호화가 수행되는 방법을 선택하는 것입니다. 참조: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html</div>
+<div class="comment-content">Amazon DynamoDB는 기본적으로 모든 저장 데이터를 항상 암호화하여 DynamoDB 데이터의 보안을 강화합니다. 개발자가 선택할 수 있는 유일한 것은 이 암호화가 수행되는 방법을 선택하는 것입니다. 참조: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -669,7 +712,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -697,7 +740,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 20일 (월) 17:00">
@@ -705,7 +748,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이 아닙니다.</div>
+<div class="comment-content">그것은 사실이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -714,7 +757,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -753,12 +796,12 @@
 				마이크로앱
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 11:41">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 11:41">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">유휴 Amazon DynamoDB 테이블을 암호화하기 위한 가장 비용 효율적인 솔루션은 AWS KMS(키 관리 서비스) 관리 키를 사용하여 서버 측 암호화를 활성화하는 것입니다. 이 옵션은 추가 비용 없이 사용할 수 있으며 테이블에 저장된 모든 데이터가 암호화되도록 합니다. DynamoDB 테이블을 생성할 때 기본 KMS 키를 사용하여 서버 측 암호화를 활성화하기만 하면 됩니다.</div>
+<div class="comment-content">저장 중인 Amazon DynamoDB 테이블을 암호화하는 가장 비용 효과적인 솔루션은 AWS KMS(Key Management Service) 관리형 키를 사용하여 서버 측 암호화를 활성화하는 것입니다. 이 옵션은 추가 비용 없이 사용할 수 있으며 테이블에 저장된 모든 데이터가 암호화되도록 보장합니다. DynamoDB 테이블을 생성할 때 기본 KMS 키를 사용하여 서버 측 암호화를 활성화하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -767,7 +810,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -795,16 +838,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				치트랭크
+				치트랑크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 8일 수요일 10:48">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">기본 암호화 유형. 키는 DynamoDB에서 소유합니다(추가 비용 없음).</div>
+<div class="comment-content">기본 암호화 유형. 키는 DynamoDB가 소유합니다(추가 비용 없음).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -813,7 +856,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -841,16 +884,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				태어나지 않은
+				아직 태어나지 않은
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 08:40">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Amazon DynamoDB의 기본 암호화 설정은 암호화되지 않았으므로 A는 아웃입니다. 옵션 B는 추가 사용자 지정 코드의 개발 및 유지 관리가 필요하므로 비용이 증가합니다.</div>
+<div class="comment-content">Amazon DynamoDB의 기본 암호화 설정은 암호화되지 않으므로 A는 제외됩니다. 옵션 B를 사용하려면 추가 사용자 지정 코드를 개발하고 유지 관리해야 하므로 비용이 증가합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -859,7 +902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -879,7 +922,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 20일 (월) 17:00">
@@ -887,7 +930,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이 아닙니다</div>
+<div class="comment-content">그것은 사실이 아니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -896,7 +939,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,8 +978,8 @@
 				929
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 1일 수요일 01:29">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 1일 수 01:29">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -950,7 +993,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -978,15 +1021,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				alecs_adam
+				알렉스_아담
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 25일 수 01:55">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 아닌 이유는 무엇입니까? 각 규칙에는 최대 5개의 대상이 있을 수 있습니다.</div>
+<div class="comment-content">B는 왜 안되나요? 각 규칙에는 최대 5개의 대상이 있을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -995,7 +1038,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1026,8 +1069,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 08:47">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 08:47">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1041,7 +1084,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1096,7 +1139,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 12:39">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1287,7 +1330,7 @@ But if I go in KMS, I can't see any key like "aws/dynamodb" or "aws/simpletable"
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 09:36">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1341,7 +1384,7 @@ Option D, configuring encryption at rest with an AWS KMS customer managed key, p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 15:36">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1434,7 +1477,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 15:59">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1472,7 +1515,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 09:46">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1518,7 +1561,7 @@ C and D requires additional costs, hence are not cost effective. Sorry pal</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 15:35">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1617,7 +1660,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 11:41">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1662,7 +1705,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 10:48">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1708,7 +1751,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 08:40">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1799,7 +1842,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 01 Feb 2023 01:29">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1845,7 +1888,7 @@ Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Encr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 01:55">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1891,7 +1934,7 @@ Each rule can have up to 5 targets</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 08:47">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

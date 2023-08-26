@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 194 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 194 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 194 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 194 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849872">
 <p class="card-text">
 							
-								회사는 온프레미스 시스템에 고객 ID 카드 사본을 가지고 있습니다. 회사는 온프레미스 시스템이 ID 카드 이미지를 Amazon S3 버킷에 직접 자동으로 업로드하기를 원합니다. <br/><br/>이 요구 사항을 충족하는 가장 안전한 방법은 무엇입니까?
+								회사의 온프레미스 시스템에 고객 ID 카드 사본이 있습니다. 회사는 온프레미스 시스템이 ID 카드 이미지를 Amazon S3 버킷에 직접 자동으로 업로드하기를 원합니다. <br/><br/>이 요구 사항을 충족하는 가장 안전한 방법은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849872" type="application/json">[{"voted_answers": "C", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="849872" type="application/json">[{"voted_answers": "C", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS SDK를 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. IAM 사용자를 생성합니다. s3:PutObject 권한이 포함된 정책에 사용자를 연결합니다. 생성된 액세스 키와 암호를 사용하여 AWS에 대한 액세스를 인증하도록 온프레미스 시스템을 구성합니다.
+											AWS SDK를 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드하십시오. IAM 사용자를 생성합니다. s3:PutObject 권한이 포함된 정책에 사용자를 연결합니다. 생성된 액세스 키와 비밀을 사용하여 AWS에 대한 액세스를 인증하도록 온프레미스 시스템을 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -103,7 +166,7 @@
 													C.
 												</span> 
 											
-											S3 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수 및 프라이빗 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. 온프레미스 시스템이 미리 서명된 URL을 수신하기 위해 API를 호출할 수 있도록 온프레미스 네트워크와 VPC 간에 AWS Site-to-Site VPN 연결을 생성합니다.
+											S3의 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수와 프라이빗 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. 온프레미스 시스템이 API를 호출하여 미리 서명된 URL을 수신할 수 있도록 온프레미스 네트워크와 VPC 간에 AWS Site-to-Site VPN 연결을 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,11 +175,11 @@
 													D.
 												</span> 
 											
-											S3 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수 및 퍼블릭 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. Amazon Cognito 권한 부여자를 추가하여 API를 보호하십시오. 사전 서명된 URL을 수신하기 위해 API를 호출하기 위한 인증에 사용할 온프레미스 시스템의 사용자를 생성합니다.
+											S3의 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수와 공개 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. Amazon Cognito 권한 부여자를 추가하여 API를 보호합니다. 미리 서명된 URL을 수신하기 위해 API를 호출하기 위한 인증에 사용할 온프레미스 시스템용 사용자를 만듭니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -126,19 +189,9 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">B (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">A (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="7%" data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div></div></div></div>
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">C (44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">B (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">A (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="6%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								CloudHandsOn
-							</a> 
-							
-							2022 <i>
-							년 11월 24일 오후 11:44</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -160,7 +213,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849872" type="application/json">[{"voted_answers": "C", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="849872" type="application/json">[{"voted_answers": "C", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -210,19 +263,9 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">C (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">B (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">A (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="7%" data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div></div></div></div>
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">C (44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">B (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">A (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="6%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								CloudHandsOn
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 11:44 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,11 +293,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AswinDe
+				아스윈드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 23일 일 17:33">
-			3주, 6일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -303,7 +346,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아이 돈노</div>
+<div class="comment-content">AI 돈노</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,22 +386,22 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 21일 일 14:55">
+<span class="comment-date align-middle" title="2023년 5월 21일 일요일 14:55">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 S3 미리 서명된 URL과 프라이빗 REST API 엔드포인트를 활용하여 안전한 솔루션을 제공합니다. 작동 방식은 다음과 같습니다. S3 미리 서명된 URL 생성: AWS Lambda 함수를 사용하여 S3 미리 서명된 URL을 생성합니다. 이러한 URL은 유효 기간이 제한되며 ID 카드 이미지를 S3 버킷에 업로드할 수 있는 임시 액세스 권한을 부여합니다. 프라이빗 REST API 엔드포인트: API Gateway에서 Lambda 함수를 호출하는 프라이빗 REST API 엔드포인트를 생성합니다. 이 API 엔드포인트는 AWS 인프라 내에서만 또는 보안 연결을 통해서만 액세스할 수 있어야 합니다. AWS Site-to-Site VPN 연결: 온프레미스 네트워크와 API Gateway 및 Lambda 함수가 상주하는 Amazon Virtual Private Cloud(VPC) 간에 AWS Site-to-Site VPN 연결을 설정합니다.</div>
+<div class="comment-content">옵션 C는 S3의 미리 서명된 URL과 프라이빗 REST API 엔드포인트를 활용하여 보안 솔루션을 제공합니다. 작동 방식은 다음과 같습니다. S3 사전 서명된 URL 생성: AWS Lambda 함수를 사용하여 S3 사전 서명된 URL을 생성합니다. 이러한 URL은 제한된 시간 동안 유효하며 ID 카드 이미지를 S3 버킷에 업로드할 수 있는 임시 액세스 권한을 부여합니다. 프라이빗 REST API 엔드포인트: API 게이트웨이에서 Lambda 함수를 호출하는 프라이빗 REST API 엔드포인트를 생성합니다. 이 API 엔드포인트는 AWS 인프라 내에서 또는 보안 연결을 통해서만 액세스할 수 있어야 합니다. AWS Site-to-Site VPN 연결: 온프레미스 네트워크와 API Gateway 및 Lambda 함수가 상주하는 Amazon Virtual Private Cloud(VPC) 간에 AWS Site-to-Site VPN 연결을 설정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,12 +424,12 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 21일 일 14:56">
+<span class="comment-date align-middle" title="2023년 5월 21일 일요일 14:56">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">온프레미스 시스템 통합: 프라이빗 REST API 엔드포인트를 호출하여 생성된 S3 미리 서명된 URL을 수신하도록 온프레미스 시스템을 구성합니다. 이는 이전 단계에서 설정한 VPN 연결을 통해 수행할 수 있습니다. ID 카드 이미지 업로드: 온프레미스 시스템은 수신된 미리 서명된 URL을 사용하여 ID 카드 이미지를 S3 버킷에 직접 업로드할 수 있습니다. 미리 서명된 URL은 장기 액세스 키 또는 자격 증명 없이도 이미지를 업로드할 수 있는 임시 액세스 및 권한을 부여합니다. 프라이빗 REST API 엔드포인트 및 VPN 연결과 함께 S3 미리 서명된 URL을 사용함으로써 온프레미스 시스템은 장기 액세스 키 또는 자격 증명을 노출하지 않고 ID 카드 이미지를 S3 버킷에 안전하게 업로드합니다.</div>
+<div class="comment-content">온프레미스 시스템 통합: 생성된 S3 미리 서명된 URL을 수신하기 위해 프라이빗 REST API 엔드포인트를 호출하도록 온프레미스 시스템을 구성합니다. 이는 이전 단계에서 설정된 VPN 연결을 통해 수행할 수 있습니다. ID 카드 이미지 업로드: 그러면 온프레미스 시스템은 수신된 미리 서명된 URL을 사용하여 ID 카드 이미지를 S3 버킷에 직접 업로드할 수 있습니다. 미리 서명된 URL은 장기 액세스 키나 자격 증명 없이 이미지를 업로드하기 위한 임시 액세스 및 권한을 부여합니다. 프라이빗 REST API 엔드포인트 및 VPN 연결과 함께 S3의 미리 서명된 URL을 사용함으로써 온프레미스 시스템은 장기 액세스 키나 자격 증명을 노출하지 않고 ID 카드 이미지를 S3 버킷에 안전하게 업로드합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -395,7 +438,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -418,12 +461,12 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 21일 일 14:56">
+<span class="comment-date align-middle" title="2023년 5월 21일 일요일 14:56">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">주어진 요구 사항에 대해 옵션 B가 가장 안전한 솔루션이 아닌 이유를 자세히 살펴보겠습니다. 옵션 B는 IAM 역할을 생성하고 이를 s3:PutObject 권한이 포함된 정책에 연결할 것을 제안합니다. 그런 다음 온프레미스 시스템은 AWS SDK의 AssumeRole 기능을 사용하여 AWS에 대한 액세스를 인증하고 ID 카드 이미지를 S3 버킷에 직접 업로드합니다. IAM 역할을 사용하는 것이 액세스 키를 사용하는 것보다 더 안전한 접근 방식이지만(옵션 A에서 언급), 이 시나리오에서는 여전히 몇 가지 제한 사항과 잠재적인 보안 위험이 있습니다. 네트워크 연결: 옵션 B는 두 서버 간에 직접 네트워크 연결이 있다고 가정합니다. 온프레미스 시스템 및 AWS. 이는 특히 연결이 적절하게 보호되지 않거나 온프레미스 시스템이 인터넷에 노출된 경우 잠재적인 보안 문제를 야기합니다.</div>
+<div class="comment-content">옵션 B가 주어진 요구 사항에 대해 가장 안전한 솔루션이 아닌 이유를 자세히 살펴보겠습니다. 옵션 B에서는 IAM 역할을 생성하고 이를 s3:PutObject 권한이 포함된 정책에 연결할 것을 제안합니다. 그런 다음 온프레미스 시스템은 AWS SDK의 AssumeRole 기능을 사용하여 AWS에 대한 액세스를 인증하고 ID 카드 이미지를 S3 버킷에 직접 업로드합니다. IAM 역할을 사용하는 것은 액세스 키(옵션 A에서 언급한 대로)를 사용하는 것보다 더 안전한 접근 방식이지만 이 시나리오에는 여전히 몇 가지 제한 사항과 잠재적인 보안 위험이 있습니다. 네트워크 연결: 옵션 B는 역할 간에 직접 네트워크 연결이 있다고 가정합니다. 온프레미스 시스템과 AWS. 이로 인해 특히 연결이 제대로 보호되지 않거나 온프레미스 시스템이 인터넷에 노출되는 경우 잠재적인 보안 문제가 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -432,7 +475,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -455,12 +498,12 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 21일 일 14:57">
+<span class="comment-date align-middle" title="2023년 5월 21일 일요일 14:57">
 			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">액세스 관리: 각 온프레미스 시스템에 대한 IAM 역할 생성 및 관리는 특히 시스템 수가 많거나 자주 변경되는 경우 번거로울 수 있습니다. 또한 적절하게 관리하지 않으면 잘못된 구성 또는 과도한 권한 부여의 위험이 발생할 수 있습니다. 장기 자격 증명: AssumeRole 기능은 AWS 서비스에 대한 임시 액세스를 허용하지만 온프레미스 시스템은 여전히 ​​장기 자격 증명(예: 액세스 키)이 있어야 IAM 역할을 맡을 수 있습니다. 이로 인해 이러한 자격 증명이 손상되어 잠재적으로 S3 버킷에 대한 무단 액세스로 이어질 위험이 있습니다. 이러한 고려 사항을 고려할 때 프라이빗 REST API 엔드포인트 및 VPN 연결과 함께 S3 미리 서명된 URL을 활용하는 옵션 C는 온프레미스 시스템에서 S3 버킷으로 ID 카드 이미지를 업로드하기 위한 보다 안전한 접근 방식을 제공합니다. 장기 자격 증명이 필요하지 않으며 프라이빗 API 엔드포인트 및 VPN 연결을 통해 안전한 통신을 보장합니다.</div>
+<div class="comment-content">액세스 관리: 각 온프레미스 시스템에 대한 IAM 역할을 생성하고 관리하는 것은 번거로울 수 있습니다. 특히 시스템 수가 많거나 변경이 자주 발생하는 경우 더욱 그렇습니다. 또한 제대로 관리되지 않으면 구성이 잘못되거나 과도한 권한이 부여될 위험이 있을 수도 있습니다. 장기 자격 증명: AssumeRole 기능을 사용하면 AWS 서비스에 대한 임시 액세스가 허용되지만 온프레미스 시스템에는 IAM 역할을 맡으려면 여전히 장기 자격 증명(액세스 키 등)이 필요합니다. 이로 인해 이러한 자격 증명이 손상되어 잠재적으로 S3 버킷에 대한 무단 액세스가 발생할 위험이 있습니다. 이러한 고려 사항을 고려하여 프라이빗 REST API 엔드포인트 및 VPN 연결과 함께 S3의 미리 서명된 URL을 활용하는 옵션 C는 다음과 같습니다. 온프레미스 시스템에서 S3 버킷으로 ID 카드 이미지를 업로드하기 위한 보다 안전한 접근 방식을 제공합니다. 장기 자격 증명이 필요하지 않으며 프라이빗 API 엔드포인트 및 VPN 연결을 통해 안전한 통신을 보장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -469,7 +512,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -489,7 +532,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				샤산크 페리왈
+				샤산페리왈
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 13일 화요일 11:39">
@@ -497,7 +540,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">갓 호 캬 바이</div>
+<div class="comment-content">맙소사 바이</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -506,7 +549,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -566,25 +609,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 12:36">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 12:36">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">옵션 B는 필요한 권한이 있는 IAM 역할을 생성하고 AWS SDK의 AssumeRole 기능을 사용하여 AWS에 대한 액세스를 인증하도록 온프레미스 시스템을 구성하는 작업을 포함하므로 가장 안전합니다. 이렇게 하면 온프레미스 시스템에 액세스 키나 비밀이 없으므로 손상 위험이 줄어듭니다. 또한 IAM 역할에는 자동으로 교체되는 임시 보안 자격 증명이 있어 공격자가 S3 버킷에 대한 지속적인 액세스 권한을 얻기가 더 어렵습니다.</div>
+<div class="comment-content">옵션 B는 필요한 권한이 있는 IAM 역할을 생성하고 AWS SDK의 AssumeRole 기능을 사용하여 AWS에 대한 액세스를 인증하도록 온프레미스 시스템을 구성하기 때문에 가장 안전합니다. 이렇게 하면 온프레미스 시스템에 액세스 키나 비밀이 없으므로 손상 위험이 줄어듭니다. 또한 IAM 역할에는 자동으로 교체되는 임시 보안 자격 증명이 있으므로 공격자가 S3 버킷에 지속적으로 액세스하기가 더 어렵습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -612,16 +655,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				온드레이츠
+				온드레이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 10:49">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 10:49">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C입니다</div>
+<div class="comment-content">C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,8 +704,8 @@
 				qsergii
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 12일 수 10:38">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 12일 수요일 10:38">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -675,7 +718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,13 +749,13 @@
 				케이프 시그널 프리어
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 06:48">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 06:48">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">C는 유출될 수 있는 URL을 생성하므로 IMO는 B보다 덜 안전하기 때문에 C보다 B를 선호합니다.</div>
+<div class="comment-content">C는 유출될 수 있는 URL을 생성하므로 IMO는 B보다 덜 안전하므로 C보다 B를 선호합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -721,7 +764,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -753,12 +796,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 24일 금요일 16:05">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">대답은 C입니다. 사용자|역할을 정책에 연결할 수 없기 때문에 처음에는 A와 B가 틀립니다.</div>
+<div class="comment-content">대답은 C입니다. 사용자|역할을 정책에 연결할 수 없기 때문에 처음에는 A와 B가 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -767,7 +810,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -791,11 +834,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 24일 금요일 16:06">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">투표 된 답변이 매우 잘못되고 훌륭한 직업 엔지니어라는 사실에 놀랐습니다.</div>
+<div class="comment-content">투표한 답변이 매우 잘못되었다는 사실에 놀랐습니다. 훌륭한 직업 엔지니어입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -804,7 +847,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,13 +886,13 @@
 				m4r0ck
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 23:52">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 23:52">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다. Lambda 함수 + 사이트 간 VPN에서 SDK를 사용하여 동적으로 생성된 미리 서명된 URL</div>
+<div class="comment-content">C가 정답입니다. 람다 함수 + 사이트 간 VPN에서 SDK를 사용하여 동적으로 생성된 미리 서명된 URL</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -858,7 +901,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,13 +932,13 @@
 				미스트랄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 19:32">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 19:32">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이 요구 사항을 충족하는 가장 안전한 방법은 옵션 D입니다. S3 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수 및 퍼블릭 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. Amazon Cognito 권한 부여자를 추가하여 API를 보호하십시오. 사전 서명된 URL을 수신하기 위해 API를 호출하기 위한 인증에 사용할 온프레미스 시스템의 사용자를 생성합니다. 옵션 D는 ID 카드 이미지를 S3 버킷에 업로드할 수 있는 임시 액세스 권한을 부여하는 시간 제한 URL인 S3 미리 서명된 URL을 사용하므로 안전한 솔루션을 제공합니다. AWS Lambda 기능을 사용하여 서버 측에서 미리 서명된 URL을 생성함으로써 온프레미스 시스템은 액세스 키 및 비밀 없이 ID 카드 이미지를 S3 버킷에 직접 안전하게 업로드할 수 있습니다. 솔루션을 더욱 안전하게 확보하려면 미리 서명된 URL을 생성하기 위한 액세스를 허용하기 전에 Amazon Cognito 권한 부여자를 퍼블릭 REST API 엔드포인트에 추가하여 온프레미스 시스템을 인증할 수 있습니다. 이 접근 방식은 인증 및 승인된 시스템만 미리 서명된 URL을 생성할 수 있도록 하여 추가 보안 계층을 제공합니다.</div>
+<div class="comment-content">이 요구 사항을 충족하는 가장 안전한 방법은 옵션 D입니다. S3의 미리 서명된 URL을 사용하여 온프레미스 시스템에서 직접 S3 버킷에 이미지를 업로드합니다. AWS Lambda 함수와 공개 REST API 엔드포인트를 사용하여 미리 서명된 URL을 생성합니다. Amazon Cognito 권한 부여자를 추가하여 API를 보호합니다. 미리 서명된 URL을 수신하기 위해 API를 호출하기 위한 인증에 사용할 온프레미스 시스템용 사용자를 만듭니다. 옵션 D는 ID 카드 이미지를 S3 버킷에 업로드하기 위한 임시 액세스 권한을 부여하는 시간 제한 URL인 S3 미리 서명된 URL을 사용하므로 보안 솔루션을 제공합니다. AWS Lambda 함수를 사용하여 서버 측에서 미리 서명된 URL을 생성함으로써 온프레미스 시스템은 액세스 키와 비밀을 요구하지 않고도 ID 카드 이미지를 S3 버킷에 직접 안전하게 업로드할 수 있습니다. 솔루션을 더욱 안전하게 보호하기 위해 미리 서명된 URL을 생성하기 위한 액세스를 허용하기 전에 Amazon Cognito 권한 부여자를 공개 REST API 엔드포인트에 추가하여 온프레미스 시스템을 인증할 수 있습니다. 이 접근 방식은 인증되고 승인된 시스템만 미리 서명된 URL을 생성할 수 있도록 보장하여 추가 보안 계층을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -904,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -932,16 +975,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 18:06">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 18:06">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">c는 가장 안전한 imho입니다.</div>
+<div class="comment-content">c가 가장 안전한 imho입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -950,7 +993,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -978,16 +1021,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 16:02">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 16:02">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답은 B입니다. 그런데 정책에 역할을 연결하라는 답에 오타가 있는 것 같습니다. 반대로 해야 합니다.</div>
+<div class="comment-content">답은 B입니다. 그런데 정책에 역할을 연결한다고 답에 오타가 있는 것 같습니다. 그 반대도 되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -996,7 +1039,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1032,7 +1075,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">결정적으로 C입니다</div>
+<div class="comment-content">확실히 C야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1041,7 +1084,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1069,16 +1112,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ShriniW
+				슈리니W
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 22:23">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A, 어떻게 정책에 역할을 첨부할 수 있습니까? 따라서 B는 배제됩니다.</div>
+<div class="comment-content">A, 어떻게 정책에 역할을 부여할 수 있습니까? 따라서 B는 제외됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1087,7 +1130,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1107,15 +1150,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 16:01">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 16:01">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그리고 A와 함께 가는 경우 사용자를 정책에 어떻게 연결합니까? :)</div>
+<div class="comment-content">그리고 A를 사용한다면 사용자를 정책에 어떻게 연결합니까? :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1124,7 +1167,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1148,7 +1191,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 9일 목요일 17:29">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1161,7 +1204,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1208,13 +1251,13 @@
 				스마티업
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 21:47">
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 21:47">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">서명된 시간 기반 URL만이 문서를 업로드할 수 있기 때문에 사람들이 투표하지 않는 이유를 이해할 수 없습니다. 파일을 업데이트하기 위해 통과할 VPN이 있습니다. 이것이 가장 안전한 옵션입니다.</div>
+<div class="comment-content">왜 사람들이 문서를 업로드할 수 있도록 서명된 시간 기반 URL 외에 C에 투표하지 않는지 이해하지 못합니다. 파일을 업데이트하려면 VPN이 필요합니다. 이것이 가장 안전한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1223,7 +1266,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1255,7 +1298,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:19">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1269,7 +1312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1301,12 +1344,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 22:29">
-			6개월, 3주 전
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D https://medium.com/geekculture/upload-images-to-aws-s3-using-presigned-url-in-react-native-45059fe3d31b C VPN은 데이터 전송에 사용되지 않습니다. A와 B는 안전하지 않습니다. 탈퇴한 URL</div>
+<div class="comment-content">D https://medium.com/geekculture/upload-images-to-aws-s3-using-presigned-url-in-react-native-45059fe3d31b C VPN은 데이터 전송에 사용되지 않습니다. A와 B는만큼 안전하지 않습니다. 사임한 URL</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1315,7 +1358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1347,11 +1390,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 22:28">
-			6개월, 3주 전
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C https://medium.com/geekculture/upload-images-to-aws-s3-using-presigned-url-in-react-native-45059fe3d31b C VPN은 데이터 전송에 사용되지 않습니다. A와 B는 안전하지 않습니다. 탈퇴한 URL</div>
+<div class="comment-content">C https://medium.com/geekculture/upload-images-to-aws-s3-using-presigned-url-in-react-native-45059fe3d31b C VPN은 데이터 전송에 사용되지 않습니다. A와 B는만큼 안전하지 않습니다. 사임한 URL</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1360,7 +1403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1388,16 +1431,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				michele_scar
+				Michele_scar
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 10:43">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">가장 안전한 것은 C입니다! 다른 사람들은 작업을 수행하기 위해 "공용" 연결 또는 "하드 코딩된" 키를 가지고 있습니다. B는 정의상 올바르지 않고 A는 덜 안전하며 D를 사용하면 공용 인터넷으로 이동합니다.</div>
+<div class="comment-content">가장 안전한 것은 C입니다! 다른 사람들은 작업을 수행하기 위해 "공개" 연결 또는 "하드코드된" 키를 가지고 있습니다. B는 정의상 올바르지 않으며 A는 덜 안전하며 D를 사용하면 공용 인터넷으로 이동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1406,7 +1449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1437,13 +1480,13 @@
 				엄마305
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 17일 화요일 00:52">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 17일 화 00:52">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">B가 아니라 먼저 역할을 정책에 연결할 수 없고(정책을 역할에 연결) 두 번째로 온프레미스 시스템에서 AssumeRole을 사용할 수 없습니다(AWS 외부의 워크로드는 역할을 맡을 수 없음). 최근에 "IAM Roles Anywhere"(2022년 7월 출시)라는 새로운 기능이 있지만 여기에서는 언급하지 않았습니다. 따라서 SDK를 사용하고 IAM 사용자 정책을 연결하고 인증할 액세스 키 및 비밀을 생성하는 것이 유일하게 가능한 옵션입니다.</div>
+<div class="comment-content">B가 아닙니다. 먼저 역할을 정책에 연결할 수 없으며(정책을 역할에 연결), 두 번째로 온프레미스 시스템에서 AssumeRole을 수행할 수 없습니다(AWS 외부 워크로드는 역할을 맡을 수 없음). 최근에는 'IAM Roles Anywhere'(2022년 7월 출시)라는 새로운 기능이 있지만 여기서는 언급하지 않습니다. 따라서 SDK를 사용하고 IAM 사용자 정책을 첨부하고 액세스 키 및 비밀을 생성하여 인증하는 것이 유일하게 가능한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1452,7 +1495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1476,11 +1519,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 08:15">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 동의하지 않는다. 나는 당신이 그것을 위해 사용자를 만들 것이라고 생각하지 않습니다. 그것은 더 많은 역할입니다. 나는 B를 선택했다</div>
+<div class="comment-content">나는 동의하지 않습니다. 나는 당신이 그것을 위해 사용자를 만들 것이라고 생각하지 않습니다. 그것은 더 많은 역할입니다. 나는 B를 선택했다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1489,7 +1532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1528,12 +1571,12 @@
 				엄마305
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 17일 화요일 00:46">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 17일 화 00:46">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 아니라 먼저 역할을 정책에 연결할 수 없고(정책을 역할에 연결) 두 번째로 온프레미스 시스템에서 AssumeRole을 사용할 수 없습니다(AWS 외부의 워크로드는 역할을 맡을 수 없음). 최근에 "IAM Roles Anywhere"(2022년 7월 출시)라는 새로운 기능이 있지만 여기에서는 언급하지 않았습니다. 따라서 SDK를 사용하고 IAM 사용자 정책을 연결하고 인증할 액세스 키 및 비밀을 생성하는 것이 유일하게 가능한 옵션입니다.</div>
+<div class="comment-content">B가 아닙니다. 먼저 역할을 정책에 연결할 수 없으며(정책을 역할에 연결), 두 번째로 온프레미스 시스템에서 AssumeRole을 수행할 수 없습니다(AWS 외부 워크로드는 역할을 맡을 수 없음). 최근에는 'IAM Roles Anywhere'(2022년 7월 출시)라는 새로운 기능이 있지만 여기서는 언급하지 않습니다. 따라서 SDK를 사용하고 IAM 사용자 정책을 첨부하고 액세스 키 및 비밀을 생성하여 인증하는 것이 유일하게 가능한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1542,7 +1585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1574,11 +1617,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 16:28">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C에 투표합니다. SDK를 사용하면 파일이 인터넷을 통해 이동합니다(암호화되지만 인터넷을 통해). 옵션 C는 vpn입니다.</div>
+<div class="comment-content">저는 C에 투표합니다. "가장 안전하다"고 합니다. SDK를 사용하면 파일이 인터넷을 통해 전송됩니다(암호화되었지만 인터넷을 통해). 옵션 C의 VPN은 VPN입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1587,7 +1630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1618,13 +1661,13 @@
 				bbbl34sd
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 09:49">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 09:49">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">비? 정책에 역할을 연결하시겠습니까?</div>
+<div class="comment-content">B? 정책에 역할을 추가하시겠습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1633,7 +1676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1661,7 +1704,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				압쿠사이
+				아브쿠사이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 20:02">
@@ -1669,7 +1712,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">누군가 b가 c가 아닌 이유를 지정할 수 있습니까?</div>
+<div class="comment-content">누군가 c가 아닌 b를 지정할 수 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1678,7 +1721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1702,11 +1745,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 00:51">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">미리 서명된 URL은 주로 고객/사용자가 인증할 필요가 없고 생성된 URL이 일시적인 경우에 사용됩니다. 단일 소스인 On-Prem에서 직접 업로드하고 시스템에 임시 URL이 필요한 이유는 사전 서명된 URL을 사용할 필요가 없습니다.</div>
+<div class="comment-content">미리 서명된 URL은 고객/사용자의 인증이 필요하지 않고 생성된 URL이 임시인 경우 주로 사용됩니다. 단일 소스인 On-Prem에서 직접 업로드하므로 미리 서명된 URL을 사용할 필요가 없으며 시스템에 임시 URL이 필요한 이유는 무엇입니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1751,11 +1794,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 09:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 09:02">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1769,7 +1812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1800,13 +1843,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 10:14">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 10:14">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 선택</div>
+<div class="comment-content">B를 선택</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1815,7 +1858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1846,12 +1889,12 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 23:44">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 23:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">C는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1860,7 +1903,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1912,7 +1955,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Jul 2023 17:33">
-			3 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2019,7 +2062,7 @@ AWS Site-to-Site VPN connection: Establish an AWS Site-to-Site VPN connection be
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2246,7 +2289,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 12:36">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2259,7 +2302,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2292,7 +2335,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Apr 2023 10:49">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2338,7 +2381,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Apr 2023 10:38">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2383,7 +2426,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 06:48">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2429,7 +2472,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 16:05">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2467,7 +2510,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 16:06">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2520,7 +2563,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 23:52">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2566,7 +2609,7 @@ Given these considerations, option C, which leverages S3 presigned URLs with a p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 19:32">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2616,7 +2659,7 @@ To further secure the solution, an Amazon Cognito authorizer can be added to the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 18:06">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2753,7 +2796,7 @@ To further secure the solution, an Amazon Cognito authorizer can be added to the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 22:23">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2828,7 +2871,7 @@ To further secure the solution, an Amazon Cognito authorizer can be added to the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 09 Mar 2023 17:29">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2935,7 +2978,7 @@ To further secure the solution, an Amazon Cognito authorizer can be added to the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:19">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2981,7 +3024,7 @@ To further secure the solution, an Amazon Cognito authorizer can be added to the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 22:29">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3031,7 +3074,7 @@ A and B are not as secure as resigned URL</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 22:28">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3080,7 +3123,7 @@ A and B are not as secure as resigned URL</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 10:43">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3127,7 +3170,7 @@ B is uncorrect by definition, A is the LESS secure and with D you will go in pub
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 00:52">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3165,7 +3208,7 @@ B is uncorrect by definition, A is the LESS secure and with D you will go in pub
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 08:15">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3218,7 +3261,7 @@ B is uncorrect by definition, A is the LESS secure and with D you will go in pub
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 00:46">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3263,7 +3306,7 @@ B is uncorrect by definition, A is the LESS secure and with D you will go in pub
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 16:28">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3310,7 +3353,7 @@ It's say "MOST secure", with SDK the files go over internet (encrypted but over 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 09:49">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3393,7 +3436,7 @@ It's say "MOST secure", with SDK the files go over internet (encrypted but over 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 00:51">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3446,7 +3489,7 @@ It's say "MOST secure", with SDK the files go over internet (encrypted but over 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 09:02">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3492,7 +3535,7 @@ It's say "MOST secure", with SDK the files go over internet (encrypted but over 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 10:14">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3538,7 +3581,7 @@ It's say "MOST secure", with SDK the files go over internet (encrypted but over 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 23:44">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

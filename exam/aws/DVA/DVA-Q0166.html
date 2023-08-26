@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 166 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 166 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 166 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 166 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="848049">
 <p class="card-text">
 							
-								개발자는 Amazon DynamoDB 테이블의 데이터에 액세스하는 애플리케이션을 지원합니다. 항목 속성 중 하나는 타임스탬프 형식의 만료 날짜입니다. 애플리케이션은 이 속성을 사용하여 항목을 찾고 아카이브하고 타임스탬프 값을 기반으로 테이블에서 제거합니다. <br/><br/>애플리케이션은 곧 폐기될 예정이며 개발자는 이 기능을 구현할 다른 방법을 찾아야 합니다. 개발자는 작성하는 데 최소한의 코드가 필요한 솔루션이 필요합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 Amazon DynamoDB 테이블의 데이터에 액세스하는 애플리케이션을 지원합니다. 항목 속성 중 하나는 타임스탬프 형식의 만료 날짜입니다. 애플리케이션은 이 속성을 사용하여 항목을 찾아 보관하고 타임스탬프 값을 기반으로 테이블에서 제거합니다. <br/><br/>애플리케이션은 곧 폐기될 예정이며 개발자는 이 기능을 구현하기 위한 다른 방법을 찾아야 합니다. 개발자는 작성하는 데 최소한의 코드가 필요한 솔루션이 필요합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											테이블의 expirationDate 속성에서 TTL을 활성화합니다. DynamoDB 스트림을 생성합니다. 삭제된 항목을 처리할 AWS Lambda 함수를 생성합니다. Lambda 함수에 대한 DynamoDB 트리거를 생성합니다.
+											테이블의expirationDate 속성에서 TTL을 활성화하십시오. DynamoDB 스트림을 생성합니다. 삭제된 항목을 처리하는 AWS Lambda 함수를 생성합니다. Lambda 함수에 대한 DynamoDB 트리거를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											두 개의 AWS Lambda 함수를 생성합니다. 하나는 항목을 삭제하고 다른 하나는 항목을 처리합니다. DynamoDB 스트림을 생성합니다. DeleteItem API 작업을 사용하여 expirationDate 속성을 기반으로 항목을 삭제합니다. GetRecords API 작업을 사용하여 DynamoDB 스트림에서 항목을 가져와 처리합니다.
+											두 개의 AWS Lambda 함수를 생성합니다. 하나는 항목을 삭제하고 다른 하나는 항목을 처리합니다. DynamoDB 스트림을 생성합니다. ExpirationDate 속성을 기반으로 항목을 삭제하려면 DeleteItem API 작업을 사용하십시오. GetRecords API 작업을 사용하여 DynamoDB 스트림에서 항목을 가져와 처리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											두 개의 AWS Lambda 함수를 생성합니다. 하나는 항목을 삭제하고 다른 하나는 항목을 처리합니다. Lambda 함수를 호출하는 Amazon EventBridge(Amazon CloudWatch Events) 예약 규칙을 생성합니다. DeleteItem API 작업을 사용하여 expirationDate 속성을 기반으로 항목을 삭제합니다. GetRecords API 작업을 사용하여 DynamoDB 테이블에서 항목을 가져와 처리합니다.
+											두 개의 AWS Lambda 함수를 생성합니다. 하나는 항목을 삭제하고 다른 하나는 항목을 처리합니다. Lambda 함수를 호출하는 Amazon EventBridge(Amazon CloudWatch Events) 예약 규칙을 생성합니다. ExpirationDate 속성을 기반으로 항목을 삭제하려면 DeleteItem API 작업을 사용하십시오. GetRecords API 작업을 사용하여 DynamoDB 테이블에서 항목을 가져와 처리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											테이블의 expirationDate 속성에서 TTL을 활성화합니다. 항목을 삭제할 대상으로 Amazon Simple Queue Service(Amazon SQS) 배달 못한 편지 대기열을 지정합니다. 항목을 처리할 AWS Lambda 함수를 생성합니다.
+											테이블의expirationDate 속성에서 TTL을 활성화합니다. 항목을 삭제할 대상으로 Amazon Simple Queue Service(Amazon SQS) 배달 못한 편지 대기열을 지정합니다. 항목을 처리하는 AWS Lambda 함수를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 91%; display: flex;" title="">A (91%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 91%; display: flex;" title="">A (91%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a> 
-							
-							2022 <i>
-							년 11월 21일 오후 3:41</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a>
-							
-							at <i>
-							Nov. 21, 2022, 3:41 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,10 +293,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 07:14">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 07:14">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -301,12 +344,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 22:07">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 22:07">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">댓글에서 A인 것 같더라도 투표하지 않겠습니다. 항목이 삭제되자마자 DynamoDB 스트림을 활성화하고 람다 함수를 트리거하는 이유는 무엇입니까?</div>
+<div class="comment-content">댓글에서 A로 보이더라도 투표하지 않겠습니다. 왜 만료 날짜 속성에 TTL을 활성화하지 않는지 이해하지 못했습니까? 항목이 삭제되자마자 DynamoDB 스트림을 활성화하고 람다 함수를 트리거하는 이유는 무엇입니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -315,7 +358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,7 +386,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 20일 (월) 18:37">
@@ -352,7 +395,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이지A</div>
+<div class="comment-content">쉬운 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,11 +436,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 00:17">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그렇군요</div>
+<div class="comment-content">ㅇ 그렇군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,15 +477,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				당시 정신
+				그때의 정신
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 07:30">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">작성할 최소 코드 양 - dynamoDB ez</div>
+<div class="comment-content">작성해야 할 최소한의 코드 - dynamoDB ez</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,11 +522,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:29">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:29">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,8 +571,8 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 12:48">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 12:48">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,15 +613,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 23일 수 17:20">
-			8개월, 4주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A https://aws.amazon.com/blogs/database/automatically-archive-items-to-s3-using-dynamodb-time-to-live-with-aws-lambda-and-amazon-kinesis-firehose/</div>
+<div class="comment-content">https://aws.amazon.com/blogs/database/automatically-archive-items-to-s3-using-dynamodb-time-to-live-with-aws-lambda-and-amazon-kinesis-firehose/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,7 +661,7 @@
 				시오니타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 16:21">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 16:21">
 			9개월 전
 		</span>
 </div>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,13 +706,13 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:41">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:41">
 			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">cccccccc</div>
+<div class="comment-content">ㅋㅋㅋㅋㅋㅋ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -733,7 +776,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 07:14">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -873,7 +916,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 00:17">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -918,7 +961,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 07:30">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -963,7 +1006,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:29">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 12:48">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1098,7 @@ We can set TTL in dynamoDB to remove items</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Nov 2022 17:20">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

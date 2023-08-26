@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 429 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 429 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 429 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 429 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866138">
 <p class="card-text">
 							
-								회사는 크기가 10KB인 사용자 지정 루트 인증 기관 인증서 체인(Root CA Cert)을 사용하여 온프레미스 HTTPS 끝점에 대한 SSL 인증서를 생성합니다. 회사의 클라우드 기반 애플리케이션 중 하나에는 이러한 엔드포인트에서 데이터를 가져오는 수백 개의 AWS Lambda 함수가 있습니다. 개발자는 Lambda 실행 환경이 초기화될 때 루트 CA 인증서를 사용하도록 Lambda 실행 환경의 신뢰 저장소를 업데이트했습니다. 개발자는 루트 CA 인증서를 Lambda 배포 번들에 텍스트 파일로 묶었습니다.<br/><br/>개발 3개월 후 루트 CA 인증서는 더 이상 유효하지 않으며 업데이트해야 합니다. 개발자는 배포된 모든 Lambda 기능에 대한 루트 CA 인증서를 업데이트하기 위해 보다 효율적인 솔루션이 필요합니다. 솔루션에는 루트 CA 인증서를 사용하는 모든 Lambda 함수의 재구축 또는 업데이트가 포함되어서는 안 됩니다. 솔루션은 또한 모든 개발, 테스트 및 프로덕션 환경에서 작동해야 합니다. 각 환경은 별도의 AWS 계정에서 관리됩니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하기 위해 개발자가 수행해야 하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								회사에서는 크기가 10KB인 사용자 지정 루트 인증 기관 인증서 체인(루트 CA 인증서)을 사용하여 온프레미스 HTTPS 끝점에 대한 SSL 인증서를 생성합니다. 회사의 클라우드 기반 애플리케이션 중 하나에는 이러한 엔드포인트에서 데이터를 가져오는 수백 개의 AWS Lambda 함수가 있습니다. 개발자는 Lambda 실행 환경이 초기화될 때 루트 CA 인증서를 사용하도록 Lambda 실행 환경의 신뢰 저장소를 업데이트했습니다. 개발자는 루트 CA 인증서를 Lambda 배포 번들에 텍스트 파일로 묶었습니다.<br/><br/>개발 후 3개월이 지나면 루트 CA 인증서는 더 이상 유효하지 않으므로 업데이트해야 합니다. 개발자에게는 배포된 모든 Lambda 함수에 대해 루트 CA 인증서를 업데이트하기 위한 보다 효율적인 솔루션이 필요합니다. 솔루션에는 루트 CA 인증서를 사용하는 모든 Lambda 함수를 재구축하거나 업데이트하는 작업이 포함되어서는 안 됩니다. 솔루션은 모든 개발, 테스트 및 프로덕션 환경에서도 작동해야 합니다. 각 환경은 별도의 AWS 계정에서 관리됩니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하려면 개발자가 수행해야 하는 단계 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장합니다. 리소스 기반 정책을 만듭니다. 암호에 대한 액세스를 허용하려면 IAM 사용자를 추가하십시오.
+											루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장하십시오. 리소스 기반 정책을 만듭니다. 보안 암호에 대한 액세스를 허용하려면 IAM 사용자를 추가하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											루트 CA 인증서를 AWS Systems Manager Parameter Store에 SecureString 매개변수로 저장합니다. 리소스 기반 정책을 만듭니다. 정책에 대한 액세스를 허용하려면 IAM 사용자를 추가하십시오.
+											루트 CA 인증서를 AWS 시스템 관리자 매개 변수 저장소에 SecureString 매개 변수로 저장합니다. 리소스 기반 정책을 만듭니다. 정책에 대한 액세스를 허용하려면 IAM 사용자를 추가하세요.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											루트 CA 인증서를 Amazon S3 버킷에 저장합니다. 버킷에 대한 액세스를 허용하는 리소스 기반 정책을 생성합니다.
+											루트 CA 인증서를 Amazon S3 버킷에 저장합니다. 버킷에 대한 액세스를 허용하는 리소스 기반 정책을 만듭니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -121,7 +184,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,19 +194,9 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">CE (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">AC(16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">기원전 (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="11%" data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">11%</div></div></div></div>
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">CE (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">AC (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">기원전 (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="11%" data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">11%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a> 2023년 
-							
-							1 <i>
-							월 21일 오전 1:59</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -223,16 +276,6 @@
 <div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">CE (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">AC (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">BC (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="11%" data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">11%</div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a>
-							
-							at <i>
-							Jan. 21, 2023, 1:59 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -264,14 +307,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 01:59">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 01:59">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
 <div class="comment-content">C와 E</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -281,7 +324,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -301,15 +344,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 25일 토요일 01:59">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">솔루션에는 루트 CA 인증서를 사용하는 모든 Lambda 함수의 재구축 또는 업데이트가 포함되어서는 안 됩니다. E는 이 요구 사항을 위반합니다.</div>
+<div class="comment-content">솔루션에는 루트 CA 인증서를 사용하는 모든 Lambda 함수를 재구축하거나 업데이트하는 작업이 포함되어서는 안 됩니다. E는 이 요구 사항을 위반합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -360,13 +403,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 5일 수 10:47">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수요일 10:47">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
-<div class="comment-content">AWS Secrets Manager가 비용 효율적이지 않기 때문에 A가 아닙니다. 인증서 크기가 너무 크기 때문에 B가 아님(AWS Systems Manager Parameter Store는 10KB 미만으로 제한됨)</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
+<div class="comment-content">AWS Secrets Manager는 비용 효율적이지 않기 때문에 A가 아닙니다. 인증서 크기가 너무 크기 때문에 B가 아닙니다. (AWS Systems Manager Parameter Store의 제한은 10KB 미만입니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -375,7 +418,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -403,7 +446,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 12:52">
@@ -411,8 +454,8 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
-<div class="comment-content">IMO 모든 옵션은 Lamda 기능을 변경해야 합니다. 이 제한을 무시하고 C, E를 선택하도록</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
+<div class="comment-content">IMO의 모든 옵션에는 Lamda 기능을 변경해야 합니다. 그래서 저는 이 제한을 무시하고 C, E를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -421,7 +464,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -449,15 +492,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 25일 토요일 01:59">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
 <div class="comment-content">B와 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -467,7 +510,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -498,13 +541,13 @@
 				AmberTheTamber
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 04:08">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 04:08">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">좋아, 이것은 질문의 뜨거운 엉망입니다. 먼저 D와 E는 질문에서 하지 말라고 명시한 람다 함수를 수정해야 합니다. 그래서 나는 그것이 왜 투표 답변인지 알 수 없습니다. 둘째, ABC가 같은 일을 할 때 이것이 왜 두 가지 선택 질문입니까? 따라서 꼭 선택해야 한다면 B와 C를 선택하겠습니다. 파라미터 스토어는 secrets manger보다 비용이 적게 들고 s3 버킷을 사용하면 실제 파일을 업로드할 수 있습니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">좋아요, 이것은 정말 엉망인 질문입니다. 우선, D와 E는 질문에서 하지 말라고 명시한 람다 함수의 수정이 필요합니다. 그래서 나는 왜 그것이 답변으로 투표되었는지 알 수 없습니다. 둘째, ABC가 동일한 작업을 수행하는데 왜 이 질문은 두 개를 선택해야 합니까? 따라서 꼭 선택해야 한다면 B와 C를 선택하겠습니다. 매개변수 저장소는 비밀 관리자보다 비용이 저렴하고 s3 버킷을 사용하면 실제 파일을 업로드할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -513,7 +556,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -544,12 +587,12 @@
 				joanneli77
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 16:53">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 16:53">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Secrets Manager에 액세스하기 위해 Lambdas가 사용하는 역할을 수정하십시오. D와 E는 모두 Lambdas의 리팩토링으로 인해 제외되었습니다. 나는 개인적으로 인증서를 두 번 저장하지 않을 것이므로 ABC 중에서 하나를 선택하십시오. 이 질문은 의심스럽습니다.</div>
+<div class="comment-content">비밀 관리자에 액세스하기 위해 Lambdas가 사용하는 역할이 올바르게 수정되었습니다. D와 E는 모두 람다 리팩토링으로 인해 제외되었습니다. 저는 개인적으로 인증서를 두 번 저장하지 않을 것이므로 ABC 중에서 하나를 선택하세요. 이 질문은 의심스럽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -558,7 +601,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -586,15 +629,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알포르비시오니
+				알포비시오니
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 10:48">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 그것을 이해하지 못한다. 좋습니다. A, B, C 중에서 정답은 C여야 합니다(가장 저렴하기 때문). 하지만 문제는 람다 코드를 수정하지 말라고 하는데 왜 리팩토링해야 할까요? "두 가지 선택"을 위해?</div>
+<div class="comment-content">이해가 안 돼요. 좋습니다. A, B, C 중에서 정답은 C여야 합니다(가장 저렴하기 때문입니다). 하지만 람다 코드를 수정하지 말라는 질문이 있는데 왜 리팩토링해야 합니까? 단지 "2개 선택"을 위해서인가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -603,7 +646,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -635,11 +678,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 22:36">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저에게는 b와 c입니다. 이 질문은 비용 효율성에 대해 이야기하고 있기 때문에 a는 이 질문과 어울리지 않는다고 생각합니다. 또한 C가 가장 안전한 옵션은 아니지만 질문을 충족합니다.</div>
+<div class="comment-content">나한테는 b와 c야. 나는 이 질문이 비용 효율성에 대해 이야기하고 있기 때문에 이 질문과 맞지 않는다고 생각합니다. 게다가 C가 가장 안전한 옵션은 아니라고 생각하지만 질문을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -648,7 +691,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -676,16 +719,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 17:59">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 17:59">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
-<div class="comment-content">SSM 값은 유형에 따라 4-8K입니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
+<div class="comment-content">SSM 값은 유형에 따라 4~8K입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -694,7 +737,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,11 +757,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 25일 토요일 21:14">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -731,7 +774,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -771,7 +814,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 5일 일요일 11:07">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -785,7 +828,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,15 +848,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일(수) 18:00">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수 18:00">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">힌트: 이유 없이 문제의 사이즈가 나타나면 대개 이유가 있습니다 ^_~</div>
+<div class="comment-content">힌트: 아무 이유 없이 사이즈가 문제로 표시되면 일반적으로 이유가 있습니다 ^_~</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -822,7 +865,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -850,15 +893,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 06일 월요일 11:25">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 11:25">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A AWS Secrets Manager는 B AWS Systems Manager Parameter Store보다 비쌉니다.</div>
+<div class="comment-content">A AWS Secrets Manager는 B AWS Systems Manager Parameter Store보다 비용이 더 많이 드는 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -867,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -887,10 +930,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 11:28">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 11:28">
 			6개월, 2주 전
 		</span>
 </div>
@@ -904,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -948,16 +991,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 11:21">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">A. 루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장합니다. 리소스 기반 정책을 만듭니다. 암호에 대한 액세스를 허용하려면 IAM 사용자를 추가하십시오. B. 루트 CA 인증서를 AWS Systems Manager Parameter Store에 SecureString 매개변수로 저장합니다. 리소스 기반 정책을 만듭니다. 정책에 대한 액세스를 허용하려면 IAM 사용자를 추가하십시오. 루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장한 다음 리소스 기반 정책을 생성하고 비밀에 대한 액세스를 허용하도록 IAM 사용자를 추가함으로써 개발자는 재구축 또는 업데이트 없이 배포된 모든 Lambda 함수에 대한 루트 CA 인증서를 업데이트할 수 있습니다. 그들을. 이는 Lambda 함수가 암호를 참조하고 업데이트된 루트 CA 인증서를 검색할 수 있기 때문입니다. 루트 CA 인증서를 AWS Systems Manager Parameter Store에 SecureString 매개변수로 저장하는 것도 좋은 솔루션입니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">A. 루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장하십시오. 리소스 기반 정책을 만듭니다. 보안 암호에 대한 액세스를 허용하려면 IAM 사용자를 추가하세요. B. 루트 CA 인증서를 AWS 시스템 관리자 매개 변수 저장소에 SecureString 매개 변수로 저장합니다. 리소스 기반 정책을 만듭니다. 정책에 대한 액세스를 허용하려면 IAM 사용자를 추가하세요. 루트 CA 인증서를 AWS Secrets Manager에 비밀로 저장한 다음 리소스 기반 정책을 생성하고 IAM 사용자를 추가하여 비밀에 대한 액세스를 허용함으로써 개발자는 재구축이나 업데이트 없이 배포된 모든 Lambda 함수에 대해 루트 CA 인증서를 업데이트할 수 있습니다. 그들을. 이는 Lambda 함수가 암호를 참조하고 업데이트된 루트 CA 인증서를 검색할 수 있기 때문입니다. 루트 CA 인증서를 AWS Systems Manager Parameter Store에 SecureString 파라미터로 저장하는 것도 좋은 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -966,7 +1009,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1059,7 +1102,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 01:59">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1115,7 +1158,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 10:47">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1208,7 +1251,7 @@ Not B because the cert is too big in size (AWS Systems Manager Parameter Store h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 01:59">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1254,7 +1297,7 @@ Not B because the cert is too big in size (AWS Systems Manager Parameter Store h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 04:08">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1303,7 +1346,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 16:53">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1348,7 +1391,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 10:48">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1393,7 +1436,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 22:36">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1438,7 +1481,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 17:59">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1476,7 +1519,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 21:14">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1529,7 +1572,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Feb 2023 11:07">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1567,7 +1610,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 18:00">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1710,7 +1753,7 @@ So if I really had to choose I would go with B and C. Parameter store costs less
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 11:21">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

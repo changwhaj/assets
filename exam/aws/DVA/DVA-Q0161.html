@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 161 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 161 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 161 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 161 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="848044">
 <p class="card-text">
 							
-								개발자가 AWS CodeDeploy를 사용하여 Amazon Elastic Container Service(Amazon ECS) 서비스를 배포하려고 합니다. <br/><br/>CodeDeploy가 ECS 서비스를 성공적으로 배포하기 위해 AppSpec file의 'resources' 섹션에 필요한 최소 속성은 무엇입니까?
+								개발자는 AWS CodeDeploy를 사용하여 Amazon Elastic Container Service(Amazon ECS) 서비스를 배포하려고 합니다. <br/><br/>ECS 서비스를 성공적으로 배포하기 위해 CodeDeploy에 대한 AppSpec 파일의 'resources' 섹션에 필요한 최소 속성은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											이름, 별칭 현재 버전 및 대상 버전
+											이름, 별칭 currentversion 및 targetversion
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">씨 (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">A (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">C (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">A (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a> 
-							
-							2022 <i>
-							년 11월 21일 오후 3:33</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a>
-							
-							at <i>
-							Nov. 21, 2022, 3:33 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 21:33">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 21:33">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Ops, "이름, 별칭 현재 버전 및 대상 버전"을 선택했는데 람다 함수와 혼동이 생겼습니다. 그러나 확실히 C: "TaskDefinition, ContainerName 및 ContainerPort"입니다.</div>
+<div class="comment-content">죄송합니다. "이름, 별칭 현재 버전 및 대상 버전"을 선택했는데 람다 함수와 혼동되었습니다. 하지만 확실히 C: "TaskDefinition, ContainerName 및 ContainerPort"입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,16 +335,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Suraj_7
+				수라즈_7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 22일 월요일 05:50">
-			2개월, 4주 전
+<span class="comment-date align-middle" title="2023년 5월 22일 (월) 05:50">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 A는 AWS Lambda 배포를 위한 AppSpec '리소스' 섹션을 위한 것입니다. Amazon ECS 배포용이 아닙니다. Amazon ECS 배포의 경우 옵션 C가 올바른 선택입니다. 참조: https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html</div>
+<div class="comment-content">옵션 A는 AWS Lambda 배포를 위한 AppSpec '리소스' 섹션용이기 때문입니다. Amazon ECS 배포에는 해당되지 않습니다. Amazon ECS 배포의 경우 옵션 C가 올바른 선택입니다. 참조: https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,11 +381,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 3일 월요일 04:56">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,7 +431,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 08:32">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,12 +475,12 @@
 				후안페
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 26일 목요일 20:24">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 26일 목 20:24">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것은 c입니다!</div>
+<div class="comment-content">C야!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -446,7 +489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,11 +521,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 12:20">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨 그것은</div>
+<div class="comment-content">ㄷ 그렇군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,7 +565,7 @@
 				벨로미오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 22:32">
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 22:32">
 			8개월, 1주 전
 		</span>
 </div>
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -564,16 +607,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 12:12">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 12:12">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html#reference-appspec-file-structure-resources-ecs TaskDefinition – 필수. 배포할 Amazon ECS 서비스에 대한 작업 정의입니다. 작업 정의의 ARN으로 지정됩니다. ARN 형식은 arn:aws:ecs:aws-region:account-id:task-definition/task-definition-family:task-definition-revision입니다. 자세한 내용은 Amazon 리소스 이름(ARN) 및 AWS 서비스 네임스페이스를 참조하십시오. 컨테이너 이름 – 필수입니다. Amazon ECS 애플리케이션이 포함된 Amazon ECS 컨테이너의 이름입니다. Amazon ECS 작업 정의에 지정된 컨테이너여야 합니다. ContainerPort – 필수입니다. 트래픽이 라우팅될 컨테이너의 포트입니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html#reference-appspec-file-structure-resources-ecs 작업 정의 – 필수입니다. 이는 배포할 Amazon ECS 서비스에 대한 작업 정의입니다. 작업 정의의 ARN으로 지정됩니다. ARN 형식은 arn:aws:ecs:aws-region:account-id:task-definition/task-definition-family:task-definition-revision입니다. 자세한 내용은 Amazon 리소스 이름(ARN) 및 AWS 서비스 네임스페이스를 참조하십시오. 컨테이너 이름 – 필수입니다. 이는 Amazon ECS 애플리케이션이 포함된 Amazon ECS 컨테이너의 이름입니다. Amazon ECS 작업 정의에 지정된 컨테이너여야 합니다. 컨테이너포트 – 필수입니다. 이는 트래픽이 라우팅될 컨테이너의 포트입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,16 +653,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 06:42">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 06:42">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EC2가 아닌 ECS용</div>
+<div class="comment-content">EC2가 아닌 ECS용입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -628,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -656,11 +699,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:21">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:21">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -674,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,8 +748,8 @@
 				찬드라_07
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 04:54">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 04:54">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -719,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -750,12 +793,12 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 06:48">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 06:48">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C - 아래는 ECS에 필요한 구성입니다. https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html</div>
+<div class="comment-content">C - 다음은 ECS https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html에 필요한 구성입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -764,7 +807,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -795,7 +838,7 @@
 				시오니타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:50">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:50">
 			9개월 전
 		</span>
 </div>
@@ -809,7 +852,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -840,13 +883,13 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:33">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:33">
 			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html " 리소스: - name-of-function-to-deploy: type: "AWS::Lambda ::Function" 속성: 이름: name-of-lambda-function-to-deploy alias: alias-of-lambda-function-to-deploy currentversion: version-of-the-lambda-function-traffic-currently-points- to targetversion: version-of-the-lambda-function-to-shift-traffic-to "</div>
+<div class="comment-content">https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-resources.html " 리소스: - name-of-function-to-deploy: 유형: "AWS::Lambda ::함수" 속성: 이름: 이름-of-lambda-함수-배포 별칭: 별칭-of-lambda-함수-배포 현재 버전: 버전-of-the-lambda-함수-트래픽-현재-포인트- 대상 버전: 버전-람다-함수-시프트-트래픽-to "</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -855,7 +898,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -875,7 +918,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				랴리아
+				리아리아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 07:14">
@@ -883,7 +926,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">람다 함수용입니다.</div>
+<div class="comment-content">그것은 람다 함수를 위한 것입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -892,7 +935,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -998,7 +1041,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 05:50">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1048,7 +1091,7 @@ Refer: https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Apr 2023 04:56">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1096,7 +1139,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 08:32">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1141,7 +1184,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 20:24">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1186,7 +1229,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 12:20">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1278,7 +1321,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/tutorial-ecs-create-apps
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 12:12">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1330,7 +1373,7 @@ ContainerPort – Required. This is the port on the container where traffic will
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 06:42">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1376,7 +1419,7 @@ ContainerPort – Required. This is the port on the container where traffic will
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:21">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1422,7 +1465,7 @@ ContainerPort – Required. This is the port on the container where traffic will
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 04:54">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1469,7 +1512,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/tutorial-ecs-create-apps
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 06:48">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

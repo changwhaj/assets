@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 379 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 379 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 379 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 379 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866088">
 <p class="card-text">
 							
-								회사의 인프라 팀은 AWS CloudFormation을 사용하여 다른 팀에서 사용할 VPC, 서브넷, Amazon RDS DB 클러스터 엔드포인트 및 Amazon DynamoDB 테이블과 같은 공통 인프라 리소스를 배포하고 있습니다. 또한 CloudFormation 템플릿은 애플리케이션 개발자를 위해 이러한 리소스에 대한 정보를 저장하기 위해 AWS Systems Manager Parameter Store 파라미터를 생성합니다. 파라미터에는 템플릿이 생성하는 클러스터에 대한 RDS DB 클러스터 엔드포인트와 같은 요소가 포함됩니다.<br/><br/>개발자는 RDS DB 클러스터 엔드포인트에 액세스하기 위해 SSM 파라미터 값을 읽는 AWS Lambda 함수가 포함된 CloudFormation 템플릿을 생성합니다. Lambda 함수는 계정과 계정을 호스팅하는 AWS 리전의 Parameter Store 최대 처리량(초당 트랜잭션) 할당량 값과 일치하도록 구성된 동시성을 예약했습니다. <br/><br/>개발자는 잠재적인 부하 증가에 대비하려고 합니다. 개발자는 Lambda 함수의 동시 호출 비율이 Parameter Store 최대 처리량 할당량 값보다 2배 더 많을 것으로 예상합니다. <br/><br/>부하 증가에 가장 비용 효율적으로 대비할 수 있는 솔루션은 무엇입니까?
+								한 회사의 인프라 팀은 AWS CloudFormation을 사용하여 다른 팀이 사용할 수 있도록 VPC, 서브넷, Amazon RDS DB 클러스터 엔드포인트, Amazon DynamoDB 테이블과 같은 공통 인프라 리소스를 배포하고 있습니다. CloudFormation 템플릿은 또한 AWS Systems Manager Parameter Store 매개변수를 생성하여 애플리케이션 개발자를 위해 이러한 리소스에 대한 정보를 저장합니다. 매개 변수에는 템플릿이 생성하는 클러스터에 대한 RDS DB 클러스터 엔드포인트와 같은 요소가 포함됩니다.<br/><br/>개발자는 RDS DB 클러스터 엔드포인트에 액세스하기 위해 SSM 매개변수 값을 읽는 AWS Lambda 함수가 포함된 CloudFormation 템플릿을 생성합니다. Lambda 함수에는 계정 및 계정을 호스팅하는 AWS 리전의 Parameter Store 최대 처리량(초당 트랜잭션) 할당량 값과 일치하도록 구성된 예약된 동시성이 있습니다. <br/><br/>개발자는 잠재적인 부하 증가에 대비하고 싶어합니다. 개발자는 Lambda 함수의 동시 호출 비율이 Parameter Store의 최대 처리량 할당량 값보다 2배 더 높을 것으로 예상합니다. <br/><br/>부하 증가에 가장 비용 효율적으로 대비할 수 있는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="866088" type="application/json">[{"voted_answers": "D", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="866088" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											SSM 파라미터 값을 읽는 코드를 Lambda 함수 핸들러 외부로 이동합니다. RDS DB 클러스터 엔드포인트 값을 전역 변수에 저장합니다. Lambda 함수 핸들러 내부의 엔드포인트 값을 사용합니다.
+											SSM 매개변수 값을 읽는 코드를 Lambda 함수 핸들러 외부로 이동합니다. RDS DB 클러스터 엔드포인트 값을 전역 변수에 저장합니다. Lambda 함수 핸들러 내에서 엔드포인트 값을 사용하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											SSM 파라미터 값을 읽는 코드를 Lambda 함수 핸들러 외부로 이동합니다. RDS DB 클러스터 엔드포인트 값을 환경 변수에 저장합니다. Lambda 함수 핸들러 내부의 엔드포인트 값을 사용합니다.
+											SSM 매개변수 값을 읽는 코드를 Lambda 함수 핸들러 외부로 이동합니다. RDS DB 클러스터 엔드포인트 값을 환경 변수에 저장합니다. Lambda 함수 핸들러 내에서 엔드포인트 값을 사용하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Lambda 함수의 동시성과 일치하도록 Systems Manager GetParameter 속도 할당량 값에 대한 서비스 할당량 증가를 요청합니다.
+											Lambda 함수의 동시성과 일치하도록 Systems Manager GetParameter 비율 할당량 값에 대한 서비스 할당량 증가를 요청합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											ssm 동적 참조를 사용하여 배포 시 RDS DB 클러스터 끝점 값을 확인하는 CloudFormation 템플릿에 SSM 매개 변수를 추가합니다. CloudFormation에서 Lambda 함수 리소스를 업데이트하여 새로 생성된 SSM 파라미터를 참조하는 환경 변수를 생성합니다.
+											ssm 동적 참조를 사용하여 배포 시 RDS DB 클러스터 엔드포인트 값을 확인하는 SSM 매개 변수를 CloudFormation 템플릿에 추가합니다. CloudFormation에서 Lambda 함수 리소스를 업데이트하여 새로 생성된 SSM 매개변수를 참조하는 환경 변수를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">디 (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 28%; display: flex;" title="">B (28%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">A (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">D (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">A (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Phinx
-							</a> 
-							
-							시간: <i>
-							2023년 1월 22일, 오전 6:19</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -157,7 +210,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="866088" type="application/json">[{"voted_answers": "D", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="866088" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 4, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -203,20 +256,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">D (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 28%; display: flex;" title="">B (28%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">A (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">D (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 26%; display: flex;" title="">B (26%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">A (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Phinx
-							</a>
-							
-							at <i>
-							Jan. 22, 2023, 6:19 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,26 +287,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 08:41">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">. ssm 동적 참조를 사용하여 배포 시 RDS DB 클러스터 엔드포인트 값을 확인하는 CloudFormation 템플릿에 SSM 파라미터를 추가합니다. CloudFormation에서 Lambda 함수 리소스를 업데이트하여 새로 생성된 SSM 파라미터를 참조하는 환경 변수를 생성합니다. 이 솔루션은 서비스 할당량 증가를 요청할 필요가 없고 배포 시 SSM 매개변수가 해결되도록 보장하여 Lambda 함수에 의한 SSM 호출 수를 줄이기 때문에 가장 비용 효율적으로 부하 증가에 대비합니다. .</div>
+<div class="comment-content">. ssm 동적 참조를 사용하여 배포 시 RDS DB 클러스터 엔드포인트 값을 확인하는 SSM 매개 변수를 CloudFormation 템플릿에 추가합니다. CloudFormation에서 Lambda 함수 리소스를 업데이트하여 새로 생성된 SSM 매개변수를 참조하는 환경 변수를 생성합니다. 이 솔루션은 서비스 할당량 증가를 요청할 필요가 없고 배포 시 SSM 매개변수가 확인되도록 보장하여 Lambda 함수에 의한 SSM 호출 수를 줄이므로 가장 비용 효율적으로 로드 증가에 대비합니다. .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">6</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -299,13 +342,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 24일 수 11:29">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 11:29">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B입니다. 환경 변수에 RDS DB 클러스터 엔드포인트 값을 저장하면 Lambda 함수 핸들러 내에서 Systems Manager Parameter Store(SSM)에 대한 반복 호출을 피할 수 있습니다. 대신 Lambda 함수는 초기화 중에 값을 한 번 검색하고 메모리에 저장하여 추가 API 호출의 오버헤드를 줄일 수 있습니다. 솔루션 작동 방식은 다음과 같습니다. 가급적이면 Lambda 함수의 초기화 단계 동안 Lambda 함수 핸들러 외부의 SSM 매개 변수 저장소에서 RDS DB 클러스터 엔드포인트 값을 검색합니다. 검색된 값을 환경 변수에 저장합니다. RDS DB 클러스터 엔드포인트 값을 사용하려면 Lambda 함수 핸들러 내의 환경 변수에 액세스하십시오. 이 접근법을 따르면,</div>
+<div class="comment-content">B입니다. RDS DB 클러스터 엔드포인트 값을 환경 변수에 저장하면 Lambda 함수 핸들러 내에서 SSM(Systems Manager Parameter Store)에 대한 반복 호출을 피할 수 있습니다. 대신, Lambda 함수는 초기화 중에 값을 한 번 검색하고 이를 메모리에 저장하여 추가 API 호출로 인한 오버헤드를 줄일 수 있습니다. 솔루션의 작동 방식은 다음과 같습니다. 가급적이면 Lambda 함수의 초기화 단계 중에 Lambda 함수 핸들러 외부의 SSM 매개 변수 저장소에서 RDS DB 클러스터 엔드포인트 값을 검색합니다. 검색된 값을 환경 변수에 저장합니다. RDS DB 클러스터 엔드포인트 값을 사용하려면 Lambda 함수 핸들러 내의 환경 변수에 액세스하십시오. 이 접근법을 따르면,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -337,12 +380,12 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일 수 11:30">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 11:30">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Lambda 함수 핸들러 내의 전역 변수에 RDS DB 클러스터 엔드포인트 값을 저장하면 여러 호출에서 지속되지 않아 SSM Parameter Store에 대한 불필요한 API 호출이 발생할 수 있으므로 옵션 A는 권장되지 않습니다. 이 시나리오에서는 옵션 C가 필요하지 않습니다. Lambda 함수의 동시성을 독립적으로 관리할 수 있으므로 Systems Manager GetParameter 속도 할당량에 대한 서비스 할당량 증가를 요청할 필요가 없습니다. 옵션 D는 불필요한 복잡성을 도입합니다. CloudFormation 템플릿에서 SSM 매개변수를 사용하고 Lambda 함수의 환경 변수에서 참조하는 것은 가능하지만 간단한 환경 변수가 요구 사항을 충족할 수 있는 경우 필요하지 않은 추가 단계와 종속성을 추가합니다.</div>
+<div class="comment-content">RDS DB 클러스터 엔드포인트 값을 Lambda 함수 핸들러 내의 전역 변수에 저장하면 여러 호출에서 지속되지 않아 SSM 매개변수 저장소에 대한 불필요한 API 호출이 발생할 수 있으므로 옵션 A는 권장되지 않습니다. 이 시나리오에서는 옵션 C가 필요하지 않습니다. Lambda 함수의 동시성을 독립적으로 관리할 수 있으므로 Systems Manager GetParameter 비율 할당량에 대한 서비스 할당량 증가를 요청할 필요가 없습니다. 옵션 D는 불필요한 복잡성을 초래합니다. CloudFormation 템플릿에서 SSM 매개변수를 사용하고 이를 Lambda 함수의 환경 변수에서 참조하는 것이 가능하지만 간단한 환경 변수가 요구 사항을 충족할 수 있는 경우에는 필요하지 않은 추가 단계와 종속성이 추가됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,11 +430,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스다파드파
+				sdafadsfa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 07:50">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 07:50">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,16 +476,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 13:27">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">잠정적으로 내 마음을 B로 바꿉니다. 문제는 처음부터 버그가 있는 코드를 가정하고 람다가 매개 변수 저장소를 너무 많이 호출하는 것에 대해 걱정하는 것 같습니다. 따라서 핸들러 외부에서 SSM 저장소를 호출하고 env 변수를 설정하고 핸들러 내부에서 읽습니다. 이것은 처리기 내부에서 끝점 값을 사용하여 RDS를 초기화하려는 시도를 의미하므로 심각한 결함이 있지만. 대안의 경우, B: 핸들러 외부에 설정된 변수는 범위 내에서 전역이지만 전역 변수라고 부를 수 있는지 확실하지 않습니다. D: 배포 시 db 정보를 잠그는 것 같습니다. 이는 SSM의 목적에 어긋나는 것 같습니다.</div>
+<div class="comment-content">잠정적으로 마음을 B로 바꾸었습니다. 문제는 처음부터 버그가 있는 코드를 가정하고 람다가 매개변수 저장소를 너무 많이 호출하는 것에 대해 걱정하는 것 같습니다. 따라서 핸들러 외부에서 SSM 저장소를 호출하고, env 변수를 설정하고, 핸들러 내부에서 이를 읽습니다. 이는 심각한 결함이 있지만 핸들러 내부에서 엔드포인트 값을 사용하여 RDS를 초기화하려고 시도한다는 의미입니다. 대안의 경우 B: 핸들러 외부에 설정된 변수는 범위가 전역이지만 전역 변수라고 부를 수 있는지 확실하지 않습니다. D: 배포 시 DB 정보를 잠그는 것 같습니다. 이는 SSM의 목적을 무너뜨리는 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -471,15 +514,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 13:30">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 13:30">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. "대안의 경우 A: ..."를 의미합니다.</div>
+<div class="comment-content">죄송합니다. "대체로 A: ..."라는 뜻입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -488,7 +531,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,16 +567,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 02:01">
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 02:01">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 말이 됩니다. SSM에서 끝점 값을 검색한 후 전역 변수에 저장해야 합니다. Lambda 환경 변수는 이 경우에 적합하지 않습니다. 어쨌든 환경 변수를 사용하려는 경우 SSM에서 가져올 필요가 없기 때문입니다.</div>
+<div class="comment-content">A는 말이 됩니다. SSM에서 엔드포인트 값을 검색한 후 이를 전역 변수에 저장해야 합니다. 어쨌든 환경 변수를 사용하려는 경우 SSM에서 가져올 필요가 없기 때문에 Lambda 환경 변수는 이 경우 적합하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -562,15 +605,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 13:18">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">핸들러 "전역 변수" 외부에서 선언된 변수를 호출할 수 있습니까? 나는 그것에 대한 언급을 찾을 수 없습니다.</div>
+<div class="comment-content">핸들러 외부에서 선언된 변수를 "전역 변수"라고 부를 수 있나요? 그에 대한 언급을 찾을 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -579,7 +622,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,13 +661,13 @@
 				다람쥐 집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 19:05">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 19:05">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 배포 시 RDS DB 클러스터 엔드포인트 값을 확인하고 이를 Lambda 함수의 환경 변수에서 참조하여 시스템 관리자에 대한 호출 수를 줄여주므로 문제를 해결하는 가장 비용 효율적이고 확장 가능한 솔루션입니다. 매개변수 저장소.</div>
+<div class="comment-content">D는 배포 시 RDS DB 클러스터 엔드포인트 값을 확인하고 이를 Lambda 함수의 환경 변수에서 참조하여 시스템 관리자에 대한 호출 수를 줄이므로 문제를 해결하기 위한 가장 비용 효율적이고 확장 가능한 솔루션입니다. 매개변수 저장소.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -653,15 +696,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 13:20">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나중에 db 끝점을 전환해야 하는 경우 어떻게 합니까? 매개 변수 저장소를 시작하는 것이 중요하지 않습니까?</div>
+<div class="comment-content">나중에 db 엔드포인트를 전환해야 한다면 어떻게 해야 합니까? 애초에 매개변수 저장소를 갖는 것이 핵심이 아닌가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -670,7 +713,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,16 +749,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 31일 화요일 22:38">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D에 동의해야 합니다. 전체 설정은 SSM, 처리량, 할당량, 예약된 동시성과는 아무 관련이 없습니다. 단순한 중첩 스택이며 잠재적 부하에 대해 이야기할 만큼 개발자가 바보가 아닙니다. 하지만 그것이 시험관의 의도라고 보장할 수는 없습니다. 행운을 빌어요</div>
+<div class="comment-content">D에 동의해야 합니다. 전체 설정은 SSM, 처리량, 할당량, 예약된 동시성과 아무 관련이 없습니다. 이는 단순한 중첩 스택이므로 잠재적 부하에 대해 이야기할 만큼 멍청한 개발자는 없습니다. 하지만 그것이 심사관의 의도인지는 보장할 수 없습니다. 행운을 빌어요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -744,15 +787,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 13:21">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">마음이 바뀌었을지도 몰라 B를 유혹해</div>
+<div class="comment-content">마음이 바뀌었을지도 모르지 B를 유혹해서</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -761,7 +804,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,16 +840,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				michele_scar
+				Michele_scar
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 30일 (월) 17:46">
+<span class="comment-date align-middle" title="2023년 1월 30일 월요일 17:46">
 			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Global var는 문서에서 설명하는 방법이 더 효율적입니다. https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.html SSM의 데이터가 "기밀"이 아니거나 "비공개"가 처리기 외부에 있어야 하는 경우: 연결 db 문자열 및 aws-region .</div>
+<div class="comment-content">Global var는 문서에 설명된 방식이 더 효율적입니다. https://docs.aws.amazon.com/lambda/latest/operatorguide/global-scope.html SSM의 데이터가 "기밀"이 아니거나 "비공개"인 경우 처리기 외부에 있어야 합니다. 연결 db 문자열 및 aws-region .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -815,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,16 +886,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 06:19">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">나는 이것이 B라고 생각한다.</div>
+<div class="comment-content">내 생각엔 이게 B인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -916,7 +959,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 08:41">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -929,7 +972,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">5</span> times
+				upvoted <span class="upvote-count">6</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -965,7 +1008,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 24 May 2023 11:29">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1011,7 +1054,7 @@ By following this approach, the Lambda function can reuse the stored value from 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 11:30">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1068,7 +1111,7 @@ Option D introduces unnecessary complexity. While using an SSM parameter in the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 07:50">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1114,7 +1157,7 @@ Option D introduces unnecessary complexity. While using an SSM parameter in the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 13:27">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1154,7 +1197,7 @@ For the alternatives, B: variables set outside handler is global in scope, but n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 13:30">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1245,7 +1288,7 @@ For the alternatives, B: variables set outside handler is global in scope, but n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 13:18">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1336,7 +1379,7 @@ For the alternatives, B: variables set outside handler is global in scope, but n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 13:20">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1389,7 +1432,7 @@ For the alternatives, B: variables set outside handler is global in scope, but n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 22:38">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1429,7 +1472,7 @@ The whole setup has nothing to do with SSM, throughput, quota, reserved concurre
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 13:21">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1531,7 +1574,7 @@ Given the data from SSM are not "confidential" or "private" should stay outside 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 06:19">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

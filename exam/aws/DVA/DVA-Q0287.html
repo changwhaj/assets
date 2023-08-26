@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 287 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 287 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 287 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 287 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849965">
 <p class="card-text">
 							
-								소셜 미디어 애플리케이션은 Amazon S3에 수백만 개의 비디오 클립을 저장하고 이를 전 세계 사용자에게 제공합니다. 애플리케이션에 대한 트래픽은 다양하지만 초당 10,000개 이상의 PUT 요청 및 GET 요청으로 액세스가 갑자기 증가하는 경우가 많습니다. 응용 프로그램의 인기가 높아짐에 따라 사용자는 비디오 스트리밍 품질이 좋지 않다고 보고합니다. <br/><br/>어떤 솔루션이 가장 큰 성능 향상을 제공합니까?
+								소셜 미디어 애플리케이션은 Amazon S3에 수백만 개의 비디오 클립을 저장하고 이를 전 세계 사용자에게 제공합니다. 애플리케이션에 대한 트래픽은 다양하지만 액세스가 갑자기 초당 10,000개 이상의 PUT 요청 및 GET 요청으로 증가하는 경우가 많습니다. 애플리케이션의 인기가 높아짐에 따라 사용자들은 비디오 스트리밍 품질이 좋지 않다고 보고합니다. <br/><br/>어떤 솔루션이 가장 큰 성능 향상을 제공합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											S3 교차 리전 복제를 사용하여 여러 AWS 리전에서 콘텐츠를 복제합니다.
+											S3 교차 지역 복제를 사용하여 여러 AWS 지역의 콘텐츠를 복제합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11 
-							
-							월 <i>
-							26일 오후 1:05</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 1:05 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,13 +294,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 30일 금요일 11:15">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 30일 금 11:15">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D 물론 CloudFront를 사용하면 에지에서 요소를 캐싱하고 전 세계에 걸쳐 콘텐츠 배포를 개선할 수 있습니다.</div>
+<div class="comment-content">물론, CloudFront를 사용하면 엣지에서 요소를 캐시하고 전 세계에 걸쳐 콘텐츠 배포를 개선할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				m4r0ck
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 25일 (토) 13:06">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 25일 토요일 13:06">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Cloudfront는 가장 자주 액세스하는 개체를 캐싱하는 데 사용할 수 있으므로 D</div>
+<div class="comment-content">Cloudfront는 가장 자주 액세스되는 객체를 캐싱하는 데 사용될 수 있으므로 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -332,15 +375,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 27일 (월) 12:37">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 27일 월요일 12:37">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">비디오를 캐시합니까?</div>
+<div class="comment-content">비디오를 캐시하나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -349,7 +392,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,11 +428,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 14:06">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 14:06">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,13 +477,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:05">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:05">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">동의</div>
+<div class="comment-content">동의함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -501,7 +544,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 11:15">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -547,7 +590,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 13:06">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -585,7 +628,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 12:37">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -638,7 +681,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 14:06">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -684,7 +727,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:05">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

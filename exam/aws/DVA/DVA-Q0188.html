@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 188 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 188 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 188 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 188 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849866">
 <p class="card-text">
 							
-								개발자는 사용자가 휴대폰의 사진을 클라우드에 저장할 수 있는 기능을 제공하는 애플리케이션을 만들고 있습니다. 애플리케이션은 수만 명의 사용자를 지원해야 합니다. 애플리케이션은 AWS Lambda 함수와 통합된 Amazon API Gateway REST API를 사용하여 사진을 처리합니다. 애플리케이션은 Amazon DynamoDB에 사진에 대한 세부 정보를 저장합니다. <br/><br/>사용자는 애플리케이션에 액세스하려면 계정을 생성해야 합니다. 애플리케이션에서 사용자는 사진을 업로드하고 이전에 업로드한 사진을 검색할 수 있어야 합니다. 사진의 크기는 300KB에서 5MB 사이입니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 사용자가 휴대폰의 사진을 클라우드에 저장할 수 있는 기능을 제공하는 애플리케이션을 만들고 있습니다. 애플리케이션은 수만 명의 사용자를 지원해야 합니다. 애플리케이션은 AWS Lambda 함수와 통합된 Amazon API Gateway REST API를 사용하여 사진을 처리합니다. 애플리케이션은 Amazon DynamoDB에 사진에 대한 세부 정보를 저장합니다. <br/><br/>사용자는 애플리케이션에 액세스하려면 계정을 만들어야 합니다. 애플리케이션에서 사용자는 사진을 업로드하고 이전에 업로드한 사진을 검색할 수 있어야 합니다. 사진 크기는 300KB에서 5MB까지입니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon Cognito 사용자 풀을 사용하여 사용자 계정을 관리합니다. API에 대한 액세스를 제어하기 위해 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 생성합니다. Lambda 함수를 사용하여 DynamoDB 테이블에 사진과 세부 정보를 저장합니다. 이전에 업로드한 사진을 DynamoDB 테이블에서 직접 검색합니다.
+											Amazon Cognito 사용자 풀을 사용하여 사용자 계정을 관리하십시오. API에 대한 액세스를 제어하려면 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 생성합니다. Lambda 함수를 사용하여 DynamoDB 테이블에 사진과 세부 정보를 저장합니다. 이전에 업로드한 사진을 DynamoDB 테이블에서 직접 검색합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon Cognito 사용자 풀을 사용하여 사용자 계정을 관리합니다. API에 대한 액세스를 제어하기 위해 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 생성합니다. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
+											Amazon Cognito 사용자 풀을 사용하여 사용자 계정을 관리합니다. API에 대한 액세스를 제어하려면 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 생성합니다. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											가입 프로세스 중에 애플리케이션의 각 사용자에 대한 IAM 사용자를 생성합니다. IAM 인증을 사용하여 API Gateway API에 액세스합니다. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
+											가입 프로세스 중에 애플리케이션의 각 사용자에 대해 IAM 사용자를 생성합니다. IAM 인증을 사용하여 API Gateway API에 액세스합니다. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											DynamoDB에서 사용자 테이블을 생성합니다. 테이블을 사용하여 사용자 계정을 관리합니다. 사용자 테이블에 대해 사용자 자격 증명을 검증하는 Lambda 권한 부여자를 생성합니다. Lambda 권한 부여자를 API 게이트웨이와 통합하여 API에 대한 액세스를 제어합니다. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
+											DynamoDB에서 사용자 테이블을 생성합니다. 테이블을 사용하여 사용자 계정을 관리합니다. 사용자 테이블에 대해 사용자 자격 증명을 검증하는 Lambda 권한 부여자를 생성합니다. API에 대한 액세스를 제어하려면 Lambda 권한 부여자를 API Gateway와 통합하세요. Lambda 함수를 사용하여 Amazon S3에 사진을 저장합니다. DynamoDB 테이블에 사진 세부 정보의 일부로 객체의 S3 키를 저장합니다. DynamoDB에 S3 키를 쿼리하여 이전에 업로드한 사진을 검색합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 25일 
-							
-							오전 <i>
-							9:36</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 9:36 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,12 +294,12 @@
 				제이바르마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 07:39">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 07:39">
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">애플리케이션에 등록하는 각 사용자에 대해 새 IAM 사용자를 생성하는 것은 좋은 방법이 아니므로 옵션 C는 제외됩니다. Amazon Cognito 사용자 풀의 주요 목적은 웹 및 모바일 애플리케이션을 인증하고 권한을 부여하는 것입니다. 솔루션은 애플리케이션이 크기가 300KB에서 5MB 사이인 이미지를 저장해야 하므로 DynamoDb 테이블의 객체 크기가 400kb를 초과할 수 없기 때문에 DynamoDB에 이미지를 저장한다는 아이디어는 배제됩니다. 이 문제에 대한 이상적인 솔루션은 사진을 S3에 저장하고 객체의 키를 DynamoDB 테이블에 저장하는 것입니다. 따라서 옵션 B가 정답입니다.</div>
+<div class="comment-content">애플리케이션에 등록하는 각 사용자에 대해 새 IAM 사용자를 생성하는 것은 좋은 방법이 아니므로 옵션 C는 제외됩니다. Amazon Cognito 사용자 풀의 주요 목적은 웹 및 모바일 애플리케이션을 인증하고 권한을 부여하는 것입니다. 솔루션에서는 애플리케이션이 300KB~5MB 크기의 이미지를 저장해야 하기 때문에 DynamoDb 테이블의 객체 크기는 400KB를 초과할 수 없기 때문에 DynamoDB에 이미지를 저장한다는 아이디어는 배제됩니다. 이 문제에 대한 이상적인 솔루션은 사진을 S3에 저장하고 객체의 키를 DynamoDB 테이블에 저장하는 것입니다. 따라서 옵션 B가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,7 +345,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">파트 1) 인증 프로세스는 Amazon Cognito 사용자 풀에서 관리합니다. 이러한 이유로 우리는 C와 D를 제외할 수 있고(각 사용자에 대해 IAM 사용자를 생성하는 것은 터무니없는 일입니다) 사용자 테이블을 생성하고 인증을 관리할 수 있지만 이것은 최소한의 오버헤드를 원하기 때문에 요구 사항을 충족하지 않습니다. Cognito 사용자 풀은 권한 부여 메커니즘만 제공하므로 API Gateway에서 Cognito 권한 부여자를 생성하고 메서드를 릴리스할 때 이 권한 부여자를 사용하여 무단 액세스 요청을 거부해야 합니다. 지금까지 A와 B는 모두 유효합니다.</div>
+<div class="comment-content">1부) 인증 프로세스는 Amazon Cognito 사용자 풀에서 관리됩니다. 이러한 이유로 C와 D를 제외하고(각 사용자에 대해 IAM 사용자를 생성하는 것은 어처구니 없음) ​​사용자 테이블을 생성하고 인증을 관리할 수 있지만 이는 가능한 최소한의 오버헤드를 원하기 때문에 요구 사항을 충족하지 않습니다. congnito 사용자 풀은 권한 부여 메커니즘만 제공하므로 API Gateway에서 cognito 권한 부여자를 생성하고 무단 액세스 요청을 거부하기 위해 메서드를 릴리스할 때 이 권한 부여자를 사용해야 합니다. 지금까지는 A와 B가 모두 유효합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,7 +382,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">파트 2) 사진(300KB에서 5MB 사이의 크기)에 대한 제약이 있기 때문에 DynamoDB의 각 행에 대한 제한이 400KB이기 때문에 DynamoDB에 해당 정보를 기억할 수 없습니다. 업로드된 사진은 DB보다는 영구저장소에 저장하는 것이 좋습니다. 그렇기 때문에 S3를 사용하는 것이 좋습니다. 마지막으로 올바른 객체를 검색하려면 DynamoDB의 키(예: 버킷 이름, 경로 및 객체 이름)와 사용자 이름, 날짜 등과 같은 기타 정보를 기억해야 합니다. A와 BI 사이에서 B가 올바른 것이라고 말할 것입니다!</div>
+<div class="comment-content">2부) 사진에 대한 제한(300KB ~ 5MB 사이)이 있기 때문에 DynamoDB에서 해당 정보를 기억할 수 없습니다. 이러한 제한이 없더라도 DynamoDB의 각 행에 대한 제한은 400KB이기 때문입니다. 업로드된 사진은 DB보다는 영구저장소에 기억해 두는 것이 좋습니다. 그렇기 때문에 S3를 사용하는 것이 더 좋습니다. 마지막으로 올바른 객체를 검색하려면 DynamoDB의 키(버킷 이름, 경로, 객체 이름 등)와 사용자 이름, 날짜 등과 같은 기타 정보를 기억해야 합니다. A와 BI 사이에서는 B가 옳다고 말할 것입니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -348,7 +391,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,7 +436,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">테스트 BBB</div>
+<div class="comment-content">BBB 테스트</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,8 +476,8 @@
 				가르모
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 02일 목요일 09:41">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 2일 목요일 09:41">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,11 +522,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 12:26">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">비 그것은</div>
+<div class="comment-content">ㄴ 그렇군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -492,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,12 +566,12 @@
 				벨로미오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 23:08">
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 23:08">
 			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">A는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -561,7 +604,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 14:19">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -574,7 +617,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -602,10 +645,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Duded12121
+				친구12121
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 04:51">
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 04:51">
 			7개월, 1주 전
 		</span>
 </div>
@@ -619,7 +662,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -639,15 +682,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 17:13">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 17:13">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이미지 크기가 작은 경우 실제로 DynamoDB에 이미지를 저장할 수 있습니다. NoSQL 데이터베이스이기 때문에 가능합니다. 그러나 질문에 제공된 파일 크기가 너무 커서 DynamoDB에 저장할 수 없습니다. 따라서 답은 B입니다.</div>
+<div class="comment-content">이미지 크기가 작은 경우 실제로 DynamoDB에 이미지를 저장할 수 있습니다. NoSQL 데이터베이스이기 때문에 가능합니다. 그러나 질문에 제공된 파일 크기가 너무 커서 DynamoDB에 저장할 수 없습니다. 따라서 답은 B이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -656,7 +699,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -679,12 +722,12 @@
 				가르모
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 02일 목요일 09:41">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 2일 목요일 09:41">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB에서 s3 버킷 객체 링크를 참조하면 더 간단하게 만들 수 있습니다.</div>
+<div class="comment-content">DynamoDB에서 s3 버킷 객체 링크를 참조하면 더 간단해집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -693,7 +736,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -745,11 +788,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 07:23">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 07:23">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -794,8 +837,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 09:36">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 09:36">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -809,7 +852,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -832,12 +875,12 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 09:44">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 09:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB 항목 제한: DynamoDB의 최대 항목 크기는 속성 이름 이진 길이(UTF-8 길이)와 속성 값 길이(다시 이진 길이)를 모두 포함하는 400KB입니다. 속성 이름은 크기 제한에 포함됩니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html 대용량 항목 및 속성 저장을 위한 모범 사례 - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp- use-s3-too.html</div>
+<div class="comment-content">DynamoDB 항목 제한: DynamoDB의 최대 항목 크기는 400KB이며 여기에는 속성 이름 바이너리 길이(UTF-8 길이)와 속성 값 길이(역시 바이너리 길이)가 모두 포함됩니다. 속성 이름은 크기 제한에 포함됩니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html 대용량 항목 및 속성 저장 모범 사례 - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp- use-s3-too.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -846,7 +889,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -906,7 +949,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 07:39">
-			1 week, 3 days ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 09:41">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1138,7 +1181,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 12:26">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1220,7 +1263,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 14:19">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1339,7 +1382,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 09:41">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1408,7 +1451,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 07:23">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1454,7 +1497,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 09:36">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1492,7 +1535,7 @@ Finally in order to retrieve the right object, we have to memorize a key (like t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 09:44">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

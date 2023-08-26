@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 326 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 326 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 326 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 326 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850021">
 <p class="card-text">
 							
-								개발자가 PHI(개인 건강 정보)를 저장할 애플리케이션을 만들고 있습니다. PHI는 항상 암호화되어야 합니다. 암호화된 Amazon RDS for MySQL DB 인스턴스가 데이터를 저장하고 있습니다. 개발자는 캐시된 데이터 세트를 정렬하거나 순위를 지정하는 기능을 추가하면서 자주 액세스하는 데이터를 캐시하여 애플리케이션의 성능을 향상시키려고 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자가 개인 건강 정보(PHI)를 저장할 애플리케이션을 만들고 있습니다. PHI는 항상 암호화되어야 합니다. MySQL DB 인스턴스용 암호화된 Amazon RDS가 데이터를 저장하고 있습니다. 개발자는 자주 액세스하는 데이터를 캐시하는 동시에 캐시된 데이터 세트를 정렬하거나 순위를 지정하는 기능을 추가하여 애플리케이션의 성능을 높이고 싶어합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850021" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}]</script>
+<script id="850021" type="application/json">[{"voted_answers": "A", "vote_count": 14, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Redis 인스턴스용 Amazon ElastiCache를 생성합니다. 전송 중 및 미사용 데이터의 암호화를 활성화합니다. 자주 액세스하는 데이터를 캐시에 저장합니다.
+											Redis 인스턴스용 Amazon ElastiCache를 생성합니다. 전송 중인 데이터와 저장 중인 데이터의 암호화를 활성화합니다. 자주 액세스하는 데이터를 캐시에 저장합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											Memcached 인스턴스용 Amazon ElastiCache를 생성합니다. 전송 중 및 미사용 데이터의 암호화를 활성화합니다. 자주 액세스하는 데이터를 캐시에 저장합니다.
+											Memcached 인스턴스용 Amazon ElastiCache를 생성합니다. 전송 중인 데이터와 저장 중인 데이터의 암호화를 활성화합니다. 자주 액세스하는 데이터를 캐시에 저장합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon RDS for MySQL 읽기 전용 복제본을 생성합니다. SSL을 사용하여 읽기 전용 복제본에 연결합니다. 자주 액세스하는 데이터를 저장하도록 읽기 전용 복제본을 구성합니다.
+											MySQL용 Amazon RDS 읽기 전용 복제본을 생성합니다. SSL을 사용하여 읽기 복제본에 연결합니다. 자주 액세스하는 데이터를 저장하도록 읽기 복제본을 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon DynamoDB 테이블과 테이블에 대한 DynamoDB Accelerator(DAX) 클러스터를 생성합니다. 자주 액세스하는 데이터를 DynamoDB 테이블에 저장합니다.
+											Amazon DynamoDB 테이블과 테이블용 DynamoDB Accelerator(DAX) 클러스터를 생성합니다. 자주 액세스하는 데이터를 DynamoDB 테이블에 저장합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11 
-							
-							월 <i>
-							26일 오후 5:32</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850021" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}]</script>
+<script id="850021" type="application/json">[{"voted_answers": "A", "vote_count": 14, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -205,22 +258,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 5:32 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,28 +291,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 3일 (토) 20:42">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 20:42">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">요점: "캐싱된 데이터 세트를 정렬하거나 순위를 매기는 기능" Memcached와 Redis 중에서 결정할 때 고려해야 할 몇 가지 질문은 다음과 같습니다. 목록, 해시, 비트 배열, HyperLogLog 및 세트와 같은 고급 데이터 유형을 찾고 있습니까? ? 그렇다면 Redis를 사용하십시오. 순위표와 같이 메모리에서 데이터 세트를 정렬하고 순위를 매기는 것이 도움이 됩니까? 그렇다면 Redis를 사용하십시오. https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/memcached-vs.-redis.html</div>
+<div class="comment-content">핵심 포인트: "캐시된 ​​데이터 세트를 정렬하거나 순위를 지정하는 기능" Memcached와 Redis 중에서 결정할 때 고려해야 할 몇 가지 질문은 다음과 같습니다. 목록, 해시, 비트 배열, HyperLogLogs 및 세트와 같은 고급 데이터 유형을 찾고 있습니까? ? 그렇다면 Redis를 사용하세요. 리더보드와 같이 메모리에서 데이터 세트를 정렬하고 순위를 매기는 것이 도움이 됩니까? 그렇다면 Redis를 사용하세요. https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/memcached-vs.-redis.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">8</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,11 +332,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 11일 (토) 17:42">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 11일 토요일 17:42">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,12 +392,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 15:20">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">캐시된 데이터 세트를 정렬하거나 순위를 지정하는 기능을 추가하면서 자주 액세스하는 데이터를 캐시합니다. 이러한 요구 사항을 충족하는 솔루션은 무엇입니까? 데이터를 캐시하려면 ElasticCache를 사용할 수 있습니다. 데이터를 정렬해야 하므로 Memcached가 아닌 Redis를 사용해야 합니다. A가 정답입니다.</div>
+<div class="comment-content">자주 액세스하는 데이터를 캐시하는 동시에 캐시된 데이터 세트를 정렬하거나 순위를 지정하는 기능을 추가합니다. 어떤 솔루션이 이러한 요구 사항을 충족합니까? 데이터를 캐시하려면 ElasticCache를 사용할 수 있습니다. 데이터를 정렬해야 하기 때문에 Memcached 대신 Redis를 사용해야 합니다. A가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -399,7 +442,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 A</div>
+<div class="comment-content">답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,11 +479,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 08:33">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 08:33">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,8 +528,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 17:32">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 17:32">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -555,7 +598,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 20:42">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -576,7 +619,7 @@ https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/mem
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">8</span> times
+				upvoted <span class="upvote-count">9</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -601,7 +644,7 @@ https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/mem
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 17:42">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -657,7 +700,7 @@ https://docs.aws.amazon.com/whitepapers/latest/scale-performance-elasticache/mem
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 15:20">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -751,7 +794,7 @@ To cache data we can use ElasticCache, since we neeed to sort data we have to us
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 08:33">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -797,7 +840,7 @@ To cache data we can use ElasticCache, since we neeed to sort data we have to us
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 17:32">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

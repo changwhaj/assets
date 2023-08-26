@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 355 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 355 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 355 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 355 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850062">
 <p class="card-text">
 							
-								개발자는 AWS Cloud Development Kit(AWS CDK)를 사용하여 애플리케이션 인프라를 배포하는 서버리스 애플리케이션을 구축하고 있습니다. 개발자는 HTTP API를 쿼리하는 AWS Lambda 함수를 생성하고 있습니다. API에는 인증 및 권한 부여를 위한 액세스 토큰을 포함하기 위한 모든 요청이 필요합니다. 개발자는 액세스 토큰을 안전하게 저장하고 Lambda 함수에 토큰에 대한 액세스 권한을 부여해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 AWS Cloud Development Kit(AWS CDK)를 사용하여 애플리케이션 인프라를 배포하는 서버리스 애플리케이션을 구축하고 있습니다. 개발자는 HTTP API를 쿼리하는 AWS Lambda 함수를 생성하고 있습니다. API에는 인증 및 권한 부여를 위한 액세스 토큰을 포함하기 위한 모든 요청이 필요합니다. 개발자는 액세스 토큰을 안전하게 저장하고 Lambda 함수에 토큰에 대한 액세스 권한을 부여해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											배포 환경을 업데이트하여 액세스 토큰을 환경 변수로 주입합니다. 액세스 토큰을 캡처하도록 AWS CDK 스택을 업데이트합니다. 액세스 토큰을 Lambda 함수의 환경 변수로 설정합니다. 환경 변수를 참조하도록 Lambda 함수의 코드를 업데이트합니다.
+											액세스 토큰을 환경 변수로 삽입하도록 배포 환경을 업데이트합니다. 액세스 토큰을 캡처하려면 AWS CDK 스택을 업데이트하세요. 액세스 토큰을 Lambda 함수의 환경 변수로 설정합니다. 환경 변수를 참조하도록 Lambda 함수의 코드를 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											배포 환경을 업데이트하여 액세스 토큰을 환경 변수로 주입합니다. AWS CDK 스택을 업데이트하여 AWS Systems Manager Parameter Store 문자열 파라미터를 생성합니다. 환경 변수에서 매개변수 값을 설정합니다. 파라미터에 대한 GetParameter 작업을 허용하도록 Lambda 함수의 실행 역할을 업데이트합니다. AWS SDK를 사용하여 Parameter Store에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
+											배포 환경을 업데이트하여 액세스 토큰을 환경 변수로 삽입합니다. AWS CDK 스택을 업데이트하여 AWS 시스템 관리자 매개변수 저장소 문자열 매개변수를 생성합니다. 환경 변수에서 매개변수 값을 설정합니다. 매개변수에 대한 GetParameter 작업을 허용하도록 Lambda 함수의 실행 역할을 업데이트합니다. AWS SDK를 사용하여 Parameter Store에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											AWS CDK 스택을 업데이트하여 AWS Systems Manager Parameter Store String 파라미터를 생성합니다. 파라미터에 대한 GetParameter 작업을 허용하도록 Lambda 함수의 실행 역할을 업데이트합니다. Parameter Store에서 액세스 토큰을 수동으로 설정합니다. AWS SDK를 사용하여 Parameter Store에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
+											AWS CDK 스택을 업데이트하여 AWS 시스템 관리자 매개변수 저장소 문자열 매개변수를 생성합니다. 매개변수에 대한 GetParameter 작업을 허용하도록 Lambda 함수의 실행 역할을 업데이트합니다. Parameter Store에서 액세스 토큰을 수동으로 설정합니다. AWS SDK를 사용하여 Parameter Store에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS CDK 스택을 업데이트하여 AWS Secrets Manager 암호를 생성합니다. 함수가 암호에 액세스할 수 있도록 암호 및 Lambda 함수에 대한 권한을 구성합니다. AWS CDK 스택 내부의 CloudFormation 스택 정책을 업데이트하여 암호 업데이트를 방지하십시오. Secrets Manager에서 액세스 토큰을 수동으로 설정합니다. AWS SDK를 사용하여 Secrets Manager에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
+											AWS CDK 스택을 업데이트하여 AWS Secrets Manager 비밀을 생성합니다. 함수가 암호에 액세스할 수 있도록 암호 및 Lambda 함수에 대한 권한을 구성합니다. 비밀 업데이트를 방지하려면 AWS CDK 스택 내부의 CloudFormation 스택 정책을 업데이트하십시오. Secrets Manager에서 액세스 토큰을 수동으로 설정합니다. AWS SDK를 사용하여 Secrets Manager에서 액세스 토큰을 검색하도록 Lambda 함수의 코드를 업데이트합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">D (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">D (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							2022 <i>
-							년 11월 27일 오후 5:19</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 27, 2022, 5:19 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,18 +289,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 17:19">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 17:19">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: B https://aws.amazon.com/blogs/compute/securely-retrieving-secrets-with-aws-lambda/ AWS Systems Manager Parameter Store를 사용하면 암호를 비롯한 구성 데이터를 파라미터 값으로 안전하게 저장할 수 있습니다. Parameter Store는 Secrets Manager 암호에 대한 참조를 위한 통과 서비스로 Secrets Manager와 직접 통합됩니다. 애플리케이션 전체에서 암호를 호출하고 참조하기 위한 일관된 솔루션으로 Parameter Store를 사용하려는 경우 이 통합을 사용하십시오. https://betterprogramming.pub/managing-secrets-with-aws-cloud-development-kit-cdk-25ec1e80dfc3</div>
+<div class="comment-content">답변: B https://aws.amazon.com/blogs/compute/securely-retrieving-secrets-with-aws-lambda/ AWS Systems Manager Parameter Store를 사용하면 암호를 포함한 구성 데이터를 매개변수 값으로 안전하게 저장할 수 있습니다. Parameter Store는 Secrets Manager 암호를 참조하기 위한 통과 서비스로 Secrets Manager와 직접 통합됩니다. 애플리케이션 전체에서 암호를 호출하고 참조하기 위한 일관된 솔루션으로 Parameter Store를 사용하려는 경우 이 통합을 사용하십시오. https://betterprogramming.pub/managing-secrets-with-aws-cloud-development-kit-cdk-25ec1e80dfc3</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,15 +329,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 04:49">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">올바른 블로그 URL을 받았지만 답이 잘못되었습니다. 비밀을 안전하게 저장하는 옵션을 묻는 질문이므로(구성이 아님) Secrets Manager가 필요합니다. 귀하가 댓글로 공유한 페이지에도 언급되어 있습니다.</div>
+<div class="comment-content">올바른 블로그 URL을 얻었지만 답변이 잘못되었습니다. 질문은 비밀을 안전하게 저장하는 옵션(구성 아님)을 묻는 것이므로 Secrets Manager가 필요합니다. 귀하가 댓글로 공유한 페이지에도 언급되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,19 +382,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 02:10">
+<span class="comment-date align-middle" title="2022년 12월 23일 금 02:10">
 			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문에 "... 액세스 토큰을 안전하게 저장 ..."이라고 언급되어 있습니다. 이것이 Secrets Manager를 가리킨다고 생각합니다.</div>
+<div class="comment-content">질문에는 "... 액세스 토큰을 안전하게 저장하십시오 ..."라고 언급되어 있습니다. 이는 Secrets Manager를 가리키는 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -383,12 +426,12 @@
 				아그불라쿤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 03:48">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 03:48">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서는 B가 정답이라고 생각합니다. AWS System Manager Parameter Store는 보안 문자열 파라미터를 생성하여 액세스 토큰을 안전하게 저장할 수도 있습니다. 실제로 Secrets Manager와 통합되어 있습니다. 토큰의 자동 교체가 질문의 요구 사항인 경우 Secrets Manager가 필요할 수 있습니다. 또한 옵션 D의 또 다른 문제는 마지막 문장의 "수동"입니다.</div>
+<div class="comment-content">내 생각엔 B가 정답인 것 같아. AWS System Manager Parameter Store는 보안 문자열 매개변수를 생성하여 액세스 토큰을 안전하게 저장할 수도 있습니다. 실제로 Secrets Manager와 통합되어 있습니다. 문제에서 토큰의 자동 교체가 요구되는 경우 Secrets Manager가 필요할 수 있습니다. 또한 옵션 D의 또 다른 문제는 마지막 문장의 "수동"입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -397,7 +440,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -417,15 +460,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 24일 월요일 04:08">
-			3주, 6일 전
+<span class="comment-date align-middle" title="2023년 7월 24일 (월) 04:08">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션의 매개변수 문자열은 표준 문자열이며 토큰을 저장하려면 보안 문자열이 필요합니다. 옵션 B는 아무 것도 언급하지 않았습니다.</div>
+<div class="comment-content">옵션의 매개변수 문자열은 표준 문자열이며, 토큰을 저장하려면 보안 문자열이 필요합니다. 옵션 B에서는 아무 것도 언급하지 않았습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -434,7 +477,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,19 +521,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 01:10">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D도 마찬가지라고 생각합니다. 다른 모든 옵션은 문자열 필드가 있는 System Manager Parameter store를 사용하고 있습니다. 그것은 그것을 안전하게 저장하는 요구 사항을 충족하지 않습니다.</div>
+<div class="comment-content">내 생각에도 D인 것 같다. 다른 모든 옵션은 문자열 필드가 있는 System Manager 매개변수 저장소를 사용합니다. 이는 안전하게 저장해야 하는 요구 사항을 충족하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,11 +574,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 17:17">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">토큰에 대한 Lambda 함수 액세스 권한을 부여하는 B: lamda에게 IAM 역할을 부여합니다.</div>
+<div class="comment-content">B: Lambda 함수에 토큰에 대한 액세스 권한을 부여합니다. lamda에게 IAM 역할을 부여합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -576,12 +619,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 19:52">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">SSM Parameter store에 토큰을 저장하려면 String이 아닌 SecureString으로 저장하는 것이 좋습니다. B와 C 모두 정확하지 않습니다. D는 보안 솔루션입니다.</div>
+<div class="comment-content">SSM 파라미터 스토어에 토큰을 저장하려면 String 대신 SecureString으로 저장하는 것이 좋습니다. B, C 둘 다 정확하지 않습니다. D는 보안 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,7 +665,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 19:28">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -691,7 +734,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 17:19">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -734,7 +777,7 @@ https://betterprogramming.pub/managing-secrets-with-aws-cloud-development-kit-cd
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 04:49">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -828,7 +871,7 @@ https://betterprogramming.pub/managing-secrets-with-aws-cloud-development-kit-cd
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 03:48">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -869,7 +912,7 @@ Perhaps, you would need Secrets Manager if automatic rotation of the token is a 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 04:08">
-			3 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -933,7 +976,7 @@ Perhaps, you would need Secrets Manager if automatic rotation of the token is a 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 01:10">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -979,7 +1022,7 @@ Perhaps, you would need Secrets Manager if automatic rotation of the token is a 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 17:17">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1025,7 +1068,7 @@ to give the Lambda function access to the token: gives lamda a IAM role</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 01 Jan 2023 19:52">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1071,7 +1114,7 @@ to give the Lambda function access to the token: gives lamda a IAM role</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 19:28">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

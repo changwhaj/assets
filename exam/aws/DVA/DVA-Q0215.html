@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 215 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 215 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 215 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 215 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849893">
 <p class="card-text">
 							
-								회사의 개발자가 프로덕션 환경을 위해 Amazon S3에 배포할 정적 웹 사이트를 구축하고 있습니다. 웹 사이트는 AWS Lambda 함수를 사용하여 Amazon Aurora PostgreSQL 데이터베이스와 통합됩니다. 프로덕션에 배포되는 웹 사이트는 특정 버전의 Lambda 함수를 가리키는 Lambda 별칭을 사용합니다. <br/><br/>회사는 2주마다 데이터베이스 자격 증명을 교체해야 합니다. 회사에서 이전에 배포한 Lambda 함수는 최신 자격 증명을 사용할 수 있어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사의 개발자가 프로덕션 환경을 위해 Amazon S3에 배포할 정적 웹 사이트를 구축하고 있습니다. 웹 사이트는 AWS Lambda 함수를 사용하여 Amazon Aurora PostgreSQL 데이터베이스와 통합됩니다. 프로덕션에 배포된 웹 사이트는 특정 버전의 Lambda 함수를 가리키는 Lambda 별칭을 사용합니다. <br/><br/>회사는 2주마다 데이터베이스 자격 증명을 교체해야 합니다. 회사가 이전에 배포한 Lambda 기능은 최신 자격 증명을 사용할 수 있어야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS Secrets Manager에 데이터베이스 자격 증명을 저장합니다. 회전을 켭니다. Secrets Manager에서 자격 증명을 검색하는 Lambda 함수에 코드를 작성합니다.
+											AWS Secrets Manager에 데이터베이스 자격 증명을 저장합니다. 회전을 켭니다. Secrets Manager에서 자격 증명을 검색하려면 Lambda 함수에 코드를 작성하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											Lambda 함수 코드의 일부로 데이터베이스 자격 증명을 포함합니다. 자격 증명을 주기적으로 업데이트하고 새 Lambda 함수를 배포합니다.
+											데이터베이스 자격 증명을 Lambda 함수 코드의 일부로 포함합니다. 자격 증명을 주기적으로 업데이트하고 새 Lambda 함수를 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Lambda 환경 변수를 사용합니다. 새 자격 증명을 사용할 수 있으면 환경 변수를 업데이트합니다.
+											Lambda 환경 변수를 사용하십시오. 새 자격 증명을 사용할 수 있으면 환경 변수를 업데이트하세요.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS Systems Manager Parameter Store에 데이터베이스 자격 증명을 저장합니다. 회전을 켭니다. Lambda 함수에 코드를 작성하여 Systems Manager Parameter Store에서 자격 증명을 검색합니다.
+											AWS Systems Manager Parameter Store에 데이터베이스 자격 증명을 저장합니다. 교체를 켭니다. Lambda 함수에 코드를 작성하여 Systems Manager Parameter Store에서 자격 증명을 검색합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 
-							
-							2022 <i>
-							년 11월 24일 오후 5:24</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 5:24 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,19 +291,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 13:43">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 13:43">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Parameter Store는 자동 회전을 제공하지 않습니다.</div>
+<div class="comment-content">Parameter Store는 자동 교체를 제공하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -269,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,15 +332,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 5일 일요일 02:52">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="일 2023년 2월 5일 02:52">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정확히 내가 찾고 있는 것입니다. 감사해요</div>
+<div class="comment-content">내가 찾고 있는 것이 바로 그것이다. 감사해요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -354,7 +397,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 AWS Secretes 관리자가 회전을 지원하고 자격 증명을 저장하고 검색하는 안전한 방법을 제공하며 코드를 변경하지 않고 안전한 방식으로 람다 함수에서 자격 증명을 검색할 수 있기 때문에 맞습니다. A는 확실히 정답입니다.</div>
+<div class="comment-content">A는 맞습니다. AWS Secretes 관리자는 교체를 지원하고 자격 증명을 저장하고 검색하는 안전한 방법을 제공하며 코드를 변경하지 않고도 람다 함수에서 자격 증명을 안전한 방식으로 검색할 수 있기 때문입니다. A가 확실히 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,16 +434,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 14:00">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 14:00">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 D는 AWS Systems Manager Parameter Store에 데이터베이스 자격 증명을 저장하고 교체를 켤 것을 제안합니다. 그러나 AWS Systems Manager Parameter Store에는 데이터베이스 자격 증명에 대한 기본 제공 회전 기능이 없습니다. 대신 AWS Secrets Manager는 데이터베이스 자격 증명에 대한 기본 제공 교체 기능을 제공하며 회사에서 요구하는 대로 자격 증명을 2주마다 자동으로 교체하는 데 사용할 수 있습니다. 이것이 옵션 A가 정답이고 옵션 D가 정답이 아닌 이유입니다.</div>
+<div class="comment-content">옵션 D에서는 AWS Systems Manager Parameter Store에 데이터베이스 자격 증명을 저장하고 교체를 활성화할 것을 제안합니다. 그러나 AWS Systems Manager Parameter Store에는 데이터베이스 자격 증명에 대한 기본 회전 기능이 없습니다. 대신, AWS Secrets Manager는 데이터베이스 자격 증명에 대한 기본 교체 기능을 제공하며 회사에서 요구하는 대로 2주마다 자격 증명을 자동으로 교체하는 데 사용할 수 있습니다. 이것이 A가 정답이고 D가 정답이 아닌 이유입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,13 +483,13 @@
 				ihta_2031
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 1일 (토) 14:32">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 1일 토요일 14:32">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">자격 증명 회전 =&gt; Secrets Manager</div>
+<div class="comment-content">자격 증명 교체 =&gt; 비밀 관리자</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,16 +526,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 04:18">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 04:18">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">다음은 시험에 대한 팁입니다. "자격 증명 회전"이 표시될 때마다 --&gt; Secrets Manager</div>
+<div class="comment-content">시험에 대한 팁은 다음과 같습니다. "자격 증명 교체"가 표시될 때마다 --&gt; Secrets Manager</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,16 +572,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ShriniW
+				슈리니W
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 07:18">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Secret Manger는 교체를 제공합니다.</div>
+<div class="comment-content">AWS Secret Manager는 교체를 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,15 +618,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 31일 (토) 18:54">
+<span class="comment-date align-middle" title="2022년 12월 31일 토요일 18:54">
 			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager를 사용하여 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 교체, 관리 및 검색할 수 있습니다. 자세한 내용은 AWS Secrets Manager란 무엇입니까? 를 참조하십시오. AWS Secrets Manager 사용 설명서에서.</div>
+<div class="comment-content">https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager를 사용하면 수명 주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 교체, 관리 및 검색할 수 있습니다. 자세한 내용은 AWS Secrets Manager란 무엇입니까?를 참조하십시오. AWS Secrets Manager 사용 설명서에 나와 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,16 +663,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Karthickdata
+				카르틱데이터
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 07:09">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">안은 A</div>
+<div class="comment-content">안스는 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -669,8 +712,8 @@
 				스피어
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 14:14">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 14:14">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -715,8 +758,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 13:36">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 13:36">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -730,7 +773,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,15 +801,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 17:24">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 17:24">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html을 사용하여 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 교체, 관리 및 검색할 수 있습니다.</div>
+<div class="comment-content">A 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html을 사용하면 수명 주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 교체, 관리 및 검색할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -830,7 +873,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 13:43">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -868,7 +911,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Feb 2023 02:52">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -970,7 +1013,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 14:00">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1016,7 +1059,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Apr 2023 14:32">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1109,7 +1152,7 @@ Whenever you see "rotate the credentials" --&gt; Secrets Manager</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 07:18">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1201,7 +1244,7 @@ To implement password rotation lifecycles, use AWS Secrets Manager. You can rota
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 07:09">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1247,7 +1290,7 @@ To implement password rotation lifecycles, use AWS Secrets Manager. You can rota
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 14:14">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1293,7 +1336,7 @@ To implement password rotation lifecycles, use AWS Secrets Manager. You can rota
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 13:36">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1339,7 +1382,7 @@ To implement password rotation lifecycles, use AWS Secrets Manager. You can rota
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 17:24">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 350 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 350 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 350 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 350 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850057">
 <p class="card-text">
 							
-								개발자는 기존 AWS Lambda 함수의 새 버전을 배포할 때 위험을 줄이려고 합니다. Lambda 함수를 테스트하려면 개발자는 기존 버전과 새 버전의 Lambda 함수 간에 트래픽을 분할해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 기존 AWS Lambda 함수의 새 버전을 배포할 때 위험을 줄이고 싶어합니다. Lambda 함수를 테스트하려면 개발자는 기존 버전과 새 버전의 Lambda 함수 간에 트래픽을 분할해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon Route 53에서 가중 라우팅 정책을 구성합니다. Lambda 함수의 버전을 가중 라우팅 정책과 연결합니다.
+											Amazon Route 53에서 가중치 기반 라우팅 정책을 구성합니다. Lambda 함수 버전을 가중치 기반 라우팅 정책과 연결합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											함수 별칭을 만듭니다. Lambda 함수의 두 버전 간에 트래픽을 분할하도록 별칭을 구성합니다.
+											함수 별칭을 만듭니다. 두 버전의 Lambda 함수 간에 트래픽을 분할하도록 별칭을 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Lambda 함수를 대상으로 사용하는 Application Load Balancer(ALB)를 생성합니다. Lambda 함수의 두 버전 간에 트래픽을 분할하도록 ALB를 구성합니다.
+											Lambda 함수를 대상으로 사용하는 ALB(Application Load Balancer)를 생성합니다. 두 버전의 Lambda 함수 간에 트래픽을 분할하도록 ALB를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											기존 버전에서 Lambda 계층으로 Lambda 함수의 새 버전을 생성합니다. 두 레이어 간에 트래픽을 분할하도록 기능을 구성합니다.
+											기존 버전의 Lambda 계층으로 Lambda 함수의 새 버전을 생성합니다. 두 레이어 간에 트래픽을 분할하는 기능을 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 11월 23일 오전 <i>
-							8:32 </i><a class="title-username" style="">
-								절대
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								absolutic
-							</a>
-							
-							at <i>
-							Nov. 23, 2022, 8:32 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,16 +291,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				피핏
+				hpipit
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 11:30">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 11:30">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">100% B가 정답입니다.</div>
+<div class="comment-content">100% B가 정답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				mrbig00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 09:20">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 09:20">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 함수 별칭을 만듭니다. Lambda 함수의 두 버전 간에 트래픽을 분할하도록 별칭을 구성합니다. Lambda 함수의 기존 버전과 새 버전 간에 트래픽을 분할하기 위해 개발자는 함수 별칭을 생성하고 두 버전 간에 트래픽을 분할하도록 구성할 수 있습니다. 함수 별칭은 Lambda 함수의 특정 버전에 대한 포인터이며 트래픽을 적절한 버전으로 라우팅하는 데 사용할 수 있습니다. 개발자는 AWS Management Console 또는 AWS CLI를 사용하여 함수 별칭을 생성하고 구성할 수 있습니다.</div>
+<div class="comment-content">B. 함수 별칭을 만듭니다. 두 버전의 Lambda 함수 간에 트래픽을 분할하도록 별칭을 구성합니다. Lambda 함수의 기존 버전과 새 버전 간에 트래픽을 분할하기 위해 개발자는 함수 별칭을 생성하고 두 버전 간에 트래픽을 분할하도록 구성할 수 있습니다. 함수 별칭은 특정 버전의 Lambda 함수에 대한 포인터이며 트래픽을 적절한 버전으로 라우팅하는 데 사용할 수 있습니다. 개발자는 AWS Management Console 또는 AWS CLI를 사용하여 함수 별칭을 생성하고 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,8 +386,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 09:58">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 09:58">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,15 +429,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 09:08">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 09:08">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 별칭에서 라우팅 구성을 사용하여 트래픽의 일부를 두 번째 기능 버전으로 보냅니다. 예를 들어 대부분의 트래픽을 기존 버전으로 보내고 적은 비율의 트래픽만 새 버전으로 보내도록 별칭을 구성하여 새 버전을 배포하는 위험을 줄일 수 있습니다. https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html</div>
+<div class="comment-content">B 별칭의 라우팅 구성을 사용하여 트래픽의 일부를 두 번째 기능 버전으로 보냅니다. 예를 들어, 대부분의 트래픽을 기존 버전으로 보내고 일부 트래픽만 새 버전으로 보내도록 별칭을 구성하여 새 버전 배포의 위험을 줄일 수 있습니다. https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -431,16 +474,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 16:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 16:15">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">나를 위해 B</div>
+<div class="comment-content">나한테는 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,15 +520,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 02:09">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 02:09">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: D https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html 버전을 사용하여 기능 배포를 관리할 수 있습니다. 예를 들어 안정적인 프로덕션 버전의 사용자에게 영향을 주지 않고 베타 테스트를 위해 함수의 새 버전을 게시할 수 있습니다. Lambda는 함수를 게시할 때마다 새 버전의 함수를 생성합니다. 새 버전은 함수의 게시되지 않은 버전의 복사본입니다. 참고: 게시되지 않은 버전의 코드가 이전에 게시된 버전과 동일한 경우 Lambda는 새 버전을 생성하지 않습니다.</div>
+<div class="comment-content">답변: D https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html 버전을 사용하여 기능 배포를 관리할 수 있습니다. 예를 들어, 안정적인 프로덕션 버전 사용자에게 영향을 주지 않고 베타 테스트를 위한 새 버전의 함수를 게시할 수 있습니다. Lambda는 함수를 게시할 때마다 새 버전의 함수를 생성합니다. 새 버전은 게시되지 않은 함수 버전의 복사본입니다. 참고: 게시되지 않은 버전의 코드가 이전에 게시된 버전과 동일한 경우 Lambda는 새 버전을 생성하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -514,15 +557,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 09:38">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 09:38">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답: B. D가 올바르지 않습니다. 미안해!</div>
+<div class="comment-content">정답 답변: B. D가 정확하지 않습니다. 죄송해요!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -531,7 +574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,15 +610,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				절대적
+				절대적인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 23일 수 08:32">
-			8개월, 4주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B입니다</div>
+<div class="comment-content">B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -636,7 +679,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 11:30">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -682,7 +725,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 09:20">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -730,7 +773,7 @@ To split traffic between the existing and new versions of a Lambda function, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 09:58">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -776,7 +819,7 @@ To split traffic between the existing and new versions of a Lambda function, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 09:08">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -823,7 +866,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 16:15">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -869,7 +912,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 02:09">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -910,7 +953,7 @@ Lambda doesn't create a new version if the code in the unpublished version is th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 09:38">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -964,7 +1007,7 @@ D is not correct. Sorry about it!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Nov 2022 08:32">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

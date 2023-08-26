@@ -186,7 +186,7 @@ def remove_exam_element(driver):
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'discussion-link'))
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'title-username'))
     except Exception as e:
-        print(f"*** Error remove_exam_element !!! {e}")
+        # print(f"*** Error remove_exam_element !!! {e}")
         pass
 
 def remove_discuss_element(driver):
@@ -456,17 +456,17 @@ def make_filename(qtitle, qid):
     # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
     #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
-        fname = 'aws/SAA_C02/SAA-Q' + format(int(qid), '04') + '.html'
+        fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
     # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
     #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
-        fname = 'aws/SAA_C03/SAA-Q' + format(int(qid), '04') + '.html'
+        fname = 'aws/SAA_C03/SAA3-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
         fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
     # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
     #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
-        fname = 'aws/SAP_C02/SAP-Q' + format(int(qid), '04') + '.html'
+        fname = 'aws/SAP_C02/SAP2-Q' + format(int(qid), '04') + '.html'
     elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
         fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
     elif qtitle == 'Exam AWS Certified Developer - Associate DVA-C02 topic 1':
@@ -739,6 +739,7 @@ def refresh_forum_list(discuss_list, forum_name):
 
 
 def read_Exam_list(fname):
+
     df = pd.read_csv(fname, delimiter='\t', encoding='utf-8', header=None,
                     names=['ExamNo', 'DiscussNo', 'DiscussURL'], 
                     index_col=False)
@@ -752,7 +753,7 @@ def refresh_all_exam(exam_list_file, qtitle):
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    for i in range(len(df))[138:139]:
+    for i in range(len(df))[10:]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
         url = str(df.at[i, 'DiscussURL'])
@@ -762,6 +763,7 @@ def refresh_all_exam(exam_list_file, qtitle):
             if (len(fname) <= 0): 
                 new_data_id = 0
             else:
+
                 new_data_id = make_question_file(driver, fname, url, did)
                 translate_page_to_kr(driver, fname)
                 save_kr(driver, fname)
@@ -774,13 +776,15 @@ def refresh_all_exam(exam_list_file, qtitle):
     driver.quit()
 
 if __name__ == "__main__":
-    # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
-    # DBS = 'Exam AWS Certified Database - Specialty topic 1'
-    # CISM = 'Exam CISM topic 1'
+    SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
+    DBS = 'Exam AWS Certified Database - Specialty topic 1'
+    CISM = 'Exam CISM topic 1'
+    refresh_all_exam('CISM_Exam.csv', CISM)
     # CISA = 'Exam CISA topic 1'
-
-    DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
-    DVA = 'Exam AWS Certified Developer Associate topic 1'
+    # refresh_all_exam('CISA_Exam.csv', CISA)
+    
+    # DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
+    # DVA = 'Exam AWS Certified Developer Associate topic 1'
     # refresh_all_exam('DVA2_Exam.csv', DVA2)
     # refresh_all_exam('DVA_Exam.csv', DVA)
 
@@ -792,6 +796,6 @@ if __name__ == "__main__":
     # FORUM_NAME = 'isaca'
     # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     
-    df = read_discuss_list(AMAZON_DISCUSS)
-    write_discuss_list(df, AMAZON_DISCUSS)
+    # df = read_discuss_list(AMAZON_DISCUSS)
+    # write_discuss_list(df, AMAZON_DISCUSS)
     # refresh_forum_list('AmazonDiscussNew.txt', 'amazon')

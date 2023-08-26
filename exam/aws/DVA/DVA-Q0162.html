@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 162 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 162 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 162 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 162 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="848045">
 <p class="card-text">
 							
-								한 회사가 AWS에 단일 페이지 애플리케이션을 배포했습니다. 애플리케이션은 Amazon S3 버킷에 자산을 저장합니다. 애플리케이션에는 S3 버킷을 오리진으로 구성한 Amazon CloudFront 배포가 있습니다. Amazon API Gateway API는 Amazon DynamoDB 테이블에 정보를 저장하는 AWS Lambda 함수에 액세스합니다. 애플리케이션은 민감한 데이터의 20개 필드가 포함된 페이로드를 수집합니다. <br/><br/>AWS에서 전체 수명 주기 동안 민감한 데이터를 보호하기 위해 개발자가 취해야 하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사가 AWS에 단일 페이지 애플리케이션을 배포했습니다. 애플리케이션은 Amazon S3 버킷에 자산을 저장합니다. 애플리케이션에는 S3 버킷을 원본으로 사용하여 구성된 Amazon CloudFront 배포가 있습니다. Amazon API Gateway API는 Amazon DynamoDB 테이블에 정보를 저장하는 AWS Lambda 함수에 액세스합니다. 애플리케이션은 민감한 데이터의 20개 필드를 포함하는 페이로드를 수집합니다. <br/><br/>AWS의 전체 수명 주기 동안 민감한 데이터를 보호하기 위해 개발자는 어떤 단계 조합을 수행해야 합니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 오리진 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다.
+											CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 원본 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Lambda@Edge가 사용할 수 있는 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다.
+											Lambda@Edge에서 사용할 수 있는 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,18 +173,18 @@
 													D.
 												</span> 
 											
-											API Gateway 프라이빗 통합을 위해 Network Load Balancer를 설정합니다.
+											API 게이트웨이 프라이빗 통합을 위해 Network Load Balancer를 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											Amazon S3 관리 암호화 키(SSE-S3)로 서버 측 암호화를 사용하여 S3 버킷에 데이터를 저장합니다. S3 버킷에서 DynamoDB 테이블로 암호화된 데이터를 전송합니다.
+											Amazon S3 관리형 암호화 키(SSE-S3)와 함께 서버 측 암호화를 사용하여 S3 버킷에 데이터를 저장합니다. 암호화된 데이터를 S3 버킷에서 DynamoDB 테이블로 전송합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,20 +194,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">AB (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">부작용(29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">AB (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">AE (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sionita
-							</a> 
-							
-							시간: <i>
-							2022년 11월 21일, 오후 4:10</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -225,16 +278,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sionita
-							</a>
-							
-							at <i>
-							Nov. 21, 2022, 4:10 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -265,13 +308,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 21:45">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 21:45">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">저에게는 A이자 B입니다. 먼저 Lambda@Edge가 사용할 수 있도록 KMS를 사용하여 AWS 키를 생성해야 합니다. 그런 다음 CloudFront에서 클라이언트 요청 및 오리진 요청을 처리할 때 암호화를 허용합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">저는 A와 B 둘 다입니다. 먼저 Lambda@Edge에서 사용할 수 있도록 KMS를 사용하여 AWS 키를 생성해야 합니다. 그런 다음 CloudFront가 클라이언트 요청 및 오리진 요청을 처리할 때 암호화를 허용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -280,7 +323,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -308,15 +351,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 26일 수 04:07">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 오리진 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다. 이 단계는 중요한 데이터가 전송 중에 암호화되도록 합니다. B. Lambda@Edge가 사용할 수 있는 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. 이 단계를 통해 중요한 데이터가 고객 관리형 키로 암호화되어 회사가 키를 더 잘 제어할 수 있습니다.</div>
+<div class="comment-content">A. CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 원본 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다. 이 단계에서는 중요한 데이터가 전송 중에 암호화되도록 보장합니다. B. Lambda@Edge에서 사용할 수 있는 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. 이 단계를 통해 중요한 데이터가 고객 관리 키로 암호화되어 회사가 키를 더 효과적으로 제어할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -325,7 +368,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -362,7 +405,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">CHatgpt에서 보기</div>
+<div class="comment-content">CHatgpt에서 확인하세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -371,7 +414,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,15 +434,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 3일 월요일 05:04">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">chatGPT에서 A와 E를 봤습니다</div>
+<div class="comment-content">chatGPT에서 A와 E를 봤어요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -447,13 +490,13 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 18일 (토) 20:54">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 18일 토요일 20:54">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">내가 틀렸을 수도 있지만 여기서 핵심은 ...민감한 데이터를 보호하는 것입니다... 이 요구 사항에서 저는 필드 수준 암호화를 이해하고 AWS KMS를 사용하여 lambda@edge를 사용하여 여기에서만 수행할 수 있습니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">제가 틀렸을 수도 있지만 여기서 핵심은 ...민감한 데이터를 보호하는 것입니다... 이 요구 사항에서 저는 필드 수준 암호화를 이해하고 있으며 여기서는 AWS KMS를 사용하여 Lambda@edge를 사용하여 수행할 수만 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -462,7 +505,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -493,13 +536,13 @@
 				미스트랄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 13:17">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 13:17">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">AE - 전체 수명 주기, 미사용 암호화 및 전송 중 암호화가 있어야 합니다. A. CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 오리진 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다. 이렇게 하면 유휴 상태, 전송 중 및 처리 중에 데이터가 암호화됩니다. Lambda@Edge 함수는 고객 관리형 AWS KMS 키를 사용하여 중요한 데이터를 암호화해야 합니다. E. Amazon S3 관리 암호화 키(SSE-S3)로 서버 측 암호화를 사용하여 S3 버킷에 데이터를 저장합니다. S3 버킷에서 DynamoDB 테이블로 암호화된 데이터를 전송합니다. 이렇게 하면 데이터가 S3 버킷에 저장되어 있을 때와 DynamoDB 테이블로 전송되는 동안 암호화됩니다. SSE-S3를 사용하면 AWS가 S3 버킷의 암호화 키를 관리하므로 키 관리가 간소화됩니다.</div>
+<div class="comment-content">AE - 완전한 수명 주기, 저장 시 암호화, 전송 시 암호화가 필요합니다. A. CloudFront가 클라이언트 요청을 처리할 때 데이터를 암호화하는 Lambda@Edge 함수를 생성합니다. 원본 요청 이벤트가 발생할 때 Lambda@Edge 함수를 호출하도록 배포를 구성합니다. 이렇게 하면 저장 중, 전송 중, 처리 중에 데이터가 암호화됩니다. Lambda@Edge 함수는 고객 관리형 AWS KMS 키를 사용하여 민감한 데이터를 암호화해야 합니다. E. Amazon S3 관리형 암호화 키(SSE-S3)와 함께 서버 측 암호화를 사용하여 S3 버킷에 데이터를 저장합니다. 암호화된 데이터를 S3 버킷에서 DynamoDB 테이블로 전송합니다. 이렇게 하면 S3 버킷에 저장된 데이터와 DynamoDB 테이블로 전송되는 동안 데이터가 암호화됩니다. SSE-S3를 사용하면 AWS가 S3 버킷의 암호화 키를 관리하므로 키 관리가 단순화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -508,7 +551,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,12 +574,12 @@
 				포멘코그레고리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 13일 (월) 16:29">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 13일 월요일 16:29">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Lambda@Edge로 데이터를 암호화하면 "그림 2: 필드 수준 암호화 프로세스" https://aws.amazon.com/blogs/security/how와 같이 스토리지까지 암호화된 상태로 유지됩니다. -to-protect-sensitive-data-for-its-ent-life-cycle-in-aws/</div>
+<div class="comment-content">제 생각에는 Lambda@Edge로 데이터를 암호화하면 "그림 2: 필드 수준 암호화 프로세스"(https://aws.amazon.com/blogs/security/how)에 표시된 것처럼 스토리지까지 암호화된 상태로 유지될 것입니다. -AWS의 전체 수명 주기 동안 민감한 데이터를 보호하려면/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -581,15 +624,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				제크
+				지크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 19일 일요일 08:25">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">E는 답 중 하나여야 합니다!</div>
+<div class="comment-content">E는 답 중 하나 여야합니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -598,7 +641,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,7 +661,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 21일 화요일 16:57">
@@ -626,7 +669,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜? lambda@edge가 데이터를 암호화하는 경우 유휴 암호화가 없더라도 S3에서 암호화된 상태로 유지됩니다(기본적으로 유휴 암호화가 있기 때문에 지금은 불가능함).</div>
+<div class="comment-content">왜? Lambda@edge가 데이터를 암호화하는 경우 저장 시 암호화가 없더라도 S3에서 암호화된 상태로 유지됩니다(현재는 기본적으로 저장 시 암호화되므로 불가능합니다).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -655,7 +698,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 21일 화요일 16:58">
@@ -663,7 +706,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">S3에는 웹 사이트 파일만 있으므로 민감한 데이터는 없습니다.</div>
+<div class="comment-content">S3에는 웹사이트 파일만 있으므로 민감한 데이터는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -672,7 +715,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -716,15 +759,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				appuNBablu
+				아푸N바블루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 08:03">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">완전히 혼란스러운 질문입니다. AWS Cloudfront는 S3를 소스로 사용하여 구성됩니다. 그런 다음 Dynamo에 데이터를 저장하는 API 게이트웨이가 Lambda 앞에 있습니다. 답은 AB입니까?</div>
+<div class="comment-content">완전히 혼란스러운 질문입니다. AWS Cloudfront는 S3를 소스로 구성됩니다. 그런 다음 Dynamo에 데이터를 저장하는 람다 앞에 API 게이트웨이가 있습니다. 대답은 AB입니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -733,7 +776,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -765,11 +808,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 12:39">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 B가 더 이해가 된다</div>
+<div class="comment-content">A와 B가 더 합리적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -778,7 +821,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,16 +849,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아유브엠크
+				ayoubmk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 11일 수 14:55">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 11일 수요일 14:55">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
-<div class="comment-content">A 및 B https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-entire-lifecycle-in-aws/</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
+<div class="comment-content">A와 B https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-entire-lifecycle-in-aws/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -824,7 +867,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -852,15 +895,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				렌매쓰
+				렌마트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 5일 목요일 16:41">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Okie는 이미 Lambda@Edge에 의해 암호화되었으므로 다시 암호화할 필요가 없습니다..</div>
+<div class="comment-content">Okie는 이미 Lambda@Edge로 암호화되었으므로 다시 암호화할 필요가 없습니다..</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -869,7 +912,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,15 +940,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				렌매쓰
+				렌마트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 5일 목요일 16:40">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 A &amp; E가 될 수 없습니까? 민감한 데이터 암호화가 S3에서도 필요할 수 있기 때문에 제가 맞습니다...</div>
+<div class="comment-content">왜 A&amp;E가 될 수 없나요? S3에서도 민감한 데이터 암호화가 필요할 수 있으므로 제 말이 맞습니다...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -914,7 +957,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -951,7 +994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -987,15 +1030,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:24">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:24">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
 <div class="comment-content">A와 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -1005,7 +1048,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1036,12 +1079,12 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 06:55">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 06:55">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AB</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AB</strong></span></div>
 <div class="comment-content">https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-entire-lifecycle-in-aws/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -1051,7 +1094,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1082,12 +1125,12 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 12:29">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 12:29">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 문서에 따라 A, B와 함께 갈 것입니다. Lambda Edge가 사용할 수 있는 KMS와 함께 Lambda @Edge 사용 참조: https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-entire-lifecycle-in-aws /</div>
+<div class="comment-content">나는 문서에 따라 A, B와 함께 갈 것입니다. Lambda Edge가 참조를 사용할 수 있는 KMS와 함께 Lambda @Edge를 사용합니다: https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-entire-lifecycle-in-aws /</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1096,7 +1139,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1127,7 +1170,7 @@
 				시오니타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 16:12">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 16:12">
 			9개월 전
 		</span>
 </div>
@@ -1141,7 +1184,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1172,7 +1215,7 @@
 				시오니타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 16:10">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 16:10">
 			9개월 전
 		</span>
 </div>
@@ -1186,7 +1229,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1284,7 +1327,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 04:07">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1368,7 +1411,7 @@ B. Generate an AWS Key Management Service (AWS KMS) customer managed key that La
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Apr 2023 05:04">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1421,7 +1464,7 @@ B. Generate an AWS Key Management Service (AWS KMS) customer managed key that La
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Mar 2023 20:54">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1467,7 +1510,7 @@ B. Generate an AWS Key Management Service (AWS KMS) customer managed key that La
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 13:17">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1511,7 +1554,7 @@ This will ensure that data is encrypted at rest in the S3 bucket, and during tra
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Mar 2023 16:29">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1565,7 +1608,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 08:25">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1700,7 +1743,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 08:03">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1745,7 +1788,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 12:39">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1790,7 +1833,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 11 Jan 2023 14:55">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1837,7 +1880,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 05 Jan 2023 16:41">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1882,7 +1925,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 05 Jan 2023 16:40">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1972,7 +2015,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:24">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2018,7 +2061,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 06:55">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2064,7 +2107,7 @@ https://aws.amazon.com/blogs/security/how-to-protect-sensitive-data-for-its-enti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 12:29">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 65 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 65 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 65 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 65 <br/>
 							주제 #: 1
@@ -72,10 +135,10 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807565">
 <p class="card-text">
 							
-								회사에는 Amazon S3 버킷에 파일을 쓰는 애플리케이션이 있습니다. 새 파일이 있을 때마다 S3 알림 이벤트는 AWS Lambda 함수를 호출하여 파일을 처리합니다. Lambda 함수 코드가 예상대로 작동합니다. 그러나 개발자가 Lambda 함수 로그를 확인할 때 개발자는 모든 파일에 대해 여러 호출이 발생함을 발견합니다. <br/>중복 항목의 원인은 무엇입니까?<br/>
+								회사에는 Amazon S3 버킷에 파일을 쓰는 애플리케이션이 있습니다. 새 파일이 있을 때마다 S3 알림 이벤트는 AWS Lambda 함수를 호출하여 파일을 처리합니다. Lambda 함수 코드가 예상대로 작동합니다. 그러나 개발자가 Lambda 함수 로그를 확인하면 모든 파일에 대해 여러 호출이 발생한다는 사실을 발견합니다. <br/>중복 항목의 원인은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807565" type="application/json">[{"voted_answers": "B", "vote_count": 24, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 11, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="807565" type="application/json">[{"voted_answers": "B", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 11, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											S3 버킷 이름이 애플리케이션에 잘못 지정되어 다른 S3 버킷을 대상으로 합니다.
+											S3 버킷 이름이 애플리케이션에 잘못 지정되어 있으며 다른 S3 버킷을 대상으로 하고 있습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Lambda 함수가 올바르게 실행되지 않았고 Lambda가 호출을 지연하여 재시도했습니다.
+											Lambda 함수가 올바르게 실행되지 않았고 Lambda가 지연된 호출을 다시 시도했습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											응용 프로그램이 간헐적으로 중지되었다가 다시 시작되어 로그가 여러 개의 작은 파일로 분할됩니다.
+											애플리케이션이 간헐적으로 중지되었다가 다시 시작되어 로그가 여러 개의 작은 파일로 분할되었습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,20 +184,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="24 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">B (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">C (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">B (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">C (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 1일 오전 <i>
-							3시 19분 </i><a class="title-username" style="">
-								JAMG54
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -155,7 +208,7 @@
 								A company has an application that writes files to an Amazon S3 bucket. Whenever there is a new file, an S3 notification event invokes an AWS Lambda function to process the file. The Lambda function code works as expected. However, when a developer checks the Lambda function logs, the developer finds that multiple invocations occur for every file.<br/>What is causing the duplicate entries?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807565" type="application/json">[{"voted_answers": "B", "vote_count": 24, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 11, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="807565" type="application/json">[{"voted_answers": "B", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 11, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -201,20 +254,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="24 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">B (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 31%; display: flex;" title="">C (31%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">3%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">B (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">C (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">3%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JAMG54
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 3:19 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,15 +289,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 14:12">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 14:12">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">코드가 올바르게 작동한다는 질문에 분명히 동의하지만 B에 투표합니다. 파일이 잘못된 버킷에 기록되는 경우 람다가 한 번도 트리거하지 않기 때문에 A일 수 없습니다. C는 AWS의 근본적인 문제를 가정합니다. 발생할 수는 있지만 발생 가능성은 낮습니다. D는 말이 되지 않습니다.</div>
+<div class="comment-content">나는 질문에 코드가 올바르게 작동한다는 것이 명확하게 명시되어 있다는 데 동의하지만 B에 투표합니다. A일 수 없습니다. 파일이 잘못된 버킷에 기록되면 람다가 한 번도 트리거되지 않기 때문입니다. C는 AWS에 근본적인 문제가 있다고 가정합니다. 발생할 수는 있지만 가능성은 낮습니다. D는 말이 안 돼요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -263,7 +306,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -286,12 +329,12 @@
 				tbhtp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 14:00">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 14:00">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">실제로 적어도 한 번은 S3가 하나의 이벤트(C 지원)에 대해 여러 번 트리거할 가능성이 있다고 제안하지만 다음 문제 해결은 재시도(B 지원)만 가리킵니다. /lambda-function-duplicate-invocations/</div>
+<div class="comment-content">실제로 적어도 한 번은 S3가 하나의 이벤트(C 지원)에 대해 여러 번 트리거할 가능성이 있다고 제안하지만 다음 문제 해결은 재시도(B 지원)만 가리킵니다. https://aws.amazon.com/premiumsupport/knowledge-center /lambda-함수-중복-호출/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -300,7 +343,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -315,6 +358,55 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988952" id="comment-988952">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				ninomfr64
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 24일 (목) 09:30">
+			1일 5시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
+<div class="comment-content">나에게는 B가 맞다. C는 동일한 이벤트가 여러 번 전달되는 것처럼 각 이벤트에 대해 서로 다른 람다 실행(ID)을 적용할 수 없습니다. 다양한 실행은 다양한 CloudWatch 로그 스트림으로 이동하며, 재시도는 동일한 실행 ID를 보유하고 동일한 CW 로그 스트림으로 이동합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -339,16 +431,13 @@
 				말레이샤
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 7월 8일 토요일 15:49">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">aws 설명서에 따라 S3 이벤트 알림은 한 번 이상 전달하도록 설계되었으며 이는 두 번 이상 전달할 수 있음을 의미합니다. Aws 참조: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications .html StackOverflow: https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-events</div>
+<div class="comment-content">aws 문서에 따르면 S3 이벤트 알림은 최소한 한 번 전달하도록 설계되어 있으며 이는 두 번 이상 전달될 수 있음을 의미합니다. Aws Ref: https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications .html StackOverflow: https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-events</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,13 +477,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 13:47">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 13:47">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 확실히 정답입니다. 람다 함수에 대한 호출이 실패하면 함수는 지연과 함께 다른 두 번 실행됩니다(그래서 동일한 ID를 가진 2~3개의 로그를 찾을 수 있습니다). 또한 함수가 세 번 스로틀링되면 디버그하도록 DLQ를 구성하고 해당 특정 이벤트에 대해 어떤 일이 발생하는지 확인할 수 있습니다.</div>
+<div class="comment-content">B가 확실히 정답입니다. 람다 함수 호출이 실패하면 함수는 지연된 상태로 두 번 더 실행됩니다. 따라서 동일한 ID를 가진 로그를 2~3개 찾을 수 있습니다. 또한 기능이 세 번 조절되면 디버깅하도록 DLQ를 구성하고 해당 특정 이벤트에 대해 어떤 일이 발생하는지 확인할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,13 +523,13 @@
 				시레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 12일 수 16:11">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 12일 수요일 16:11">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">여기서 대답은 C 녀석이어야 합니다. 가장 가능성이 높은 것입니다.</div>
+<div class="comment-content">여기서 대답은 C 녀석이어야 하며, 이것이 가장 가능성이 높은 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +538,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,16 +566,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				KDennisss
+				K데니스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 27일 (월) 12:21">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 27일 월요일 12:21">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 A는 버킷 이름이 잘못 지정된 경우 Lambda 함수가 전혀 호출되지 않기 때문에 가능성이 낮습니다. 옵션 B는 Lambda 함수가 올바르게 실행되지 않으면 전혀 호출되지 않고 로그가 생성되지 않기 때문에 가능성이 낮습니다. 로그가 여러 개의 작은 파일로 분할된 경우 각 파일에는 중복 항목이 아닌 다른 로그 항목이 포함되기 때문에 옵션 D는 가능성이 없습니다.</div>
+<div class="comment-content">옵션 A는 버킷 이름이 잘못 지정되면 Lambda 함수가 전혀 호출되지 않기 때문에 가능성이 낮습니다. 또한 옵션 B는 Lambda 함수가 올바르게 실행되지 않으면 전혀 호출되지 않고 로그도 생성되지 않기 때문에 가능성이 낮습니다. 옵션 D는 로그가 여러 개의 작은 파일로 분할된 경우 각 파일에 중복 항목이 아닌 다른 로그 항목이 포함되므로 가능성이 낮습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -495,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,15 +612,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 16일 목요일 15:20">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. - Lamda는 멱등적이어야 합니다(질문이 이 지점에 도달하려고 할 가능성이 있음). ; https://aws.amazon.com/premiumsupport/knowledge-center/lambda-function-idempotent/ Not B: 코드가 제대로 작동하는지 여부는 중요하지 않습니다. 람다 호출은 람다 코드가 좋든 나쁘든 항상 발생합니다. 이는 무언가가 람다를 여러 번 호출하고 있음을 의미합니다.</div>
+<div class="comment-content">C. - Lamda는 멱등적이어야 합니다(질문이 이 지점에 도달하려고 할 가능성이 있음) https://aws.amazon.com/premiumsupport/knowledge-center/lambda-function-duplicate-invocations/에서는 Lamba가 중복 호출을 처리해야 한다고 제안합니다. ; https://aws.amazon.com/premiumsupport/knowledge-center/lambda-function-idempotent/ B 아님: 코드가 작동하는지 제대로 작동하지 않는지는 중요하지 않습니다. 람다 호출은 람다 코드가 얼마나 좋든 나쁘든 상관없이 항상 발생합니다. 이는 무언가가 람다를 여러 번 호출하고 있음을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,12 +661,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 27일 (월) 20:22">
-			5개월, 3주 전
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 이 시나리오에 대한 정답입니다. 중복 항목은 동일한 S3 알림 이벤트를 여러 번 전달하는 Amazon S3로 인해 발생합니다. S3 알림 이벤트는 한 번만 전달된다는 보장이 없으며, 이벤트가 중복되거나 순서 없이 전달될 수 있습니다. 이는 네트워크 문제, 처리 지연 또는 기타 요인으로 인해 발생할 수 있습니다.</div>
+<div class="comment-content">옵션 C는 이 시나리오의 정답입니다. Amazon S3가 동일한 S3 알림 이벤트를 여러 번 전달하여 중복 항목이 발생합니다. S3 알림 이벤트는 한 번만 전달된다는 보장이 없으며, 이벤트가 중복되거나 순서 없이 전달될 수 있습니다. 이는 네트워크 문제, 처리 지연 또는 기타 요인으로 인해 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,12 +707,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 07:39">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">'모든 파일에 대한 다중 호출'과 'Lambda 함수 코드가 예상대로 작동합니다' 사이에 충돌이 없습니다. '예상대로 작동'은 오류가 포착되어 다시 채워지는 것을 의미하지 않습니다. Lambda 코드가 작동하지만 파일(모든 파일)을 완료하려면 여러 번 실행해야 할 수 있습니다. ASYNC 처리에 종소리가 울리므로 B를 선택합니다.</div>
+<div class="comment-content">'모든 파일에 대한 다중 호출'과 'Lambda 함수 코드가 예상대로 작동합니다' 사이에는 충돌이 없습니다. '예상대로 작동합니다'는 오류가 발견되지 않고 다시 채워지는 것을 의미하지 않습니다. = Lambda 코드는 작동하지만 파일(모든 파일)을 완료하려면 여러 번 실행해야 합니다. ASYNC 처리 시 벨이 울리므로 B를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -660,15 +749,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				sweetheatmn
+				아가야
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 22:05">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 22:05">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문에 "The Lambda 함수 코드가 예상대로 작동합니다"라고 명확하게 명시되어 있음에도 불구하고 대부분의 답변이 B로 가는 이유는 C로 갑니다. ChatGPT는 다음과 같이 생각합니다. S3 버킷에 많은 수의 객체가 있는 경우 S3는 여러 S3 이벤트 알림을 보낼 수 있습니다. 특히 객체가 빠르게 업로드되거나 수정되는 경우 동일한 객체에 대해. 이는 S3가 높은 내구성과 가용성을 제공하도록 설계되었고 모든 이벤트 알림이 전달되도록 보장하기 때문입니다. 그러나 이로 인해 Lambda 함수에서 중복 이벤트 알림을 수신하게 될 수 있습니다.</div>
+<div class="comment-content">질문에 "Lambda 함수 코드가 예상대로 작동합니다"라고 명확하게 명시되어 있음에도 불구하고 대부분의 답변이 B로 가는 이유는 C를 사용하는 것입니다. ChatGPT가 생각하는 것은 다음과 같습니다. S3 버킷에 객체가 많을 때 S3는 여러 S3 이벤트 알림을 보낼 수 있습니다. 특히, 객체가 빠르게 업로드되거나 수정되는 경우에는 더욱 그렇습니다. 이는 S3가 높은 내구성과 가용성을 제공하도록 설계되었으며 모든 이벤트 알림이 전달되도록 보장하기 때문입니다. 그러나 이로 인해 Lambda 함수가 중복된 이벤트 알림을 수신할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -677,7 +766,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -697,15 +786,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Rpod
+				R포드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 4일 목요일 08:19">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">흠 chatGpt가 새로운 것을 배웠나요? 이것이 오늘날 말하는 것입니다. 중복 호출의 가장 가능성이 높은 원인은 Lambda 함수가 올바르게 실행되지 않았고 AWS Lambda가 호출을 자동으로 재시도하고 있기 때문입니다. Lambda 함수가 오류를 반환하면 Lambda는 호출을 자동으로 두 번 재시도하며 재시도 사이에는 지연이 있습니다. 함수가 계속해서 오류를 반환하면 호출이 더 이상 재시도되지 않습니다. 개발자는 Lambda 함수의 오류 처리 및 로깅을 확인하여 문제를 진단하고 해결할 수 있습니다. 또한 개발자는 함수를 동시에 여러 번 호출하지 않도록 함수의 동시성 제한을 구성하고 배달 못한 편지 대기열을 사용하여 성공적으로 처리되지 않은 이벤트를 캡처할 수 있습니다.</div>
+<div class="comment-content">흠 chatGpt가 뭔가 새로운 것을 배웠나요? 오늘은 이렇게 말합니다. 중복 호출의 가장 가능성 있는 원인은 Lambda 함수가 올바르게 실행되지 않았고 AWS Lambda가 자동으로 호출을 재시도하는 것입니다. Lambda 함수가 오류를 반환하면 Lambda는 자동으로 호출을 두 번 재시도하며 재시도 간에 지연이 발생합니다. 함수가 계속해서 오류를 반환하면 호출이 더 이상 재시도되지 않습니다. 개발자는 Lambda 함수의 오류 처리 및 로깅을 확인하여 문제를 진단하고 해결할 수 있습니다. 또한 개발자는 함수를 동시에 여러 번 호출하지 않도록 함수의 동시성 제한을 구성하고 배달 못한 편지 대기열을 사용하여 성공적으로 처리되지 않은 이벤트를 캡처할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -714,7 +803,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -746,11 +835,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 24일 금요일 14:59">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AI 친구에게 참고 부탁해, 내가 너라면 AI 친구 없이는 믿지 않을거야</div>
+<div class="comment-content">AI 친구에게 참고 자료를 요청하세요. 내가 당신이라면 AI 친구 없이는 믿을 수 없을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -759,7 +848,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -799,12 +888,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 14:57">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Lambda 오류 핸들러가 제대로 구현되지 않고 함수가 실행을 재시도합니다. ChatGPT의 답변에 의존해서는 안됩니다.</div>
+<div class="comment-content">Lambda 오류 핸들러가 제대로 구현되지 않아 함수가 실행을 다시 시도합니다. ChatGPT의 답변에 의존해서는 안됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -813,7 +902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -841,15 +930,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토니쇼크
+				토니초크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 17:30">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 17:30">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 ChatGPT에 물었고 대답은 아마도 C와 더 비슷하다고 합니다. 요점은 질문이 우리에게 말하는 것입니다: "람다 함수 코드가 예상대로 작동하지만 ..." 그러나 대답 B는 "람다 함수가 올바르게 실행되지 않았습니다. , ..."</div>
+<div class="comment-content">ChatGPT에 물었더니 대답이 아마도 C와 비슷하다고 합니다. 중요한 점은 질문에서 "Lambda 함수 코드가 예상대로 작동합니다. ..."라고 말하지만 B 대답에는 "Lambda 함수가 올바르게 실행되지 않았습니다"라고 표시되어 있다는 것입니다. , ..."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -858,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -886,15 +975,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				may2021_r
+				2021년 5월
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 17:47">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 17:47">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나에게 정답은 C입니다. Amazon S3는 동일한 이벤트를 여러 번 전달합니다. 중복 항목은 동일한 S3 알림 이벤트를 여러 번 전달하는 Amazon S3로 인해 발생했을 가능성이 큽니다. 이는 S3 버킷에 여러 이벤트 알림이 구성되어 있거나 이벤트 알림 전달이 지연되어 S3가 알림을 재시도하는 경우에 발생할 수 있습니다.</div>
+<div class="comment-content">내 경우 정답은 C입니다. Amazon S3는 동일한 이벤트를 여러 번 전달합니다. 중복 항목은 Amazon S3가 동일한 S3 알림 이벤트를 여러 번 전달했기 때문에 발생할 가능성이 높습니다. 이는 S3 버킷에 여러 이벤트 알림이 구성되어 있거나 이벤트 알림 전달이 지연되어 S3가 알림을 다시 시도하는 경우 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -903,7 +992,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,11 +1024,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 11:12">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실히 A는 아닙니다. 중복 항목이 로그에 있다고 표시되면 호출이 두 번 이상 수행된 어딘가에 있어야 합니다~ 재시도 중입니다. 따라서 옵션 B. 그리고 다른 S3 버킷이 지정된 경우 로그에 단일 호출 항목도 없어야 합니다.</div>
+<div class="comment-content">확실히 A는 아닙니다. 로그에 중복된 항목이 있다는 메시지가 표시되면 호출이 두 번 이상 수행된 위치에 있어야 합니다. 재시도하는 중입니다. 따라서 옵션 B. 그리고 다른 S3 버킷이 지정된 경우 로그에 호출 항목이 하나도 있어서는 안 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -948,7 +1037,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -976,11 +1065,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언제부터
+				언제보다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 12일 목요일 03:06">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -993,7 +1082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1025,11 +1114,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 12:51">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1038,7 +1127,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1066,16 +1155,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 20:53">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 20:53">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 작은 S3 파일에 대해 코드가 올바르게 작동하는 이벤트 때문에 큰 S3 파일에 대해 람다가 시간 초과되어 여러 번의 람다 재시도가 발생할 수 있습니다. https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html</div>
+<div class="comment-content">B. 코드가 작은 S3 파일에 대해 올바르게 작동하는 경우 큰 S3 파일에 대해 람다가 시간 초과되어 람다 재시도가 여러 번 발생할 수 있기 때문입니다. https://docs.aws.amazon.com/lambda/latest/dg/invocation-retries.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1084,7 +1173,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1116,12 +1205,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 17일 목요일 19:15">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 이벤트가 적어도 한 번이기 때문에 A가 아닙니다. 버킷이 잘못된 경우 객체와 연결할 수 없기 때문에 B가 아닙니다. 람다가 제대로 작동한다고 하기 때문입니다.</div>
+<div class="comment-content">C는 이벤트가 적어도 한 번은 A가 아니기 때문입니다. 잘못된 버킷이었다면 객체와 연결할 수 없기 때문입니다. 람다가 제대로 작동한다고 말하기 때문에 B가 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1130,7 +1219,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1150,15 +1239,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 (금) 16:38">
+<span class="comment-date align-middle" title="2022년 12월 30일 금 16:38">
 			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">뛰어난 상세한 탐정 작업! 제대로 작동한다는 것은 제대로 작동한다는 것을 여러 번 의미할 수 있고 로그에 "모든 파일에 대해 여러 호출이 발생함"이 표시되지만 ... 요컨대 Amazon의 잘못일 수는 없습니다. 특히 시험 중에는 아닙니다 :-)</div>
+<div class="comment-content">훌륭하고 상세한 탐정 작업! 제대로 작동하면 여러 번 제대로 작동할 수 있으며 로그에는 "모든 파일에 대해 여러 호출이 발생합니다"가 표시되지만 ... 결론적으로, 특히 시험 중에는 그렇지 않은 것이 Amazon의 잘못일 수는 없습니다. :-)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1167,7 +1256,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1199,11 +1288,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 17일 목요일 19:23">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"이벤트 간에 시퀀스 키가 일치하면 내보내기 프로세스가 객체를 한 번 업로드하지만 Amazon S3는 중복 이벤트를 생성하고 이벤트를 동일한 시퀀스 키로 매핑하여 여러 Lambda 호출을 발생시킵니다. 이것은 재시도 특성으로 인해 발생하는 드문 조건입니다. Amazon S3 서비스 및 해결 방법은 시퀀서 키 값을 저장하고 비교하여 각 이벤트 알림이 처리될 때 중복을 확인하는 것입니다." https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-events</div>
+<div class="comment-content">"이벤트 간에 시퀀스 키가 일치하는 경우 내보내기 프로세스는 객체를 한 번 업로드하지만 Amazon S3는 중복 이벤트를 생성하고 동일한 시퀀스 키로 이벤트를 매핑하여 여러 Lambda 호출을 발생시킵니다. 이는 재시도 특성으로 인해 발생하는 드문 조건입니다. Amazon S3 서비스의 문제이며 해결 방법은 시퀀서 키 값을 저장하고 비교하여 각 이벤트 알림이 처리될 때 중복이 있는지 확인하는 것입니다." https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-events</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1212,7 +1301,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1251,12 +1340,12 @@
 				AK34180
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 26일 (월) 17:34">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 26일 월요일 17:34">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">b가 가장 많이 투표된 이유는 분명히 람다가 예상대로 작동하고 있음을 나타냅니다.</div>
+<div class="comment-content">b가 가장 많이 투표된 이유는 람다가 예상대로 작동하고 있음을 분명히 나타냅니다. A여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1265,7 +1354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1289,11 +1378,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 13일 목요일 17:30">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 이 경우 람다는 전혀 호출되지 않습니다.</div>
+<div class="comment-content">하지만 이 경우 람다는 전혀 호출되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1302,7 +1391,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1338,16 +1427,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				전사예
+				전사응
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 26일 (월) 11:26">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 26일 월요일 11:26">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">나도 그것의 C를 생각했지만 문서에 따라 두 번 보내지 않습니다. 여기를 보세요 https://stackoverflow.com/a/40196853</div>
+<div class="comment-content">나도 C라고 생각했지만 문서에 따르면 두 번 보내지 않습니다. 여기에서 살펴보십시오 https://stackoverflow.com/a/40196853</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1356,7 +1445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1384,11 +1473,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 20일 화요일 14:44">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 20일 화 14:44">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1402,7 +1491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1433,12 +1522,12 @@
 				굽타삭
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 11일 일 06:51">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 11일 일요일 06:51">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 아래 페이지에서 "Amazon S3 이벤트 알림은 최소 한 번은 전달되도록 설계되었습니다."를 참조하면 됩니다. 즉, 동일한 이벤트가 여러 번 통지될 가능성이 있습니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</div>
+<div class="comment-content">C 아래 페이지에서 "Amazon S3 이벤트 알림은 한 번 이상 전달되도록 설계되었습니다."를 참조하면. 이는 가능성이 여러 번 통보된 동일한 이벤트임을 의미합니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1447,7 +1536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1467,15 +1556,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아르노92
+				Arnaud92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 13일 목요일 09:10">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 13일 (목) 09:10">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이지만 여기에서는 모든 파일에 대해 여러 호출이 발생합니다. 이벤트를 여러 번 전송하는 S3 때문이라면 거의 발생하지 않습니다. 이것은 모든 파일에 대한 첫 번째 호출에서 시간 초과되는 람다 함수일 가능성이 높으므로 재시도 후 다시 호출되고 성공적으로 완료됩니다.</div>
+<div class="comment-content">사실이지만 여기서는 모든 파일에 대해 여러 호출이 발생합니다. S3가 이벤트를 여러 번 전송했기 때문에 발생하는 경우는 거의 발생하지 않습니다. 이는 모든 파일에 대한 첫 번째 호출에서 람다 함수가 시간 초과되어 다시 호출되고 재시도 후 성공적으로 완료될 가능성이 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1484,7 +1573,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1523,13 +1612,13 @@
 				PVR
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 5일 월요일 14:10">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 5일 (월) 14:10">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B여야 합니다.</div>
+<div class="comment-content">B여야 한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1538,7 +1627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1558,15 +1647,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시드빅
+				시빅
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 6일 화요일 08:30">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 6일 (화) 08:30">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 질문에는 "Lambda 함수 코드가 예상대로 작동합니다"라고 나와 있습니다. 질문에 AWS Lambda가 올바르게 작동한다고 하는데 왜 AWS Lambda가 실패해야 합니까?</div>
+<div class="comment-content">하지만 질문에는 "Lambda 함수 코드가 예상대로 작동합니다"라고 나와 있습니다. AWS Lambda가 올바르게 작동한다고 질문하는데 왜 실패해야 합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1575,7 +1664,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1611,16 +1700,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시드빅
+				시빅
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 4일 일요일 08:53">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저에게 대답은 A입니다. "개발자는 모든 파일에 대해 여러 호출이 발생한다는 것을 발견했습니다."</div>
+<div class="comment-content">나에게 대답은 A입니다. "개발자는 모든 파일에 대해 여러 호출이 발생한다는 것을 발견했습니다"라는 질문이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1629,7 +1718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1675,7 +1764,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1703,7 +1792,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 15:06">
@@ -1712,7 +1801,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">S3 이벤트 알림이 중복 이벤트로 이어질 수 있는 FIFO 대기열 대신 표준 SQS 대기열을 사용할 수 있으므로 대답은 C일 수 있습니다. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html</div>
+<div class="comment-content">S3 이벤트 알림이 FIFO 대기열 대신 표준 SQS 대기열을 사용하여 이벤트가 중복될 수 있으므로 대답은 C일 수 있다고 생각합니다. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1721,7 +1810,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1749,15 +1838,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잼54
+				JAMG54
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 03:19">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그들 중 어느 것도 나에게 의미가 없습니다. 람다가 데이터를 처리할 시간이 충분하지 않은 것 같습니다. 따라서 코드가 제대로 작동하더라도 실행이 끝나기 전에 시간 초과에 도달하여 여러 이벤트가 전달되는 것처럼 보일 수 있습니다. 일부는 정답이 무엇이며 왜 그런지 설명할 수 있습니까?</div>
+<div class="comment-content">그들 중 아무것도 나에게 의미가 없습니다. 제 생각에는 람다가 데이터를 처리할 시간이 충분하지 않은 것 같습니다. 따라서 코드가 제대로 작동하더라도 때로는 실행이 끝나기 전에 시간 초과에 도달하여 여러 이벤트가 전달되는 것처럼 보일 수 있습니다. 어떤 사람들은 정답이 무엇이며 왜 정답인지 설명할 수 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1766,7 +1855,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1821,7 +1910,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 14:12">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1859,7 +1948,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 14:00">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1896,6 +1985,55 @@
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988952" id="comment-988952">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				ninomfr64
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Thu 24 Aug 2023 09:30">
+			1 day, 5 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">For me B is correct. C cannot be as if we have same event delivered multiple times we will a different lambda execution (ID) for each events. Different executions goes into different CloudWatch log streams, while retries hold the same execution ID and goes in the same CW log streams</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="946526" id="comment-946526">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1911,11 +2049,8 @@
 				MalayShah
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 15:49">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1964,7 +2099,7 @@ StackOverflow: https://stackoverflow.com/questions/56772299/s3-notification-crea
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 13:47">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2010,7 +2145,7 @@ StackOverflow: https://stackoverflow.com/questions/56772299/s3-notification-crea
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Apr 2023 16:11">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2056,7 +2191,7 @@ StackOverflow: https://stackoverflow.com/questions/56772299/s3-notification-crea
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 12:21">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2106,7 +2241,7 @@ Option D is not likely because if the logs were split into multiple smaller file
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 15:20">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2154,7 +2289,7 @@ It does not matter if the code works or does not work correctly. The invocation 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 20:22">
-			5 months, 3 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2200,7 +2335,7 @@ It does not matter if the code works or does not work correctly. The invocation 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 07:39">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2252,7 +2387,7 @@ It   rings a bell  on  ASYNC  processing ,  thus I choose B.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 22:05">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2293,7 +2428,7 @@ When an S3 bucket has a large number of objects, S3 may send multiple S3 event n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 04 May 2023 08:19">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2338,7 +2473,7 @@ When an S3 bucket has a large number of objects, S3 may send multiple S3 event n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 14:59">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2391,7 +2526,7 @@ When an S3 bucket has a large number of objects, S3 may send multiple S3 event n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 14:57">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2437,7 +2572,7 @@ When an S3 bucket has a large number of objects, S3 may send multiple S3 event n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 17:30">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2488,7 +2623,7 @@ but answer B shows
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 17:47">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2535,7 +2670,7 @@ The duplicate entries are most likely being caused by Amazon S3 delivering the s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 11:12">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2580,7 +2715,7 @@ The duplicate entries are most likely being caused by Amazon S3 delivering the s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 12 Jan 2023 03:06">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2626,7 +2761,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 12:51">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2671,7 +2806,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 20:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2717,7 +2852,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 19:15">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2804,7 +2939,7 @@ it's not B because it says the lambda works properly</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 19:23">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2859,7 +2994,7 @@ https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-ev
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Sep 2022 17:34">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2896,7 +3031,7 @@ https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-ev
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 17:30">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2949,7 +3084,7 @@ https://stackoverflow.com/questions/56772299/s3-notification-creates-multiple-ev
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Sep 2022 11:26">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2996,7 +3131,7 @@ Please have a look here https://stackoverflow.com/a/40196853</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Sep 2022 14:44">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3042,7 +3177,7 @@ Please have a look here https://stackoverflow.com/a/40196853</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Sep 2022 06:51">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3081,7 +3216,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 09:10">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3134,7 +3269,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Sep 2022 14:10">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3172,7 +3307,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Sep 2022 08:30">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3225,7 +3360,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Sep 2022 08:53">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3367,7 +3502,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 03:19">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

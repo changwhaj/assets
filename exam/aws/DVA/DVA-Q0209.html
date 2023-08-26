@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 209 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 209 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 209 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 209 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849887">
 <p class="card-text">
 							
-								회사에서 애플리케이션을 Amazon EC2 인스턴스로 마이그레이션했습니다. 자동 조정은 애플리케이션 사용자 인터페이스에서 잘 작동합니다. 그러나 회사 창고 직원에게 배송 요청을 전달하는 프로세스에 문제가 있습니다. 중복 배송 요청이 도착하고 있으며 일부 요청은 분실되거나 순서가 맞지 않게 도착합니다. <br/><br/>회사는 중복 배송 요청을 피하고, 요청이 도착한 순서대로 처리해야 합니다. 요청 크기는 250KB를 넘지 않으며 처리하는 데 5~10분이 걸립니다. 개발자는 요청 전달 및 처리의 안정성을 개선하기 위해 응용 프로그램을 다시 설계해야 합니다. <br/><br/>개발자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								회사에서 애플리케이션을 Amazon EC2 인스턴스로 마이그레이션했습니다. 자동 크기 조정은 애플리케이션 사용자 인터페이스에 적합하게 작동합니다. 그러나 회사 창고 직원에게 배송 요청을 전달하는 과정에서 문제가 발생합니다. 중복된 배송 요청이 도착하고 일부 요청이 분실되거나 순서 없이 도착합니다. <br/><br/>회사는 중복된 배송 요청을 피하고 요청이 도착한 순서대로 요청을 처리해야 합니다. 요청 크기는 250KB를 초과할 수 없으며 처리하는 데 5~10분이 소요됩니다. 개발자는 요청 전달 및 처리의 안정성을 향상시키기 위해 애플리케이션을 다시 설계해야 합니다. <br/><br/>이러한 요구 사항을 충족하려면 개발자는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849887" type="application/json">[{"voted_answers": "D", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="849887" type="application/json">[{"voted_answers": "D", "vote_count": 15, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											요청을 처리할 Amazon Kinesis Data Firehose 전송 스트림을 생성합니다. Amazon Kinesis 데이터 스트림을 생성합니다. Kinesis 데이터 스트림에 요청을 쓰도록 애플리케이션을 수정합니다.
+											요청을 처리하기 위해 Amazon Kinesis Data Firehose 전송 스트림을 생성합니다. Amazon Kinesis 데이터 스트림을 생성합니다. Kinesis 데이터 스트림에 요청을 쓰도록 애플리케이션을 수정합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											요청을 처리할 AWS Lambda 함수를 생성합니다. Amazon Simple Notification Service(Amazon SNS) 주제를 생성합니다. SNS 주제에 Lambda 함수를 구독합니다. SNS 주제에 요청을 쓰도록 애플리케이션을 수정합니다.
+											요청을 처리할 AWS Lambda 함수를 생성합니다. Amazon Simple 알림 서비스(Amazon SNS) 주제를 생성합니다. SNS 주제에 Lambda 함수를 구독합니다. SNS 주제에 요청을 쓰도록 애플리케이션을 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">D (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">D (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a> 
-							
-							시간: <i>
-							2022년 11월 25일, 오전 10:59</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849887" type="application/json">[{"voted_answers": "D", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="849887" type="application/json">[{"voted_answers": "D", "vote_count": 15, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">D (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">D (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 10:59 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -255,16 +298,16 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">SQS FIFO 대기열은 중복을 피하고 주문도 보장해야 한다는 요구 사항을 감안할 때 이 시나리오에 적합합니다. 확실히 디.</div>
+<div class="comment-content">요구 사항에 따라 중복을 피하고 순서도 보장해야 한다는 점을 고려하면 SQS FIFO 대기열은 이 시나리오에 적합합니다. 확실히 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,16 +335,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 13:45">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 13:45">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D는 중복 배송 요청을 피하고 도착한 순서대로 요청을 처리하는 요구 사항을 충족하므로 최상의 솔루션입니다. 이것은 Amazon Simple Queue Service(Amazon SQS) FIFO(First-In-First-Out) 대기열을 사용하여 달성됩니다. FIFO 대기열은 메시지가 송수신되는 순서가 엄격하게 유지되고 각 메시지가 한 번 전달되고 소비자가 메시지를 처리하고 삭제할 때까지 사용 가능한 상태로 유지되도록 설계되었습니다. 요청을 처리하는 AWS Lambda 함수를 생성하고 SQS FIFO 대기열을 Lambda 함수의 이벤트 소스로 설정함으로써 애플리케이션은 요청을 SQS 대기열에 쓸 수 있고 Lambda 함수는 요청이 도착한 순서대로 요청을 처리합니다. 모든 중복. 이렇게 하면 요청 전달 및 처리의 안정성이 향상됩니다.</div>
+<div class="comment-content">옵션 D는 중복 배송 요청을 방지하고 도착 순서대로 요청을 처리해야 하는 요구 사항을 충족하므로 가장 좋은 솔루션입니다. 이는 Amazon Simple Queue Service(Amazon SQS) FIFO(선입선출) 대기열을 사용하여 달성됩니다. FIFO 대기열은 메시지 전송 및 수신 순서가 엄격하게 유지되고 각 메시지가 한 번 전달된 후 소비자가 이를 처리하고 삭제할 때까지 계속 사용할 수 있도록 설계되었습니다. 요청을 처리하는 AWS Lambda 함수를 생성하고 SQS FIFO 대기열을 Lambda 함수의 이벤트 소스로 설정함으로써 애플리케이션은 SQS 대기열에 요청을 쓸 수 있으며 Lambda 함수는 요청이 도착하는 순서대로 처리합니다. 모든 중복. 이를 통해 요청 전달 및 처리의 신뢰성이 향상됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,13 +384,13 @@
 				시레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 15일 (토) 06:05">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 15일 토요일 06:05">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">이 질문은 까다롭습니다. 답은 C입니다. 옵션 D는 Amazon SQS FIFO 대기열을 사용하여 요청을 처리할 것을 제안합니다. 이렇게 하면 메시지가 수신된 순서대로 처리됩니다. 그러나 중복 메시지 도착 문제는 다루지 않습니다. FIFO 대기열은 중복 메시지가 전송되는 것을 막지는 않지만 수신된 순서대로 처리되도록 합니다. 중복을 방지하려면 중복 제거 논리를 구현하도록 응용 프로그램을 수정해야 합니다. 옵션 C는 AWS Lambda 함수를 사용하여 요청을 처리하고 Amazon SQS 표준 대기열을 이벤트 소스로 사용할 것을 제안합니다. 이 구성을 통해 애플리케이션은 대기열에서 중복 제거를 활성화하여 메시지가 중복되지 않도록 할 수 있습니다. 따라서 이 시나리오에서는 옵션 C가 옵션 D보다 더 나은 솔루션입니다.</div>
+<div class="comment-content">이 질문은 까다롭습니다. 대답은 C입니다. 옵션 D에서는 Amazon SQS FIFO 대기열을 사용하여 요청을 처리할 것을 제안합니다. 이는 메시지가 수신된 순서대로 처리되도록 보장합니다. 그러나 중복된 메시지 도착 문제는 해결되지 않습니다. FIFO 대기열은 중복된 메시지가 전송되는 것을 방지하지 않지만 수신된 순서대로 처리되도록 보장합니다. 중복을 방지하려면 중복 제거 논리를 구현하도록 애플리케이션을 수정해야 합니다. 옵션 C는 AWS Lambda 함수를 사용하여 요청을 처리하고 Amazon SQS 표준 대기열을 이벤트 소스로 사용할 것을 제안합니다. 이 구성을 사용하면 애플리케이션이 대기열에서 중복 제거를 활성화하여 메시지가 중복되지 않도록 할 수 있습니다. 따라서 이 시나리오에서는 옵션 C가 옵션 D보다 더 나은 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,13 +399,58 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988127" id="comment-988127">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				야니스GTR
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 23일 수요일 11:06">
+			2일 4시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">회사는 중복 배송 요청을 피해야 하며 요청이 도착한 순서대로 요청을 처리해야 합니다. &lt;&lt;&lt; (D) bro입니다. 질문을 다시 읽어주세요.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -388,11 +476,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 07:03">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실히 D 이 옵션에서도 중복 제거 ID를 기대했지만 'FIFO'가 언급되었으므로 괜찮습니다.</div>
+<div class="comment-content">확실히 D 이 옵션에도 중복 제거 ID가 있을 것으로 예상했는데 'FIFO'가 언급되었으니 괜찮습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -429,16 +517,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 04:58">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 04:58">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">중복을 방지하려면 SQS FIFO 대기열이 필요합니다. SQS 표준 대기열은 중복을 도입할 수 있습니다.</div>
+<div class="comment-content">중복을 방지하려면 SQS FIFO 대기열이 필요합니다. SQS 표준 대기열에는 중복이 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,13 +566,13 @@
 				A_Q
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 11:12">
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 11:12">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문은 "중복 배송 요청을 피하고 요청이 도착하는 순서대로 요청을 처리해야 합니다"를 묻는 것입니다. 이는 확실히 SQS FIFO임을 의미합니다.</div>
+<div class="comment-content">질문은 "중복 배송 요청을 피하고 요청이 도착하는 순서대로 요청을 처리해야 합니다"라고 묻는 것입니다. 이는 확실히 SQS FIFO를 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,12 +613,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:15">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">SQS FIFO. 디이다</div>
+<div class="comment-content">SQS FIFO. D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,16 +655,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				노살
+				코
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 23:21">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 정답입니다</div>
+<div class="comment-content">D가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,8 +704,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 11:20">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 11:20">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -631,7 +719,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,11 +747,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 10:59">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 10:59">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -677,7 +765,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -742,7 +830,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -775,7 +863,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 13:45">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -822,7 +910,7 @@ By creating an AWS Lambda function to process the requests and setting the SQS F
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Apr 2023 06:05">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -846,6 +934,51 @@ To prevent duplicates, the application needs to be modified to implement dedupli
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988127" id="comment-988127">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				YanisGTR
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Wed 23 Aug 2023 11:06">
+			2 days, 4 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">The company must avoid duplicate shipping requests and must process the requests in the order that the requests arrive &lt;&lt;&lt; it's (D) bro pls read question again</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -871,7 +1004,7 @@ To prevent duplicates, the application needs to be modified to implement dedupli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 07:03">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1142,7 @@ I was expecting a deduplication ID as well in this option but it is fine since '
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:15">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1188,7 @@ I was expecting a deduplication ID as well in this option but it is fine since '
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 23:21">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1101,7 +1234,7 @@ I was expecting a deduplication ID as well in this option but it is fine since '
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 11:20">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1148,7 +1281,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 10:59">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

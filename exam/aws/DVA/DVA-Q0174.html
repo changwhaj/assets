@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 174 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 174 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 174 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 174 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="848057">
 <p class="card-text">
 							
-								금융회사는 법적인 이유로 원본 고객 기록을 10년 동안 보관해야 합니다. 완전한 기록에는 개인 식별 정보(PII)가 포함됩니다. 현지 규정에 따릅니다. PII는 회사의 특정 사람들만 사용할 수 있으며 제3자와 공유해서는 안 됩니다. 회사는 PII를 공유하지 않고 통계 분석을 위해 타사 조직에서 레코드를 사용할 수 있도록 해야 합니다. <br/><br/>개발자는 변경 불가능한 원본 레코드를 Amazon S3에 저장하려고 합니다. S3 문서에 액세스하는 사람에 따라 문서를 있는 그대로 반환하거나 모든 PII를 제거한 상태로 반환해야 합니다. 개발자는 문서에서 PII를 제거하기 위해 AWS Lambda 함수를 작성했습니다. 이 함수의 이름은 removePii입니다.<br/><br/>문서 사본 하나만 유지하면서 회사가 PII 요구 사항을 충족할 수 있도록 개발자는 어떻게 해야 합니까?
+								금융회사는 법적인 이유로 고객기록 원본을 10년간 보관해야 합니다. 완전한 기록에는 개인 식별 정보(PII)가 포함되어 있습니다. 현지 규정에 따릅니다. PII는 회사의 특정 직원만 사용할 수 있으며 제3자와 공유해서는 안 됩니다. 회사는 PII를 공유하지 않고 통계 분석을 위해 제3자 조직에 기록을 제공해야 합니다. <br/><br/>개발자는 변경 불가능한 원본 레코드를 Amazon S3에 저장하려고 합니다. S3 문서에 액세스하는 사람에 따라 문서는 있는 그대로 반환되거나 모든 PII가 제거된 상태로 반환되어야 합니다. 개발자는 문서에서 PII를 제거하기 위해 AWS Lambda 함수를 작성했습니다. 이 함수의 이름은 RemovePii입니다.<br/><br/>회사가 문서 사본을 하나만 유지하면서 PII 요구 사항을 충족할 수 있도록 개발자는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											S3 GET 요청이 있을 때 removePii 함수를 호출하는 S3 이벤트 알림을 설정합니다. PII 없이 객체에 액세스하려면 GET 요청을 사용하여 Amazon S3를 호출하십시오.
+											S3 GET 요청이 이루어질 때 RemovePii 함수를 호출하는 S3 이벤트 알림을 설정하십시오. PII 없이 객체에 액세스하려면 GET 요청을 사용하여 Amazon S3를 호출합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											S3 PUT 요청이 있을 때 removePii 함수를 호출하는 S3 이벤트 알림을 설정합니다. PII 없이 객체에 액세스하려면 PUT 요청을 사용하여 Amazon S3를 호출하십시오.
+											S3 PUT 요청이 있을 때 RemovePii 기능을 호출하는 S3 이벤트 알림을 설정합니다. PII 없이 객체에 액세스하려면 PUT 요청을 사용하여 Amazon S3를 호출합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											S3 콘솔에서 S3 객체 Lambda 액세스 포인트를 생성합니다. removePii 기능을 선택합니다. S3 액세스 포인트를 사용하여 PII 없이 객체에 액세스합니다.
+											S3 콘솔에서 S3 객체 Lambda 액세스 포인트를 생성합니다. RemovePii 기능을 선택합니다. PII 없이 객체에 액세스하려면 S3 액세스 포인트를 사용하십시오.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											S3 콘솔에서 S3 액세스 포인트를 생성합니다. 액세스 포인트 이름을 사용하여 GetObjectLegalHold S3 API 함수를 호출합니다. PII 없이 개체에 액세스하려면 removePii 함수 이름을 전달합니다.
+											S3 콘솔에서 S3 액세스 포인트를 생성합니다. 액세스 포인트 이름을 사용하여 GetObjectLegalHold S3 API 함수를 호출합니다. PII 없이 객체에 액세스하려면 RemovePii 함수 이름을 전달하세요.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a> 
-							
-							2022 <i>
-							년 11월 21일 오후 3:56</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a>
-							
-							at <i>
-							Nov. 21, 2022, 3:56 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,15 +295,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 23일 목요일 16:36">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">주어진 요구 사항에 대한 최상의 솔루션은 S3 객체 Lambda 함수를 사용하여 문서에서 PII를 제거하는 것입니다. S3 객체 Lambda는 개발자가 S3 GET 요청에 사용자 지정 코드를 추가할 수 있는 새로운 기능입니다. 개발자는 S3 객체 Lambda 함수를 생성하여 문서에서 PII를 제거하고 특정 액세스 포인트에서 객체가 요청될 때마다 함수를 사용하도록 S3를 구성할 수 있습니다. 이렇게 하면 문서에 액세스하는 사람에 따라 문서의 여러 복사본을 저장할 필요 없이 문서가 그대로 반환되거나 PII가 제거된 상태로 반환됩니다. 따라서 보기 C가 정답입니다. 개발자는 S3 콘솔에서 S3 객체 Lambda 액세스 포인트를 생성하고 removePii 함수를 선택한 다음 S3 액세스 포인트를 사용하여 PII 없이 객체에 액세스해야 합니다.</div>
+<div class="comment-content">주어진 요구 사항에 가장 적합한 솔루션은 S3 객체 Lambda 함수를 사용하여 문서에서 PII를 제거하는 것입니다. S3 객체 Lambda는 개발자가 S3 GET 요청에 사용자 지정 코드를 추가할 수 있는 새로운 기능입니다. 개발자는 S3 객체 Lambda 함수를 생성하여 문서에서 PII를 제거하고 특정 액세스 포인트에서 객체가 요청될 때마다 해당 함수를 사용하도록 S3를 구성할 수 있습니다. 이렇게 하면 문서에 액세스하는 사람에 따라 문서의 여러 복사본을 저장할 필요 없이 문서가 있는 그대로 또는 PII가 제거된 상태로 반환됩니다. 따라서 보기 C가 정답입니다. 개발자는 S3 콘솔에서 S3 객체 Lambda 액세스 포인트를 생성하고, RemovePii 기능을 선택한 다음, S3 액세스 포인트를 사용하여 PII 없이 객체에 액세스해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -309,7 +352,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 정확합니다. S3 객체 Lambda 액세스 포인트를 정의하면 파일에서 중요한 정보를 제거하기 위해 removePii 함수를 호출할 수 있습니다. 전체 문서는 회사에서 S3 액세스 포인트를 사용하여 분석할 수 있도록 계속 액세스할 수 있습니다.</div>
+<div class="comment-content">C가 맞습니다. S3 객체 Lambda 액세스 포인트를 정의하면 파일에서 민감한 정보를 제거하기 위해 RemovePii 함수를 호출할 수 있습니다. 회사에서는 S3 액세스 포인트를 사용하여 분석을 위해 전체 문서에 계속 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -346,7 +389,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 20일 (월) 17:58">
@@ -355,7 +398,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -364,7 +407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,15 +435,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 27일 화요일 19:20">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 27일 (화) 19:20">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">액세스 포인트가 있어야 합니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/olap-use.html https://docs.aws.amazon.com/AmazonS3/latest/userguide/ tutorial-s3-object-lambda-redact-pii.html</div>
+<div class="comment-content">올바른 액세스 포인트가 필요합니다: https://docs.aws.amazon.com/AmazonS3/latest/userguide/olap-use.html https://docs.aws.amazon.com/AmazonS3/latest/userguide/ tutorial-s3-object-lambda-redact-pii.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,16 +480,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 09:06">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 09:06">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">S3 이벤트 알림은 Get, list 또는 Head에 대해 트리거되지 않습니다. S3 객체 람다 액세스 포인트입니다 https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</div>
+<div class="comment-content">Get, list 또는 Head에 대해서는 S3 이벤트 알림이 트리거되지 않습니다. S3 객체 람다 액세스 포인트 https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,11 +526,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:39">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:39">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,8 +575,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 08:00">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 08:00">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -578,7 +621,7 @@
 				시오니타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 17:24">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 17:24">
 			9개월 전
 		</span>
 </div>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -623,7 +666,7 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:56">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:56">
 			9개월 전
 		</span>
 </div>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,7 +704,7 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:57">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:57">
 			9개월 전
 		</span>
 </div>
@@ -675,7 +718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -698,7 +741,7 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:58">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:58">
 			9개월 전
 		</span>
 </div>
@@ -712,7 +755,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -783,7 +826,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 16:36">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -926,7 +969,7 @@ Therefore, option C is the correct answer. The developer should create an S3 Obj
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Dec 2022 19:20">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -973,7 +1016,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/tutorial-s3-object-lambda-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 09:06">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1020,7 +1063,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:39">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1066,7 +1109,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 08:00">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

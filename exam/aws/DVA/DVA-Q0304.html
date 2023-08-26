@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 304 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 304 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 304 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 304 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849982">
 <p class="card-text">
 							
-								개발자가 3개의 Amazon EC2 인스턴스에 사용자 지정 애플리케이션을 배포합니다. 애플리케이션은 기본 설정으로 Amazon Simple Queue Service(Amazon SQS) 표준 대기열의 메시지를 처리합니다. 개발자가 Amazon SQS 대기열에서 부하 테스트를 실행할 때 개발자는 애플리케이션이 많은 메시지를 여러 번 처리한다는 사실을 발견합니다. <br/><br/>개발자는 애플리케이션이 각 메시지를 정확히 한 번만 처리하도록 어떻게 보장할 수 있습니까?
+								개발자가 세 개의 Amazon EC2 인스턴스에 사용자 지정 애플리케이션을 배포합니다. 애플리케이션은 기본 설정으로 Amazon Simple Queue Service(Amazon SQS) 표준 대기열의 메시지를 처리합니다. 개발자가 Amazon SQS 대기열에서 로드 테스트를 실행할 때 개발자는 애플리케이션이 많은 메시지를 여러 번 처리한다는 사실을 발견합니다. <br/><br/>개발자는 애플리케이션이 각 메시지를 정확히 한 번만 처리하는지 어떻게 확인할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											세 개의 인스턴스가 아닌 하나의 EC2 인스턴스에서 메시지를 처리합니다.
+											세 개의 인스턴스 대신 하나의 EC2 인스턴스에서 메시지를 처리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											새로운 SQS FIFO 대기열을 생성합니다. 응용 프로그램이 새 대기열을 가리키도록 합니다.
+											새로운 SQS FIFO 대기열을 생성합니다. 애플리케이션이 새 큐를 가리키도록 합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											현재 SQS 대기열에서 DelaySeconds 값을 늘립니다.
+											현재 SQS 대기열의 DelaySeconds 값을 늘립니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">씨 (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">D (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">C (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">D (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							시간: <i>
-							2022년 11월 24일, 오후 2:12</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 2:12 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,12 +291,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 13:36">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">SQS FIFO 대기열은 다음을 위해 설계되었습니다. 1 - 순서대로 데이터 처리 2 - 중복 메시지 방지 표준 SQS 대기열에 대한 또 다른 중요한 측면은 일단 생성되면 SQS FIFO 대기열로 변경할 수 없다는 것입니다. 따라서 요구 사항을 충족하기 위해 다른 SQS FIFO Q를 생성하고 이 Q를 가리키도록 애플리케이션을 업데이트할 수 있습니다. C가 정답입니다.</div>
+<div class="comment-content">SQS FIFO 대기열은 다음을 위해 설계되었습니다. 1 - 순서대로 데이터 처리 2 - 중복 메시지 방지 표준 SQS 대기열의 또 다른 중요한 측면은 일단 생성되면 SQS FIFO 대기열로 변경할 수 없다는 것입니다. 따라서 요구 사항을 충족하기 위해 또 다른 SQS FIFO Q를 생성하고 이 Q를 가리키도록 애플리케이션을 업데이트할 수 있습니다. C가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,12 +337,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 06:47">
-			4개월, 3주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">새 SQS 대기열을 만들고 편집하려고 하면 FIFO로 변경할 수 없다는 것을 알 수 있습니다.</div>
+<div class="comment-content">새 SQS 대기열을 생성하고 편집해 보면 FIFO로 변경할 수 없다는 것을 알 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,7 +379,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 12일 일요일 19:21">
@@ -345,7 +388,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞습니다. 표준 대기열은 중복 처리를 허용합니다. 중복 처리가 없도록 FIFO 대기열이 필요합니다. 그러나 기존 표준 대기열을 FIFO 대기열로 변환할 수 없습니다. 대기열 유형을 표준에서 FIFO로 변경하려면 기존 표준 대기열을 삭제하고 FIFO 대기열을 생성해야 합니다.</div>
+<div class="comment-content">C가 맞습니다. 표준 대기열은 중복 처리를 허용합니다. 중복 처리가 발생하지 않도록 FIFO 대기열이 필요합니다. 그러나 기존 표준 대기열을 FIFO 대기열로 변환할 수는 없습니다. 대기열 유형을 표준에서 FIFO로 변경하려면 기존 표준 대기열을 삭제하고 FIFO 대기열을 생성해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,15 +425,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 29일 일 18:26">
+<span class="comment-date align-middle" title="2023년 1월 29일 일요일 18:26">
 			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기에 정답이 있다고 생각하지 마세요. "많은 메시지를 여러 번 처리합니다"는 응용 프로그램이 재시도된 것처럼 들립니다. FIFO는 한 번 전달을 보장하지만 재시도를 막지는 않습니다. 가능한 진정한 원인은 프로세스를 완료할 시간이 충분하지 않기 때문에 가시성 제한 시간을 늘릴 수 있는 옵션이 있어야 합니다.</div>
+<div class="comment-content">여기에 정답이 있다고 생각하지 마세요. "많은 메시지를 여러 번 처리합니다"는 응용 프로그램이 다시 시도된 것처럼 들립니다. FIFO는 한 번 전달을 보장하지만 재시도를 방지하지는 않습니다. 실제 원인은 프로세스를 완료하는 데 시간이 충분하지 않기 때문일 수 있습니다. 가시성 제한 시간을 늘리는 옵션이 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -399,7 +442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -419,15 +462,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 14:50">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">귀하의 요점은 알지만 불행히도 모든 질문에 결함이 없는 것은 아닙니다. 나는 지나치게 생각하지 않고 단순하게 가는 것이 나에게 유용하다고 생각합니다.</div>
+<div class="comment-content">귀하의 요점은 알겠습니다만, 불행하게도 모든 질문에 결함이 없는 것은 아닙니다. 나는 지나치게 생각하지 않고 단순하게 가는 것이 나에게 유용하다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -436,7 +479,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -472,7 +515,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				노살
+				코
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 00:45">
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -521,13 +564,13 @@
 				mrbig00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:20">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:20">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">올바른 솔루션은 옵션 A입니다. SQS 표준 대기열을 SQS FIFO 대기열로 수정하면 애플리케이션이 각 메시지를 정확히 한 번만 처리합니다. SQS FIFO 대기열은 메시지가 전송된 순서대로 전달 및 처리되고 각 메시지가 정확히 한 번만 처리되도록 보장합니다. 3개의 EC2 인스턴스를 사용하여 메시지를 처리하면 일부 메시지가 여러 번 처리될 수 있습니다. 새 SQS FIFO 대기열을 생성하고 애플리케이션을 가리키면 작동하지만 기존 대기열을 수정하는 것이 더 간단한 솔루션입니다. 대기열에서 DelaySeconds 값을 늘리는 것은 메시지가 여러 번 처리될 수 있다는 사실을 변경하지 않기 때문에 도움이 되지 않습니다.</div>
+<div class="comment-content">올바른 해결책은 옵션 A입니다. SQS 표준 대기열을 SQS FIFO 대기열로 수정하면 애플리케이션이 각 메시지를 정확히 한 번 처리하도록 보장됩니다. SQS FIFO 대기열은 메시지가 전송된 순서대로 전달 및 처리되고 각 메시지가 정확히 한 번 처리되도록 보장합니다. 3개의 EC2 인스턴스를 사용하여 메시지를 처리하면 일부 메시지가 여러 번 처리될 수 있습니다. 새로운 SQS FIFO 대기열을 생성하고 애플리케이션을 이를 가리키는 것이 가능하지만 기존 대기열을 수정하는 것이 더 간단한 솔루션입니다. 큐의 DelaySeconds 값을 늘리면 메시지가 여러 번 처리될 수 있다는 사실이 바뀌지 않으므로 도움이 되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,8 +610,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 14:20">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 14:20">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,16 +653,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:39">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:39">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞습니다. 메시지 순서는 여기서 문제가 아닙니다. DrCloud</div>
+<div class="comment-content">D 맞습니다. 여기서 메시지 순서는 문제가 되지 않습니다. DrCloud</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -628,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -648,7 +691,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 12일 일요일 19:18">
@@ -656,7 +699,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DelaySeconds는 초기 가시성 지연을 설정합니다. 따라서 대기열의 작업은 n초 후에 작업을 처리하는 EC2 인스턴스에 표시됩니다. 중복 처리에는 영향을 미치지 않습니다. D가 올바르지 않습니다.</div>
+<div class="comment-content">DelaySeconds는 초기 가시성 지연을 설정합니다. 따라서 대기열의 작업은 n초 후에 해당 작업을 처리하는 EC2 인스턴스에 표시됩니다. 중복 처리에는 영향을 미치지 않습니다. D는 정확하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -665,7 +708,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -701,15 +744,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 14:12">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 14:12">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-moving.html 표준 대기열에서 FIFO 대기열로 이동: 표준 대기열을 사용하는 기존 애플리케이션이 있고 FIFO 대기열의 주문 또는 정확히 한 번 처리 기능을 활용하려면 대기열과 애플리케이션을 올바르게 구성해야 합니다. 참고: 기존 표준 대기열을 FIFO 대기열로 변환할 수 없습니다. 이동하려면 애플리케이션에 대한 새 FIFO 대기열을 생성하거나 기존 표준 대기열을 삭제하고 FIFO 대기열로 다시 생성해야 합니다.</div>
+<div class="comment-content">답변: C https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-moving.html 표준 대기열에서 FIFO 대기열로 이동: 표준 대기열을 사용하는 기존 애플리케이션이 있고 FIFO 대기열의 순서 지정 또는 정확히 한 번만 처리하는 기능을 활용하려면 대기열과 애플리케이션을 올바르게 구성해야 합니다. 참고: 기존 표준 대기열을 FIFO 대기열로 변환할 수 없습니다. 이동하려면 애플리케이션에 대한 새 FIFO 대기열을 생성하거나 기존 표준 대기열을 삭제하고 FIFO 대기열로 다시 생성해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -770,7 +813,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 13:36">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -819,7 +862,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 06:47">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -948,7 +991,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 14:50">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1047,7 +1090,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:20">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 14:20">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1139,7 +1182,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:39">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1230,7 +1273,7 @@ Another important aspect about standard SQS Queues is that once created cannot b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 14:12">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

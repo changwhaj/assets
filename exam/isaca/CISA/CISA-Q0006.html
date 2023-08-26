@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 6 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 6 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 6 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 6 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="818031">
 <p class="card-text">
 							
-								IS 감사인은 제안된 새 컴퓨터 하드웨어 인수를 감사하도록 요청받았습니다. 감사인의 주요 관심사는 다음과 같습니다.<br/>
+								IS 감사자는 제안된 새 컴퓨터 하드웨어 인수를 감사해 달라는 요청을 받았습니다. 감사인의 주요 관심사는 다음과 같습니다.<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="818031" type="application/json">[{"voted_answers": "A", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								AWS56
-							</a> 
-							
-							2022 <i>
-							년 9월 13일 오후 10:41</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								AWS56
-							</a>
-							
-							at <i>
-							Sept. 13, 2022, 10:41 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 18일 일 01:58">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 18일 일요일 01:58">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">IS 감사인의 첫 번째 관심사는 제안이 비즈니스 요구 사항을 충족하는지 확인하는 것이며 이는 명확한 비즈니스 사례에 의해 설정되어야 합니다. 사용자의 요구를 충족하고 구현 프로세스에 사용자를 참여시키는 것과 같이 보안 표준 준수가 필수적이지만, 이것이 IS 감사인의 첫 번째 관심사가 되기에는 조달 프로세스 초기 단계입니다.</div>
+<div class="comment-content">IS 감사인의 첫 번째 관심은 제안이 비즈니스 요구 사항을 충족하는지 확인하는 것이어야 하며 이는 명확한 비즈니스 사례를 통해 확립되어야 합니다. 사용자의 요구 사항을 충족하고 사용자를 구현 프로세스에 참여시키는 것과 마찬가지로 보안 표준을 준수하는 것이 필수적이지만 IS 감사인의 최우선 관심사가 되기에는 조달 프로세스 초기 단계입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -299,13 +342,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 13일 화요일 18:28">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 13일 (화) 18:28">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">새 컴퓨터 하드웨어의 제안된 인수를 감사할 때 IS 감사인의 주요 관심사는 B. 새 하드웨어가 확립된 보안 표준을 충족하는 것입니다. 새 하드웨어가 확립된 보안 표준을 충족하는지 확인하는 것은 데이터 및 시스템의 기밀성, 무결성 및 가용성을 유지하는 데 매우 중요합니다. 악의적인 행위자가 악용할 수 있는 잠재적 취약성이나 약점을 방지하려면 하드웨어의 보안 기능과 제어를 평가하는 것이 필수적입니다. 옵션 A, C, D도 중요한 고려 사항이지만 하드웨어의 보안은 안전하고 신뢰할 수 있는 IT 인프라의 기반을 형성하므로 우선적으로 고려해야 합니다.</div>
+<div class="comment-content">새 컴퓨터 하드웨어의 구입 제안을 감사할 때 IS 감사인의 주요 관심사는 B입니다. 새 하드웨어는 확립된 보안 표준을 충족합니다. 새로운 하드웨어가 확립된 보안 표준을 충족하는지 확인하는 것은 데이터와 시스템의 기밀성, 무결성 및 가용성을 유지하는 데 중요합니다. 악의적인 행위자가 악용할 수 있는 잠재적인 취약성이나 약점을 방지하려면 하드웨어의 보안 기능과 제어를 평가하는 것이 필수적입니다. 옵션 A, C, D도 중요한 고려 사항이지만 하드웨어 보안은 안전하고 안정적인 IT 인프라의 기반을 형성하므로 우선적으로 고려되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,15 +385,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				NDUBU
+				은두부
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 1일 월요일 06:02">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">새 컴퓨터 하드웨어의 제안된 구입을 감사할 때 IS 감사인의 주요 관심사는 새 하드웨어가 확립된 보안 표준을 충족하는지 여부입니다. 보안은 모든 정보 시스템에서 중요한 구성 요소이며 하드웨어는 시스템의 필수적인 부분이기 때문입니다. 따라서 새 하드웨어가 확립된 보안 표준을 충족하는지 확인하는 것이 IS 감사인의 최우선 순위가 되어야 합니다. 다른 옵션(가시적인 감사 추적을 포함한 비즈니스 사례 설정 및 사용자 요구 사항 충족)도 중요하지만 보안 문제에 부차적입니다.</div>
+<div class="comment-content">새 컴퓨터 하드웨어 구입 제안을 감사할 때 IS 감사인의 주요 관심사는 새 하드웨어가 확립된 보안 표준을 충족하는지 여부입니다. 보안은 모든 정보 시스템에서 중요한 구성 요소이고 하드웨어는 시스템의 필수적인 부분이기 때문입니다. 따라서 새 하드웨어가 확립된 보안 표준을 충족하는지 확인하는 것이 IS 감사자의 최우선 과제입니다. 다른 옵션(가시적인 감사 추적을 포함한 비즈니스 사례 설정 및 사용자 요구 사항 충족)도 중요하지만 보안 문제에 있어서는 부차적인 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -359,7 +402,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,13 +433,13 @@
 				AWS56
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 13일 화요일 22:41">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 13일 (화) 22:41">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B, 감사자로서의 bcos- 비즈니스 사례가 확립되면 덜 걱정하고 하드웨어가 보안 표준을 충족하면 더 걱정할 것입니다.</div>
+<div class="comment-content">B, bcos 감사자로서 나는 비즈니스 사례가 확립되면 덜 걱정하고 하드웨어가 보안 표준을 충족하면 더 걱정할 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -428,12 +471,12 @@
 				스바 니야
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 25일 일 18:27">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 25일 일요일 18:27">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">IT는 비즈니스 목표와 일치해야 함을 기억하십시오. 그래서 A</div>
+<div class="comment-content">IT는 비즈니스 목표와 일치해야 한다는 점을 기억하십시오. 그래서 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -442,7 +485,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -505,7 +548,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 18 Sep 2022 01:58">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -554,7 +597,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 13 Jun 2023 18:28">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -600,7 +643,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 01 May 2023 06:02">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -645,7 +688,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Sep 2022 22:41">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -683,7 +726,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Sep 2022 18:27">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

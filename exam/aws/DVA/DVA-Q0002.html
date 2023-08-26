@@ -41,8 +41,71 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 2 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807502">
 <p class="card-text">
 							
-								개발자가 AWS 서비스에 직접 HTTP 요청을 보내는 Java 애플리케이션을 만들었습니다. 애플리케이션 로깅은 불규칙한 간격으로 발생하는 5xx HTTP 응답 코드를 보여줍니다. 오류가 사용자에게 영향을 미치고 있습니다. <br/>애플리케이션의 복원력을 향상시키기 위해 개발자는 애플리케이션을 어떻게 업데이트해야 합니까?<br/>
+								개발자가 AWS 서비스에 직접 HTTP 요청을 보내는 Java 애플리케이션을 만들었습니다. 애플리케이션 로깅에는 불규칙한 간격으로 발생하는 5xx HTTP 응답 코드가 표시됩니다. 오류가 사용자에게 영향을 미치고 있습니다. <br/>애플리케이션의 탄력성을 향상시키기 위해 개발자는 애플리케이션을 어떻게 업데이트해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807502" type="application/json">[{"voted_answers": "B", "vote_count": 23, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											애플리케이션 코드에서 요청 내용을 수정하십시오.
+											애플리케이션 코드에서 요청 내용을 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -100,7 +163,7 @@
 													C.
 												</span> 
 											
-											애플리케이션의 더 많은 인스턴스가 실행되도록 애플리케이션을 확장합니다.
+											더 많은 애플리케이션 인스턴스가 실행되도록 애플리케이션을 확장합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="23 votes." data-toggle="tooltip" role="progressbar" style="width: 96%; display: flex;" title="">B (96%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="23 votes." data-toggle="tooltip" role="progressbar" style="width: 96%; display: flex;" title="">B (96%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a> 
-							
-							시간: <i>
-							2022년 8월 31일 오후 3:32</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Spamuel
-							</a>
-							
-							at <i>
-							Aug. 31, 2022, 3:32 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,28 +287,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				hariti_crafting
+				하리티_crafting
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 25일 일 09:31">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 25일 일요일 09:31">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/http-5xx-errors-s3/ 모든 AWS SDK에는 지수 백오프를 사용하는 알고리즘이 포함된 재시도 메커니즘이 내장되어 있습니다. 이 알고리즘은 연속적인 오류 응답에 대한 재시도 사이의 점점 더 길어지는 대기 시간을 구현합니다. 대부분의 지수 백오프 알고리즘은 연속적인 충돌을 방지하기 위해 지터(무작위 지연)를 사용합니다.</div>
+<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/http-5xx-errors-s3/ 모든 AWS SDK에는 지수 백오프를 사용하는 알고리즘이 포함된 재시도 메커니즘이 내장되어 있습니다. 이 알고리즘은 연속적인 오류 응답에 대한 재시도 사이의 대기 시간이 점점 더 길어지도록 구현합니다. 대부분의 지수 백오프 알고리즘은 연속적인 충돌을 방지하기 위해 지터(무작위 지연)를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,15 +340,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 05일 월요일 17:10">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 5일 (월) 17:10">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">아주 이상한 질문입니다. 개발자는 AWS 서비스와 통신하는 클라이언트를 생성했습니다. 이 개발자의 앱은 클라이언트와 관련이 없는 5xx 오류를 수신합니다(https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses). 또한 산발적 오류입니다. 클라이언트 앱을 확장하는 것이 어떻게 도움이 될 수 있는지 모르겠습니다. 물론 복원력에 도움이 되지만 문제가 서버에 있는 경우 여전히 실패합니다. 옵션 B를 선택하겠습니다. 사용자 지정을 구현하는 것보다 AWS SDK를 사용하여 AWS 서비스와 상호 작용하는 것이 좋습니다. 실제로 서버에서 이러한 오류를 반환하는 이유를 확인하기 위해 애플리케이션에 로깅을 추가하겠습니다.</div>
+<div class="comment-content">매우 이상한 질문입니다. 개발자는 AWS 서비스와 통신하는 클라이언트를 생성했습니다. 이 개발자의 앱은 클라이언트와 관련이 없는 5xx 오류를 수신합니다(https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses). 게다가 산발적인 오류이기도 합니다. 클라이언트 앱을 확장하는 것이 어떻게 도움이 될 수 있는지 모르겠습니다. 물론 복원력에 도움이 되지만 서버에 문제가 있으면 여전히 실패할 것입니다. 저는 옵션 B를 선택하겠습니다. 맞춤형 서비스를 구현하는 것보다 AWS SDK를 사용하여 AWS 서비스와 상호 작용하는 것이 더 좋습니다. 실용적인 방법으로 서버에서 이러한 오류가 발생하는 이유를 확인하기 위해 애플리케이션에 로깅을 적용하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,13 +391,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 7일 금요일 21:23">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 7일 금 21:23">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">C여야 합니다. 웹 사이트에서 D를 결정한 이유가 확실하지 않습니다. 5xx 오류는 적절한 실패이며 리소스 부족에 태그를 지정하면 안 됩니다.</div>
+<div class="comment-content">C여야 합니다. 웹 사이트가 D로 결정한 이유를 잘 모르겠습니다. 5xx 오류는 적절한 실패이며 리소스가 부족하다고 태그해서는 안 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -395,12 +438,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 14:43">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">오류를 수신하는 즉시 지수 백오프 알고리즘을 구현하여 요청 수행을 재시도할 수 있습니다. 작동 방식 처음에는 시도하고, 오류가 발생하면 30초 후에 시도합니다. 오류가 수신되면 1분 후에 다시 시도합니다. 그동안 문제를 이해하기 위해 일부 로그를 디버그하고 추가할 수 있습니다. 나는 B로 갈거야</div>
+<div class="comment-content">오류가 발생하는 즉시 지수 백오프 알고리즘을 구현하여 요청을 다시 시도할 수 있습니다. 작동 방식은 처음 시도하고, 오류가 발생하면 30초 후에 시도합니다. 오류가 발생하면 1분 후에 다시 시도합니다. 그동안 디버깅하고 로그를 추가하여 문제를 이해할 수 있습니다. 나는 B로 갈게</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,7 +480,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				트리밍
+				트림플
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 10:06">
@@ -446,7 +489,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">재시도 메커니즘을 사용하려면 sdk를 사용하십시오.</div>
+<div class="comment-content">재시도 메커니즘을 사용하려면 SDK를 사용하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -486,12 +529,12 @@
 				징커
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 20:27">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 20:27">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 B라고 생각합니다</div>
+<div class="comment-content">내 생각엔 정답은 B인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,15 +571,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				람야009
+				라미야009
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 11일 화요일 06:30">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 11일 (화) 06:30">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 매우 혼란 스러워요 , 이 사이트 가 무엇 처럼 정답 을 만드는 .</div>
+<div class="comment-content">나는 이 사이트가 어떻게 정답을 제시하는지 매우 혼란스럽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,11 +620,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 11:45">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Java용 AWS SDK를 사용하면 네트워크 연결 문제, 재시도 및 오류 처리를 처리하는 기본 제공 기능을 제공하므로 AWS 서비스와 상호 작용하는 보다 강력하고 안정적인 접근 방식을 제공합니다. 또한 SDK는 애플리케이션에서 발생하는 5xx HTTP 응답 코드의 원인이 될 수 있는 일시적인 오류를 처리하도록 설계되었습니다. 개발자는 SDK를 사용하여 오류 처리 및 재시도 전략에 대한 AWS의 모범 사례를 활용하여 애플리케이션이 간헐적인 연결 문제 및 일시적 중단을 처리할 수 있도록 보장할 수 있습니다. 이렇게 하면 애플리케이션의 전반적인 복원력과 사용자 경험이 향상됩니다. 애플리케이션 코드에서 요청 콘텐츠를 수정하면(옵션 A) 일부 오류의 근본 원인을 해결하는 데 도움이 될 수 있지만 애플리케이션의 전체 복원력이 향상되지는 않습니다. 애플리케이션 확장(옵션 C)은 오류의 근본 원인을 해결하는 데 도움이 되지 않으며 필요하지 않을 수도 있습니다. 추가 로깅(옵션 D)을 추가하면 오류의 근본 원인을 디버깅하는 데 도움이 될 수 있지만 애플리케이션의 복원력이 향상되지는 않습니다.</div>
+<div class="comment-content">Java용 AWS SDK를 사용하면 네트워크 연결 문제, 재시도 및 오류 처리를 처리하는 내장 기능이 제공되므로 AWS 서비스와 상호 작용하는 보다 강력하고 안정적인 접근 방식이 제공됩니다. 또한 SDK는 애플리케이션에서 발생하는 5xx HTTP 응답 코드의 원인이 될 수 있는 일시적인 오류를 처리하도록 설계되었습니다. SDK를 사용하면 개발자는 오류 처리 및 재시도 전략에 대한 AWS의 모범 사례를 활용하여 애플리케이션이 간헐적인 연결 문제와 일시적인 중단을 처리할 수 있는지 확인할 수 있습니다. 이렇게 하면 애플리케이션의 전반적인 탄력성과 사용자 경험이 향상됩니다. 애플리케이션 코드(옵션 A)에서 요청 콘텐츠를 수정하면 일부 오류의 근본 원인을 해결하는 데 도움이 될 수 있지만 애플리케이션의 전반적인 복원력은 향상되지 않습니다. 애플리케이션을 확장(옵션 C)하면 오류의 근본 원인을 해결하는 데 도움이 되지 않으며 필요하지 않을 수도 있습니다. 추가 로깅(옵션 D)을 추가하면 오류의 근본 원인을 디버깅하는 데 도움이 될 수 있지만 애플리케이션의 복원력은 향상되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,12 +665,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:24">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B여야 합니다.</div>
+<div class="comment-content">B여야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -668,11 +711,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 08:32">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">로컬/온프레미스 애플리케이션을 사용할 때는 항상 SDK를 사용하여 AWS와 상호 작용하는 것이 좋습니다. 그리고 문제는 4xx가 클라이언트 측 오류 코드이므로 옵션 B이므로 서버 측 오류 코드인 5xx입니다.</div>
+<div class="comment-content">로컬/온프레미스 애플리케이션을 사용할 때는 항상 SDK를 사용하여 AWS와 상호 작용하는 것이 좋습니다. 4xx는 클라이언트 측 오류 코드이므로 옵션 B이므로 문제는 서버 측 오류 코드인 5xx입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -713,11 +756,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 23일 (월) 10:39">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">5xx는 서버 undestand 요청을 의미하지만(4xxx를 반환하지 않기 때문에) 성공적으로 응답하지 않습니다. 따라서 요청 구조에 대한 문제가 아니라 요청 내용에 대한 문제입니다. xith aws java api를 변경해도 오류가 지속될 수 있습니다. 가장 좋은 답변은 A입니다. 개발자는 요청 시 데이터를 전송해야 합니다.</div>
+<div class="comment-content">5xx는 서버가 요청을 이해할 수 없지만(4xxx를 반환하지 않기 때문에) 성공으로 응답하지 않음을 의미합니다. 따라서 요청 구조에 관한 문제가 아니라 요청 내용에 관한 문제입니다. xith aws를 변경하더라도 java api 오류가 지속될 수 있습니다. 가장 좋은 대답은 A입니다. 개발자는 요청 시 ss 데이터를 전송해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,12 +800,12 @@
 				흑인 백인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 04:11">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 04:11">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">매우 명확하게 답변 B입니다 https://docs.aws.amazon.com/general/latest/gr/api-retries.html</div>
+<div class="comment-content">매우 명확하게 답변 B https://docs.aws.amazon.com/general/latest/gr/api-retries.html입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,12 +845,12 @@
 				딥40
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 07:37">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 07:37">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그렇다면 어떤 옵션을 선택해야 할까요?. 이 문서에서 정답과 투표된 답변이 달라 혼동을 주고 있습니다.</div>
+<div class="comment-content">그렇다면 어떤 옵션을 선택해야 할까요?. 이 문서에서는 정답과 투표된 답변이 다르기 때문에 혼란을 야기합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -816,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -844,15 +887,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				광고
+				광고다다아빠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 06일 목요일 06:29">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 6일 목요일 06:29">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">애플리케이션의 복원력을 향상시키기 위해 개발자는 애플리케이션을 어떻게 업데이트해야 합니까? 나는 sdk를 사용하는 것이 정확하다는 데 동의하지만 그들이 원하는 것은 더 많은 인스턴스를 확장하는 것이라고 생각합니다. 이는 애플리케이션 복원력을 직접적으로 향상시키기 때문입니다. 질문하는 방식에 대한 재작업이 필요하다고 생각합니다.</div>
+<div class="comment-content">애플리케이션의 탄력성을 향상시키기 위해 개발자는 애플리케이션을 어떻게 업데이트해야 합니까? 나는 SDK를 사용하는 것이 옳다는 데 동의하지만 그들이 원했던 것은 더 많은 인스턴스를 확장하는 것이라고 생각합니다. 이는 애플리케이션 복원력을 직접적으로 향상시키기 때문입니다. 질문하는 방식을 재작업해야 한다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -898,7 +941,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">사용자는 AWS 서비스와 직접 상호 작용하는 CLIENT를 생성했습니다. AWS 서비스에서 때때로 오류를 반환합니다. 추가 클라이언트 사본이 어떻게 AWS 서비스를 더 탄력적으로 만들 수 있습니까? C는 무의미한 답변입니다. 클라이언트가 오류를 일으키는 잘못된 무언가를 보내고 있을 가능성이 훨씬 더 높으며, 이 경우 B가 훨씬 더 나은 대답입니다.</div>
+<div class="comment-content">사용자가 AWS 서비스와 직접 상호 작용하는 CLIENT를 생성했습니다. AWS 서비스가 때때로 오류를 반환합니다. 클라이언트의 추가 복사본을 사용하면 AWS 서비스의 복원력이 어떻게 향상됩니까? C는 무의미한 답변입니다. 클라이언트가 오류를 일으키는 잘못된 것을 보낼 가능성이 훨씬 더 높으며, 이 경우 B가 훨씬 더 나은 대답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -907,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,11 +978,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				노땡큐스팬큐
+				노땡큐스팽쿄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 3일 (토) 21:42">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 21:42">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -952,7 +995,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -975,12 +1018,12 @@
 				슈퍼피스키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 5일 월요일 17:07">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 5일 (월) 17:07">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">5xx는 모든 서버 오류입니다: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses</div>
+<div class="comment-content">5xx는 서버 오류입니다: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -989,7 +1032,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1033,7 +1076,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">댓글을 읽어보니 B. 사용자 기여도가 100% C로 표시되는 이유는 무엇입니까?</div>
+<div class="comment-content">B라는 댓글을 읽어보세요. 왜 사용자 기여도가 100%C로 표시되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1042,7 +1085,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1074,11 +1117,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 08:26">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. 핵심어: AWS 서비스 C. 핵심어: 불규칙한 간격 B. AWS SDK for Java</div>
+<div class="comment-content">B. 키워드: AWS 서비스 C. 키워드: 불규칙한 간격을 사용하겠습니다 B. Java용 AWS SDK</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1087,7 +1130,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1119,11 +1162,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 00:10">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. 절대 C</div>
+<div class="comment-content">B. 절대 C가 아니야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1132,7 +1175,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1164,12 +1207,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 8월 31일 수 23:08">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">5xx는 HTTP 상태 코드의 오류입니다. 서버가 오류가 있거나 요청을 수행할 수 없음을 인식하고 있음을 나타냅니다. 서버 응답에는 일반적으로 오류 상황에 대한 설명과 일시적 또는 영구적 상태인지 여부가 포함됩니다. 앱 레이어를 확장하면 문제를 해결하는 데 도움이 될 것이라고 생각합니다.</div>
+<div class="comment-content">5xx는 HTTP 상태 코드 오류로, 서버가 오류가 발생했거나 요청을 수행할 수 없음을 인식하고 있음을 나타냅니다. 서버 응답에는 일반적으로 오류 상황에 대한 설명과 그것이 일시적인지 영구적인지 여부가 포함됩니다. 앱 계층을 확장하면 문제를 해결하는 데 도움이 될 것이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1178,7 +1221,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1206,15 +1249,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 8월 31일 수 15:32">
-			11개월, 3주 전
+<span class="comment-date align-middle" title="2022년 8월 31일 수요일 15:32">
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 B일까요?</div>
+<div class="comment-content">이게 B가 아닐까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1223,7 +1266,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1243,15 +1286,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잼54
+				JAMG54
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 03:52">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예. 같은 생각</div>
+<div class="comment-content">예. 나도 같은 생각</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1260,7 +1303,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1323,7 +1366,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 25 Sep 2022 09:31">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1374,7 +1417,7 @@ All AWS SDKs have a built-in retry mechanism with an algorithm that uses exponen
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 05 Sep 2022 17:10">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1431,7 +1474,7 @@ In a practical way, I'll put logging to the application in order to check why th
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 21:23">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1477,7 +1520,7 @@ In a practical way, I'll put logging to the application in order to check why th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 14:43">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1570,7 +1613,7 @@ I'll go for B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Apr 2023 20:27">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1615,7 +1658,7 @@ I'll go for B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Apr 2023 06:30">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1660,7 +1703,7 @@ I'll go for B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 11:45">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1709,7 +1752,7 @@ Revising the request content in the application code (Option A) might help to ad
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:24">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1755,7 +1798,7 @@ Revising the request content in the application code (Option A) might help to ad
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 08:32">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1800,7 +1843,7 @@ Revising the request content in the application code (Option A) might help to ad
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 10:39">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1845,7 +1888,7 @@ Revising the request content in the application code (Option A) might help to ad
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 04:11">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1891,7 +1934,7 @@ https://docs.aws.amazon.com/general/latest/gr/api-retries.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 07:37">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1936,7 +1979,7 @@ https://docs.aws.amazon.com/general/latest/gr/api-retries.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Oct 2022 06:29">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2030,7 +2073,7 @@ C is a non-sensical answer.  It is much more likely that the Client is sending s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 21:42">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2067,7 +2110,7 @@ C is a non-sensical answer.  It is much more likely that the Client is sending s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Sep 2022 17:07">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2165,7 +2208,7 @@ C is a non-sensical answer.  It is much more likely that the Client is sending s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 08:26">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2213,7 +2256,7 @@ I'll take B. AWS SDK for Java</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 00:10">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2258,7 +2301,7 @@ I'll take B. AWS SDK for Java</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 Aug 2022 23:08">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2306,7 +2349,7 @@ I believe scaling the app layer will help to solve the issue</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 Aug 2022 15:32">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2343,7 +2386,7 @@ I believe scaling the app layer will help to solve the issue</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 03:52">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

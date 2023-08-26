@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 227 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 227 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 227 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 227 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849905">
 <p class="card-text">
 							
-								회사에는 온프레미스에서 실행되는 다중 노드 Windows 레거시 애플리케이션이 있습니다. 이 애플리케이션은 네트워크 공유 폴더를 중앙 구성 저장소로 사용하여 구성 파일을 .xml 형식으로 저장합니다. 회사는 애플리케이션을 Amazon EC2 인스턴스로 마이그레이션하고 있습니다. AWS로 마이그레이션하는 과정에서 개발자는 리포지토리에 고가용성을 제공하는 솔루션을 식별해야 합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								회사에는 온프레미스에서 실행되는 다중 노드 Windows 레거시 애플리케이션이 있습니다. 애플리케이션은 네트워크 공유 폴더를 중앙 집중식 구성 저장소로 사용하여 구성 파일을 .xml 형식으로 저장합니다. 회사는 애플리케이션을 Amazon EC2 인스턴스로 마이그레이션하고 있습니다. AWS로 마이그레이션하는 과정에서 개발자는 리포지토리에 고가용성을 제공하는 솔루션을 식별해야 합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											EC2 인스턴스 중 하나에 Amazon Elastic Block Store(Amazon EBS) 볼륨을 탑재합니다. EBS 볼륨에 파일 시스템을 배포합니다. 호스트 운영 체제를 사용하여 폴더를 공유합니다. 공유 폴더에서 구성 파일을 읽고 쓰도록 애플리케이션 코드를 업데이트합니다.
+											Amazon Elastic Block Store(Amazon EBS) 볼륨을 EC2 인스턴스 중 하나에 탑재합니다. EBS 볼륨에 파일 시스템을 배포합니다. 호스트 운영 체제를 사용하여 폴더를 공유합니다. 공유 폴더에서 구성 파일을 읽고 쓰려면 애플리케이션 코드를 업데이트하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											인스턴스 스토어 볼륨이 있는 마이크로 EC2 인스턴스를 배포합니다. 호스트 운영 체제를 사용하여 폴더를 공유합니다. 공유 폴더에서 구성 파일을 읽고 쓰도록 애플리케이션 코드를 업데이트합니다.
+											인스턴스 스토어 볼륨이 포함된 마이크로 EC2 인스턴스를 배포합니다. 호스트 운영 체제를 사용하여 폴더를 공유합니다. 공유 폴더에서 구성 파일을 읽고 쓰려면 애플리케이션 코드를 업데이트하세요.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											리포지토리를 호스팅할 Amazon S3 버킷을 생성합니다. 기존 xml 파일을 S3 버킷으로 마이그레이션합니다. S3 버킷을 EC2 인스턴스에 로컬 볼륨으로 마운트합니다. 디스크에서 구성 파일을 읽고 쓰도록 애플리케이션 코드를 업데이트합니다.
+											리포지토리를 호스팅할 Amazon S3 버킷을 생성합니다. 기존 xml 파일을 S3 버킷으로 마이그레이션합니다. S3 버킷을 EC2 인스턴스에 로컬 볼륨으로 탑재합니다. 디스크에서 구성 파일을 읽고 쓰도록 애플리케이션 코드를 업데이트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">씨 (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">디 (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="12 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">C (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">D (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11 
-							
-							월 <i>
-							25일 오후 2:22</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 2:22 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 04:07">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 04:07">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">저는 C를 선택합니다. S3를 마운트할 수 있지만 버킷을 마운트하는 데 사용하는 도구가 수행하는 API 작업에 따라 비용 효율성이 떨어질 수 있습니다. 그러나 C를 사용하면 이 질문에 명시된 대로 제어된 GET 및 PUT API 호출만 수행하는 경우 API 옵션이 더 비용 효율적입니다.</div>
+<div class="comment-content">저는 C를 선택합니다. S3를 탑재할 수 있더라도 버킷을 탑재하는 데 사용하는 도구가 수행하는 API 작업에 따라 비용 효율성이 떨어질 수 있습니다. 그러나 C를 사용하면 이 질문에 명시된 대로 제어된 GET 및 PUT API 호출만 수행하는 경우 API 옵션이 더 비용 효과적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -287,11 +330,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 (수) 04:08">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 04:08">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,19 +383,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 3월 22일 수 18:16">
+<span class="comment-date align-middle" title="2023년 3월 22일 수요일 18:16">
 			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">S3를 마운트할 수 있는지 몰랐습니다. 하지만 설명서를 읽었고 설정해야 할 항목(Private Link, File Gateway)이 많이 있으며 여기에는 비용이 들 것이라고 확신합니다. 문제는 보다 비용 효율적이기 때문에 C를 선택합니다.</div>
+<div class="comment-content">S3를 마운트할 수 있는지 몰랐습니다. 하지만 문서를 읽어보니 설정해야 할 항목(개인 링크, 파일 게이트웨이)이 많이 있으며 여기에는 비용이 많이 들 것이라고 확신합니다. 질문은 비용 효율성에 관한 것이므로 C를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,7 +436,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 06:01">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -439,12 +482,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 23일 목요일 14:33">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 amazon SDK를 포함하도록 애플리케이션 코드를 변경할 필요 없이 스토리지 볼륨으로 s3를 사용하기 때문에 가장 좋은 접근 방식이지만 애플리케이션 코드에서 볼륨 이름을 간단히 변경하면 S3에 파일을 쓰기에 충분합니다.</div>
+<div class="comment-content">D는 Amazon SDK를 포함하도록 애플리케이션 코드를 변경할 필요 없이 s3를 스토리지 볼륨으로 사용하는 가장 좋은 접근 방식이지만 오히려 애플리케이션 코드에서 볼륨 이름을 간단히 변경하면 S3에 파일을 쓰는 데 충분합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -481,16 +524,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 03:21">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 03:21">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞습니다. 예, S3를 EC2 인스턴스에 마운트할 수 있습니다. 하지만 이 시나리오에서는 그렇게 할 필요가 없습니다. 동일한 S3 버킷을 사용하면 모든 EC2 인스턴스가 S3의 XML 파일에 액세스할 수 있습니다.</div>
+<div class="comment-content">C가 맞습니다. 예, S3를 EC2 인스턴스에 탑재할 수 있습니다. 하지만 이 시나리오에서는 그렇게 할 필요가 없습니다. 동일한 S3 버킷을 사용하면 모든 EC2 인스턴스가 S3의 XML 파일에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,11 +574,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 12:37">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저는 Amazon EBS(Elastic Block Store)를 선택합니다 모든 규모에서 사용하기 쉬운 고성능 블록 스토리지 AWS 프리 티어로 12개월 동안 30GB의 스토리지 미션 크리티컬을 포함하여 가장 까다로운 고성능 워크로드에 빠르게 확장 SAP, Oracle 및 Microsoft 제품과 같은 애플리케이션. 가용 영역(AZ) 내 복제를 포함하여 99.999%의 가용성과 io2 Block Express 볼륨으로 99.999%의 내구성으로 장애로부터 보호합니다. 워크로드에 가장 적합한 스토리지를 선택하십시오. 볼륨은 비용 효율적인 GB당 비용에서 가장 빠른 IOPS 및 처리량을 갖춘 고성능에 이르기까지 다양합니다.</div>
+<div class="comment-content">저는 Amazon Elastic Block Store(EBS)를 선택합니다. 모든 규모에서 사용하기 쉬운 고성능 블록 스토리지 미션 크리티컬을 포함하여 가장 까다로운 고성능 워크로드를 빠르게 처리할 수 있는 AWS 프리 티어 확장을 통해 12개월 동안 30GB의 스토리지 제공 SAP, Oracle, Microsoft 제품과 같은 애플리케이션. AZ(가용성 영역) 내 복제를 포함하여 99.999% 가용성과 io2 Block Express 볼륨을 통한 99.999% 내구성으로 장애로부터 보호합니다. 귀하의 워크로드에 가장 적합한 스토리지를 선택하십시오. 볼륨은 비용 효율적인 GB당 달러부터 가장 빠른 IOPS 및 처리량을 갖춘 고성능까지 다양합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,10 +615,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 02:45">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 02:45">
 			7 달 전
 		</span>
 </div>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,15 +653,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 02:45">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 02:45">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file-gateway/#:~: text=%20이%20솔루션%20사용자%20를 사용하여%20%20변경%20어떤%20소스%20코드.</div>
+<div class="comment-content">https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file-gateway/#:~: text=%20this%20solution%20you%20can을 사용하여%20change%20any%20source%20code로.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -627,7 +670,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,7 +706,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 23:44">
@@ -671,7 +714,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그럼 D로 가겠습니다. 로컬 볼륨에 대해 확신이 없었지만 괜찮은 것 같습니다. https://bluexp.netapp.com/blog/amazon-s3-as-a-file-system</div>
+<div class="comment-content">좋아요, 그러면 D로 가겠습니다. 로컬 볼륨이 확실하지 않았지만 괜찮은 것 같습니다. https://bluexp.netapp.com/blog/amazon-s3-as-a-file-system</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -680,7 +723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -717,7 +760,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 D. https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file- 게이트웨이/</div>
+<div class="comment-content">나는 D를 사용하겠습니다. https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3-file- 게이트웨이/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -754,16 +797,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 09:10">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">S3에 마운트할 수는 있지만 로컬 볼륨 로컬 볼륨은 기본 노드의 가용성에 따라 달라지고 모든 애플리케이션에 적합하지 않기 때문에 마운트하는 것이 현명하지 않다고 생각합니다(https://kubernetes.io/ docs/concepts/storage/volumes/) https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3 -파일 게이트웨이/</div>
+<div class="comment-content">S3에 마운트하는 것은 가능하지만 로컬 볼륨 로컬 볼륨은 기본 노드의 가용성에 따라 달라지고 모든 애플리케이션에 적합하지 않기 때문에 마운트하는 것이 현명하지 않다고 생각합니다 (https://kubernetes.io/ docs/concepts/storage/volumes/) https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instance-using-a-private-connection-to-s3 -파일 게이트웨이/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -772,7 +815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -800,16 +843,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 16:34">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 16:34">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">확실히 S3를 마운트할 수 있습니다. 나는 매일 그것을한다. 답은 D라고 생각합니다.</div>
+<div class="comment-content">확실히 S3를 마운트할 수 있습니다. 나는 매일 그것을한다. 나는 그 대답이 D라고 믿는다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -838,15 +881,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 03:17">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 03:17">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아니오, 당신은 할 수 없습니다</div>
+<div class="comment-content">아니요 선생님, 그러면 안 돼요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -855,7 +898,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -875,15 +918,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 03:18">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 03:18">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. 실제로 가능하다는 것을 방금 알게 되었습니다.</div>
+<div class="comment-content">죄송합니다. 실제로 할 수 있다는 것을 방금 알아냈습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -892,7 +935,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -936,11 +979,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라이언DDD
+				RyanDDD
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 05:31">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 05:31">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -973,11 +1016,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라이언DDD
+				RyanDDD
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 05:32">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 05:32">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -990,7 +1033,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,8 +1072,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 14:22">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 14:22">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1080,7 +1123,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1143,7 +1186,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 04:07">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1181,7 +1224,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 04:08">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1283,7 +1326,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 06:01">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1330,7 +1373,7 @@ https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 14:33">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1422,7 +1465,7 @@ https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 12:37">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1657,7 +1700,7 @@ https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 09:10">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1705,7 +1748,7 @@ https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 16:34">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1841,7 +1884,7 @@ https://aws.amazon.com/blogs/storage/mounting-amazon-s3-to-an-amazon-ec2-instanc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 05:31">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1879,7 +1922,7 @@ You can mount S3 bucket as local volume.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 05:32">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1932,7 +1975,7 @@ You can mount S3 bucket as local volume.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 14:22">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 359 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 359 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 359 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 359 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850066">
 <p class="card-text">
 							
-								캘린더 애플리케이션은 사용자에게 이벤트를 예약하고 공유할 수 있는 기능을 제공합니다. 애플리케이션은 여러 Amazon DynamoDB 테이블에 데이터를 저장합니다. 이벤트 테이블은 애플리케이션에 대한 모든 이벤트를 저장합니다. 이벤트 테이블에는 파티션 키가 이벤트 날짜이고 정렬 키가 사용자의 고유 ID 번호인 기본 키가 있습니다. <br/><br/>개발자는 각 사용자에게 하루에 예정된 모든 이벤트에 대한 모든 세부 정보를 표시하는 대시보드에서 작업하고 있습니다. 개발자는 이벤트 테이블에서 데이터를 가져와야 합니다. <br/><br/>관련 데이터를 가장 효율적으로 얻으려면 개발자는 무엇을 해야 합니까?
+								캘린더 애플리케이션을 사용하면 사용자가 이벤트를 예약하고 공유할 수 있습니다. 애플리케이션은 여러 Amazon DynamoDB 테이블에 데이터를 저장합니다. 이벤트 테이블에는 애플리케이션에 대한 모든 이벤트가 저장됩니다. 이벤트 테이블에는 파티션 키가 이벤트 날짜이고 정렬 키가 사용자의 고유 ID 번호인 기본 키가 있습니다. <br/><br/>개발자는 각 사용자에게 하루에 예정된 모든 이벤트에 대한 모든 세부 정보를 표시하는 대시보드를 작업하고 있습니다. 개발자는 이벤트 테이블에서 데이터를 가져와야 합니다. <br/><br/>관련 데이터를 가장 효율적으로 얻으려면 개발자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,32 +148,32 @@
 													A.
 												</span> 
 											
-											파티션 키와 정렬 키를 필터 식으로 사용하여 Events 테이블에서 스캔을 수행합니다.
+											파티션 키와 정렬 키를 필터 표현식으로 사용하여 이벤트 테이블에서 스캔을 수행합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											파티션 키와 정렬 키를 필터 식으로 사용하여 Events 테이블에서 쿼리를 수행합니다.
+											파티션 키와 정렬 키를 필터 표현식으로 사용하여 이벤트 테이블에서 쿼리를 수행합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											키 조건 식에서 파티션 키와 정렬 키를 사용하여 Events 테이블에서 스캔을 수행합니다.
+											키 조건 표현식의 파티션 키와 정렬 키를 사용하여 이벤트 테이블에서 스캔을 수행합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											키 조건 식에서 파티션 키와 정렬 키를 사용하여 Events 테이블에서 쿼리를 수행합니다.
+											키 조건 표현식의 파티션 키와 정렬 키를 사용하여 이벤트 테이블에 대한 쿼리를 수행합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,21 +183,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">D (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">B (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">D (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">B (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 27일 
-							
-							오전 <i>
-							10:56</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 27, 2022, 10:56 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -242,16 +285,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스다파드파
+				sdafadsfa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 07:13">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 07:13">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문을 풀기 위해 내 자신의 프로그램을 확인했습니다 대답은 B입니다</div>
+<div class="comment-content">질문을 해결하기 위해 내 프로그램을 확인했습니다. 대답은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -260,7 +303,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -288,15 +331,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 11일 수 08:06">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 11일 수요일 08:06">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">- 스캔이 쿼리보다 집중적이므로 A 또는 C가 아닙니다. 이렇게 하면 B 또는 D가 남습니다. - B를 사용하면 쿼리가 완료된 후 결과가 반환되기 전에 필터 표현식이 적용됩니다. 따라서 쿼리는 필터 표현식이 있는지 여부에 관계없이 동일한 양의 읽기 용량을 사용합니다. - D가 최선의 선택으로 보입니다.</div>
+<div class="comment-content">- 검색이 쿼리보다 집중적이므로 A 또는 C가 아닙니다. 그러면 B 또는 D가 남습니다. - B를 사용하면 쿼리가 완료된 후 결과가 반환되기 전에 필터 표현식이 적용됩니다. 따라서 쿼리는 필터 표현식이 있는지 여부에 관계없이 동일한 양의 읽기 용량을 소비합니다. - D가 최선의 선택인 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -333,11 +376,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 06:12">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 06:12">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,16 +422,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 18:25">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 18:25">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">쿼리에 대한 주요 조건 식: 검색 기준을 지정하려면 테이블 또는 인덱스에서 읽을 항목을 결정하는 문자열인 주요 조건 식을 사용합니다. 파티션 키 이름과 값을 동등 조건으로 지정해야 합니다. 키 조건 표현식에서 키가 아닌 속성을 사용할 수 없습니다. 선택적으로 정렬 키에 대한 두 번째 조건을 제공할 수 있습니다(있는 경우). https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions</div>
+<div class="comment-content">쿼리에 대한 주요 조건 표현식: 검색 기준을 지정하려면 테이블이나 인덱스에서 읽을 항목을 결정하는 문자열인 키 조건 표현식을 사용합니다. 파티션 키 이름과 값을 등식 조건으로 지정해야 합니다. 키 조건 표현식에는 키가 아닌 속성을 사용할 수 없습니다. 선택적으로 정렬 키에 대한 두 번째 조건을 제공할 수 있습니다(있는 경우). https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.KeyConditionExpressions</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -397,7 +440,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -428,8 +471,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 10:56">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 10:56">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -443,7 +486,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -495,7 +538,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 07:13">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -541,7 +584,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 11 Jan 2023 08:06">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -590,7 +633,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 06:12">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -636,7 +679,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 18:25">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -690,7 +733,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Quer
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 10:56">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

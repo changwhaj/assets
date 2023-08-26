@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 13 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 13 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 13 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 13 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="818038">
 <p class="card-text">
 							
-								주요 응용 프로그램 개발 프로젝트에 대한 제어를 평가하는 동안 IS 감사인의 시간을 가장 효과적으로 사용하는 것은 다음을 검토하고 평가하는 것입니다.<br/>
+								주요 응용 프로그램 개발 프로젝트에 대한 통제를 평가하는 동안 IS 감사인의 시간을 가장 효과적으로 사용하는 방법은 다음을 검토하고 평가하는 것입니다.<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="818038" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											비용 편익 분석.
+											비용-편익 분석.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -111,7 +174,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">씨 (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">C (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								saado9
-							</a> 
-							
-							2023 <i>
-							년 3월 29일 오전 11:49</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								saado9
-							</a>
-							
-							at <i>
-							March 29, 2023, 11:49 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,12 +291,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 08:10">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">대답은 "C"입니까? 나는 프로젝트 계획이 전체 전략을 요약한다고 생각했습니다.</div>
+<div class="comment-content">그 대답은 "C"인가요? 나는 프로젝트 계획이 전반적인 전략을 요약한다고 생각했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -293,12 +336,12 @@
 				다하테
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 17:13">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 17:13">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">프로젝트 상태가 아니라 컨트롤을 평가하는 것입니다. 그래서 정답은 C</div>
+<div class="comment-content">프로젝트 상태가 아닌 제어를 평가하는 것입니다. 그럼 정답은 C 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -307,7 +350,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,11 +382,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 3일 토요일 07:01">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D: 프로젝트 계획을 검토하고 평가하면 IS 감사인이 응용 프로그램 개발 프로젝트의 전체 구조와 구성을 평가할 수 있습니다. 프로젝트의 범위, 목표, 타임라인, 리소스 할당 및 관리 접근 방식에 대한 통찰력을 제공합니다. 프로젝트 계획을 검토함으로써 IS 감사인은 프로젝트의 성공에 영향을 미칠 수 있는 프로젝트 관리 관행의 잠재적인 위험, 격차 또는 결함을 식별할 수 있습니다.</div>
+<div class="comment-content">D: 프로젝트 계획을 검토하고 평가하면 IS 감사인이 응용 프로그램 개발 프로젝트의 전체 구조와 조직을 평가할 수 있습니다. 이는 프로젝트의 범위, 목표, 일정, 자원 할당 및 관리 접근 방식에 대한 통찰력을 제공합니다. IS 감사인은 프로젝트 계획을 검토하여 프로젝트 성공에 영향을 미칠 수 있는 프로젝트 관리 관행의 잠재적인 위험, 격차 또는 결함을 식별할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -352,7 +395,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,12 +427,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 28일 일요일 10:08">
-			2개월, 3주 전
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">프로젝트 계획 검토 및 평가는 주요 응용 프로그램 개발 프로젝트에 대한 통제를 평가할 때 IS 감사인의 시간을 가장 효과적으로 사용하는 것입니다. 프로젝트 계획은 프로젝트의 전반적인 전략, 목표, 일정, 리소스 및 이정표를 설명합니다. 프로젝트 계획을 검토함으로써 감사인은 프로젝트의 거버넌스 구조, 위험 관리 관행 및 제어 메커니즘에 대한 통찰력을 얻을 수 있습니다.</div>
+<div class="comment-content">프로젝트 계획을 검토하고 평가하는 것은 주요 응용 프로그램 개발 프로젝트에 대한 통제를 평가할 때 IS 감사인의 시간을 가장 효과적으로 사용하는 것입니다. 프로젝트 계획에는 프로젝트의 전반적인 전략, 목표, 일정, 자원 및 이정표가 요약되어 있습니다. 감사자는 프로젝트 계획을 검토함으로써 프로젝트의 거버넌스 구조, 위험 관리 관행 및 제어 메커니즘에 대한 통찰력을 얻을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -429,13 +472,13 @@
 				007조지오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 04:30">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 04:30">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">컨트롤 평가는 애플리케이션 테스트 사례입니다.</div>
+<div class="comment-content">컨트롤 평가는 애플리케이션 테스트 케이스입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,12 +518,12 @@
 				007조지오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 04:29">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 04:29">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">컨트롤 평가는 애플리케이션 테스트 사례입니다.</div>
+<div class="comment-content">컨트롤 평가는 애플리케이션 테스트 케이스입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -489,7 +532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -520,13 +563,13 @@
 				뱅크시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 31일 금요일 05:24">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 31일 금 05:24">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">내 관점에서 프로젝트 계획은 응용 프로그램의 가장 전반적인 그림을 제공합니다.</div>
+<div class="comment-content">내 관점에서 프로젝트 계획은 애플리케이션에 대한 가장 전체적인 그림을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -535,7 +578,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -566,8 +609,8 @@
 				사도9
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 11:49">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 11:49">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -580,7 +623,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -632,7 +675,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 08:10">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -679,7 +722,7 @@ I thought Project Plans summarize overall strategy.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 17:13">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -724,7 +767,7 @@ I thought Project Plans summarize overall strategy.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Jun 2023 07:01">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -770,7 +813,7 @@ Reviewing and evaluating project plans allows the IS auditor to assess the overa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 28 May 2023 10:08">
-			2 months, 3 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -816,7 +859,7 @@ Reviewing and evaluating project plans allows the IS auditor to assess the overa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Apr 2023 04:30">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -862,7 +905,7 @@ Reviewing and evaluating project plans allows the IS auditor to assess the overa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Apr 2023 04:29">
-			3 months, 3 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -907,7 +950,7 @@ Reviewing and evaluating project plans allows the IS auditor to assess the overa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 05:24">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -953,7 +996,7 @@ Reviewing and evaluating project plans allows the IS auditor to assess the overa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 11:49">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 983 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 983 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 983 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 983 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="851288">
 <p class="card-text">
 							
-								한 조직이 고객 데이터베이스의 유지 관리를 외부 공급업체에 아웃소싱했으며 공급업체는 데이터베이스 성능을 테스트하기 위해 라이브 데이터를 요청했습니다. 다음 중 IS 감사인이 권장해야 할 가장 중요한 사항은 무엇입니까?
+								한 조직이 고객 데이터베이스의 유지 관리를 외부 공급업체에 아웃소싱했으며 해당 공급업체는 데이터베이스 성능을 테스트하기 위해 라이브 데이터를 요청했습니다. 다음 중 IS 감사인이 권장하는 가장 중요한 것은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											민감한 필드 데이터는 임의의 문자로 익명화해야 합니다.
+											민감한 필드 데이터가 임의의 문자로 익명화되었는지 확인하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											테스트가 완료된 후 양 당사자가 데이터를 파기한다는 데 동의하는지 확인하십시오.
+											테스트가 완료된 후 데이터가 파기된다는 데 양측이 동의하는지 확인하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -106,11 +169,11 @@
 													D.
 												</span> 
 											
-											데이터 전송 세부 정보가 서비스 계약에 명시되어 있는지 확인합니다.
+											서비스 계약에 데이터 전송 세부 사항이 명시되어 있는지 확인하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -123,16 +186,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Staanlee
-							</a> 
-							
-							시간: <i>
-							2022년 12월 30일, 오전 3:16</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -201,16 +254,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Staanlee
-							</a>
-							
-							at <i>
-							Dec. 30, 2022, 3:16 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -241,12 +284,12 @@
 				스탠리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 금요일 03:16">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 30일 금 03:16">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D입니다. 데이터 전송 세부 정보가 서비스 계약에 명시되어 있는지 확인하십시오. 조직이 고객 데이터베이스의 유지 관리를 외부 공급업체에 아웃소싱할 때 IS 감사인은 데이터 전송 세부 정보가 서비스 계약에 명시되어 있는지 확인하는 것이 중요합니다. 여기에는 공급업체와 공유할 특정 유형의 데이터, 데이터 전송 목적 및 전송 중 데이터를 보호하기 위해 구현될 모든 보안 조치가 포함됩니다. 계약에 이러한 세부 사항을 지정함으로써 조직은 데이터 전송이 안전하고 투명한 방식으로 수행되도록 할 수 있으며 데이터 침해 또는 민감한 고객 데이터에 대한 무단 액세스의 위험을 완화하는 데 도움이 될 수 있습니다.</div>
+<div class="comment-content">정답은 D입니다. 데이터 전송 세부 사항이 서비스 계약에 명시되어 있는지 확인하세요. 조직이 고객 데이터베이스의 유지 관리를 외부 공급업체에 아웃소싱하는 경우 IS 감사자는 데이터 전송 세부 사항이 서비스 계약에 명시되어 있는지 확인하는 것이 중요합니다. 여기에는 공급업체와 공유할 특정 데이터 유형, 데이터 전송 목적, 전송 중 데이터를 보호하기 위해 구현될 보안 조치가 포함됩니다. 계약에 이러한 세부 사항을 지정함으로써 조직은 데이터 전송이 안전하고 투명한 방식으로 수행되도록 보장할 수 있으며, 데이터 위반 또는 민감한 고객 데이터에 대한 무단 액세스의 위험을 완화하는 데 도움이 될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -255,7 +298,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -307,7 +350,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Dec 2022 03:16">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 719 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 719 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 719 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 719 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="818744">
 <p class="card-text">
 							
-								IS 감사인이 새로운 자동화 시스템의 배포를 검토하고 있습니다. 다음 결과 중 가장 심각한 위험을 나타내는 것은 무엇입니까?<br/>
+								IS 감사자는 새로운 자동화 시스템의 배포를 검토하고 있습니다. 다음 중 가장 심각한 위험을 나타내는 결과는 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="818744" type="application/json">[]</script>
@@ -98,18 +161,18 @@
 													C.
 												</span> 
 											
-											레거시 시스템의 데이터가 새 시스템으로 올바르게 마이그레이션되지 않습니다.
+											기존 시스템의 데이터가 새 시스템으로 올바르게 마이그레이션되지 않습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											새로운 제도로 인해 핵심 경력 인력이 정리 해고되었습니다.
+											새로운 시스템으로 인해 핵심 경험이 풍부한 인력이 해고되었습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,16 +185,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 6월 26일, 오후 4:20</i> 
-							
-							에 <a class="title-username" style="">
-								cybervds
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -199,16 +252,6 @@
 </div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cybervds
-							</a>
-							
-							at <i>
-							June 26, 2023, 4:20 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -239,8 +282,8 @@
 				요네스카
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 19일 수 11:49">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 19일 수요일 11:49">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -253,7 +296,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -281,15 +324,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				사이버 비디오
+				사이버 VDS
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 16:20">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">새로운 자동화 시스템의 배포를 검토할 때 주어진 옵션 중에서 가장 중요한 위험은 특정 상황과 조직의 우선 순위에 따라 다릅니다. 그러나 비즈니스 운영 및 연속성에 대한 잠재적 영향과 재정 및 평판 손상 가능성을 고려할 때 가장 심각한 위험을 나타내는 결과는 다음과 같습니다. C. 레거시 시스템의 데이터가 새 시스템으로 올바르게 마이그레이션되지 않음 . 이 발견은 몇 가지 위험을 내포하고 있습니다. 데이터를 잘못 마이그레이션하면 데이터 손실, 데이터 손상 또는 데이터 불일치가 발생하여 비즈니스 운영, 의사 결정 및 고객 만족에 상당한 영향을 미칠 수 있습니다. 부정확한 재무 보고, 법률 준수 문제, 이해 관계자의 신뢰 상실을 초래할 수 있습니다. 추가적으로,</div>
+<div class="comment-content">새로운 자동화 시스템의 배포를 검토할 때 주어진 옵션 중에서 가장 심각한 위험은 특정 상황과 조직의 우선 순위에 따라 달라집니다. 그러나 비즈니스 운영 및 연속성에 대한 잠재적 영향과 재정적 및 평판 손상 가능성을 고려할 때 가장 심각한 위험을 나타내는 결과는 다음과 같습니다. C. 기존 시스템의 데이터가 새 시스템으로 올바르게 마이그레이션되지 않습니다. . 이 발견은 몇 가지 위험을 내포하고 있습니다. 잘못된 데이터 마이그레이션은 데이터 손실, 데이터 손상 또는 데이터 불일치로 이어질 수 있으며, 이는 비즈니스 운영, 의사 결정 및 고객 만족도에 심각한 영향을 미칠 수 있습니다. 이로 인해 부정확한 재무 보고, 법률 준수 문제 및 이해관계자의 신뢰 상실이 발생할 수 있습니다. 추가적으로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -298,7 +341,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -350,7 +393,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 11:49">
-			4 weeks, 1 day ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -395,7 +438,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 16:20">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

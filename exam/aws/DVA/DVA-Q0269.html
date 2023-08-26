@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 269 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 269 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 269 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 269 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849947">
 <p class="card-text">
 							
-								회사는 고객 인구 통계 데이터를 분석하기 위해 클라우드 솔루션을 구축하고 있습니다. 데이터에는 전체 이름, 주소 및 금융 기록과 같은 개인 식별 정보(PII)가 포함됩니다. <br/><br/>개발자가 DynamoDB 스트림으로 소스 Amazon DynamoDB 테이블을 구성하고 있습니다. 개발자는 DynamoDB 스트림에서 인구 통계 데이터를 수집할 AWS Lambda 함수를 작성하고 있습니다. 분석을 수행하고 별도의 DynamoDB 테이블에 결과를 씁니다. 애플리케이션은 모니터링 목적으로 중요한 AWS API 워크플로 이벤트를 기록해야 하지만 애플리케이션은 PII를 노출해야 합니다. <br/><br/>PII를 노출하지 않고 가장 많은 양의 AWS API 운영 정보를 기록하기 위해 개발자가 취해야 할 조치 조합은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사에서 고객 인구통계 데이터를 분석하기 위해 클라우드 솔루션을 구축하고 있습니다. 데이터에는 성명, 주소, 재무 기록 등 개인 식별 정보(PII)가 포함됩니다. <br/><br/>개발자가 DynamoDB 스트림을 사용하여 소스 Amazon DynamoDB 테이블을 구성하고 있습니다. 개발자는 DynamoDB 스트림에서 인구통계 데이터를 수집하는 AWS Lambda 함수를 작성하고 있습니다. 분석을 수행하고 결과를 별도의 DynamoDB 테이블에 기록합니다. 애플리케이션은 모니터링 목적으로 중요한 AWS API 워크플로 이벤트를 기록해야 하지만 PII를 노출해야 합니다. <br/><br/>PII를 노출하지 않고 가장 많은 양의 AWS API 운영 정보를 기록하려면 개발자가 수행해야 하는 작업 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849947" type="application/json">[{"voted_answers": "AE", "vote_count": 5, "is_most_voted": true}, {"voted_answers": "CE", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="849947" type="application/json">[{"voted_answers": "AE", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "CE", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -101,14 +164,14 @@
 													C.
 												</span> 
 											
-											수신된 이벤트를 기록합니다. 소스 DynamoDB 테이블에서 항목을 가져옵니다. API에서 응답 메타데이터를 기록합니다. 별도의 DynamoDB 테이블에 결과를 처리하고 기록합니다. API에서 응답 메타데이터를 기록합니다.
+											수신된 이벤트를 기록합니다. 소스 DynamoDB 테이블에서 항목을 가져옵니다. API의 응답 메타데이터를 기록합니다. 별도의 DynamoDB 테이블에 결과를 처리하고 기록합니다. API의 응답 메타데이터를 기록합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											수신된 이벤트를 기록합니다. 소스 DynamoDB 테이블에서 항목을 가져옵니다. API의 응답을 기록합니다. 별도의 DynamoDB 테이블에 결과를 처리하고 기록합니다. API에서 응답 메타데이터를 기록합니다.
+											수신된 이벤트를 기록합니다. 소스 DynamoDB 테이블에서 항목을 가져옵니다. API의 응답을 기록합니다. 별도의 DynamoDB 테이블에 결과를 처리하고 기록합니다. API의 응답 메타데이터를 기록합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="E">
@@ -121,7 +184,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,21 +194,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">부작용(83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">CE (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">AE (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 
-							
-							2022 <i>
-							년 12월 1일 오전 6:26</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -167,7 +220,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849947" type="application/json">[{"voted_answers": "AE", "vote_count": 5, "is_most_voted": true}, {"voted_answers": "CE", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="849947" type="application/json">[{"voted_answers": "AE", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "CE", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -222,21 +275,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">AE (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">CE (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">AE (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Dec. 1, 2022, 6:26 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -264,26 +307,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 05일 (월) 01:11">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 5일 (월) 01:11">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">PII를 필터링하지 않고는 어디에도 이벤트를 기록하지 마십시오.</div>
+<div class="comment-content">PII를 필터링하지 않고는 어디에도 이벤트를 기록하지 마세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">6</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -313,18 +356,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 18:23">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 맞고 B는 틀립니다 D는 "API에서 응답을 기록"할 때 PII 데이터를 기록하고 있기 때문에 정확하지 않습니다. E는 최종 기록 작업이 누락됩니다. C는 요청된 운영 정보를 충족하기에 충분한 처리 후 메타다만 기록합니다.</div>
+<div class="comment-content">A는 맞고 B는 틀림 D는 "API의 응답 기록" 시 PII 데이터를 기록하기 때문에 정확하지 않습니다. E는 최종 로그 작업이 누락되었습니다. C는 요청된 운영 정보를 충족하기에 충분한 처리 후 메타다만 기록합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -333,7 +376,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -361,15 +404,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				해멜론
+				하멜론
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 02:21">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 02:21">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A&amp;E라고 생각합니다. "KEYS_ONLY — 수정된 항목의 키 속성만." 이 방법으로 PII 정보를 검색할 필요가 없습니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html</div>
+<div class="comment-content">A&amp;E인 것 같아요. "KEYS_ONLY — 수정된 항목의 주요 속성만." 이 방법으로 PII 정보를 검색할 필요는 없습니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -378,7 +421,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -414,7 +457,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CE</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CE</strong></span></div>
 <div class="comment-content">C&amp;E 선택</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -424,7 +467,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,7 +522,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 05 Dec 2022 01:11">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -492,7 +535,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">5</span> times
+				upvoted <span class="upvote-count">6</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -528,7 +571,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 18:23">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -576,7 +619,7 @@ C is logging only the metada after processing that suffices to meet the operatio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 02:21">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

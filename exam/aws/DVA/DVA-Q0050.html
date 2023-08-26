@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 50 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 50 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 50 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 50 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807550">
 <p class="card-text">
 							
-								한 회사에서 Amazon EC2 인스턴스 플릿에서 실행할 컴퓨팅 집약적 애플리케이션을 구축하고 있습니다. 애플리케이션은 연결된 Amazon EBS 디스크를 사용하여 데이터를 저장합니다. 애플리케이션은 민감한 정보를 처리하며 모든 데이터는 암호화되어야 합니다. <br/>성능에 영향을 주지 않고 데이터가 디스크에서 암호화되도록 하려면 개발자가 무엇을 해야 합니까?<br/>
+								한 회사가 Amazon EC2 인스턴스 집합에서 실행될 컴퓨팅 집약적 애플리케이션을 구축하고 있습니다. 애플리케이션은 연결된 Amazon EBS 디스크를 사용하여 데이터를 저장합니다. 애플리케이션은 민감한 정보를 처리하며 모든 데이터는 암호화되어야 합니다. <br/>성능에 영향을 주지 않고 데이터가 디스크에서 암호화되도록 하려면 개발자는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807550" type="application/json">[{"voted_answers": "A", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											데이터 저장을 위해 암호화된 EBS 볼륨을 사용하도록 Amazon EC2 인스턴스 플릿을 구성합니다.
+											데이터 저장을 위해 암호화된 EBS 볼륨을 사용하도록 Amazon EC2 인스턴스 집합을 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -93,28 +156,28 @@
 													B.
 												</span> 
 											
-											모든 데이터를 암호화된 Amazon S3 버킷에 쓰는 로직을 추가합니다.
+											암호화된 Amazon S3 버킷에 모든 데이터를 쓰는 로직을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											모든 데이터를 암호화하고 해독할 사용자 지정 암호화 알고리즘을 응용 프로그램에 추가합니다.
+											모든 데이터를 암호화하고 해독하는 사용자 지정 암호화 알고리즘을 애플리케이션에 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											암호화된 루트 볼륨으로 새 Amazon 머신 이미지(AMI)를 생성하고 데이터를 임시 디스크에 저장합니다.
+											암호화된 루트 볼륨으로 새로운 Amazon 머신 이미지(AMI)를 생성하고 데이터를 임시 디스크에 저장합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">A </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -122,21 +185,11 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html<br/><img class="in-exam-image" src="/assets/media/exam-media/04238/0002700001.png"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">A (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">A (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sidvic
-							</a> 
-							
-							시간: <i>
-							2022년 9월 3일, 오후 3:16</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sidvic
-							</a>
-							
-							at <i>
-							Sept. 3, 2022, 3:16 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 21:26">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 21:26">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다.</div>
+<div class="comment-content">정답은 A 입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +339,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 15:35">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 데이터 저장을 위해 암호화된 EBS 볼륨을 사용하도록 Amazon EC2 인스턴스 플릿을 구성하는 것이 가장 좋습니다. 이렇게 하면 연결된 Amazon EBS 디스크에 저장된 모든 데이터가 유휴 상태에서 암호화됩니다. 암호화는 애플리케이션에 투명하게 수행되며 성능에 큰 영향을 미치지 않습니다. 암호화된 루트 볼륨으로 암호화된 AMI를 생성하는 것은 옵션이지만 연결된 EBS 디스크가 아닌 루트 볼륨만 암호화합니다. 암호화된 Amazon S3 버킷에 데이터를 쓰거나 애플리케이션에 사용자 지정 암호화 알고리즘을 추가하는 것도 가능하지만 연결된 EBS 디스크에만 국한되지 않으며 잠재적으로 성능에 영향을 미칠 수 있습니다.</div>
+<div class="comment-content">A. 데이터 저장을 위해 암호화된 EBS 볼륨을 사용하도록 Amazon EC2 인스턴스 플릿을 구성하는 것이 가장 좋은 옵션입니다. 이렇게 하면 연결된 Amazon EBS 디스크에 저장된 모든 데이터가 저장 시 암호화됩니다. 암호화는 애플리케이션에 투명하게 수행되며 성능에 큰 영향을 미치지 않습니다. 암호화된 루트 볼륨으로 암호화된 AMI를 생성하는 것은 옵션이지만 연결된 EBS 디스크가 아닌 루트 볼륨만 암호화합니다. 암호화된 Amazon S3 버킷에 데이터를 쓰거나 애플리케이션에 사용자 지정 암호화 알고리즘을 추가하는 것도 가능하지만 연결된 EBS 디스크에만 국한되지 않으며 잠재적으로 성능에 영향을 미칠 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,13 +384,13 @@
 				디리즘
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 20:29">
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 20:29">
 			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A 다른 사람들은 일이 너무 많거나 이해가 되지 않습니다.</div>
+<div class="comment-content">A는 다른 것들은 일이 너무 많거나 말이 안 돼요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,16 +427,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에길09
+				Agil09
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 19:38">
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 19:38">
 			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">확실히</div>
+<div class="comment-content">ㄴ 확실히요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -422,10 +465,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에길09
+				Agil09
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 19:40">
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 19:40">
 			8개월 전
 		</span>
 </div>
@@ -439,7 +482,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,11 +518,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아르노92
+				Arnaud92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 08:46">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 08:46">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -521,16 +564,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시드빅
+				시빅
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 03일 (토) 15:16">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 15:16">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 A라고 생각한다</div>
+<div class="comment-content">내 생각엔 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +582,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -591,7 +634,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 21:26">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -637,7 +680,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 15:35">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -820,7 +863,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 08:46">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -866,7 +909,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 15:16">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

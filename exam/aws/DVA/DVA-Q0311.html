@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 311 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 311 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 311 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 311 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849989">
 <p class="card-text">
 							
-								회사는 브라우저에서 JavaScript용 AWS SDK를 사용하여 웹 애플리케이션을 구축한 다음 Amazon S3에서 애플리케이션을 호스팅합니다. 회사는 애플리케이션이 10,000명의 사용자를 동시에 지원하기를 원합니다. 회사는 테이블에 사용자 기본 설정을 저장하기 위해 Amazon DynamoDB를 선택합니다. 모든 규모에서 사용자를 고유하게 식별해야 하는 요구 사항이 있습니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 브라우저에서 JavaScript용 AWS SDK를 사용하여 웹 애플리케이션을 구축한 다음 Amazon S3에서 애플리케이션을 호스팅합니다. 회사는 애플리케이션이 10,000명의 사용자를 동시에 지원하기를 원합니다. 이 회사는 사용자 기본 설정을 테이블에 저장하기 위해 Amazon DynamoDB를 선택했습니다. 모든 규모에서 사용자를 고유하게 식별해야 한다는 요구 사항이 있습니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											S3 버킷에 액세스하기 위해 원본 액세스 ID(OAI)가 있는 Amazon CloudFront 배포를 배포합니다.
+											S3 버킷에 액세스하려면 원본 액세스 ID(OAI)를 사용하여 Amazon CloudFront 배포를 배포합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											각 사용자에 대해 IAM 사용자를 생성합니다. DynamoDB 테이블에서 세분화된 액세스 제어를 사용하여 액세스를 제어합니다.
+											각 사용자에 대해 IAM 사용자를 생성합니다. DynamoDB 테이블에 대한 세분화된 액세스 제어를 사용하여 액세스를 제어합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							시간: <i>
-							2022년 11월 24일 오후 5:44</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 5:44 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,7 +295,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 14:22">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				mrbig00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:36">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:36">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">올바른 솔루션은 Amazon Cognito를 구성하고 사용하는 것입니다. 이를 통해 애플리케이션은 동시에 10,000명의 사용자를 지원할 수 있으며 각 사용자에 대한 고유 식별자를 제공합니다. 회사는 Amazon Cognito를 사용하여 사용자를 인증한 다음 인증된 사용자로 DynamoDB에 액세스하여 기본 설정을 테이블에 저장할 수 있습니다. 이 접근 방식을 통해 회사는 DynamoDB 테이블에 대한 액세스를 제어하고 원하는 수의 사용자로 확장할 수 있습니다. 이러한 솔루션은 사용자를 고유하게 식별하거나 DynamoDB에 대한 액세스를 제어하는 ​​방법을 제공하지 않기 때문에 사용자 쿠키를 생성하거나 OAI로 Amazon CloudFront 배포를 배포해도 문제가 해결되지 않습니다.</div>
+<div class="comment-content">올바른 해결책은 Amazon Cognito를 구성하고 사용하는 것입니다. 이를 통해 애플리케이션은 동시에 10,000명의 사용자를 지원할 수 있으며 각 사용자에게 고유 식별자를 제공합니다. Amazon Cognito를 사용하면 회사는 사용자를 인증한 다음 인증된 사용자로 DynamoDB에 액세스하여 기본 설정을 테이블에 저장할 수 있습니다. 이 접근 방식을 통해 회사는 DynamoDB 테이블에 대한 액세스를 제어하고 사용자 수에 관계없이 확장할 수 있습니다. 사용자 쿠키를 생성하거나 OAI를 사용하여 Amazon CloudFront 배포를 배포해도 문제가 해결되지 않습니다. 이러한 솔루션은 사용자를 고유하게 식별하거나 DynamoDB에 대한 액세스를 제어하는 ​​방법을 제공하지 않기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,15 +429,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 17:44">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 17:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C 서버리스 애플리케이션에서 사용자 프로필을 처리할 때 앱 자체가 사용자 엔터티를 저장하는 동안 자격 증명을 관리하기 위해 종종 Cognito로 전환합니다. https://www.sorenandersen.com/manage-user-profile-data-between-cognito-and-dynamodb/</div>
+<div class="comment-content">답변: C 서버리스 애플리케이션에서 사용자 프로필을 처리할 때 앱 자체가 사용자 엔터티를 저장하는 동안 자격 증명을 관리하기 위해 Cognito를 사용하는 경우가 많습니다. https://www.sorenandersen.com/manage-user-profile-data-between-cognito-and-dynamodb/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -455,7 +498,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 14:22">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -501,7 +544,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:36">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -593,7 +636,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 17:44">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

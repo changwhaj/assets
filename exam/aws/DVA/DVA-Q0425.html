@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 425 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 425 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 425 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 425 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866134">
 <p class="card-text">
 							
-								한 회사에 Node.js로 작성된 3개의 AWS Lambda 함수가 있습니다. Lambda 함수에는 사용자 지정 코드와 오픈 소스 모듈이 혼합되어 있습니다. 오픈 소스 모듈에서 가끔 버그가 감지되면 세 가지 Lambda 함수를 모두 패치해야 합니다. <br/><br/>세 가지 Lambda 함수 모두에 대해 패치된 오픈 소스 라이브러리를 배포하는 가장 운영 효율적인 솔루션은 무엇입니까?
+								회사에는 Node.js로 작성된 세 가지 AWS Lambda 함수가 있습니다. Lambda 함수에는 사용자 지정 코드와 오픈 소스 모듈이 혼합되어 있습니다. 오픈 소스 모듈에서 가끔 버그가 감지되면 세 가지 Lambda 함수를 모두 패치해야 합니다. <br/><br/>세 가지 Lambda 기능 모두에 대해 패치가 적용된 오픈 소스 라이브러리를 배포하는 가장 운영상 효율적인 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											사용자 지정 AWS CloudFormation 퍼블릭 레지스트리 확장을 생성합니다. 확장에서 오픈 소스 모듈을 호스팅하는 GitHub 리포지토리를 참조하십시오. 매일 한 번 리포지토리를 스캔하도록 CloudFormation을 구성합니다. 스캔 알림 변경 시 세 개의 Lambda 함수를 재배포하도록 AWS SAM(AWS Serverless Application Model) 템플릿을 작성합니다.
+											사용자 지정 AWS CloudFormation 퍼블릭 레지스트리 확장을 생성합니다. 확장에서 오픈 소스 모듈을 호스팅하는 GitHub 저장소를 참조하세요. 매일 한 번씩 저장소를 스캔하도록 CloudFormation을 구성합니다. 스캔 알림 변경 시 세 가지 Lambda 함수를 재배포하기 위해 AWS Serverless Application Model(AWS SAM) 템플릿을 작성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon S3 버킷을 원본으로 사용하여 Amazon CloudFront 배포를 생성합니다. 필요한 경우 패치가 적용된 모듈을 Amazon S3에 업로드합니다. 콜드 스타트 ​​중에 CloudFront 배포에서 패치된 모듈을 다운로드하도록 각 Lambda 함수를 수정합니다.
+											Amazon S3 버킷을 원본으로 사용하여 Amazon CloudFront 배포를 생성합니다. 필요한 경우 패치된 모듈을 Amazon S3에 업로드합니다. 콜드 스타트 ​​중에 CloudFront 배포에서 패치된 모듈을 다운로드하도록 각 Lambda 함수를 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon EC2 인스턴스를 시작합니다. EC2 인스턴스에서 프라이빗 오픈 소스 모듈 레지스트리를 호스팅합니다. 필요한 경우 수정된 오픈 소스 모듈을 비공개 레지스트리에 업로드합니다. 프라이빗 레지스트리에서 모듈을 다운로드하도록 각 Lambda 함수 배포 스크립트를 수정합니다. 세 가지 새로운 Lambda 함수를 재배포합니다.
+											Amazon EC2 인스턴스를 시작합니다. EC2 인스턴스에서 프라이빗 오픈 소스 모듈 레지스트리를 호스팅합니다. 필요한 경우 수정된 오픈 소스 모듈을 개인 레지스트리에 업로드하십시오. 프라이빗 레지스트리에서 모듈을 다운로드하도록 각 Lambda 함수 배포 스크립트를 수정합니다. 세 가지 새로운 Lambda 함수를 재배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											오픈 소스 모듈로 Lambda 계층을 생성합니다. 계층에 종속되도록 세 개의 Lambda 함수를 모두 수정합니다. 각 Lambda 함수에서 오픈 소스 모듈을 제거합니다. 필요한 경우 수정된 오픈 소스 모듈로 Lambda 계층을 패치합니다. 새 계층 버전을 참조하도록 Lambda 함수를 업데이트합니다.
+											오픈 소스 모듈을 사용하여 Lambda 계층을 생성합니다. 계층에 따라 세 가지 Lambda 함수를 모두 수정합니다. 각 Lambda 함수에서 오픈 소스 모듈을 제거합니다. 필요한 경우 수정된 오픈 소스 모듈로 Lambda 계층을 패치합니다. 새 계층 버전을 참조하도록 Lambda 함수를 업데이트합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Breathingcloud
-							</a> 
-							
-							시간: <i>
-							2023년 1월 20일, 오후 6:19</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								breathingcloud
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 6:19 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,16 +291,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빵빵
+				빵집
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 16일 수 01:18">
-			4일, 4시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D 다른 사람들은 이해가 되지 않습니다.</div>
+<div class="comment-content">D 다른 것들은 말이 안 돼요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,16 +337,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 03:07">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,16 +383,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 11:17">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">오픈 소스 모듈을 사용하여 Lambda 계층을 생성합니다. 계층에 종속되도록 세 개의 Lambda 함수를 모두 수정합니다. 각 Lambda 함수에서 오픈 소스 모듈을 제거합니다. 필요한 경우 수정된 오픈 소스 모듈로 Lambda 계층을 패치합니다. 새 계층 버전을 참조하도록 Lambda 함수를 업데이트합니다.</div>
+<div class="comment-content">오픈 소스 모듈을 사용하여 Lambda 계층을 생성합니다. 계층에 따라 세 가지 Lambda 함수를 모두 수정합니다. 각 Lambda 함수에서 오픈 소스 모듈을 제거합니다. 필요한 경우 수정된 오픈 소스 모듈로 Lambda 계층을 패치합니다. 새 계층 버전을 참조하도록 Lambda 함수를 업데이트합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 01:41">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 01:41">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D. 계층을 사용하여 서로 다른 Lambda 함수 간의 공통 종속성을 처리합니다.</div>
+<div class="comment-content">D. 계층을 사용하여 다양한 Lambda 함수 간의 공통 종속성을 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -441,7 +484,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">람다 레이어를 활용하고 거기에 최신 패치를 푸시합니다.</div>
+<div class="comment-content">람다 계층을 활용하고 거기에 최신 패치를 푸시합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -450,7 +493,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -502,7 +545,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Aug 2023 01:18">
-			4 days, 4 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -549,7 +592,7 @@ Others don't make sense</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 03:07">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -595,7 +638,7 @@ Others don't make sense</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 11:17">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

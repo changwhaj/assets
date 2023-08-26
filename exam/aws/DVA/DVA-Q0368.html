@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 368 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 368 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 368 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 368 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866077">
 <p class="card-text">
 							
-								개발자가 AWS CLI를 사용하여 Amazon DynamoDB 테이블을 생성하고 있습니다. DynamoDB 테이블은 AWS 소유 암호화 키로 서버 측 암호화를 사용해야 합니다. <br/><br/>개발자는 이러한 요구 사항을 충족하기 위해 DynamoDB 테이블을 어떻게 생성해야 합니까?
+								개발자가 AWS CLI를 사용하여 Amazon DynamoDB 테이블을 생성하고 있습니다. DynamoDB 테이블은 AWS 소유 암호화 키와 함께 서버 측 암호화를 사용해야 합니다. <br/><br/>이러한 요구 사항을 충족하려면 개발자가 DynamoDB 테이블을 어떻게 생성해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											AWS Key Management Service(AWS KMS) AWS 관리형 키를 생성합니다. DynamoDB 테이블을 생성하는 동안 KMSMasterKeyId 파라미터에 키의 Amazon 리소스 이름(ARN)을 제공합니다.
+											AWS KMS(AWS Key Management Service) AWS 관리형 키를 생성합니다. DynamoDB 테이블을 생성하는 동안 KMSMasterKeyId 파라미터에 키의 Amazon 리소스 이름(ARN)을 제공합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -106,13 +169,13 @@
 													D.
 												</span> 
 											
-											기본 암호화 옵션으로 DynamoDB 테이블을 생성합니다.
+											기본 암호화 옵션을 사용하여 DynamoDB 테이블을 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">B (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">D (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">B (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a> 2023년 
-							
-							1 <i>
-							월 20일 오후 3시 30분</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 3:30 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,12 +292,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 22:00">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 22:00">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D 정답은 D입니다. AWS CLI를 사용하여 Amazon DynamoDB 테이블을 생성할 때 AWS 소유 암호화 키를 사용한 서버 측 암호화가 기본적으로 활성화됩니다. 따라서 개발자는 AWS KMS 키를 생성하거나 KMSMasterKeyId 파라미터를 지정할 필요가 없습니다. 옵션 A와 B는 이 시나리오에서 필요하지 않은 고객 관리형 및 AWS 관리형 KMS 키 생성을 제안하기 때문에 올바르지 않습니다. 기본적으로 서버 측 암호화에 AWS 소유 키가 자동으로 사용되기 때문에 옵션 C도 올바르지 않습니다.</div>
+<div class="comment-content">D 정답은 D입니다. AWS CLI를 사용하여 Amazon DynamoDB 테이블을 생성할 때 AWS 소유 암호화 키를 사용한 서버 측 암호화가 기본적으로 활성화됩니다. 따라서 개발자는 AWS KMS 키를 생성하거나 KMSMasterKeyId 파라미터를 지정할 필요가 없습니다. 옵션 A와 B는 이 시나리오에서는 필요하지 않은 고객 관리형 및 AWS 관리형 KMS 키 생성을 제안하므로 정답이 아닙니다. AWS 소유 키는 기본적으로 서버 측 암호화에 자동으로 사용되므로 옵션 C도 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -263,7 +306,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -286,12 +329,12 @@
 				아그불라쿤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 03:39">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 03:39">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">자세한 설명 감사합니다. D가 정답인 이유를 정확히 설명한 사람은 사실 당신뿐입니다. CLI로 DynamoDB를 생성하면 기본적으로 AWS 소유 키에 대한 액세스 권한이 부여됩니다. 이것은 여기 링크에 설명되어 있습니다 - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.tutorial.html</div>
+<div class="comment-content">자세한 설명에 감사드립니다. 왜 D가 정답인지 정확하게 설명한 사람은 실제로 당신뿐입니다. CLI를 사용하여 DynamoDB를 생성하면 기본적으로 AWS 소유 키에 액세스할 수 있습니다. 이에 대한 설명은 여기 링크(https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/encryption.tutorial.html)에 나와 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -300,7 +343,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,8 +382,8 @@
 				다람쥐 집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 15:44">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 15:44">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -377,12 +420,12 @@
 				다람쥐 집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 15:46">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 15:46">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">생각이 바뀌었습니다. D입니다.</div>
+<div class="comment-content">마음이 바뀌었어, D야.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -391,7 +434,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -427,7 +470,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JulietHsu
+				줄리엣수
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 18:02">
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,12 +520,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 15:30">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">답은 D여야 합니다.</div>
+<div class="comment-content">답은 D여야 한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -543,7 +586,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 22:00">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -584,7 +627,7 @@ When creating an Amazon DynamoDB table using the AWS CLI, server-side encryption
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 03:39">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -637,7 +680,7 @@ When creating an Amazon DynamoDB table using the AWS CLI, server-side encryption
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 15:44">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -675,7 +718,7 @@ When creating an Amazon DynamoDB table using the AWS CLI, server-side encryption
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 15:46">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -774,7 +817,7 @@ When creating an Amazon DynamoDB table using the AWS CLI, server-side encryption
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 15:30">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

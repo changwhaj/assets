@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 12 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 12 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 12 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 12 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807512">
 <p class="card-text">
 							
-								개발자는 회사의 AWS Elastic Beanstalk에 애플리케이션을 배포해야 합니다. 애플리케이션은 단일 Docker 이미지로 구성됩니다. 회사의 자동화된 CI/CD(지속적인 통합 및 지속적인 전달) 프로세스는 Docker 이미지를 빌드하고 이미지를 공용 Docker 레지스트리에 푸시합니다. <br/>개발자는 애플리케이션을 Elastic Beanstalk에 어떻게 배포해야 합니까?<br/>
+								개발자는 회사를 위해 AWS Elastic Beanstalk에 애플리케이션을 배포해야 합니다. 애플리케이션은 단일 Docker 이미지로 구성됩니다. 회사의 자동화된 CI/CD(지속적 통합 및 지속적 전달) 프로세스는 Docker 이미지를 구축하고 해당 이미지를 공용 Docker 레지스트리에 푸시합니다. <br/>개발자는 Elastic Beanstalk에 애플리케이션을 어떻게 배포해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807512" type="application/json">[{"voted_answers": "B", "vote_count": 33, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 11, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 2, "is_most_voted": false}]</script>
@@ -100,7 +163,7 @@
 													C.
 												</span> 
 											
-											Docker 이미지가 포함된 .zip 파일을 생성합니다. Elastic Beanstalk에 .zip 파일을 업로드합니다.
+											Docker 이미지가 포함된 .zip 파일을 생성합니다. .zip 파일을 Elastic Beanstalk에 업로드합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,20 +184,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="33 votes." data-toggle="tooltip" role="progressbar" style="width: 72%; display: flex;" title="">B (72%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="33 votes." data-toggle="tooltip" role="progressbar" style="width: 72%; display: flex;" title="">B (72%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sindra
-							</a> 
-							
-							시간: <i>
-							2022년 9월 1일, 오전 11:32</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sindra
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 11:32 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,7 +289,7 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 18:55">
 			11개월, 3주 전
@@ -254,7 +297,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-container-docker.deploy-remote 원격 Docker 이미지를 Elastic Beanstalk에 배포 로컬에서 컨테이너를 테스트한 후 Elastic Beanstalk에 배포 콩나무 환경. Docker Compose를 사용하는 경우 Elastic Beanstalk는 docker-compose.yml 파일을 사용하여 이미지를 가져오고 실행합니다. 그렇지 않으면 Elastic Beanstalk는 대신 Dockerrun.aws.json을 사용합니다. EB CLI를 사용하여 환경을 생성하고 이미지를 배포합니다. ~/remote-docker$ eb create 환경 이름</div>
+<div class="comment-content">https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-container-docker.deploy-remote Elastic Beanstalk에 원격 Docker 이미지 배포 컨테이너를 로컬에서 테스트한 후 Elastic에 배포 콩나무 환경. Docker Compose를 사용하는 경우 Elastic Beanstalk는 docker-compose.yml 파일을 사용하여 이미지를 가져와 실행합니다. 그렇지 않으면 Elastic Beanstalk는 대신 Dockerrun.aws.json을 사용합니다. EB CLI를 사용하여 환경을 생성하고 이미지를 배포합니다. ~/remote-docker$ eb 환경 이름 생성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -287,11 +330,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 17:53">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">좋아요, 대답 B는 가능합니다. 그런데 왜 답 A가 틀렸습니까?</div>
+<div class="comment-content">네, B라고 대답하시면 됩니다. 그런데 A답은 왜 틀렸나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -300,7 +343,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,7 +385,7 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 16:04">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 16:04">
 			1개월, 3주 전
 		</span>
 </div>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -380,12 +423,12 @@
 				라이덴쿠로사키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 02:41">
-			1주, 4일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 02:41">
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ChapGPT는 신뢰할 수 있는 소스가 아닙니다. 여전히 B입니다.</div>
+<div class="comment-content">ChapGPT는 신뢰할 수 있는 소스가 아닙니다. 아직은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -394,7 +437,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,11 +477,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 16:53">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">의심은 가지만 B라고 하겠습니다.</div>
+<div class="comment-content">의문이 들지만 B라고 하겠습니다. (잘 모르겠어서 투표댓글을 달지 않았습니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,16 +518,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 23일 일 05:22">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 23일 일요일 05:22">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Dockerfile을 생성합니다. 애플리케이션을 Docker 이미지로 빌드하도록 Elastic Beanstalk를 구성합니다. Elastic Beanstalk 배포에는 docker-compose.yml 파일을 사용하는 것이 권장되지 않기 때문에 옵션 B가 올바르지 않습니다. Elastic Beanstalk는 Dockerfile을 지원하여 애플리케이션의 종속성과 구성을 정의합니다.</div>
+<div class="comment-content">A. Dockerfile을 생성합니다. 애플리케이션을 Docker 이미지로 빌드하도록 Elastic Beanstalk를 구성합니다. Elastic Beanstalk 배포에는 docker-compose.yml 파일을 사용하는 것이 권장되지 않으므로 옵션 B는 올바르지 않습니다. Elastic Beanstalk는 Dockerfile을 지원하여 애플리케이션의 종속성과 구성을 정의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -516,12 +559,12 @@
 				제레미11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 2일 수 03:43">
-			2주, 4일 전
+<span class="comment-date align-middle" title="2023년 8월 2일 수요일 03:43">
+			3주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"docker-compose.yml 파일을 사용하는 것은 Elastic Beanstalk 배포에 권장되지 않습니다." - 이것은 거짓입니다. 컨테이너를 로컬에서 테스트한 후 Elastic Beanstalk 환경에 배포합니다. Docker Compose를 사용하는 경우 Elastic Beanstalk는 docker-compose.yml 파일을 사용하여 이미지를 가져오고 실행합니다. 그렇지 않으면 Elastic Beanstalk는 대신 Dockerrun.aws.json을 사용합니다. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-container-docker.deploy-remote</div>
+<div class="comment-content">"Elastic Beanstalk 배포에는 docker-compose.yml 파일을 사용하지 않는 것이 좋습니다." - 이는 거짓입니다. 컨테이너를 로컬에서 테스트한 후 Elastic Beanstalk 환경에 배포합니다. Docker Compose를 사용하는 경우 Elastic Beanstalk는 docker-compose.yml 파일을 사용하여 이미지를 가져와 실행합니다. 그렇지 않으면 Elastic Beanstalk는 대신 Dockerrun.aws.json을 사용합니다. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-container-docker.deploy-remote</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -530,7 +573,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,13 +612,13 @@
 				루텍
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수 19:21">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수요일 19:21">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS Elastic Beanstalk는 Dockerfile에 설명된 이미지를 구축하거나 원격 Docker 이미지를 가져와서 Docker 환경을 시작할 수 있습니다. 원격 Docker 이미지를 배포하는 경우 Dockerfile을 포함할 필요가 없습니다. 대신 Docker Compose도 사용하는 경우 사용할 이미지와 추가 구성 옵션을 지정하는 docker-compose.yml 파일을 사용하십시오. Docker 환경에서 Docker Compose를 사용하지 않는 경우 대신 Dockerrun.aws.json 파일을 사용하십시오.</div>
+<div class="comment-content">AWS Elastic Beanstalk는 Dockerfile에 설명된 이미지를 구축하거나 원격 Docker 이미지를 가져와 Docker 환경을 시작할 수 있습니다. 원격 Docker 이미지를 배포하는 경우 Dockerfile을 포함할 필요가 없습니다. 대신 Docker Compose도 사용하는 경우 사용할 이미지와 추가 구성 옵션을 지정하는 docker-compose.yml 파일을 사용하세요. Docker 환경에서 Docker Compose를 사용하지 않는 경우 Dockerrun.aws.json 파일을 대신 사용하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,13 +658,13 @@
 				수탉
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 01:03">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 (화) 01:03">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문은 Docker Compose가 사용되고 있는지 여부를 지정하지 않았으므로 Docker Compose가 사용되고 있는지 여부에 따라 A와 B가 모두 정확할 수 있습니다. Docker Compose가 사용되는 경우 응답 옵션 B는 Elastic Beanstalk에 단일 Docker 이미지를 배포하기 위한 올바른 접근 방식입니다.</div>
+<div class="comment-content">질문에는 Docker Compose가 사용되는지 여부가 지정되지 않았으므로 Docker Compose 사용 여부에 따라 A와 B가 모두 정확할 수 있습니다. Docker Compose를 사용하는 경우 옵션 B는 단일 Docker 이미지를 Elastic Beanstalk에 배포하기 위한 올바른 접근 방식입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -658,16 +701,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				챠오리
+				차오리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 05:03">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.DeployApp.html " 원격 Docker 이미지를 배포하는 경우 다음을 포함할 필요가 없습니다. 대신 Docker Compose도 사용하는 경우 사용할 이미지와 추가 구성 옵션을 지정하는 docker-compose.yml 파일을 사용하고, Docker 환경에서 Docker Compose를 사용하지 않는 경우 Dockerrun.aws를 사용합니다. " 이미지가 원격 레지스트리에 있으므로 dockerfile을 사용하여 로컬에서 다시 빌드하는 것은 이치에 맞지 않습니다.</div>
+<div class="comment-content">저는 이 문서 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.DeployApp.html "에서 B에 투표했습니다. 원격 Docker 이미지를 배포하는 경우 Dockerfile 대신 Docker Compose도 사용하는 경우에는 사용할 이미지와 추가 구성 옵션을 지정하는 docker-compose.yml 파일을 사용하고, Docker 환경에서 Docker Compose를 사용하지 않는 경우에는 Dockerrun.aws를 사용하세요. 대신 json 파일을 사용하세요." 이미지는 원격 레지스트리에 있으므로 dockerfile을 사용하여 로컬로 다시 빌드하는 것은 의미가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -676,7 +719,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -708,12 +751,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 17:31">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">It's A Stephane Maarek 강의: Elastic Beanstalk – 단일 Docker • 애플리케이션을 단일 docker 컨테이너로 실행 • 다음 중 하나를 제공합니다. • Dockerfile: Elastic Beanstalk가 Docker 컨테이너를 빌드하고 실행합니다. built* Docker 이미지는 • 이미지 • 포트 • 볼륨 • 로깅 • 기타... • 단일 Docker 컨테이너의 Beanstalk는 ECS를 사용하지 않습니다.</div>
+<div class="comment-content">A Stephane Maarek의 강의: Elastic Beanstalk – 단일 Docker • 애플리케이션을 단일 Docker 컨테이너로 실행 • 다음 중 하나 제공: • Dockerfile: Elastic Beanstalk가 Docker 컨테이너를 구축하고 실행합니다. • Dockerrun.aws.json(v1): *이미 어디에 있는지 설명합니다. 빌드된* Docker 이미지는 • 이미지 • 포트 • 볼륨 • 로깅 • 기타... • 단일 Docker 컨테이너의 Beanstalk는 ECS를 사용하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -722,7 +765,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -746,20 +789,20 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 04:24">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그의 강의의 이전 버전이었습니다. 그의 최근 강의에는 이 정보가 포함되어 있지 않습니다. AWS 설명서(https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/single-container-docker-configuration.html)에 따라 대답은 B라고 생각합니다.</div>
+<div class="comment-content">그의 강의의 이전 버전에있었습니다. 그의 최근 강의에는 이러한 정보가 포함되어 있지 않습니다. AWS 설명서에 따르면 대답은 B라고 생각합니다. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/single-container-docker-configuration.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -787,24 +830,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				샤산크 페리왈
+				샤산페리왈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 11일 일 14:36">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 11일 일요일 14:36">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Stephane의 강의에서 이것은 어디에 있습니까? 나는 이것을 찾지 못했습니다.</div>
+<div class="comment-content">스테판의 강의에서 이게 어디에 있나요? 나는 이것을 찾지 못했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,13 +886,13 @@
 				커크스터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 00:33">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 00:33">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">도커 이미지가 이미 빌드되어 원격 도커 레지스트리로 푸시되기 때문에 정답은 도커 작성 파일을 사용하는 B입니다. 문서에서 답을 찾을 수 있습니다(이미지가 원격 리포지토리에 있는 Beanstalk의 단일 컨테이너 배포에만 해당됨). https://docs.aws.amazon.com/elasticbeanstalk/latest/dg /single-container-docker-configuration.html#single-container-docker-configuration(참고 - 저는 AWS의 주 SA입니다)</div>
+<div class="comment-content">docker-compose 파일을 사용하는 경우 정답은 B입니다. 왜냐하면 docker 이미지가 이미 빌드되어 원격 docker 레지스트리에 푸시되었기 때문입니다. 여기 문서에서 답변을 찾을 수 있습니다(이는 이미지가 원격 저장소에 있는 Beanstalk의 단일 컨테이너 배포에만 해당됩니다). https://docs.aws.amazon.com/elasticbeanstalk/latest/dg /single-container-docker-configuration.html#single-container-docker-configuration (참고 - 저는 AWS의 주요 SA입니다)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -858,7 +901,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -886,15 +929,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 22:29">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Maarek 강의 노트, Elastic Beanstalk – 단일 Docker • 애플리케이션을 단일 docker 컨테이너로 실행 • 다음 중 하나를 제공합니다. • Dockerfile: Elastic Beanstalk가 Docker 컨테이너를 빌드하고 실행합니다. built* Docker 이미지는 • 이미지 • 포트 • 볼륨 • 로깅 • 기타... • 단일 Docker 컨테이너의 Beanstalk는 ECS를 사용하지 않습니다.</div>
+<div class="comment-content">Maarek 강의 노트, Elastic Beanstalk – 단일 Docker • 애플리케이션을 단일 Docker 컨테이너로 실행 • 다음 중 하나를 제공합니다. • Dockerfile: Elastic Beanstalk가 Docker 컨테이너를 구축하고 실행합니다. • Dockerrun.aws.json(v1): *이미 어디에 있는지 설명합니다. 빌드된* Docker 이미지는 • 이미지 • 포트 • 볼륨 • 로깅 • 기타... • 단일 Docker 컨테이너의 Beanstalk는 ECS를 사용하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -903,7 +946,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,12 +978,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:28">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B와 함께 가기</div>
+<div class="comment-content">B와 함께 가다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -949,7 +992,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -985,7 +1028,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">dockerfile은 docker 이미지를 빌드하는 데 사용되지만 이미 저장소에 이미지가 있습니다.</div>
+<div class="comment-content">dockerfile은 도커 이미지를 만드는 데 사용되지만 이미 저장소에 이미지가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -994,7 +1037,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1022,16 +1065,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아유브엠크
+				ayoubmk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 2일 월요일 01:02">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 2일 (월) 01:02">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이미 이미지가 저장소에 푸시되어 있으므로 dockerfile이 필요하지 않다고 생각합니다. ;) 그래서 B가 가장 좋은 답이라는 것을 알았습니다.</div>
+<div class="comment-content">이미지가 이미 저장소에 푸시되어 있으므로 dockerfile이 필요하지 않다고 생각합니다.) 그래서 B가 가장 좋은 대답이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1040,7 +1083,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1068,15 +1111,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				smica9
+				스미카9
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 21:10">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 21:10">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이에 대한 요령은 docker-compose가 다중 컨테이너 환경 구축에만 사용된다는 것을 아는 것입니다. 단일 컨테이너 빌드를 배포하려면 이미 빌드된 Docker 이미지가 저장되는 위치를 지정하는 `Dockerrun.aws.json` 파일을 제공하거나 사용자 지정 Dockerfile에서 빌드하고 실행해야 합니다. 첫 번째 옵션이 제공되지 않았으므로 단일 컨테이너 환경을 구축하는 유일한 다른 방법은 옵션 A입니다. (그리고 .zip 파일 제공은 도커화되지 않은 EB 구성에만 해당됨)</div>
+<div class="comment-content">이에 대한 비결은 docker-compose가 다중 컨테이너 환경 구축에만 사용된다는 점을 아는 것입니다. 단일 컨테이너 빌드를 배포하려면 이미 빌드된 Docker 이미지가 저장되는 위치를 지정하는 `Dockerrun.aws.json` 파일을 제공하거나 사용자 지정 Dockerfile에서 빌드하고 실행해야 합니다. 첫 번째 옵션이 제공되지 않았으므로 단일 컨테이너 환경을 구축하는 유일한 다른 방법은 옵션 A입니다. (그리고 .zip 파일 제공은 dockerized되지 않은 EB 구성에만 해당됩니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1085,7 +1128,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1105,15 +1148,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아유브엠크
+				ayoubmk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 2일 월요일 01:02">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 2일 (월) 01:02">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이미 이미지가 저장소에 푸시되어 있으므로 dockerfile이 필요하지 않다고 생각합니다. ;) 그래서 B가 가장 좋은 답이라는 것을 알았습니다.</div>
+<div class="comment-content">이미지가 이미 저장소에 푸시되어 있으므로 dockerfile이 필요하지 않다고 생각합니다.) 그래서 B가 가장 좋은 대답이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1122,7 +1165,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1158,16 +1201,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 21:14">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">문제는 배포에 관한 것입니다. 코드는 이미 CI/CD를 통해 빌드되었습니다. 따라서 A가 정답입니다. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.DeployApp.html을 참조하십시오.</div>
+<div class="comment-content">문제는 배포에 관한 것입니다. 코드는 이미 CI/CD를 통해 빌드되었습니다. 따라서 A가 정답입니다. https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/GettingStarted.DeployApp.html을 참조하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1176,7 +1219,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1208,7 +1251,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 09:53">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1222,7 +1265,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1246,11 +1289,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 19:33">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이 아닙니다. 단일 컨테이너 앱에 작성을 사용할 수 있습니다. 이해가 되지 않는 것은 ci/cd 파이프라인으로 이미 빌드된 이미지가 있고 Dockerfile을 생성한다는 것입니다.</div>
+<div class="comment-content">사실이 아닙니다. 단일 컨테이너 앱에 Compose를 사용할 수 있습니다. 말이 안 되는 것은 ci/cd 파이프라인으로 이미 이미지를 구축하고 Dockerfile을 생성한다는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1259,7 +1302,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1299,7 +1342,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 13일 목요일 04:45">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1312,7 +1355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1340,16 +1383,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				광고
+				광고다다아빠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 06일 목요일 07:04">
-			10개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 6일 목요일 07:04">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">컨테이너의 오케스트레이션으로 EB를 사용하고 있기 때문에 완전히 실행 가능한 것은 없습니다. 이것은 ecs 또는 eks로 오프로드되어야 합니다. 그러나이 경우 컨테이너 환경으로 docker-compose를 사용하고 싶을 것입니다. 대답은 B입니다</div>
+<div class="comment-content">컨테이너의 오케스트레이션으로 EB를 사용하고 있기 때문에 완전히 실행 가능한 것은 없습니다. 이는 ecs 또는 eks로 오프로드되어야 합니다. 하지만 이 경우 컨테이너 환경으로 docker-compose를 사용하는 것이 좋습니다. 답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1358,7 +1401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1386,11 +1429,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자볼
+				야볼
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 13일 화요일 12:40">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 13일 (화) 12:40">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1404,7 +1447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1435,8 +1478,8 @@
 				카지한
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 7일 수 18:36">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 7일 수요일 18:36">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1449,7 +1492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1473,11 +1516,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 17일 목요일 00:46">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">하지만 도커는 어디에 있습니까?</div>
+<div class="comment-content">그런데 도커는 어디 있지?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1486,7 +1529,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1517,12 +1560,12 @@
 				콜린스울프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 28일 금요일 00:43">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 28일 금 00:43">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">네 저도 같은 생각을 했습니다. ACloud Guru, TD 및 Whizlabs에 따르면 C입니다.</div>
+<div class="comment-content">네, 저도 같은 생각이었습니다. ACloud Guru, TD 및 Whizlabs에 따르면 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1531,7 +1574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1571,12 +1614,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 4일 일요일 22:29">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B입니다</div>
+<div class="comment-content">B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1585,7 +1628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1613,11 +1656,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Sirikou_0922
+				시리쿠_0922
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 11:42">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1630,7 +1673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1653,12 +1696,12 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 17일 목요일 00:49">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 17일 (목) 00:49">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"원격 Docker 이미지를 배포하는 경우 Dockerfile을 포함할 필요가 없습니다. 대신 Docker Compose도 사용하는 경우 docker-compose.yml 파일을 사용하십시오."</div>
+<div class="comment-content">". 원격 Docker 이미지를 배포하는 경우 Dockerfile을 포함할 필요가 없습니다. 대신 Docker Compose도 사용하는 경우 docker-compose.yml 파일을 사용하세요."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1667,7 +1710,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1690,12 +1733,12 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 17일 목요일 00:50">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 17일 (목) 00:50">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C가 아니라 B를 의미한다</div>
+<div class="comment-content">내 말은 C가 아니라 B를 말하는 거야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1704,7 +1747,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1752,7 +1795,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 11:32">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1766,7 +1809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1867,7 +1910,7 @@ Use the EB CLI to create an environment and deploy your image.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 17:53">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1961,7 +2004,7 @@ Use the EB CLI to create an environment and deploy your image.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 02:41">
-			1 week, 4 days ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2014,7 +2057,7 @@ Use the EB CLI to create an environment and deploy your image.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 16:53">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2059,7 +2102,7 @@ Use the EB CLI to create an environment and deploy your image.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 05:22">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2098,7 +2141,7 @@ Option B is incorrect because using docker-compose.yml file is not recommended f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 03:43">
-			2 weeks, 4 days ago
+			3 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2155,7 +2198,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-contai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 19:21">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2201,7 +2244,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-contai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 01:03">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2247,7 +2290,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html#single-contai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 05:03">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2299,7 +2342,7 @@ The image is on the remote registry, does not make sense to build again locally 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 17:31">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2349,7 +2392,7 @@ Elastic Beanstalk – Single Docker
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 04:24">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2361,7 +2404,7 @@ Elastic Beanstalk – Single Docker
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2394,7 +2437,7 @@ Elastic Beanstalk – Single Docker
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Jun 2023 14:36">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2406,7 +2449,7 @@ Elastic Beanstalk – Single Docker
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2447,7 +2490,7 @@ Elastic Beanstalk – Single Docker
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 00:33">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2496,7 +2539,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/single-container-docker-c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 22:29">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2548,7 +2591,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:28">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2639,7 +2682,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 01:02">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2685,7 +2728,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 21:10">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2722,7 +2765,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 01:02">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2775,7 +2818,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 21:14">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2821,7 +2864,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 09:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2859,7 +2902,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 19:33">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2912,7 +2955,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 04:45">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2957,7 +3000,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Oct 2022 07:04">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3003,7 +3046,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Sep 2022 12:40">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3049,7 +3092,7 @@ Elastic Beanstalk – Single Docker • Run your application as a single docker 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Sep 2022 18:36">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3087,7 +3130,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 00:46">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3132,7 +3175,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Oct 2022 00:43">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3185,7 +3228,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Sep 2022 22:29">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3231,7 +3274,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/applications-sourcebundle
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 11:42">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3269,7 +3312,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 00:49">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3308,7 +3351,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 00:50">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3369,7 +3412,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/docker.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 11:32">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

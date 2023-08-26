@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 877 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 877 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 877 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 877 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850911">
 <p class="card-text">
 							
-								다음 중 조직의 새로 구현된 온라인 보안 인식 프로그램을 검토하는 IS 감사인에게 가장 중요한 문제는 무엇입니까?
+								다음 중 조직에서 새로 구현된 온라인 보안 인식 프로그램을 검토하는 IS 감사인이 가장 우려해야 할 결과는 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,18 +148,18 @@
 													A.
 												</span> 
 											
-											직원은 결과를 즉시 통보받지 못합니다.
+											직원은 결과를 즉시 통보받지 않습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
-													B.
+													나.
 												</span> 
 											
-											신규 직원만 프로그램에 참석해야 합니다.
+											신입사원만 이 프로그램에 참석해야 합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
-													C.
+													다.
 												</span> 
 											
 											프로그램 업데이트 시기는 미정입니다.
@@ -106,11 +169,11 @@
 													D.
 												</span> 
 											
-											교육 결과를 평가하기 위한 메트릭이 설정되지 않았습니다.
+											교육 결과를 평가하기 위한 측정 기준이 확립되지 않았습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,21 +183,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">디 (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">B (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">D (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">B (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023 <i>
-							년 3월 27일, 오전 8:05 </i><a class="title-username" style="">
-								SRJ13
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								SRJ13
-							</a>
-							
-							at <i>
-							March 27, 2023, 8:05 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,12 +289,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 4일 일요일 09:28">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">d는 답이다</div>
+<div class="comment-content">d가 답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -260,7 +303,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -283,12 +326,12 @@
 				3008
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 13일 일 10:09">
-			4일, 11시간 전
+<span class="comment-date align-middle" title="2023년 8월 13일 일요일 10:09">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">교육 결과를 평가하기 위한 측정 기준이 설정되지 않았습니다. 측정 기준이 없으면 교육 프로그램의 효과를 판단할 수 없기 때문에 이것이 정답입니다. 지표는 프로그램의 성공을 측정하고, 지식과 행동의 격차를 식별하고, 프로그램을 개선하는 데 필수적입니다. IS 감사인은 조직이 교육 프로그램의 효율성을 평가하기 위해 메트릭을 설정하고 결과를 추적할 것을 권장합니다.</div>
+<div class="comment-content">훈련 결과를 평가하기 위한 지표가 확립되어 있지 않습니다. 지표가 없으면 훈련 프로그램의 효과를 판단할 수 없기 때문에 이것이 정답입니다. 지표는 프로그램의 성공을 측정하고, 지식과 행동의 격차를 식별하고, 프로그램을 개선하는 데 필수적입니다. IS 감사자는 조직이 교육 프로그램의 효율성을 평가하기 위해 측정 기준을 설정하고 결과를 추적할 것을 권장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -297,7 +340,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -337,12 +380,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 6일 토요일 23:11">
-			3개월, 1주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 더 나은 대답입니다</div>
+<div class="comment-content">B가 더 나은 답변입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,11 +426,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 08:05">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B가 정답입니다. 정보 보안에 대한 조직의 정책, 절차 및 모범 사례에 대해 재직 기간이나 직무 기능에 관계없이 모든 직원을 교육할 수 있도록 포괄적이고 효과적인 보안 인식 프로그램을 설계해야 합니다. 프로그램을 신입 사원으로만 제한함으로써 조직은 모든 ​​직원이 최신 위협 및 취약성에 대해 경계하고 최신 상태를 유지해야 하는 지속적인 요구를 해결하지 못하고 있습니다. 이로 인해 조직은 적절한 교육과 정보를 받지 못한 직원으로 인해 발생할 수 있는 잠재적인 보안 사고 및 위반에 취약합니다.</div>
+<div class="comment-content">보기 B가 정답입니다. 포괄적이고 효과적인 보안 인식 프로그램은 재직 기간이나 직무에 관계없이 모든 직원에게 정보 보안에 대한 조직의 정책, 절차 및 모범 사례를 교육하도록 설계되어야 합니다. 프로그램을 신입 직원에게만 제한함으로써 조직은 모든 ​​직원이 최신 위협과 취약점에 대해 경계하고 최신 상태를 유지해야 하는 지속적인 요구를 해결하지 못하고 있습니다. 이로 인해 조직은 적절한 교육과 정보를 받지 못한 직원으로 인해 발생할 수 있는 잠재적인 보안 사고 및 침해에 취약해집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -396,7 +439,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -448,7 +491,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Jun 2023 09:28">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -486,7 +529,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 13 Aug 2023 10:09">
-			4 days, 11 hours ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -539,7 +582,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 06 May 2023 23:11">
-			3 months, 1 week ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -585,7 +628,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 08:05">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

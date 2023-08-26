@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 288 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 288 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 288 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 288 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849966">
 <p class="card-text">
 							
-								개발자가 Amazon DynamoDB 테이블에 민감한 데이터를 저장할 Java 애플리케이션을 만들고 있습니다. 데이터는 항상 암호화되어야 합니다. <br/><br/>개발자는 이 요구 사항을 어떻게 충족할 수 있습니까?
+								개발자는 Amazon DynamoDB 테이블에 민감한 데이터를 저장할 Java 애플리케이션을 생성하고 있습니다. 데이터는 항상 암호화되어야 합니다. <br/><br/>개발자는 어떻게 이 요구 사항을 충족할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											DynamoDB 테이블에 대해 AWS Key Management Service(AWS KMS) AWS 소유 키를 사용하여 유휴 시 암호화를 활성화합니다.
+											DynamoDB 테이블에 대해 AWS KMS(AWS Key Management Service) AWS 소유 키를 사용하여 저장 중 암호화를 활성화합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											DynamoDB 테이블에 대해 AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 유휴 시 암호화를 활성화합니다.
+											DynamoDB 테이블에 대해 AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 저장 중 암호화를 활성화합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">씨 (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">C (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 11월 26일 
-							
-							오전 <i>
-							7시</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 7 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 12:27">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 12:27">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">서버 측 암호화를 통해 TLS는 HTTPS 연결을 통해 전송 중인 데이터를 암호화합니다. 데이터는 DynamoDB 엔드포인트에서 해독된 다음 DynamoDB에 저장되기 전에 다시 암호화됩니다. 클라이언트 측 암호화는 소스에서 DynamoDB의 스토리지를 거쳐 사용자에게로 데이터에 대한 종단 간 보호를 제공합니다. https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html</div>
+<div class="comment-content">서버 측 암호화를 사용하면 TLS는 HTTPS 연결을 통해 전송 중인 데이터를 암호화합니다. 데이터는 DynamoDB 엔드포인트에서 해독된 다음 DynamoDB에 저장되기 전에 다시 암호화됩니다. 클라이언트 측 암호화는 소스에서 DynamoDB의 스토리지를 거쳐 사용자에게 다시 전달되는 데이터에 대한 엔드투엔드 보호를 제공합니다. https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -301,13 +344,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 30일 금요일 11:25">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 30일 금 11:25">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">따라서 제외를 진행해 보겠습니다. 유휴 암호화가 요구 사항을 충족하지 않기 때문에 A와 B는 확실하지 않습니다. 그런 다음 각 단계에서 데이터를 암호화해야 하므로 전송 중인 데이터를 암호화하지만 데이터베이스에 저장할 때 인코딩되지 않기 때문에 HTTPS 프로토콜도 적합하지 않습니다. 이러한 이유로 D도 올바르지 않습니다. TBH, DynamoDB Encryption Client를 사용하여 클라이언트 측 암호화를 사용할 가능성이 있다는 것을 몰랐지만 https://docs.aws.amazon.com/crypto/latest/userguide 문서에 따르면 가능합니다. /awscryp-service-ddb-client.html 따라서 클라이언트 측 암호화가 클라우드의 모든 곳에서 암호화를 제공한다는 점을 감안할 때 C가 정확합니다.</div>
+<div class="comment-content">그럼 제외를 진행해 보겠습니다. A와 B는 저장 암호화가 요구 사항을 충족하지 않기 때문에 확실히 잘못된 것입니다. 그런 다음 각 단계에서 데이터를 암호화해야 하기 때문에 HTTPS 프로토콜도 전송 중인 데이터를 암호화하지만 데이터베이스에 저장할 때 인코딩되지 않기 때문에 적합하지 않습니다. 이러한 이유로 D도 올바르지 않습니다. TBH, DynamoDB Encryption Client를 사용하여 클라이언트 측 암호화를 사용할 가능성이 있다는 것을 몰랐지만 설명서에 따르면 https://docs.aws.amazon.com/crypto/latest/userguide에 따르면 그렇습니다. /awscryp-service-ddb-client.html 따라서 클라이언트 측 암호화가 클라우드의 모든 곳에서 암호화를 제공한다는 점을 고려하면 C가 확실히 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,11 +387,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Suraj_7
+				수라즈_7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 10일(수) 20:30">
-			3개월, 1주 전
+<span class="comment-date align-middle" title="2023년 5월 10일 수요일 20:30">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,16 +433,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 23:12">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 23:12">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다</div>
+<div class="comment-content">C가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,16 +479,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 6일 화요일 14:49">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">클라이언트 측 및 서버 측 암호화: "DynamoDB Encryption Client"는 테이블 데이터를 DynamoDB로 보내기 전에 암호화하는 클라이언트 측 암호화를 지원합니다. 그러나 DynamoDB는 테이블이 디스크에 유지될 때 투명하게 암호화하고 테이블에 액세스할 때 해독하는 서버 측 유휴 암호화 기능을 제공합니다. https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html</div>
+<div class="comment-content">클라이언트 측 및 서버 측 암호화: "DynamoDB Encryption Client"는 테이블 데이터를 DynamoDB로 보내기 전에 암호화하는 클라이언트 측 암호화를 지원합니다. 그러나 DynamoDB는 테이블이 디스크에 유지될 때 테이블을 투명하게 암호화하고 테이블에 액세스할 때 해독하는 서버 측 저장 데이터 암호화 기능을 제공합니다. https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -491,7 +534,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html AWS는 서버 측 암호화 기능인 저장된 데이터 암호화 외에도 Amazon DynamoDB 암호화 클라이언트를 제공합니다. 이 클라이언트 측 암호화 라이브러리를 사용하면 테이블 데이터를 DynamoDB에 제출하기 전에 보호할 수 있습니다. 서버 측 암호화를 통해 TLS는 HTTPS 연결을 통해 전송 중인 데이터를 암호화합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html 서버 측 암호화 기능인 저장 데이터 암호화 외에도 AWS는 Amazon DynamoDB 암호화 클라이언트를 제공합니다. 이 클라이언트 측 암호화 라이브러리를 사용하면 테이블 데이터를 DynamoDB에 제출하기 전에 보호할 수 있습니다. 서버 측 암호화를 사용하면 TLS는 HTTPS 연결을 통해 전송 중인 데이터를 암호화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,11 +571,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 14:07">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 14:07">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,8 +620,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:10">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:10">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,15 +663,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 07:00">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C DynomoDB는 기본적으로 AWS 소유 키를 사용하여 유휴 상태에서 암호화합니다. 전송의 경우 DynamoDB 암호화 클라이언트를 사용하여 클라이언트 측 암호화를 사용합니다.</div>
+<div class="comment-content">C DynamoDB는 기본적으로 AWS 소유 키를 사용하여 저장 상태를 암호화합니다. 전송의 경우 DynamoDB 암호화 클라이언트를 사용하여 클라이언트 측 암호화를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -692,7 +735,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 12:27">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -742,7 +785,7 @@ https://docs.aws.amazon.com/kms/latest/developerguide/services-dynamodb.html</di
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 11:25">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -791,7 +834,7 @@ So C is for sure correct given that the client-side encryption will provide us e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 10 May 2023 20:30">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -837,7 +880,7 @@ So C is for sure correct given that the client-side encryption will provide us e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 23:12">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -883,7 +926,7 @@ So C is for sure correct given that the client-side encryption will provide us e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 14:49">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -979,7 +1022,7 @@ In addition to encryption at rest, which is a server-side encryption feature, AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 14:07">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1025,7 +1068,7 @@ In addition to encryption at rest, which is a server-side encryption feature, AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:10">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1071,7 +1114,7 @@ In addition to encryption at rest, which is a server-side encryption feature, AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 07:00">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

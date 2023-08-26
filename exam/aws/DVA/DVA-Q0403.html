@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 403 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 403 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 403 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 403 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866112">
 <p class="card-text">
 							
-								개발자가 레거시 시스템을 업데이트하기 위해 AWS Lambda 함수를 구축했습니다. 개발자는 Lambda 함수의 트리거 유형을 Amazon EventBridge로 설정했습니다. <br/><br/>레거시 시스템은 Lambda 함수의 초기 배포 후 압도당했습니다. 근본 원인은 동시에 레거시 시스템에 대한 너무 많은 요청이었습니다. 개발자는 레거시 시스템에 대한 요청 수를 제한하고 높은 처리량을 유지해야 합니다. <br/><br/>아키텍처 변경 없이 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								개발자는 레거시 시스템을 업데이트하기 위해 AWS Lambda 함수를 구축했습니다. 개발자는 Lambda 함수의 트리거 유형을 Amazon EventBridge로 설정했습니다. <br/><br/>Lambda 함수를 처음 배포한 후 레거시 시스템이 압도되었습니다. 근본 원인은 레거시 시스템에 동시에 요청이 너무 많았기 때문입니다. 개발자는 레거시 시스템에 대한 요청 수를 제한하고 높은 처리량을 유지해야 합니다. <br/><br/>아키텍처 변경 없이 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											Lambda 함수에 대해 예약된 동시성을 구성합니다. 비동기식 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘립니다.
+											Lambda 함수에 대한 예약된 동시성을 구성합니다. 비동기 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘립니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 61%; display: flex;" title="">씨 (61%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 39%; display: flex;" title="">A (39%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 61%; display: flex;" title="">C (61%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 39%; display: flex;" title="">A (39%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a> 
-							
-							2023 <i>
-							년 1월 20일, 오후 8:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 8:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 14:09">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">모든 질문을 읽을 수만 있다면 모든 질문이 기사와 짝을 이루는 것 같습니다. https://aws.amazon.com/blogs/compute/improved-failure-recovery-for-amazon-eventbridge</div>
+<div class="comment-content">우리가 모두 읽을 수만 있다면 모든 질문이 기사와 짝을 이루는 것 같습니다... https://aws.amazon.com/blogs/compute/improved-failure-recovery-for-amazon-eventbridge</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -287,15 +330,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 06일 월요일 08:40">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 08:40">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">좋은 지적, 감사합니다</div>
+<div class="comment-content">좋은 지적이야, 고마워</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -346,13 +389,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 25일 목요일 07:11">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 25일 (목) 07:11">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 예약 동시성을 사용하면 Lambda 함수의 최대 동시 실행 수를 제한할 수 있습니다. Lambda 함수에 대해 예약된 동시성을 구성하면 동시에 레거시 시스템으로 전송되는 요청 수를 제어하여 과부하를 방지할 수 있습니다. 또한 비동기식 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘릴 수 있습니다. 이렇게 하면 실패한 호출을 재시도하고 이벤트가 더 오랜 기간 동안 시스템에 유지되도록 하여 Lambda 함수가 이벤트를 처리할 수 있는 시간을 더 많이 확보할 수 있습니다. Lambda 함수에 대해 프로비저닝된 동시성을 구성하는 옵션 A는 레거시 시스템에 대한 요청 수를 제한하는 문제를 직접적으로 다루지 않습니다.</div>
+<div class="comment-content">C 예약 동시성을 사용하면 Lambda 함수의 최대 동시 실행 수를 제한할 수 있습니다. Lambda 함수에 대해 예약된 동시성을 구성하면 레거시 시스템으로 동시에 전송되는 요청 수를 제어하여 과부하를 방지할 수 있습니다. 또한 비동기 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘릴 수 있습니다. 이를 통해 실패한 호출을 재시도하고 이벤트가 더 오랜 기간 동안 시스템에 유지되어 Lambda 함수가 이벤트를 처리하는 데 더 많은 시간을 확보할 수 있습니다. Lambda 함수에 대해 프로비저닝된 동시성을 구성하는 옵션 A는 레거시 시스템에 대한 요청 수를 제한하는 문제를 직접적으로 해결하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,8 +435,8 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 13:47">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 13:47">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,12 +473,12 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 22:47">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 22:47">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. 실수했습니다. C가 맞습니다. 예약 동시성을 사용해야 요청량을 제한할 수 있습니다.</div>
+<div class="comment-content">죄송합니다. 실수했습니다. C가 맞습니다. 요청 양을 제한하는 예약 동시성을 사용해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,12 +527,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 23일 목요일 16:16">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 우세합니다. 1. 프로비저닝된 동시성을 사용하여 동시 람다의 한도를 제한합니다. 2. '아키텍트 변경 없음'은 B,C,D를 배제합니다.</div>
+<div class="comment-content">A가 우선합니다. 1. 프로비저닝된 동시성을 사용하여 동시 람다 한도를 제한합니다. 2. '아키텍트 변경 없음'은 B,C,D를 배제합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,15 +569,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				펭귄
+				아스펜귄
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 12:43">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 원칙적으로 가능해 보이지만 질문에는 아키텍처 변경이 없으므로 C여야 합니다.</div>
+<div class="comment-content">D는 원칙적으로 가능해 보이지만 질문에서는 아키텍처 변경이 없으므로 C여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,12 +617,12 @@
 				joanneli77
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 00:54">
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 00:54">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">프로비저닝된 동시성이 아닌 예약된 동시성.</div>
+<div class="comment-content">프로비저닝된 동시성이 아닌 예약된 동시성입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,16 +659,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 25일 수 01:47">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Lambda 함수에 대해 프로비저닝된 동시성을 구성합니다. 프로비저닝된 동시성을 원하는 최대 동시 함수 호출 수로 설정합니다. 프로비저닝된 동시성을 사용하면 특정 시간에 들어오는 요청을 처리하기 위해 특정 수의 함수 인스턴스를 구성할 수 있습니다. 프로비저닝된 동시성을 원하는 최대 동시 함수 호출 수로 설정하면 언제든지 레거시 시스템에 대한 요청 수가 해당 제한을 초과하지 않도록 하여 시스템이 과부하되는 것을 방지할 수 있습니다. 이 솔루션은 Lambda 함수에 대한 구성 변경이므로 아키텍처 변경이 필요하지 않습니다.</div>
+<div class="comment-content">Lambda 함수에 대해 프로비저닝된 동시성을 구성합니다. 프로비저닝된 동시성을 원하는 최대 동시 함수 호출 수로 설정합니다. 프로비저닝된 동시성을 사용하면 특정 시간에 들어오는 요청을 처리하도록 특정 수의 함수 인스턴스를 구성할 수 있습니다. 프로비저닝된 동시성을 원하는 최대 동시 함수 호출 수로 설정하면 언제든지 레거시 시스템에 대한 요청 수가 해당 제한을 초과하지 않도록 하여 시스템이 과부하되는 것을 방지할 수 있습니다. 이 솔루션은 Lambda 함수의 구성 변경이므로 아키텍처 변경이 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,7 +709,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 20:11">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -680,7 +723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -717,7 +760,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. Lambda 함수에 대해 예약된 동시성을 구성합니다. 비동기식 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘립니다.</div>
+<div class="comment-content">C. Lambda 함수에 대한 예약된 동시성을 구성합니다. 비동기 호출 재시도 횟수와 Lambda 함수의 최대 이벤트 기간을 늘립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -781,7 +824,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 14:09">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -876,7 +919,7 @@ https://aws.amazon.com/blogs/compute/improved-failure-recovery-for-amazon-eventb
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 25 May 2023 07:11">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -927,7 +970,7 @@ Option A, configuring provisioned concurrency for the Lambda function, does not 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 13:47">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -967,7 +1010,7 @@ This option will limit the amount of request to the legacy app without architect
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 22:47">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1020,7 +1063,7 @@ This option will limit the amount of request to the legacy app without architect
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 16:16">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1069,7 +1112,7 @@ This option will limit the amount of request to the legacy app without architect
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 12:43">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1159,7 +1202,7 @@ This option will limit the amount of request to the legacy app without architect
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 01:47">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1207,7 +1250,7 @@ Provisioned concurrency allows you to configure a specific number of instances o
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 20:11">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

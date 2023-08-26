@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 303 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 303 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 303 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 303 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849981">
 <p class="card-text">
 							
-								회사에 새로운 애플리케이션이 있습니다. 회사는 애플리케이션이 외부 리소스에 액세스하는 데 사용하는 데이터베이스 연결 문자열, 애플리케이션 라이선스 코드 및 API 키와 같은 중요한 구성 데이터를 보호해야 합니다. 회사는 감사 목적으로 구성 데이터에 대한 액세스를 추적해야 합니다. 리소스는 애플리케이션 외부에서 관리됩니다. <br/><br/>회사는 응용 프로그램에서 연결 문자열, 라이선스 코드 및 API 키의 회전을 관리할 필요가 없습니다. 회사는 구성 데이터를 안전하게 저장하고 구성 데이터에 대한 애플리케이션 액세스를 제공하는 솔루션을 구현해야 합니다. 솔루션은 보안 모범 사례를 준수해야 합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								회사에 새로운 애플리케이션이 있습니다. 회사는 데이터베이스 연결 문자열, 애플리케이션 라이선스 코드, 애플리케이션이 외부 리소스에 액세스하는 데 사용하는 API 키 등 민감한 구성 데이터를 보호해야 합니다. 회사는 감사 목적으로 구성 데이터에 대한 액세스를 추적해야 합니다. 리소스는 애플리케이션 외부에서 관리됩니다. <br/><br/>회사는 애플리케이션에서 연결 문자열, 라이센스 코드 및 API 키의 순환을 관리할 필요가 없습니다. 회사는 구성 데이터를 안전하게 저장하고 애플리케이션에 구성 데이터에 대한 액세스 권한을 부여하는 솔루션을 구현해야 합니다. 솔루션은 보안 모범 사례를 준수해야 합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											설정 데이터는 소스코드 번들에 암호화된 파일로 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
+											구성 데이터를 소스 코드 번들의 암호화된 파일에 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											구성 데이터를 AWS Systems Manager Parameter Store에 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
+											AWS Systems Manager Parameter Store에 구성 데이터를 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											구성 데이터를 Amazon Elastic Block Store(Amazon EBS) 암호화 볼륨에 저장합니다. 애플리케이션이 데이터에 액세스할 수 있도록 EBS 볼륨을 Amazon EC2 인스턴스에 연결합니다.
+											Amazon Elastic Block Store(Amazon EBS) 암호화 볼륨에 구성 데이터를 저장합니다. EBS 볼륨을 Amazon EC2 인스턴스에 연결하여 애플리케이션에 데이터 액세스 권한을 제공합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											구성 데이터를 AWS Secrets Manager에 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
+											AWS Secrets Manager에 구성 데이터를 저장합니다. IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">B (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">B (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a> 2022년 
-							
-							11 <i>
-							월 26일 오전 10:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								kapil206001
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 10:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 30일 금요일 13:32">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 30일 금 13:32">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS Secrets Manager를 사용할 수 있지만 더 비싸고 교체를 관리할 필요가 없기 때문에 비용 효율적이고 계층적 매개변수를 안전한 방식으로 저장할 수 있는 가능성을 제공하는 Systems Manager Parameter Store를 사용할 수 있습니다. 다른 수준의 보안을 추가하고 요구 사항을 달성하려면 IAM 정책도 구성해야 합니다. 따라서 B가 올바른 방법입니다.</div>
+<div class="comment-content">AWS Secrets Manager를 사용할 수 있지만 가격이 더 비싸고 교체를 관리할 필요가 없기 때문에 비용 효율적이고 계층적 매개변수를 안전한 방식으로 저장할 수 있는 Systems Manager Parameter Store를 간단히 사용할 수 있습니다. 다른 수준의 보안을 추가하고 요구 사항을 충족하려면 IAM 정책도 구성해야 합니다. 그래서 B가 가는 길이 맞다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,16 +335,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수 17:38">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수요일 17:38">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B DrCloud가 보여준 것 때문에. "회사는 교체를 관리할 필요가 없습니다"와 "솔루션은 보안 모범 사례를 준수해야 합니다"가 공존할 수 있는 방법을 알려줄 수 있습니까?</div>
+<div class="comment-content">B DrCloud가 보여준 것 때문에. "회사는 순환을 관리할 필요가 없습니다"와 "솔루션은 보안 모범 사례를 준수해야 합니다"가 어떻게 공존할 수 있는지 말해 줄 수 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,16 +381,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 11:36">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 11:36">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 시스템 관리자 매개변수는 고객이 회전을 원하지 않기 때문에 비용 효율적입니다.</div>
+<div class="comment-content">B 시스템 관리자 매개변수는 고객이 교체를 원하지 않기 때문에 비용 효율적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,13 +430,13 @@
 				mrbig00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:16">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:16">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">올바른 솔루션은 옵션 B입니다. AWS Systems Manager Parameter Store에 구성 데이터를 저장하고 IAM 정책을 사용하여 애플리케이션 액세스 권한을 부여하면 구성 데이터를 안전하게 저장하고 애플리케이션에 액세스 권한을 부여하는 요구 사항을 충족합니다. AWS Systems Manager Parameter Store는 구성 데이터에 대한 보안 저장소를 제공하고 데이터에 대한 액세스 감사를 허용하는 관리형 서비스입니다. 이 솔루션은 회사에서 연결 문자열, 라이센스 코드 및 API 키의 순환을 관리할 필요가 없기 때문에 비용 효율적입니다. 소스 코드 번들 또는 Amazon EBS 암호화 볼륨의 암호화된 파일에 데이터를 저장하는 것은 민감한 데이터를 보호하기에 충분히 안전하지 않을 수 있습니다. AWS Secrets Manager를 사용하는 것이 적절한 솔루션이 될 것입니다.</div>
+<div class="comment-content">올바른 솔루션은 옵션 B입니다. AWS Systems Manager Parameter Store에 구성 데이터를 저장하고 IAM 정책을 사용하여 애플리케이션에 액세스 권한을 부여하면 구성 데이터를 안전하게 저장하고 애플리케이션에 이에 대한 액세스 권한을 부여하는 요구 사항을 충족합니다. AWS Systems Manager Parameter Store는 구성 데이터에 대한 보안 저장소를 제공하고 데이터에 대한 액세스 감사를 허용하는 관리형 서비스입니다. 이 솔루션은 회사에서 연결 문자열, 라이센스 코드 및 API 키의 순환을 관리할 필요가 없으므로 비용 효율적입니다. 소스 코드 번들의 암호화된 파일이나 Amazon EBS 암호화 볼륨에 데이터를 저장하는 것은 민감한 데이터를 보호할 만큼 충분히 안전하지 않을 수 있습니다. AWS Secrets Manager를 사용하는 것이 적절한 솔루션이 될 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,16 +473,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 14:49">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/blogs/mt/the-right-way-to-store-secrets-using-parameter-store/ https://docs.aws.amazon.com/managedservices/latest/userguide/ sys-man-param-store.html AWS Systems Manager Parameter Store(AMS SSPS): AWS Systems Manager Parameter Store는 구성 데이터 관리 및 암호 관리를 위한 안전한 계층적 스토리지를 제공합니다. 암호, 데이터베이스 문자열 및 라이센스 코드와 같은 데이터를 매개변수 값으로 저장할 수 있습니다.</div>
+<div class="comment-content">https://aws.amazon.com/blogs/mt/the-right-way-to-store-secrets-using-parameter-store/ https://docs.aws.amazon.com/managedservices/latest/userguide/ sys-man-param-store.html AWS 시스템 관리자 매개변수 저장소(AMS SSPS): AWS 시스템 관리자 매개변수 저장소는 구성 데이터 관리 및 비밀 관리를 위한 안전한 계층적 스토리지를 제공합니다. 비밀번호, 데이터베이스 문자열, 라이센스 코드 등의 데이터를 매개변수 값으로 저장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,12 +523,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 14:19">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 선택</div>
+<div class="comment-content">B를 선택</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,16 +565,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:35">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:35">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디입니다</div>
+<div class="comment-content">이것은 D입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,15 +611,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 10:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 10:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 시스템 관리자 매개변수는 고객이 회전을 원하지 않기 때문에 비용 효율적입니다.</div>
+<div class="comment-content">B 시스템 관리자 매개변수는 고객이 교체를 원하지 않기 때문에 비용 효율적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -637,7 +680,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 13:32">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -683,7 +726,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 17:38">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -729,7 +772,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 11:36">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -776,7 +819,7 @@ System manager parameter is cost effective since customer doesnot want rotation 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:16">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -822,7 +865,7 @@ System manager parameter is cost effective since customer doesnot want rotation 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 14:49">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -872,7 +915,7 @@ AWS Systems Manager Parameter Store provides secure, hierarchical storage for co
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 14:19">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -918,7 +961,7 @@ AWS Systems Manager Parameter Store provides secure, hierarchical storage for co
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:35">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -964,7 +1007,7 @@ AWS Systems Manager Parameter Store provides secure, hierarchical storage for co
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 10:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

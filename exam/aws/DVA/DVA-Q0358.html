@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 358 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 358 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 358 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 358 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850065">
 <p class="card-text">
 							
-								개발자가 Amazon Aurora MySQL 데이터베이스와 상호 작용하는 AWS Lambda 함수를 생성했습니다. Lambda 함수는 데이터베이스에 대한 쿼리를 만듭니다. Lambda 함수에 대한 성능 테스트 후 데이터베이스에 너무 많은 연결에 대한 오류가 표시되기 시작합니다. <br/><br/>최소한의 운영 노력으로 이 문제를 해결할 솔루션은 무엇입니까?
+								개발자가 Amazon Aurora MySQL 데이터베이스와 상호 작용하는 AWS Lambda 함수를 생성했습니다. Lambda 함수는 데이터베이스에 쿼리를 보냅니다. Lambda 함수에 대한 성능 테스트 후 데이터베이스에 연결이 너무 많아 오류가 표시되기 시작합니다. <br/><br/>최소한의 운영 노력으로 이 문제를 해결할 수 있는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											데이터베이스용 도로 복제본을 만듭니다. 기본 데이터베이스 대신 복제본 데이터베이스를 쿼리합니다.
+											데이터베이스에 대한 도로 복제본을 만듭니다. 기본 데이터베이스 대신 복제본 데이터베이스를 쿼리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											따라서 Lambda 함수의 동시성에 대한 제한이 있습니다.
+											Lambda 함수의 동시성에 제한이 있습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 77%; display: flex;" title="">D (77%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">A (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 77%; display: flex;" title="">D (77%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">A (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							2022 <i>
-							년 11월 27일 오후 6:14</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 27, 2022, 6:14 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 18:14">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 18:14">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">오류: 너무 많은 연결 질문: 최소한의 운영 노력? https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Managing.Performance.html 애플리케이션이 연결을 자주 열고 닫거나 많은 수의 장기 연결을 열어 두는 경우 다음을 수행하는 것이 좋습니다. Amazon RDS 프록시를 사용합니다. RDS Proxy는 연결 풀링을 사용하여 데이터베이스 연결을 안전하고 효율적으로 공유하는 완전 관리형 고가용성 데이터베이스 프록시입니다.</div>
+<div class="comment-content">오류: 연결이 너무 많습니다. 질문: 운영 노력이 가장 적습니까? https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Managing.Performance.html 애플리케이션이 자주 연결을 열고 닫거나 다수의 장기 연결을 열어두는 경우 다음을 수행하는 것이 좋습니다. Amazon RDS 프록시를 사용합니다. RDS Proxy는 연결 풀링을 사용하여 데이터베이스 연결을 안전하고 효율적으로 공유하는 완전 관리형 고가용성 데이터베이스 프록시입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,11 +345,11 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 20:05">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. Lambda 함수의 동시성에 대한 제한을 설정합니다. Lambda 함수의 동시성에 제한을 설정하면 함수가 데이터베이스에 대해 만들 수 있는 동시 연결 수를 제한하여 함수가 데이터베이스에 과부하를 주지 않도록 할 수 있습니다. 이 솔루션은 Lambda 함수의 구성 조정만 포함하므로 다른 솔루션에 비해 최소한의 운영 노력이 필요합니다. 그러나 동시성을 제한하면 데이터베이스에 대한 요청을 병렬화하는 기능이 제한될 수 있으므로 이 솔루션은 Lambda 함수의 성능을 저하시킬 수도 있습니다.</div>
+<div class="comment-content">C. Lambda 함수의 동시성에 대한 제한을 설정합니다. Lambda 함수의 동시성에 대한 제한을 설정하면 함수가 데이터베이스에 연결할 수 있는 동시 연결 수를 제한하여 함수가 데이터베이스에 오버로드되는 것을 방지할 수 있습니다. 이 솔루션은 Lambda 기능의 구성 조정만 포함하므로 다른 솔루션에 비해 운영 노력이 가장 적습니다. 그러나 동시성을 제한하면 데이터베이스에 대한 요청을 병렬화하는 기능이 제한될 수 있으므로 이 솔루션은 Lambda 함수의 성능이 저하될 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -315,7 +358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,11 +382,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 20:06">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다음은 두 솔루션의 구성 단계입니다. C. Lambda 함수의 동시성에 대한 제한 설정: AWS Management Console에서 Amazon Aurora MySQL 데이터베이스와 상호 작용하는 AWS Lambda 함수를 엽니다. 구성 섹션에서 고급 설정으로 이동합니다. 동시성에서 동시에 실행할 수 있는 최대 호출 수에 대한 제한을 설정합니다. Lambda 함수 구성에 대한 변경 사항을 저장합니다.</div>
+<div class="comment-content">두 솔루션에 대한 구성 단계는 다음과 같습니다. C. Lambda 함수의 동시성에 대한 제한을 설정합니다. AWS Management Console에서 Amazon Aurora MySQL 데이터베이스와 상호 작용하는 AWS Lambda 함수를 엽니다. 구성 섹션에서 고급 설정으로 이동합니다. 동시성에서 동시에 실행할 수 있는 최대 호출 수에 대한 제한을 설정합니다. Lambda 함수 구성에 대한 변경 사항을 저장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -352,7 +395,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,11 +419,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 20:06">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. Amazon RDS Proxy에서 프록시 생성: Aurora 데이터베이스에 대한 Amazon RDS 데이터베이스 인스턴스를 생성합니다. 데이터베이스 인스턴스에 대한 Amazon RDS 프록시를 생성합니다. Amazon RDS 프록시 엔드포인트를 사용하도록 데이터베이스에 연결하기 위해 Lambda 함수에서 사용하는 연결 문자열을 수정합니다. Amazon RDS 프록시에 대한 액세스를 허용하도록 Lambda 함수에서 사용하는 IAM 역할을 수정합니다. Lambda 함수를 테스트하여 Amazon RDS Proxy를 사용하여 데이터베이스에 연결할 수 있는지 확인하십시오.</div>
+<div class="comment-content">D. Amazon RDS 프록시에서 프록시 생성: Aurora 데이터베이스용 Amazon RDS 데이터베이스 인스턴스를 생성합니다. 데이터베이스 인스턴스에 대한 Amazon RDS 프록시를 생성합니다. Amazon RDS 프록시 엔드포인트를 사용하기 위해 데이터베이스에 연결하기 위해 Lambda 함수에서 사용하는 연결 문자열을 수정합니다. Amazon RDS 프록시에 대한 액세스를 허용하도록 Lambda 함수에서 사용하는 IAM 역할을 수정합니다. Lambda 함수를 테스트하여 Amazon RDS 프록시를 사용하여 데이터베이스에 연결할 수 있는지 확인하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -389,7 +432,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -413,11 +456,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 20:11">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. Amazon RDS 프록시에서 프록시를 생성합니다. 데이터베이스 대신 프록시를 쿼리합니다. Amazon RDS Proxy에서 프록시를 생성하면 데이터베이스에 대한 연결을 관리하고 최적화하여 너무 많은 연결에 대한 오류를 완화하는 데 도움이 될 수 있습니다. Amazon RDS Proxy는 Lambda 함수에 대한 연결 풀을 자동으로 관리하여 필요한 연결 수를 줄이고 데이터베이스 성능을 향상시킬 수 있습니다. 이 솔루션은 Lambda 함수의 동시성에 대한 제한을 설정하는 것과 비교하여 약간 더 많은 운영 노력이 필요하지만 데이터베이스 연결을 보다 효율적으로 사용할 수 있으므로 Lambda 함수의 성능이 향상될 수 있습니다.</div>
+<div class="comment-content">D. Amazon RDS 프록시에서 프록시를 생성합니다. 데이터베이스 대신 프록시를 쿼리합니다. Amazon RDS 프록시에서 프록시를 생성하면 데이터베이스에 대한 연결을 관리하고 최적화하여 너무 많은 연결로 인한 오류를 줄이는 데 도움이 될 수 있습니다. Amazon RDS 프록시는 Lambda 함수에 대한 연결 풀을 자동으로 관리하여 필요한 연결 수를 줄이고 데이터베이스 성능을 향상시킬 수 있습니다. 이 솔루션은 Lambda 함수의 동시성에 대한 제한을 설정하는 것에 비해 약간 더 많은 운영 노력이 필요하지만 데이터베이스 연결을 보다 효율적으로 사용할 수 있으므로 Lambda 함수의 성능이 향상될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -426,7 +469,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,12 +525,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 12:23">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A: 읽기 복제본 "애플리케이션에 대한 읽기 작업을 확장하기 위해 쿼리를 발행할 수 있습니다. 일반적으로 클러스터의 리더 엔드포인트에 연결하여 그렇게 합니다. 이렇게 하면 Aurora가 읽기 전용 연결에 대한 로드를 가능한 한 많이 분산시킬 수 있습니다. 클러스터에 있는 Aurora 복제본." https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html</div>
+<div class="comment-content">A: 읽기 전용 복제본 "쿼리를 실행하여 애플리케이션에 대한 읽기 작업을 확장할 수 있습니다. 일반적으로 클러스터의 리더 엔드포인트에 연결하여 그렇게 할 수 있습니다. 이렇게 하면 Aurora는 읽기 전용 연결에 대한 로드를 최대한 많은 수로 분산시킬 수 있습니다. 클러스터에 있는 것과 같은 Aurora 복제본입니다." https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,11 +567,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 06:11">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 06:11">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -597,7 +640,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 18:14">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -649,7 +692,7 @@ If your applications frequently open and close connections, or keep a large numb
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 20:05">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -688,7 +731,7 @@ Setting a limit to the Lambda function's concurrency can prevent the function fr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 20:06">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -732,7 +775,7 @@ Save the changes to the Lambda function configuration.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 20:06">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -775,7 +818,7 @@ Test the Lambda function to ensure that it can connect to the database using the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 20:11">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -846,7 +889,7 @@ Creating a proxy in Amazon RDS Proxy can help alleviate the error for too many c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 12:23">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -895,7 +938,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 06:11">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

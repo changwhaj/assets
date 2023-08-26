@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 418 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 418 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 418 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 418 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866127">
 <p class="card-text">
 							
-								회사에서 새로운 서버리스 애플리케이션을 개발 중입니다. 개발자는 최소한의 코딩 노력으로 AWS Lambda 기능 및 종속 인프라를 배포하는 자동화된 방법을 찾아야 합니다. 응용 프로그램은 또한 신뢰할 수 있어야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 방법은 무엇입니까?
+								회사에서 새로운 서버리스 애플리케이션을 개발 중입니다. 개발자는 최소한의 코딩 노력으로 AWS Lambda 기능과 종속 인프라를 배포하는 자동화된 방법을 찾아야 합니다. 또한 애플리케이션은 신뢰성이 있어야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 방법은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											셸 스크립트를 사용하여 각 Lambda 함수에 대한 .zip 파일을 생성하여 애플리케이션을 구축합니다. .zip 파일을 AWS Management 콘솔에 수동으로 업로드합니다.
+											쉘 스크립트를 사용하여 각 Lambda 함수에 대한 .zip 파일을 생성하여 애플리케이션을 구축합니다. .zip 파일을 AWS Management Console에 수동으로 업로드합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											AWS Serverless Application Model(AWS SAM)을 사용하여 애플리케이션을 구축합니다. 지속적 통합 및 지속적 전달(CI/CD) 파이프라인과 SAM CLI를 사용하여 Lambda 함수를 배포합니다.
+											AWS Serverless Application Model(AWS SAM)을 사용하여 애플리케이션을 구축합니다. CI/CD(지속적 통합 및 지속적 전달) 파이프라인과 SAM CLI를 사용하여 Lambda 함수를 배포합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											셸 스크립트를 사용하여 각 Lambda 함수에 대한 .zip 파일을 생성하여 애플리케이션을 구축합니다. .zip 파일을 업로드합니다. 지속적 통합 및 지속적 전달(CI/CD) 파이프라인에서 AWS CLI를 사용하여 .zip 파일을 Lambda 함수로 배포합니다.
+											쉘 스크립트를 사용하여 각 Lambda 함수에 대한 .zip 파일을 생성하여 애플리케이션을 구축합니다. .zip 파일을 업로드합니다. CI/CD(지속적 통합 및 지속적 전달) 파이프라인에서 AWS CLI를 사용하여 .zip 파일을 Lambda 함수로 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											각 Lambda 함수에 대한 컨테이너를 구축합니다. 컨테이너 이미지를 AWS CodeArtifact에 저장합니다. 지속적 통합 및 지속적 전달(CI/CD) 파이프라인에서 AWS CLI를 사용하여 컨테이너를 Lambda 함수로 배포합니다.
+											각 Lambda 함수에 대한 컨테이너를 구축합니다. AWS CodeArtifact에 컨테이너 이미지를 저장합니다. CI/CD(지속적 통합 및 지속적 전달) 파이프라인에서 AWS CLI를 사용하여 컨테이너를 Lambda 함수로 배포합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a> 2023년 
-							
-							1 <i>
-							월 21일 오전 1시 20분</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								KT_Yu
-							</a>
-							
-							at <i>
-							Jan. 21, 2023, 1:20 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,11 +291,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빵빵
+				빵집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 16일 수 01:00">
-			4일, 4시간 전
+<span class="comment-date align-middle" title="2023년 8월 16일 수요일 01:00">
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,16 +337,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 03:21">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,16 +383,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 11:11">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. AWS Serverless Application Model(AWS SAM)을 사용하여 애플리케이션을 구축합니다. 지속적 통합 및 지속적 전달(CI/CD) 파이프라인과 SAM CLI를 사용하여 Lambda 함수를 배포합니다.</div>
+<div class="comment-content">B. AWS Serverless Application Model(AWS SAM)을 사용하여 애플리케이션을 구축합니다. CI/CD(지속적 통합 및 지속적 전달) 파이프라인과 SAM CLI를 사용하여 Lambda 함수를 배포합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 01:20">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 01:20">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">CI/CD가 포함된 SAM이 가장 좋은 것 같습니다.</div>
+<div class="comment-content">CI/CD를 포함하는 SAM이 가장 좋은 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -456,7 +499,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Aug 2023 01:00">
-			4 days, 4 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -502,7 +545,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 03:21">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -548,7 +591,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 11:11">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

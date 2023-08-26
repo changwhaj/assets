@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 300 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 300 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 300 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 300 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849978">
 <p class="card-text">
 							
-								새로운 모바일 앱은 Amazon Cognito 웹 자격 증명 연동을 사용합니다. 사용자가 로그인한 직후 다음 오류가 발생합니다. <br/><br/>AccessDenied -- Sts:AssumeRoleWithWebIdentity를 수행할 권한이 없음 <br/><br/>개발자가 Amazon Cognito 구성이 올바른 것으로 판단합니다. <br/><br/>다음 중 오류의 원인이 될 수 있는 것은 무엇입니까?
+								새로운 모바일 앱은 Amazon Cognito 웹 자격 증명 연동을 사용합니다. 사용자가 로그인한 직후 다음 오류가 발생합니다. <br/><br/>AccessDenied - sts:AssumeRoleWithWebIdentity를 수행할 권한이 없습니다. <br/><br/>개발자는 Amazon Cognito 구성이 올바른 것으로 판단합니다. <br/><br/>다음 중 오류의 원인은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											앱 개발자가 인증된 보안 주체 역할 액세스 정책을 잘못 정의했습니다.
+											앱 개발자가 인증된 주체 역할 액세스 정책을 잘못 정의했습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											앱이 사용자 풀에서 사용자를 확인할 수 없습니다.
+											앱이 사용자 풀의 사용자를 확인할 수 없습니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											앱이 ID 공급자로 사용자를 제대로 인증할 수 없습니다.
+											앱이 ID 공급자를 통해 사용자를 제대로 인증할 수 없습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 88%; display: flex;" title="">D (88%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 88%; display: flex;" title="">D (88%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								IvanPetrovichPavlov
-							</a> 2022년 11월 24 
-							
-							일 <i>
-							오후 10:16</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								IvanPetrovichPavlov
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 10:16 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				AWSdeveloper08
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 09:23">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 18일 (화) 09:23">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">다음과 같은 이유로 D, bcox를 선택했습니다. https://stackoverflow.com/questions/66405794/not-authorized-to-perform-stsassumerolewithwebidentity-403 아래 링크를 확인하십시오.</div>
+<div class="comment-content">다음과 같은 이유로 D, bcox를 선택했습니다. 아래 링크를 확인하세요 https://stackoverflow.com/questions/66405794/not-authorized-to-perform- stsassumerolewithwebidentity-403</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -295,21 +338,21 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 23:31">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 23:31">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C "AccessDenied -- Not Authorized to perform sts:AssumeRoleWithWebIdentity" 오류 메시지는 AWS Security Token Service(STS)에서 인증된 보안 주체와 연결된 역할을 가정하는 데 문제가 있음을 나타냅니다. 이 오류는 ID 공급자로 사용자를 제대로 인증하지 못했기 때문에 발생할 수 있습니다. 사용자가 Amazon Cognito 웹 자격 증명 연동을 사용하는 앱에 로그인하면 앱은 사용자 대신 AWS 서비스에 액세스할 수 있는 임시 AWS 자격 증명을 얻습니다. 이러한 자격 증명은 AWS STS에서 AssumeRoleWithWebIdentity API를 사용하여 자격 증명 공급자로부터 얻은 사용자의 자격 증명 토큰을 임시 AWS 자격 증명으로 교환하여 얻습니다. 인증 프로세스에 문제가 있는 경우 앱에서 유효한 임시 자격 증명을 얻지 못할 수 있습니다. "AccessDenied" 오류 메시지가 나타납니다. 이는 Amazon Cognito와 함께 웹 자격 증명 연동을 사용할 때 발생하는 일반적인 오류 원인입니다.</div>
+<div class="comment-content">C 오류 메시지 "AccessDenied - sts:AssumeRoleWithWebIdentity를 수행할 권한이 없음"은 AWS Security Token Service(STS)에서 인증된 보안 주체와 연결된 역할을 맡는 데 문제가 있음을 나타냅니다. 이 오류는 ID 공급자를 통해 사용자를 적절하게 인증하지 못하여 발생할 수 있습니다. 사용자가 Amazon Cognito 웹 자격 증명 연동을 사용하는 앱에 로그인하면 앱은 사용자를 대신하여 AWS 서비스에 액세스할 수 있는 임시 AWS 자격 증명을 얻습니다. 이러한 자격 증명은 AWS STS의 AssumeRoleWithWebIdentity API를 사용하여 자격 증명 공급자로부터 얻은 사용자의 자격 증명 토큰을 임시 AWS 자격 증명으로 교환하여 얻습니다. 인증과정에 문제가 있는 경우, 앱이 유효한 임시 자격 증명을 획득하지 못할 수 있으며, "AccessDenied" 오류 메시지가 표시됩니다. 이는 Amazon Cognito에서 웹 자격 증명 연동을 사용할 때 발생하는 일반적인 오류 원인입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,13 +383,13 @@
 				모르지스트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 13:36">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 13:36">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D를 선택</div>
+<div class="comment-content">D를 선택하세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +398,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,11 +426,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 11:55">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 11:55">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,8 +475,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 14:06">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 14:06">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,8 +521,8 @@
 				이반페트로비치파블로프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 22:16">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 22:16">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -545,7 +588,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 09:23">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -613,7 +656,7 @@ If there is an issue with the authentication process, the app may not be able to
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -646,7 +689,7 @@ If there is an issue with the authentication process, the app may not be able to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 13:36">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -692,7 +735,7 @@ If there is an issue with the authentication process, the app may not be able to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 11:55">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -739,7 +782,7 @@ https://aws.amazon.com/pt/premiumsupport/knowledge-center/eks-load-balancer-webi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 14:06">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -785,7 +828,7 @@ https://aws.amazon.com/pt/premiumsupport/knowledge-center/eks-load-balancer-webi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 22:16">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 69 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 69 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 69 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 69 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807569">
 <p class="card-text">
 							
-								개발자가 유지 관리 활동을 수행하기 위해 AWS Lambda 함수를 설계하고 있습니다. 개발자는 Amazon EventBridge(Amazon CloudWatch Events)를 사용하여 매시간 일정에 따라 함수를 호출합니다. 개발자는 함수가 로그 수준 변수의 값에 따라 다양한 세부 수준에서 정보를 기록하기를 원합니다. 개발자는 함수 코드를 변경하지 않고도 로그 수준을 설정할 수 있도록 함수를 설계해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?<br/>
+								개발자가 유지 관리 활동을 수행하기 위해 AWS Lambda 함수를 설계하고 있습니다. 개발자는 Amazon EventBridge(Amazon CloudWatch Events)를 사용하여 시간별 일정에 따라 함수를 호출합니다. 개발자는 로그 수준 변수의 값에 따라 다양한 세부 수준에서 정보를 기록하는 함수를 원합니다. 개발자는 함수 코드를 변경하지 않고도 로그 수준을 설정할 수 있도록 함수를 설계해야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807569" type="application/json">[{"voted_answers": "B", "vote_count": 8, "is_most_voted": true}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											Lambda 함수에 대한 사용자 지정 로그 수준 매개 변수를 추가합니다. Lambda 콘솔을 사용하여 파라미터 설정
+											Lambda 함수에 대한 사용자 지정 로그 수준 매개 변수를 추가합니다. Lambda 콘솔을 사용하여 매개변수 설정
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											Lambda 함수에 대한 사용자 지정 로그 수준 매개 변수를 추가합니다. AWS CLI를 사용하여 파라미터를 설정합니다.
+											Lambda 함수에 대한 사용자 지정 로그 수준 매개 변수를 추가합니다. AWS CLI를 사용하여 매개변수를 설정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 1일 오전 <i>
-							3시 13분 </i><a class="title-username" style="">
-								JAMG54
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JAMG54
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 3:13 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,18 +289,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 14:50">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞습니다: https://docs.aws.amazon.com/solutions/latest/operations-conductor/appendix-d.html</div>
+<div class="comment-content">B가 정확함: https://docs.aws.amazon.com/solutions/latest/Operations-conductor/appendix-d.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -294,18 +337,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Punit007
+				푸닛007
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 19일 수 09:45">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B, 올바른 옵션입니다</div>
+<div class="comment-content">B, 올바른 선택인가</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -345,13 +388,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 14:26">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 14:26">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B, 환경 변수를 특정 로그 수준으로 설정할 수 있습니다. 이런 식으로 코드가 아닌 변수만 변경하면 됩니다.</div>
+<div class="comment-content">B, 환경 변수를 특정 로그 수준으로 설정할 수 있습니다. 이런 식으로 코드를 변경하는 대신 변수만 변경하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,16 +431,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 22:55">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 22:55">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">로그 수준을 환경 변수로 설정하면 Lambda 함수는 런타임 시 이 변수의 값을 읽고 그에 따라 코드를 변경할 필요 없이 로깅 수준을 조정할 수 있습니다. 이렇게 하면 함수를 다시 배포할 필요 없이 로그 수준을 쉽게 변경할 수 있습니다.</div>
+<div class="comment-content">로그 수준을 환경 변수로 설정하면 Lambda 함수는 런타임에 이 변수의 값을 읽고 코드를 변경할 필요 없이 그에 따라 로깅 수준을 조정할 수 있습니다. 이렇게 하면 함수를 다시 배포할 필요 없이 로그 수준을 더 쉽게 변경할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,16 +477,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Rpod
+				R포드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 11:12">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 11:12">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">투표 B - 함수에 대한 매개변수로 로그 수준으로 무언가를 설정하는 것이 잘못된 것 같기 때문입니다. 매개변수는 함수 실행과 관련이 있어야 합니다.</div>
+<div class="comment-content">B로 투표 - 로그 수준을 함수에 대한 매개변수로 설정하는 것이 잘못된 것 같습니다. 매개변수는 함수 실행과 관련이 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,15 +523,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ShriniW
+				슈리니W
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 22:05">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 22:05">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">각 Lambda 함수에는 LogLevel 환경 변수가 있습니다. 값을 변경하려면 특정 마이크로서비스 Lambda 함수의 로그 수준만 변경하면 됩니다. 답변: B</div>
+<div class="comment-content">각 Lambda 함수에는 LogLevel 환경 변수가 있습니다. 값을 변경하려면 특정 마이크로서비스 Lambda 함수의 로그 수준만 변경할 수 있습니다. 답: B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,11 +572,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 13:30">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,15 +613,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 21:16">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 21:16">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">참고: "게시되지 않은 함수 버전에서 환경 변수를 정의합니다. 버전을 게시하면 다른 버전별 구성과 함께 해당 버전에 대해 환경 변수가 잠깁니다." https://docs.amazonaws.cn/en_us/ 람다/최신/dg/configuration-envvars.html</div>
+<div class="comment-content">참고: "게시되지 않은 함수 버전에서 환경 변수를 정의합니다. 버전을 게시하면 다른 버전별 구성과 함께 해당 버전에 대한 환경 변수가 잠깁니다." https://docs.amazonaws.cn/en_us/ 람다/최신/dg/configuration-envvars.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,12 +661,12 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 17일 목요일 22:06">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 17일 (목) 22:06">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B "각 Lambda 함수에는 LogLevel 환경 변수가 있습니다" https://docs.aws.amazon.com/solutions/latest/operations-conductor/appendix-d.html</div>
+<div class="comment-content">B입니다. "각 Lambda 함수에는 LogLevel 환경 변수가 있습니다." https://docs.aws.amazon.com/solutions/latest/Operations-conductor/appendix-d.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,13 +706,13 @@
 				cloud_collector
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 13일 일 07:45">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 13일 일요일 07:45">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">환경 변수를 사용하여 코드를 업데이트하지 않고 함수의 동작을 조정할 수 있습니다. 환경 변수는 함수의 버전별 구성에 저장되는 문자열 쌍입니다. Lambda 런타임은 코드에서 환경 변수를 사용할 수 있게 하고 함수 및 호출 요청에 대한 정보가 포함된 추가 환경 변수를 설정합니다.</div>
+<div class="comment-content">환경 변수를 사용하면 코드를 업데이트하지 않고도 함수의 동작을 조정할 수 있습니다. 환경 변수는 함수의 버전별 구성에 저장되는 문자열 쌍입니다. Lambda 런타임은 환경 변수를 코드에 사용할 수 있도록 하고 함수 및 호출 요청에 대한 정보가 포함된 추가 환경 변수를 설정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,8 +752,8 @@
 				노로카스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 19일 수 13:48">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 19일 수요일 13:48">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,16 +795,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아르노92
+				Arnaud92
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 13일 목요일 13:40">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">나는 B에 투표</div>
+<div class="comment-content">나는 B에 투표한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -825,7 +868,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 14:50">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -873,7 +916,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 09:45">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -918,7 +961,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 14:26">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -964,7 +1007,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 22:55">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1010,7 +1053,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 11:12">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1103,7 +1146,7 @@ Ans: B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 13:30">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1148,7 +1191,7 @@ Ans: B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 21:16">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1193,7 +1236,7 @@ Ans: B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 22:06">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1242,7 +1285,7 @@ https://docs.aws.amazon.com/solutions/latest/operations-conductor/appendix-d.htm
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 13 Nov 2022 07:45">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1288,7 +1331,7 @@ https://docs.aws.amazon.com/solutions/latest/operations-conductor/appendix-d.htm
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 13:48">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1334,7 +1377,7 @@ https://docs.aws.amazon.com/solutions/latest/operations-conductor/appendix-d.htm
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 13:40">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 152 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 152 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 152 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 152 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="847998">
 <p class="card-text">
 							
-								한 회사가 레거시 애플리케이션을 AWS의 서버리스 애플리케이션으로 마이그레이션하고 있습니다. 레거시 애플리케이션은 Amazon API Gateway API에 의해 노출되는 웹 서비스 세트로 구성됩니다. 개발자는 웹 서비스의 기존 구현을 AWS Lambda 함수로 대체해야 합니다. 개발자는 프로덕션에서 기능을 사용하는 API의 새 버전을 테스트해야 합니다. 개발자는 애플리케이션 사용자에 대한 테스트의 영향을 최소화해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 레거시 애플리케이션을 AWS의 서버리스 애플리케이션으로 마이그레이션하고 있습니다. 레거시 애플리케이션은 Amazon API Gateway API에 의해 노출되는 웹 서비스 세트로 구성됩니다. 개발자는 기존 웹 서비스 구현을 AWS Lambda 함수로 대체해야 합니다. 개발자는 프로덕션에서 기능을 사용하는 새로운 버전의 API를 테스트해야 합니다. 개발자는 테스트가 응용 프로그램 사용자에게 미치는 영향을 최소화해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											API의 새 버전에 대한 베타 단계를 만듭니다. 업데이트된 끝점을 사용자에게 보냅니다.
+											새 버전의 API에 대한 베타 단계를 만듭니다. 업데이트된 엔드포인트를 사용자에게 보냅니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											API의 새 버전에 대한 개발 단계를 만듭니다. 카나리아 배포를 사용합니다.
+											새 버전의 API에 대한 개발 단계를 만듭니다. 카나리아 배포를 사용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											API의 새 버전에 대한 개발 단계를 만듭니다. 카나리아 릴리스를 승격하십시오.
+											새 버전의 API에 대한 개발 단계를 만듭니다. 카나리아 릴리스를 승격합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											배포 단계를 만듭니다. API의 새 버전에 대해 상호 TLS를 활성화합니다.
+											배포 단계를 생성합니다. 새 버전의 API에 대해 상호 TLS를 활성화합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">B (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">B (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a> 
-							
-							2022 <i>
-							년 11월 21일 오후 3:13</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dark_cherrymon
-							</a>
-							
-							at <i>
-							Nov. 21, 2022, 3:13 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 19:31">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 귀하의 고객이 아닌 귀하의 통제하에 있기 때문에 확실히 더 안전한 방법입니다.</div>
+<div class="comment-content">B는 고객의 통제하에 있지 않고 귀하의 통제하에 있기 때문에 확실히 더 안전한 방법입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -301,13 +344,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 21:04">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 21:04">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 "API의 새 버전에 대한 개발 단계를 만듭니다. 카나리아 배포를 사용하십시오"가 맞습니다.</div>
+<div class="comment-content">B가 맞습니다. "새 버전의 API에 대한 개발 단계를 만듭니다. 카나리아 배포를 사용하세요."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,16 +387,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 18:52">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 18:52">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">확실히 B입니다. 카나리아 배포입니다. 문제는 사용자에게 최소한의 영향을 미치는 솔루션을 요구하는 것입니다. A가 옳다고 생각하는 사람들에게 베타 버전을 사용자에게 보내는 이유는 무엇입니까? 그리고 그렇게 한다면 베타 버전에 문제가 생기면 사용자에게 어떤 영향을 미칠까요?</div>
+<div class="comment-content">확실히 B입니다. 카나리아 배포입니다. 문제는 사용자에게 최소한의 영향을 미치는 솔루션을 요구하는 것입니다. A가 맞다고 생각하는 사람들에게 왜 베타 버전을 사용자에게 보내겠습니까? 그리고 그렇게 한다면 베타 버전에 문제가 생기면 사용자에게 어떤 영향을 미치게 될까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,12 +436,12 @@
 				시칠람
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 14:12">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 14:12">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">배포에 대해 이야기하기 전에 먼저 테스트해야 하기 때문에 A에 투표합니다!</div>
+<div class="comment-content">배포에 관해 논의하기 전에 먼저 테스트해야 하기 때문에 A에 투표합니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,7 +478,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 01:03">
@@ -443,7 +486,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 "테스트"가 의미하는 바가 명확하지 않은 것 같습니다. 포스트 프로덕션을 라이브로 테스트하시겠습니까? 또는 prod env에서 새로 만든 코드를 테스트합니다.</div>
+<div class="comment-content">여기서 "테스트"가 무엇을 의미하는지 명확하지 않은 것 같습니다. 테스트 후반 작업이 시작되나요? 또는 prod env에서 새로 생성된 코드를 테스트합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,15 +523,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 05:05">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저는 A를 선택합니다. 아직 프로덕션 사용자를 포함하지 않고 개발자가 테스트 중인 것으로 이해합니다. B를 사용하면 프로덕션 사용자는 오류 또는 유사 항목을 찾을 수 있지만 A를 사용하면 특정 끝점으로 테스트하는 것만 오류가 발생하기 쉽고 일단 개발자 B가 테스트하면 사용할 수 있습니다.</div>
+<div class="comment-content">나는 A를 선택합니다. 개발자가 아직 프로덕션 사용자를 참여시키지 않고 테스트하는 사람이라는 것을 이해합니다. B를 사용하면 프로덕션 사용자가 오류나 유사한 오류를 찾을 수 있지만 A를 사용하면 특정 엔드포인트로 테스트하는 경우에만 오류가 발생하기 쉬우며 일단 개발자가 테스트하면 B를 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,16 +568,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 05:59">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 05:59">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">사용자를 참여시키거나 테스트에 의존할 필요가 없습니다.</div>
+<div class="comment-content">테스트를 위해 사용자를 참여시키거나 사용자에게 의존할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,11 +614,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 19:35">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -619,13 +662,13 @@
 				말삼수프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 09:38">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 09:38">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">bbbbbbb</div>
+<div class="comment-content">bbbbbbbb</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,12 +708,12 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 11:51">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 11:51">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B를 선택합니다. A라고 생각하지 않습니다. 애플리케이션 사용자에게 미치는 영향이 가장 적고 프로덕션 환경에서 사용자에게 업데이트된 엔드포인트를 제공하는 것은 큰 혼란이 될 것이기 때문입니다. 문서에 따르면 개발 단계를 만들고 카나리아 방식을 사용하는 것이 더 적합해 보입니다. 참조: https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html</div>
+<div class="comment-content">저는 B를 선택합니다. A라고 생각하지 않습니다. 애플리케이션 사용자에게 미치는 영향이 가장 적다고 언급하고 프로덕션 사용자에게 업데이트된 엔드포인트를 제공하는 것은 엄청난 혼란을 가져올 것이기 때문입니다. 문서에 따르면 개발 단계를 만들고 카나리아 접근 방식을 사용하는 것이 더 실현 가능하다고 합니다. 참조: https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -707,15 +750,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 23일 수 14:17">
-			8개월, 4주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저는 B https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html#api-gateway-canary-release-deployment-overview를 선택합니다.</div>
+<div class="comment-content">B https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-release.html#api-gateway-canary-release-deployment-overview를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -755,13 +798,13 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:13">
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:13">
 			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 당신이 업그레이드를 하지 않기 때문에 b나 c라고 생각하지 않기 때문에, 그리고 보안에 대한 언급이 없기 때문에 D도 제거했습니다.</div>
+<div class="comment-content">A는 업그레이드를 하지 않아서 b나 c가 아니라고 생각하고, 보안에 대한 언급이 없기 때문에 D를 제거했기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -790,15 +833,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				michele_scar
+				Michele_scar
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 14:49">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최소한의 영향에 대한 이유가 있지만 사용자 애플리케이션이 모바일에 있는 경우 테스트를 위해 이러한 사용자에게 새 테스트 엔드포인트를 배포할 수 없습니다. 일반 사용자에게는 지루할 것입니다. 그래서 그것은 B입니다</div>
+<div class="comment-content">영향이 최소화된다는 이유가 있지만 사용자 애플리케이션이 모바일에 있는 경우 테스트할 사용자에게 새 테스트 엔드포인트를 배포할 수 없습니다. 일반 사용자에게는 지루할 것입니다. 그럼 B야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -807,7 +850,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -870,7 +913,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 19:31">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1011,7 +1054,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 14:12">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1101,7 +1144,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 05:05">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1146,7 +1189,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 05:59">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1192,7 +1235,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 19:35">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1237,7 +1280,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 09:38">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1283,7 +1326,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 11:51">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1331,7 +1374,7 @@ Reference: https://docs.aws.amazon.com/apigateway/latest/developerguide/canary-r
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Nov 2022 14:17">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1417,7 +1460,7 @@ i don't think it's b or c because your not doing an upgrade, and also elimanted 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 14:49">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

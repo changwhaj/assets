@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 367 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 367 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 367 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 367 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866076">
 <p class="card-text">
 							
-								개발자가 레거시 애플리케이션을 AWS Lambda 함수로 마이그레이션했습니다. 이 기능은 타사 서비스를 사용하여 매달 말에 일련의 API 호출로 데이터를 가져옵니다. 그런 다음 함수는 데이터를 처리하여 월별 보고서를 생성합니다. 이 기능은 지금까지 문제 없이 작동했습니다. <br/><br/>타사 서비스는 최근 매분 및 매일 고정된 수의 API 호출을 허용하는 제한을 발표했습니다. API 호출이 분당 또는 매일 한도를 초과하면 서비스에서 오류가 발생합니다. API는 또한 응답 헤더에 분 한도와 일일 한도를 제공합니다. 이 제한은 프로세스가 사용 가능한 한도보다 더 많은 API 호출을 사용하기 때문에 전체 프로세스를 여러 날로 연장할 수 있습니다.<br/><br/>이 변경 사항을 수용하기 위해 서버리스 애플리케이션을 리팩터링하는 가장 효율적인 운영 방법은 무엇입니까?
+								개발자가 레거시 애플리케이션을 AWS Lambda 함수로 마이그레이션했습니다. 이 함수는 타사 서비스를 사용하여 매월 말에 일련의 API 호출을 통해 데이터를 가져옵니다. 그런 다음 함수는 데이터를 처리하여 월별 보고서를 생성합니다. 이 기능은 현재까지 아무런 문제 없이 작동하고 있습니다. <br/><br/>타사 서비스는 최근 매분, 매일 고정된 수의 API 호출을 허용하는 제한을 발표했습니다. API 호출이 분당 또는 일별 제한을 초과하면 서비스에서 오류가 발생합니다. API는 응답 헤더에 분 제한과 일일 제한도 제공합니다. 프로세스가 사용 가능한 제한보다 더 많은 API 호출을 소비하므로 이 제한으로 인해 전체 프로세스가 며칠로 연장될 수 있습니다.<br/><br/>이러한 변화를 수용하기 위해 서버리스 애플리케이션을 리팩터링하는 가장 운영상 효율적인 방법은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS Step Functions 상태 시스템을 사용하여 API 오류를 모니터링합니다. Wait 상태를 사용하여 Lambda 함수 호출을 지연합니다.
+											AWS Step Functions 상태 시스템을 사용하여 API 오류를 모니터링하십시오. 대기 상태를 사용하여 Lambda 함수 호출을 지연합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -103,18 +166,18 @@
 													C.
 												</span> 
 											
-											Amazon CloudWatch Logs 지표를 사용하여 API 호출 수를 계산합니다. 지표가 API 임계값 제한을 초과하면 현재 실행 중인 Lambda 함수 인스턴스를 중지하는 Amazon CloudWatch 경보를 구성합니다.
+											Amazon CloudWatch Logs 지표를 사용하여 API 호출 수를 계산합니다. 지표가 API 임계값 제한을 초과하는 경우 현재 실행 중인 Lambda 함수 인스턴스를 중지하는 Amazon CloudWatch 경보를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon Kinesis Data Firehose를 사용하여 API 호출을 일괄 처리하고 이벤트 알림과 함께 Amazon S3 버킷으로 전달하여 Lambda 함수를 호출합니다.
+											Amazon Kinesis Data Firehose를 사용하여 API 호출을 일괄 처리하고 이벤트 알림과 함께 Amazon S3 버킷에 전달하여 Lambda 함수를 호출합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">B (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">A (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">B (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">A (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JulietHsu
-							</a> 
-							
-							2023 <i>
-							년 1월 20일 오후 6:03</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JulietHsu
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 6:03 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,11 +291,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JulietHsu
+				줄리엣수
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 18:03">
 			7 달 전
@@ -260,7 +303,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Step Functions가 이 경우에 어떻게 도움이 될지 모르겠습니다. 나는 SQS와 람다와 함께 갈 것입니다</div>
+<div class="comment-content">이 경우 Step Functions가 어떻게 도움이 될지 모르겠습니다. 나는 SQS와 람다를 사용하겠습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -269,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,15 +332,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 04:18">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS 대기열에서 허용되는 최대 지연 시간은 15분입니다. 질문에 작업이 며칠이 걸릴 것이라고 명시되어 있습니다. 그래서 그것은 작동하지 않을 것입니다.</div>
+<div class="comment-content">SQS 대기열에 허용되는 최대 지연 시간은 15분입니다. 질문에는 작업에 며칠이 걸릴 것이라고 나와 있습니다. 그래서 그것은 작동하지 않을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,13 +391,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 15:01">
-			2개월, 4주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 15:01">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B입니다. Amazon SQS 대기열을 사용하면 Lambda 함수 실행에서 API 호출을 분리하고 API 한도 내에서 유지할 수 있습니다. 솔루션 작동 방식은 다음과 같습니다. 1. API 호출을 보관할 Amazon SQS 대기열을 설정합니다. 이 대기열은 버퍼 역할을 하여 API 호출 속도를 제어할 수 있습니다. 2. 메시지에 대해 Amazon SQS 대기열을 주기적으로 폴링하도록 Lambda 함수를 구성합니다. 대기열에 메시지가 있을 때 AWS SDK 또는 AWS Lambda 트리거를 사용하여 함수를 트리거할 수 있습니다. 3. Lambda 함수 내에서 대기열에서 API 호출을 검색하고 타사 서비스에 필요한 API 요청을 합니다. Lambda 함수가 매분 및 매일 API 임계값 제한을 준수하는지 확인합니다.</div>
+<div class="comment-content">B입니다. Amazon SQS 대기열을 사용하면 API 호출을 Lambda 함수 실행에서 분리하고 API 제한 내에서 유지할 수 있습니다. 솔루션의 작동 방식은 다음과 같습니다. 1. API 호출을 보관할 Amazon SQS 대기열을 설정합니다. 이 대기열은 버퍼 역할을 하여 API 호출 속도를 제어할 수 있습니다. 2. 메시지에 대한 Amazon SQS 대기열을 주기적으로 폴링하도록 Lambda 함수를 구성합니다. 대기열에 메시지가 있을 때 AWS SDK 또는 AWS Lambda 트리거를 사용하여 함수를 트리거할 수 있습니다. 3. Lambda 함수 내에서 대기열에서 API 호출을 검색하고 타사 서비스에 필요한 API 요청을 보냅니다. Lambda 함수가 매 분, 매일 API 임계값 제한을 준수하는지 확인하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,12 +429,12 @@
 				pranay_2406
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 15:01">
-			2개월, 4주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 15:01">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">4. 각 API 호출을 처리한 후 성공적으로 처리되었음을 나타내기 위해 Amazon SQS 대기열에서 메시지를 삭제합니다. 이 솔루션을 구현함으로써 Lambda 함수는 허용된 제한 내에서만 API 호출을 수행하여 오류를 방지하고 원활한 작동을 보장합니다. Amazon SQS를 사용하면 확장 가능하고 안정적인 대기열 시스템을 제공하여 다양한 API 호출 속도를 처리하고 타사 서비스에서 부과하는 제한 사항을 수용할 수 있습니다. 따라서 운영상 가장 효율적인 접근 방식은 Amazon SQS 대기열을 사용하여 애플리케이션을 리팩터링하여 Lambda 함수가 수행하는 API 호출 속도를 제어하는 ​​것입니다.</div>
+<div class="comment-content">4. 각 API 호출을 처리한 후 Amazon SQS 대기열에서 메시지를 삭제하여 성공적으로 처리되었음을 나타냅니다. 이 솔루션을 구현하면 Lambda 함수는 허용된 한도 내에서만 API 호출을 수행하여 오류를 방지하고 원활한 작동을 보장합니다. Amazon SQS를 사용하면 확장 가능하고 안정적인 대기열 시스템이 제공되므로 다양한 API 호출 속도를 처리하고 타사 서비스에서 부과하는 제한 사항을 수용할 수 있습니다. 따라서 운영상 가장 효율적인 접근 방식은 Amazon SQS 대기열을 사용하여 애플리케이션을 리팩터링하여 Lambda 함수의 API 호출 속도를 제어하는 ​​것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -400,7 +443,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,16 +479,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스다파드파
+				sdafadsfa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 07:24">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 07:24">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">SQS를 사용하세요.</div>
+<div class="comment-content">Plze SQS를 사용하세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,16 +525,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스다파드파
+				sdafadsfa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 07:24">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 07:24">
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">SQS 사용</div>
+<div class="comment-content">SQS를 사용하다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,12 +574,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 22:05">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 22:05">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B Amazon SQS 대기열을 사용하여 API 호출을 유지하는 것은 이 변경 사항을 수용하기 위해 서버리스 애플리케이션을 리팩터링하는 가장 운영상 효율적인 방법입니다. Lambda 함수는 API 임계값 제한 내에서 메시지 대기열을 폴링할 수 있습니다. 이를 통해 함수는 API 제한을 초과하지 않고 데이터를 처리하고 보고서를 생성할 수 있습니다. 대기열의 메시지 수가 제한보다 높으면 대기열의 메시지 수가 줄어들 때까지 새 메시지 처리를 중지하도록 기능을 구성할 수 있습니다.</div>
+<div class="comment-content">B Amazon SQS 대기열을 사용하여 API 호출을 보관하는 것은 이러한 변경 사항을 수용하기 위해 서버리스 애플리케이션을 리팩터링하는 가장 운영상 효율적인 방법입니다. Lambda 함수는 API 임계값 제한 내에서 메시지에 대한 대기열을 폴링할 수 있습니다. 이를 통해 함수는 API 제한을 초과하지 않고 데이터를 처리하고 보고서를 생성할 수 있습니다. 대기열의 메시지 수가 제한보다 높으면 대기열의 메시지 수가 줄어들 때까지 새 메시지 처리를 중지하도록 기능을 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,12 +611,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 22:05">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 22:05">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A는 AWS Step Functions에서 추가 비용이 발생하고 전체 아키텍처에 복잡성이 추가되기 때문에 가장 효율적인 방법이 아닙니다. 대기 상태로 인해 함수가 필요한 시간 창을 넘어 실행되어 더 높은 비용이 발생할 수 있습니다. 옵션 C는 실행 중에 기능을 중지해야 하는 상황을 처리하는 효율적인 방법이 아니기 때문에 적합한 솔루션이 아닙니다. 옵션 D는 Amazon Kinesis Data Firehose를 도입하여 복잡성을 추가하기 때문에 적합한 솔루션이 아닙니다. 이 옵션에는 추가 리소스가 필요할 수도 있으며 이로 인해 비용이 증가할 수 있습니다.</div>
+<div class="comment-content">AWS Step Functions는 추가 비용을 발생시키고 전체 아키텍처에 복잡성을 추가하므로 옵션 A는 가장 효율적인 방법이 아닙니다. 대기 상태로 인해 필요한 시간을 초과하여 함수가 실행되어 비용이 높아질 수 있습니다. 옵션 C는 실행 중에 함수를 중지하는 것과 관련되어 상황을 처리하는 효율적인 방법이 아니기 때문에 적합한 솔루션이 아닙니다. 옵션 D는 Amazon Kinesis Data Firehose를 도입하여 복잡성 계층을 추가하므로 적합한 솔루션이 아닙니다. 이 옵션에는 추가 리소스가 필요할 수도 있으며 이로 인해 비용이 증가할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,12 +665,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 19:16">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">단계 기능으로 이동합니다. 작업 실행 중에 분 및 일 제한이 변경되는 시나리오를 다룹니다.</div>
+<div class="comment-content">단계 기능과 함께 갈 것입니다. 작업 실행 중에 분 및 일 제한이 변경되는 시나리오를 다룹니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,16 +707,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 10일 금요일 04:24">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 10일 금 04:24">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 AWS Step Functions 상태 시스템을 사용하여 API 오류를 모니터링하는 질문에서 가장 적합합니다. Wait 상태를 사용하여 Lambda 함수 호출을 지연합니다. SQS 대기열에 허용되는 최대 지연 시간이 15분이므로 SQS 대기열이 작동하지 않습니다. Kinesis는 데이터 스트림에 더 적합하지만 여기서는 그렇지 않습니다. C(CloudWatch)는 작동하지만 A만큼 효율적이지는 않습니다.</div>
+<div class="comment-content">A는 이 질문에 가장 적합합니다. AWS Step Functions 상태 시스템을 사용하여 API 오류를 모니터링합니다. 대기 상태를 사용하여 Lambda 함수 호출을 지연합니다. SQS 대기열에 허용되는 최대 지연 시간은 15분이므로 SQS 대기열이 작동하지 않습니다. Kinesis는 데이터 스트림에 더 적합하지만 여기서는 그렇지 않습니다. C(CloudWatch)는 작동하지만 A만큼 효율적이지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -682,7 +725,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,12 +748,12 @@
 				joanneli77
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 19일 일 23:34">
+<span class="comment-date align-middle" title="2023년 2월 19일 일요일 23:34">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS 대기열은 계속 재시도할 수 있습니다. 항목은 SQS 대기열에 14일 동안 보관할 수 있습니다. 지연 타이머는 관련이 없습니다... 람다는 전체 워크로드가 완료될 때까지 시작하고 다시 시도합니다. 대답은 B입니다. 완료될 때까지 대기합니다.</div>
+<div class="comment-content">SQS 대기열은 계속 재시도할 수 있습니다. 항목은 14일 동안 SQS 대기열에 보관될 수 있습니다. 지연 타이머는 관련이 없습니다. 람다가 실행되어 전체 작업 부하가 완료될 때까지 다시 시도합니다. 대답은 B. 완료될 때까지 대기열입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -719,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -755,16 +798,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 24일 화요일 07:32">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 24일 (화) 07:32">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">저는 C로 가겠습니다. SQS는 이 시나리오에서 효율적이지 않습니다.</div>
+<div class="comment-content">저는 C를 선택하겠습니다. SQS는 이 시나리오에서는 효율적이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -866,7 +909,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 04:18">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -922,7 +965,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 23 May 2023 15:01">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -967,7 +1010,7 @@ By using an Amazon SQS queue, you can decouple the API calls from the Lambda fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 15:01">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1024,7 +1067,7 @@ Therefore, the most operationally efficient approach is to refactor the applicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 07:24">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1070,7 +1113,7 @@ Therefore, the most operationally efficient approach is to refactor the applicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 07:24">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1116,7 +1159,7 @@ Therefore, the most operationally efficient approach is to refactor the applicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 22:05">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1157,7 +1200,7 @@ The Lambda function can poll the queue for messages within the API threshold lim
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 22:05">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1214,7 +1257,7 @@ Option D is not a suitable solution because it adds an extra layer of complexity
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 19:16">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1260,7 +1303,7 @@ Option D is not a suitable solution because it adds an extra layer of complexity
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 04:24">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1355,7 +1398,7 @@ C (CloudWatch) would work but it is not as efficient as A.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 07:32">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

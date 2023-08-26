@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 201 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 201 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 201 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 201 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849879">
 <p class="card-text">
 							
-								개발자가 계정 A에서 실행되는 Amazon EC2 인스턴스에 애플리케이션을 배포하고 있습니다. 애플리케이션은 계정 B의 기존 Amazon Kinesis 데이터 스트림에서 데이터를 읽어야 합니다. 애플리케이션에 스트림에 대한 액세스 <br/><br/>권한을 제공하기 위해 개발자는 어떤 조치를 취해야 합니까? (두 가지를 선택하세요.)
+								개발자가 계정 A에서 실행되는 Amazon EC2 인스턴스에 애플리케이션을 배포하고 있습니다. 애플리케이션은 계정 B의 기존 Amazon Kinesis 데이터 스트림에서 데이터를 읽어야 합니다. 애플리케이션에 스트림에 대한 액세스 <br/><br/>권한을 제공하기 위해 개발자는 어떤 조치를 취해야 합니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											스트림 읽기 권한으로 계정 A의 인스턴스 프로필 역할을 업데이트합니다.
+											스트림 읽기 권한으로 계정 A의 인스턴스 프로파일 역할을 업데이트합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											계정 B의 인스턴스 프로필 역할과 IAM 역할에 신뢰 정책을 추가하여 인스턴스 프로필 역할이 IAM 역할을 맡도록 허용합니다.
+											인스턴스 프로파일 역할이 IAM 역할을 맡을 수 있도록 계정 B의 인스턴스 프로파일 역할과 IAM 역할에 신뢰 정책을 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,18 +173,18 @@
 													D.
 												</span> 
 											
-											계정 B의 인스턴스 프로필 역할과 IAM 역할에 신뢰 정책을 추가하여 스트림에서 읽기를 허용합니다.
+											스트림에서 읽기를 허용하도록 계정 B의 인스턴스 프로파일 역할과 IAM 역할에 신뢰 정책을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											계정 B에 리소스 기반 정책을 추가하여 인스턴스 프로필 역할에서 읽기 액세스를 허용합니다.
+											계정 B에 리소스 기반 정책을 추가하여 인스턴스 프로파일 역할의 읽기 액세스를 허용합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,20 +194,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">기원전 (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">부작용(27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">AC(20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">기원전 (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">AE (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">교류(20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a> 
-							
-							시간: <i>
-							2022년 11월 25일, 오전 8:51</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -225,16 +278,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								michaldavid
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 8:51 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -262,24 +305,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 13:05">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 13:05">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">애플리케이션에 스트림에 대한 액세스 권한을 제공하려면 개발자는 계정 A의 인스턴스 프로필 역할을 스트림 읽기 권한(옵션 A)으로 업데이트하고 인스턴스 프로필 역할(옵션 A)에서 읽기 액세스를 허용하도록 계정 B에 리소스 기반 정책을 추가해야 합니다. 이자형). 이렇게 하면 계정 A의 EC2 인스턴스에서 실행 중인 애플리케이션이 인스턴스 프로필 역할을 맡고 계정 B의 Kinesis 데이터 스트림에서 데이터를 읽을 수 있습니다.</div>
+<div class="comment-content">애플리케이션에 스트림에 대한 액세스 권한을 제공하려면 개발자는 계정 A의 인스턴스 프로파일 역할을 스트림 읽기 권한(옵션 A)으로 업데이트하고 인스턴스 프로파일 역할의 읽기 액세스를 허용하도록 계정 B에 리소스 기반 정책을 추가해야 합니다(옵션 A). 이자형). 이렇게 하면 계정 A의 EC2 인스턴스에서 실행되는 애플리케이션이 인스턴스 프로필 역할을 맡고 계정 B의 Kinesis 데이터 스트림에서 데이터를 읽을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -310,13 +353,13 @@
 				시레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 15일 (토) 05:42">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 15일 토요일 05:42">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">옵션 B는 잘못된 계정에 IAM 역할을 생성하기 때문에 올바르지 않습니다.</div>
+<div class="comment-content">옵션 B는 잘못된 계정에 IAM 역할을 생성하므로 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -325,7 +368,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -353,16 +396,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shahs10
+				샤스10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수요일 01:05">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수 01:05">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/kinesisanalytics/latest/java/examples-cross.html 기반</div>
+<div class="comment-content">https://docs.aws.amazon.com/kinesisanalytics/latest/java/examples-cross.html 기준</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -371,7 +414,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -403,11 +446,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 05:10">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것의 AC</div>
+<div class="comment-content">AC</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -416,7 +459,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -448,11 +491,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:13">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
 <div class="comment-content">B와 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -462,7 +505,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -490,15 +533,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스바겔라
+				스브바겔라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 8일 수요일 21:07">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 8일 수 21:07">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 B와 D여야 합니다. 신뢰 정책 문서 읽기 https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/</div>
+<div class="comment-content">대답은 B와 D여야 합니다. 신뢰 정책 문서(https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/)를 읽어보세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -507,7 +550,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,15 +570,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 22일 수 13:17">
+<span class="comment-date align-middle" title="2023년 3월 22일 수요일 13:17">
 			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">IMO, 당신은 B&amp;D에 투표하지만 링크는 B&amp;C를 확인합니다.</div>
+<div class="comment-content">IMO, 귀하는 B&amp;D에 투표하고 있지만 링크는 B&amp;C를 확인합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -584,11 +627,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 13:01">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
 <div class="comment-content">일부 AWS 서비스의 경우 리소스에 대한 교차 계정 액세스 권한을 부여할 수 있습니다. 이렇게 하려면 역할을 프록시로 사용하는 대신 공유하려는 리소스에 직접 정책을 연결합니다. 공유하려는 리소스는 리소스 기반 정책을 지원해야 합니다. 자격 증명 기반 정책과 달리 리소스 기반 정책은 해당 리소스에 액세스할 수 있는 사람(주체)을 지정합니다. 다음 목록에는 리소스 기반 정책을 지원하는 일부 AWS 서비스가 포함되어 있습니다. Amazon S3 버킷 Amazon Simple Notification Service(Amazon SNS) 주제 Amazon Simple Queue Service(Amazon SQS) 대기열</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -598,7 +641,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -630,12 +673,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 12:41">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>AE</strong></span></div>
-<div class="comment-content">A&amp;E는 왜 안되나요???</div>
+<div class="comment-content">왜 A&amp;E가 아닌가 ???</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -644,7 +687,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -672,16 +715,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 01:08">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 01:08">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">저에게는 B,C입니다. https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-account-access-for-amazon-kinesis-data-streams-using-kinesis-client-library-2- 엑스/</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">나한테는 B,C야. https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-account-access-for-amazon-kinesis-data-streams-using-kinesis-client-library-2- 엑스/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -690,7 +733,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -713,12 +756,12 @@
 				묵타바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 25일 수 17:19">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 25일 수요일 17:19">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 'B'는 계정 A에 대한 IAM 역할이어야 합니다. 옵션 'C'에는 이미 계정 B에 대한 IAM 역할이 있습니다. 그러면 B와 C가 완벽한 답이 될 것입니다. 이 질문에서 두 가지 선택 중 일치하는 항목이 없습니다. A와 C는 IAM 역할 자체가 아니라 인스턴스 프로필 역할을 말하기 때문에 충분히 가깝지 않습니다.</div>
+<div class="comment-content">옵션 'B'는 계정 A에 대한 IAM 역할이어야 하는 것 같습니다. 옵션 'C'에는 계정 B에 대한 IAM 역할이 이미 있습니다. 그러면 B와 C가 완벽한 답이 될 것이다. 이 질문에서는 두 가지 선택 사항 중 어느 것도 일치하지 않습니다. A와 C는 인스턴스 프로필 역할이 IAM 역할 자체가 아니라고 말하기 때문에 충분히 가깝지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -727,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -766,13 +809,13 @@
 				엄마305
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 17일 화요일 05:04">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 17일 (화) 05:04">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">이 기사에 따르면 Kinesis Stream 계정에서 액세스(읽기)할 IAM 역할을 생성합니다. EC2 인스턴스 계정 및 Kinesis 스트림 계정에 신뢰 정책을 추가하여 EC2 인스턴스가 스트림에서 읽을 수 있는 역할을 맡도록 허용합니다. 따라서 B와 C</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">이 문서에 따르면 Kinesis 스트림 계정에서 액세스(읽기)할 IAM 역할을 생성합니다. EC2 인스턴스 계정과 Kinesis 스트림 계정에 신뢰 정책을 추가하여 EC2 인스턴스가 스트림에서 읽을 수 있는 역할을 맡을 수 있도록 합니다. 따라서 B와 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -781,7 +824,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,12 +847,12 @@
 				엄마305
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 17일 화요일 05:05">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 17일 (화) 05:05">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다음은 "k1kavi1" https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-account-access-for-amazon-kinesis-data-streams-using-에서 제공하는 문서입니다. kinesis-클라이언트-라이브러리-2-x/</div>
+<div class="comment-content">다음은 "k1kavi1" https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-account-access-for-amazon-kinesis-data-streams-using-에서 제공한 기사입니다. 키네시스-클라이언트-라이브러리-2-x/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -854,7 +897,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Duded12121
+				친구12121
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 14일 토요일 20:02">
@@ -872,7 +915,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -904,11 +947,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 17:42">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">제 생각에는 B와 C도 Kinesis에서 읽을 수 있도록 B 계정의 역할과 신뢰 정책에서 계정 A에 대한 AssumeRole</div>
+<div class="comment-content">제 생각에는 B와 C도 B 계정의 역할을 통해 Kinesis에서 읽기를 허용하고 신뢰 정책에서는 계정 A에 대한 AssumeRole을 허용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -917,7 +960,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -953,8 +996,8 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">제 생각에는 B와 C여야 합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">내 생각에는 B와 C가 되어야 할 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -963,7 +1006,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -994,8 +1037,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 10:40">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 10:40">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,15 +1072,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				해멜론
+				하멜론
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 22:41">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 글을 보니 BC가 정답인 것 같습니다.</div>
+<div class="comment-content">이 글을 읽어보니 BC가 정답인 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1046,7 +1089,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1070,11 +1113,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 4일 일요일 07:40">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예. B&amp;C가 맞는듯</div>
+<div class="comment-content">예. B&amp;C가 맞는 것 같네요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1083,7 +1126,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1127,15 +1170,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 08:51">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 08:51">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나에게 이것은 A와 E여야 합니까?</div>
+<div class="comment-content">나에게 이것은 A와 E이어야합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1144,7 +1187,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,12 +1210,12 @@
 				카펠로10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 13:53">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 13:53">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AE가 정답입니다</div>
+<div class="comment-content">AE가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1181,7 +1224,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1241,7 +1284,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 13:05">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1253,7 +1296,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1286,7 +1329,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Apr 2023 05:42">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1332,7 +1375,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 01:05">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1378,7 +1421,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 05:10">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1423,7 +1466,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:13">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1469,7 +1512,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 21:07">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1562,7 +1605,7 @@ https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 13:01">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1612,7 +1655,7 @@ Amazon Simple Queue Service (Amazon SQS) queues</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 12:41">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1698,7 +1741,7 @@ https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-accoun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 17:19">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1751,7 +1794,7 @@ https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-accoun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 05:04">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1789,7 +1832,7 @@ https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-accoun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 05:05">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1888,7 +1931,7 @@ https://aws.amazon.com/blogs/architecture/field-notes-how-to-enable-cross-accoun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 17:42">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1981,7 +2024,7 @@ Role in B Account to allow read from Kinesis and in trust policy AssumeRole for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 10:40">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2019,7 +2062,7 @@ Role in B Account to allow read from Kinesis and in trust policy AssumeRole for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 22:41">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2056,7 +2099,7 @@ Role in B Account to allow read from Kinesis and in trust policy AssumeRole for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Dec 2022 07:40">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2117,7 +2160,7 @@ Role in B Account to allow read from Kinesis and in trust policy AssumeRole for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 08:51">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2154,7 +2197,7 @@ Role in B Account to allow read from Kinesis and in trust policy AssumeRole for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 13:53">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

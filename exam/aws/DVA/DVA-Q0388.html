@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 388 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 388 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 388 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 388 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866097">
 <p class="card-text">
 							
-								회사의 개발자가 AWS CloudFormation을 사용하여 AWS에 애플리케이션을 배포했습니다. CloudFormation 스택에는 애플리케이션이 구성 설정으로 사용하는 AWS Systems Manager Parameter Store의 매개변수가 포함되어 있습니다. 애플리케이션은 매개변수 값을 수정할 수 있습니다. <br/><br/>개발자가 스택을 업데이트하여 태그가 있는 추가 리소스를 생성할 때 개발자는 매개 변수 값이 재설정되었으며 값이 애플리케이션에서 수행한 최신 변경 사항을 무시한다는 점에 주목했습니다. 개발자는 회사가 CloudFormation 스택을 배포하는 방식을 변경해야 합니다. 또한 개발자는 스택 외부에서 매개변수 값을 재설정하지 않도록 해야 합니다. <br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사의 개발자가 AWS CloudFormation을 사용하여 AWS에 애플리케이션을 배포했습니다. CloudFormation 스택에는 애플리케이션이 구성 설정으로 사용하는 AWS Systems Manager Parameter Store의 매개변수가 포함되어 있습니다. 애플리케이션은 매개변수 값을 수정할 수 있습니다. <br/><br/>개발자가 태그를 사용하여 추가 리소스를 생성하기 위해 스택을 업데이트했을 때 개발자는 매개변수 값이 재설정되었으며 해당 값이 애플리케이션의 최신 변경 사항을 무시했다는 점을 지적했습니다. 개발자는 회사가 CloudFormation 스택을 배포하는 방식을 변경해야 합니다. 또한 개발자는 스택 외부에서 매개변수 값을 재설정하지 않아야 합니다. <br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											CloudFormation 스택을 수정하여 Parameter Store 파라미터에 대한 삭제 정책을 Retain으로 설정합니다.
+											CloudFormation 스택을 수정하여 Parameter Store 매개변수에 대한 삭제 정책을 Retain으로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											애플리케이션에 대한 구성 데이터를 보관할 CloudFormation 스택의 리소스로 Amazon DynamoDB 테이블을 생성합니다. 애플리케이션이 수정하는 파라미터를 Parameter Store에서 DynamoDB 테이블로 마이그레이션합니다.
+											Amazon DynamoDB 테이블을 CloudFormation 스택의 리소스로 생성하여 애플리케이션의 구성 데이터를 보관합니다. 애플리케이션이 수정하는 매개변수를 Parameter Store에서 DynamoDB 테이블로 마이그레이션합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											CloudFormation 스택의 리소스로 Amazon RDS DB 인스턴스를 생성합니다. 매개변수 구성을 위해 데이터베이스에 테이블을 생성합니다. 애플리케이션이 수정하는 파라미터를 Parameter Store에서 구성 테이블로 마이그레이션합니다.
+											Amazon RDS DB 인스턴스를 CloudFormation 스택의 리소스로 생성합니다. 매개변수 구성을 위해 데이터베이스에 테이블을 만듭니다. 애플리케이션이 수정하는 매개변수를 Parameter Store에서 구성 테이블로 마이그레이션합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Parameter Store 파라미터에 대한 업데이트를 거부하도록 CloudFormation 스택 정책을 수정합니다.
+											Parameter Store 매개변수에 대한 업데이트를 거부하도록 CloudFormation 스택 정책을 수정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">디 (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">D (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JagpreetLM10
-							</a> 2023년 1월 22일 
-							
-							오전 <i>
-							6:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JagpreetLM10
-							</a>
-							
-							at <i>
-							Jan. 22, 2023, 6:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,14 +287,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 07:25">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -300,12 +343,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 7일 수요일 16:36">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문에 "...응용 프로그램이 매개 변수 값을 수정할 수 있습니다..."라고 나와 있으므로 응용 프로그램이 어떤 상황에서는 매개 변수 값을 수정해야 한다고 가정합니다. CloudFormation 스택 정책을 수정하기 때문에 D는 선택 사항이 아닙니다. Parameter Store 매개변수에 대한 업데이트를 거부하면 애플리케이션 자체에서 수행한 매개변수를 포함하여 매개변수에 대한 모든 업데이트가 금지됩니다. 이렇게 하면 바람직하지 않을 수 있는 매개 변수 값을 수정하는 기능이 제한됩니다. 나는 B와 함께 갈 것이다.</div>
+<div class="comment-content">질문에는 "...애플리케이션이 매개변수 값을 수정할 수 있습니다..."라고 되어 있으므로 어떤 상황에서는 애플리케이션이 매개변수 값을 수정해야 한다고 가정합니다. CloudFormation 스택 정책을 수정하기 때문에 D는 선택이 아닙니다. 매개변수 저장소 매개변수에 대한 업데이트를 거부하면 애플리케이션 자체에서 수행한 업데이트를 포함하여 매개변수에 대한 모든 업데이트가 차단됩니다. 이는 매개변수 값을 수정하는 기능을 제한하므로 바람직하지 않을 수 있습니다. 나는 B와 함께 갈 것이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -345,12 +388,12 @@
 				joanneli77
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 23:18">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 23:18">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"D"라고 말하는 경우 - 스택을 업데이트했는데 리소스에 대한 액세스가 거부되면 스택 업데이트가 FAIL되지 않습니까? 이런 이유로 나는 "B"로 갔다. 예, 사물에 대한 액세스를 거부할 수 있지만 이것이 스택이 제대로 업데이트된다는 의미는 아닙니다.</div>
+<div class="comment-content">"D"라고 말하는 경우 - 스택을 업데이트했는데 리소스에 대한 액세스가 거부되면 스택 업데이트가 실패하지 않나요? 이런 이유로 나는 "B"를 선택했습니다. 예, 항목에 대한 액세스를 거부할 수 있지만 이것이 스택이 제대로 업데이트된다는 의미는 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -359,7 +402,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,13 +433,13 @@
 				다람쥐 집
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 17:09">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 17:09">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디입니다.</div>
+<div class="comment-content">D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,16 +476,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 16:54">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D 맞는 것 같다</div>
+<div class="comment-content">D 맞는거같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,16 +522,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 07:22">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">여기서 A가 가장 합리적인 대답입니다.</div>
+<div class="comment-content">A가 여기서 가장 합리적인 답변입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -517,15 +560,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 07:24">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">추가 조사를 통해 죄송합니다. D여야 합니다. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html#stack-policy-samples</div>
+<div class="comment-content">추가 조사로 인해 죄송합니다. D여야 합니다. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-resources.html#stack-policy-samples</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -534,7 +577,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,15 +613,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 06:45">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DDDDDDDDDDDDDD</div>
+<div class="comment-content">DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -607,15 +650,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 10:31">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -624,7 +667,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -687,7 +730,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 07:25">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -736,7 +779,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 07 Jun 2023 16:36">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -873,7 +916,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 16:54">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -919,7 +962,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 07:22">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -957,7 +1000,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 07:24">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1012,7 +1055,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-res
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 06:45">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1049,7 +1092,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/protect-stack-res
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 10:31">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 320 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 320 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 320 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 320 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850007">
 <p class="card-text">
 							
-								한 회사에서 사진 공유 모바일 앱의 호환성을 고유한 화면 크기와 해상도를 가진 수백 개의 추가 장치로 확장하고 있습니다. 사진은 원래 형식과 해상도로 Amazon S3에 저장됩니다. 회사는 Amazon CloudFront 배포를 사용하여 사진을 제공합니다. 앱에는 모든 요청에 ​​GET 매개변수로 디스플레이의 크기와 해상도가 포함됩니다. <br/><br/>개발자는 로드 시간을 줄이고 사진 품질을 높이기 위해 각 장치에 제공되는 사진을 최적화하는 솔루션을 구현해야 합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								한 회사는 고유한 화면 크기와 해상도를 갖춘 수백 개의 추가 장치로 사진 공유 모바일 앱의 호환성을 확장하고 있습니다. 사진은 원본 형식과 해상도로 Amazon S3에 저장됩니다. 회사는 Amazon CloudFront 배포를 사용하여 사진을 제공합니다. 앱에는 모든 요청과 함께 디스플레이의 크기와 해상도가 GET 매개변수로 포함됩니다. <br/><br/>개발자는 로드 시간을 줄이고 사진 품질을 높이기 위해 각 장치에 제공되는 사진을 최적화하는 솔루션을 구현해야 합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											S3 배치 작업을 사용하여 AWS Lambda 함수를 호출하여 필요한 크기와 해상도로 사진의 새로운 변형을 생성합니다. 각 디바이스의 요청을 해당 사진 변형에 자동으로 매핑하는 동적 CloudFront 오리진을 생성합니다.
+											S3 배치 작업을 사용하여 AWS Lambda 함수를 호출하여 필요한 크기와 해상도로 사진의 새로운 변형을 생성하십시오. 각 디바이스의 요청을 해당 사진 변형에 자동으로 매핑하는 동적 CloudFront 오리진을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											요청 시 사진을 최적화하고 응답으로 사진을 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다.
+											요청 시 사진을 최적화하고 사진을 응답으로 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,13 +171,13 @@
 													D.
 												</span> 
 											
-											요청 시 사진을 최적화하고 응답으로 사진을 반환하는 Lambda@Edge 함수를 생성합니다. 동일한 기능에서 후속 요청을 위해 처리된 사진의 사본을 Amazon S3에 저장합니다.
+											요청 시 사진을 최적화하고 사진을 응답으로 반환하는 Lambda@Edge 함수를 생성합니다. 동일한 함수에서 후속 요청을 위해 처리된 사진의 복사본을 Amazon S3에 저장합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">디 (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 38%; display: flex;" title="">씨 (38%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">D (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 38%; display: flex;" title="">C (38%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 
-							
-							2022 <i>
-							년 12월 1일 오후 1:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Dec. 1, 2022, 1:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,19 +291,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 29일 일 21:09">
+<span class="comment-date align-middle" title="2023년 1월 29일 일요일 21:09">
 			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답을 맞히세요 ^_^ 최대 TTL에서 무엇이든 캐싱하는 것은 터무니없고 누군가가 실제로 계산을 한다면 저렴할 수 없으며 엣지 위치별로만 작동합니다.</div>
+<div class="comment-content">정답을 높이세요 ^_^ 최대 TTL에서 무엇이든 캐싱하는 것은 터무니없고 누군가가 실제로 계산을 한다면 저렴할 수 없으며 가장자리 위치에서만 작동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -301,15 +344,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:53">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:53">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. 요청 시 사진을 최적화하고 응답으로 사진을 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다. 이 솔루션은 개발자가 Lambda@Edge 기능을 사용하여 다양한 장치에 대한 여러 사진 변형을 미리 생성할 필요 없이 즉석에서 사진을 최적화할 수 있기 때문에 요구 사항을 가장 비용 효율적으로 충족합니다. 이 접근 방식은 여러 사진 변형을 생성하고 저장하는 것과 관련된 전체 스토리지 및 컴퓨팅 비용을 줄일 수 있습니다. 또한 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하면 Lambda@Edge 함수를 실행해야 하는 횟수를 줄여 비용을 더욱 절감할 수 있습니다.</div>
+<div class="comment-content">C. 요청 시 사진을 최적화하고 사진을 응답으로 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다. 이 솔루션은 개발자가 다양한 장치에 대한 여러 변형 사진을 미리 생성할 필요 없이 Lambda@Edge 기능을 사용하여 즉석에서 사진을 최적화할 수 있으므로 가장 비용 효율적으로 요구 사항을 충족합니다. 이 접근 방식을 사용하면 여러 사진 변형을 생성하고 저장하는 것과 관련된 전체 저장 및 컴퓨팅 비용을 줄일 수 있습니다. 또한 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하면 Lambda@Edge 함수를 실행해야 하는 횟수를 줄여 비용을 더욱 절감할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,12 +384,12 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 15일 수 22:07">
+<span class="comment-date align-middle" title="2023년 3월 15일 수요일 22:07">
 			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최대 TTL은 365일입니다. 1년 동안 모든 이미지를 포착하는 것은 신의 아이디어가 아니라고 생각합니다. 나머지 답변은 괜찮은 것 같습니다.</div>
+<div class="comment-content">Max TTL은 365일입니다. 1년 동안 모든 이미지를 잡는 것은 좋은 생각이 아닌 것 같습니다. 나머지 대답은 괜찮은 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +398,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,11 +422,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 16일 목요일 13:57">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 가장 비용 효율적이라는 생각을 바꿨습니다. S3에 파일을 저장할 필요가 없으며 처리된 파일은 현금으로 사용할 수 있습니다.</div>
+<div class="comment-content">마음이 바뀌었습니다. 이것이 가장 비용 효율적입니다. S3에 파일을 저장할 필요가 없으며 처리된 파일을 현금으로 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -392,7 +435,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -443,12 +486,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 15:05">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 사진의 resuolution을 수정하고 S3에 "캐시/저장"하기 위해 lamda@edge 함수를 호출하는 D와 함께 갈 것입니다. C에서 TTL을 설정해야 하는 이유는 무엇입니까?</div>
+<div class="comment-content">나는 D를 사용하여 lamda@edge 함수를 호출하여 사진의 결과를 수정하고 S3에 "캐시/저장"할 것입니다. C에서는 왜 TTL을 설정해야 합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -457,7 +500,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,13 +531,13 @@
 				클락수
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 14일 화요일 04:44">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 14일 (화) 04:44">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">mrbig00의 의견에 동의합니다. 옵션 A, WRONG은 여러 출처(버킷)로의 라우팅에 추가 복잡성을 도입했으며, 옵션 C,D, WRONG은 매번 사진을 생성하기 위한 람다 컴퓨팅 오버헤드를 도입했습니다. 확실히 잘못되었습니다.</div>
+<div class="comment-content">mrbig00님의 의견에 동의합니다. 옵션 A, WRONG은 여러 원본(버킷)으로의 라우팅에 대한 추가 복잡성을 도입했으며, 옵션 C,D, WRONG은 매번 사진 생성을 위한 람다 컴퓨팅 오버헤드를 도입했으며, 확실히 잘못되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -503,7 +546,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,15 +566,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				리틀솝
+				작은비누
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 8일 (토) 12:46">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 8일 토요일 12:46">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">추가 요청을 위해 크기가 조정된 사진이 AWS S3에 복사되므로 사진은 한 번만 생성되므로 C와 D는 OK이고 D와 함께 진행됩니다.</div>
+<div class="comment-content">크기가 조정된 사진은 추가 요청을 위해 AWS S3에 복사되므로 사진은 한 번만 생성되므로 C와 D는 괜찮을 것입니다. D로 가세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,12 +622,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 13:41">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 13:41">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B S3 배치 작업이 많은 수의 파일을 처리하는 비용 효율적인 방법이기 때문에 이 옵션은 비용 효율적입니다. 함수가 최종 사용자와 가장 가까운 AWS 엣지 로케이션에서 실행되므로 지연 시간과 데이터 전송 비용이 줄어들기 때문에 Lambda@Edge를 사용하는 것도 비용 효율적입니다.</div>
+<div class="comment-content">B S3 배치 작업은 많은 수의 파일을 처리하는 비용 효율적인 방법이므로 이 옵션은 비용 효율적입니다. Lambda@Edge를 사용하면 함수가 최종 사용자와 가장 가까운 AWS 엣지 위치에서 실행되어 지연 시간과 데이터 전송 비용이 줄어들므로 비용 효율적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -593,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,12 +659,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 13:41">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 13:41">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A에는 각 장치의 요청을 해당 사진 변형에 자동으로 매핑하는 동적 CloudFront 오리진 생성이 포함됩니다. 이 옵션은 더 복잡한 구성이 필요하며 옵션 B만큼 비용 효율적이지 않을 수 있습니다. 옵션 C에는 Lambda@Edge 함수를 사용하여 요청 시 사진을 최적화하고 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하는 작업이 포함됩니다. 이 옵션은 사진을 최적화하지만 TTL 캐시 정책을 가능한 최대값으로 설정해야 하므로 가장 비용 효율적이지 않을 수 있습니다. 옵션 D는 요청 시 Lambda@Edge 함수를 사용하여 사진을 최적화하고 후속 요청을 위해 처리된 사진의 사본을 Amazon S3에 저장하는 것입니다. S3에 처리된 사진의 복사본을 저장하면 추가 저장 비용이 발생할 수 있으므로 이 옵션은 가장 비용 효율적이지 않을 수 있습니다.</div>
+<div class="comment-content">옵션 A에는 각 디바이스의 요청을 해당 사진 변형에 자동으로 매핑하는 동적 CloudFront 오리진을 생성하는 작업이 포함됩니다. 이 옵션은 더 복잡한 구성이 필요하며 옵션 B만큼 비용 효율적이지 않을 수 있습니다. 옵션 C에는 요청 시 Lambda@Edge 함수를 사용하여 사진을 최적화하고 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하는 작업이 포함됩니다. 이 옵션은 사진을 최적화하지만 TTL 캐시 정책을 가능한 최대값으로 설정해야 하므로 가장 비용 효율적이지 않을 수 있습니다. 옵션 D에는 Lambda@Edge 함수를 사용하여 요청 시 사진을 최적화하고 후속 요청을 위해 처리된 사진의 복사본을 Amazon S3에 저장하는 작업이 포함됩니다. 처리된 사진의 사본을 S3에 저장하면 추가 저장 비용이 발생할 수 있으므로 이 옵션은 가장 비용 효율적이지 않을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -669,13 +712,13 @@
 				고든2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 11:00">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 11:00">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">크기가 조정된 이미지는 S3 버킷에 저장하는 것이 좋습니다. https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/</div>
+<div class="comment-content">크기가 조정된 이미지를 S3 버킷에 저장하는 것이 좋습니다. https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -715,8 +758,8 @@
 				벵기
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 10일 금요일 13:27">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 10일 금 13:27">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -729,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,16 +800,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				태어나지 않은
+				아직 태어나지 않은
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 01:04">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 요구 사항을 충족하는 가장 비용 효율적인 솔루션입니다. 요청 시 사진을 최적화하고 응답으로 사진을 반환하는 Lambda@Edge 기능을 생성함으로써 사진 공유 모바일 앱은 사진이 각 장치의 디스플레이 크기 및 해상도에 최적화되어 로드 시간을 줄이고 사진 품질을 높일 수 있습니다. 또한 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하면 동일한 사진에 대한 후속 요청을 캐시에서 처리하여 Lambda@Edge 함수의 처리 오버헤드를 줄일 수 있습니다. 이 솔루션은 새로운 사진 변형 생성 및 저장과 관련된 비용을 최소화하고 처리 오버헤드를 줄이기 위해 CloudFront 캐싱 사용을 최대화합니다.</div>
+<div class="comment-content">옵션 C는 요구 사항을 충족하는 가장 비용 효율적인 솔루션입니다. 사진 공유 모바일 앱은 요청 시 사진을 최적화하고 사진을 응답으로 반환하는 Lambda@Edge 함수를 생성하여 사진이 각 장치의 디스플레이 크기 및 해상도에 최적화되어 로드 시간을 줄이고 사진 품질을 높일 수 있습니다. 또한 CloudFront TTL 캐시 정책을 가능한 최대값으로 변경하면 동일한 사진에 대한 후속 요청을 캐시에서 처리하여 Lambda@Edge 기능의 처리 오버헤드를 줄일 수 있습니다. 이 솔루션은 새로운 사진 변형 생성 및 저장과 관련된 비용을 최소화하고 CloudFront 캐싱 사용을 극대화하여 처리 오버헤드를 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -807,12 +850,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 15:16">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. 요청 시 사진을 최적화하고 응답으로 사진을 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다.</div>
+<div class="comment-content">C. 요청 시 사진을 최적화하고 사진을 응답으로 반환하는 Lambda@Edge 함수를 생성합니다. CloudFront TTL 캐시 정책을 가능한 최대값으로 변경합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,11 +892,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스복시
+				S복쉬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 05일 월요일 00:22">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 5일 (월) 00:22">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -867,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -898,12 +941,12 @@
 				우분투1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 04:36">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 04:36">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것도 D일 수 있습니다. C도 기술적으로 정확하지만 작업 흐름은 D에서만 완료됩니다. 객체의 크기를 조정할 때 캐시를 위해 S3에 다시 저장해야 하기 때문입니다. https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/</div>
+<div class="comment-content">C도 기술적으로 정확하지만 D일 수도 있지만 워크플로우는 D에서만 완료됩니다. 객체의 크기가 조정되면 캐시를 위해 S3에 다시 저장해야 하기 때문입니다. https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-with-amazon-cloudfront-lambdaedge-aws-cdn-blog/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -912,7 +955,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -932,15 +975,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 05:36">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">캐시하기 위해 저장할 필요가 없습니다. Cloudfront 응답에서 직접 캐싱할 수 있으므로 Cloudfront의 TTL이 최대 TTL로 설정됩니다.</div>
+<div class="comment-content">캐시하기 위해 저장할 필요는 없습니다. Cloudfront 응답에서 직접 캐시할 수 있으므로 Cloudfront의 TTL이 최대 TTL로 설정됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -949,7 +992,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -993,7 +1036,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나를 위해</div>
+<div class="comment-content">C 포 미</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1048,7 +1091,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1154,7 +1197,7 @@ Caching anything at max TTL is ridiculous and can't be cheap if someone really d
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:53">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1231,7 +1274,7 @@ This solution will meet the requirements most cost-effectively because it allows
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 13:57">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1295,7 +1338,7 @@ This solution will meet the requirements most cost-effectively because it allows
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 15:05">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1342,7 +1385,7 @@ In the C, why we need to set TTL?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Mar 2023 04:44">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1383,7 +1426,7 @@ Option C,D , WRONG,   introducing  lambda computing overhead for creation of the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Apr 2023 12:46">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1436,7 +1479,7 @@ Option C,D , WRONG,   introducing  lambda computing overhead for creation of the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 13:41">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1475,7 +1518,7 @@ This option is cost-effective because S3 Batch Operations is a cost-effective wa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 13:41">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1532,7 +1575,7 @@ Option D involves optimizing the photos upon request using a Lambda@Edge functio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 11:00">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1579,7 +1622,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 13:27">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1624,7 +1667,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 01:04">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1670,7 +1713,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 15:16">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1716,7 +1759,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Dec 2022 00:22">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1762,7 +1805,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 04:36">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1801,7 +1844,7 @@ https://aws.amazon.com/blogs/networking-and-content-delivery/resizing-images-wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 05:36">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

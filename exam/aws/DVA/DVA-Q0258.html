@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 258 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 258 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 258 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 258 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849936">
 <p class="card-text">
 							
-								회사에는 Amazon SQS API를 사용하여 Amazon Simple Queue Service(Amazon SQS) 대기열에서 메시지를 읽는 AWS Lambda 함수가 있습니다. 타사 종속성의 무작위 실패로 인해 Lambda 함수가 모든 메시지를 성공적으로 처리하지 못하고 있습니다. 개발자는 Lambda 함수가 타사 종속성 오류에도 불구하고 각 메시지를 성공적으로 처리할 수 있도록 Lambda 함수의 안정성을 개선해야 합니다. <br/><br/>최소한의 노력으로 이 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사에는 Amazon SQS API를 사용하여 Amazon Simple Queue Service(Amazon SQS) 대기열에서 메시지를 읽는 AWS Lambda 함수가 있습니다. 타사 종속성의 무작위 실패로 인해 Lambda 함수가 모든 메시지를 성공적으로 처리하지 못하고 있습니다. 개발자는 타사 종속성 오류에도 불구하고 Lambda 함수가 각 메시지를 성공적으로 처리할 수 있도록 Lambda 함수의 안정성을 향상해야 합니다. <br/><br/>최소한의 노력으로 이 요구 사항을 충족할 수 있는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,27 +155,27 @@
 													B.
 												</span> 
 											
-											Lambda 함수의 코드를 업데이트하여 SQS SDK ReceiveMessage 함수에 대한 호출을 제거합니다. SQS 대기열을 이벤트 소스로 사용하도록 Lambda 함수를 구성합니다. SQS 대기열의 리드라이브 정책에서 maxReceiveCount 값을 5 이상으로 설정합니다.
+											Lambda 함수의 코드를 업데이트하여 SQS SDK receiveMessage 함수에 대한 호출을 제거합니다. SQS 대기열을 이벤트 소스로 사용하도록 Lambda 함수를 구성합니다. SQS 대기열의 리드라이브 정책에서 maxReceiveCount 값을 5 이상으로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											배달 못한 편지 대기열로 사용할 두 번째 SQS 대기열을 만듭니다. 원래 SQS 대기열에서 리드라이브 정책을 구성하여 실패한 메시지를 배달 못한 편지 대기열로 보내십시오. 두 대기열에서 메시지를 읽도록 Lambda 함수를 수정합니다.
+											배달 못한 편지 대기열로 사용할 두 번째 SQS 대기열을 생성합니다. 실패한 메시지를 배달 못한 편지 대기열로 보내도록 원래 SQS 대기열에 리드라이브 정책을 구성합니다. 두 대기열 모두에서 메시지를 읽도록 Lambda 함수를 수정합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											배달 못한 편지 대기열로 사용할 두 번째 SQS 대기열을 만듭니다. 타사 종속성에 대한 호출을 예외 처리 블록으로 이동합니다. 예외 처리기에서 타사 종속성 오류가 발견되면 배달 못한 편지 대기열에 메시지를 씁니다.
+											배달 못한 편지 대기열로 사용할 두 번째 SQS 대기열을 생성합니다. 타사 종속성에 대한 호출을 예외 처리 블록으로 이동합니다. 예외 처리기에서 타사 종속성 오류가 발견되면 배달 못한 편지 대기열에 메시지를 씁니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">디 (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">D (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 26일 
-							
-							오전 <i>
-							5:27</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 5:27 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -253,7 +296,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">따라서 SQS 데드 레터 대기열을 생성하는 것이 좋습니다. 이러한 이유로 A와 B는 확실히 정확하지 않습니다. DLQ Q를 생성하고 두 대기열에서 메시지를 읽도록 람다 함수를 수정하는 것은 의미가 없기 때문에 C도 제외해야 합니다. 대신 SQS Dead letter Queue를 생성하고 함수에서 애플리케이션 예외를 포착하고 타사 라이브러리로 인한 장애가 있는 경우 DLQ에 작성하는 것이 좋습니다. 따라서 답 D가 정답입니다.</div>
+<div class="comment-content">따라서 A와 B가 확실히 올바르지 않은 이유 때문에 SQS 배달 못한 편지 대기열을 만드는 것이 좋습니다. DLQ Q를 생성하고 두 대기열 모두에서 메시지를 읽도록 람다 함수를 수정하는 것은 의미가 없기 때문에 C도 제외해야 합니다. 대신 SQS 배달 못한 편지 대기열을 생성하고, 함수에서 애플리케이션 예외를 포착하고, 타사 라이브러리로 인해 오류가 발생한 경우 DLQ에 기록하는 것이 좋습니다. 그럼 D가 정답이군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -293,13 +336,13 @@
 				m4r0ck
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 20:22">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 20:22">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나에게 여기서 핵심은 'Lambda 함수가 타사 종속성의 "실패에도 불구하고" 각 메시지를 성공적으로 처리하도록 하는 것'입니다. 즉, 메시지를 반드시 다시 처리할 필요가 없습니다. SQS 대기열로 다시 메시지를 반환하는 방법이 잘못되었습니다. 왼쪽은 C 또는 D이고, C에서 답은 일반 대기열과 배달 못한 편지 대기열의 메시지 소비에 대해 이야기하고 있습니다. 다시 첫 번째 문에서 실패한 메시지를 다시 처리하려고 하지 않으므로 DLQ에서 메시지를 다시 사용할 필요가 없습니다. 그래서 D는 제 생각에 올바른 것입니다</div>
+<div class="comment-content">나에게 여기서 핵심은 '타사 종속성의 "실패에도 불구하고" Lambda 함수가 각 메시지를 성공적으로 처리하도록 하는 것'입니다. 즉, 메시지를 반드시 다시 처리할 필요가 없다는 의미입니다. SQS 대기열로 메시지를 다시 반환하는 방법이 잘못되었습니다. 왼쪽은 C 또는 D입니다. C의 대답은 일반 대기열과 배달 못한 편지 대기열의 메시지를 소비하는 것에 대한 것입니다. 다시 첫 번째 문에서 실패한 메시지를 다시 처리하려고 하지 않으므로 DLQ에서 메시지를 다시 사용할 필요가 없습니다. 그래서 내 생각엔 D가 맞는 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,16 +379,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 14:37">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 14:37">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 1) 최소한의 노력 - 추가 대기열 없음 2) 메시지 처리를 보장하는 이 시나리오에서 무제한 재시도 횟수.</div>
+<div class="comment-content">나는 A. 1) 최소한의 노력 - 추가 대기열 없음 2) 메시지 처리를 보장하는 이 시나리오에서 무제한의 재시도라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,12 +428,12 @@
 				AmberTheTamber
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 00:30">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 00:30">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"예외 처리 블록"이라는 단어를 바꿔야 합니다. 개발자에게 이것은 코드의 "catch" 또는 "Except" 부분을 의미합니다. 나는 그것을 바탕으로 정답을 실격 처리했습니다.</div>
+<div class="comment-content">"예외 처리 블록"이라는 단어를 바꿔야 합니다. 개발자로서 나에게 이것은 코드의 "catch" 또는 "Except" 부분을 의미합니다. 나는 그것을 토대로 정답을 실격 처리했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -399,7 +442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -427,16 +470,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 17일 금요일 00:59">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 17일 금 00:59">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞습니다. 배달 못한 편지 대기열은 SQS에서 오류를 포착하고 처리하는 방법입니다.</div>
+<div class="comment-content">D 맞습니다. 배달 못한 편지 대기열은 SQS에서 오류를 포착하고 처리하는 방법입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,16 +516,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 03:49">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 03:49">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나를 위해 D.</div>
+<div class="comment-content">나한테는 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,13 +565,13 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 9일 월요일 15:55">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 9일 (월) 15:55">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 나에게 가장 의미가 있습니다. C: Redrive 정책은 원래 대기열이 아닌 DLQ에서 작동해야 합니다.</div>
+<div class="comment-content">D가 나에게 가장 의미가 있습니다. C: 리드라이브 정책은 원래 대기열이 아닌 DLQ에서 작동해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -557,15 +600,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 14:58">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 14:58">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"소스 대기열의 리드라이브 정책에 대한 maxReceiveCount를 5개 이상으로 설정합니다." https://aws.amazon.com/premiumsupport/knowledge-center/lambda-retrying-valid-sqs-messages/</div>
+<div class="comment-content">"소스 대기열의 리드라이브 정책에서 maxReceiveCount를 5 이상으로 설정하십시오." https://aws.amazon.com/premiumsupport/knowledge-center/lambda-retrying-valid-sqs-messages/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -574,7 +617,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,11 +653,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 16:53">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -627,7 +670,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,12 +702,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 10:19">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B를 선택합니다(선택한 maxReceiveCount 값과 동일한 최대 실패 수만 허용하는 경우에도). A와 관련하여 "각" 메시지의 성공적인 처리를 보장하는 유일한 솔루션인 것처럼 보이지만 "SQS 대기열에 다시 쓰기"라는 표현이 이상해 보입니다(그런데 이 솔루션을 사용하면 무한 루프가 발생할 수 있습니다. 구조적 오류). D와 관련하여 단일 오류 후 DLQ로 즉시 이동하면 프로세스의 소스로 사용하지 않고 어떻게 복원력이 향상되는지 궁금했습니다. ). C와 관련하여 maxReceiveCount를 수정하지 않으면 탄력성을 단 두 번의 시도로 증가시킵니다. 위의 추론에 대해 논쟁할 사람이 있습니까?</div>
+<div class="comment-content">B를 선택합니다(선택한 maxReceiveCount 값과 동일한 최대 오류 수만 허용하는 경우에도). A와 관련하여, 이것이 "각" 메시지의 성공적인 처리를 보장하는 유일한 솔루션인 것처럼 보이더라도 "SQS 대기열에 다시 쓰기"라는 문구는 이상한 것 같습니다(그런데 이 솔루션을 사용하면 무한 루프가 발생할 수 있습니다). 구조적 오류의 경우). D에 관해서는 단일 오류가 발생한 후 DLQ로 즉시 이동하면 이를 프로세스의 소스로 사용하지 않고 어떻게 복원력이 향상되는지 궁금합니다(이 접근 방식을 따르면 DLQ의 모든 오류에 대한 추적만 갖게 되지만 복원력은 증가하지 않습니다). ). C와 관련하여 maxReceiveCount를 수정하지 않으면 단 두 번의 시도로 복원력이 향상됩니다. 위의 추론에 대해 논쟁을 벌일 수 있는 사람이 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,12 +747,12 @@
 				우분투1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 03:24">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 03:24">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DLQ를 구성하기 위해 두 번째 SQS 대기열을 생성하고 원래 SQS 대기열에 연결해야 하므로 D로 변경합니다.</div>
+<div class="comment-content">DLQ를 구성하려면 두 번째 SQS 대기열을 생성하고 이를 원래 SQS 대기열에 연결해야 하므로 D로 변경합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -749,12 +792,12 @@
 				우분투1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 30일 수요일 05:18">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 30일 수 05:18">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html 함수가 오류를 반환하거나 최대 동시성 때문에 호출할 수 없는 경우 추가 시도로 처리가 성공할 수 있습니다. . 메시지를 배달 못한 편지 대기열로 보내기 전에 처리할 수 있는 더 나은 기회를 제공하려면 소스 대기열의 리드라이브 정책에 대한 maxReceiveCount를 5 이상으로 설정합니다.(C와 D는 잘못된 선택을 만드는 두 번째 대기열 생성)</div>
+<div class="comment-content">B. https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html 함수가 오류를 반환하거나 최대 동시성으로 인해 호출할 수 없는 경우 추가 시도를 통해 처리가 성공할 수 있습니다. . 메시지를 배달 못한 편지 대기열로 보내기 전에 처리할 수 있는 기회를 더 많이 제공하려면 소스 대기열의 리드라이브 정책에서 maxReceiveCount를 5 이상으로 설정하십시오. (C와 D는 대신 동일한 소스 대기열에서 DLQ를 생성해야 합니다. 두 번째 대기열을 생성하여 잘못된 선택을 하게 됩니다)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -791,16 +834,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 07:55">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">A와 B가 아닌 Defo. C보다 D가 더 말이 돼</div>
+<div class="comment-content">A와 B가 아닌 Defo. D가 C보다 더 의미가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -809,7 +852,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -841,12 +884,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 05:27">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">예외 처리와 함께 배달 못한 편지 대기열 사용</div>
+<div class="comment-content">예외 처리와 함께 데드 레터 큐 사용</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -855,7 +898,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -953,7 +996,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 20:22">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1000,7 +1043,7 @@ Left are C or D, in C the answer is talking about consuming the messages from th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 14:37">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@ Left are C or D, in C the answer is talking about consuming the messages from th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 00:59">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1185,7 +1228,7 @@ Left are C or D, in C the answer is talking about consuming the messages from th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 09 Jan 2023 15:55">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1224,7 +1267,7 @@ C: Redrive policy should be working on DLQ, not the original queue</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 14:58">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1278,7 +1321,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/lambda-retrying-valid-sqs
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 16:53">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1324,7 +1367,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 10:19">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1375,7 +1418,7 @@ Can anybody argument on my above reasonings?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 03:24">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1420,7 +1463,7 @@ Can anybody argument on my above reasonings?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 05:18">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1467,7 +1510,7 @@ If your function returns an error, or can't be invoked because it's at maximum c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 07:55">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1513,7 +1556,7 @@ If your function returns an error, or can't be invoked because it's at maximum c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 05:27">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 질문 1 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 CISA 주제 1 문제 1 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam CISA topic 1 question 1 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header">
+<div class="question-discussion-header"><a class="discussion-link">Isaca CISA</a> 
 						
-							Isaca의
-						 <a class="discussion-link">CISA 에서 실제 시험 문제</a>
+							의 실제 시험 문제
+						<a class="discussion-link"></a>
 <div>
 							질문 #: 1 <br/>
 							주제 #: 1
@@ -75,7 +138,7 @@
 								다음 중 조직의 비즈니스 연속성 계획(BCP)을 검토하는 IS 감사인에게 가장 큰 관심사는 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="818026" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 10, "is_most_voted": true}]</script>
+<script id="818026" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 11, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											BCP는 처음 발행된 이후로 테스트되지 않았습니다.
+											BCP는 처음 발행된 이후 테스트를 거치지 않았습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -93,7 +156,7 @@
 													B.
 												</span> 
 											
-											BCP는 버전 제어되지 않습니다.
+											BCP는 버전 관리가 되지 않습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -107,13 +170,13 @@
 													D.
 												</span> 
 											
-											고위 경영진이 BCP를 승인하지 않았습니다.
+											BCP는 고위 경영진의 승인을 받지 않았습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -123,21 +186,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">디 (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 54%; display: flex;" title="">A (54%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 46%; display: flex;" title="">D (46%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 3 일 <i>
-							오후 6:34 올 </i><a class="title-username" style="">
-								루카예
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 								Which of the following should be of GREATEST concern to an IS auditor reviewing an organization's business continuity plan (BCP)?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="818026" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 10, "is_most_voted": true}]</script>
+<script id="818026" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 11, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -206,21 +259,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 43%; display: flex;" title="">D (43%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 54%; display: flex;" title="">A (54%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 46%; display: flex;" title="">D (46%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Olukaye
-							</a>
-							
-							at <i>
-							Sept. 3, 2022, 6:34 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -236,6 +279,142 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="986202" id="comment-986202">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				필트릭
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 21일 월요일 06:48">
+			4일, 16시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">이전 게시물에서는 "BCP"를 의미했습니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="986200" id="comment-986200">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				필트릭
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 21일 월요일 06:46">
+			4일, 16시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">A를 선택하신 분들은 처음부터 현재까지의 시간이 길었다고 가정하시는 것 같아요. 그러나 그 질문은 시간에 관해 아무 말도 하지 않았습니다. 문서가 오늘 또는 어제 작성되었기 때문에 테스트되지 않았다는 것을 어떻게 알 수 있습니까? 따라서 대답은 D입니다. --&gt; BIA가 유효하려면 항상 고위 경영진의 승인을 받아야 합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985568" id="comment-985568">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				미나자한
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 20일 일요일 07:48">
+			5일, 15시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
+<div class="comment-content">승인이 중요하다</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="983367" id="comment-983367">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -248,15 +427,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프롬즈
+				프롬츠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 17일 가을 10:13">
-			11시간 52분 전
+<span class="comment-date align-middle" title="가을 2023년 8월 17일 10:13">
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최근에 필기시험 본 사람 있어? 이러한 질문이 다시 나타납니까?</div>
+<div class="comment-content">최근에 필기 시험 본 사람 있나요? 이러한 질문이 다시 나타나나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,8 +475,8 @@
 				가정84
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 07:57">
-			3주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 07:57">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -311,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,11 +522,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 15:52">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최근에 시험을 본 사람이 있습니까? 여전히 유효합니까?</div>
+<div class="comment-content">최근에 시험을 본 사람이 있나요? 아직도 유효합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,11 +555,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프롬즈
+				프롬츠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 17일 가을 10:14">
-			11시간 51분 전
+<span class="comment-date align-middle" title="가을 2023년 8월 17일 10:14">
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -393,7 +572,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,11 +612,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 06:24">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 답은 A라고 합니다. 하지만 가장 큰 고민은 '찬성'이라고 생각했습니다. 그래서 저는 D를 선택합니다</div>
+<div class="comment-content">여기서는 A라고 대답했습니다. 하지만 가장 고민되는 부분은 '승인'이라고 생각했습니다. 그래서 저는 D를 선택했어요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -446,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -474,16 +653,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프리스버그
+				프리즈그
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 21:48">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 21:48">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">사업주가 BCP에 참여해야 하므로 현재로서는 승인이 필요하지 않습니다. 첫 번째 테스트와 RPO/RTO가 충족된 후에만 고위 경영진이 계획을 확정할 수 있거나 이미 BCP 프로세스의 일부이므로 필요하지 않을 수도 있습니다. 그러나 테스트는 BCP가 완료된 후 첫 번째이자 유일한 중요한 포인트입니다.</div>
+<div class="comment-content">사업주는 BCP에 참여해야 하므로 현재로서는 승인이 필요하지 않습니다. 첫 번째 테스트와 RPO/RTO가 충족된 후에만 고위 경영진이 계획을 확정할 수 있습니다. 또는 이미 BCP 프로세스의 일부이므로 필요하지 않을 수도 있습니다. 하지만 테스트는 BCP가 완료된 후의 첫 번째이자 유일한 중요한 포인트입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -492,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,7 +703,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 10일 수요일 06:22">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -538,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,7 +749,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 8일 월요일 12:58">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -583,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,7 +794,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 5일 금요일 05:5">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -629,7 +808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -657,16 +836,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				모하메드압델라알
+				모하메드압델랄
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 26일 수 09:41">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">BCP 테스트는 매우 중요합니다.</div>
+<div class="comment-content">BCP 테스트는 매우 중요합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -675,7 +854,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -707,11 +886,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 04:30">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실히 D입니다</div>
+<div class="comment-content">확실히 D야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -720,7 +899,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -751,12 +930,12 @@
 				츠바사1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 8일 수 17:16">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 8일 수요일 17:16">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">GPT는 대답이 A라고 말합니다. BCP는 조직이 비상 사태 또는 재난 발생 중 및 이후에 운영을 계속하는 방법을 설명하는 계획입니다. 계획이 효과적이며 실제 사고 중에 적시에 실행될 수 있는지 확인하기 위해 정기적으로 계획을 테스트하는 것이 중요합니다. 테스트 없이는 필요할 때 BCP가 실제로 작동하는지 확인할 방법이 없습니다. 다른 옵션도 IS 감사인에게 중요한 고려 사항이지만 BCP를 정기적으로 테스트하는 것만큼 중요하지는 않습니다. 버전 제어는 모든 사람이 동일한 문서로 작업하는지 확인하는 데 중요하지만 계획이 효과적인지 확인하는 것만큼 중요하지는 않습니다. 연락처 정보는 필요에 따라 업데이트할 수 있으며 고위 경영진의 승인이 없다고 해서 반드시 계획이 비효율적이라는 의미는 아닙니다.</div>
+<div class="comment-content">GPT는 대답이 A라고 말합니다. BCP는 긴급 상황이나 재해 발생 시 및 이후에 조직이 어떻게 운영을 계속할 것인지를 개략적으로 설명하는 계획입니다. 계획을 정기적으로 테스트하여 실제 사고가 발생하는 동안 계획이 효과적이고 적시에 실행될 수 있는지 확인하는 것이 중요합니다. 테스트하지 않으면 필요할 때 BCP가 실제로 작동하는지 확인할 방법이 없습니다. 다른 옵션도 IS 감사자에게 중요한 고려 사항이지만 BCP를 정기적으로 테스트하는 것만큼 중요하지는 않습니다. 버전 관리는 모든 사람이 동일한 문서로 작업하도록 하는 데 중요하지만 계획이 효과적인지 확인하는 것만큼 중요하지는 않습니다. 연락처 정보는 필요에 따라 업데이트될 수 있으며 고위 경영진의 승인이 없다고 해서 반드시 계획이 효과적이지 않다는 의미는 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -765,7 +944,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -793,16 +972,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				우라미
+				오라미
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 09:25">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 답이어야 합니다.</div>
+<div class="comment-content">D가 답이겠지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -811,7 +990,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,20 +1022,20 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 25일 토요일 01:36">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 덤프는 여전히 유효합니다. 어제 시험을 치고 나니 여기 1049문제 중 65% 정도가 나왔고 새로운 문제도 있는데 여기 문제를 이해하고 풀면 문제가 없다.</div>
+<div class="comment-content">이 덤프는 여전히 유효합니다. 어제 시험을 치고 보니 여기 1049개 문제 중 제가 낸 문제의 65% 정도가 나왔고, 새로운 문제도 있지만 여기 문제를 이해하면 해결하는데 문제가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -884,16 +1063,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로니항
+				로니하앙
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 06:51">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">조직의 비즈니스 연속성 계획(BCP)을 검토하는 IS 감사인에게 가장 큰 관심사가 되어야 하는 옵션은 A입니다. BCP는 처음 발행된 이후로 테스트되지 않았습니다. BCP의 목적은 조직이 위기나 중단이 발생한 경우에도 계속 운영할 수 있도록 보장하는 것입니다. BCP의 효과는 테스트를 거치지 않고는 확인할 수 없으며 이 테스트는 계획의 약점이나 차이를 식별하는 데 필수적입니다. BCP는 손상을 최소화하고 비즈니스 중단의 영향을 줄이기 위해 신속하고 효과적으로 대응할 수 있어야 합니다. BCP가 처음 발급된 이후로 테스트되지 않은 경우 IS 감사인은 계획이 실제 위기를 처리하는 능력을 확신하지 못할 수 있으며 이로 인해 조직이 위험에 처할 수 있습니다.</div>
+<div class="comment-content">조직의 비즈니스 연속성 계획(BCP)을 검토하는 IS 감사인이 가장 관심을 가져야 할 옵션은 A입니다. BCP는 처음 발행된 이후 테스트되지 않았습니다. BCP의 목적은 위기나 혼란이 발생한 경우에도 조직이 계속 운영될 수 있도록 보장하는 것입니다. BCP의 효율성은 테스트를 거치지 않으면 확인할 수 없으며, 이 테스트는 계획의 약점이나 격차를 식별하는 데 필수적입니다. BCP는 피해를 최소화하고 비즈니스 중단으로 인한 영향을 줄이기 위해 신속하고 효과적으로 대응할 수 있어야 합니다. BCP가 처음 발행된 이후 테스트되지 않은 경우 IS 감사인은 계획의 실제 위기 처리 능력에 대해 확신을 갖지 못할 수 있으며 이로 인해 조직이 위험에 빠질 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -902,7 +1081,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -922,15 +1101,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로니항
+				로니하앙
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 06:52">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B, C, D는 BCP의 유지 관리에 중요하지만 옵션 A에 비해 덜 중요합니다. 문서화 및 문서화 제어 프로세스로 해결할 수 있는 절차상의 문제에 가깝습니다. 그러나 BCP가 테스트되지 않은 경우 IS 감사인의 주요 관심사인 실제 위기에 대응하는 데 효과적이지 않을 수 있습니다.</div>
+<div class="comment-content">옵션 B, C, D는 BCP의 유지 관리에 중요하지만 옵션 A에 비해 덜 중요합니다. 버전 제어가 부족하거나 오래된 연락처 정보는 상대적으로 빠르게 수정할 수 있지만 고위 경영진의 승인이 부족합니다. 이는 문서화 및 문서화 제어 프로세스를 통해 해결할 수 있는 절차적 문제에 가깝습니다. 그러나 BCP가 테스트되지 않은 경우 IS 감사인의 주요 관심사인 실제 위기 대응에 효과적이지 않을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -939,7 +1118,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -979,12 +1158,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 9일 월요일 12:56">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">BCP는 경영진의 승인을 먼저 받아야 합니다.</div>
+<div class="comment-content">BCP는 먼저 경영진의 승인을 받아야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -993,7 +1172,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1021,15 +1200,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오라저
+				오라슈어
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 25일 일 15:00">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 25일 일요일 15:00">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BCP는 처음 발행된 이후로 테스트되지 않았습니다. A는 경영진이 승인했지만 BCP가 테스트되지 않았음을 나타내므로 답입니다.</div>
+<div class="comment-content">BCP는 처음 발행된 이후 테스트를 거치지 않았습니다. A는 경영진이 승인했지만 BCP는 테스트되지 않았음을 보여주기 때문에 대답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1038,7 +1217,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1069,13 +1248,13 @@
 				AWS56
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 13일 화요일 22:32">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 13일 (화) 22:32">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">감사자로서 BCP 계획이 테스트되었는지 확인합니다. 엔터프라이즈/솔루션 아키텍트로서 저는 솔루션 및 예산에 대한 고위 경영진의 승인을 구합니다. 따라서 CISA 관점에서 내 관심사는 솔루션이 테스트되었는지 여부이며 그렇지 않은 경우 -1점을 줍니다. 답변: A</div>
+<div class="comment-content">나는 감사자로서 BCP 계획이 테스트되었는지 확인합니다. 엔터프라이즈/솔루션 설계자로서 저는 솔루션과 예산에 대해 Sr 경영진의 승인을 구하겠습니다. 따라서 CISA 관점에서 볼 때 제가 우려하는 점은 솔루션이 테스트되었는지 여부이며, 그렇지 않은 경우에는 -1점을 줍니다. 답: A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1084,7 +1263,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1107,12 +1286,12 @@
 				상관_9
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 16일 일 18:39">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 16일 일요일 18:39">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BCP 테스트도 중요하지만 테스트보다 상위 경영진의 승인이 더 중요합니다. BCP가 테스트되지 않았다고 해서 사용에 실패한 것은 아니지만 BCP가 아직 고위 경영진에 의해 승인되지 않았으므로 아무도 BCP를 구현할 수 없습니다.</div>
+<div class="comment-content">BCP 테스트는 중요하지만 테스트보다 상위 경영진의 승인이 더 중요합니다. BCP가 테스트되지 않았다고 해서 사용에 실패했다는 의미는 아니지만 BCP가 아직 고위 경영진의 승인을 받지 못했다면 누구도 BCP를 구현할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1121,7 +1300,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1161,12 +1340,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 5일 월요일 06:18">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D여야 합니다. BCP가 고위 경영진의 승인을 받지 못하면 BCP가 실제로 중요한 비즈니스를 다루고 있다고 판단할 수 없습니다. 이것은 테스트되지 않은 것보다 더 심각합니다.</div>
+<div class="comment-content">정답은 D여야 합니다. BCP가 고위 경영진의 승인을 받지 않으면 BCP가 실제로 중요한 비즈니스를 다루고 있다고 판단할 수 없습니다. 이것은 테스트되지 않은 것보다 더 심각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1175,7 +1354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1195,15 +1374,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				당신은 그것을 말했다
+				당신이 말했잖아요
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 6일 화요일 08:03">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 6일 (화) 08:03">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BCP가 테스트되지 않은 경우 관리 승인이 무슨 소용이 있습니까? 테스트 중이면 충분한지 여부가 표시됩니다. A가 정답이라고 생각합니다.</div>
+<div class="comment-content">BCP가 테스트되지 않으면 경영진의 승인이 무슨 소용이 있습니까? 테스트를 통해 그것이 충분한지 아닌지를 알 수 있습니다. 나는 A가 정답이라고 생각한다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1212,7 +1391,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1235,12 +1414,12 @@
 				상관_9
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 16일 일 18:40">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 16일 일요일 18:40">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 테스트되지 않은 BCP가 항상 안전하게 구현될 수 없다는 의미는 아닙니다.</div>
+<div class="comment-content">하지만 테스트되지 않은 BCP가 항상 안전하게 구현될 수 없다는 의미는 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1249,7 +1428,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1297,11 +1476,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 4일 일요일 08:00">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 동의했다, D가 답이어야 한다</div>
+<div class="comment-content">나도 동의했어, D가 답이 되어야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1310,7 +1489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1338,15 +1517,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자신의
+				그 자신의
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 03일 (토) 18:34">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 18:34">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 경우 답은 D여야 합니다. 가장 먼저 요구되는 것은 고위 경영진의 승인이어야 합니다.</div>
+<div class="comment-content">이 경우에는 D가 답이 되어야 합니다. 가장 먼저 필요한 것은 고위 경영진의 승인이었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1355,7 +1534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1391,6 +1570,142 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="986202" id="comment-986202">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				isaphiltrick
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Mon 21 Aug 2023 06:48">
+			4 days, 16 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">I meant "BCPs" in my previous post.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="986200" id="comment-986200">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				isaphiltrick
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Mon 21 Aug 2023 06:46">
+			4 days, 16 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">I think those of you who selected A assume that there was a long period of time from inception to current. However, the question never said anything about time. How do we know that the document hadn't been tested because it was just created today or yesterday?  Therefore, the answer is D --&gt; BIAs must always have senior management approval for it to be valid.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985568" id="comment-985568">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				minajahan
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Sun 20 Aug 2023 07:48">
+			5 days, 15 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">Approval is important</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="983367" id="comment-983367">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1407,7 +1722,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 10:13">
-			11 hours, 52 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1452,7 +1767,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 07:57">
-			3 weeks, 5 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1498,7 +1813,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 15:52">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1535,7 +1850,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 10:14">
-			11 hours, 51 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1588,7 +1903,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 06:24">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1634,7 +1949,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 21:48">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1680,7 +1995,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 10 May 2023 06:22">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1726,7 +2041,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 08 May 2023 12:58">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1771,7 +2086,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 05 May 2023 05:57">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1817,7 +2132,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 09:41">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1863,7 +2178,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 04:30">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1908,7 +2223,7 @@ But I thought the greatest concerning point is "approval". So I choose D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Mar 2023 17:16">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1957,7 +2272,7 @@ While the other options are also important considerations for an IS auditor, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 09:25">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2003,7 +2318,7 @@ While the other options are also important considerations for an IS auditor, the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 01:36">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2017,7 +2332,7 @@ After taking the test yesterday, about 65% of my questions came out of 1049 ques
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2050,7 +2365,7 @@ After taking the test yesterday, about 65% of my questions came out of 1049 ques
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 06:51">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2090,7 +2405,7 @@ The purpose of a BCP is to ensure that the organization can continue to operate 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 06:52">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2143,7 +2458,7 @@ The purpose of a BCP is to ensure that the organization can continue to operate 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 09 Jan 2023 12:56">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2189,7 +2504,7 @@ The purpose of a BCP is to ensure that the organization can continue to operate 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Sep 2022 15:00">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2234,7 +2549,7 @@ The purpose of a BCP is to ensure that the organization can continue to operate 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Sep 2022 22:32">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2275,7 +2590,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Apr 2023 18:39">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2328,7 +2643,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Sep 2022 06:18">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2366,7 +2681,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Sep 2022 08:03">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2403,7 +2718,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Apr 2023 18:40">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2464,7 +2779,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Sep 2022 08:00">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2509,7 +2824,7 @@ Answer: A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 18:34">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

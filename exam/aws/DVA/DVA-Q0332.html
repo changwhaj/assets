@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 332 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 332 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 332 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 332 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850034">
 <p class="card-text">
 							
-								개발자는 HTTPS 리스너가 있는 인터넷 연결 Application Load Balancer(ALB)를 사용하여 요청을 수신하는 웹 API를 생성했습니다. 개발자는 Amazon Cognito 사용자 풀을 구성하고 API에 대한 모든 요청이 Amazon Cognito를 통해 인증되기를 원합니다. <br/><br/>이 요구 사항을 충족하려면 개발자는 어떻게 해야 합니까?
+								개발자는 HTTPS 리스너와 함께 인터넷 연결 ALB(Application Load Balancer)를 사용하여 요청을 수신하는 웹 API를 만들었습니다. 개발자는 Amazon Cognito 사용자 풀을 구성하고 API에 대한 모든 요청이 Amazon Cognito를 통해 인증되는지 확인하려고 합니다. <br/><br/>이 요구 사항을 충족하려면 개발자는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Authorization 헤더가 누락된 경우 고정 응답을 반환하도록 수신기 규칙을 수신기에 추가합니다. 고정 응답을 401 Unauthorized로 설정합니다.
+											Authorization 헤더가 누락된 경우 고정된 응답을 반환하도록 리스너에 리스너 규칙을 추가합니다. 고정 응답을 401 Unauthorized로 설정하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											ALSet의 리스너 규칙에 대한 인증 작업을 생성하고 규칙 작업 유형을 인증-cognito로 설정합니다. OnUnauthenticatedRequest 필드를 "거부"로 설정합니다.
+											ALSet의 리스너 규칙에 대한 인증 작업을 생성합니다. 규칙 작업 유형을 authenticate-cognito로 설정합니다. OnUnauthenticatedRequest 필드를 "거부"로 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Amazon API Gateway API를 생성합니다. ALB 엔드포인트로 전달될 모든 API 메서드를 구성합니다. COGNITO_USER_POOLS 유형의 권한 부여자를 만듭니다. 해당 권한 부여자를 사용하도록 모든 API 메서드를 구성합니다.
+											Amazon API Gateway API를 생성합니다. ALB 엔드포인트로 전달되도록 모든 API 메서드를 구성합니다. COGNITO_USER_POOLS 유형의 권한 부여자를 만듭니다. 해당 권한 부여자를 사용하도록 모든 API 메서드를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon Cognito를 사용하여 Authorization 헤더를 검증하는 AWS Lambda 함수 대상을 포함하는 새 대상 그룹을 생성합니다. 대상 그룹을 수신기와 연결합니다.
+											Amazon Cognito를 사용하여 Authorization 헤더를 검증하는 AWS Lambda 함수 대상을 포함하는 새로운 대상 그룹을 생성합니다. 대상 그룹을 리스너와 연결합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">B (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">씨 (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">B (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">C (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 
-							
-							2022 <i>
-							년 11월 26일 오후 5:46</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 5:46 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 08:22">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 08:22">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. ALB의 리스너 규칙에 대한 인증 작업을 생성합니다. 규칙 작업 유형을 인증-cognito로 설정합니다. OnUnauthenticatedRequest 필드를 "거부"로 설정합니다. 인터넷 연결 ALB(Application Load Balancer)에 대한 모든 요청이 Amazon Cognito를 통해 인증되도록 하기 위해 개발자는 ALB의 리스너 규칙에 대한 인증 작업을 생성할 수 있습니다. 인증 작업은 수행할 인증 유형을 지정하며, 이 경우 "authenticate-cognito"여야 합니다. 또한 개발자는 OnUnauthenticatedRequest 필드를 "deny"로 설정해야 ALB가 인증되지 않은 모든 요청을 거부하게 됩니다. 이렇게 하면 유효한 Amazon Cognito 토큰이 있는 요청만 ALB를 통해 허용됩니다. 다른 옵션,</div>
+<div class="comment-content">B. ALB의 리스너 규칙에 대한 인증 작업을 생성합니다. 규칙 작업 유형을 authenticate-cognito로 설정합니다. OnUnauthenticatedRequest 필드를 "거부"로 설정합니다. 인터넷 연결 Application Load Balancer(ALB)에 대한 모든 요청이 Amazon Cognito를 통해 인증되도록 하기 위해 개발자는 ALB의 리스너 규칙에 대한 인증 작업을 생성할 수 있습니다. 인증 작업은 수행할 인증 유형을 지정하며, 이 경우 "authenticate-cognito"여야 합니다. 또한 개발자는 OnUnauthenticatedRequest 필드를 "거부"로 설정해야 합니다. 그러면 ALB가 인증되지 않은 모든 요청을 거부하게 됩니다. 이렇게 하면 유효한 Amazon Cognito 토큰이 있는 요청만 ALB를 통해 허용됩니다. 다른 옵션,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,7 +345,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 5일 토요일 17:02">
-			2주 전
+			2주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,12 +390,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 18:47">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 18:47">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B API에 대한 모든 요청이 Amazon Cognito를 통해 인증되도록 하려면 개발자가 ALB의 리스너 규칙에 대한 인증 작업을 생성하고 규칙 작업 유형을 authenticate-cognito로 설정해야 합니다. OnUnauthenticatedRequest 필드는 "거부"로 설정해야 합니다. 이렇게 하면 ALB가 대상 그룹에 요청을 전달하기 전에 Amazon Cognito에서 유효한 인증 토큰을 확인하게 됩니다. 옵션 B가 정답입니다.</div>
+<div class="comment-content">B API에 대한 모든 요청이 Amazon Cognito를 통해 인증되도록 하려면 개발자는 ALB의 리스너 규칙에 대한 인증 작업을 생성하고 규칙 작업 유형을 authenticate-cognito로 설정해야 합니다. OnUnauthenticatedRequest 필드는 "거부"로 설정되어야 합니다. 이렇게 하면 ALB가 요청을 대상 그룹에 전달하기 전에 Amazon Cognito에서 유효한 인증 토큰을 확인하게 됩니다. 보기 B가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,12 +435,12 @@
 				후안페
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 04:47">
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 04:47">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저에게는 c입니다.</div>
+<div class="comment-content">나한테는 c야.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,15 +477,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 05:49">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">API GW를 만들 필요가 없습니다. ALB는 이를 자체적으로 처리할 수 있습니다. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 하나 이상의 리스너 규칙에 대한 인증 작업을 생성하여 사용자 인증을 구성합니다. authenticate-cognito 및 authenticate-oidc 작업 유형은 HTTPS 리스너에서만 지원됩니다. 해당 필드에 대한 설명은 Elastic Load Balancing API 참조 버전 2015-12-01에서 AuthenticateCognitoActionConfig 및 AuthenticateOidcActionConfig를 참조하십시오.</div>
+<div class="comment-content">API GW를 만들 필요가 없습니다. ALB는 이를 자체적으로 처리할 수 있습니다. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html 하나 이상의 리스너 규칙에 대한 인증 작업을 생성하여 사용자 인증을 구성합니다. authenticate-cognito 및 authenticate-oidc 작업 유형은 HTTPS 리스너에서만 지원됩니다. 해당 필드에 대한 설명은 Elastic Load Balancing API 참조 버전 2015-12-01의 AuthenticateCognitoActionConfig 및 AuthenticateOidcActionConfig를 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,11 +522,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 3일 (토) 21:29">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 21:29">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,11 +568,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 08:51">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 08:51">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,11 +613,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kapil206001
+				카필206001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 04:48">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 04:48">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,8 +661,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 17:46">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 17:46">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -688,7 +731,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 08:22">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -741,7 +784,7 @@ Other options, such as adding a listener rule to return a fixed response, creati
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 05 Aug 2023 17:02">
-			2 weeks ago
+			2 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -787,7 +830,7 @@ Other options, such as adding a listener rule to return a fixed response, creati
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 18:47">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -879,7 +922,7 @@ To ensure that every request to the API is authenticated through Amazon Cognito,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 05:49">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -926,7 +969,7 @@ You configure user authentication by creating an authenticate action for one or 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 21:29">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -975,7 +1018,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 08:51">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1020,7 +1063,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 04:48">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1066,7 +1109,7 @@ https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balance
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 17:46">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

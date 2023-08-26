@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 24 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 24 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 24 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 24 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807524">
 <p class="card-text">
 							
-								개발자가 시간 경과에 따라 계정의 Amazon S3 버킷을 추적하는 솔루션을 만들고 있습니다. 개발자는 일정에 따라 실행될 AWS Lambda 함수를 생성했습니다. 이 함수는 계정의 S3 버킷을 나열하고 Amazon DynamoDB 테이블에 목록을 저장합니다. 개발자가 AWSLambdaBasicExecutionRole AWS 관리형 정책으로 함수를 실행할 때 개발자에게 권한 오류가 발생합니다. <br/>이 오류를 해결하기 위해 개발자는 어떤 권한 조합을 사용해야 합니까? (두 가지를 선택하세요.)<br/>
+								개발자는 시간 경과에 따라 계정의 Amazon S3 버킷을 추적하는 솔루션을 만들고 있습니다. 개발자는 일정에 따라 실행되는 AWS Lambda 함수를 만들었습니다. 이 함수는 계정의 S3 버킷을 나열하고 해당 목록을 Amazon DynamoDB 테이블에 저장합니다. 개발자가 AWSLambdaBasicExecutionRole AWS 관리형 정책을 사용하여 함수를 실행할 때 권한 오류가 발생합니다. <br/>이 오류를 해결하려면 개발자는 어떤 권한 조합을 사용해야 합니까? (2개를 선택하세요.)<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807524" type="application/json">[{"voted_answers": "BC", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
@@ -100,7 +163,7 @@
 													C.
 												</span> 
 											
-											Lambda 함수가 DynamoDB에 쓸 수 있는 권한
+											DynamoDB에 쓸 수 있는 Lambda 함수에 대한 권한
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -120,7 +183,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -130,21 +193,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">기원전 (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">기원전 (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sindra
-							</a> 
-							
-							시간: <i>
-							2022년 9월 3일, 오전 5:15</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -225,16 +278,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sindra
-							</a>
-							
-							at <i>
-							Sept. 3, 2022, 5:15 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -262,19 +305,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시드빅
+				시빅
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 3일 (토) 10:38">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 10:38">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">답변의 경우 "AWSLambdaBasicExecutionRole"은 CloudWatch https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html에 로그를 쓸 수 있는 권한이지만 BC입니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">대답은 BC이지만 "AWSLambdaBasicExecutionRole"은 CloudWatch https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html에 로그를 쓸 수 있는 권한이지만</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -283,7 +326,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -317,13 +360,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 19:33">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 19:33">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">BC가 정답입니다. 한 시간에 한 번씩 람다 함수를 호출하기 위해 Cloudwatch 이벤트가 생성되었음을 추론할 수 있습니다. 함수가 호출되면 버킷의 객체를 나열할 수 있는 권한이 필요하고 DynamoDB에 레코드를 삽입해야 합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">BC가 정답입니다. 한 시간에 한 번씩 람다 함수를 호출하기 위해 Cloudwatch 이벤트가 생성되었다고 추론할 수 있습니다. 함수가 호출되면 버킷의 객체를 나열할 수 있는 권한이 필요하고 DynamoDB에 레코드를 삽입해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -332,7 +375,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -360,16 +403,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 23일 일 13:48">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 23일 일요일 13:48">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">B. Lambda 함수가 Amazon S3의 버킷을 나열할 수 있는 권한 C. Lambda 함수가 DynamoDB에 쓸 수 있는 권한</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">B. Amazon S3의 버킷을 나열하기 위한 Lambda 함수에 대한 권한 C. DynamoDB에 쓰기 위한 Lambda 함수에 대한 권한</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -378,7 +421,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -409,12 +452,12 @@
 				잇신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 04:48">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 04:48">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">특정 이벤트 로그를 파일에 기록할 때 D를 선택하는 것이 더 생산적입니다.</div>
+<div class="comment-content">특정 이벤트 로그를 파일에 기록하려면 D를 선택하는 것이 더 생산적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -423,7 +466,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -446,12 +489,12 @@
 				잇신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 04:50">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 04:50">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 Q. 26에 대한 것입니다. 이 질문에서 잘못 답변했습니다.</div>
+<div class="comment-content">이것은 Q. 26에 대한 것입니다. 이 질문에 잘못 대답했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -460,7 +503,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -500,7 +543,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:32">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -514,7 +557,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -542,15 +585,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				용감한 마음22
+				브레이브하트22
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 21:45">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 21:45">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문은 제 관점에서 약간 혼란스럽습니다. 정답이 C &amp; E가 아니어야 하는 이유를 간략하게 설명할 수 있는 사람이 있습니까?</div>
+<div class="comment-content">이 질문은 제 관점에서는 약간 혼란스럽습니다. 왜 정답이 C &amp; E가 되어서는 안 되는지 간단히 설명해 주실 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -559,7 +602,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -582,12 +625,12 @@
 				조우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 18:42">
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 18:42">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">일정에 따라 실행되는 AWS Lambda 함수. 호출할 필요가 없습니다.</div>
+<div class="comment-content">일정에 따라 실행되는 AWS Lambda 함수입니다. 호출할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -596,7 +639,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,15 +667,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프라탐111
+				Pratham111
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 3일 화요일 18:53">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문에 따르면 Lambda 함수는 dynamodb 테이블에 쓰기만 하면 되고 dynamodb는 함수를 호출할 필요가 없습니다(이치에 맞지 않음). 오히려 함수는 s3 목록에 액세스해야 합니다.</div>
+<div class="comment-content">질문에 따르면 Lambda 함수는 dynamodb 테이블에만 쓰기만 하면 되고 dynamodb는 함수를 호출할 필요가 없습니다(말이 안 됨). 오히려 함수는 s3 목록에 액세스해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -641,7 +684,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -680,13 +723,13 @@
 				미툰쿤두1983
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 06:54">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 06:54">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">답변 B&amp;C</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">답변 B &amp; C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -695,7 +738,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -727,11 +770,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 14일 금 11:26">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답 비앤씨</div>
+<div class="comment-content">정답 B&amp;C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -740,7 +783,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -771,12 +814,12 @@
 				신드라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 3일 (토) 05:15">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 3일 토요일 05:15">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B와 C를 믿습니다. 람다가 s3(getlist)에서 읽고 dynamo DB에 써야 하기 때문에</div>
+<div class="comment-content">나는 B와 C를 믿습니다. 람다는 s3(getlist)에서 읽고 dynamo DB에 써야 하기 때문에</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -785,7 +828,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -840,7 +883,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 10:38">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -889,7 +932,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 19:33">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -935,7 +978,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 13:48">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -981,7 +1024,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 04:48">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1018,7 +1061,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 04:50">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1071,7 +1114,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:32">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1117,7 +1160,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 21:45">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1200,7 +1243,7 @@ Don't need to be invoked</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 18:53">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1253,7 +1296,7 @@ Don't need to be invoked</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 06:54">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1299,7 +1342,7 @@ Don't need to be invoked</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 11:26">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1344,7 +1387,7 @@ Don't need to be invoked</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Sep 2022 05:15">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

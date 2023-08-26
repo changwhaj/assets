@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 80 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 80 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 80 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 80 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807580">
 <p class="card-text">
 							
-								AWS Lambda 함수 도구에서 만든 개발자는 15MB의 메모리를 사용합니다. 개발자가 기본적으로 4개의 코어가 있는 노트북에서 코드를 실행하면 함수가 100ms 이내에 실행됩니다. 개발자가 128MB의 메모리가 있는 Lambda 함수로 코드를 배포하면 첫 번째 실행에 3초가 걸립니다. 후속 실행을 완료하는 데 500ms 이상 걸립니다. <br/>개발자는 함수가 초기 시작 시간을 제외하고 100ms 미만으로 일관되게 실행되도록 Lambda 함수의 성능을 개선해야 합니다. <br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?<br/>
+								개발자는 AWS Lambda 함수 도구에서 15MB의 메모리를 사용합니다. 개발자가 코어가 4개인 노트북에서 기본적으로 코드를 실행하면 함수가 100ms 이내에 실행됩니다. 개발자가 128MB의 메모리를 갖춘 Lambda 함수로 코드를 배포하면 첫 번째 실행에 3초가 걸립니다. 후속 실행을 완료하는 데 500ms 이상이 걸립니다. <br/>개발자는 초기 시작 시간을 제외하고 100ms 이내에 함수가 일관되게 실행되도록 Lambda 함수의 성능을 개선해야 합니다. <br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807580" type="application/json">[{"voted_answers": "C", "vote_count": 17, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 1, "is_most_voted": false}]</script>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											Lambda 함수를 컨테이너로 다시 패키징합니다. 함수를 재배포합니다.
+											Lambda 함수를 컨테이너로 다시 패키징합니다. 함수를 다시 배포합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">씨 (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">C (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JOL86
-							</a> 
-							
-							2022 <i>
-							년 9월 1일 오후 9:25</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JOL86
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 9:25 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,23 +291,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 21:25">
 			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C여야 한다고 생각합니까? 로컬에서 4개의 코어를 사용한다고 언급하고 있으며 람다의 메모리를 늘리면 CPU를 늘릴 수 있습니다. 또한 프로비저닝된 동시성은 콜드 스타트에서만 도움이 되며 후속 실행에서는 여전히 너무 오래 걸립니다.</div>
+<div class="comment-content">대답은 C가 되어야 한다고 생각하나요? 로컬에서 4개의 코어를 사용한다고 언급하고 있으며 람다의 메모리를 늘리면 CPU를 늘릴 수 있습니다. 게다가 프로비저닝된 동시성은 콜드 스타트에만 도움이 되며 후속 실행에서는 여전히 너무 오랜 시간이 걸립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,14 +335,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빚진 87
+				빚진87
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 6일 화요일 14:10">
-			11개월, 2주 전
+<span class="comment-date align-middle" title="2022년 9월 6일 (화) 14:10">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -347,13 +390,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 15:10">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 15:10">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 메모리를 늘리면 CPU도 증가하기 때문에 확실합니다. 이런 식으로 우리는 람다 성능을 향상시킵니다.</div>
+<div class="comment-content">C는 확실합니다. 메모리를 늘리면 CPU도 늘어나기 때문입니다. 이런 식으로 우리는 람다 성능을 향상시킵니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,16 +433,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미스터티
+				MrTee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 25일 화요일 23:42">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 25일 (화) 23:42">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. Lambda 함수의 메모리를 늘립니다. Lambda 함수에 할당된 메모리를 늘리면 그에 비례하여 CPU 성능과 네트워크 대역폭도 증가합니다. 이렇게 하면 함수의 성능을 개선하고 실행 시간을 줄이는 데 도움이 될 수 있습니다.</div>
+<div class="comment-content">C. Lambda 함수의 메모리를 늘립니다. Lambda 함수에 할당된 메모리를 늘리면 그에 비례하여 CPU 성능과 네트워크 대역폭도 늘어납니다. 이는 함수의 성능을 향상시키고 실행 시간을 줄이는 데 도움이 될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -439,12 +482,12 @@
 				Dr_Chomp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 05:53">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 05:53">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">매우 기만적인 질문입니다. 4코어를 사용하면 vCPU가 필요한 것처럼 들리므로 메모리 응답을 확장해야 합니다. 아마도 4코어 CPU의 멀티스레딩이 동시성이 문제임을 암시할 수도 있습니다... 그들은 그들의 문제를 바로 거절해야 합니다... 더 수직적인 스케일링과 따라서 메모리 = CPU의 것 같은 느낌이 듭니다!</div>
+<div class="comment-content">매우 기만적인 질문입니다. 4코어를 사용하면 vCPU가 필요한 것처럼 들리므로 메모리를 확장해야 한다는 답변이 필요합니다. 어쩌면 4코어 CPU의 멀티스레딩이 동시성이 문제임을 시사할 수도 있습니다... 그들은 동시성을 바로 꺼야 합니다... 수직 확장이 더 많아 메모리 = CPU인 것처럼 느껴집니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -481,11 +524,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 16일 목요일 19:32">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,12 +573,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 08:55">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">기능의 메모리 증가</div>
+<div class="comment-content">func의 메모리 증가</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,12 +618,12 @@
 				gaddour_med
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 31일 화요일 09:04">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 31일 (화) 09:04">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그는 128 RAM을 사용하는 aws lambda의 첫 번째 실행이 3ms라고 말합니다. 따라서 RAM이나 프로세서에는 문제가 없습니다. 랩탑의 경우 100ms 미만이 소요되기 때문입니다. 동시성 때문에 500ms가 걸립니다. 새로운 요청은 새로운 기능이 실행되기를 기다립니다. 나는 B가 맞다고 생각한다.</div>
+<div class="comment-content">그는 128 RAM을 갖춘 AWS Lambda의 첫 번째 실행이 3ms라고 말합니다. 따라서 랩톱에서 100ms 미만의 시간이 걸리기 때문에 RAM이나 프로세서에는 문제가 없습니다. 동시성으로 인해 그 후 500ms가 걸립니다. 새로운 요청은 새로운 기능이 실행되기를 기다립니다. 내 생각엔 B가 맞는 것 같아.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -589,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,15 +660,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				당시 정신
+				그때의 정신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 금요일 03:00">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 30일 금 03:00">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">메모리를 늘리면 갈 수 있습니다.</div>
+<div class="comment-content">메모리만 늘리면 괜찮을 거예요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,16 +705,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 00:12">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 00:12">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다</div>
+<div class="comment-content">C가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -680,7 +723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -708,11 +751,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				gpit
+				지핏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 22:31">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 22:31">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,8 +800,8 @@
 				G4시험
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 19일 (토) 05:54">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 19일 토요일 05:54">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -772,7 +815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,12 +846,12 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 18일 금요일 01:36">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 18일 금 01:36">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"초기 시작 시간 제외" 때문에 B가 아니라 C입니다.</div>
+<div class="comment-content">"초기 시작 시간을 제외"하기 때문에 B가 아닌 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -817,7 +860,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -837,15 +880,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				겸손한_개발자
+				겸손한 개발자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 02:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 02:15">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이건 내려다보니까 B로 가는데....대신 C로 해야지</div>
+<div class="comment-content">이것을 간과해서 B를 선택합니다.... 대신 C를 선택해야 합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -854,7 +897,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -893,12 +936,12 @@
 				클라우드핸즈온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 06일 일요일 17:01">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 6일 일요일 17:01">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것의 C. 람다에서 메모리를 늘리면 함수의 CPU를 늘리는 것과 같기 때문에 성능에 도움이 됩니다. 프로비저닝된 동시성을 추가하면 초기화 시간을 제거하는 데 도움이 되지만 질문에서는 이를 무시하라고 합니다.</div>
+<div class="comment-content">C. 람다에서 메모리를 늘리면 함수의 CPU를 늘리는 것과 같기 때문에 성능에 도움이 됩니다. 프로비저닝된 동시성을 추가하면 초기화 시간을 줄이는 데 도움이 되지만 이를 무시하라는 질문이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -907,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -938,13 +981,13 @@
 				david00
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 24일 (토) 19:28">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 24일 토요일 19:28">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C: 성능 향상을 위해 람다 함수에 대한 메모리 할당을 늘려야 합니다.</div>
+<div class="comment-content">C: 성능을 향상하려면 람다 함수에 대한 메모리 할당을 늘려야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1058,7 +1101,7 @@ Plus provisioned concurrency would only help on a cold start, and it's still tak
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 06 Sep 2022 14:10">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1155,7 +1198,7 @@ But the Question says "excluding the initial startup time".</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Apr 2023 23:42">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1201,7 +1244,7 @@ But the Question says "excluding the initial startup time".</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 05:53">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1246,7 +1289,7 @@ But the Question says "excluding the initial startup time".</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 19:32">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1292,7 +1335,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 08:55">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1338,7 +1381,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 09:04">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1383,7 +1426,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Dec 2022 03:00">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1428,7 +1471,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 00:12">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1474,7 +1517,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 22:31">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1520,7 +1563,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Nov 2022 05:54">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1566,7 +1609,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Nov 2022 01:36">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1603,7 +1646,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 02:15">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1656,7 +1699,7 @@ https://docs.aws.amazon.com/lambda/latest/operatorguide/computing-power.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 06 Nov 2022 17:01">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1702,7 +1745,7 @@ Increasing memory on the lambda will help with performance, because it's like in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Sep 2022 19:28">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

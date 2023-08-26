@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 13 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 13 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 13 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 13 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807513">
 <p class="card-text">
 							
-								회사는 모든 프로덕션 배포에 AWS CodeDeploy를 사용하고 있습니다. 개발자에게 CodeDeployDefault.ECSAIIAtOnce 구성을 사용하는 Amazon Elastic Container Service(Amazon ECS) 애플리케이션이 있습니다. 개발자는 전체 프로덕션 환경이 업데이트될 때까지 프로덕션 환경을 10%씩 업데이트해야 합니다. <br/>이러한 요구 사항을 충족하기 위해 개발자는 어떤 CodeDeploy 구성을 사용해야 합니까?<br/>
+								회사는 모든 프로덕션 배포에 AWS CodeDeploy를 사용하고 있습니다. 개발자에게는 CodeDeployDefault.ECSAIIAtOnce 구성을 사용하는 Amazon Elastic Container Service(Amazon ECS) 애플리케이션이 있습니다. 개발자는 전체 프로덕션 환경이 업데이트될 때까지 프로덕션 환경을 10% 단위로 업데이트해야 합니다. <br/>이러한 요구 사항을 충족하려면 개발자는 어떤 CodeDeploy 구성을 사용해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807513" type="application/json">[{"voted_answers": "B", "vote_count": 17, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">B (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">B (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								VivekSolutionArchitect
-							</a> 
-							
-							시간: <i>
-							2022년 9월 2일, 오후 7:40</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								VivekSolutionArchitect
-							</a>
-							
-							at <i>
-							Sept. 2, 2022, 7:40 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 14일 금 01:20">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 14일 금요일 01:20">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">CodeDeployDefault.ECSLinear10PercentEvery3Minutes 모든 트래픽이 이동할 때까지 3분마다 트래픽의 10%를 이동합니다. CodeDeployDefault.ECSCanary10Percent5Minutes 첫 번째 증분에서 트래픽의 10%를 이동합니다. 나머지 90%는 5분 후에 배포됩니다.</div>
+<div class="comment-content">CodeDeployDefault.ECSLinear10PercentEvery3Minutes 모든 트래픽이 전환될 때까지 3분마다 트래픽의 10%를 전환합니다. CodeDeployDefault.ECSCanary10Percent5Minutes 첫 번째 증분에서 트래픽의 10%를 이동합니다. 나머지 90%는 5분 후에 배포됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -299,13 +342,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 17:01">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 17:01">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">확실히 B입니다! 그들은 이미 설명했지만 요구 사항에 맞추기 위해 선형 릴리스가 필요합니다. ECSLinear10PercentEvery3Minutes를 사용하면 이 새 버전의 릴리스 시점까지 3분마다 애플리케이션의 10%를 릴리스합니다. 대신 카나리아 배포는 ECSCanary10Percent5Minutes라고 가정하고 처음에는 선형과 마찬가지로 10%를 해제하지만 5분 후에 모든 90%가 해제됩니다. 따라서 선형 배포에는 훨씬 더 많은 시간이 소요됩니다.</div>
+<div class="comment-content">확실히 B입니다! 이미 설명했지만 요구 사항을 충족하려면 선형 릴리스가 필요합니다. ECSLinear10PercentEvery3Minutes를 사용하면 이 새 버전의 릴리스 시점까지 3분마다 애플리케이션의 10%를 릴리스합니다. 대신 카나리아 배포에서는 ECSCanary10Percent5Minutes를 가정하고 처음에는 선형처럼 10%를 해제하지만 5분 후에는 90%가 모두 해제됩니다. 따라서 선형 배포는 출시될 때까지 훨씬 더 많은 시간이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,16 +385,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Rpod
+				R포드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 24일 월요일 14:04">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 24일 (월) 14:04">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">chatgpt에서 C-rechecked로 투표했습니다. 거기에 C가 있습니다. 그러나 빠른 확인에서 Enhanced Fanout에 대한 Lambda의 옵션이 없는 것 같습니다. 그래서 확실하지 않습니다.</div>
+<div class="comment-content">C에 투표했습니다. chatgpt에서 다시 확인했습니다. 거기에 C가 있습니다. 그러나 간단히 확인해 보면 향상된 팬아웃을 위한 옵션이 Lambda에 없는 것 같아서 확실하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,15 +431,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				OtavioC
+				오타비오C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 15일 (토) 13:07">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 15일 토요일 13:07">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 아닌 이유는 무엇입니까? https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html</div>
+<div class="comment-content">A는 왜 안되나요? https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -429,11 +472,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 3일 수요일 08:09">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">문제는 개발자가 각 라운드에 대해 10%씩 업데이트를 원하기 때문입니다. A는 카나리아 테스트입니다. 즉, 새 버전에 대해 10%를 업데이트하고 5분 후에 나머지 이전 버전(90%)이 업데이트됩니다.</div>
+<div class="comment-content">문제는 개발자가 각 라운드마다 10%씩 업데이트를 원한다는 것이기 때문입니다. A는 카나리아 테스트입니다. 즉, 새 버전에 대해 10%가 업데이트되고 5분 후에 나머지 이전 버전(90%)이 업데이트된다는 의미입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -442,7 +485,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,12 +525,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:28">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B여야 합니다.</div>
+<div class="comment-content">B여야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,8 +570,8 @@
 				G4시험
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 03:41">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 03:41">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,12 +617,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 30일 금 11:15">
-			10개월, 3주 전
+			10개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">모든 트래픽이 이동할 때까지 3분마다 트래픽의 10%를 이동합니다.</div>
+<div class="comment-content">모든 트래픽이 전환될 때까지 3분마다 트래픽의 10%를 전환합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,16 +659,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자볼
+				야볼
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 14일 수 06:54">
-			11개월, 1주 전
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">선형 옵션만 변경 사항을 증분으로 배포합니다. 정답입니다.</div>
+<div class="comment-content">선형 옵션만 변경 사항을 증분 방식으로 배포합니다. 대답은 정확합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,10 +705,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				VivekSolution건축가
+				Vivek솔루션건축가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 02일 금 19:40">
+<span class="comment-date align-middle" title="2022년 9월 2일 금요일 19:40">
 			11개월, 3주 전
 		</span>
 </div>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -734,7 +777,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 01:20">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -788,7 +831,7 @@ Shifts 10 percent of traffic in the first increment. The remaining 90 percent is
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 17:01">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -835,7 +878,7 @@ So linear deployments nehttps://www.examtopics.com/exams/amazon/aws-certified-de
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Apr 2023 14:04">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -881,7 +924,7 @@ So linear deployments nehttps://www.examtopics.com/exams/amazon/aws-certified-de
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Apr 2023 13:07">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -919,7 +962,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configuration
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 03 May 2023 08:09">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -972,7 +1015,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configuration
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:28">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1018,7 +1061,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configuration
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 03:41">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1064,7 +1107,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configuration
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Sep 2022 11:15">
-			10 months, 3 weeks ago
+			10 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1110,7 +1153,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configuration
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Sep 2022 06:54">
-			11 months, 1 week ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

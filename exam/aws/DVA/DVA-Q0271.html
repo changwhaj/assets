@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 271 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 271 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 271 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 271 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849949">
 <p class="card-text">
 							
-								한 회사에서 AWS Lambda 함수와 Amazon API Gateway를 사용하는 기존 애플리케이션을 위한 서버리스 마이크로서비스를 구축하고 있습니다. 마이크로서비스는 OIDC(OpenID Connect) 표준을 지원하는 온프레미스 ID 공급자(IdP)를 자동화해야 합니다. <br/><br/>최소한의 운영 오버헤드로 API 권한 부여 메커니즘을 구현하려면 회사에서 무엇을 해야 합니까?
+								한 회사가 AWS Lambda 기능과 Amazon API Gateway를 사용하는 기존 애플리케이션을 위한 서버리스 마이크로서비스를 구축하고 있습니다. 마이크로서비스는 OIDC(OpenID Connect) 표준을 지원하는 온프레미스 ID 공급자(IdP)를 자동화해야 합니다. <br/><br/>최소한의 운영 오버헤드로 API 인증 메커니즘을 구현하려면 회사는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849949" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="849949" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											API Gateway HTTP API를 사용하여 Lambda 함수를 호출합니다. JWT(JSON Web Token) 발급자를 온프레미스 IdP의 퍼블릭 OIDC 엔드포인트로 설정합니다.
+											API Gateway HTTP API를 사용하여 Lambda 함수를 호출합니다. JWT(JSON 웹 토큰) 발급자를 온프레미스 IdP의 공개 OIDC 엔드포인트로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											API Gateway HTTP API를 사용하여 Lambda 함수를 호출합니다. Amazon Cognito 자격 증명 풀을 생성합니다. 자격 증명 풀과 온프레미스 IdP 간에 연합을 생성합니다. 자격 증명 풀을 JSON 웹 토큰(JWT) 발급자로 설정합니다.
+											API 게이트웨이 HTTP API를 사용하여 Lambda 함수를 호출합니다. Amazon Cognito 자격 증명 풀을 생성합니다. 자격 증명 풀과 온프레미스 IdP 간의 페더레이션을 생성합니다. 자격 증명 풀을 JWT(JSON Web Token) 발급자로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											API Gateway REST API를 사용하여 Lambda 함수를 호출합니다. 공용 인터넷을 통해 온프레미스 IdP에 연결하도록 JWT(JSON Web Token) 발급자를 구성합니다.
+											API Gateway REST API를 사용하여 Lambda 함수를 호출합니다. 공용 인터넷을 통해 온프레미스 IdP에 연결하도록 JWT(JSON 웹 토큰) 발급자를 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											API Gateway REST API를 사용하여 Lambda 함수를 호출합니다. Amazon Cognito 자격 증명 풀을 생성합니다. 자격 증명 풀과 온프레미스 IdP 간에 연합을 생성합니다. Amazon Cognito를 권한 부여자로 설정합니다.
+											API Gateway REST API를 사용하여 Lambda 함수를 호출합니다. Amazon Cognito 자격 증명 풀을 생성합니다. 자격 증명 풀과 온프레미스 IdP 간의 페더레이션을 생성합니다. Amazon Cognito를 승인자로 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">디 (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">B (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">D (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">B (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 26일 
-							
-							오전 <i>
-							6:25</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="849949" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 4, "is_most_voted": false}]</script>
+<script id="849949" type="application/json">[{"voted_answers": "D", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">D (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">B (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">D (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">B (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 6:25 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,12 +293,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금 10:04">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">나는 B와 함께 갈 것이다. HTTP API가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">B를 선택하겠습니다. HTTP API는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,25 +335,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에제이크
+				에세이크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 23일 목요일 14:33">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B, REST가 아닌 HTTP API 지원 https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-authorizer.html</div>
+<div class="comment-content">대답은 B입니다. REST가 아닌 HTTP API가 지원됩니다 https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-authorizer.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,7 +385,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 11:34">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,12 +430,12 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 18일 수 16:58">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 18일 수요일 16:58">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A여야 합니다. HTTP API만 OpenID Connect를 지원합니다. 또한 API 게이트웨이는 Cognito Identity 풀과 통합되지 않습니다(실제로 사용자 풀임).</div>
+<div class="comment-content">대답은 A여야 합니다. HTTP API만 OpenID Connect를 지원합니다. 또한 API 게이트웨이는 Cognito 자격 증명 풀과 통합되지 않습니다(실제로는 사용자 풀입니다).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -429,16 +472,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 08:38">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">동의</div>
+<div class="comment-content">동의함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,7 +522,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 26일 토요일 06:25">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -545,7 +588,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 10:04">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -591,7 +634,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 14:33">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -605,7 +648,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-author
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -638,7 +681,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-author
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 11:34">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -684,7 +727,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-author
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 16:58">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -730,7 +773,7 @@ Only HTTP api support OpenID Connect. Also, API gateway does not integrated with
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 08:38">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -776,7 +819,7 @@ Only HTTP api support OpenID Connect. Also, API gateway does not integrated with
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 06:25">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

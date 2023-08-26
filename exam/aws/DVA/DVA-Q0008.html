@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 8 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 질문 8 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 8 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 8 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807508">
 <p class="card-text">
 							
-								회사에 사진을 분석하는 애플리케이션이 있습니다. 개발자가 Amazon EC2 인스턴스에 배포할 애플리케이션을 준비하고 있습니다. 애플리케이션의 이미지 분석 기능에는 Amazon Linux에서 실행되는 GPU 인스턴스와 CPU 인스턴스가 혼합되어 있어야 합니다. 개발자는 함수가 GPU 인스턴스에서 실행 중인지 여부를 확인할 수 있도록 애플리케이션에 코드를 추가해야 합니다. <br/>이 정보를 얻기 위해 함수는 무엇을 해야 합니까?<br/>
+								한 회사에 사진을 분석하는 애플리케이션이 있습니다. 개발자가 Amazon EC2 인스턴스에 배포할 애플리케이션을 준비하고 있습니다. 애플리케이션의 이미지 분석 기능에는 Amazon Linux에서 실행되는 GPU 인스턴스와 CPU 인스턴스가 혼합되어 있어야 합니다. 개발자는 함수가 GPU 인스턴스에서 실행 중인지 여부를 확인할 수 있도록 애플리케이션에 코드를 추가해야 합니다. <br/>이 정보를 얻으려면 함수가 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807508" type="application/json">[{"voted_answers": "D", "vote_count": 15, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											DescribeInstances API 작업을 호출하고 현재 인스턴스 ID를 필터링합니다. ElasticGpuAssociations 속성을 검사합니다.
+											DescriptionInstances API 작업을 호출하고 현재 인스턴스 ID를 필터링합니다. ElasticGpuAssociations 속성을 검사합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -98,7 +161,7 @@
 													C.
 												</span> 
 											
-											DescribeElasticGpus API 작업을 호출합니다.
+											DescriptionElasticGpus API 작업을 호출합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -111,7 +174,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">D (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">D (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">6%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 1일 오전 <i>
-							3:58 </i><a class="title-username" style="">
-								JAMG54
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								JAMG54
-							</a>
-							
-							at <i>
-							Sept. 1, 2022, 3:58 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,18 +287,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잼54
+				JAMG54
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 03:58">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D 169.254.169.254 ip를 사용하여 EC2 인스턴스에서 메타데이터 정보를 얻을 수 있으므로</div>
+<div class="comment-content">169.254.169.254 ip를 사용하여 EC2 인스턴스에서 메타데이터 정보를 얻을 수 있으므로 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -299,12 +342,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 15:47">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">SDK 또는 이미지 처리를 수행하는 데 사용된 모든 기술을 사용하면 EC2에서 실행되는 애플리케이션이 인스턴스에 대한 메타데이터를 요청하는 특정 내부 URL을 쿼리하고 GPU 또는 CPU를 사용하는지 인식할 수 있습니다. hw의 종류에 따라 논리를 구별할 수 있습니다. 이 메타데이터를 검색하려면 애플리케이션이 http://169.254.169.254/latest/meta-data/ 링크에 대한 curl 명령을 실행해야 합니다.</div>
+<div class="comment-content">SDK 또는 이미지 처리를 수행하는 데 사용된 기술을 사용하면 EC2에서 실행되는 애플리케이션이 인스턴스에 대한 메타데이터를 요청하는 특정 내부 URL을 쿼리하고 GPU 또는 CPU를 사용하는지 인식하는 것이 가능합니다. 의 종류에 따라 논리의 구별이 가능하다. 이 메타데이터를 검색하려면 애플리케이션이 다음 링크에 대한 컬 명령을 실행해야 합니다: http://169.254.169.254/latest/meta-data/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -313,7 +356,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,13 +387,13 @@
 				레오울리안
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 10일 (월) 20:33">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 10일 월요일 20:33">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이 디 나는 생각한다</div>
+<div class="comment-content">내 생각엔 이 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -359,7 +402,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,16 +430,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 02:22">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 02:22">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">알 수 있는 유일한 방법은 인스턴스 메타데이터를 가져오는 것입니다. 제공되는 다른 옵션은 Elastic Elastic Graphics 액셀러레이터와 관련되어 있으므로 혼동하지 마십시오. GPU 인스턴스와 다릅니다. Elastic Graphics 액셀러레이터는 GPU 그래픽 인스턴스 유형(예: G2 및 G3)을 사용하는 것보다 저렴한 대안입니다.</div>
+<div class="comment-content">알 수 있는 유일한 방법은 인스턴스 메타데이터를 가져오는 것입니다. 제공된 다른 옵션은 Elastic Elastic Graphics 액셀러레이터와 관련되어 있기 때문에 혼동을 주지 마십시오. 이는 GPU 인스턴스와 다릅니다. Elastic Graphics 액셀러레이터는 GPU 그래픽 인스턴스 유형(예: G2 및 G3) 사용에 대한 저렴한 대안입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,12 +480,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 21:26">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">B여야 합니다.</div>
+<div class="comment-content">B여야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,11 +526,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 22:29">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다, 네 D입니다</div>
+<div class="comment-content">미안, 응 D야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,12 +570,12 @@
 				페페펩
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 16:18">
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 16:18">
 			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">완전히 B입니다. 인스턴스 유형에 연결된 메타데이터를 얻기 위해 인스턴스 내부에서 "curl http://169.254.169.254/latest/meta-data/instance-type"을 사용하여 인스턴스 유형을 검색합니다.</div>
+<div class="comment-content">완전히 B입니다. 인스턴스 내부에서 "curl http://169.254.169.254/latest/meta-data/instance-type"을 사용하여 인스턴스 유형을 검색하여 인스턴스 유형과 관련된 메타데이터를 얻습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -561,15 +604,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 00:46">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D를 의미합니까?</div>
+<div class="comment-content">D 말하는 거야?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -578,7 +621,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,11 +657,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아르노92
+				Arnaud92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 10일 (월) 10:55">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 10일 월요일 10:55">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -669,7 +712,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 d라고 생각한다!</div>
+<div class="comment-content">내 생각엔 d인 것 같아!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,7 +749,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 22일 목요일 21:56">
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,16 +795,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자볼
+				야볼
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 22일 목요일 07:16">
-			11개월 전
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">D는 맞지만 메타데이터의 인스턴스 유형은 원하지 않습니다. B가 맞다고 생각합니다 https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeElasticGpus.html</div>
+<div class="comment-content">D는 정확하지만 메타데이터의 인스턴스 유형을 원하지 않습니다. B가 정확하다고 생각합니다 https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeElasticGpus.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -790,15 +833,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자볼
+				야볼
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 22일 목요일 07:41">
-			11개월 전
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">좋아, 내가 틀렸어. 인스턴스 유형 https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html이 필요합니다.</div>
+<div class="comment-content">알았어, 내가 틀렸어. 인스턴스 유형 https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -807,7 +850,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,7 +886,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				세
+				그럼
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 1일 목요일 19:46">
@@ -851,7 +894,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"Amazon Elastic Graphics는 Windows 인스턴스를 위한 유연하고 저렴한 고성능 그래픽 가속을 제공합니다." https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html</div>
+<div class="comment-content">"Amazon Elastic Graphics는 Windows 인스턴스에 유연하고 저렴한 고성능 그래픽 가속을 제공합니다." https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/elastic-graphics.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -860,7 +903,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -915,7 +958,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 01 Sep 2022 03:58">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -963,7 +1006,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 15:47">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Apr 2023 20:33">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1098,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 02:22">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1101,7 +1144,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 21:26">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1147,7 +1190,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 22:29">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1229,7 +1272,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 00:46">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1282,7 +1325,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Oct 2022 10:55">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1420,7 +1463,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Sep 2022 07:16">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1458,7 +1501,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Sep 2022 07:41">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

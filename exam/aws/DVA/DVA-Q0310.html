@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 310 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 310 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 310 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 310 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849988">
 <p class="card-text">
 							
-								애플리케이션은 재무제표를 Amazon S3 버킷에 저장합니다. 최근 보안 감사에서 버킷이 회사 표준을 준수하지 않는 것으로 나타났습니다. 현재 여러 IAM 정책에서 버킷에 대한 암호화된 호출과 암호화되지 않은 호출을 허용합니다. 회사는 버킷에 대한 모든 요청이 암호화된 연결을 사용하도록 하는 버킷 정책을 생성해야 합니다. <br/><br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?
+								애플리케이션은 Amazon S3 버킷에 재무제표를 저장합니다. 최근 보안 감사 결과 버킷이 회사 표준을 준수하지 않는 것으로 나타났습니다. 현재 여러 IAM 정책에서는 버킷에 대한 암호화된 호출과 암호화되지 않은 호출을 허용합니다. 회사는 버킷에 대한 모든 요청이 암호화된 연결을 사용하도록 강제하는 버킷 정책을 만들어야 합니다. <br/><br/>이 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											리소스가 "am:aws:s3:::https/bucketname"이고 효과가 "허용"인 버킷 정책을 추가합니다.
+											"am:aws:s3:::https/bucketname" 리소스와 "허용" 효과가 있는 버킷 정책을 추가합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											조건이 "aws:SecureTransport": "false"이고 효과가 "Deny"인 버킷 정책을 추가합니다.
+											조건이 "aws:SecureTransport": "false"이고 효과가 "거부"인 버킷 정책을 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">씨 (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 86%; display: flex;" title="">C (86%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 14%; display: flex;" title="">14%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							시간: <i>
-							2022년 11월 24일 오후 5:31</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Nov. 24, 2022, 5:31 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,13 +292,13 @@
 				AWSdeveloper08
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 12:15">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 18일 화 12:15">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS에 따르면 "명시적 거부 문을 사용하는 대신 이 정책은 "aws:SecureTransport": "true" 조건을 충족하는 요청에 대한 액세스를 허용합니다. 이 문은 요청이 있는 경우 버킷의 모든 객체에 대해 s3:GetObject에 대한 익명 액세스를 허용합니다. HTTPS를 사용합니다. 사용 사례에 HTTPS를 통한 익명 액세스가 필요한 경우가 아니면 이 유형의 버킷 정책을 피하십시오."</div>
+<div class="comment-content">AWS에 따르면 "명시적인 거부 문을 사용하는 대신 정책은 "aws:SecureTransport": "true" 조건을 충족하는 요청에 대한 액세스를 허용합니다. 이 문은 요청이 있는 경우 버킷의 모든 객체에 대해 s3:GetObject에 대한 익명 액세스를 허용합니다. HTTPS를 사용합니다. 사용 사례에서 HTTPS를 통한 익명 액세스가 필요한 경우가 아니면 이 유형의 버킷 정책을 사용하지 마세요."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +339,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 14:18">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 A로 가려고 했지만 C도 살펴보았습니다. 정말 비슷한 것 같지만 그렇지 않기 때문입니다. "aws:SecureTransport":"false" 조건으로 거부 문을 추가하는 것이 좋습니다. amazon에서: " "aws:SecureTransport": "true". 이 문은 요청이 HTTPS를 사용하는 경우 버킷의 모든 객체에 대해 s3:GetObject에 대한 익명 액세스를 허용합니다. 사용 사례에서 HTTPS를 통한 익명 액세스가 필요한 경우가 아니면 이 유형의 버킷 정책을 사용하지 마십시오. ." 따라서 C가 정답입니다. 폰테: https://repost.aws/knowledge-center/s3-bucket-policy-for-config-rule</div>
+<div class="comment-content">A를 가려고 했는데 C도 살펴봤습니다. 정말 비슷한 것 같지만 그렇지 않기 때문입니다. "aws:SecureTransport":"false" 조건으로 거부 문을 추가하는 것이 좋습니다. Amazon에서: " "aws:SecureTransport": "true". 이 문은 요청이 HTTPS를 사용하는 경우 버킷의 모든 객체에 대해 s3:GetObject에 대한 익명 액세스를 허용합니다. 사용 사례에서 HTTPS를 통한 익명 액세스가 필요한 경우가 아니면 이 유형의 버킷 정책을 사용하지 마세요. ." 따라서 C가 정답입니다. 글꼴: https://repost.aws/knowledge-center/s3-bucket-policy-for-config-rule</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,16 +381,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				davdan99
+				다브단99
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 23일 목요일 14:11">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 조건이 "aws:SecureTransport": "true"이고 효과가 "허용"인 버킷 정책을 추가할 것을 제안한다고 생각합니다. 이 정책은 버킷에 대한 모든 요청이 "aws:SecureTransport" 조건을 확인하여 보안 연결(HTTPS)을 통해 이루어지도록 합니다. 조건이 참이면 "허용" 효과가 적용되고 요청이 허용됩니다. 조건이 거짓이면 "거부" 효과가 적용되어 요청이 거부됩니다. 옵션 C는 조건이 "aws:SecureTransport": "false"이고 효과가 "Deny"인 버킷 정책을 추가할 것을 제안합니다. 이 정책은 보안 연결을 통해 이루어지지 않은 요청을 거부하며, 이는 회사가 달성하고자 하는 것과 반대입니다.</div>
+<div class="comment-content">옵션 A는 "aws:SecureTransport": "true" 조건과 "Allow" 효과를 갖는 버킷 정책을 추가하는 것을 제안합니다. 이 정책은 "aws:SecureTransport" 조건을 확인하여 버킷에 대한 모든 요청이 보안 연결(HTTPS)을 통해 이루어지도록 보장합니다. 조건이 true일 경우 '허용' 효과가 적용되어 요청이 허용됩니다. 조건이 거짓일 경우 "Deny" 효과가 적용되어 요청이 거부됩니다. 옵션 C는 조건이 "aws:SecureTransport": "false"이고 효과가 "거부"인 버킷 정책을 추가할 것을 제안합니다. 이 정책은 보안 연결을 통해 이루어지지 않은 요청을 거부하며, 이는 회사가 달성하고자 하는 것과 반대입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,13 +430,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 16:50">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 16:50">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">동의</div>
+<div class="comment-content">동의함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,11 +473,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:58">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:58">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,11 +519,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 17:31">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 17:31">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -545,7 +588,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 12:15">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -591,7 +634,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 14:18">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -640,7 +683,7 @@ Fonte: https://repost.aws/knowledge-center/s3-bucket-policy-for-config-rule</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 14:11">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -689,7 +732,7 @@ Option C suggests adding a bucket policy with a condition of "aws:SecureTranspor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 16:50">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -735,7 +778,7 @@ Option C suggests adding a bucket policy with a condition of "aws:SecureTranspor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:58">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -781,7 +824,7 @@ Option C suggests adding a bucket policy with a condition of "aws:SecureTranspor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 17:31">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

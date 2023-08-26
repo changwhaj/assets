@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 289 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 289 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 289 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 289 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849967">
 <p class="card-text">
 							
-								한 회사에서 AWS Elastic Beanstalk를 사용하여 Amazon EC2 인스턴스에서 실행 중인 웹 애플리케이션을 관리하고 있습니다. 개발자는 구성을 변경해야 합니다. 개발자는 변경 사항을 새 인스턴스에만 배포해야 합니다. <br/><br/>개발자가 이 요구 사항을 충족하기 위해 사용할 수 있는 배포 유형은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사는 AWS Elastic Beanstalk를 사용하여 Amazon EC2 인스턴스에서 실행되는 웹 애플리케이션을 관리하고 있습니다. 개발자는 구성을 변경해야 합니다. 개발자는 변경 사항을 새 인스턴스에만 배포해야 합니다. <br/><br/>개발자는 이 요구 사항을 충족하기 위해 어떤 유형의 배포를 사용할 수 있습니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -89,7 +152,7 @@
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
-													나.
+													B.
 												</span> 
 											
 											불변
@@ -117,11 +180,11 @@
 													E.
 												</span> 
 											
-											추가 배치로 압연
+											추가 배치로 롤링
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,21 +194,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 56%; display: flex;" title="">BD (56%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">비(44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 56%; display: flex;" title="">BD (56%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 44%; display: flex;" title="">BE (44%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11 
-							
-							월 <i>
-							26일 오후 1:12</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -227,16 +280,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 26, 2022, 1:12 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -264,16 +307,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 22일 토요일 07:32">
-			4주 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">Blue/Green은 Beanstalk의 배포 유형이 아니며 Route53의 도움을 받아 수동으로 획득해야 합니다. 추가 배치로 롤링하는 것이 올바른 옵션이며 새 인스턴스는 새 앱을 배포하는 데 사용되며 이전 인스턴스는 수정되지 않습니다.</div>
+<div class="comment-content">Blue/Green은 Beanstalk의 배포 유형이 아니므로 Route53의 도움을 받아 수동으로 구현해야 합니다. 추가 배치로 롤링하는 것이 올바른 옵션입니다. 새 인스턴스는 새 앱을 배포하는 데 사용되며 이전 인스턴스는 수정되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -282,7 +325,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -302,15 +345,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 23일 일 17:15">
-			3주, 6일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">수정: 파란색/녹색이 맞습니다.. 그래서 BD.</div>
+<div class="comment-content">정정: 파란색/녹색이 맞습니다.. 그래서 BD입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -319,7 +362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -358,13 +401,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 30일 금요일 11:32">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 30일 금 11:32">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">B(불변) 및 D(파란색/녹색)는 완전히 새로운 로드 밸런서를 제공하고 트래픽을 완전히 새로운 인스턴스로 리디렉션하므로 Elastic Beanstalk에서 올바르고 지원합니다. 물론 이전 및 새 로드 밸런서를 관리하기 때문에 비용이 두 배로 들지만 트래픽을 리디렉션하고 애플리케이션이 올바르게 작동한다고 확신하면 이전 인스턴스를 종료할 수 있습니다.</div>
+<div class="comment-content">B(불변) 및 D(블루/그린)는 완전히 새로운 로드 밸런서를 제공하고 둘 다 트래픽을 완전히 새로운 인스턴스로 리디렉션하므로 Elastic Beanstalk에서 정확하고 지원됩니다. 물론 이전 로드 밸런서와 새 로드 밸런서를 관리하기 때문에 비용이 두 배로 증가하지만 트래픽을 리디렉션하고 애플리케이션이 올바르게 작동한다고 확신하면 이전 인스턴스를 종료할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -373,7 +416,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -404,12 +447,12 @@
 				안킷1010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 21:05">
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 21:05">
 			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BD 불변 블루/그린 출처: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html</div>
+<div class="comment-content">BD 불변 블루/그린 소스: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -418,7 +461,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -449,13 +492,13 @@
 				로봇 괴짜
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 10:21">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 10:21">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">Blue/green은 Beanstalk의 일종의 배포가 아니며 CNAME https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html에서 수행해야 하는 라우팅입니다. B와 E가 되려면 "추가 배치로 롤링"은 말 그대로 다른 것과 함께 옵션입니다.</div>
+<div class="comment-content">Blue/green은 beanstalk의 일종의 배포가 아니며 CNAME https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html에서도 수행해야 하는 라우팅입니다. B와 E가 되려면 "추가 배치로 롤링"은 말 그대로 다른 배치와 함께 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -464,7 +507,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,15 +527,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡틴파이크
+				캡틴 파이크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 27일 (월) 12:46">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 27일 월요일 12:46">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html을 확인하십시오.</div>
+<div class="comment-content">https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html을 확인하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -537,16 +580,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 02:38">
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 02:38">
 			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">개발자는 변경 사항을 새 인스턴스에만 배포해야 합니다. 즉, 우리가 선택할 전략은 기존 인스턴스에 배포하면 안 됩니다. 불변: 이 전략에서는 새 인스턴스를 만들고 여기에 배포합니다. 새 인스턴스가 예상대로 작동하는 것을 확인하면 사용하던 이전 인스턴스를 제거합니다. Blue/Green: 불변 전략과 유사합니다. 새 인스턴스를 만들고 배포합니다(그린 인스턴스로). 그런 다음 일부 트래픽을 이러한 인스턴스로 보냅니다(또는 이들에 대한 테스트 실행). 애플리케이션이 예상대로 실행되고 있음을 확인하면 모든 트래픽을 이러한 녹색 인스턴스로 보내기 시작합니다.</div>
+<div class="comment-content">개발자는 변경 사항을 새 인스턴스에만 배포해야 합니다. 즉, 우리가 선택할 전략은 기존 인스턴스에 전혀 배포해서는 안 됩니다. 불변: 이 전략에서는 새 인스턴스를 생성하고 여기에 배포합니다. 새 인스턴스가 예상대로 작동하는 것을 확인하면 사용 중이던 이전 인스턴스를 제거합니다. 파란색/녹색: 불변 전략과 유사합니다. 새 인스턴스를 생성하고 해당 인스턴스에 배포합니다(그린 인스턴스). 그런 다음 일부 트래픽을 이러한 인스턴스로 보냅니다(또는 이에 대해 테스트를 실행합니다). 애플리케이션이 예상대로 실행되고 있음을 확인하면 모든 트래픽을 이러한 녹색 인스턴스로 보내기 시작합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -555,7 +598,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -583,16 +626,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 6일 화요일 15:39">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">@Irom: 여기 친구가 있습니다 .... 변경 불가능한 배포는 ==&gt; "별도의 Auto Scaling 그룹""에서 애플리케이션의 "새 버전"을 실행하는 "새 인스턴스"의 전체 세트를 시작하기 위해 변경 불가능한 업데이트를 수행합니다. 이전 버전을 실행하는 인스턴스 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html</div>
+<div class="comment-content">@Irom: 간다 친구 .... 불변 배포는 불변 업데이트를 수행하여 ==&gt; "별도의 Auto Scaling 그룹"에서 애플리케이션의 "새 버전"을 실행하는 전체 "새 인스턴스" 세트를 시작합니다. 이전 버전을 실행하는 인스턴스 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-version-deploy.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -601,7 +644,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -632,8 +675,8 @@
 				롬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 12:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 12:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -646,7 +689,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,15 +709,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 07:30">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 07:30">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">원하는 상태를 얻기 위해 응용 프로그램을 실행하는 이전 인스턴스를 수정해서는 안 됩니다.</div>
+<div class="comment-content">원하는 상태를 얻기 위해 애플리케이션을 실행하는 이전 인스턴스를 수정해서는 안 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -722,8 +765,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 13:12">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 13:12">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -737,7 +780,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -789,7 +832,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 07:32">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -828,7 +871,7 @@ Rolling with additional batches is the right option, new instances are used to d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Jul 2023 17:15">
-			3 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -882,7 +925,7 @@ so BD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 11:32">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -979,7 +1022,7 @@ Source: https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.de
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 10:21">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1019,7 +1062,7 @@ It has to be B and E, "Rolling with additional batch" is literally an option tog
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 12:46">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1122,7 +1165,7 @@ Blue/Green: This is similar to immutable strategy. We create new instances and d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 15:39">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1171,7 +1214,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-ve
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 12:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1208,7 +1251,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-ve
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 07:30">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1261,7 +1304,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.rolling-ve
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 13:12">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

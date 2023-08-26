@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 226 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 226 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 226 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 226 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849904">
 <p class="card-text">
 							
-								개발자는 연동 사용자에게 AWS KMS(AWS Key Management Service)에 대한 관리자 액세스 권한을 부여하는 IAM 정책 문서를 작성하고 있습니다. 연합 IAM 역할 이름은 FederatedIAMRole입니다. 사용자 이름은 KeyAdmin입니다. <br/><br/>개발자는 이러한 요구 사항을 충족하기 위해 KMS 키 정책에서 보안 주체를 어떻게 설정해야 합니까?
+								개발자는 연동 사용자에게 AWS Key Management Service(AWS KMS)에 대한 관리자 액세스 권한을 부여하는 IAM 정책 문서를 작성하고 있습니다. 연동 IAM 역할 이름은 FederatedIAMRole입니다. 사용자 이름은 KeyAdmin입니다. <br/><br/>개발자는 이러한 요구 사항을 충족하기 위해 KMS 키 정책에서 주체를 어떻게 설정해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											"주체": { "AWS": "arn:aws:sts::123456789012:role/FederatedIAMRole/KeyAdmin" }
+											“주체”: { “AWS”: “arn:aws:sts::123456789012:role/FederatedIAMRole/KeyAdmin” }
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											"주체": { "AWS": "arn:aws:sts::123456789012:user/FederatedIAMRole/KeyAdmin" }
+											“주체”: { “AWS”: “arn:aws:sts::123456789012:user/FederatedIAMRole/KeyAdmin” }
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											"주체": { "AWS": "arn:aws:sts::123456789012:user/KeyAdmin" }
+											“주체”: { “AWS”: “arn:aws:sts::123456789012:user/KeyAdmin” }
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											"주체": { "AWS": "arn:aws:sts::123456789012:assumed-role/FederatedIAMRole/KeyAdmin" }
+											“주체”: { “AWS”: “arn:aws:sts::123456789012:assumed-role/FederatedIAMRole/KeyAdmin” }
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">디 (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">C (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">D (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">C (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 
-							
-							2022 <i>
-							년 11월 25일 오후 2:15</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 2:15 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -254,7 +297,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 모른다 XD</div>
+<div class="comment-content">모르겠어요 XD</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -263,7 +306,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -291,11 +334,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				davdan99
+				다브단99
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 23일 목요일 19:45">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -309,7 +352,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,8 +383,8 @@
 				비시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 24일 화요일 08:23">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 24일 (화) 08:23">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -354,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,7 +425,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 21일 토요일 02:09">
@@ -400,7 +443,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -431,12 +474,12 @@
 				페페펩
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 14:08">
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 14:08">
 			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 D와 함께 갈 것입니다. 아래 링크에서: 역할 세션 이름이 "Mary"인 "Accounting-Role"의 역할을 맡은 사람의 활성 세션: arn:aws:sts::123456789012:assumed-role/Accounting -역할/메리 https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div>
+<div class="comment-content">저는 D를 사용하겠습니다. 아래 링크에서: 역할 세션 이름이 "Mary"인 "Accounting-Role" 역할을 맡은 누군가의 활성 세션: arn:aws:sts::123456789012:assumed-role/Accounting -역할/메리 https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,10 +516,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				패브릭올프
+				제작
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 02:21">
+<span class="comment-date align-middle" title="2022년 12월 23일 금 02:21">
 			8개월 전
 		</span>
 </div>
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,8 +565,8 @@
 				HieuTT
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 13:05">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 13:05">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,13 +610,13 @@
 				롬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 27일 일 18:53">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 27일 일요일 18:53">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 모든 선택 항목에 접두사 "arn:aws:sts:"로 표시되는 연합 사용자라고 생각합니다.</div>
+<div class="comment-content">내 생각에 D는 모든 선택 항목에 "arn:aws:sts:" 접두사로 표시된 연합 사용자입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,16 +653,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미할다비드
+				미칼다비드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 16:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 16:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 그것이 C라고 믿는다</div>
+<div class="comment-content">난 C라고 믿어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -628,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,8 +702,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 14:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 14:15">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -674,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -694,7 +737,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 21일 토요일 02:09">
@@ -702,7 +745,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">제공한 링크를 기반으로 하는 D입니다.</div>
+<div class="comment-content">제공하신 링크에 따르면 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -711,7 +754,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -816,7 +859,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 19:45">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -862,7 +905,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 08:23">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1050,7 +1093,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 13:05">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1095,7 +1138,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Nov 2022 18:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1141,7 +1184,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 16:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1187,7 +1230,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 14:15">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

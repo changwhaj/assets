@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 189 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 189 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 189 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 189 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="849867">
 <p class="card-text">
 							
-								한 개발자가 분당 최소 5000개의 요청을 처리할 수 있는 3계층 웹 애플리케이션을 구축하고 있습니다. 요구 사항에 따르면 애플리케이션이 사용자의 세션 상태를 유지하는 동안 웹 계층은 완전히 상태 비저장이어야 합니다. <br/><br/>대기 시간을 가능한 가장 낮은 값으로 유지하면서 세션 데이터를 어떻게 외부화할 수 있습니까?
+								개발자는 분당 최소 5000개의 요청을 처리할 수 있는 3계층 웹 애플리케이션을 구축하고 있습니다. 요구 사항에 따르면 애플리케이션이 사용자의 세션 상태를 유지하는 동안 웹 계층은 완전히 상태 비저장이어야 합니다. <br/><br/>세션 데이터를 어떻게 외부화하여 대기 시간을 가능한 가장 낮은 값으로 유지할 수 있습니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											Amazon RDS 인스턴스를 만든 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장을 위해 RDS 데이터베이스 인스턴스 내부의 데이터베이스를 활용합니다.
+											Amazon RDS 인스턴스를 생성한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장을 위해 RDS 데이터베이스 인스턴스 내부의 데이터베이스를 활용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											기본 Amazon EC2 인스턴스 전체에 공유 파일 시스템 솔루션을 구현한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장을 위해 공유 파일 시스템을 활용합니다.
+											기본 Amazon EC2 인스턴스 전반에 걸쳐 공유 파일 시스템 솔루션을 구현한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장을 위해 공유 파일 시스템을 활용합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon ElastiCache Memcached 클러스터를 생성한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 스토리지에 클러스터를 활용합니다.
+											Amazon ElastiCache Memcached 클러스터를 생성한 다음 애플리케이션 수준에서 세션 처리를 구현하여 클러스터를 세션 데이터 저장에 활용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon DynamoDB 테이블을 생성한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장을 위해 테이블을 활용합니다.
+											Amazon DynamoDB 테이블을 생성한 다음 애플리케이션 수준에서 세션 처리를 구현하여 세션 데이터 저장용 테이블을 활용합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a> 2022년 11월 25일 
-							
-							오전 <i>
-							9:48</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k1kavi1
-							</a>
-							
-							at <i>
-							Nov. 25, 2022, 9:48 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,7 +291,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 20일 목요일 13:46">
@@ -257,7 +300,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">최저 대기 시간 = Memcache</div>
+<div class="comment-content">최저 지연 시간 = Memcache</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -303,7 +346,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">대기 시간이 짧으므로 Elastic Cache memcache 클러스터를 선택해야 합니다. C로 가겠습니다</div>
+<div class="comment-content">지연 시간이 짧으므로 Elastic Cache Memcache Cluster를 선택해야 합니다. 난 C로 갈게</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,7 +383,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"클러스터"로 지정된 이유. 이것은 Elastic Cache Redis 속성이어야 합니다. 그렇지 않습니까?</div>
+<div class="comment-content">"클러스터"로 지정된 이유. 이는 Elastic Cache Redis 속성이어야 합니다. 그렇지 않습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -349,7 +392,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,15 +428,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				배시
+				배트시
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 8일 월요일 09:57">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon ElastiCache는 대기 시간이 짧은 작업에 최적화된 관리형 인 메모리 데이터 스토어입니다. Memcached 클러스터를 사용하여 세션 데이터를 저장하면 데이터에 빠르게 액세스할 수 있으며 처리량이 많은 시나리오를 위해 설계되었습니다. D는 작동할 수 있지만 ElastiCache Memcached에 비해 추가 설정 및 구성이 필요합니다.</div>
+<div class="comment-content">Amazon ElastiCache는 지연 시간이 짧은 작업에 최적화된 관리형 인 메모리 데이터 스토어입니다. Memcached 클러스터를 사용하여 세션 데이터를 저장하면 데이터에 빠르게 액세스할 수 있으며 처리량이 많은 시나리오에 맞게 설계되었습니다. D는 작동할 수 있지만 ElastiCache Memcached에 비해 추가 설정 및 구성이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,12 +476,12 @@
 				GD_ZH
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 23:34">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 23:34">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D여야 합니다. Amazon ElastiCache Memcached는 클러스터를 지원하지 않고 Redis만 클러스터를 지원합니다.</div>
+<div class="comment-content">D여야 합니다. Amazon ElastiCache Memcached는 클러스터를 지원하지 않으며 Redis만 클러스터를 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,12 +522,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 19:45">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">DynamoDB와 ElastiCache 중 어느 것이 더 빠릅니까? 일반적으로 두 자릿수 밀리초인 기존 데이터베이스와 비교할 때 ElastiCache는 훨씬 빠르고 인메모리 데이터 스토어의 목적을 수행합니다.</div>
+<div class="comment-content">DynamoDB와 ElastiCache 중 어느 것이 더 빠릅니까? 일반적으로 두 자릿수 밀리초인 기존 데이터베이스에 비해 ElastiCache는 훨씬 빠르며 인 메모리 데이터 저장소의 목적을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,11 +568,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 12:32">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨 그것은</div>
+<div class="comment-content">ㄷ 그렇군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -566,15 +609,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				해멜론
+				하멜론
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 4일 일요일 23:53">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D에 무슨 문제가 있습니까?</div>
+<div class="comment-content">D에게 무슨 문제가 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -583,7 +626,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -607,11 +650,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 16:10">
-			7개월, 3주 전
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"지연 시간을 가장 낮게 유지" --&gt; 탄성체</div>
+<div class="comment-content">"대기 시간을 최저로 유지" --&gt; 탄력성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -620,7 +663,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,8 +702,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 09:48">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 09:48">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -674,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -711,7 +754,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -908,7 +951,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 08 May 2023 09:57">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -953,7 +996,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 23:34">
-			5 months, 4 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -998,7 +1041,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 19:45">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1045,7 +1088,7 @@ Compared to traditional databases, which are usually double-digit milliseconds, 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 12:32">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1090,7 +1133,7 @@ Compared to traditional databases, which are usually double-digit milliseconds, 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Dec 2022 23:53">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1127,7 +1170,7 @@ Compared to traditional databases, which are usually double-digit milliseconds, 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 16:10">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1180,7 +1223,7 @@ Compared to traditional databases, which are usually double-digit milliseconds, 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 09:48">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

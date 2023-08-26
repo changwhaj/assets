@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 334 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 334 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 334 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 334 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850036">
 <p class="card-text">
 							
-								회사에는 AWS에 배포된 웹 애플리케이션이 있습니다. 애플리케이션은 Amazon API Gateway API 및 AWS Lambda 함수를 백엔드로 사용합니다. <br/><br/>응용 프로그램이 최근 예기치 않은 동작을 보여 주었습니다. 개발자는 Lambda 함수 코드를 검사하고 오류를 찾은 다음 코드를 수정하여 문제를 해결합니다. 프로덕션에 변경 사항을 배포하기 전에 개발자는 테스트를 실행하여 애플리케이션이 제대로 작동하는지 확인해야 합니다. <br/><br/>애플리케이션에는 사용 가능한 프로덕션 환경만 있습니다. 개발자는 코드 변경 사항을 테스트하기 위해 새로운 개발 환경을 만들어야 합니다. 또한 개발자는 테스트 주기 동안 다른 개발자가 이러한 변경 사항을 덮어쓰지 못하도록 해야 합니다.<br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								회사에 AWS에 배포된 웹 애플리케이션이 있습니다. 애플리케이션은 Amazon API Gateway API와 AWS Lambda 함수를 백엔드로 사용합니다. <br/><br/>최근 애플리케이션에서 예상치 못한 동작이 나타났습니다. 개발자는 Lambda 함수 코드를 검사하고 오류를 찾은 후 코드를 수정하여 문제를 해결합니다. 변경 사항을 프로덕션에 배포하기 전에 개발자는 테스트를 실행하여 애플리케이션이 제대로 작동하는지 확인해야 합니다. <br/><br/>애플리케이션에는 프로덕션 환경만 사용 가능합니다. 개발자는 코드 변경 사항을 테스트하기 위해 새로운 개발 환경을 만들어야 합니다. 또한 개발자는 테스트 주기 동안 다른 개발자가 이러한 변경 사항을 덮어쓰는 것을 방지해야 합니다.<br/><br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850036" type="application/json">[{"voted_answers": "BD", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "DE", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="850036" type="application/json">[{"voted_answers": "BD", "vote_count": 11, "is_most_voted": true}, {"voted_answers": "DE", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											현재 단계에서 새로운 리소스를 생성합니다. Lambda 프록시 통합으로 새 메서드를 생성합니다. Lambda 함수를 선택합니다. 핫픽스 별칭을 추가합니다. 현재 단계를 재배포합니다. 백엔드를 테스트합니다.
+											현재 단계에서 새 리소스를 생성합니다. Lambda 프록시 통합을 사용하여 새 메서드를 생성합니다. Lambda 함수를 선택합니다. 핫픽스 별칭을 추가합니다. 현재 단계를 다시 배포합니다. 백엔드를 테스트합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											핫픽스 별칭을 사용하도록 API Gateway API 통합 요청에서 Lambda 함수를 업데이트합니다. hotfix라는 새 단계에 API Gateway API를 배포합니다. 백엔드를 테스트합니다.
+											핫픽스 별칭을 사용하도록 API Gateway API 통합 요청의 Lambda 함수를 업데이트합니다. hotfix라는 새 단계에 API Gateway API를 배포합니다. 백엔드를 테스트합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,14 +164,14 @@
 													C.
 												</span> 
 											
-											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. 별칭 핫픽스를 만듭니다. 별칭을 $LATEST 버전으로 지정하십시오.
+											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. 별칭 핫픽스를 만듭니다. 별칭이 $LATEST 버전을 가리키도록 합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. Lambda 함수가 예상대로 작동하면 Lambda 함수를 새 버전으로 게시합니다. 별칭 핫픽스를 만듭니다. 별명을 새 버전으로 지정하십시오.
+											코드를 수정하여 Lambda 함수를 수정합니다. Lambda 함수를 테스트합니다. Lambda 함수가 예상대로 작동하면 Lambda 함수를 새 버전으로 게시합니다. 별칭 핫픽스를 만듭니다. 별칭이 새 버전을 가리키도록 합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,11 +180,11 @@
 													E.
 												</span> 
 											
-											개발 환경을 위한 새로운 API Gateway API를 생성합니다. Lambda 통합으로 리소스 및 메서드를 추가합니다. Lambda 함수와 핫픽스 별칭을 선택합니다. 새 단계에 배포합니다. 백엔드를 테스트합니다.
+											개발 환경을 위한 새로운 API Gateway API를 생성합니다. Lambda 통합을 통해 리소스 및 메서드를 추가합니다. Lambda 함수와 핫픽스 별칭을 선택합니다. 새로운 단계에 배포합니다. 백엔드를 테스트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,21 +194,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">BD (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">독일 (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">BD (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">독일 (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								SoMaL69
-							</a> 
-							
-							2022 <i>
-							년 12월 1일 오후 12:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -167,7 +220,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850036" type="application/json">[{"voted_answers": "BD", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "DE", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="850036" type="application/json">[{"voted_answers": "BD", "vote_count": 11, "is_most_voted": true}, {"voted_answers": "DE", "vote_count": 2, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -222,21 +275,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">BD (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">DE (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">BD (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">DE (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								SoMaL69
-							</a>
-							
-							at <i>
-							Dec. 1, 2022, 12:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -268,7 +311,7 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 15:15">
 			8개월, 3주 전
@@ -276,14 +319,14 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">비앤디와 함께</div>
+<div class="comment-content">B&amp;D와 함께 하세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">11</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -324,8 +367,8 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>DE</strong></span></div>
-<div class="comment-content">D,E PROD인 스테이지가 하나뿐이므로 새로운 스테이지를 생성해야 합니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>DE</strong></span></div>
+<div class="comment-content">D,E PROD 스테이지가 하나만 있으므로 새로운 스테이지를 생성해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -334,7 +377,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -354,15 +397,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 05:50">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">New stage는 New API GW와 다릅니다. 따라서 E는 참이 아니다</div>
+<div class="comment-content">새로운 단계는 새로운 API GW와 동일하지 않습니다. 따라서 E는 참이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -371,7 +414,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,15 +434,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시코미노르
+				xicomynor
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 16일 금요일 05:51">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 16일 금 05:51">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">New 단계는 New API GW API와 동일하지 않습니다. 따라서 E는 참이 아니다</div>
+<div class="comment-content">새로운 단계는 새로운 API GW API와 동일하지 않습니다. 따라서 E는 참이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -492,7 +535,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">10</span> times
+				upvoted <span class="upvote-count">11</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -567,7 +610,7 @@ New stage needs to be created as there is only one which is PROD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 05:50">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -604,7 +647,7 @@ New stage needs to be created as there is only one which is PROD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 05:51">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

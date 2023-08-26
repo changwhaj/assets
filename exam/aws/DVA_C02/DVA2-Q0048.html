@@ -58,13 +58,13 @@
 </span>
 </div>
 </div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
 <script>
-	var curPagePath = window.location.pathname;
-	var curPageName = curPagePath.substring(curPagePath.lastIndexOf('/') + 1);
-	var curPageDir = curPagePath.replace(curPageName, '').match(/((\/[^/]+){4}\/$)/)[1];
-	var curPageNo = parseInt(curPageName.match(/.+-Q(\d+)\.html/)[1]);
-	var pagePrefix = curPageName.match(/(.+-Q)\d+\.html/)[1];
-	var totalPages = 142;  // Adjust this to the total number of pages
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
 
 	var prevPageNo = curPageNo - 1;
 	var nextPageNo = curPageNo + 1;
@@ -126,7 +126,7 @@
 <div class="question-discussion-header">
 						
 							Amazon
-						 <a class="discussion-link">AWS Certified Developer - Associate DVA-C02 시험 문제</a>
+						 <a class="discussion-link">AWS Certified Developer - Associate DVA-C02 시험문제</a>
 <div>
 							질문 #: 48 <br/>
 							주제 #: 1
@@ -135,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="874620">
 <p class="card-text">
 							
-								개발자가 Amazon RDS for MySQL 데이터베이스에 연결하기 위해 자격 증명이 필요한 AWS Lambda 함수를 생성하고 있습니다. Amazon S3 버킷은 현재 자격 증명을 저장합니다. 개발자는 자격 증명 순환 및 보안 저장소를 구현하여 기존 솔루션을 개선해야 합니다. 개발자는 또한 Lambda 함수와의 통합을 제공해야 합니다. <br/>최소한의 관리 오버헤드로 자격 증명을 저장하고 검색하기 위해 개발자는 어떤 솔루션을 사용해야 합니까?
+								개발자가 MySQL용 Amazon RDS 데이터베이스에 연결하기 위해 자격 증명이 필요한 AWS Lambda 함수를 생성하고 있습니다. Amazon S3 버킷은 현재 자격 증명을 저장합니다. 개발자는 자격 증명 순환 및 보안 저장소를 구현하여 기존 솔루션을 개선해야 합니다. 개발자는 또한 Lambda 기능과의 통합을 제공해야 합니다. <br/>개발자는 최소한의 관리 오버헤드로 자격 증명을 저장하고 검색하기 위해 어떤 솔루션을 사용해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -148,7 +148,7 @@
 													A.
 												</span> 
 											
-											자격 증명을 AWS Systems Manager Parameter Store에 저장합니다. 매개변수가 액세스할 데이터베이스를 선택하십시오. 기본 AWS Key Management Service(AWS KMS) 키를 사용하여 파라미터를 암호화합니다. 매개변수에 대해 자동 회전을 활성화합니다. Lambda 함수에서 Parameter Store의 매개변수를 사용하여 데이터베이스에 연결합니다.
+											AWS Systems Manager Parameter Store에 자격 증명을 저장합니다. 매개변수가 액세스할 데이터베이스를 선택합니다. 기본 AWS Key Management Service(AWS KMS) 키를 사용하여 파라미터를 암호화합니다. 매개변수에 대한 자동 회전을 활성화합니다. Lambda 함수의 Parameter Store에 있는 매개변수를 사용하여 데이터베이스에 연결합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -162,7 +162,7 @@
 													C.
 												</span> 
 											
-											AWS Secrets Manager에 자격 증명을 저장합니다. 암호 유형을 Amazon RDS 데이터베이스에 대한 자격 증명으로 설정합니다. 암호가 액세스할 데이터베이스를 선택합니다. 기본 AWS Key Management Service(AWS KMS) 키를 사용하여 암호를 암호화합니다. 암호에 대해 자동 교체를 활성화합니다. Lambda 함수에서 Secrets Manager의 암호를 사용하여 데이터베이스에 연결합니다.
+											AWS Secrets Manager에 자격 증명을 저장합니다. 비밀 유형을 Amazon RDS 데이터베이스 자격 증명으로 설정합니다. 비밀이 액세스할 데이터베이스를 선택합니다. 기본 AWS Key Management Service(AWS KMS) 키를 사용하여 비밀을 암호화합니다. 보안 비밀에 대한 자동 교체를 활성화합니다. Lambda 함수에서 Secrets Manager의 암호를 사용하여 데이터베이스에 연결합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -171,7 +171,7 @@
 													D.
 												</span> 
 											
-											AWS Key Management Service(AWS KMS)를 사용하여 자격 증명을 암호화합니다. 자격 증명을 Amazon DynamoDB 테이블에 저장합니다. 자격 증명을 교체할 두 번째 Lambda 함수를 생성합니다. 일정에 따라 실행되는 Amazon EventBridge 규칙을 사용하여 두 번째 Lambda 함수를 호출합니다. DynamoDB 테이블을 업데이트합니다. 생성된 자격 증명을 사용하도록 데이터베이스를 업데이트합니다. 첫 번째 Lambda 함수를 사용하여 DynamoDB에서 자격 증명을 검색합니다. 데이터베이스에 연결합니다.
+											AWS Key Management Service(AWS KMS)를 사용하여 자격 증명을 암호화합니다. Amazon DynamoDB 테이블에 자격 증명을 저장합니다. 자격 증명을 교체하는 두 번째 Lambda 함수를 생성합니다. 일정에 따라 실행되는 Amazon EventBridge 규칙을 사용하여 두 번째 Lambda 함수를 호출합니다. DynamoDB 테이블을 업데이트합니다. 생성된 자격 증명을 사용하도록 데이터베이스를 업데이트합니다. 첫 번째 Lambda 함수를 사용하여 DynamoDB에서 자격 증명을 검색합니다. 데이터베이스에 연결합니다.
 										</li>
 </ul>
 </div>
@@ -185,7 +185,7 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
@@ -295,10 +295,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 26일 일요일 02:24">
-			4개월, 4주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -312,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -332,11 +332,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지박
+				지파크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 14:40">
-			2주, 3일 전
+			3 주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -392,7 +392,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 11일 금요일 00:32">
-			1주, 4일 전
+			2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -437,7 +437,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="일 2023년 7월 9일 20:12">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -505,7 +505,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 02:24">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -546,7 +546,7 @@ https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieving-secrets_l
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 14:40">
-			2 weeks, 3 days ago
+			3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -602,7 +602,7 @@ https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieving-secrets_l
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 11 Aug 2023 00:32">
-			1 week, 4 days ago
+			2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -648,7 +648,7 @@ Keyword: Implementing credential rotation and secure storage.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Jul 2023 20:12">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

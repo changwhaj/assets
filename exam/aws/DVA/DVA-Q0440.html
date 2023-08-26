@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 440 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Developer Associate 주제 1 문제 440 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 440 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 440 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="866149">
 <p class="card-text">
 							
-								회사에는 고객에게 블로그 호스팅 서비스를 제공하는 애플리케이션이 있습니다. 애플리케이션에는 기본 키가 있는 Amazon DynamoDB 테이블이 포함되어 있습니다. 기본 키는 파티션 키인 고객의 UserName과 정렬 키인 NumberOfBlogs로 구성됩니다. 애플리케이션은 TotalReactionsOnBlogs를 동일한 DynamoDB 테이블의 속성으로 저장합니다. <br/><br/>개발자는 블로그에서 가장 많은 반응 수를 기준으로 상위 10명의 고객을 검색하는 작업을 구현해야 합니다. 이 작업은 DynamoDB 테이블의 기존 읽기 용량을 사용하지 않아야 합니다. <br/><br/>운영상 가장 효율적인 방식으로 이러한 요구 사항을 충족하려면 개발자는 무엇을 해야 합니까?
+								회사에는 고객에게 블로그 호스팅 서비스를 제공하는 애플리케이션이 있습니다. 애플리케이션에는 기본 키가 있는 Amazon DynamoDB 테이블이 포함되어 있습니다. 기본 키는 파티션 키인 고객의 UserName과 정렬 키인 NumberOfBlogs로 구성됩니다. 애플리케이션은 TotalReactionsOnBlogs를 동일한 DynamoDB 테이블에 속성으로 저장합니다. <br/><br/>개발자는 블로그에서 가장 많은 반응을 기반으로 상위 10명의 고객을 검색하는 작업을 구현해야 합니다. 이 작업은 DynamoDB 테이블의 기존 읽기 용량을 소비해서는 안 됩니다. <br/><br/>가장 운영상 효율적인 방식으로 이러한 요구 사항을 충족하려면 개발자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											기존 DynamoDB 테이블의 경우 파티션 키로 UserName이 있고 정렬 키로 TotalReactionsOnBlogs가 있는 새로운 글로벌 보조 인덱스(GSI)를 생성합니다.
+											기존 DynamoDB 테이블의 경우 UserName을 파티션 키로, TotalReactionsOnBlogs를 정렬 키로 사용하는 새로운 글로벌 보조 인덱스(GSI)를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											기존 DynamoDB 테이블의 경우 파티션 키로 UserName이 있고 정렬 키로 TotalReactionsOnBlogs가 있는 새 LSI(local secondary index)를 생성합니다.
+											기존 DynamoDB 테이블의 경우 UserName을 파티션 키로, TotalReactionsOnBlogs를 정렬 키로 사용하는 새로운 LSI(Local Secondary Index)를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											DynamoDB 테이블을 새 DynamoDB 테이블로 백업 및 복원합니다. 파티션 키로 UserName이 있고 정렬 키로 TotalReactionsOnBlogs가 있는 새 글로벌 보조 인덱스(GSI)를 생성합니다. 이전 DynamoDB 테이블을 삭제합니다.
+											DynamoDB 테이블을 새 DynamoDB 테이블로 백업하고 복원합니다. UserName을 파티션 키로, TotalReactionsOnBlogs를 정렬 키로 사용하는 새로운 글로벌 보조 인덱스(GSI)를 생성합니다. 이전 DynamoDB 테이블을 삭제합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											DynamoDB 테이블을 새 DynamoDB 테이블로 백업 및 복원합니다. 파티션 키로 UserName이 있고 정렬 키로 TotalReactionsOnBlogs가 있는 새 LSI(local secondary index)를 생성합니다. 이전 DynamoDB 테이블을 삭제합니다.
+											DynamoDB 테이블을 새 DynamoDB 테이블로 백업하고 복원합니다. UserName을 파티션 키로, TotalReactionsOnBlogs를 정렬 키로 사용하는 새로운 LSI(로컬 보조 인덱스)를 생성합니다. 이전 DynamoDB 테이블을 삭제합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">A (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">디 (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">A (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">D (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a> 
-							
-							2023 <i>
-							년 1월 20일, 오후 3:27</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								DrCloud
-							</a>
-							
-							at <i>
-							Jan. 20, 2023, 3:27 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,16 +289,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				타이유아
+				티에유아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 15:24">
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 15:24">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 유일하게 가능한 선택이지만 질문이 잘못 표현된 것 같습니다. 전반적으로 반응이 가장 높은 사용자에게 쿼리를 시도하는 것처럼 들리지만 이 솔루션은 특정 사용자의 상위 10개 블로그에만 적합합니다.</div>
+<div class="comment-content">A가 유일한 선택이지만 질문의 표현이 잘못된 것 같습니다. 전반적으로 반응이 가장 높은 사용자에게 쿼리를 시도하는 것처럼 들리지만 이 솔루션은 특정 사용자의 상위 10개 블로그에만 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,16 +335,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				팬맨
+				판크맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 02:44">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">local secondary index는 테이블을 생성할 때만 생성할 수 있습니다. 나중에는 불가능합니다. 가장 효율적인 솔루션을 묻는 질문이므로 Global Secondary Index가 필요합니다.</div>
+<div class="comment-content">로컬 보조 인덱스는 테이블을 생성할 때만 생성할 수 있습니다. 나중에는 할 수 없습니다. 질문은 가장 효율적인 솔루션을 요구하므로 글로벌 보조 지수가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,11 +381,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 23일 (월) 06:00">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,7 +431,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 23일 (월) 00:50">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -430,16 +473,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 22일 일 12:11">
-			6개월, 4주 전
+<span class="comment-date align-middle" title="2023년 1월 22일 일요일 12:11">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Global secondary index는 기본 테이블의 용량을 사용하지 않습니다.</div>
+<div class="comment-content">Global Secondary Index는 메인 테이블의 용량을 소비하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,16 +519,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자그프리트LM10
+				JagpreetLM10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 08:50">
-			6개월, 4주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">읽기 용량으로 사용하면 안 됩니다.</div>
+<div class="comment-content">읽기 용량으로서의 A는 소비되어서는 안 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,13 +568,13 @@
 				KT_유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 02:23">
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 02:23">
 			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 작업은 DynamoDB 테이블의 기존 읽기 용량을 사용하지 않아야 합니다. 따라서 GSI를 만드는 것이 유일한 옵션입니다. GSL은 언제든지 생성될 수 있으므로 A가 맞습니다.</div>
+<div class="comment-content">이 작업은 DynamoDB 테이블의 기존 읽기 용량을 소비해서는 안 됩니다. 따라서 GSI를 만드는 것이 유일한 옵션입니다. GSL은 언제든지 생성될 수 있으므로 A는 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,7 +611,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Opps, 나는 C에 더 동의한다고 생각합니다.</div>
+<div class="comment-content">이런, 내 생각엔 C에 더 동의하는 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -577,7 +620,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -605,7 +648,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다시 A가 될 수 있습니다!</div>
+<div class="comment-content">다시 A가 될 수도 있어요!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -614,7 +657,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -658,16 +701,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 15:27">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">-- 테이블이 생성될 때 테이블에 대한 로컬 보조 인덱스가 생성됩니다. -- local secondary index는 주어진 파티션 키 값에 대한 대체 정렬 키를 유지합니다. -- local secondary index를 쿼리할 때 소비되는 읽기 용량 단위의 수는 데이터에 액세스하는 방법에 따라 다릅니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html</div>
+<div class="comment-content">-- 테이블이 생성될 때 테이블의 Local Secondary Index가 생성됩니다. -- 로컬 보조 인덱스는 지정된 파티션 키 값에 대한 대체 정렬 키를 유지합니다. -- 로컬 보조 인덱스를 쿼리할 때 사용되는 읽기 용량 단위의 수는 데이터 액세스 방법에 따라 달라집니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -676,7 +719,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -696,11 +739,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				닥터클라우드
+				DrCloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 25일 (토) 12:27">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 25일 토요일 12:27">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -713,7 +756,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -741,15 +784,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				tony554556
+				토니554556
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 06일 월요일 11:58">
+<span class="comment-date align-middle" title="2023년 2월 6일 월요일 11:58">
 			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 운영상 가장 효율적인 방법 중 하나가 아닙니다.</div>
+<div class="comment-content">C는 운영상 가장 효율적인 방식 중 하나가 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -758,7 +801,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -786,15 +829,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				핀크스
+				핑크스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 22일 일 12:12">
-			6개월, 4주 전
+<span class="comment-date align-middle" title="2023년 1월 22일 일요일 12:12">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">LSI는 기본 테이블의 용량을 사용합니다. 메인 테이블의 용량을 소모해서는 안된다고 명시되어 있습니다.</div>
+<div class="comment-content">LSI는 기본 테이블의 용량을 소비합니다. 명령문에는 기본 테이블의 용량을 소비해서는 안 된다고 명시되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -803,7 +846,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -909,7 +952,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 02:44">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -955,7 +998,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 06:00">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1001,7 +1044,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 00:50">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1047,7 +1090,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 12:11">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 08:50">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1275,7 +1318,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 15:27">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1317,7 +1360,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 12:27">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1407,7 +1450,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LSI.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 12:12">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 질문 87 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 개발자 어소시에이트 주제 1 문제 87 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Developer Associate topic 1 question 87 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 개발자 어소시에이트 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Developer Associate 의 시험 문제</a>
 <div>
 							질문 #: 87 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807587">
 <p class="card-text">
 							
-								개발자는 SAML(Security Assertion Markup Language) 및 소셜 미디어 공급자와의 인증을 지원하는 애플리케이션을 만들어야 합니다. 또한 Amazon DynamoDB와 같은 AWS 서비스에 대한 액세스를 허용해야 합니다. <br/>최소한의 추가 코딩으로 이러한 요구 사항을 충족하는 AWS 서비스 또는 기능은 무엇입니까?<br/>
+								개발자는 SAML(Security Assertion Markup Language) 및 소셜 미디어 공급자 인증을 지원하는 애플리케이션을 만들어야 합니다. 또한 Amazon DynamoDB와 같은 AWS 서비스에 대한 액세스도 허용해야 합니다. <br/>최소한의 추가 코딩으로 이러한 요구 사항을 충족하는 AWS 서비스 또는 기능은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807587" type="application/json">[{"voted_answers": "B", "vote_count": 18, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											AWS 앱싱크
+											AWS AppSync
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 95%; display: flex;" title="">B (95%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 95%; display: flex;" title="">B (95%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a> 2022년 8월 31 
-							
-							일 <i>
-							오후 10:20</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Chhotu_DBA
-							</a>
-							
-							at <i>
-							Aug. 31, 2022, 10:20 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 9월 7일 수 21:42">
-			11개월, 2주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS 서비스에 대한 액세스, 그래서 B</div>
+<div class="comment-content">AWS 서비스에 액세스하므로 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -285,15 +328,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스파뮤엘
+				스팸
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 20일 화요일 15:31">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 20일 화 15:31">
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 "소셜 미디어 제공자와의 인증"이 필요하다고 명시되어 있습니다. 그렇다면 사용자 풀(C)도 필요하지 않을까요? https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/</div>
+<div class="comment-content">그러나 "소셜 미디어 제공업체의 인증"이 필요하다고 명시되어 있습니다. 그렇다면 사용자 풀(C)도 필요하지 않을까요? https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,7 +345,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,12 +387,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 19:55">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 19:55">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. Amazon Developer Guide에 따라; Amazon Cognito 자격 증명 풀을 사용하면 고유한 자격 증명을 생성하고 사용자에게 권한을 할당할 수 있습니다. 자격 증명 풀에는 다음이 포함될 수 있습니다. - Amazon Cognito 사용자 풀의 사용자 자격 증명 풀을 사용하면 다른 AWS 서비스에 직접 액세스하거나 Amazon API Gateway를 통해 리소스에 액세스하도록 정의한 권한이 있는 임시 AWS 자격 증명을 얻을 수 있습니다. - 외부 자격 증명으로 인증하는 사용자 Facebook, Google, Apple, OIDC 또는 SAML ID 공급자와 같은 공급자. https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-identity-pools.html</div>
+<div class="comment-content">B. Amazon 개발자 가이드에 따라; Amazon Cognito 자격 증명 풀을 사용하면 고유한 자격 증명을 생성하고 사용자에게 권한을 할당할 수 있습니다. 자격 증명 풀에는 다음이 포함될 수 있습니다. - Amazon Cognito 사용자 풀의 사용자 자격 증명 풀을 사용하면 다른 AWS 서비스에 직접 액세스하거나 Amazon API Gateway를 통해 리소스에 액세스하도록 정의한 권한이 있는 임시 AWS 자격 증명을 얻을 수 있습니다. - 외부 자격 증명으로 인증하는 사용자 Facebook, Google, Apple, OIDC, SAML ID 공급자 등의 공급자입니다. https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-identity-pools.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 				르칼리안드로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 16:12">
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 16:12">
 			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Cognito 자격 증명 풀은 엔드포인트 URL(예: DynamoDB)을 제공하지 않는 AWS 서비스에 액세스할 수 있는 가능성을 제공합니다. 또한 SAML 및 소셜 미디어 공급자와 연합 ID와의 통합을 지원합니다. 따라서 답은 당연히 B입니다.</div>
+<div class="comment-content">Amazon Cognito 자격 증명 풀을 사용하면 엔드포인트 URL(예: DynamoDB)을 제공하지 않는 AWS 서비스에 액세스할 수 있습니다. 또한 SAML 및 소셜 미디어 제공업체와의 페더레이션 ID와의 통합도 지원합니다. 그렇다면 답은 당연히 B이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,15 +475,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				즉흥
+				즉흥적으로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 13:48">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 13:48">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최소한의 코딩으로 Amazon DynamoDB와 같은 AWS 서비스에 대한 액세스와 함께 SAML 및 소셜 미디어 인증 요구 사항을 충족하려면 AWS Cognito 사용자 풀을 사용해야 합니다. SAML 및 소셜 미디어 인증에 대한 기본 지원을 제공하며 사용자는 AWS 리소스에 액세스하기 위한 임시 AWS 자격 증명을 얻을 수 있습니다. Cognito 사용자 풀은 AWS 서비스와 원활하게 통합되는 동시에 사용자 관리 및 인증을 간소화합니다.</div>
+<div class="comment-content">최소한의 코딩으로 Amazon DynamoDB와 같은 AWS 서비스에 액세스하는 동시에 SAML 및 소셜 미디어 인증 요구 사항을 충족하려면 AWS Cognito 사용자 풀을 사용해야 합니다. SAML 및 소셜 미디어 인증에 대한 기본 지원을 제공하며 사용자는 AWS 리소스에 액세스하기 위한 임시 AWS 자격 증명을 얻을 수 있습니다. Cognito 사용자 풀은 AWS 서비스와 원활하게 통합되면서 사용자 관리 및 인증을 단순화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,11 +520,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				배시
+				배트시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 2일 화요일 09:19">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 2일 (화) 09:19">
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,12 +568,12 @@
 				시레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 12일 수 17:47">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 12일 수요일 17:47">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여러분은 다시 오답에 동의하고 있습니다. 대답은 C입니다. Amazon Cognito 사용자 풀은 사용자 가입, 로그인 및 액세스 제어를 제공합니다. 또한 SAML 기반 인증을 지원하고 Google, Facebook 및 Amazon과 같은 소셜 자격 증명 공급자와의 기본 통합을 제공합니다. 또한 사용자 프로필을 관리하기 위한 사용자 디렉터리를 제공하고 Amazon DynamoDB 및 기타 AWS 서비스와의 통합을 지원합니다. B는 추가 코딩이 필요합니다. Amazon Cognito 자격 증명 풀을 사용하면 AWS 리소스에 대한 액세스를 연합하고 사용자가 AWS 리소스에 액세스할 수 있도록 권한을 구성할 수 있습니다.</div>
+<div class="comment-content">여러분은 다시 잘못된 대답에 동의하고 있습니다. 대답은 C입니다. Amazon Cognito 사용자 풀은 사용자 가입, 로그인 및 액세스 제어를 제공합니다. 또한 SAML 기반 인증을 지원하고 Google, Facebook, Amazon과 같은 소셜 ID 공급자와의 기본 통합을 제공합니다. 또한 사용자 프로필을 관리하기 위한 사용자 디렉터리를 제공하고 Amazon DynamoDB 및 기타 AWS 서비스와의 통합을 지원합니다. B에는 추가 코딩이 필요합니다. Amazon Cognito 자격 증명 풀을 사용하면 AWS 리소스에 대한 액세스를 연합하고 사용자가 AWS 리소스에 액세스할 수 있도록 권한을 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +582,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,8 +613,8 @@
 				Dr_Chomp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 06:13">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 06:13">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,12 +660,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 09:21">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Cognito는 SAML 2.0(Security Assertion Markup Language 2.0)을 통해 자격 증명 공급자(IdP)를 통한 인증을 지원합니다. Amazon Cognito에서 SAML을 지원하는 IdP를 사용하여 사용자에게 간단한 온보딩 흐름을 제공할 수 있습니다. SAML 지원 IdP는 사용자가 맡을 수 있는 IAM 역할을 지정합니다. 이러한 방식으로 다른 사용자는 다른 권한 집합을 받을 수 있습니다.</div>
+<div class="comment-content">Amazon Cognito는 SAML 2.0(Security Assertion Markup Language 2.0)을 통해 자격 증명 공급자(IdP) 인증을 지원합니다. Amazon Cognito에서 SAML을 지원하는 IdP를 사용하여 사용자에게 간단한 온보딩 흐름을 제공할 수 있습니다. SAML 지원 IdP는 사용자가 맡을 수 있는 IAM 역할을 지정합니다. 이렇게 하면 여러 사용자가 서로 다른 권한 집합을 받을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -631,7 +674,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,15 +702,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 08:36">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 리소스 https://medium.com/swlh/amazon-cognito-what-is-the-difference-between-user-pool-and-identity-pool-ff0c71d79ca7에 따르면 B처럼 보입니다. API 게이트웨이 엔드포인트에 액세스하면 Cognito 사용자 풀로 충분합니다. 애플리케이션이 AWS 서비스(DynamoDB, S3 등)와 직접 통신해야 하는 경우 Amazon Cognito 자격 증명 풀도 필요합니다."</div>
+<div class="comment-content">이 리소스 https://medium.com/swlh/amazon-cognito-what-is-the-difference-between-user-pool-and-identity-pool-ff0c71d79ca7에 따르면 B인 것 같습니다. "우리 애플리케이션이 API 게이트웨이 엔드포인트에 액세스하면 Cognito 사용자 풀이면 충분합니다. 애플리케이션이 AWS 서비스(DynamoDB, S3 등)와 직접 통신해야 한다면 Amazon Cognito 자격 증명 풀도 필요합니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -676,7 +719,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -708,7 +751,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 13:56">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -721,7 +764,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -749,7 +792,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				의해116549
+				작성자116549
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 07:10">
@@ -757,7 +800,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 리소스 참조: https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/#:~:text=With%20a%20user%20pool%2C%20your,access %20to%20other%20AWS%20services. 자격 증명 풀에 기대어</div>
+<div class="comment-content">이 리소스 참조: https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/#:~:text=With%20a%20user%20pool%2C%20your,access %20to%20other%20AWS%20서비스. 자격 증명 풀에 기대어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -766,7 +809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -798,12 +841,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 19일 토요일 06:14">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">자격 증명 풀이 있는 Cognito는 이 시나리오에서 의심할 여지 없이 cognito이고 사용자 풀은 자체 사이트에 등록하는 자체 생성 사용자 풀이 있는 시나리오에 더 적합하기 때문에 답입니다...</div>
+<div class="comment-content">자격 증명 풀이 있는 Cognito가 답입니다. 이 시나리오에서는 의심할 여지 없이 cognito이고 사용자 풀은 자체 사이트에 등록하는 자체 생성 사용자 풀이 있는 시나리오에 더 적합하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -812,7 +855,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,13 +886,13 @@
 				dark_cherrymon
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 18일 금요일 03:30">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 18일 금 03:30">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C이므로 사용자 풀만 리소스 액세스 권한을 부여할 수 있습니다. , 웹 또는 모바일 앱은 Amazon Cognito에서 사용자 풀 토큰을 수신합니다. 이러한 토큰을 사용하여 서버 측 리소스에 대한 액세스를 제어할 수 있습니다."</div>
+<div class="comment-content">C입니다. 사용자 풀만으로도 리소스 액세스 권한을 부여할 수 있습니다 https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-scenarios.html#scenario-basic-user-pool "성공적인 사용자 풀 로그인 후 , 웹 또는 모바일 앱은 Amazon Cognito로부터 사용자 풀 토큰을 수신합니다. 해당 토큰을 사용하여 서버 측 리소스에 대한 액세스를 제어할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -858,7 +901,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,8 +932,8 @@
 				cloud_collector
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 14일 금 05:28">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 14일 금요일 05:28">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -904,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -932,11 +975,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토83
+				sat83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 25일 일 18:05">
-			10개월, 4주 전
+<span class="comment-date align-middle" title="2022년 9월 25일 일요일 18:05">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -950,7 +993,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -986,7 +1029,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Ans는 B입니다. DynamoDB와 같은 AWS 서비스에 대한 액세스를 요청하고 있습니다.</div>
+<div class="comment-content">답은 B입니다. DynamoDB와 같은 AWS 서비스에 대한 액세스를 요청하고 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -995,7 +1038,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1027,12 +1070,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 8월 31일 수 22:20">
-			11개월, 3주 전
+			11개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">대답은 B입니다</div>
+<div class="comment-content">답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1041,7 +1084,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1096,7 +1139,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 07 Sep 2022 21:42">
-			11 months, 2 weeks ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1134,7 +1177,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Sep 2022 15:31">
-			11 months ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1192,7 +1235,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identi
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 10 Jul 2023 19:55">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1287,7 +1330,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 13:48">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1332,7 +1375,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 May 2023 09:19">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1377,7 +1420,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Apr 2023 17:47">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1425,7 +1468,7 @@ B will require additional coding, With Amazon Cognito identity pools, you can fe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 06:13">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1471,7 +1514,7 @@ B will require additional coding, With Amazon Cognito identity pools, you can fe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 09:21">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1517,7 +1560,7 @@ B will require additional coding, With Amazon Cognito identity pools, you can fe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 08:36">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1566,7 +1609,7 @@ If our application needs to talk directly with an AWS service (DynamoDB, S3, …
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 13:56">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1659,7 +1702,7 @@ Leaning to identity pools</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Nov 2022 06:14">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1705,7 +1748,7 @@ Leaning to identity pools</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Nov 2022 03:30">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1755,7 +1798,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-scenarios.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 05:28">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1801,7 +1844,7 @@ https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-scenarios.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Sep 2022 18:05">
-			10 months, 4 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1893,7 +1936,7 @@ It is asking access to AWS services such as DynamoDB</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 Aug 2022 22:20">
-			11 months, 3 weeks ago
+			11 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
