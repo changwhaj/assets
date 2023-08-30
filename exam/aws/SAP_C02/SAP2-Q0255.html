@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect – Professional SAP-C02 주제 1 문제 255 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 255 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 255 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 255 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="888151">
 <p class="card-text">
 							
-								한 회사에서 수백 개의 AWS 계정으로부터 로그를 수신하고 분석하는 Amazon EC2에서 실행되는 중앙 집중식 로깅 서비스를 만들고 있습니다. AWS PrivateLink는 클라이언트 서비스와 로깅 서비스 간의 연결을 제공하는 데 사용되고 있습니다. <br/><br/>클라이언트가 있는 각 AWS 계정에서 로깅 서비스에 대한 인터페이스 엔드포인트가 생성되었으며 사용할 수 있습니다. NLB(Network Load Balancer)가 있는 EC2 인스턴스에서 실행되는 로깅 서비스는 서로 다른 서브넷에 배포됩니다. 클라이언트는 VPC 엔드포인트를 사용하여 로그를 제출할 수 없습니다. <br/><br/>솔루션 아키텍트가 이 문제를 해결하기 위해 취해야 하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사는 수백 개의 AWS 계정에서 로그를 수신하고 분석하는 Amazon EC2에서 실행되는 중앙 집중식 로깅 서비스를 만들고 있습니다. AWS PrivateLink는 클라이언트 서비스와 로깅 서비스 간의 연결을 제공하는 데 사용됩니다. <br/><br/>클라이언트가 있는 각 AWS 계정에는 로깅 서비스를 위한 인터페이스 엔드포인트가 생성되어 사용할 수 있습니다. NLB(Network Load Balancer)를 사용하여 EC2 인스턴스에서 실행되는 로깅 서비스는 다른 서브넷에 배포됩니다. 클라이언트는 VPC 엔드포인트를 사용하여 로그를 제출할 수 없습니다. <br/><br/>이 문제를 해결하기 위해 솔루션 아키텍트가 수행해야 하는 단계 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="888151" type="application/json">[{"voted_answers": "BD", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "AC", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "BC", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="888151" type="application/json">[{"voted_answers": "BD", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "AC", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "BC", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											NLB 서브넷과의 통신을 허용하기 위해 NACL이 로깅 서비스 서브넷에 연결되어 있는지 확인하십시오. NACL이 NLB 서브넷에 연결되어 EC2 인스턴스에서 실행되는 로깅 서비스 서브넷과의 통신을 허용하는지 확인하십시오.
+											NLB 서브넷과의 통신을 허용하려면 NACL이 로깅 서비스 서브넷에 연결되어 있는지 확인하십시오. EC2 인스턴스에서 실행되는 로깅 서비스 서브넷과의 통신을 허용하려면 NACL이 NLB 서브넷에 연결되어 있는지 확인하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											NACL이 로깅 서비스 서브넷에 연결되어 인터페이스 엔드포인트 서브넷과의 통신을 허용하는지 확인합니다. NACL이 인터페이스 엔드포인트 서브넷에 연결되어 EC2 인스턴스에서 실행되는 로깅 서비스 서브넷과의 통신을 허용하는지 확인하십시오.
+											NACL이 로깅 서비스 서브넷에 연결되어 인터페이스 엔드포인트 서브넷과의 통신을 허용하는지 확인합니다. EC2 인스턴스에서 실행되는 로깅 서비스 서브넷과의 통신을 허용하려면 인터페이스 엔드포인트 서브넷에 NACL이 연결되어 있는지 확인하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,14 +164,14 @@
 													C.
 												</span> 
 											
-											EC2 인스턴스에서 실행 중인 로깅 서비스의 보안 그룹을 확인하여 NLB 서브넷에서 수신을 허용하는지 확인합니다.
+											EC2 인스턴스에서 실행 중인 로깅 서비스에 대한 보안 그룹을 확인하여 NLB 서브넷으로부터의 수신을 허용하는지 확인합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											EC2 인스턴스에서 실행되는 로깅 서비스의 보안 그룹을 확인하여 클라이언트로부터의 수신을 허용하는지 확인하십시오.
+											EC2 인스턴스에서 실행되는 로깅 서비스의 보안 그룹을 확인하여 클라이언트로부터의 수신을 허용하는지 확인하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,11 +180,11 @@
 													E.
 												</span> 
 											
-											NLB의 보안 그룹을 확인하여 인터페이스 엔드포인트 서브넷에서 수신을 허용하는지 확인합니다.
+											NLB의 보안 그룹을 확인하여 인터페이스 엔드포인트 서브넷으로부터의 수신을 허용하는지 확인하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,20 +194,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 60%; display: flex;" title="">BD (60%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">AC(27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">BD (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">AC (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">기원전 (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shree2023
-							</a> 2023년 
-							
-							6 <i>
-							월 24일 오전 6:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -166,7 +219,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="888151" type="application/json">[{"voted_answers": "BD", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "AC", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "BC", "vote_count": 2, "is_most_voted": false}]</script>
+<script id="888151" type="application/json">[{"voted_answers": "BD", "vote_count": 9, "is_most_voted": true}, {"voted_answers": "AC", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "BC", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -221,20 +274,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 60%; display: flex;" title="">BD (60%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">AC (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">13%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 53%; display: flex;" title="">BD (53%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 29%; display: flex;" title="">AC (29%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">BC (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shree2023
-							</a>
-							
-							at <i>
-							June 24, 2023, 6:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -262,11 +305,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				vjp_training
+				vjp_훈련
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 17:29">
-			22시간 42분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -280,7 +323,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -308,25 +351,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Just_Ninja
+				저스트_닌자
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 27일 목요일 05:29">
-			3주, 2일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BC</strong></span></div>
-<div class="comment-content">B 및 C. NLB는 대상 계정의 장소입니다. 즉, EC2 로깅 인스턴스가 NLB에서 트래픽을 가져옵니다. 따라서 Logging EC2 인스턴스의 소스는 NLB여야 합니다. https://aws.amazon.com/de/blogs/architecture/building-saas-services-for-aws-customers-with-privatelink/ 오래되었지만 구식은 아닙니다.</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BC</strong></span></div>
+<div class="comment-content">B 및 C. NLB는 대상 계정에 위치합니다. 이는 EC2 로깅 인스턴스가 NLB에서 트래픽을 받는다는 의미입니다. 따라서 Logging EC2 인스턴스의 소스는 NLB여야 합니다. https://aws.amazon.com/de/blogs/architecture/building-saas-services-for-aws-customers-with-privatelink/ 오래되었지만 오래되지 않음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -358,21 +401,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 20일 목요일 00:33">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">서비스 소비자가 인터페이스 엔드포인트를 통해 서비스에 트래픽을 보낼 때 애플리케이션에 제공되는 소스 IP 주소는 서비스 소비자의 IP 주소가 아니라 로드 밸런서 노드의 사설 IP 주소입니다. https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html</div>
+<div class="comment-content">서비스 소비자가 인터페이스 엔드포인트를 통해 서비스에 트래픽을 보낼 때 애플리케이션에 제공되는 소스 IP 주소는 서비스 소비자의 IP 주소가 아닌 로드 밸런서 노드의 프라이빗 IP 주소입니다. https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -400,15 +443,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				study_aws1
+				연구_aws1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 05:44">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 05:44">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A), C)보다 B), D)를 선택하는 적. 소비자 및 서비스 공급자는 피어링되지 않고(PrivateLink를 통해 연결됨) 겹치는 IP도 가질 수 있는 서로 다른 VPC에 있습니다. 피어링되지 않은 VPC 및 겹칠 수 있는 개인 IP에서도 SG를 참조할 수 없습니다. A) - NACL을 통해 EC2의 서브넷이 있는 네트워크 LB의 IP를 참조할 수 있지만 더 제한적으로 만들지 않으려면 VPC 내에서 기본적으로 허용됩니다. C) - Network LB 자체에는 SG가 없지만 EC2 인스턴스와 연결된 SG에서 Network LB 서브넷과 연결된 CIDR의 IP 범위를 허용하는 옵션이 명시되어 있어 유효한 옵션이다. IMO, 옵션 B) 및 D)는 수백 개의 AWS 계정(클라이언트 서비스)이 로깅 서비스와 동일한 VPC에 있는 경우에만 가능합니다.</div>
+<div class="comment-content">A), C) 대신 B), D) 옵션을 선택하는 것에 반대하십시오. 소비자 및 서비스 제공업체는 피어링되지 않고(PrivateLink를 통해 연결됨) IP가 중복될 수 있는 서로 다른 VPC에 있습니다. 피어링되지 않은 VPC 전체에서 SG를 참조할 수 없으며 심지어 겹칠 수 있는 프라이빗 IP로도 참조할 수 없습니다. A) - NACL을 통해 EC2의 서브넷이 있는 네트워크 LB의 IP를 참조할 수 있지만 더 제한적으로 설정하지 않는 한 VPC 내에서는 기본적으로 허용됩니다. C) - 네트워크 LB 자체에는 SG가 없지만, EC2 인스턴스와 연결된 SG의 네트워크 LB 서브넷과 연결된 CIDR의 IP 범위를 허용하는 옵션이 명시되어 있으며 이는 유효한 옵션입니다. IMO, 옵션 B) 및 D)는 수백 개의 AWS 계정(클라이언트 서비스)이 로깅 서비스와 동일한 VPC에 있는 경우에만 가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -417,7 +460,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -445,16 +488,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				섀키
+				엉뚱한
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 06:16">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 06:16">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">사실 AC입니다. 로깅 서비스는 클라이언트가 아닌 NLB에서 직접 트래픽을 수신합니다. 이 아키텍처(PrivateLink 끝점 서비스)를 사용하면 클라이언트와 서비스 제공자 간에 겹치는 CIDR 블록을 가질 수 있습니다.</div>
+<div class="comment-content">실제로는 AC입니다. 로깅 서비스는 클라이언트가 아닌 NLB에서 트래픽을 직접 수신합니다. 해당 아키텍처(PrivateLink 엔드포인트 서비스)를 사용하면 클라이언트와 서비스 공급자 간에 CIDR 블록이 겹치도록 할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -463,7 +506,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -495,12 +538,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 7일 금요일 18:55">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">NLB용 BD 없음 SG</div>
+<div class="comment-content">NLB용 BD에는 SG가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -509,7 +552,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,12 +575,12 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 17:43">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 17:43">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">새로운 댓글을 읽은 후 AC로 전환합니다.</div>
+<div class="comment-content">최신 댓글을 읽은 후 AC로 전환 중입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -585,13 +628,13 @@
 				크리스티나666
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 5일 수요일 23:14">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 5일 수 23:14">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">NLB 보안 그룹 없음 AWS Network Load Balancer는 현재 보안 그룹을 지원하지 않습니다. Amazon VPC NACL, AWS Network Firewall 및/또는 AWS Gateway Load Balancer와 함께 마켓플레이스 방화벽을 사용하여 NLB에 다양한 수준의 보호를 제공할 수 있습니다. 클라이언트 IP 보존이 활성화된 경우 대상에서 보안 그룹을 사용할 수도 있습니다(클라이언트 IP 보존이 지원되는 시기에 대한 자세한 내용은 여기 참조).</div>
+<div class="comment-content">NLB 보안 그룹 없음 AWS Network Load Balancer는 현재 보안 그룹을 지원하지 않습니다. Amazon VPC NACL, AWS 네트워크 방화벽 및/또는 AWS Gateway Load Balancer와 함께 마켓플레이스 방화벽을 사용하여 NLB에 대한 다양한 수준의 보호를 제공할 수 있습니다. 클라이언트 IP 보존이 활성화된 경우 대상에서 보안 그룹을 사용할 수도 있습니다(클라이언트 IP 보존이 지원되는 경우에 대한 자세한 내용은 여기 참조) https://repost.aws/questions/QUuueXAi20QuisbkOhinnbzQ/aws-nlb-security-group</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -600,7 +643,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,11 +667,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 19:20">
-			1일, 20시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">보안 그룹을 NLB에 연결할 수 있습니다. 아래 링크를 찾으십시오. https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-security-groups.html 이에 따라 답은 B와 E여야 합니다.</div>
+<div class="comment-content">보안 그룹을 NLB에 연결할 수 있습니다. 아래 링크를 찾으십시오: https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-security-groups.html 이를 바탕으로 대답은 B와 E가 되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -673,16 +716,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마일리클라우드
+				스마일클라우드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 00:25">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">B와 D. C가 나가면 E와 마찬가지로 NLB 서브넷에서 수신을 구성하지 않습니다. NLB에는 보안 그룹이 없습니다. A - 같은 개념입니다. NLB는 기존 ELB 및 ALB와 달리 투명합니다.</div>
+<div class="comment-content">B와 D. C가 종료되었습니다. E와 마찬가지로 NLB 서브넷에서 수신을 구성하지 않으며 NLB에는 보안 그룹이 없습니다. A - 같은 개념입니다. NLB는 기존 ELB 및 ALB와 달리 투명합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -691,7 +734,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -723,12 +766,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 23:25">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">발신자(클라이언트의 인터페이스 끝점) --&gt; 개인 링크 --&gt; 수신자(NLB --&gt; 로깅 서비스의 EC2)이므로 NACL 및 보안 그룹이 모두 수신자 측에 있으므로 발신자(클라이언트) ip를 포함해야 합니다. . 그래서 비앤디</div>
+<div class="comment-content">발신자(클라이언트의 인터페이스 엔드포인트) --&gt; 프라이빗 링크 --&gt; 수신자(NLB --&gt; 로깅 서비스의 EC2)이므로 NACL 및 보안 그룹은 모두 수신자 측에 있으므로 발신자(클라이언트) IP를 포함해야 합니다. . 그래서 B &amp; D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -737,7 +780,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -765,15 +808,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				푹트
+				푸옥트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 10:04">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B&amp;D인 것 같아요</div>
+<div class="comment-content">내 생각엔 B와 D인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -782,7 +825,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -810,16 +853,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shree2023
+				슈리2023
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 06:45">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BD</strong></span></div>
-<div class="comment-content">비앤디가 맞는듯</div>
+<div class="comment-content">B&amp;D가 맞는 것 같다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -828,7 +871,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -880,7 +923,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 17:29">
-			22 hours, 42 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -926,7 +969,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Jul 2023 05:29">
-			3 weeks, 2 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -943,7 +986,7 @@ Old but not outdated</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">3</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -976,7 +1019,7 @@ Old but not outdated</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Jul 2023 00:33">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -991,7 +1034,7 @@ https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html<
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1024,7 +1067,7 @@ https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 05:44">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1075,7 +1118,7 @@ IMO, options B) &amp; D) are feasible only if hundreds of AWS accounts (client s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Jul 2023 06:16">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1122,7 +1165,7 @@ Logging service will receive traffic from NLB, not from the clients directly. Th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 18:55">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1161,7 +1204,7 @@ no SG for NLB</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 17:43">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1214,7 +1257,7 @@ no SG for NLB</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Jul 2023 23:14">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1256,7 +1299,7 @@ https://repost.aws/questions/QUuueXAi20QuisbkOhinnbzQ/aws-nlb-security-group</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 19:20">
-			1 day, 20 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1311,7 +1354,7 @@ Based on this, the answer should be B and E.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 00:25">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1357,7 +1400,7 @@ Based on this, the answer should be B and E.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 23:25">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1407,7 +1450,7 @@ so B &amp; D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 10:04">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1452,7 +1495,7 @@ so B &amp; D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 06:45">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

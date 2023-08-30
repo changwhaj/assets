@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 36 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect – Professional SAP-C02 주제 1 질문 36 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 질문 36 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 36 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 36 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="856151">
 <p class="card-text">
 							
-								회사의 솔루션 아키텍트가 AWS에서 실행되는 웹 애플리케이션을 검토하고 있습니다. 애플리케이션은 us-east-1 리전의 Amazon S3 버킷에 있는 정적 자산을 참조합니다. 회사는 여러 AWS 리전에서 복원력이 필요합니다. 회사는 이미 두 번째 리전에 S3 버킷을 생성했습니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사의 솔루션 아키텍트가 AWS에서 실행되는 웹 애플리케이션을 검토하고 있습니다. 애플리케이션은 us-east-1 지역의 Amazon S3 버킷에 있는 정적 자산을 참조합니다. 회사는 여러 AWS 리전에 걸친 복원력이 필요합니다. 회사는 이미 두 번째 리전에 S3 버킷을 생성했습니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											각 객체를 두 S3 버킷에 쓰도록 애플리케이션을 구성합니다. 각 S3 버킷에 대한 가중 라우팅 정책을 사용하여 레코드 세트로 Amazon Route 53 퍼블릭 호스팅 영역을 설정합니다. Route 53 DNS 이름을 사용하여 객체를 참조하도록 애플리케이션을 구성합니다.
+											각 객체를 두 S3 버킷 모두에 쓰도록 애플리케이션을 구성합니다. 각 S3 버킷에 가중치가 부여된 라우팅 정책을 사용하여 레코드 세트로 Amazon Route 53 퍼블릭 호스팅 영역을 설정합니다. Route 53 DNS 이름을 사용하여 객체를 참조하도록 애플리케이션을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											us-east-1의 S3 버킷에서 두 번째 리전의 S3 버킷으로 객체를 복사하는 AWS Lambda 함수를 생성합니다. 객체가 us-east-1의 S3 버킷에 기록될 때마다 Lambda 함수를 호출합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹으로 Amazon CloudFront 배포를 설정합니다.
+											us-east-1의 S3 버킷에서 두 번째 리전의 S3 버킷으로 객체를 복사하는 AWS Lambda 함수를 생성합니다. us-east-1의 S3 버킷에 객체가 기록될 때마다 Lambda 함수를 호출합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹을 사용하여 Amazon CloudFront 배포를 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											두 번째 리전의 S3 버킷에 개체를 복제하도록 us-east-1의 S3 버킷에서 복제를 구성합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹으로 Amazon CloudFront 배포를 설정합니다.
+											us-east-1의 S3 버킷에 복제를 구성하여 두 번째 리전의 S3 버킷에 객체를 복제합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹을 사용하여 Amazon CloudFront 배포를 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											두 번째 리전의 S3 버킷에 개체를 복제하도록 us-east-1의 S3 버킷에서 복제를 구성합니다. 장애 조치가 필요한 경우 두 번째 리전의 S3 버킷에서 S3 객체를 로드하도록 애플리케이션 코드를 업데이트합니다.
+											us-east-1의 S3 버킷에 복제를 구성하여 두 번째 리전의 S3 버킷에 객체를 복제합니다. 장애 조치가 필요한 경우 애플리케이션 코드를 업데이트하여 두 번째 리전의 S3 버킷에서 S3 객체를 로드합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="29 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">씨 (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="29 votes." data-toggle="tooltip" role="progressbar" style="width: 94%; display: flex;" title="">C (94%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a> 2022년 
-							
-							12 <i>
-							월 12일 오전 2:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a>
-							
-							at <i>
-							Dec. 12, 2022, 2:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,14 +289,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장규20000
+				장유20000
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 02:45">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 02:45">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -301,7 +344,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 15일 화요일 14:06">
-			1 일 전
+			1주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -346,12 +389,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 9일 수요일 21:11">
-			6일, 17시간 전
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">완전히 CRR을 요구하는 것은 C입니다.</div>
+<div class="comment-content">완전히 CRR을 요구하는 것입니다. 오른쪽은 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,16 +431,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				브라이탈
+				브라이탈루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 8일 화요일 08:02">
-			1주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">EB 지원 .Net. 질문에서 앱을 온프레미스에서 AWS로 이동하도록 지시했습니다. 이 경우에는 EB가 더 적합합니다.</div>
+<div class="comment-content">EB 지원 .Net. 그리고 질문에서 앱을 온프레미스에서 AWS로 옮기라는 명령을 받았습니다. 이 경우에는 EB가 더 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,11 +477,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				조날브
+				요날브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 8일 (토) 11:06">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 8일 토요일 11:06">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,16 +523,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				조날브
+				요날브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 03일 월요일 12:20">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 12:20">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 정답입니다...</div>
+<div class="comment-content">C 정답이군요...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,11 +573,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 04:05">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨 의심의 여지가</div>
+<div class="comment-content">ㄷ 의심할 여지가 없지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,12 +618,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 15:08">
-			1개월, 2주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A를 사용하면 한 지역이 다운되더라도 여전히 다른 버킷에 쓸 수 있고 모든 웹앱 기능을 보장할 수 있기 때문에 전반적으로 더 나은 복원력을 얻을 수 있습니다. 또한 CloudFront를 이미 사용하지 않는 경우 CloudFront를 추가할 필요가 없어 운영 오버헤드가 줄어듭니다. 그러나 s3 쓰기에 쓰기 성능이 저하될 수 있으며 향후 데이터 일관성 문제가 발생할 수 있습니다.</div>
+<div class="comment-content">A를 사용하면 한 지역이 다운되더라도 다른 버킷에 계속 쓸 수 있고 모든 웹앱 기능을 보장할 수 있으므로 전반적인 복원력이 향상됩니다. 또한 이미 사용하지 않는 경우 cloudfront를 추가할 필요가 없으므로 운영 오버헤드가 줄어듭니다. 그러나 s3 쓰기 성능이 저하될 수 있으며 향후 데이터 일관성 문제가 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -589,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,16 +660,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				조날브
+				요날브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 11:53">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 Amazon S3의 내장 복제 기능을 활용하기 때문에 옵션 D에 비해 운영 오버헤드가 가장 적은 가장 적합한 솔루션입니다. 옵션 C에서 두 번째 리전의 S3 버킷에 개체를 복제하도록 us-east-1의 S3 버킷에서 복제를 구성하면 복제 프로세스가 Amazon S3에서 자동으로 처리됩니다. 이렇게 하면 수동 개입이나 사용자 지정 코드 없이 정적 자산이 두 지역 간에 일관되게 동기화됩니다. 반면 옵션 D는 us-east-1의 S3 버킷에서 복제를 구성하고 장애 조치 시 두 번째 리전에서 객체를 로드하도록 애플리케이션 코드를 업데이트할 것을 제안합니다. 이 옵션은 여러 지역에서 복원력을 달성할 수 있지만 추가적인 복잡성과 운영 오버헤드가 발생합니다.</div>
+<div class="comment-content">옵션 C는 Amazon S3에 내장된 복제 기능을 활용하므로 옵션 D에 비해 운영 오버헤드가 가장 적은 가장 적합한 솔루션입니다. 옵션 C에서는 us-east-1의 S3 버킷에 복제를 구성하여 두 번째 리전의 S3 버킷에 객체를 복제함으로써 Amazon S3에서 복제 프로세스를 자동으로 처리합니다. 이렇게 하면 수동 개입이나 사용자 정의 코드 없이도 정적 자산이 두 지역 간에 일관되게 동기화됩니다. 반면 옵션 D는 us-east-1의 S3 버킷에 복제를 구성하고 장애 조치 시 두 번째 리전에서 객체를 로드하도록 애플리케이션 코드를 업데이트하는 것을 제안합니다. 이 옵션은 여러 지역에서 복원력을 달성할 수 있지만 추가적인 복잡성과 운영 오버헤드가 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -667,12 +710,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 21:54">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다. 자세한 내용은 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html을 참조하십시오.</div>
+<div class="comment-content">C가 정답입니다. 자세한 내용은 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html을 참조하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,16 +752,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				게임 오브 러브
+				사랑의 게임
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 9일 화요일 11:51">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 요구 사항에 따라 유일한 옵션입니다.</div>
+<div class="comment-content">C는 요구 사항에 따른 유일한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -727,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -759,12 +802,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 2일 화요일 22:12">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 CF 배포로 두 버킷을 모두 사용하기 때문에 가장 적합합니다.</div>
+<div class="comment-content">C가 가장 적합합니다. 두 버킷을 모두 CF 배포로 사용하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,12 +847,12 @@
 				신하
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 14일 금요일 01:33">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 14일 금 01:33">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최소한의 운영 오버헤드로 요구 사항을 충족하는 솔루션은 us-east-1의 S3 버킷에서 복제를 구성하여 객체를 두 번째 리전의 S3 버킷으로 복제하고 다음을 포함하는 오리진 그룹으로 Amazon CloudFront 배포를 설정하는 것입니다. 2개의 S3 버킷을 오리진으로 사용합니다. 따라서 정답은 C입니다.</div>
+<div class="comment-content">최소한의 운영 오버헤드로 요구 사항을 충족하는 솔루션은 us-east-1의 S3 버킷에서 복제를 구성하여 두 번째 리전의 S3 버킷에 객체를 복제하고 다음을 포함하는 원본 그룹으로 Amazon CloudFront 배포를 설정하는 것입니다. 두 개의 S3 버킷을 원본으로 사용합니다. 따라서 정답은 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -846,11 +889,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 09:39">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 (화) 09:39">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -864,7 +907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -896,12 +939,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 07:31">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">서로 다른 리전의 서로 다른 두 Amazon S3 버킷을 콘텐츠의 오리진으로 사용하도록 Amazon CloudFront를 구성할 수 있습니다. 이렇게 하려면 CloudFront 배포 설정에서 두 개의 별도 Amazon S3 버킷 오리진을 생성해야 합니다. 각각은 다른 리전의 다른 S3 버킷을 가리킵니다. CloudFront 배포를 생성할 때 배포 구성에 여러 오리진을 추가할 수 있습니다. 오리진으로 사용하려는 S3 버킷의 도메인 이름에 해당하는 각 오리진의 오리진 도메인 이름을 지정할 수 있습니다. CloudFront가 오리진과 통신하기 위해 HTTP를 사용할지 HTTPS를 사용할지를 결정하는 오리진 프로토콜 정책을 지정할 수도 있습니다. 두 버킷의 콘텐츠를 동기화된 상태로 유지하려면 두 S3 버킷 간에 교차 리전 복제를 구성해야 합니다.</div>
+<div class="comment-content">서로 다른 지역의 서로 다른 두 Amazon S3 버킷을 콘텐츠의 오리진으로 사용하도록 Amazon CloudFront를 구성할 수 있습니다. 이렇게 하려면 CloudFront 배포 설정에서 두 개의 별도 Amazon S3 버킷 오리진을 생성해야 하며, 각각은 서로 다른 지역의 서로 다른 S3 버킷을 가리킵니다. CloudFront 배포를 생성할 때 배포 구성에 여러 오리진을 추가할 수 있습니다. 오리진으로 사용하려는 S3 버킷의 도메인 이름에 해당하는 각 오리진의 오리진 도메인 이름을 지정할 수 있습니다. CloudFront가 오리진과 통신하기 위해 HTTP를 사용할지, 아니면 HTTPS를 사용할지 결정하는 오리진 프로토콜 정책을 지정할 수도 있습니다. 두 버킷의 콘텐츠를 동기화된 상태로 유지하려면 두 S3 버킷 간에 지역 간 복제를 구성해야 한다는 점을 명심하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -910,7 +953,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -941,8 +984,8 @@
 				준코
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 31일 화요일 03:55">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 31일 (화) 03:55">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -956,7 +999,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,16 +1027,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ask4cloud
+				Ask4cloud
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 20일 금요일 12:17">
-			6개월, 4주 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">이 솔루션은 회사가 Amazon CloudFront를 사용하여 여러 지역에 웹 애플리케이션의 정적 자산을 자동으로 배포하고 us-east-1의 기본 S3 버킷을 사용할 수 없게 되면 CloudFront 트래픽을 두 번째 리전의 보조 S3 버킷으로 자동 라우팅합니다. 이 솔루션은 추가 Lambda 기능이 필요하지 않거나 장애 조치를 위해 애플리케이션 코드를 업데이트할 필요가 없습니다.</div>
+<div class="comment-content">이 솔루션은 회사가 Amazon CloudFront를 사용하여 웹 애플리케이션의 정적 자산을 여러 지역에 자동으로 배포할 수 있게 하고, us-east-1의 기본 S3 버킷을 사용할 수 없게 되면 CloudFront를 사용하여 최소한의 운영 오버헤드로 요구 사항을 충족합니다. 트래픽을 두 번째 지역의 보조 S3 버킷으로 자동 라우팅합니다. 이 솔루션을 사용하면 추가 Lambda 기능이 필요하지 않거나 장애 조치를 위해 애플리케이션 코드를 업데이트할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1030,16 +1073,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 21:37">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. 두 번째 리전의 S3 버킷에 개체를 복제하도록 us-east-1의 S3 버킷에서 복제를 구성합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹으로 Amazon CloudFront 배포를 설정합니다. 이 옵션은 2개의 S3 버킷에서 객체의 자동 복제를 제공하고 CloudFront는 가장 가까운 오리진으로 요청을 자동으로 라우팅하여 애플리케이션에 짧은 지연 시간과 고가용성을 제공합니다. 복제 및 장애 조치가 S3 및 CloudFront에서 자동으로 처리되므로 이 솔루션을 유지하려면 최소한의 운영 오버헤드가 필요합니다.</div>
+<div class="comment-content">C. us-east-1의 S3 버킷에 복제를 구성하여 두 번째 리전의 S3 버킷에 객체를 복제합니다. 두 개의 S3 버킷을 오리진으로 포함하는 오리진 그룹을 사용하여 Amazon CloudFront 배포를 설정합니다. 이 옵션은 두 개의 S3 버킷에 걸쳐 자동 객체 복제를 제공하며 CloudFront는 자동으로 요청을 가장 가까운 오리진으로 라우팅하여 애플리케이션에 짧은 지연 시간과 높은 가용성을 제공합니다. 이 솔루션은 복제 및 장애 조치가 S3 및 CloudFront에 의해 자동으로 처리되므로 유지 관리를 위해 최소한의 운영 오버헤드가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1048,7 +1091,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1080,7 +1123,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 5일 목요일 20:09">
-			7개월, 1주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1093,7 +1136,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1121,16 +1164,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아이믹
+				아이미크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 28일 수 13:00">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C에서와 같이 오리진 그룹과 함께 CloudFront를 사용하는 경우에는 필요하지 않은 장애 조치의 경우 두 번째 리전에서 S3 객체를 로드하도록 애플리케이션 코드를 업데이트하는 작업이 포함됩니다.</div>
+<div class="comment-content">장애 조치가 발생한 경우 두 번째 리전에서 S3 객체를 로드하도록 애플리케이션 코드를 업데이트해야 합니다. 이는 옵션 C와 같이 원본 그룹과 함께 CloudFront를 사용하는 경우에는 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,16 +1210,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 19:20">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 19:20">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답변 C</div>
+<div class="comment-content">답 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1185,7 +1228,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1240,7 +1283,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 02:45">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1289,7 +1332,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 15 Aug 2023 14:06">
-			1 day ago
+			1 week, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1334,7 +1377,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 21:11">
-			6 days, 17 hours ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1380,7 +1423,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 08 Aug 2023 08:02">
-			1 week, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1426,7 +1469,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 11:06">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1472,7 +1515,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 12:20">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1518,7 +1561,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 04:05">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1563,7 +1606,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 15:08">
-			1 month, 2 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1609,7 +1652,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availabi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 11:53">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1659,7 +1702,7 @@ On the other hand, option D suggests configuring replication on the S3 bucket in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 21:54">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1706,7 +1749,7 @@ More information at https://docs.aws.amazon.com/AmazonCloudFront/latest/Develope
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 09 May 2023 11:51">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1752,7 +1795,7 @@ More information at https://docs.aws.amazon.com/AmazonCloudFront/latest/Develope
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 May 2023 22:12">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1798,7 +1841,7 @@ More information at https://docs.aws.amazon.com/AmazonCloudFront/latest/Develope
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Apr 2023 01:33">
-			4 months ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1843,7 +1886,7 @@ More information at https://docs.aws.amazon.com/AmazonCloudFront/latest/Develope
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 09:39">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1889,7 +1932,7 @@ More information at https://docs.aws.amazon.com/AmazonCloudFront/latest/Develope
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 07:31">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1943,7 +1986,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 03:55">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1989,7 +2032,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 20 Jan 2023 12:17">
-			6 months, 4 weeks ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2035,7 +2078,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 21:37">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2081,7 +2124,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 05 Jan 2023 20:09">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2126,7 +2169,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 13:00">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2172,7 +2215,7 @@ Keep in mind that you will need to configure cross-region replication between th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 19:20">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

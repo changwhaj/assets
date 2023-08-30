@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 프로페셔널 SAP-C02 주제 1 질문 13 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 시험 문제 13 문제 13 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 13 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 13 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="856128">
 <p class="card-text">
 							
-								회사는 서버에 대한 패치 프로세스를 구현해야 합니다. 온프레미스 서버와 Amazon EC2 인스턴스는 다양한 도구를 사용하여 패치를 수행합니다. 관리에는 모든 서버 및 인스턴스의 패치 상태를 보여주는 단일 보고서가 필요합니다. <br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 어떤 조치를 취해야 합니까?
+								회사에서는 서버에 대한 패치 프로세스를 구현해야 합니다. 온프레미스 서버와 Amazon EC2 인스턴스는 다양한 도구를 사용하여 패치를 수행합니다. 관리에는 모든 서버와 인스턴스의 패치 상태를 보여주는 단일 보고서가 필요합니다. <br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 어떤 조치를 취해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS Systems Manager를 사용하여 온프레미스 서버 및 EC2 인스턴스에서 패치를 관리합니다. Systems Manager를 사용하여 패치 규정 준수 보고서를 생성합니다.
+											AWS Systems Manager를 사용하여 온프레미스 서버 및 EC2 인스턴스의 패치를 관리하십시오. Systems Manager를 사용하여 패치 규정 준수 보고서를 생성하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											AWS OpsWorks를 사용하여 온프레미스 서버 및 EC2 인스턴스에서 패치를 관리합니다. OpsWorks와 Amazon QuickSight 통합을 사용하여 패치 규정 준수 보고서를 생성합니다.
+											AWS OpsWorks를 사용하여 온프레미스 서버 및 EC2 인스턴스의 패치를 관리합니다. OpsWorks와 Amazon QuickSight 통합을 사용하여 패치 규정 준수 보고서를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon EventBridge 규칙을 사용하여 AWS Systems Manager 패치 수정 작업을 예약하여 패치를 적용합니다. Amazon Inspector를 사용하여 패치 규정 준수 보고서를 생성하십시오.
+											Amazon EventBridge 규칙을 사용하여 AWS Systems Manager 패치 수정 작업을 예약하여 패치를 적용합니다. Amazon Inspector를 사용하여 패치 규정 준수 보고서를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS OpsWorks를 사용하여 온프레미스 서버 및 EC2 인스턴스에서 패치를 관리합니다. AWS X-Ray를 사용하여 패치 상태를 AWS Systems Manager OpsCenter에 게시하여 패치 규정 준수 보고서를 생성합니다.
+											AWS OpsWorks를 사용하여 온프레미스 서버 및 EC2 인스턴스의 패치를 관리합니다. AWS X-Ray를 사용하여 패치 상태를 AWS Systems Manager OpsCenter에 게시하여 패치 규정 준수 보고서를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a> 2022년 
-							
-							12 <i>
-							월 12일 오전 2:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a>
-							
-							at <i>
-							Dec. 12, 2022, 2:38 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,19 +291,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 17:13">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 17:13">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 좋다 https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premises.html</div>
+<div class="comment-content">A가 좋다 https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premise.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -269,7 +312,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,24 +332,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 18:14">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞습니다. AWS Systems Manager는 온프레미스 서버와 EC2 인스턴스 모두에서 패치를 관리하고 패치 규정 준수 보고서를 생성할 수 있습니다. AWS OpsWorks 및 Amazon Inspector는 패치 관리용으로 특별히 설계되지 않았으므로 이 사용 사례에 가장 적합하지 않습니다. Amazon EventBridge 규칙 및 AWS X-Ray를 사용하여 패치 규정 준수 보고서를 생성하는 것은 패치 관리 보고용으로 설계되지 않았기 때문에 실용적인 솔루션이 아닙니다.</div>
+<div class="comment-content">A가 맞습니다. AWS Systems Manager는 온프레미스 서버와 EC2 인스턴스 모두에서 패치를 관리하고 패치 규정 준수 보고서를 생성할 수 있습니다. AWS OpsWorks 및 Amazon Inspector는 패치 관리를 위해 특별히 설계되지 않았으므로 이 사용 사례에 가장 적합한 선택이 아닙니다. Amazon EventBridge 규칙과 AWS X-Ray를 사용하여 패치 규정 준수 보고서를 생성하는 것은 패치 관리 보고용으로 설계되지 않았기 때문에 실용적인 솔루션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">6</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,19 +385,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언제부터
+				언제보다
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 14:23">
-			12시간 23분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 14:23">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,11 +434,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				stevegod0
+				스티브갓0
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 29일 (토) 05:54">
-			3 주 전
+<span class="comment-date align-middle" title="2023년 7월 29일 토요일 05:54">
+			4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,16 +479,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				소_레이
+				소 레이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 24일 월요일 02:01">
-			3주, 6일 전
+<span class="comment-date align-middle" title="2023년 7월 24일 (월) 02:01">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">다른 옵션은 산만합니다. 옵스워크는 고객이 셰프나 퍼펫의 기존 대본이나 노하우를 활용하고자 하는 경우에만 맞을 것입니다.</div>
+<div class="comment-content">다른 옵션은 방해 요소입니다. 고객이 기존 대본이나 셰프나 퍼펫의 노하우를 활용하고 싶을 경우에만 Opswork가 옳을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -486,12 +529,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 28일 수요일 03:04">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">네 - A</div>
+<div class="comment-content">응 - 에</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,11 +575,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 25일 목요일 11:39">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 가장 좋지만 Systems Manager는 패치 규정 준수 보고서를 생성할 수 없습니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premises.html - Systems Manager Inventory의 리소스 데이터 동기화는 패치 세부 정보를 수집하고 게시합니다. S3 버킷. - 패치 규정 준수 보고 및 대시보드는 S3 버킷 정보에서 Amazon QuickSight에 구축됩니다.</div>
+<div class="comment-content">A가 가장 좋지만 Systems Manager는 패치 규정 준수 보고서를 생성할 수 없습니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premise.html - Systems Manager Inventory의 리소스 데이터 동기화는 패치 세부 정보를 수집하여 게시합니다. S3 버킷. - 패치 규정 준수 보고 및 대시보드는 S3 버킷 정보를 바탕으로 Amazon QuickSight에 구축되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,16 +616,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				게임 오브 러브
+				사랑의 게임
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 8일 월요일 13:14">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 그들이 공유한 정보에 따라 이 질문에 대한 정답입니다.</div>
+<div class="comment-content">A가 공유한 정보에 따르면 이 질문에 대한 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -591,7 +634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -619,11 +662,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				2알두스
+				2aldous
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 18일 화요일 20:21">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 18일 화 20:21">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,16 +708,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 06:54">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 화 06:54">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Systems Manager를 사용하여 패치 관리</div>
+<div class="comment-content">AWS 시스템 관리자를 사용하여 패치 관리</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -711,16 +754,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 7일 화요일 11:15">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premises.html</div>
+<div class="comment-content">https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid-cloud/design-on-premise.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -729,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,11 +800,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				게임 오브 러브
+				사랑의 게임
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 08:06">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,13 +849,13 @@
 				dev112233xx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 01:29">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 01:29">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 올바른 ofc.. 쉬운 것입니다)</div>
+<div class="comment-content">A는 대부분 정확합니다..쉬운 것입니다)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,11 +892,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				spencer_sharp
+				스펜서_샤프
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 09:18">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -867,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -898,8 +941,8 @@
 				라지40
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 09:54">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 09:54">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -913,7 +956,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -941,15 +984,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장규20000
+				장유20000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 02:38">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 02:38">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -958,7 +1001,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1013,7 +1056,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 17:13">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1052,7 +1095,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 18:14">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1064,7 +1107,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">6</span> times
+				upvoted <span class="upvote-count">7</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1108,7 +1151,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 14:23">
-			12 hours, 23 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1154,7 +1197,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Jul 2023 05:54">
-			3 weeks ago
+			4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1200,7 +1243,7 @@ https://www.amazonaws.cn/en/systems-manager/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 02:01">
-			3 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1246,7 +1289,7 @@ https://www.amazonaws.cn/en/systems-manager/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 03:04">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1292,7 +1335,7 @@ https://www.amazonaws.cn/en/systems-manager/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 11:39">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1341,7 +1384,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 08 May 2023 13:14">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1387,7 +1430,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patch-management-hybrid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 20:21">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1434,7 +1477,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 06:54">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1480,7 +1523,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Mar 2023 11:15">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1526,7 +1569,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 08:06">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1572,7 +1615,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 01:29">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1618,7 +1661,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 09:18">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1664,7 +1707,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 09:54">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1710,7 +1753,7 @@ A is the answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 02:38">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

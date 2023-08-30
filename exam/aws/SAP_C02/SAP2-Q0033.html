@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect – Professional SAP-C02 주제 1 질문 33 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 질문 33 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 33 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 33 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="856148">
 <p class="card-text">
 							
-								한 회사가 VPC의 퍼블릭 서브넷에 있는 5개의 Amazon EC2 인스턴스에서 모바일 앱용 모놀리식 REST 기반 API를 호스팅하고 있습니다. 모바일 클라이언트는 Amazon Route 53에서 호스팅되는 도메인 이름을 사용하여 API에 연결합니다. 회사는 모든 EC2 인스턴스의 IP 주소로 Route 53 다중값 응답 라우팅 정책을 생성했습니다. 최근 이 앱은 갑작스러운 대규모 트래픽 증가에 압도당했습니다. 앱이 트래픽을 따라잡지 못했습니다. <br/>솔루션 설계자는 앱이 새롭고 다양한 로드를 처리할 수 있도록 솔루션을 구현해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 VPC의 퍼블릭 서브넷에 있는 5개의 Amazon EC2 인스턴스에서 모바일 앱용 모놀리식 REST 기반 API를 호스팅하고 있습니다. 모바일 클라이언트는 Amazon Route 53에서 호스팅되는 도메인 이름을 사용하여 API에 연결합니다. 회사는 모든 EC2 인스턴스의 IP 주소를 사용하여 Route 53 다중 응답 라우팅 정책을 생성했습니다. 최근 앱 트래픽이 대규모로 급증하면서 앱이 압도당했습니다. 앱이 트래픽을 따라잡지 못했습니다. <br/>솔루션 설계자는 앱이 새롭고 다양한 부하를 처리할 수 있도록 솔루션을 구현해야 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="856148" type="application/json">[{"voted_answers": "A", "vote_count": 61, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 19, "is_most_voted": false}]</script>
+<script id="856148" type="application/json">[{"voted_answers": "A", "vote_count": 61, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 21, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											API를 개별 AWS Lambda 함수로 분리합니다. 백엔드에 대한 Lambda 통합으로 Amazon API Gateway REST API를 구성합니다. API Gateway API를 가리키도록 Route 53 레코드를 업데이트합니다.
+											API를 개별 AWS Lambda 함수로 분리합니다. 백엔드에 대한 Lambda 통합을 통해 Amazon API Gateway REST API를 구성합니다. API Gateway API를 가리키도록 Route 53 레코드를 업데이트합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,14 +157,14 @@
 													B.
 												</span> 
 											
-											API 로직을 컨테이너화합니다. Amazon Elastic Kubernetes Service(Amazon EKS) 클러스터를 생성합니다. Amazon EC2를 사용하여 클러스터에서 컨테이너를 실행합니다. Kubernetes 인그레스를 만듭니다. Kubernetes 수신을 가리키도록 Route 53 레코드를 업데이트합니다.
+											API 로직을 컨테이너화합니다. Amazon Elastic Kubernetes Service(Amazon EKS) 클러스터를 생성합니다. Amazon EC2를 사용하여 클러스터에서 컨테이너를 실행합니다. Kubernetes 수신을 만듭니다. Kubernetes 수신을 가리키도록 Route 53 레코드를 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Auto Scaling 그룹을 생성합니다. Auto Scaling 그룹에 모든 EC2 인스턴스를 배치합니다. CPU 사용률을 기반으로 조정 작업을 수행하도록 Auto Scaling 그룹을 구성합니다. Auto Scaling 그룹 변경에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다.
+											Auto Scaling 그룹을 생성합니다. 모든 EC2 인스턴스를 Auto Scaling 그룹에 배치합니다. CPU 사용률을 기반으로 조정 작업을 수행하도록 Auto Scaling 그룹을 구성합니다. Auto Scaling 그룹 변경 사항에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,11 +173,11 @@
 													D.
 												</span> 
 											
-											API 앞에 Application Load Balancer(ALB)를 생성합니다. EC2 인스턴스를 VPC의 프라이빗 서브넷으로 이동합니다. ALB의 대상으로 EC2 인스턴스를 추가합니다. ALB를 가리키도록 Route 53 레코드를 업데이트합니다.
+											API 앞에 ALB(Application Load Balancer)를 생성합니다. EC2 인스턴스를 VPC의 프라이빗 서브넷으로 이동합니다. EC2 인스턴스를 ALB의 대상으로 추가합니다. ALB를 가리키도록 Route 53 레코드를 업데이트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="61 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">A (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">씨 (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">D (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="61 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">C (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">D (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							마스터 로 <a class="title-username" style="">
-								메인
-							 </a><i>
-							2022년 12월 13일 오후 4:59</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="856148" type="application/json">[{"voted_answers": "A", "vote_count": 61, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 19, "is_most_voted": false}]</script>
+<script id="856148" type="application/json">[{"voted_answers": "A", "vote_count": 61, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 25, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 21, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -207,20 +260,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="61 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">A (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">C (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">D (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="61 votes." data-toggle="tooltip" role="progressbar" style="width: 57%; display: flex;" title="">A (57%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">C (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">D (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								masetromain
-							</a>
-							
-							at <i>
-							Dec. 13, 2022, 4:59 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,24 +295,24 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 16일 금요일 12:02">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 16일 금 12:02">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">서버리스는 최소한의 운영 노력이 필요합니다.</div>
+<div class="comment-content">서버리스에는 최소한의 운영 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">20</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">20</span> 회
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,12 +335,12 @@
 				dqwsmwwvtgxwkvgcvc
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 02:11">
-			13시간 53분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 02:11">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Route53의 다중값 응답 라우팅은 적절한 로드 밸런싱이 아니므로 다중값 응답 라우팅을 ALB로 교체하면 로드 밸런스가 적절할 것입니다(최소한의 노력으로).</div>
+<div class="comment-content">Route53의 다중 값 응답 라우팅은 적절한 로드 밸런싱이 아닌 것 같으므로 다중 값 응답 라우팅을 ALB로 교체하면 (최소한의 노력으로) 로드 밸런싱이 적절하게 이루어집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,11 +381,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 19일 금요일 10:50">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 유형의 실제 관점에서 이것은 IMHO의 대답이 될 수 없습니다. 확실히 AWS는 "실제 세계"를 고려합니다.</div>
+<div class="comment-content">모든 유형의 실제 관점에서 볼 때 이것은 IMHO에 대한 답이 될 수 없습니다. 확실히 AWS는 "실제 세계"를 고려합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,15 +422,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kyixoayffasdrlaqd
+				lkyixoayffasdrlaqd
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 19:00">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 어떻게 답이 될 수 있습니까 ?? API를 개별 AWS Lambda 함수로 분리합니다. 이를 위한 운영 오버헤드를 계산할 수 있습니까?</div>
+<div class="comment-content">이것이 어떻게 대답이 될 수 있습니까 ?? API를 개별 AWS Lambda 함수로 분리합니다. 그렇게 하기 위한 운영 오버헤드를 계산할 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -416,15 +459,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				scuzzy2010
+				스쿠지2010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 15일 (토) 01:58">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 15일 토요일 01:58">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">분리는 개발 오버헤드가 되겠지만 일단 완료되면 운영 오버헤드(운영 = 매일 진행)가 가장 적습니다.</div>
+<div class="comment-content">분리하는 것은 개발 오버헤드가 되지만 일단 완료되면 운영상 엿듣는 작업(운영 = 매일 진행 중인 작업)이 최소화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -481,15 +524,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 31일 화요일 03:10">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 31일 (화) 03:10">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">100개의 REST API가 있다고 가정합니다(이 애플리케이션은 모놀리식이므로 매우 일반적입니다). 여전히 모든 API 코드를 복사하여 람다에 붙여넣을 건가요? 비즈니스 논리가 변경되면 어떻게 됩니까? 이것은 최소가 아닙니다. 나는 C와 함께 갈 것이다.</div>
+<div class="comment-content">100개의 REST API가 있다고 가정합니다(이 애플리케이션은 모놀리식이므로 매우 일반적입니다). 아직도 모든 API 코드를 복사하여 람다에 붙여넣으시겠습니까? 비즈니스 로직이 변경되면 어떻게 되나요? 이것은 최소한이 아닙니다. 나는 C와 함께 갈 것이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -518,15 +561,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				scuzzy2010
+				스쿠지2010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 23:14">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 23:14">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"모놀리식 REST 기반 API"라고 되어 있으므로 API는 1개뿐입니다. 처음에는 C를 생각했지만 최소한의 작업 오버헤드(적어도 구현 노력)를 말하는 A를 사용하겠습니다. Lambda는 EC2에 비해 사실상 작업 오버헤드가 없습니다.</div>
+<div class="comment-content">"모놀리식 REST 기반 API"라고 되어 있으므로 API는 1개뿐입니다. 처음에는 C를 생각했지만 작업 오버헤드가 가장 적으므로(구현 노력도) A를 선택하겠습니다. Lambda는 EC2에 비해 작업 오버헤드가 거의 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -535,7 +578,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -555,15 +598,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 15:08">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 15:08">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 A는 "API를 개별 AWS Lambda 함수로 분리합니다."라고 말합니다. 많은 API가있을 수 있다고 생각합니다. 그러나 우리는 개발 노력이 아닌 운영 노력을 최소화하려고 합니다...</div>
+<div class="comment-content">답변 A는 "API를 개별 AWS Lambda 함수로 분리합니다."라고 말합니다. 많은 API가 있을 수 있다고 생각합니다. 그러나 우리는 개발 노력이 아닌 운영 노력을 최소화하려고 합니다...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -572,7 +615,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -604,11 +647,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 1일 월요일 10:32">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모놀리식 REST API에는 엄청나게 많은 개별 API가 있을 수 있습니다. 이 리팩터는 작은 것이 아닙니다.</div>
+<div class="comment-content">모놀리식 REST API에는 엄청나게 많은 개별 API가 있을 가능성이 높습니다. 이 리팩터링은 작은 것이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -617,7 +660,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -656,12 +699,12 @@
 				차투르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 30일 화요일 07:13">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 30일 (화) 07:13">
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"Auto Scaling 그룹 변경에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다. "이건 말도 안 되는데 왜 Lambda를 사용하여 R53 레코드를 변경해야 합니까?</div>
+<div class="comment-content">"Auto Scaling 그룹 변경 사항에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다." 이것은 말이 되지 않습니다. 왜 Lambda를 사용하여 R53 레코드를 변경해야 합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -670,7 +713,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -694,11 +737,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 10일 목요일 14:41">
-			1주, 2일 전
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ASG에 4개의 ec2가 있는 경우 ASG가 최대 6개로 확장되는 경우 도메인 이름에 4개의 레코드가 있어야 하기 때문에 예를 들어 도메인 이름에 2개의 레코드를 더 추가해야 합니다.</div>
+<div class="comment-content">ASG에 4개의 ec2가 있는 경우 ASG가 6으로 확장되면 도메인 이름에 4개의 레코드가 있어야 합니다. 예를 들어 도메인 이름에 2개 추가 2개의 레코드가 더 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -707,7 +750,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -730,6 +773,54 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="989617" id="comment-989617">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				소위타다드
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 25일 금 03:54">
+			1일, 19시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">ALB는 Rest API도 지원합니까(APIGW와 함께 사용하지 않는 한)? 나는 A (덜 오른쪽) 또는 C로 갈 것입니다</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -754,25 +845,22 @@
 				dqwsmwwvtgxwkvgcvc
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 09:46">
-			1일, 6시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Answer D는 ALB를 사용하여 적절한 로드 밸런싱을 위해 Route 53 다중 값 응답 라우팅 정책을 대체하기 위해 밸런싱합니다.</div>
+<div class="comment-content">답변 D는 ALB를 사용하여 적절한 로드 밸런싱을 위해 Route 53 다중 값 응답 라우팅 정책을 대체하기 위해 밸런싱을 수행합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,21 +892,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 23:13">
-			2주 전
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">답변: D SAP-C02에 이런 유형의 질문이 있다는 것이 믿기지 않습니다. 최소 운영 오버헤드는 A여야 하지만 질문은 정확히 다음과 같습니다. "솔루션 설계자는 앱이 새롭고 다양한 로드를 처리할 수 있도록 솔루션을 구현해야 합니다." 언제든지 "...새 앱이 처리할 수 있도록 솔루션 구현..." C가 가능하지만 "Auto Scaling 그룹 변경에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수 생성" ? 고객이 정말로 원하지 않는 한 이것을 제안할 생각조차 하지 않을 것입니다. 답변 D에는 "트래픽 급증을 처리하기 위한 ASG는 어디에 있습니까?"라는 항목이 있지만 여기에서 볼 수 있는 것처럼 문제가 요청의 빈약한 분배와 관련이 있는 것 같기 때문에 제 생각에는 덜 심각합니다.</div>
+<div class="comment-content">답: D SAP-C02에 이런 질문이 있다는 게 믿기지 않습니다. 최소 운영 오버헤드는 A여야 하지만 질문에는 정확히 다음과 같이 나와 있습니다. "솔루션 설계자는 앱이 새롭고 다양한 로드를 처리할 수 있도록 솔루션을 구현해야 합니다." 언제든지 "...새 앱이 처리할 수 있도록 솔루션을 구현하십시오..."라고 표시됩니다. C도 가능하지만 "Auto Scaling 그룹 변경 사항에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다." ? 고객이 정말로 원하지 않는 한, 나는 이것을 제안할 생각조차 하지 않을 것입니다. 답변 D에는 "트래픽 급증을 처리하기 위한 ASG는 어디에 있습니까?"라는 질문이 있지만 제 생각에는 이 문제가 여기에 표시된 것처럼 요청의 잘못된 배포와 관련된 것 같기 때문에 덜 심각하다고 생각됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -846,16 +934,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Asds
+				ASDS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 19:32">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 19:32">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">그들이 elb를 전혀 언급하지 않기 때문에 C가 될 수 없습니다…..A</div>
+<div class="comment-content">그들은 elb를 전혀 언급하지 않기 때문에 C가 될 수 없습니다. 이는…..A로 이어집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -864,7 +952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -895,13 +983,13 @@
 				소프트아트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 8일 (토) 13:35">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 8일 토요일 13:35">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">개발자 관점에서 D여야 합니다. A - 구현을 EC2에서 람다로 옮기시겠습니까? 최소 오버헤드가 될 수 없음 B - EKS도 많은 오버헤드 C - route53 레코드를 업데이트하는 데 람다를 사용하는 이유는 무엇입니까? D - 정답</div>
+<div class="comment-content">개발자 관점에서는 D여야 합니다. A - 구현을 EC2에서 람다로 옮기시겠습니까? 최소 오버헤드가 될 수 없음 B - EKS도 로트 오버헤드 C - Route53 레코드를 업데이트하기 위해 람다를 사용하는 이유는 무엇입니까? D - 정답</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -910,7 +998,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -942,12 +1030,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 7일 금요일 15:27">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A: 서버리스 - 최소 OPS 오버헤드. 배제 요인: B: K8s - OPS 오버헤드 + Dev 오버헤드. C: ASG + Lambda는 갑작스럽고 대규모 트래픽 급증에 비실용적인 것 같습니다. D: ALB + EC2는 양호하지만 ASG가 누락되어 트래픽 급증을 해결하지 못합니다.</div>
+<div class="comment-content">A: 서버리스 - OPS 오버헤드가 가장 적습니다. 제외 요소: B: K8s - OPS 오버헤드 + 개발 오버헤드. C: ASG + Lambda는 갑작스럽고 대규모 트래픽 급증에는 실용적이지 않은 것 같습니다. D: ALB + EC2는 좋지만 ASG가 누락되어 트래픽 급증을 해결하지 못합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -956,7 +1044,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -988,11 +1076,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 6일 목요일 22:49">
-			1개월, 1주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 그것이 C라고 생각했지만 질문은 "최소 운영", 서버리스 비트 옵션 CI 추측, A를 선택합니다. 내 마지막 댓글 @Examtopics를 삭제하십시오</div>
+<div class="comment-content">C인 줄 알았는데 질문은 "최소 운영"입니다. 서버리스가 옵션 CI를 능가하는 것으로 추측하고 A를 선택합니다. 내 마지막 댓글을 삭제해 주세요 @Examtopics</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1001,7 +1089,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1033,12 +1121,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 6일 목요일 22:47">
-			1개월, 1주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 그것이 C라고 생각했지만 질문은 "최소 운영"이고 서버리스는 옵션 CI 추측을 능가하며 이 질문에는 인스턴스가 5개만 있으므로 A를 선택합니다.</div>
+<div class="comment-content">C인 줄 알았는데 질문이 "최소 운영"이고 서버리스가 옵션 CI 추측을 능가하고 이 질문에는 인스턴스가 5개밖에 없으므로 A를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1047,7 +1135,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1075,16 +1163,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마일리클라우드
+				스마일클라우드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 15:45">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A입니다. 여기서 키워드는 "최소 개발"이 아니라 "최소 운영"입니다. 따라서 A의 개발 노력은 C보다 높지만 EC2, 패치, 업그레이드, 모니터링 등에 대해 걱정할 필요가 없기 때문에 운영은 낮습니다. "최소 운영" &lt;&lt;&lt;---</div>
+<div class="comment-content">A입니다. 여기서 키워드는 "최소 개발"이 아니라 "최소 운영"입니다. 그렇습니다. A를 사용한 개발 노력은 C보다 높지만 EC2, 패치, 업그레이드, 모니터링 등에 대해 걱정할 필요가 없기 때문에 운영 수준은 낮습니다. "최소 운영" &lt;&lt;&lt;---</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1093,7 +1181,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1125,12 +1213,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 03:54">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Lambda - 최소 작업 오버헤드</div>
+<div class="comment-content">Lambda - 최소한의 작업 오버헤드</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1227,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,16 +1255,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 12:23">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 12:23">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">개발 오버 헤드 때문에 A를 버릴 것입니다. D에는 ASG가 없으므로 유효한 옵션만 C입니다.</div>
+<div class="comment-content">개발 오버헤드 때문에 A를 폐기하겠습니다. D에는 ASG가 없으므로 유효한 옵션은 C뿐입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1185,7 +1273,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1216,13 +1304,13 @@
 				gd1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 01:45">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 01:45">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">GPT 4.0 ALB(Application Load Balancer)는 수신 트래픽을 Amazon EC2 인스턴스와 같은 여러 대상에 분산하는 데 도움이 됩니다. 이 배포는 애플리케이션의 가용성을 높이는 데 도움이 됩니다. ALB는 수신 트래픽 볼륨에 맞게 자동으로 확장할 수 있습니다. EC2 인스턴스를 VPC의 프라이빗 서브넷으로 이동하면 공격 노출 영역이 줄어들어 보안 태세가 강화됩니다.</div>
+<div class="comment-content">GPT 4.0 Application Load Balancer(ALB)는 Amazon EC2 인스턴스와 같은 여러 대상에 수신 트래픽을 분산하는 데 도움이 됩니다. 이 배포는 애플리케이션의 가용성을 높이는 데 도움이 됩니다. ALB는 수신 트래픽의 볼륨에 따라 자동으로 확장될 수 있습니다. EC2 인스턴스를 VPC의 프라이빗 서브넷으로 이동하면 공격 노출 영역이 줄어들어 보안 태세가 강화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1231,7 +1319,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1259,16 +1347,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				BCX
+				bcx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 15:25">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 15:25">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A는 확실히 틀렸습니다. 질문에 EC2에서 실행되는 모놀리식 애플리케이션이라고 나와 있습니다. 또한 최소한의 운영 노력으로 솔루션이 필요합니다. A를 구현하려면 Lambda에서 호스팅할 수 있도록 모놀리식 애플리케이션을 다시 작성하는 데 많은 시간과 노력이 필요합니다. B도 마찬가지입니다. Kubernetes입니다! 컨테이너! OMG, 그것은 많은 운영 노력입니다. 따라서 C 또는 D입니다. 둘 다 유효한 것 같습니다. 그러나 D에는 자동 확장 기능이 없으므로 문제를 처리할 수 없습니다(트래픽 급증 처리).</div>
+<div class="comment-content">A는 확실히 틀렸습니다. 질문에 따르면 EC2에서 실행되는 모놀리식 애플리케이션이라고 합니다. 또한 최소한의 운영 노력으로 솔루션이 필요합니다. A를 구현하려면 Lambda에서 호스팅할 수 있도록 모놀리식 애플리케이션을 다시 작성하는 데 많은 시간과 노력이 필요합니다. B도 마찬가지다, 쿠버네티스! 컨테이너! 맙소사, 운영에 많은 노력이 필요합니다. 따라서 C 또는 D입니다. 둘 다 유효한 것 같습니다. 그러나 D에는 자동 확장 기능이 없으므로 문제를 처리할 수 없습니다(트래픽 급증 처리).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1277,7 +1365,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1305,16 +1393,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				병에 걸렸다
+				병든
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 15일 목요일 13:34">
-			2 달전
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">문제는 "가장 적은 운영 오버헤드"에 대한 것이며 모바일 앱 리팩토링을 포함합니까? https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/serverless-microservices.html에 따르면 AWS는 리팩토링 앱이 운영 오버헤드에 포함되지 않는다고 가정하므로 대답은 A입니다.</div>
+<div class="comment-content">문제는 "최소 운영 오버헤드"에 관한 것이며 모바일 앱 리팩토링도 포함됩니까? https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/serverless-microservices.html에 따르면 AWS는 리팩토링 앱이 운영 오버헤드에 포함되지 않는다고 가정하므로 대답은 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1323,7 +1411,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1355,11 +1443,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 3일 토요일 08:10">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Lambda 함수와 관련된 제한이 있으며 VM에서 호스팅되는 모놀리식 앱은 람다 함수(아키텍처 변경)에 배치하기에 가장 적합하지 않습니다. 따라서 각 VM을 가리키는 도메인을 대체하는 부하 분산이 그럴듯합니다. 나는 D와 함께 갈 것이다</div>
+<div class="comment-content">Lambda 함수와 관련된 제한 사항이 있으며 VM에서 호스팅되는 모놀리식 앱은 람다 함수에 배치하는 데 가장 적합하지 않습니다(아키텍처 변경). 따라서 각 VM을 가리키는 도메인을 대체하는 부하 분산이 타당합니다. 나는 D와 함께 갈 것이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1368,7 +1456,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1396,16 +1484,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				림림우드
+				Limlimwdwd
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 26일 금요일 13:43">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">qn은 VPC에서 5 EC2를 언급했지만 Route 53 다중 값은 주로 지역 전체의 EC2에 대한 이점입니다. 핵심 단서는 "앱이 트래픽을 따라잡지 못했습니다"입니다. &gt;&gt; 첫 번째 EC2 IP 주소로 가는 모든 경로의 트래픽 때문일 수 있다고 제안하는 것 같았지만 아직 실패하지 않았으며 5개 모두에 대한 언급이 없습니다. EC2는 R53 다중값 모드에서 거의 높은 CPU 성능을 보여왔습니다. 따라서 ALB가 있으면 처리를 위한 로드가 분산됩니다.</div>
+<div class="comment-content">qn은 VPC에서 5개의 EC2를 언급했지만 Route 53 다중 값은 주로 지역 전체의 EC2에 이점이 있습니다. 핵심 단서는 "앱이 트래픽을 따라잡을 수 없습니다"입니다. &gt;&gt; 첫 번째 EC2 IP 주소로의 모든 경로가 트래픽으로 인한 것일 수 있다고 제안하는 것 같았지만 아직 실패하지 않았으며 5개 모두에 대한 언급이 없습니다. EC2는 R53 다중값 모드에서 높은 CPU에 가까운 성능을 발휘해 왔습니다. 따라서 ALB를 사용하면 처리를 위한 로드가 분산됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1414,7 +1502,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1442,16 +1530,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aca1
+				아카1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일(수) 17:50">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 17:50">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저는 A와 함께 갈 것입니다. 이것은 서버리스 솔루션이고 저에게는 확장에 가장 적합하고 일상적인 작업(운영 오버헤드)이 적기 때문에 C "C 옵션을 정말 깊이 살펴봤습니다. Auto Scaling 그룹을 만듭니다. 모든 EC2 인스턴스를 Auto Scaling 그룹에 배치합니다. CPU 사용률을 기반으로 하는 조정 작업을 수행하도록 Auto Scaling 그룹을 구성합니다. Auto Scaling 그룹 변경 사항에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다." 정말 중요한 한 가지가 빠져 있습니다. ASG에 현재 인스턴스를 추가하는 경우 ASG가 어떻게 확장됩니까? ASG는 새 EC2를 시작하기 위해 표준 AMI가 있는 시작 템플릿이 필요하며 여기에는 없습니다. ASG 내부에 현재 인스턴스를 추가합니다.</div>
+<div class="comment-content">저는 A를 선택하겠습니다. 이는 서버리스 솔루션이고 저에게는 확장에 가장 적합하고 일상적인 작업(운영 오버헤드)이 적기 때문에 C"C 옵션을 자세히 살펴보았습니다. Auto Scaling 그룹을 생성합니다. 모든 EC2 인스턴스를 Auto Scaling 그룹에 배치합니다. CPU 사용률을 기반으로 조정 작업을 수행하도록 Auto Scaling 그룹을 구성합니다. Auto Scaling 그룹 변경 사항에 반응하고 Route 53 레코드를 업데이트하는 AWS Lambda 함수를 생성합니다." - 하지만 이 항목은 정말 중요한 점 하나가 누락되었습니다. 현재 인스턴스를 ASG에 추가하는 경우 ASG는 어떻게 확장됩니까? ASG는 새 EC2를 시작하기 위해 표준 AMI가 포함된 시작 템플릿이 필요하지만 여기에는 없습니다. ASG 내부에 현재 인스턴스를 추가합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1460,7 +1548,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1492,11 +1580,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 12:20">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">퍼블릭 서브넷에 이미 5개의 EC2가 있으므로 대답은 C라고 생각합니다. 따라서 Auto Scaling 그룹을 설정하는 것이 가장 쉬운 설정이며 많은 작업 오버헤드가 없습니다.</div>
+<div class="comment-content">제 생각엔 퍼블릭 서브넷에 이미 5개의 EC2가 있기 때문에 대답은 C라고 생각합니다. 따라서 Auto Scaling 그룹을 설정하는 것이 가장 쉬운 설정이며 작업 오버헤드가 많지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1505,7 +1593,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1533,15 +1621,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				iamunstopable
+				완전 정지 가능
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 13:08">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 13:08">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 맞습니다. EC2의 Auto Scaling으로 새롭고 가변적인 부하를 처리합니다. A가 잘못되었습니다. 새롭고 가변적인 부하를 처리하지 못합니다. 확장할 수 없고 막대한 운영 오버헤드를 가져옵니다.</div>
+<div class="comment-content">C 말이 맞아요. EC2의 AutoScaling을 통해 새롭고 다양한 로드를 처리합니다. A가 잘못되었습니다. 새롭고 다양한 로드를 처리하지 않습니다. 확장성이 없으며 막대한 운영 오버헤드를 초래합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1550,7 +1638,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1581,13 +1669,13 @@
 				사루토비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 18일 화요일 02:05">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 18일 (화) 02:05">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이것은 EXAM이기 때문에 A를 선택하겠지만 실제 구현을 위한 최선의 아이디어는 아닐 수도 있습니다. D는 EC2가 프라이빗 서브넷으로 이동되어 보안이 강화된다는 이점이 추가된 훌륭한 첫 번째 단계라고 생각합니다. 아마도 A로 갈 것입니다. C도 가능하지만 로드 밸런서 기능을 대체하기 위한 다중 값이 마음에 들지 않으며 그 솔루션을 Lambda가 route-53을 업데이트하는 솔루션으로, 음...별로 좋아하지는 않습니다. ; 아마도 라이프 사이클 후크 일 것입니다.</div>
+<div class="comment-content">시험이기 때문에 A를 선택하겠습니다. 하지만 실제 구현을 위한 최선의 아이디어는 아닐 수도 있습니다. 나는 D가 EC2가 프라이빗 서브넷으로 이동되어 보안이 강화된다는 추가 이점을 갖춘 훌륭한 첫 번째 단계라고 생각합니다. 그러면 A로 갈 것입니다. C도 가능하지만 로드 밸런서 기능을 대체하는 다중 값과 ​​Route-53을 업데이트하는 Lambda를 사용하는 솔루션을 좋아하지 않습니다. 음...너무 마음에 드는지 잘 모르겠습니다. ; 어쩌면 수명 주기 후크일 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1596,7 +1684,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1624,16 +1712,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프파보레토
+				프라파보레토
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 11일 화요일 11:50">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 11일 (화) 11:50">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">사람들은 최소한의 운영 오버헤드와 구현 노력을 혼동합니다. 이들은 2개의 서로 다른 완전히 독립적인 개념입니다.</div>
+<div class="comment-content">사람들은 최소 운영 오버헤드와 구현 노력을 혼동합니다. 이는 서로 다르고 완전히 독립적인 두 가지 개념입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1642,7 +1730,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1674,12 +1762,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 7일 금요일 05:28">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">1. 항상 '최소 운영 오버헤드'가 핵심 요구 사항인 이러한 유형의 질문을 볼 때 많은 사람들이 새로운 솔루션을 위한 초기 클라우드 인프라 설정을 오버헤드가 아닌 오버헤드의 일부로 혼동합니다. 운영 오버헤드는 유지 관리, 패치 적용, 백업 등에 관한 것입니다. 2. 또한 모놀리식 부분은 가능하지만 혼동하기 위한 것입니다(https://aws.amazon.com/blogs/compute/migrating-a-monolithic-net-참조). rest-api-to-aws-lambda/) 3. 마지막으로 애플리케이션에 대해 가정하지 마십시오. 100개의 REST API, 리팩토링 노력 등에 대한 의견이 있습니다.</div>
+<div class="comment-content">1. 항상 '최소 운영 오버헤드'라는 핵심 요구 사항에 대한 이러한 유형의 질문을 볼 때 많은 사람들은 새로운 솔루션에 대한 초기 클라우드 인프라 설정을 그렇지 않은 오버헤드의 일부로 혼동합니다. 운영 오버헤드는 유지 관리, 패치 적용, 백업 등에 관한 것입니다. 2. 또한 모놀리식 부분은 가능하지만 혼동을 의미합니다(https://aws.amazon.com/blogs/compute/migating-a-monolithic-net- 참조). Rest-api-to-aws-lambda/) 3. 마지막으로 애플리케이션에 대해 가정하지 마십시오. 100개의 REST API, 리팩토링 노력 등에 대한 의견을 봅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1688,7 +1776,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1719,12 +1807,12 @@
 				미카드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 08:39">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 08:39">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">요청이 *운영상* 오버헤드가 가장 적기 때문에 A를 사용하겠습니다.</div>
+<div class="comment-content">요청의 *운영* 오버헤드가 가장 적으므로 A를 사용하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1733,7 +1821,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1765,7 +1853,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 02:08">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1778,7 +1866,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1806,16 +1894,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 09:19">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 A에 투표합니다 - sep 람다 기능</div>
+<div class="comment-content">나는 A에 투표합니다 - sep 람다 함수</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1824,7 +1912,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1856,12 +1944,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 13일 (월) 04:10">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/getting-started/hands-on/break-monolith-app-microservices-ecs-docker-ec2/module-one/ 및 https://docs.aws.amazon.com/whitepapers /latest/microservices-on-aws/serverless-microservices.html 마이크로서비스 아키텍처로 이동하는 것은 의미가 있을 뿐만 아니라 많은 운영 오버헤드를 제거합니다.</div>
+<div class="comment-content">https://aws.amazon.com/getting-started/hands-on/break-monolith-app-microservices-ecs-docker-ec2/module-one/ 및 https://docs.aws.amazon.com/whitepapers /latest/microservices-on-aws/serverless-microservices.html 간단히 말해서 마이크로서비스 아키텍처로 이동하는 것은 의미가 있을 뿐만 아니라 많은 운영 오버헤드를 제거할 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1870,7 +1958,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1901,13 +1989,13 @@
 				dev112233xx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 5일 일요일 22:29">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="일 2023년 3월 5일 22:29">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이 질문은 모든 까다로운 질문의 어머니입니다. 현재 디자인의 주요 문제는 R53이 앱에 부하를 분산하는 데 사용된다는 것입니다. 나쁜 습관입니다. 이것이 ALB가 여기에서 최고의 솔루션이라고 생각하는 이유입니다. 대답 A는 큰 리팩터링 때문에 오답이며 이것이 당신이 생각하고 싶은 마지막 생각입니다! D답안은 자동 확장만 해결하고 ALB는 놓치고 여전히 R53을 로드 밸런서로 사용합니다!</div>
+<div class="comment-content">이 질문은 모든 까다로운 질문의 어머니입니다 ㅎㅎ 현재 디자인의 주요 이슈는 R53을 사용하여 앱에 부하를 분산시키는 것입니다. 이는 나쁜 습관입니다. 이것이 제가 ALB가 여기서 최고의 솔루션이라고 생각하는 이유입니다. 대답 A는 큰 리팩터링 때문에 틀렸으며 이것이 여러분이 생각하고 싶은 마지막 생각입니다! 답변 D는 AutoScaling만 해결했지만 ALB를 놓치고 여전히 R53을 로드 밸런서로 사용합니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1940,11 +2028,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 27일 토요일 07:04">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">갑작스러운 트래픽 폭주는 ASG를 사용하여 억제할 수 없습니다.</div>
+<div class="comment-content">ASG를 사용하면 갑작스러운 트래픽 폭증을 억제할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1953,7 +2041,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1985,11 +2073,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 7일 화요일 15:28">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동의합니다. 세부 사항을 모르는 APP 리팩터링이 의미가 없습니다(A &amp; B) TTL 기간 동안 캐시될 수 있는 경로 53에 레코드를 추가하고 제거하기 위해 람다를 생성하는 이유를 모르겠습니다. ( 씨 )</div>
+<div class="comment-content">동의합니다. 세부 사항(A &amp; B)을 모르는 APP를 리팩토링하는 것은 말이 되지 않습니다. TTL 기간 동안 캐시될 수 있는 경로 53에 레코드를 추가하고 제거하기 위해 람다를 만드는 이유를 모르겠습니다. ( 씨 )</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1998,7 +2086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2037,13 +2125,13 @@
 				도토
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 02일 목요일 03:52">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 2일 목요일 03:52">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">cccccccccccc</div>
+<div class="comment-content">ㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2052,7 +2140,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2084,12 +2172,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 27일 (월) 15:59">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 맞음 A: 람다 및 다른 아키텍처로 리팩토링하는 데 많은 노력이 필요할 수 있음 B: 컨테이너/쿠버네티스 및 다른 아키텍처로 리팩토링하는 데 많은 노력이 필요할 수 있음 C: 맞음 D: 로드 밸런서가 있으면 좋겠지만 솔루션은 자동 확장을 포함하지 않으므로 자체적으로 수요 증가를 충족하지 못합니다. 또한 앱 동작에 따라 인스턴스를 프라이빗 서브넷으로 이동하는 것이 불가능할 수 있습니다.</div>
+<div class="comment-content">C가 맞습니다. A: 람다 및 다른 아키텍처로 리팩토링하는 데 많은 노력이 필요할 수 있습니다. B: 컨테이너/쿠버네티스 및 다른 아키텍처로 리팩토링하는 데 많은 노력이 필요할 수 있습니다. C: 맞습니다. D: 로드 밸런서를 사용하면 좋겠지만 솔루션에는 자동 확장이 포함되지 않으므로 자체적으로 수요 증가를 충족할 수 없습니다. 또한 앱 동작에 따라 인스턴스를 프라이빗 서브넷으로 이동하지 못할 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2098,7 +2186,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2126,16 +2214,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				커드비앙
+				큐드비안
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 00:00">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 A와 B는 상당한 개발 작업과 운영 오버헤드가 필요할 수 있는 애플리케이션 재설계를 제안합니다. 옵션 C는 Route 53 레코드를 업데이트하기 위해 추가 Lambda 함수를 요구하여 복잡성을 추가합니다.</div>
+<div class="comment-content">옵션 A와 B는 상당한 개발 작업과 운영 오버헤드가 필요할 수 있는 애플리케이션 재설계를 제안합니다. 옵션 C는 Route 53 레코드를 업데이트하기 위해 추가 Lambda 함수를 요구함으로써 복잡성을 추가합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2144,7 +2232,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2164,15 +2252,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				anita_student
+				아니타_학생
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 3일 금요일 23:42">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">맞습니다. 하지만 불행하게도 D는 ASG가 없기 때문에 확장할 수 없습니다.</div>
+<div class="comment-content">맞습니다. 하지만 안타깝게도 D에는 ASG가 없기 때문에 확장이 불가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2181,7 +2269,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2220,13 +2308,13 @@
 				호보카보보
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 25일 (토) 13:58">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 25일 토요일 13:58">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">주어진 시나리오에서 모두 나쁜 답변 세트로 질문을 제공하는 이유는 무엇입니까? D: Autoscaler가 누락되었습니다. 건축가가 솔루션을 찾도록 요청받은 작업을 수행하지 않습니다. C: 단순히 작동하지 않습니다. DNS를 변경하려면 TTL을 고려해야 합니다... B: Kubernetes에 오버헤드를 추가합니다. A: 작동하지만 터무니없이 비싸고 람다를 유지하기 위한 운영 노력이 필요합니다. 따라서 가능한 유일한 옵션은 A라고 생각합니다. 면책 조항: 부하가 높은 경우 Lambda를 사용하는 합리적인 사람은 아무도 없습니다. 로드가 5개의 EC 인스턴스는 물론 EC2를 정당화하는 경우. EC2는 갈 길이 멀다. 오토스케일러, 로드밸런서. 단순하고 단순하다는 것은 운영 오버헤드가 적다는 것을 의미하는 반면 복잡성은 운영 오버헤드를 의미합니다. Lambda는 복잡성을 추가하고 로드 시 비용이 많이 듭니다(한 번의 호출: 저렴하지만 대량의 호출은 아님).</div>
+<div class="comment-content">시나리오에 따라 모두 나쁜 답변이 포함된 질문을 제공하는 이유는 무엇입니까? D: 자동 확장 처리가 누락되었습니다. 건축가가 솔루션을 찾도록 요청받은 작업을 수행하지 않습니다. C: 단순히 작동하지 않습니다. DNS를 변경하려면 TTL을 고려해야 합니다... B: Kubernetes에 대한 오버헤드가 추가됩니다. A: 작동하지만 터무니없이 비싸고 람다를 유지하기 위한 운영 노력이 필요합니다. 따라서 가능한 유일한 옵션은 A입니다. 주의 사항: 로드가 높은 경우 합리적인 사람 중 누구도 Lambda를 사용하지 않을 것입니다. 로드가 5개의 EC 인스턴스는 물론이고 EC2를 정당화하는 경우. EC2는 갈 길이 멀다. 자동 크기 조정기, 로드 밸런서. 단순하고 단순하다는 것은 운영 오버헤드가 적다는 것을 의미하고 복잡성은 운영 오버헤드를 의미합니다. Lambda는 복잡성을 추가하고 로드 시 비용이 많이 듭니다(1회 호출: 저렴하지만 호출 수가 많지 않음).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2235,7 +2323,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2263,16 +2351,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 04:00">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 04:00">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">내 논리적 답변: 일부 토론 의견을 읽은 후 내 생각 - 최소한의 작업 노력은 빠른 수정을 의미하지 않으며 유지 관리를 위한 최소한의 작업입니다. C는 틀렸습니다. 첫 번째 부분을 잘 읽는 것 같았지만 마지막에는 "반응할 때 항상 Route53을 업데이트하는 람다? 매번 DNS 서비스를 업데이트하는 이유는 무엇입니까?" D는 적절하지 않습니다. 프라이빗 서브넷의 인스턴스? NAT 게이트웨이/경로 테이블 등을 유지하는 추가 오버헤드를 추가합니다. 따라서 최소한의 운영 노력을 위한 서버리스 솔루션은 A 또는 B를 떠납니다. 저는 B가 ECS/EKS 클러스터링으로 과도하게 프로비저닝하고 있다고 생각합니다. 인스턴스. 나는 A를 가장 좋은 대답으로 선택하겠습니다.</div>
+<div class="comment-content">내 논리적 답변: 일부 토론 의견을 읽은 후 내 의견은 다음과 같습니다. 최소한의 운영 노력은 빠른 수정을 의미하지 않으며 유지 관리에 필요한 최소한의 노력을 의미합니다. C가 틀렸습니다. 첫 번째 부분을 읽는 것은 좋은 것 같았지만 마지막에는 "반응할 때마다 Route53을 업데이트하는 람다? 매번 DNS 서비스를 업데이트하는 이유는 무엇입니까? "라는 이상한 설명이 언급되어 있습니다. D는 적절하지 않습니다. 왜냐면 인터넷을 EC2에 연결해야 하기 때문입니다. 프라이빗 서브넷의 인스턴스? 이는 NAT 게이트웨이/라우트 테이블 등을 유지 관리하는 추가 오버헤드를 추가합니다. 따라서 최소한의 운영 노력을 위한 서버리스 솔루션은 A 또는 B를 남깁니다. B가 ECS/EKS 클러스터링으로 과도하게 프로비저닝된 것 같습니다. ec2가 5개에 불과한 중저 규모 앱처럼 보이기 때문입니다. 인스턴스. 나는 최선의 답변으로 A를 선택하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2281,7 +2369,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2309,15 +2397,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 03:55">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 03:55">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 논리적 답변: 일부 토론 의견을 읽은 후 내 생각 - 최소한의 작업 노력은 빠른 수정을 의미하지 않으며 유지 관리를 위한 최소한의 작업입니다. C는 틀렸습니다. 첫 번째 부분을 잘 읽는 것 같았지만 마지막에는 "반응할 때 항상 Route53을 업데이트하는 람다? 매번 DNS 서비스를 업데이트하는 이유는 무엇입니까?" D는 적절하지 않습니다. 프라이빗 서브넷의 인스턴스? NAT 게이트웨이/경로 테이블 등을 유지하는 추가 오버헤드를 추가합니다. 따라서 최소한의 운영 노력을 위한 서버리스 솔루션은 A 또는 B를 떠납니다. 저는 B가 ECS/EKS 클러스터링으로 과도하게 프로비저닝하고 있다고 생각합니다. 인스턴스. 나는 A를 가장 좋은 대답으로 선택하겠습니다.</div>
+<div class="comment-content">내 논리적 답변: 일부 토론 의견을 읽은 후 내 의견은 다음과 같습니다. 최소한의 운영 노력은 빠른 수정을 의미하지 않으며 유지 관리에 필요한 최소한의 노력을 의미합니다. C가 틀렸습니다. 첫 번째 부분을 읽는 것은 좋은 것 같았지만 마지막에는 "반응할 때마다 Route53을 업데이트하는 람다? 매번 DNS 서비스를 업데이트하는 이유는 무엇입니까? "라는 이상한 설명이 언급되어 있습니다. D는 적절하지 않습니다. 왜냐면 인터넷을 EC2에 연결해야 하기 때문입니다. 프라이빗 서브넷의 인스턴스? 이는 NAT 게이트웨이/라우트 테이블 등을 유지 관리하는 추가 오버헤드를 추가합니다. 따라서 최소한의 운영 노력을 위한 서버리스 솔루션은 A 또는 B를 남깁니다. B가 ECS/EKS 클러스터링으로 과도하게 프로비저닝된 것 같습니다. ec2가 5개에 불과한 중저 규모 앱처럼 보이기 때문입니다. 인스턴스. 나는 최선의 답변으로 A를 선택하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2326,7 +2414,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2354,16 +2442,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 17:22">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 17:22">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">최소한의 운영 오버헤드를 기반으로 하는 C</div>
+<div class="comment-content">C는 최소 운영 오버헤드를 기반으로 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2372,7 +2460,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2392,15 +2480,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 20:34">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D에 대한 답변을 업데이트하기로 결정했습니다.</div>
+<div class="comment-content">내 답변을 D로 업데이트하기로 결정했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2409,7 +2497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2449,12 +2537,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 21:47">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">API 게이트웨이는 옵션입니다.</div>
+<div class="comment-content">API 게이트웨이는 옵션입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2463,7 +2551,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2494,13 +2582,13 @@
 				작은 불꽃
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 8일 수요일 02:51">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 8일 수 02:51">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">아니오 C Route53 다중값 응답에서 최대 8개의 EC2 때문에</div>
+<div class="comment-content">아니요 C Route53 다중값 응답의 최대 8개 EC2 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2509,7 +2597,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2540,13 +2628,13 @@
 				DWsk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 15:59">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 15:59">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 이 질문이 논쟁의 여지가 있다는 것을 안다. 실제 문제는 LAST OPERATIONAL OVERHEAD의 의미입니다. 초기 설정 작업이 가장 적다는 의미일 수 있으며, 이 경우 답은 확실히 C입니다. 모놀리식 애플리케이션을 람다로 변환하는 것은 간단한 작업이 아닙니다. 그러나 운영 오버헤드는 유지 관리에 얼마나 많은 작업이 필요한지를 의미합니다. 서버리스는 일단 운영되면 노력이 훨씬 적기 때문에 대답은 확실히 A입니다. 개인적으로 나는 이 질문에 대해 A와 함께 갈 것이다. 저는 한동안 이 인증 시험을 치르고 AWS가 서버리스를 사용하기를 원한다는 느낌을 받았습니다. 또한 C에서 람다가 Route 53을 업데이트한다는 것이 무엇을 의미하는지 잘 모르겠습니다...</div>
+<div class="comment-content">나는 이 질문이 논란의 여지가 있는 질문이라는 것을 알고 있습니다. 실제 문제는 최소 운영 오버헤드의 의미가 무엇인지입니다. 이는 초기에 설정하는 작업량이 가장 적다는 것을 의미할 수 있으며, 이 경우 대답은 확실히 C입니다. 모놀리식 애플리케이션을 람다로 변환하는 것은 간단한 작업이 아닙니다. 그러나 운영 오버헤드는 유지 관리에 필요한 작업의 양을 의미하며, 서버리스가 운영되면 노력이 훨씬 적기 때문에 대답은 확실히 A입니다. 개인적으로 나는 이 질문에 대해 A를 선택하겠습니다. 저는 한동안 이러한 인증 시험을 치르면서 AWS가 서버리스를 사용하기를 원한다는 느낌을 받았습니다. 또한 C에서 Route 53을 람다로 업데이트한다는 것이 무엇을 의미하는지 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2555,7 +2643,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2587,12 +2675,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 5일 일요일 07:57">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">대답은 C입니다. 왜 사람들이 A에 투표하는지 모르겠습니다. C는 최소한의 노력이 필요합니다.</div>
+<div class="comment-content">대답은 C입니다. 왜 사람들이 A에 투표하는지 모르겠습니다. C에는 최소한의 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2601,7 +2689,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2625,11 +2713,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 13일 월요일 00:31">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">운영 오버헤드는 장기적으로 노력이 덜 든다는 것을 의미하므로 답변을 A로 변경하겠습니다.</div>
+<div class="comment-content">운영 오버헤드는 장기적으로 더 적은 노력을 의미하므로 대답을 A로 변경하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2638,7 +2726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2677,12 +2765,12 @@
 				zozza2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 30일 (월) 16:11">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 30일 월요일 16:11">
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">왜 C는 아니지?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2691,7 +2779,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2719,16 +2807,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비디오
+				비디크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 24일 화요일 06:11">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 24일 (화) 06:11">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">2023년 1월 23일 질문, A 선택</div>
+<div class="comment-content">2023년 1월 23일 질문, A 선택됨</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2737,7 +2825,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2765,16 +2853,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 21:31">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 API를 개별 AWS Lambda 함수로 분리하여 수신하는 트래픽에 따라 백엔드를 자동으로 확장할 수 있기 때문에 좋습니다. 또한 다른 것보다 더 많은 트래픽을 수신할 수 있는 API의 특정 부분을 보다 세밀하게 조정할 수 있습니다. Lambda 통합으로 Amazon API Gateway REST API를 구성하면 캐싱, 모니터링 및 보안과 같은 기능을 활용할 수도 있습니다. 마지막으로 API 게이트웨이 API를 가리키도록 Route 53 레코드를 업데이트하면 모바일 클라이언트가 올바른 엔드포인트로 연결되도록 할 수 있습니다. 이 솔루션은 자동 조정을 허용하고 많은 운영 책임을 AWS에서 제공하는 관리형 서비스로 오프로드하므로 운영 오버헤드가 가장 적습니다.</div>
+<div class="comment-content">옵션 A는 API를 개별 AWS Lambda 함수로 분리하여 수신되는 트래픽에 따라 백엔드를 자동으로 확장할 수 있다는 점에서 좋습니다. 또한 다른 것보다 더 많은 트래픽을 수신할 수 있는 API의 특정 부분을 보다 세밀하게 확장할 수 있습니다. Lambda 통합으로 Amazon API Gateway REST API를 구성하면 캐싱, 모니터링, 보안과 같은 기능의 이점도 누릴 수 있습니다. 마지막으로 API Gateway API를 가리키도록 Route 53 레코드를 업데이트하면 모바일 클라이언트가 올바른 엔드포인트로 연결되도록 할 수 있습니다. 이 솔루션은 자동 확장을 허용하고 많은 운영 책임을 AWS에서 제공하는 관리형 서비스로 오프로드하므로 운영 오버헤드가 가장 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2783,7 +2871,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2803,15 +2891,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				따다팜
+				tatdatpham
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 31일 화요일 08:14">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C라고 생각합니다. 응용 프로그램이 모 놀리 식이라는 것을 잊었습니다. 앱을 Lambda 함수로 마이그레이션하려면 많은 노력이 필요합니다.</div>
+<div class="comment-content">제 생각에 대답은 C입니다. 애플리케이션이 모놀리식이라는 사실을 잊으셨군요. 앱을 람다 기능으로 마이그레이션하려면 많은 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2820,7 +2908,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2860,12 +2948,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 6일 금요일 10:49">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C - 기존 설정에서 최소한의 운영 노력. A - 운영 노력이 높음 B - 컨테이너화 - 운영 노력이 높음 D - ALB 및 사설 서브넷 - 운영 노력이 높음</div>
+<div class="comment-content">C - 기존 설정에서 최소한의 운영 노력이 필요합니다. A - 운영 노력이 높음 B - 컨테이너화 - 운영 노력이 높음 D - ALB 및 프라이빗 서브넷 - 운영 노력이 높음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2874,7 +2962,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2902,11 +2990,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 16:59">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 16:59">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2920,7 +3008,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2940,11 +3028,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장규20000
+				장유20000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 19일 (월) 14:45">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 19일 월요일 14:45">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2957,7 +3045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2977,15 +3065,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 21:31">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">맞습니다. 옵션 D에는 API가 트래픽에 따라 자동으로 확장하는 데 필요한 Auto Scaling 그룹의 사용이 포함되어 있지 않습니다. 이렇게 하면 증가된 트래픽을 처리하기 위해 수동 조정 조치를 취해야 하므로 운영 오버헤드가 증가합니다. 옵션 A 또는 B는 둘 다 자동 확장 기능을 포함하므로 이 경우 더 좋습니다.</div>
+<div class="comment-content">맞습니다. 옵션 D에는 API가 트래픽에 따라 자동으로 크기를 조정하는 데 필요한 Auto Scaling 그룹의 사용이 포함되지 않습니다. 증가된 트래픽을 처리하기 위해 수동 조정 작업을 수행해야 하므로 운영 오버헤드가 증가합니다. 이 경우에는 옵션 A 또는 B 모두 자동화된 확장 기능을 포함하므로 더 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2994,7 +3082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3065,7 +3153,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 12:02">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3103,7 +3191,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 02:11">
-			13 hours, 53 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3148,7 +3236,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 19 May 2023 10:50">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3193,7 +3281,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 19:00">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3230,7 +3318,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Apr 2023 01:58">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3294,7 +3382,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 03:10">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3335,7 +3423,7 @@ This is not MINIMAL. I would go with C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 23:14">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3372,7 +3460,7 @@ This is not MINIMAL. I would go with C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 15:08">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3419,7 +3507,7 @@ However, we are looking to minimize operational effort, not development effort..
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 01 May 2023 10:32">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3472,7 +3560,7 @@ However, we are looking to minimize operational effort, not development effort..
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 30 May 2023 07:13">
-			2 months, 3 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3510,7 +3598,7 @@ This does not make any sense, why do you need to change R53 records using a Lamb
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 10 Aug 2023 14:41">
-			1 week, 2 days ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3555,6 +3643,54 @@ This does not make any sense, why do you need to change R53 records using a Lamb
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="989617" id="comment-989617">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Soweetadad
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Fri 25 Aug 2023 03:54">
+			1 day, 19 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">Does ALB even support Rest API (unless you use it with APIGW)? I would go with either A (less right) or C</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984259" id="comment-984259">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -3570,11 +3706,8 @@ This does not make any sense, why do you need to change R53 records using a Lamb
 				dqwsmwwvtgxwkvgcvc
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 09:46">
-			1 day, 6 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3587,7 +3720,7 @@ This does not make any sense, why do you need to change R53 records using a Lamb
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -3620,7 +3753,7 @@ This does not make any sense, why do you need to change R53 records using a Lamb
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 23:13">
-			2 weeks ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3640,7 +3773,7 @@ Answer D has the "where is the ASG to handle spikes in traffic" thing, but it's 
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -3673,7 +3806,7 @@ Answer D has the "where is the ASG to handle spikes in traffic" thing, but it's 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Jul 2023 19:32">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3721,7 +3854,7 @@ Which leads to…..A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 13:35">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3771,7 +3904,7 @@ D - correct answer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 15:27">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3821,7 +3954,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 22:49">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3866,7 +3999,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 22:47">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3912,7 +4045,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 15:45">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3958,7 +4091,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 03:54">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4004,7 +4137,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 12:23">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4050,7 +4183,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 01:45">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4096,7 +4229,7 @@ D: ALB + EC2 is good, but ASG is missing so not addressing traffic surges.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 15:25">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4145,7 +4278,7 @@ So it is C or D, both seem valid. But D does not have autoscaling capability, wh
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Jun 2023 13:34">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4191,7 +4324,7 @@ So it is C or D, both seem valid. But D does not have autoscaling capability, wh
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Jun 2023 08:10">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4236,7 +4369,7 @@ So it is C or D, both seem valid. But D does not have autoscaling capability, wh
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 26 May 2023 13:43">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4284,7 +4417,7 @@ Hence having a ALB will distribute the load for processing</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 17:50">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4332,7 +4465,7 @@ I was look really deep to the option C "C. Create an Auto Scaling group. Place a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 May 2023 12:20">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4377,7 +4510,7 @@ I was look really deep to the option C "C. Create an Auto Scaling group. Place a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 13:08">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4426,7 +4559,7 @@ It is not scalable and brings huge operational overhead</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 02:05">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4472,7 +4605,7 @@ It is not scalable and brings huge operational overhead</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Apr 2023 11:50">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4520,7 +4653,7 @@ These are 2 different and completely independent concepts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Apr 2023 05:28">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4568,7 +4701,7 @@ These are 2 different and completely independent concepts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 08:39">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4613,7 +4746,7 @@ These are 2 different and completely independent concepts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 02:08">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4658,7 +4791,7 @@ These are 2 different and completely independent concepts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 09:19">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4704,7 +4837,7 @@ These are 2 different and completely independent concepts.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Mar 2023 04:10">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4752,7 +4885,7 @@ Just saying, moving it to a microservice architecture not only makes sense but w
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Mar 2023 22:29">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4792,7 +4925,7 @@ Answer D solve only the Autoscaling, but miss the ALB and still use the R53 as a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 27 May 2023 07:04">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4837,7 +4970,7 @@ Answer D solve only the Autoscaling, but miss the ALB and still use the R53 as a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Mar 2023 15:28">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4892,7 +5025,7 @@ I dont see why to create a lambda to add and remove records to route 53 that cou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 03:52">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4938,7 +5071,7 @@ I dont see why to create a lambda to add and remove records to route 53 that cou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 15:59">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4989,7 +5122,7 @@ D: would be great to have a load balancer but the solution does not involve auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 00:00">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5027,7 +5160,7 @@ D: would be great to have a load balancer but the solution does not involve auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Mar 2023 23:42">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5080,7 +5213,7 @@ D: would be great to have a load balancer but the solution does not involve auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 13:58">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5134,7 +5267,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 04:00">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5180,7 +5313,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 03:55">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5225,7 +5358,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 17:22">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5263,7 +5396,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 20:34">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5316,7 +5449,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 21:47">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5362,7 +5495,7 @@ Disclaimer: No one reasonable would use Lambda if it comes to high load. If the 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 02:51">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5409,7 +5542,7 @@ Because max 8 EC2s on Route53 multivalue answers</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Feb 2023 15:59">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5458,7 +5591,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Feb 2023 07:57">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5496,7 +5629,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Feb 2023 00:31">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5549,7 +5682,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 30 Jan 2023 16:11">
-			6 months, 2 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5594,7 +5727,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 06:11">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5640,7 +5773,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 21:31">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5678,7 +5811,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 08:14">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5731,7 +5864,7 @@ Additionally, not quite sure what it means in C to have the lambda update Route 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 06 Jan 2023 10:49">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5781,7 +5914,7 @@ D - ALB and private subnet - Operational effort is high</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 16:59">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5819,7 +5952,7 @@ D - ALB and private subnet - Operational effort is high</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 14:45">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5856,7 +5989,7 @@ D - ALB and private subnet - Operational effort is high</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 21:31">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

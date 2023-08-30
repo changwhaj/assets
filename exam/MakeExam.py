@@ -3,6 +3,7 @@ import re
 import os
 import winsound
 import pandas as pd
+from datetime import datetime, timedelta
 
 import pyautogui
 
@@ -48,11 +49,15 @@ def set_translate_to_kr(driver):
     actionChains = ActionChains(driver)
     actionChains.context_click().perform()
 
-    for i in range(3):
-        pyautogui.press('up')
+    pyautogui.moveTo(x=150, y=345, duration=1)
+    pyautogui.click()
+    time.sleep(1)
 
-    pyautogui.press('enter')
-    pyautogui.sleep(1)
+    # for i in range(3):
+    #     pyautogui.press('up')
+
+    # pyautogui.press('enter')
+    # pyautogui.sleep(1)
 
 def scroll_page(driver):
     # Set the interval between scrolls in seconds
@@ -389,7 +394,7 @@ def make_filename(qtitle, qid):
         },
         {
             "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
-            "prefname": "aws/DAS-C01/DAS",
+            "prefname": "aws/DAS-C01/DAS-Q",
             "qlength": 164,
         },
         {
@@ -442,37 +447,42 @@ def make_filename(qtitle, qid):
         # aws/DOP_C01/DOP-Q	Exam AWS DevOps Engineer Professional topic 1
     ]
 
-    if qtitle == "Exam CISM topic 1":
-        fname = 'isaca/CISM/CISM-Q'  + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam CISM topic 2":
-        fname = 'isaca/CISM2/CISM-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam CISA topic 1":
-        fname = 'isaca/CISA/CISA-Q'  + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam CISA topic 2":
-        fname = 'isaca/CISA2/CISA-Q' + format(int(qid), '04') + '.html'
-    
-    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
-    #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
-    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
-    #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
-        fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
-    # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
-    #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
-        fname = 'aws/SAA_C03/SAA3-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
-        fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
-    # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
-    #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
-        fname = 'aws/SAP_C02/SAP2-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
-        fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == 'Exam AWS Certified Developer - Associate DVA-C02 topic 1':
-        fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
-    elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
-        fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
+    findexam = next((exam for exam in exams if exam["qtitle"] == qtitle), None)
+
+    if findexam:
+        fname = findexam["prefname"] + format(int(qid), '04') + '.html'
+    else:
+        if qtitle == "Exam CISM topic 1":
+            fname = 'isaca/CISM/CISM-Q'  + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam CISM topic 2":
+            fname = 'isaca/CISM2/CISM-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam CISA topic 1":
+            fname = 'isaca/CISA/CISA-Q'  + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam CISA topic 2":
+            fname = 'isaca/CISA2/CISA-Q' + format(int(qid), '04') + '.html'
+        
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
+        #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
+        #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
+            fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
+        #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
+            fname = 'aws/SAA_C03/SAA3-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
+            fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
+        #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
+            fname = 'aws/SAP_C02/SAP2-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
+            fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == 'Exam AWS Certified Developer - Associate DVA-C02 topic 1':
+            fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
+            fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
 
     return fname
 
@@ -515,7 +525,7 @@ def translate_page_to_kr(driver, fname):
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'head > link'))
         driver.execute_script("arguments[0].removeAttribute('class');", driver.find_element(By.TAG_NAME, 'html'))
     except Exception as e:
-        print(f"*** Error translate_page_to_kr !!! {e}")
+        print(f"*** Error translate_page_to_kr !!!")
         pass
 
 def save_kr(driver, fname):
@@ -741,21 +751,30 @@ def refresh_forum_list(discuss_list, forum_name):
 def read_Exam_list(fname):
 
     df = pd.read_csv(fname, delimiter='\t', encoding='utf-8', header=None,
-                    names=['ExamNo', 'DiscussNo', 'DiscussURL'], 
+                    names=['ExamNo', 'DiscussNo', 'DataNo', 'DiscussURL'],
                     index_col=False)
     print(df)
 
     return df
 
 def refresh_all_exam(exam_list_file, qtitle):
+    start_time = time.time()
     df = read_Exam_list(exam_list_file)
 
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    for i in range(len(df))[10:]:
+    fn = "exam.txt"
+    idx_from = 0
+    with open(fn, "r") as file:
+        idx_from = int(file.read())
+    err = False
+
+    for i in range(len(df))[idx_from:2]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
+        if did == 0:
+            continue
         url = str(df.at[i, 'DiscussURL'])
         print(qtitle+"\t"+str(qid)+"\t"+url, flush=True)
         try:
@@ -768,26 +787,69 @@ def refresh_all_exam(exam_list_file, qtitle):
                 translate_page_to_kr(driver, fname)
                 save_kr(driver, fname)
 
+                with open(fn, 'w') as file:
+                    # Write data rows
+                    file.write(str(i) + '\n')
+
         except Exception as e:
             print("Error:", str(e))
             print(f"*** Make question error !!! {e}")
-            pass
+            err = True
+            break
+            # pass
+        
+    if not err:
+        with open(fn, 'w') as file:
+            file.write('0\n')
+
+    end_time = time.time()
+    duration = end_time - start_time
+    formatted_duration = timedelta(seconds=duration)
+
+    print(f"Function duration: {formatted_duration}")
+
     driver.close()
     driver.quit()
 
 if __name__ == "__main__":
-    SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
-    DBS = 'Exam AWS Certified Database - Specialty topic 1'
+    # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
+    # refresh_all_exam('SAA3_Exam.csv', SAA_C03)    # OK 583
+
+    # SAP_C02 = 'Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1'
+    # refresh_all_exam('SAP2_Exam.csv', SAP_C02)    # OK 298
+
+    # DBS = 'Exam AWS Certified Database - Specialty topic 1'
+    # refresh_all_exam('DBS_Exam.csv', DBS)         # OK 327
+
+    # ANS = "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1"
+    # refresh_all_exam('ANS_Exam.csv', ANS)         # OK 167
+     
+    # DAS = "Exam AWS Certified Data Analytics - Specialty topic 1"
+    # refresh_all_exam('DAS_Exam.csv', DAS)         # OK 164
+    
+    # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
+    # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
+    
+    # SAA2 = "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1"
+    # refresh_all_exam('SAA2_Exam.csv', SAA2)
+    
+    SAP = "Exam AWS Certified Solutions Architect - Professional topic 1"
+    refresh_all_exam('SAP_Exam.csv', SAP)
+    
+    # SOA2 = "Exam AWS Certified SysOps Administrator - Associate topic 1"
+    # refresh_all_exam('SOA2_Exam.csv', SOA2)       # NOK 377 -340, -341
+
+    # DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
+    # refresh_all_exam('DVA2_Exam.csv', DVA2)       # OK 142
+
+    # DVA = 'Exam AWS Certified Developer Associate topic 1'
+    # refresh_all_exam('DVA_Exam.csv', DVA)         # OK 443
+
     CISM = 'Exam CISM topic 1'
     refresh_all_exam('CISM_Exam.csv', CISM)
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    # DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
-    # DVA = 'Exam AWS Certified Developer Associate topic 1'
-    # refresh_all_exam('DVA2_Exam.csv', DVA2)
-    # refresh_all_exam('DVA_Exam.csv', DVA)
-
     AMAZON_DISCUSS = 'AmazonDiscuss.txt'
     # FORUM_NAME = 'amazon'
     # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)

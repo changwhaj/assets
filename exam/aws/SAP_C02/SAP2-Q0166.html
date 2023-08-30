@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 질문 166 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 166 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 166 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 166 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="867258">
 <p class="card-text">
 							
-								배송 회사는 AWS 클라우드에서 서버리스 솔루션을 실행하고 있습니다. 이 솔루션은 사용자 데이터, 배송 정보 및 과거 구매 내역을 관리합니다. 이 솔루션은 여러 마이크로 서비스로 구성됩니다. 중앙 사용자 서비스는 민감한 데이터를 Amazon DynamoDB 테이블에 저장합니다. 다른 여러 마이크로 서비스는 민감한 데이터의 일부 사본을 다른 스토리지 서비스에 저장합니다. <br/><br/>회사는 요청 시 사용자 정보를 삭제할 수 있는 권한이 필요합니다. 중앙 사용자 서비스가 사용자를 삭제하는 즉시 다른 모든 마이크로 서비스도 데이터 복사본을 즉시 삭제해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								배송 회사가 AWS 클라우드에서 서버리스 솔루션을 실행하고 있습니다. 사용자 데이터, 배송정보, 과거 구매내역 등을 관리하는 솔루션입니다. 솔루션은 여러 마이크로서비스로 구성됩니다. 중앙 사용자 서비스는 중요한 데이터를 Amazon DynamoDB 테이블에 저장합니다. 다른 마이크로서비스 중 일부는 민감한 데이터의 일부 복사본을 다른 스토리지 서비스에 저장합니다. <br/><br/>회사는 요청 시 사용자 정보를 삭제할 수 있는 권한이 필요합니다. 중앙 사용자 서비스가 사용자를 삭제하자마자 다른 모든 마이크로서비스도 해당 데이터 사본을 즉시 삭제해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="867258" type="application/json">[{"voted_answers": "C", "vote_count": 39, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="867258" type="application/json">[{"voted_answers": "C", "vote_count": 42, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											DynamoDB 테이블에서 DynamoDB 스트림을 활성화합니다. Amazon Simple Queue Service(Amazon SQS) 대기열에서 사용자 삭제에 대한 이벤트를 게시할 DynamoDB 스트림에 대한 AWS Lambda 트리거를 생성합니다. 대기열을 폴링하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로 서비스를 구성합니다.
+											DynamoDB 테이블에서 DynamoDB 스트림을 활성화합니다. Amazon Simple Queue Service(Amazon SQS) 대기열의 사용자 삭제에 대한 이벤트를 게시하는 DynamoDB 스트림에 대한 AWS Lambda 트리거를 생성합니다. 대기열을 폴링하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로서비스를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,14 +157,14 @@
 													B.
 												</span> 
 											
-											DynamoDB 테이블에서 DynamoDB 이벤트 알림을 설정합니다. DynamoDB 이벤트 알림의 대상으로 Amazon Simple Notification Service(Amazon SNS) 주제를 생성합니다. SNS 주제를 구독하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로서비스를 구성합니다.
+											DynamoDB 테이블에 DynamoDB 이벤트 알림을 설정합니다. DynamoDB 이벤트 알림의 대상으로 Amazon Simple 알림 서비스(Amazon SNS) 주제를 생성합니다. SNS 주제를 구독하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로서비스를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											회사에서 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 각 마이크로 서비스에 대한 EventBridge 규칙을 생성하여 사용자 삭제 이벤트 패턴과 일치시키고 마이크로 서비스의 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다.
+											회사가 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로서비스에 대한 EventBridge 규칙을 생성하고 마이크로서비스에서 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,11 +173,11 @@
 													D.
 												</span> 
 											
-											회사에서 사용자를 삭제할 때 Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 게시하도록 중앙 사용자 서비스를 구성합니다. SQS 대기열에 이벤트 필터를 생성하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로서비스를 구성합니다.
+											회사가 사용자를 삭제할 때 Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 게시하도록 중앙 사용자 서비스를 구성합니다. SQS 대기열에 이벤트 필터를 생성하고 DynamoDB 테이블에서 사용자를 삭제하도록 각 마이크로서비스를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,20 +187,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="39 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">C (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="42 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">C (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								할리독
-							</a> 
-							
-							시간: <i>
-							2023년 2월 5일, 오후 8:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="867258" type="application/json">[{"voted_answers": "C", "vote_count": 39, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="867258" type="application/json">[{"voted_answers": "C", "vote_count": 42, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 14, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -207,20 +260,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="39 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">C (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="42 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">C (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 24%; display: flex;" title="">A (24%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								harleydog
-							</a>
-							
-							at <i>
-							Feb. 5, 2023, 8:45 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,26 +291,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				CloudFloater
+				클라우드플로터
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 15일 수 11:53">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞는 것 같습니다. SQS는 하나의 마이크로 서비스에 대한 하나의 대기열이며 dynamodb 이벤트 알림에서 아무것도 찾을 수 없습니다.</div>
+<div class="comment-content">C가 맞는 것 같습니다. SQS는 하나의 마이크로서비스에 대한 하나의 대기열이며 dynamodb 이벤트 알림에서 아무 것도 찾을 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">11</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -301,15 +344,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 09:19">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">트리거는 중앙 사용자 서비스가 DynamoDB 테이블에서 사용자를 삭제하는 것입니다. DynamoDB 스트림이 요구 사항을 충족합니다. https://aws.amazon.com/blogs/database/how-to-perform-ordered-data-replication-between-applications-by-using-amazon-dynamodb-streams/ 옵션 B가 잘못되었습니다. DynamoDB 이벤트 알림이라는 기능은 없습니다.</div>
+<div class="comment-content">트리거는 중앙 사용자 서비스가 DynamoDB 테이블에서 사용자를 삭제한다는 것입니다. DynamoDB Streams는 요구 사항을 충족합니다. https://aws.amazon.com/blogs/database/how-to-perform-ordered-data-replication-between-applications-by-using-amazon-dynamodb-streams/ 옵션 B가 잘못되었습니다. DynamoDB 이벤트 알림이라는 기능은 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -341,12 +384,12 @@
 				Amac1979
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 16:10">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 (화) 16:10">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">맞습니다. 그들이 원하는 요점은 중앙 사용자 서비스가 기록 시스템이라는 것입니다. DynamoDB에서 삭제할 때까지 다른 서비스에서 삭제하면 안 됩니다.</div>
+<div class="comment-content">맞습니다. 그들이 만들고자 하는 요점은 중앙 사용자 서비스가 기록 시스템이라는 것입니다. DynamoDB에서 삭제할 때까지 다른 서비스에서 삭제하면 안 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +398,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -370,6 +413,100 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990578" id="comment-990578">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				간생크
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 26일 토요일 09:05">
+			15시간 44분 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">실제 사용 사례는 최악의 솔루션 옵션으로 완전히 파괴되었습니다. 가장 간단한 해결책은 관심 있는 당사자가 DynamoDB 스트림에서 이벤트를 소비하고 해당 데이터 스토어에서 사용자 정보를 삭제하도록 하는 것입니다. 주어진 옵션에 붉은 청어가 너무 많고, 그 중 상대적으로 건전한 유일한 옵션은 옵션 C입니다. SA 전문가에게 질문을 제기하는 기준이 계속 낮아지고 있습니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985369" id="comment-985369">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				SK_Tyagi
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 20:32">
+			1주 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">DynamoDb의 이벤트 트리거 - DynamoDb 스트림 선택</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -394,24 +531,21 @@
 				xav1er
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 12:36">
-			1일, 3시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">도대체 팬아웃 패턴이 어디있나요? 멍청한 대답들 ...</div>
+<div class="comment-content">팬아웃 패턴은 대체 어디에 있나요? 멍청한 대답들...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -439,15 +573,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 08:06">
-			2일, 8시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">* 중앙 사용자 서비스는 민감한 데이터를 Amazon DynamoDB 테이블에 저장합니다. * 다른 여러 마이크로 서비스는 민감한 데이터의 일부 사본을 다른 스토리지 서비스에 저장합니다. 분명히 중앙 사용자 서비스만 사용자 데이터를 DynamoDB에 저장합니다. 나머지는 "다른 스토리지 서비스"를 사용합니다. 그러나 모든 답변은 DynamoDB에 집중되어 있습니다...</div>
+<div class="comment-content">* 중앙 사용자 서비스는 민감한 데이터를 Amazon DynamoDB 테이블에 저장합니다. * 다른 마이크로서비스 중 일부는 민감한 데이터의 일부 복사본을 다른 스토리지 서비스에 저장합니다. 분명히 중앙 사용자 서비스만이 DynamoDB에 사용자 데이터를 저장합니다. 다른 사람들은 "다른 저장 서비스"를 사용합니다. 그러나 모든 답변은 DynamoDB에 중점을 두고 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -456,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,7 +622,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 4일 화요일 18:19">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -502,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,15 +656,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 07:55">
-			2일, 8시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">진지하게 "사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로 서비스에 대한 EventBridge 규칙을 생성하고 마이크로 서비스에서 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제"해야 한다는 의미입니까? SQS가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">"사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로 서비스에 대해 EventBridge 규칙을 생성하고 마이크로 서비스에서 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제"해야 한다는 뜻입니까? 왜 SQS가 아닌가?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -559,15 +693,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 08:03">
-			2일, 8시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여러 EventBridge 규칙을 구성하는 대신 여러 SQS 스트림이 있을 수 있습니다 :)</div>
+<div class="comment-content">여러 EventBridge 규칙을 구성하는 대신 여러 SQS 스트림이 있을 수 있습니다. :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -576,7 +710,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,21 +758,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 23일 금요일 20:20">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">기본 DynamoDB 서비스를 어떻게 사용하고 싶든 옵션 A와 B에는 몇 가지 중요한 문제가 있습니다. A와 D는 SQS가 여러 마이크로 서비스에서 사용될 것으로 예상하지만 실제로는 서비스가 수행해야 하는 작업이 아닙니다. B는 좋은 시나리오처럼 보이지만 "DynamoDB 이벤트 알림"과 같은 것은 없습니다. 그래서 우리는 옵션 C로 떠납니다</div>
+<div class="comment-content">기본 DynamoDB 서비스를 어떻게 사용하고 싶든 옵션 A와 B에는 몇 가지 중요한 문제가 있습니다. A와 D는 SQS가 여러 마이크로서비스에서 사용될 것으로 예상하는데, 이는 실제로 서비스가 수행해야 하는 작업이 아닙니다. B는 좋은 시나리오처럼 보이지만 "DynamoDB 이벤트 알림"과 같은 것은 없습니다. 그래서 우리는 옵션 C로 떠납니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -670,21 +804,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 23:40">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">모든 마이크로서비스에서 사용자 정보를 즉시 삭제해야 하는 요구 사항을 충족하는 솔루션은 다음과 같습니다. C. 회사에서 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 각 마이크로 서비스에 대한 EventBridge 규칙을 생성하여 사용자 삭제 이벤트 패턴과 일치시키고 마이크로 서비스의 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다. 이 경우 각 마이크로서비스에 대한 EventBridge 규칙을 생성하여 사용자 삭제 이벤트 패턴과 일치시키고 마이크로서비스의 로직을 호출하여 DynamoDB 테이블을 포함한 해당 스토리지 서비스에서 해당 사용자 데이터를 삭제할 수 있습니다.</div>
+<div class="comment-content">모든 마이크로서비스에서 사용자 정보를 즉시 삭제해야 하는 요구 사항을 충족하는 솔루션은 다음과 같습니다. C. 회사에서 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로서비스에 대한 EventBridge 규칙을 생성하고 마이크로서비스에서 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다. 이 경우 사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로서비스에 대한 EventBridge 규칙을 생성하고 마이크로서비스에서 로직을 호출하여 DynamoDB 테이블을 포함한 해당 스토리지 서비스에서 해당 사용자 데이터를 삭제할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -715,12 +849,12 @@
 				에릭장
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 11:29">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 11:29">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB 이벤트 알림이 있습니까?</div>
+<div class="comment-content">DynamoDB 이벤트 알림이 존재합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -729,7 +863,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -761,11 +895,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 28일 일요일 20:20">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 : C</div>
+<div class="comment-content">답 : C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -774,7 +908,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,12 +940,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 22일 월요일 15:41">
-			2개월, 4주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">스트림을 사용하여 이 솔루션에서 작업하지만 옵션 A는 사용자를 삭제한 후에만 스트림이 발생하고 옵션이 사용자가 Dynamo 테이블에서 삭제될 것이라고 마지막에 명시하기 때문에 올바르지 않습니다. 따라서 이것은 잘못된 순서입니다. 실제 사례로 이벤트 브리지를 사용한 좋은 글이기도 합니다. https://medium.com/aws-serverless-microservices-with-patterns-best/aws-event-driven-serverless-microservices-using-aws-lambda-api-gateway-eventbridge-sqs-dynamodb-a7f46220b738</div>
+<div class="comment-content">스트림을 사용하여 이 솔루션을 작업할 것이지만 스트림은 사용자를 삭제한 후에만 발생하고 옵션은 마지막에 사용자가 Dynamo 테이블에서 삭제될 것이라고 명시하므로 이는 잘못된 순서입니다. 이것은 또한 실제 사례와 함께 이벤트 브리지를 사용한 좋은 기사입니다. https://medium.com/aws-serverless-microservices-with-patterns-best/aws-event-driven-serverless-microservices-using-aws-lambda-api-gateway-eventbridge-sqs-dynamodb-a7f46220b738</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -820,7 +954,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -840,15 +974,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 17일 목요일 08:02">
-			2일, 8시간 전
+			1주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 DynamoDB 이외의 다른 곳에 저장된 중요한 정보를 삭제하는 것에 대해서는 언급하지 않습니다. 질문에서 사용자에게도 해당한다고 가정합니다.</div>
+<div class="comment-content">또한 DynamoDB가 아닌 다른 곳에 저장된 민감한 정보를 삭제하는 것에 대해서는 언급하지 않습니다. 질문에서 이 정보는 사용자에게도 해당된다고 가정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -857,7 +991,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -896,13 +1030,13 @@
 				DWsk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 20일 목요일 16:29">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 20일 목 16:29">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">작업에 적합한 도구인 DynamoDB Streams를 사용하여 이 작업을 확실히 수행할 수 있기 때문에 까다로운 작업입니다. 그러나 그 대답의 후반부는 여러 소비자가있을 때 작동하지 않는 SQS를 사용하는 것이기 때문에 질문은 당신을 속이려고합니다. 각 메시지는 한 번만 소비 될 수 있습니다. 따라서 답은 C여야 합니다.</div>
+<div class="comment-content">DynamoDB Streams를 사용하면 작업에 적합한 도구이므로 확실히 이 작업을 수행할 수 있기 때문에 이는 까다로운 작업입니다. 그러나 그 대답의 후반부는 소비자가 여러 명일 때 작동하지 않는 SQS를 사용하는 것이므로 각 메시지는 한 번만 소비될 수 있기 때문에 질문은 당신을 속이려고 합니다. 그러므로 답은 C가 되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -911,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,11 +1069,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 22일 월요일 15:37">
-			2개월, 4주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 단일 옵션이 최종 단계가 스트림을 사용하여 Dynamo에서 레코드를 삭제하는 것이라고 명시하고 있다는 사실에 추가하여 동의합니다. 삭제는 이미 발생하여 옵션 A를 잘못 만듭니다.</div>
+<div class="comment-content">모든 단일 옵션에 마지막 단계는 Dynamo에서 레코드를 삭제하는 것이며 스트림을 사용하면 삭제가 이미 발생하여 옵션 A가 올바르지 않게 된다는 사실에 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -948,7 +1082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,16 +1118,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				버바인
+				버빈
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 17:59">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">권장 솔루션은 회사에서 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성하는 것입니다. 그런 다음 각 마이크로서비스는 사용자 삭제 이벤트 패턴과 일치하는 EventBridge 규칙을 생성하고 마이크로서비스의 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제할 수 있습니다. 이 솔루션은 마이크로서비스 간에 조정하는 쉬운 방법을 제공하고 모든 마이크로서비스가 중앙 사용자 서비스에서 사용자를 삭제하는 즉시 데이터 사본을 삭제하도록 합니다. 또한 추가 서비스나 인프라를 설정할 필요가 없으므로 최소한의 노력이 필요합니다.</div>
+<div class="comment-content">권장되는 해결 방법은 회사가 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성하는 것입니다. 그러면 각 마이크로서비스는 사용자 삭제 이벤트 패턴과 일치하는 EventBridge 규칙을 생성하고 마이크로서비스의 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제할 수 있습니다. 이 솔루션은 마이크로서비스 간 조정을 위한 쉬운 방법을 제공하고 모든 마이크로서비스가 중앙 사용자 서비스에서 사용자 삭제 시 즉시 데이터 사본을 삭제하도록 보장합니다. 또한 추가 서비스나 인프라를 설정할 필요가 없으므로 최소한의 노력만 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1136,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1033,13 +1167,13 @@
 				아사구모
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 1일 (토) 14:41">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 1일 토요일 14:41">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">민감한 사용자 정보는 즉시 삭제해야 합니다. SQS 대기열을 폴링하는 데 필요한 시간이 이 메커니즘에 적합하다는 가정은 없습니다.</div>
+<div class="comment-content">민감한 사용자 정보는 즉시 삭제해야 합니다. SQS 대기열을 폴링하는 데 필요한 시간이 이 메커니즘에 허용된다는 가정은 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1048,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1076,11 +1210,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 10:34">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1094,7 +1228,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1122,16 +1256,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				테어
+				타에르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 18일 (토) 07:55">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 18일 토요일 07:55">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. 회사에서 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 각 마이크로 서비스에 대한 EventBridge 규칙을 생성하여 사용자 삭제 이벤트 패턴과 일치시키고 마이크로 서비스의 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다.</div>
+<div class="comment-content">C. 회사가 사용자를 삭제할 때 사용자 지정 Amazon EventBridge 이벤트 버스에 이벤트를 게시하도록 중앙 사용자 서비스를 구성합니다. 사용자 삭제 이벤트 패턴과 일치하도록 각 마이크로서비스에 대한 EventBridge 규칙을 생성하고 마이크로서비스에서 로직을 호출하여 DynamoDB 테이블에서 사용자를 삭제합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1140,7 +1274,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1168,16 +1302,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 15일 수 06:14">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 15일 수요일 06:14">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">C, D가 틀렸습니다. 결함은 "회사에서 사용자를 삭제합니까?"입니다. 아니요, 중앙 서비스에서 삭제합니다. B는 DynamoDB 이벤트 기능과 같은 것이 없기 때문에 틀렸습니다. Streams만이 CRUD 작업을 활성화할 수 있고 결국 람다를 트리거할 수 있습니다. 여기를 참조하십시오: https://stackoverflow.com/questions/53857304/how-to-get-notified- when-a-aws-dynamo-db-entry-are-updated https://dynobase.dev/dynamodb-triggers/</div>
+<div class="comment-content">C,D가 틀렸습니다. 결점은 "회사가 사용자를 삭제한다고?"입니다. 아니요, 중앙 서비스에서 삭제를 수행합니다. B는 틀렸습니다. DynamoDB 이벤트 기능 같은 것이 없기 때문에 스트림만 CRUD 작업을 활성화하고 결국 람다를 트리거할 수 있습니다. 여기를 참조하세요: https://stackoverflow.com/questions/53857304/how-to-get-notified- when-a-aws-dynamo-db-entry-are-updated https://dynobase.dev/dynamodb-triggers/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1186,7 +1320,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1214,16 +1348,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 9일 목요일 22:48">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A와 B는 모든 기존 마이크로 서비스를 변경해야 합니다.</div>
+<div class="comment-content">A와 B는 기존의 모든 마이크로서비스를 변경해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1232,7 +1366,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1263,13 +1397,13 @@
 				사루토비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 6일 월요일 02:43">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 6일 (월) 02:43">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문이 팬 아웃 패턴을 찾고 있다고 생각합니다. 기본적으로 여러 엔드포인트에 알리는 하나의 이벤트입니다. 이 경우 하나의 마이크로 서비스만 메시지를 받고 나머지는 사용자를 삭제하지 않기 때문에 SQS를 사용할 수 없습니다. EventBridge도 잠재적으로 그렇게 할 수 있지만 모든 마이크로 서비스를 대상으로 해야 합니다. 이를 위해 일반적으로 사용되는 방법은 SNS입니다. 저는 B 작성 방식이 마음에 들지 않습니다. 이론상 DynamoDB Streams=&gt;Lambda=&gt;SNS=&gt;마이크로 서비스를 수행할 수 있습니다.</div>
+<div class="comment-content">나는 질문이 팬아웃 패턴을 찾고 있다고 생각합니다. 기본적으로 여러 엔드포인트에 알리는 하나의 이벤트입니다. 이 경우 하나의 마이크로 서비스만 메시지를 받고 나머지는 사용자를 삭제하지 않기 때문에 SQS를 사용할 수 없습니다. EventBridge도 잠재적으로 이를 수행할 수 있지만 모든 마이크로 서비스를 대상으로 해야 합니다. 이를 위해 일반적으로 사용되는 방법은 SNS입니다. B가 작성된 방식이 마음에 들지 않습니다. 이론적으로는 DynamoDB Streams=&gt;Lambda=&gt;SNS=&gt;마이크로 서비스를 수행할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1278,7 +1412,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1301,12 +1435,12 @@
 				사루토비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 16일 화요일 14:05">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 16일 (화) 14:05">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문을 다시 신중하게 읽은 후 여기에서 C로 마음을 바꿨습니다. 또한 이 모델을 사용하는 몇 가지 앱에 대해 생각하게 했습니다. 이벤트 브리지가 존재하는 지금 SNS를 사용하는 경로 여물통은 "오래된 방식"입니다. 또한 시험이 진행되는 방식에는 DynamoDB에서 SNS를 트리거하는 직접적인 방법이 없기 때문에 B가 기술적으로 정확하지 않도록 Lambda를 사용해야 합니다.</div>
+<div class="comment-content">이 질문을 다시 주의 깊게 읽은 후 마음을 C로 바꿨습니다. 또한 이 모델을 사용하는 몇 가지 앱에 대해 생각하게 되었습니다. SNS를 사용하는 경로는 이제 이벤트 브리지가 존재하는 "기존 방식"입니다. 또한 시험 작동 방식에는 DynamoDB에서 SNS를 트리거하는 직접적인 방법이 없기 때문에 이를 위해 Lambda를 사용해야 하므로 B는 기술적으로 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1315,7 +1449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1351,16 +1485,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 21:19">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">이 솔루션은 대기열의 지속적인 폴링이 필요하지 않습니다.</div>
+<div class="comment-content">이 솔루션에는 대기열의 지속적인 폴링이 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1369,7 +1503,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1397,11 +1531,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				맛사
+				마사
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 16일 목요일 08:00">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 16일 (목) 08:00">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1415,7 +1549,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1446,13 +1580,13 @@
 				속도
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 13:00">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 13:00">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 올바름 - EventBridge 규칙에는 여러 서비스에 알릴 수 있는 기능이 있습니다.</div>
+<div class="comment-content">C가 올바른 것 같습니다. EventBridge 규칙에는 여러 서비스에 알리는 기능이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1461,7 +1595,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1492,13 +1626,13 @@
 				사향
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 11일 (토) 18:57">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 11일 토요일 18:57">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 올바른 것 같지만 다른 것들은 그렇지 않습니다. SQS 알림은 단일 마이크로 서비스에서 사용할 수 있기 때문에 SQS를 참조하는 항목은 작동하지 않습니다. A를 사용하면 노이즈가 너무 많은 DynamoDB Streams를 통해 모든 변경 사항을 받게 됩니다.</div>
+<div class="comment-content">C는 맞는 것 같지만 다른 것들은 그렇지 않습니다. SQS 알림은 단일 마이크로서비스에서 사용될 수 있으므로 SQS를 참조하는 항목은 작동하지 않습니다. A를 사용하면 DynamoDB Streams를 통해 모든 변경 사항을 받게 되므로 노이즈가 너무 많습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1507,7 +1641,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1538,8 +1672,8 @@
 				일크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 11일 (토) 18:28">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 11일 토요일 18:28">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1552,7 +1686,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1580,15 +1714,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				할리도그
+				할리독
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 5일 일요일 20:45">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대기열을 사용할 수 없으며 메시지는 한 번만 처리됩니다. DynamoDB 테이블 업데이트에 대한 이벤트 알림을 생성할 수 없다고 생각합니다.</div>
+<div class="comment-content">대기열을 사용할 수 없으며 메시지는 한 번만 처리됩니다. DynamoDB 테이블 업데이트에 대한 이벤트 알림을 생성할 수는 없을 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1597,7 +1731,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1617,11 +1751,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아챠오
+				아키아오
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 10:17">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1634,7 +1768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1697,7 +1831,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 11:53">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1710,7 +1844,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">10</span> times
+				upvoted <span class="upvote-count">11</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1746,7 +1880,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 09:19">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1786,7 +1920,7 @@ Option B is wrong. There is no feature named DynamoDB event notifications.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 16:10">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1823,6 +1957,102 @@ Option B is wrong. There is no feature named DynamoDB event notifications.</div>
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990578" id="comment-990578">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Ganshank
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Sat 26 Aug 2023 09:05">
+			15 hours, 44 minutes ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">A real-world use case utterly destroyed with some of the worst possible options for solutions.
+Simplest solution is to have the interested parties consume events off the DynamoDB streams and delete the user information in their respective datastores. Too many red herrings in the options given, and the only relatively sane one of the lot is Option C.
+The bar for coming up with questions with SA professional keeps getting lowered.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985369" id="comment-985369">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				SK_Tyagi
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Sat 19 Aug 2023 20:32">
+			1 week ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">Event trigger from DynamoDb -- Choose DynamoDb Streams</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984383" id="comment-984383">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1838,11 +2068,8 @@ Option B is wrong. There is no feature named DynamoDB event notifications.</div>
 				xav1er
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 12:36">
-			1 day, 3 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1854,7 +2081,7 @@ Option B is wrong. There is no feature named DynamoDB event notifications.</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1887,7 +2114,7 @@ Option B is wrong. There is no feature named DynamoDB event notifications.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 08:06">
-			2 days, 8 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1935,7 +2162,7 @@ Apparently only the central user service stores user data in DynamoDB. The other
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Jul 2023 18:19">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1974,7 +2201,7 @@ A would be preferable with SNS instead of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 07:55">
-			2 days, 8 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2013,7 +2240,7 @@ Why not SQS?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 08:03">
-			2 days, 8 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2074,7 +2301,7 @@ Why not SQS?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Jun 2023 20:20">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2087,7 +2314,7 @@ Why not SQS?</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2120,7 +2347,7 @@ Why not SQS?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 23:40">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2136,7 +2363,7 @@ In this case, you can create an EventBridge rule for each microservice to match 
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2169,7 +2396,7 @@ In this case, you can create an EventBridge rule for each microservice to match 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 11:29">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2214,7 +2441,7 @@ In this case, you can create an EventBridge rule for each microservice to match 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 28 May 2023 20:20">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2259,7 +2486,7 @@ In this case, you can create an EventBridge rule for each microservice to match 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 15:41">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2299,7 +2526,7 @@ https://medium.com/aws-serverless-microservices-with-patterns-best/aws-event-dri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Aug 2023 08:02">
-			2 days, 8 hours ago
+			1 week, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2352,7 +2579,7 @@ https://medium.com/aws-serverless-microservices-with-patterns-best/aws-event-dri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Apr 2023 16:29">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2391,7 +2618,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 15:37">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2444,7 +2671,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 17:59">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2490,7 +2717,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Apr 2023 14:41">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2536,7 +2763,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 10:34">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2582,7 +2809,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Mar 2023 07:55">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2628,7 +2855,7 @@ Therefore the answer has to be C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Mar 2023 06:14">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2676,7 +2903,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 09 Mar 2023 22:48">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2722,7 +2949,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Mar 2023 02:43">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2760,7 +2987,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 16 May 2023 14:05">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2813,7 +3040,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 21:19">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2859,7 +3086,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 08:00">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2905,7 +3132,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 13:00">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2951,7 +3178,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 18:57">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2997,7 +3224,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 18:28">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3042,7 +3269,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Feb 2023 20:45">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3079,7 +3306,7 @@ https://dynobase.dev/dynamodb-triggers/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 10:17">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

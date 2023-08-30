@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 214 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 214 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 214 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 214 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 214 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="888110">
 <p class="card-text">
 							
-								회사는 고객 트랜잭션 데이터베이스를 온프레미스에서 AWS로 마이그레이션해야 합니다. 데이터베이스는 Linux 서버에서 실행되는 Oracle DB 인스턴스에 상주합니다. 새로운 보안 요구 사항에 따라 회사는 매년 데이터베이스 암호를 순환해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 고객 거래 데이터베이스를 온프레미스에서 AWS로 마이그레이션해야 합니다. 데이터베이스는 Linux 서버에서 실행되는 Oracle DB 인스턴스에 상주합니다. 새로운 보안 요구 사항에 따라 회사는 매년 데이터베이스 비밀번호를 교체해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											AWS Schema Conversion Tool(AWS SCT)을 사용하여 데이터베이스를 Amazon DynamoDB로 변환합니다. AWS Systems Manager Parameter Store에 암호를 저장합니다. 연간 패스타드 교체를 위해 AWS Lambda 함수를 호출하는 Amazon CloudWatch 경보를 생성합니다.
+											AWS SCT(AWS Schema Conversion Tool)를 사용하여 데이터베이스를 Amazon DynamoDB로 변환합니다. AWS Systems Manager Parameter Store에 암호를 저장합니다. 연간 패스타드 교체를 위해 AWS Lambda 함수를 호출하는 Amazon CloudWatch 경보를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											데이터베이스를 Oracle용 Amazon RDS로 마이그레이션합니다. AWS Secrets Manager에 암호를 저장합니다. 자동 회전을 켭니다. 연간 순환 일정을 구성합니다.
+											데이터베이스를 Oracle용 Amazon RDS로 마이그레이션합니다. AWS Secrets Manager에 비밀번호를 저장합니다. 자동 회전을 켭니다. 연간 순환 일정을 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											데이터베이스를 Amazon EC2 인스턴스로 마이그레이션합니다. AWS Systems Manager Parameter Store를 사용하여 연간 일정에 따라 AWS Lambda 함수를 사용하여 연결 문자열을 유지하고 교체합니다.
+											데이터베이스를 Amazon EC2 인스턴스로 마이그레이션합니다. AWS Systems Manager Parameter Store를 사용하면 연간 일정에 따라 AWS Lambda 함수를 사용하여 연결 문자열을 유지하고 교체할 수 있습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS Schema Conversion Tool(AWS SCT)을 사용하여 데이터베이스를 Amazon Neptune으로 마이그레이션합니다. 연간 암호 교체를 위해 AWS Lambda 함수를 호출하는 Amazon CloudWatch 경보를 생성합니다.
+											AWS SCT(AWS Schema Conversion Tool)를 사용하여 데이터베이스를 Amazon Neptune으로 마이그레이션합니다. 연간 암호 교체를 위해 AWS Lambda 함수를 호출하는 Amazon CloudWatch 경보를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								nexus2020
-							</a> 2023 
-							
-							년 <i>
-							6월 20일, 오후 9:43</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								nexus2020
-							</a>
-							
-							at <i>
-							June 20, 2023, 9:43 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,16 +291,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Just_Ninja
+				저스트_닌자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 07:33">
-			3주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 07:33">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">여기에 너무 많은 질문이 올바른 것으로 표시되고 잘못된 결과가 나온다는 것은 슬픈 일입니다. 웰 아키텍처 프레임워크!!!</div>
+<div class="comment-content">여기에 너무 많은 질문이 잘못된 결과로 정답으로 표시되어 있다는 것은 슬픈 일입니다. 그럼 아키텍처 프레임워크!!!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,16 +337,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				멋진 컬
+				좋은 컬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 8일 (토) 11:15">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 8일 토요일 11:15">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">당연히 B야</div>
+<div class="comment-content">뭐야 B야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,13 +386,13 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 01:43">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 01:43">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">확실히</div>
+<div class="comment-content">ㄴ 확실히요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,12 +433,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 5일 수요일 12:44">
-			1개월, 1주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Secrets Manager에는 회전 기능이 내장되어 있습니다.</div>
+<div class="comment-content">Secrets Manager에는 순환 기능이 내장되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,8 +478,8 @@
 				스카이제로Zx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 17:29">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 17:29">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -450,7 +493,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,16 +521,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				psyx21
+				싸이엑스21
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 22:46">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 22:46">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B</div>
+<div class="comment-content">정답은 B 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,11 +567,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				이지투
+				너무 쉬워요
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 22:42">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 22:42">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,8 +615,8 @@
 				바누스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 22:24">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 22:24">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,13 +660,13 @@
 				치아 씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 12:30">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 12:30">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">저는 B에 투표하겠습니다. 저를 B로 이끄는 키워드는 "매년 데이터베이스 비밀번호를 교체합니다."입니다. 이것은 Secrets Manager를 의미합니다.</div>
+<div class="comment-content">저는 B에 투표하겠습니다. 저를 B로 이끄는 키워드는 "매년 데이터베이스 비밀번호 교체"입니다. 이는 Secrets Manager를 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -660,16 +703,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				emiliocb4
+				에밀리오브4
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 21일 수요일 08:13">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">최소 작업...rds + 비밀 관리자</div>
+<div class="comment-content">최소한의 작업... rds + 비밀 관리자</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,13 +752,13 @@
 				넥서스2020
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 21:43">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 21:43">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">최소한의 운영 오버헤드. 그래서 B가 가장 쉽다.</div>
+<div class="comment-content">최소한의 운영 오버헤드. 그래서 B가 가장 쉽다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -776,7 +819,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 07:33">
-			3 weeks, 5 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -824,7 +867,7 @@ Well Architeting Framework!!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 11:15">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -870,7 +913,7 @@ Well Architeting Framework!!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 01:43">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -916,7 +959,7 @@ Well Architeting Framework!!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Jul 2023 12:44">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -962,7 +1005,7 @@ Well Architeting Framework!!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 17:29">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 22:46">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1098,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 22:42">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1100,7 +1143,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 22:24">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1145,7 +1188,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 12:30">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1191,7 +1234,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 08:13">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1237,7 +1280,7 @@ Then B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 21:43">
-			1 month, 3 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 68 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Professional SAP-C02 주제 1 질문 68 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 68 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 68 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861786">
 <p class="card-text">
 							
-								회사는 Amazon EC2 인스턴스에서 Python 스크립트를 실행하여 데이터를 처리합니다. 스크립트는 10분마다 실행됩니다. 스크립트는 Amazon S3 버킷에서 파일을 수집하고 파일을 처리합니다. 평균적으로 스크립트는 각 파일을 처리하는 데 약 5분이 걸립니다. 스크립트는 스크립트가 이미 처리한 파일을 다시 처리하지 않습니다. <br/><br/>회사는 Amazon CloudWatch 지표를 검토한 결과 파일 처리 속도 때문에 EC2 인스턴스가 시간의 약 40% 동안 유휴 상태임을 확인했습니다. 회사는 워크로드의 가용성과 확장성을 높이길 원합니다. 회사는 또한 장기적인 관리 오버헤드를 줄이기를 원합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
+								회사는 Amazon EC2 인스턴스에서 Python 스크립트를 실행하여 데이터를 처리합니다. 스크립트는 10분마다 실행됩니다. 스크립트는 Amazon S3 버킷에서 파일을 수집하고 파일을 처리합니다. 평균적으로 스크립트는 각 파일을 처리하는 데 약 5분 정도 걸립니다. 스크립트는 스크립트가 이미 처리한 파일을 다시 처리하지 않습니다. <br/><br/>회사는 Amazon CloudWatch 지표를 검토한 결과 파일 처리 속도로 인해 EC2 인스턴스가 약 40%의 시간 동안 유휴 상태임을 확인했습니다. 회사는 워크로드의 가용성과 확장성을 높이려고 합니다. 또한 회사는 장기적인 관리 오버헤드를 줄이고 싶어합니다. <br/><br/>이러한 요구 사항을 가장 비용 효율적으로 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											데이터 처리 스크립트를 AWS Lambda 함수로 마이그레이션합니다. 회사에서 객체를 업로드할 때 S3 이벤트 알림을 사용하여 Lambda 함수를 호출하여 객체를 처리합니다.
+											데이터 처리 스크립트를 AWS Lambda 함수로 마이그레이션합니다. 회사가 객체를 업로드할 때 S3 이벤트 알림을 사용하여 Lambda 함수를 호출하여 객체를 처리합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Amazon Simple Queue Service(Amazon SQS) 대기열을 생성합니다. 이벤트 알림을 SQS 대기열로 보내도록 Amazon S3를 구성합니다. 최소 크기가 인스턴스 1개인 EC2 Auto Scaling 그룹을 생성합니다. 데이터 처리 스크립트를 업데이트하여 SQS 대기열을 폴링합니다. SQS 메시지가 식별하는 S3 객체를 처리합니다.
+											Amazon Simple Queue Service(Amazon SQS) 대기열을 생성합니다. SQS 대기열에 이벤트 알림을 보내도록 Amazon S3를 구성합니다. 최소 1개의 인스턴스 크기로 EC2 Auto Scaling 그룹을 생성합니다. SQS 대기열을 폴링하도록 데이터 처리 스크립트를 업데이트합니다. SQS 메시지가 식별하는 S3 객체를 처리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 81%; display: flex;" title="">A (81%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">D (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 81%; display: flex;" title="">A (81%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">D (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								마세트
-							</a> 
-							
-							로 메인 <i>
-							2023년 1월 14일 오후 4:55</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								masetromain
-							</a>
-							
-							at <i>
-							Jan. 14, 2023, 4:55 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 16:55">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 16:55">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 데이터 처리 스크립트를 AWS Lambda 함수로 마이그레이션하고 S3 이벤트 알림을 사용하여 Lambda 함수를 호출하여 회사에서 개체를 업로드할 때 개체를 처리하는 A입니다. 이 솔루션은 회사의 고가용성 및 확장성 요구 사항을 충족할 뿐만 아니라 장기적인 관리 오버헤드를 줄여주며 가장 비용 효율적인 옵션이 될 것입니다. 옵션 B에는 SQS 대기열을 생성하고 이벤트 알림을 보내도록 S3를 구성하는 작업이 포함됩니다. 그런 다음 데이터 처리 스크립트는 SQS 대기열을 폴링하고 SQS 메시지가 식별하는 S3 개체를 처리합니다. 이 옵션은 고가용성과 확장성도 제공하지만 SQS 대기열 및 EC2 Auto Scaling 그룹과 같은 추가 리소스가 필요하므로 Lambda를 사용하는 것보다 비용 효율적이지 않습니다.</div>
+<div class="comment-content">정답은 A입니다. 데이터 처리 스크립트를 AWS Lambda 함수로 마이그레이션하고 회사가 객체를 업로드할 때 S3 이벤트 알림을 사용하여 Lambda 함수를 호출하여 객체를 처리합니다. 이 솔루션은 회사의 고가용성 및 확장성 요구 사항을 충족할 뿐만 아니라 장기적인 관리 오버헤드를 줄여주기 때문에 가장 비용 효과적인 옵션이 될 가능성이 높습니다. 옵션 B에는 SQS 대기열을 생성하고 이벤트 알림을 보내도록 S3를 구성하는 작업이 포함됩니다. 그런 다음 데이터 처리 스크립트는 SQS 대기열을 폴링하고 SQS 메시지가 식별하는 S3 개체를 처리합니다. 이 옵션은 고가용성과 확장성을 제공하지만 SQS 대기열 및 EC2 Auto Scaling 그룹과 같은 추가 리소스가 필요하므로 Lambda를 사용하는 것보다 비용 효율성이 떨어집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -287,15 +330,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 16:55">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 16:55">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">데이터 처리 스크립트를 컨테이너 이미지로 마이그레이션하고 EC2 인스턴스에서 실행하는 옵션 C는 여전히 회사가 기본 EC2 인스턴스를 관리해야 하며 Lambda를 사용하는 것만큼 비용 효율적이지 않을 수 있습니다. 데이터 처리 스크립트를 AWS Fargate의 Amazon ECS에서 실행되는 컨테이너 이미지로 마이그레이션하는 옵션 D는 여전히 회사가 기본 인프라를 관리해야 하며 Lambda를 사용하는 것만큼 비용 효율적이지 않을 수 있습니다. 또한 Fargate RunTask API 작업을 호출하는 Lambda 함수를 추가하여 추가 복잡성을 도입합니다.</div>
+<div class="comment-content">데이터 처리 스크립트를 컨테이너 이미지로 마이그레이션하고 이를 EC2 인스턴스에서 실행하는 옵션 C는 여전히 회사에서 기본 EC2 인스턴스를 관리해야 하며 Lambda를 사용하는 것만큼 비용 효율적이지 않을 수 있습니다. 데이터 처리 스크립트를 AWS Fargate의 Amazon ECS에서 실행되는 컨테이너 이미지로 마이그레이션하는 옵션 D는 여전히 회사에서 기본 인프라를 관리해야 하며 Lambda를 사용하는 것만큼 비용 효율적이지 않을 수 있습니다. 또한 Fargate RunTask API 작업을 호출하는 Lambda 함수를 추가하면 복잡성이 더 커집니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,18 +383,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장규20000
+				장유20000
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 20:06">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 20:06">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞습니다. HA, 확장성, 적은 관리를 제공합니다. 작업은 5분만 필요 B: 더 복잡해짐 C: 컨테이너가 확장되지 않고 여전히 하나의 EC2에서 실행됨 d: 컨테이너, Farget 및 Lambda가 필요합니다. A보다 복잡한</div>
+<div class="comment-content">A가 맞습니다. HA, 확장성, 적은 관리 기능을 제공합니다. 작업에는 5분만 필요합니다. B: 더욱 복잡해집니다. C: 컨테이너는 확장되지 않고 하나의 EC2에서 계속 실행됩니다. d: 컨테이너, Farget 및 Lambda가 필요합니다. A보다 복잡함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -394,13 +437,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 11:51">
-			14시간 59분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 11:51">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저는 A D가 PUT 명령마다 새 Fargate 작업을 호출하도록 투표합니다. 1000개의 이미지를 얻으면 1000개의 작업이 표시됩니다. 그것은 경제적이거나 저렴하지 않습니다. D가 EventBridge와 같은 다른 방법으로 새 ​​작업을 호출했다면 훨씬 더 저렴했을 것입니다.</div>
+<div class="comment-content">나는 D가 모든 PUT 명령마다 새로운 Fargate 작업을 호출할 것이라고 투표했습니다. 1000개의 이미지를 얻으면 1000개의 작업이 표시됩니다. 그것은 경제적이거나 저렴하지 않습니다. D가 EventBridge와 같은 다른 방법으로 새 ​​작업을 호출했다면 훨씬 저렴했을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,11 +480,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				큐트런런
+				귀여운런런
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 8일 화요일 12:05">
-			1주, 4일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -487,12 +530,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 5일 토요일 20:32">
-			2주 전
+			3 주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나도 A와 함께 갈 것이다. Olabiba에 따르면 "예, 옵션 A는 일반적으로 옵션 D보다 비용 효율적입니다. 옵션 A에서 데이터 처리 스크립트를 종량제 요금 모델이 있는 AWS Lambda 함수로 마이그레이션합니다. 실제 요청 수와 함수 실행 기간에 대해서만 비용을 지불합니다. 이것은 파일 처리와 같은 단기 작업에 더 비용 효율적일 수 있습니다. 반면 옵션 D에서는 데이터 처리 스크립트를 AWS Fargate의 Amazon Elastic Container Service(Amazon ECS)에서 실행되는 컨테이너 이미지 Fargate에는 컨테이너에 할당된 vCPU 및 메모리 리소스에 대해 비용을 지불하는 다른 가격 모델이 있습니다. AWS Lambda의 모델을 사용하십시오."</div>
+<div class="comment-content">나도 A랑 같이 갈 거야. Olabiba에 따르면, "예, 옵션 A는 일반적으로 옵션 D보다 비용 효율적입니다. 옵션 A에서는 데이터 처리 스크립트를 종량제 가격 모델이 있는 AWS Lambda 함수로 마이그레이션합니다. 실제 요청 수와 함수 실행 기간에 대해서만 비용을 지불합니다. 이는 파일 처리와 같은 단기 작업에 더 비용 효율적일 수 있습니다. 반면 옵션 D에서는 데이터 처리 스크립트를 AWS Fargate의 Amazon Elastic Container Service(Amazon ECS)에서 실행되는 컨테이너 이미지 Fargate에는 컨테이너에 할당된 vCPU 및 메모리 리소스에 대한 비용을 지불하는 다른 가격 모델이 있습니다. AWS Lambda 모델을 사용하세요."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,12 +576,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 2일 일요일 19:55">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">그것은 A</div>
+<div class="comment-content">그것은 A입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,12 +622,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 19:12">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">문제는 작업이 약 5분 동안 실행되고 람다의 시간 제한이 15분이므로 람다 선택(A)이 적절하다는 것입니다. 작업이 15분 이상 걸리면 옵션 D가 확장성, 가용성 및 비용 효율성에 적합합니다.</div>
+<div class="comment-content">질문은 가장 비용 효과적인 것에 관한 것입니다. 작업이 약 5분 동안 실행되고 람다의 시간 제한이 15분이므로 람다 선택(A)이 적절합니다. 작업에 15분 이상이 소요된다면 확장성, 가용성 및 비용 효율성 측면에서 옵션 D가 적합할 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -593,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -625,12 +668,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 2일 화요일 20:35">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 실제로 Fargate 답변을 좋아합니다. AWS Lambda는 서비스가 제공하는 매우 짧은 조정 시간을 활용하지 않는 정기적으로 발생하는 장기 실행 프로세스에 사용하는 경우 비용이 많이 듭니다. 10분마다 5분 동안 실행되므로 대략 50%의 시간 동안 활성화됩니다. 어쨌든 더 저렴할 수 있습니다. 이 분석을 살펴보십시오. -to-run-aws-lambda-function-all-the-time</div>
+<div class="comment-content">저는 실제로 Fargate 답변을 좋아합니다. 서비스가 제공하는 매우 짧은 확장 시간을 활용하지 않는 정기적으로 발생하고 장기 실행되는 프로세스에 AWS Lambda를 사용하는 경우 AWS Lambda는 비용이 많이 듭니다. 매 10분마다 5분 동안 실행되므로 대략 50%의 시간 동안 활성화됩니다. 어쨌든 더 저렴할 수 있습니다. 이 분석을 살펴보세요 https://blogs.perficient.com/2021/06/17/aws-cost-analytic-comparing-lambda-ec2-fargate/ https://sixfeetup.com/blog/cost -aws-lambda-function-항상 실행</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -639,7 +682,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -667,11 +710,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				데복시
+				데보시
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 14일 금요일 02:29">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,15 +747,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마일리클라우드
+				스마일클라우드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 14일 수요일 03:39">
-			2 달전
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옳은. EC2에서 이동해야 하고 실행 시간이 15분 미만인 프로세스 또는 배치 스크립트를 볼 때마다 Lambda가 답이라는 것이 가장 좋습니다.</div>
+<div class="comment-content">옳은. EC2에서 이동해야 하는 프로세스나 배치 스크립트가 있고 실행 시간이 15분 미만일 때마다 가장 좋은 방법은 Lambda가 답이라는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -721,7 +764,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,11 +800,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 13:58">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 13:58">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,13 +849,13 @@
 				아사구모
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 10:50">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 10:50">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">다음 두 가지 방법으로 Lambda를 선택할 때 두 가지 우려 사항이 있습니다. 원래 EC2 사양이 너무 빨라 완료하는 데 5분밖에 걸리지 않을 수 있다는 사실입니다. 평균 시간이 5분에 불과해 15분을 초과하는 경우도 있다는 사실.</div>
+<div class="comment-content">다음 두 가지 측면에서 Lambda를 선택할 때 두 가지 우려 사항이 있습니다. 원래 EC2 사양이 너무 빨라서 완료하는 데 5분 밖에 걸리지 않는다는 사실입니다. 평균 시간이 5분에 불과하다는 사실 때문에 시간이 15분을 초과하는 경우도 있을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -852,8 +895,8 @@
 				dev112233xx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 18일 (토) 02:11">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 18일 토요일 02:11">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -867,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -898,12 +941,12 @@
 				호보카보보
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 6일 월요일 00:03">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 6일 (월) 00:03">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">가장 비용 효율적인 솔루션을 요구합니다. 호출이 적고 메모리 요구 사항이 적은 경우 Lambda는 간단하고 저렴할 수 있습니다. 10분마다 처리가 호출되기 때문입니다. EC2는 실제로 40%의 시간 동안 유휴 상태이고 60%의 시간은 부하 상태입니다. 그러나 우리는 그것이 비용과 관련하여 어떻게 확장되는지 살펴보라는 요청을 받았습니다. 60% 사용된 EC2가 있습니다. Lambda 비용은 확장될 때 폭발적으로 증가합니다. Lambda는 가장 비싼 솔루션입니다. B) 더 비용 효율적입니다. (큰 로드를 처리하는 데 드는 비용에 대해 Lambda에 투표하는 사람은 AWS 청구서를 지불할 필요가 없습니다.)</div>
+<div class="comment-content">가장 비용 효율적인 솔루션이 필요합니다. 호출 횟수가 적고 메모리 요구 사항이 낮은 경우에는 Lambda가 간단하고 저렴할 수 있습니다. 처리는 10분마다 호출됩니다. EC2는 실제로 40%의 시간 동안 유휴 상태이고, 60%의 시간은 부하가 걸린 상태입니다. 그러나 우리는 비용 측면에서 그것이 어떻게 확장되는지 살펴보아야 합니다. 우리는 60%가 EC2를 사용하고 있습니다. Lambda 비용은 확장되면 폭발적으로 증가합니다. Lambda는 가장 비싼 솔루션입니다. B) 비용면에서 더 효과적입니다. (큰 부하 처리 비용과 관련하여 Lambda에 투표한 사람은 AWS 청구서를 지불할 필요가 없었습니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -912,7 +955,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -936,11 +979,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 6일 월요일 00:12">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 "장기적인 관리 부담"도 줄여야 합니다. Ec2 장기 관리 오버헤드는 Lambda 유지 관리보다 훨씬 낮습니다.</div>
+<div class="comment-content">또한 "장기적인 관리 오버헤드"도 줄여야 합니다. Ec2 장기 관리 오버헤드는 Lambda를 유지하는 것보다 훨씬 낮습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -949,7 +992,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -972,12 +1015,12 @@
 				그레이아이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 11:41">
-			15시간 8분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 11:41">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">EC2 오버헤드가 람다보다 적다고 누가 말하겠습니까? 서버를 관리하고, 패치하고, 육성해야 하며 어떤 이유로든 서비스가 중단되면 어떤 방법으로든 다시 시작해야 합니다. (모니터링이 필요합니다.) Lambda를 100% 사용 사례에 사용할 수 없다는 데 동의하지만 언제든지 EC2를 관리하는 것보다 Lambda에서 실행되도록 할 것입니다. (나는 ec2에서 실행되는 것을 싫어하고 실패합니다)</div>
+<div class="comment-content">누가 EC2 오버헤드가 람다보다 적다고 어떻게 말하겠습니까? 서버를 관리하고, 패치하고, 육성해야 하며, 어떤 이유로든 서비스가 중단되면 어떤 방법으로든 다시 시작해야 합니다. (모니터링이 필요합니다.) Lambda를 100% 사용 사례에 사용할 수 없다는 데 동의하지만 언제든지 EC2를 관리하는 것보다 Lambda에서 작업을 실행하도록 하겠습니다. (저는 EC2에서 실행되는 것을 싫어하고 실패합니다)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -986,7 +1029,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1030,16 +1073,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 22:28">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A와 D는 좋지만 질문에서 A가 가장 비용 효율적입니다. B에는 고가용성이 아님을 의미하는 인스턴스가 하나만 있습니다. C는 ec2에 더 많은 작업을 수행하는 컨테이너/ec2 콤보를 가지고 있어 비용 효율적이고 더 많은 운영 노력이 필요합니다.</div>
+<div class="comment-content">A와 D는 좋지만 문제의 질문에 따르면 A가 가장 비용 효율적입니다. B에는 인스턴스가 하나만 있으므로 가용성이 높지 않습니다. C에는 ec2에 대한 더 많은 작업이 포함된 컨테이너/ec2 콤보가 있으며 이는 비용 효율적이지 않고 더 많은 운영 노력을 필요로 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1048,7 +1091,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1068,15 +1111,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 22:29">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 비용 효율적이지 않고 좋지 않습니다 .. (위 댓글에서 C를 의미)</div>
+<div class="comment-content">D는 비용 효율적이지 않고 좋지도 않습니다. (위 설명에서 C를 의미함)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1085,7 +1128,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1125,12 +1168,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 30일 (월) 21:29">
-			6개월, 3주 전
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">스크립트 소요 시간은 약 5분==&gt;Lamda가 가장 간단한 솔루션입니다(D에 비해).</div>
+<div class="comment-content">스크립트는 약 5분 정도 걸립니다.==&gt;Lamda는 가장 간단한 솔루션입니다(D에 비해).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1194,7 +1237,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 16:55">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1234,7 +1277,7 @@ Option B involves creating an SQS queue and configuring S3 to send event notific
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 16:55">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1292,7 +1335,7 @@ Option D, migrating the data processing script to a container image that runs on
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 20:06">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1343,7 +1386,7 @@ d: need container, Farget and Lambda. Complex than A</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 11:51">
-			14 hours, 59 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1394,7 +1437,7 @@ if D was invoking a new task by other means like EventBridge, this would have be
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 08 Aug 2023 12:05">
-			1 week, 4 days ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1440,7 +1483,7 @@ if D was invoking a new task by other means like EventBridge, this would have be
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Aug 2023 20:32">
-			2 weeks ago
+			3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1491,7 +1534,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Jul 2023 19:55">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1537,7 +1580,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 07 May 2023 19:12">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1583,7 +1626,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 May 2023 20:35">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1629,7 +1672,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Apr 2023 02:29">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1666,7 +1709,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Jun 2023 03:39">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1719,7 +1762,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 13:58">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1765,7 +1808,7 @@ On the other hand, in option D, you would migrate the data processing script to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 10:50">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1813,7 +1856,7 @@ The fact that the average time is only 5 minutes, so there may be cases where th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Mar 2023 02:11">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1859,7 +1902,7 @@ The fact that the average time is only 5 minutes, so there may be cases where th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Mar 2023 00:03">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1902,7 +1945,7 @@ B) is more cost effective.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Mar 2023 00:12">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1939,7 +1982,7 @@ B) is more cost effective.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 11:41">
-			15 hours, 8 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2003,7 +2046,7 @@ I agree Lambda cannot be used for 100% of usecases but I would make stuff run on
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 22:28">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2041,7 +2084,7 @@ I agree Lambda cannot be used for 100% of usecases but I would make stuff run on
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 22:29">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2094,7 +2137,7 @@ I agree Lambda cannot be used for 100% of usecases but I would make stuff run on
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 30 Jan 2023 21:29">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

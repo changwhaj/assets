@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 160 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 160 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 160 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 160 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="867252">
 <p class="card-text">
 							
-								한 회사에 데이터 계층이 단일 AWS 리전에 배포된 중요한 애플리케이션이 있습니다. 데이터 계층은 Amazon DynamoDB 테이블과 Amazon Aurora MySQL DB 클러스터를 사용합니다. 현재 Aurora MySQL 엔진 버전은 글로벌 데이터베이스를 지원합니다. 애플리케이션 계층은 이미 두 지역에 배포되었습니다. <br/><br/>회사 정책에 따르면 중요한 애플리케이션에는 애플리케이션 계층 구성 요소와 데이터 계층 구성 요소가 두 지역에 걸쳐 배포되어야 합니다. RTO 및 RPO는 각각 몇 분을 넘지 않아야 합니다. 솔루션 설계자는 데이터 계층이 회사 정책을 준수하도록 하는 솔루션을 권장해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (두 가지를 선택하세요.)
+								회사에는 데이터 계층이 단일 AWS 지역에 배포되는 중요한 애플리케이션이 있습니다. 데이터 계층은 Amazon DynamoDB 테이블과 Amazon Aurora MySQL DB 클러스터를 사용합니다. 현재 Aurora MySQL 엔진 버전은 글로벌 데이터베이스를 지원합니다. 애플리케이션 계층은 이미 두 리전에 배포되었습니다. <br/><br/>회사 정책에 따르면 중요한 애플리케이션에는 애플리케이션 계층 구성 요소와 데이터 계층 구성 요소가 두 지역에 걸쳐 배포되어야 합니다. RTO 및 RPO는 각각 몇 분 이하여야 합니다. 솔루션 설계자는 데이터 계층이 회사 정책을 준수하도록 하는 솔루션을 권장해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 단계 조합은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Aurora MySQL DB 클러스터의 각 테이블에 다른 리전 추가
+											Aurora MySQL DB 클러스터의 각 테이블에 다른 리전을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,7 +171,7 @@
 													D.
 												</span> 
 											
-											구성에 다른 리전을 추가하여 기존 DynamoDB 테이블을 전역 테이블로 변환
+											구성에 다른 리전을 추가하여 기존 DynamoDB 테이블을 글로벌 테이블로 변환합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,11 +180,11 @@
 													E.
 												</span> 
 											
-											Amazon Route 53 Application Recovery Controller를 사용하여 보조 리전으로 데이터베이스 백업 및 복구 자동화
+											Amazon Route 53 애플리케이션 복구 컨트롤러를 사용하여 데이터베이스 백업 및 보조 지역으로의 복구를 자동화합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,21 +194,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">광고 (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">그리고 (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 83%; display: flex;" title="">광고 (83%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 17%; display: flex;" title="">AC (17%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bititan
-							</a> 
-							
-							시간: <i>
-							2023년 2월 2일 오후 7:07</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -227,16 +280,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bititan
-							</a>
-							
-							at <i>
-							Feb. 2, 2023, 7:07 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -267,8 +310,8 @@
 				SK_Tyagi
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 17:52">
-			8시간 51분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 17:52">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -282,7 +325,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -314,7 +357,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 4일 화요일 17:46">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -328,7 +371,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -356,16 +399,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				방귀
+				펍식
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 18:36">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 18:36">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">DynamoDB의 경우 전역 테이블을 사용하고 Aurora의 경우 교차 리전 읽기 복제본을 사용합니다.</div>
+<div class="comment-content">DynamoDB의 경우 전역 테이블을 사용하고, Aurora의 경우 리전 간 읽기 전용 복제본을 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -374,7 +417,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -402,11 +445,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				이지투
+				너무 쉬워요
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 18:07">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 18:07">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -419,7 +462,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -450,8 +493,8 @@
 				룬타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 5일 월요일 17:38">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 5일 (월) 17:38">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -464,7 +507,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -492,16 +535,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				두드러진
+				타에르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 18일 (토) 07:25">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 18일 토요일 07:25">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">A. Aurora MySQL DB 클러스터에 다른 리전 추가 D. 구성에 다른 리전을 추가하여 기존 DynamoDB 테이블을 전역 테이블로 변환</div>
+<div class="comment-content">A. Aurora MySQL DB 클러스터에 다른 리전 추가 D. 구성에 다른 리전을 추가하여 기존 DynamoDB 테이블을 글로벌 테이블로 변환합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -510,7 +553,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -542,11 +585,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 16일 목요일 17:49">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">잘못 작성된 질문: "RTO 및 RPO는 각각 몇 분을 넘지 않아야 합니다." 몇 분은 무슨 뜻인가요? 나에게는 2-3분일 수도 있고, 당신에게는 9-10분일 수도 있습니다.</div>
+<div class="comment-content">잘못 작성된 질문: "RTO와 RPO는 각각 몇 분을 넘지 않아야 합니다." 몇 분이란 무슨 뜻인가요? 나에게는 2~3분일 수도 있고, 당신에게는 9~10분일 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -555,7 +598,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -583,16 +626,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 13일 (월) 03:41">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 13일 월요일 03:41">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AC</strong></span></div>
-<div class="comment-content">A는 DB 계층에 대한 다중 영역을 해결합니다. 그러나 질문은 또한 백업으로 가능한 장애 발생 시 애플리케이션의 빠른 가동 시간을 의미하는 최소 RPO 및 RTO를 요구합니다. https://aws.amazon.com/blogs/database/cost-effective-disaster-recovery-for-amazon-aurora-databases-using-aws-backup/ https://docs.aws.amazon.com/amazondynamodb/ 최신/developerguide /CrossRegionAccountCopyAWS.html</div>
+<div class="comment-content">A는 DB 계층의 다중 지역을 해결합니다. 그러나 질문은 또한 백업으로 가능한 오류 발생 시 애플리케이션의 빠른 가동 시간을 의미하는 최소 RPO 및 RTO를 요구합니다. https://aws.amazon.com/blogs/database/cost-efficient-disaster-recovery-for-amazon-aurora-databases-using-aws-backup/ https://docs.aws.amazon.com/amazondynamodb/ 최신/개발자 가이드 /CrossRegionAccountCopyAWS.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -601,7 +644,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,12 +667,12 @@
 				SK_Tyagi
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 17:52">
-			8시간 51분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 17:52">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">전역 테이블이 지원할 때 C를 사용하고 여러 단계로 복제를 수행하는 이유 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html</div>
+<div class="comment-content">전역 테이블이 지원하는 경우 C를 사용하고 여러 단계로 복제를 수행하는 이유 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,15 +709,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				God_Is_Love
+				신은_사랑이다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 13일 (월) 03:43">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">주어진 힌트는 - Aurora MySQL 엔진 버전은 이를 가능하게 하는 글로벌 데이터베이스를 지원합니다.</div>
+<div class="comment-content">주어진 힌트는 다음과 같습니다 - Aurora MySQL 엔진 버전은 이를 가능하게 하는 글로벌 데이터베이스를 지원합니다 - https://d2908q01vomqb2.cloudfront.net/887309d048beef83ad3eabf2a79a64a389ab1c9f/2021/03/08/Aurora-Global-database-2.jpg</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -719,11 +762,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				샬케 04
+				샬케04
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 22:08">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -737,7 +780,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -768,13 +811,13 @@
 				비티탄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 02일 목요일 19:07">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 2일 목요일 19:07">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">전역 테이블이 아닌 db 만 만들 수 있으므로 A와 D</div>
+<div class="comment-content">전역 테이블이 아닌 db만 생성할 수 있으므로 A와 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -783,7 +826,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -835,7 +878,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 17:52">
-			8 hours, 51 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -881,7 +924,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Jul 2023 17:46">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -927,7 +970,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 18:36">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -973,7 +1016,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 18:07">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1018,7 +1061,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Jun 2023 17:38">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1064,7 +1107,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-database-disas
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Mar 2023 07:25">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1111,7 +1154,7 @@ D. Convert the existing DynamoDB table to a global table by adding another Regio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 17:49">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1158,7 +1201,7 @@ What is few minutes mean? May be it is 2-3 min for me, may be it is 9-10 min for
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Mar 2023 03:41">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1199,7 +1242,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 17:52">
-			8 hours, 51 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1245,7 +1288,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.ht
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Mar 2023 03:43">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1298,7 +1341,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.ht
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 22:08">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1344,7 +1387,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.ht
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 19:07">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

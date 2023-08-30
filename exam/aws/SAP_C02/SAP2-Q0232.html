@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 232 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 232 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 232 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 232 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="888128">
 <p class="card-text">
 							
-								회사는 온프레미스 데이터 센터에서 AWS로의 연결을 설정해야 합니다. 회사는 VPC 네트워크 간의 전이 라우팅 기능을 사용하여 서로 다른 AWS 리전에 있는 모든 VPC를 연결해야 합니다. 회사는 또한 네트워크 아웃바운드 트래픽 비용을 줄이고 대역폭 처리량을 늘리고 최종 사용자에게 일관된 네트워크 경험을 제공해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 온프레미스 데이터 센터에서 AWS로 연결을 설정해야 합니다. 회사는 VPC 네트워크 간의 전이적 라우팅 기능을 사용하여 다양한 AWS 지역에 있는 모든 VPC를 연결해야 합니다. 또한 회사는 네트워크 아웃바운드 트래픽 비용을 줄이고, 대역폭 처리량을 늘리며, 최종 사용자에게 일관된 네트워크 경험을 제공해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											온프레미스 데이터 센터와 AWS 간에 AWS Direct Connect 연결을 생성합니다. 전송 VIF를 프로비저닝하고 이를 Direct Connect 게이트웨이에 연결합니다. 각 리전에서 전송 게이트웨이를 사용하여 Direct Connect 게이트웨이를 다른 모든 VPC에 연결합니다.
+											온프레미스 데이터 센터와 AWS 간에 AWS Direct Connect 연결을 생성합니다. 전송 VIF를 프로비저닝하고 이를 Direct Connect 게이트웨이에 연결합니다. 각 리전의 전송 게이트웨이를 사용하여 Direct Connect 게이트웨이를 다른 모든 VPC에 연결합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											온프레미스 데이터 센터와 새로운 중앙 VP 간에 AWS Site-to-Site VPN 연결 생성동적 라우팅이 있는 전송 게이트웨이를 사용합니다. 전송 게이트웨이를 다른 모든 VPC에 연결합니다.
+											온프레미스 데이터 센터와 새로운 중앙 VP 간에 AWS Site-to-Site VPN 연결을 생성합니다. 동적 라우팅이 포함된 전송 게이트웨이를 사용합니다. Transit Gateway를 다른 모든 VPC에 연결합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bhanus
-							</a> 
-							
-							시간: <i>
-							2023년 6월 22일, 오전 3:15</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bhanus
-							</a>
-							
-							at <i>
-							June 22, 2023, 3:15 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,12 +294,12 @@
 				가베쿠드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 12:09">
-			14시간 40분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 12:09">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">상황이 1개의 AWS 계정, 다른 지역에 있는 다른 VPC인 경우 어떻게 됩니까? 여전히 TGW를 사용할 수 있습니까?</div>
+<div class="comment-content">상황이 1개의 AWS 계정이고 서로 다른 지역에 걸쳐 서로 다른 VPC인 경우 어떻게 되나요? TGW를 계속 사용할 수 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,12 +340,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 7일 금요일 11:48">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. TGW는 전이적 연결을 지원하지 않기 때문에 D일 수 없습니다. 따라서 사용자가 VPN에 연결하면 이 옵션이 무효화됩니다. A와 C는 첫 번째 문구에서 건너뛸 수 있습니다.</div>
+<div class="comment-content">B. TGW는 전이적 연결을 지원하지 않으므로 D일 수 없습니다. 따라서 사용자가 VPN에 연결하면 이 옵션이 무효화됩니다. A와 C는 첫 번째 문구에서 건너뛸 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,13 +385,13 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 23:35">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 23:35">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">틀림없어</div>
+<div class="comment-content">ㄴ 틀림없지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,8 +431,8 @@
 				스카이제로Zx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 20:09">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 20:09">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,12 +469,12 @@
 				rxhan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 29일 (토) 17:07">
-			3 주 전
+<span class="comment-date align-middle" title="2023년 7월 29일 토요일 17:07">
+			4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨 복사 및 붙여넣기</div>
+<div class="comment-content">씨 복사 붙여넣기</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -440,7 +483,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,12 +523,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 20:20">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">전송 게이트웨이는 지역 서비스이지만 다른 지역에서 다른 TG를 피어링할 수 있습니다. /</div>
+<div class="comment-content">Transit Gateway는 지역 서비스이지만 다양한 지역의 다양한 TG를 피어링할 수 있습니다 https://aws.amazon.com/about-aws/whats-new/2019/12/aws-transit-gateway-supports-inter-region-peering /</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,11 +565,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마일리클라우드
+				스마일클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 24일 (토) 14:34">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 24일 토요일 14:34">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,8 +614,8 @@
 				aragon_saa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 23일 금요일 02:20">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 23일 금 02:20">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,7 +660,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 20:29">
-			1개월, 4주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -631,7 +674,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -683,7 +726,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 12:09">
-			14 hours, 40 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -728,7 +771,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 11:48">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -776,7 +819,7 @@ A and C are skippable on the first phrase.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 23:35">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -822,7 +865,7 @@ A and C are skippable on the first phrase.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 20:09">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -860,7 +903,7 @@ A and C are skippable on the first phrase.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Jul 2023 17:07">
-			3 weeks ago
+			4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -913,7 +956,7 @@ A and C are skippable on the first phrase.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 20:20">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -960,7 +1003,7 @@ https://aws.amazon.com/about-aws/whats-new/2019/12/aws-transit-gateway-supports-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 14:34">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1006,7 +1049,7 @@ https://aws.amazon.com/about-aws/whats-new/2019/12/aws-transit-gateway-supports-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Jun 2023 02:20">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1051,7 +1094,7 @@ https://aws.amazon.com/about-aws/whats-new/2019/12/aws-transit-gateway-supports-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 20:29">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

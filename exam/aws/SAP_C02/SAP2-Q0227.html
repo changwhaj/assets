@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect – Professional SAP-C02 주제 1 문제 227 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 227 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 227 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 227 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="888123">
 <p class="card-text">
 							
-								한 회사가 미술품 경매 서비스를 제공하고 북미와 유럽 전역에 사용자를 보유하고 있습니다. 회사는 us-east-1 리전의 Amazon EC2 인스턴스에서 애플리케이션을 호스팅합니다. 작가들은 자신의 작품 사진을 큰 사이즈로 업로드한다. 고해상도 이미지 파일을 휴대폰에서 us-east-1 리전에서 생성된 중앙 집중식 Amazon S3 버킷으로 전송합니다. 유럽 ​​사용자들은 이미지 업로드 속도가 느리다고 보고합니다. <br/><br/>솔루션 설계자는 이미지 업로드 프로세스의 성능을 어떻게 향상시킬 수 있습니까?
+								한 회사에서 미술품 경매 서비스를 제공하고 북미와 유럽 전역에 사용자를 보유하고 있습니다. 이 회사는 us-east-1 지역의 Amazon EC2 인스턴스에서 애플리케이션을 호스팅합니다. 아티스트는 자신의 작품 사진을 대형 사이즈로 업로드합니다. 휴대폰의 고해상도 이미지 파일을 us-east-1 리전에서 생성된 중앙 집중식 Amazon S3 버킷으로 보냅니다. 유럽 ​​사용자들은 이미지 업로드 성능이 저하되고 있다고 보고하고 있습니다. <br/><br/>솔루션 설계자는 이미지 업로드 프로세스의 성능을 어떻게 향상시킬 수 있습니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											S3 멀티파트 업로드를 사용하도록 애플리케이션을 재배포합니다.
+											S3 멀티파트 업로드를 사용하려면 애플리케이션을 재배포하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon CloudFront 배포를 생성하고 애플리케이션을 사용자 지정 오리진으로 지정합니다.
+											Amazon CloudFront 배포판을 생성하고 애플리케이션을 사용자 지정 오리진으로 지정합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">씨 (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">A (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 80%; display: flex;" title="">C (80%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 20%; display: flex;" title="">A (20%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bhanus
-							</a> 
-							
-							시간: <i>
-							2023년 6월 21일, 오후 11:52</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bhanus
-							</a>
-							
-							at <i>
-							June 21, 2023, 11:52 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -233,6 +276,96 @@
 <!-- New comment start -->
 <!-- New comment end -->
 <div class="discussion-container">
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987479" id="comment-987479">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				스카이하이커
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 15:47">
+			4일 9시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">저는 A를 선택하겠습니다. C가 "S3 Transfer Acceleration을 사용하도록 버킷을 [2개 이상] 구성하십시오"라고 말하는 이유는 무엇입니까? 때로는 이러한 질문과 답변의 표현 방식이 싫을 때도 있습니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987485" id="comment-987485">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				스카이하이커
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 15:52">
+			4일 9시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">'s'를 제거하면 C가 답이 됩니다. C와 함께 갈 것이다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984601" id="comment-984601">
 <a class="minimize-comment comment-toggle" href="#">
@@ -250,12 +383,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 17:01">
-			23시간 11분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">질문의 요점: "유럽 사용자들이 이미지 업로드 성능이 느리다고 보고하고 있습니다." 어떻게 성능을 향상시킬 수 있습니까? 지연 시간 측면을 보면 물론 S3 Transfer Acceleration(옵션 C)이지만 질문은 우리 시나리오에 또 다른 변수를 제공합니다. .." 위에서만 보면 멀티파트로 업로드를 개선할 수 있으므로 A로 전환합니다. 여기에 "유럽의 사용자가 이미지 업로드 성능이 느리다고 보고하고 있습니다."라는 반전이 있습니다. - "NA"가 아닌 "유럽"을 의미합니다. 물론! 미국의 양동이... 그래, 질문이 정말 나쁘고 객관적이지 않고 (내 관점에서) 많은 해석이 있습니다.</div>
+<div class="comment-content">질문의 요점: "유럽 사용자들은 이미지 업로드 성능이 느리다고 보고하고 있습니다." 성능을 어떻게 향상시킬 수 있나요? 지연 시간 측면을 살펴보면 물론 S3 Transfer Acceleration(옵션 C)이지만 질문은 우리 시나리오에 또 다른 변수를 추가합니다. "아티스트는 자신의 작품 사진을 휴대폰에서 대형 고해상도 이미지 파일로 업로드합니다. .." 위 내용만 보면 멀티파트로 업로드를 개선할 수 있으므로 A로 전환할 수 있습니다. 여기에 "유럽 사용자들이 이미지 업로드 속도가 느리다고 보고하고 있습니다."라는 반전이 있습니다. - "NA"가 아닌 "유럽"을 의미합니다. 물론! 미국의 양동이... 그래, 질문이 정말 나쁘다. 객관적이지 않고(내 관점에서) 해석이 많다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +397,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +429,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 30일 일 23:41">
-			2주, 5일 전
+			3주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 질문에 대해 약간의 의구심이 있습니다. 멀티파트 업로드를 사용하여 파일을 분할하고 업로드 속도를 얻는 것이 더 합리적입니다. 지연을 줄이기 위해 AWS Transfer Accelerator를 적용한 것으로 보입니다. 가속/</div>
+<div class="comment-content">이 질문에 대해 약간의 의문이 있습니다. 파일을 분할하고 업로드 속도를 얻으려면 멀티파트 업로드를 사용하는 것이 더 합리적입니다. 지연을 줄이기 위해 AWS Transfer Accelerator를 적용한 것으로 보입니다.http s://aws.amazon.com/pt/blogs/compute/uploading-large-objects-to-amazon-s3-using-multipart-upload-and-transfer- 가속/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +443,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,15 +471,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그그로드스키
+				그로드스키
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 23일 일 20:13">
-			3주, 5일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C를 맞춥니다.</div>
+<div class="comment-content">C를 맞히세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,13 +519,13 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 17:22">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 17:22">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 A와 함께 사용하면 좋지만 독립 실행형 선택으로 사용하는 것이 좋습니다.</div>
+<div class="comment-content">C는 A와 결합하면 좋지만 독립형 선택으로는 더 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,12 +566,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 5일 수요일 13:25">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">업로드 성능-&gt; 전송 가속</div>
+<div class="comment-content">업로드 성능 -&gt; 전송 가속</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,11 +608,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 17:31">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +626,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -521,16 +654,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				푹식
+				펍식
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 19:29">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Transfer Acceleration은 업로드 속도의 상당한 증가를 보장하지 않습니다. 반면에 다중 부분 업로드는 파일의 여러 작은 청크를 병렬로 업로드하기 때문에 수행됩니다. 이상적으로는 멀티파트 업로드와 Transfer Accelerator를 함께 배포해야 합니다. 둘 중 하나만 선택해야 한다면 멀티파트 업로드가 더 나은 성능을 보일 것입니다. https://aws.amazon.com/blogs/compute/uploading-large-objects-to-amazon-s3-using-multipart-upload-and-transfer-acceleration/</div>
+<div class="comment-content">Transfer Acceleration은 업로드 속도의 상당한 증가를 보장하지 않습니다. 반면에 다중 부분 업로드는 여러 개의 작은 파일 청크를 병렬로 업로드하기 때문에 가능합니다. 이상적으로는 멀티파트 업로드와 Transfer Accelerator를 함께 배포해야 합니다. 둘 중 하나만 선택해야 한다면 여러 부분으로 업로드하면 성능이 더 좋아질 것입니다. https://aws.amazon.com/blogs/compute/uploading-large-objects-to-amazon-s3-using-multipart-upload-and-transfer-acceleration/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -562,12 +695,12 @@
 				요다마스터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 06:30">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 06:30">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">귀하의 링크를 사용하면 언급된 테스트에서 C가 더 빠르다는 것을 보여줍니다. 전송 가속화가 있는 단일 업로드가 40% 더 빠릅니다. 전송 가속화가 없는 멀티파트 업로드가 38% 더 빠릅니다.</div>
+<div class="comment-content">귀하의 링크를 사용하면 언급된 테스트에서 C가 더 빠른 것으로 나타났습니다. 전송 가속을 사용하는 단일 업로드 40% 더 빠르며 전송 가속을 사용하지 않는 멀티파트 업로드 38% 더 빠릅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -576,7 +709,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,8 +748,8 @@
 				스카이제로Zx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 19:19">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 19:19">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -630,7 +763,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -658,11 +791,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마일리클라우드
+				스마일클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 23일 금요일 13:43">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 23일 금 13:43">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -676,7 +809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,15 +837,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				무사누사
+				MoussaNoussa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 16:14">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 물론</div>
+<div class="comment-content">물론이죠</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -721,7 +854,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,13 +885,13 @@
 				바누스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 23:52">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 23:52">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C - 전송 가속. S3 Transfer Acceleration은 엣지 로케이션의 Amazon CloudFront 글로벌 네트워크를 활용하여 S3 버킷과의 데이터 전송을 가속화합니다. 중앙 집중식 S3 버킷에서 S3 Transfer Acceleration을 활성화하면 유럽 사용자는 데이터가 가장 가까운 CloudFront 엣지 로케이션을 통해 라우팅되므로 더 빠른 업로드를 경험할 수 있습니다.</div>
+<div class="comment-content">C - 전송 가속. S3 Transfer Acceleration은 Amazon CloudFront 글로벌 엣지 로케이션 네트워크를 활용하여 S3 버킷과의 데이터 전송을 가속화합니다. 중앙 집중식 S3 버킷에서 S3 Transfer Acceleration을 활성화하면 유럽 사용자는 데이터가 가장 가까운 CloudFront 엣지 위치를 통해 라우팅되므로 더 빠른 업로드를 경험할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -767,7 +900,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,6 +936,97 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987479" id="comment-987479">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				skyhiker
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 15:47">
+			4 days, 9 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">I would choose A. Why does C say "Configure the buckets [more than one] to use S3 Transfer Acceleration?
+Sometimes you have to hate how these questions and answers are worded.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987485" id="comment-987485">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				skyhiker
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 15:52">
+			4 days, 9 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">C would be the answer if the 's' was removed. Will to go with C.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984601" id="comment-984601">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -819,7 +1043,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 17:01">
-			23 hours, 11 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -869,7 +1093,7 @@ Here comes the plot twist "The users in Europe are reporting slow performance fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Jul 2023 23:41">
-			2 weeks, 5 days ago
+			3 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -916,7 +1140,7 @@ s://aws.amazon.com/pt/blogs/compute/uploading-large-objects-to-amazon-s3-using-m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Jul 2023 20:13">
-			3 weeks, 5 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -961,7 +1185,7 @@ s://aws.amazon.com/pt/blogs/compute/uploading-large-objects-to-amazon-s3-using-m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 17:22">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1008,7 +1232,7 @@ would be good in combination with A, but better as a standalone choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Jul 2023 13:25">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1054,7 +1278,7 @@ would be good in combination with A, but better as a standalone choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 17:31">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1100,7 +1324,7 @@ would be good in combination with A, but better as a standalone choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 19:29">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1143,7 +1367,7 @@ https://aws.amazon.com/blogs/compute/uploading-large-objects-to-amazon-s3-using-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 06:30">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1198,7 +1422,7 @@ Multipart upload without transfer acceleration 38% faster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 19:19">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1244,7 +1468,7 @@ Multipart upload without transfer acceleration 38% faster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Jun 2023 13:43">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1290,7 +1514,7 @@ Multipart upload without transfer acceleration 38% faster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 16:14">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1335,7 +1559,7 @@ Multipart upload without transfer acceleration 38% faster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 23:52">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

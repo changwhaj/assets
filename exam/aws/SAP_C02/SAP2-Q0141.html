@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 141 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 주제 1 문제 141 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 141 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 141 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861859">
 <p class="card-text">
 							
-								회사는 Auto Scaling 그룹의 Amazon EC2 인스턴스를 사용하여 AWS Cloud에서 비디오를 처리하고 있습니다. 비디오를 처리하는 데 30분이 소요됩니다. Amazon Simple Queue Service(Amazon SQS) 대기열의 비디오 수에 따라 여러 EC2 인스턴스가 확장 및 축소됩니다. <br/><br/>회사는 대상 배달 못한 편지 대기열과 maxReceiveCount를 1로 지정하는 리드라이브 정책으로 SQS 대기열을 구성했습니다. 회사는 SQS 대기열에 대한 가시성 제한 시간을 1시간으로 설정했습니다. 이 회사는 배달 못한 편지 대기열에 메시지가 있을 때 개발 팀에 알리도록 Amazon CloudWatch 경보를 설정했습니다.<br/><br/>하루 동안 여러 번. 개발 팀은 메시지가 배달 못한 편지 대기열에 있고 비디오가 처리되지 않았다는 알림을 받습니다. 조사 결과 애플리케이션 로그에서 오류가 발견되지 않았습니다. <br/><br/>회사는 이 문제를 어떻게 해결할 수 있습니까?
+								한 회사가 Auto Scaling 그룹의 Amazon EC2 인스턴스를 사용하여 AWS 클라우드에서 비디오를 처리하고 있습니다. 비디오를 처리하는 데 30분이 소요됩니다. 여러 EC2 인스턴스는 Amazon Simple Queue Service(Amazon SQS) 대기열의 비디오 수에 따라 확장 및 축소됩니다. <br/><br/>회사는 대상 배달 못한 편지 대기열과 maxReceiveCount를 1로 지정하는 리드라이브 정책을 사용하여 SQS 대기열을 구성했습니다. 회사는 SQS 대기열에 대한 표시 제한 시간을 1시간으로 설정했습니다. 회사는 배달 못한 편지 대기열에 메시지가 있을 때 개발 팀에 알리기 위해 Amazon CloudWatch 경보를 설정했습니다.<br/><br/>하루에도 여러 번. 개발팀은 메시지가 배달 못한 편지 대기열에 있고 비디오가 처리되지 않았다는 알림을 받습니다. 조사 결과 애플리케이션 로그에서 오류가 발견되지 않았습니다. <br/><br/>회사는 이 문제를 어떻게 해결할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											EC2 인스턴스에 대한 종료 방지 기능을 켭니다.
+											EC2 인스턴스에 대한 종료 방지 기능을 활성화합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											SQS 대기열의 가시성 제한 시간을 3시간으로 업데이트합니다.
+											SQS 대기열의 제한 시간 초과를 3시간으로 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="24 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">씨 (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">디 (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="24 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">C (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">D (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a> 2023년 
-							
-							1 <i>
-							월 16일 오후 3:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zhangyu20000
-							</a>
-							
-							at <i>
-							Jan. 16, 2023, 3:45 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,19 +287,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 19:04">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 19:04">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">정답은 C입니다. 회사는 처리 중에 인스턴스에 대한 축소 보호를 구성하여 문제를 해결할 수 있습니다. 이렇게 하면 비디오를 처리하는 동안 인스턴스가 종료되지 않습니다. 이렇게 하면 메시지가 데드 레터 대기열로 이동하지 않고 비디오가 제대로 처리됩니다. 옵션 A는 올바르지 않습니다. EC2 인스턴스에 대한 종료 방지 기능을 켜면 Auto Scaling 그룹이 대기열에 있는 비디오 수에 따라 인스턴스를 확장 및 축소하는 기능에 영향을 미치므로 문제가 해결되지 않기 때문입니다. 회사에서 가시성 제한 시간을 1시간으로 지정했기 때문에 옵션 B는 올바르지 않습니다. 이는 인스턴스가 비디오를 처리하기에 충분한 시간이며 제한 시간을 3시간으로 업데이트할 필요가 없습니다. 회사에서 maxReceiveCount를 1로 설정했고 0으로 변경해도 문제가 해결되지 않기 때문에 옵션 D는 올바르지 않습니다. maxReceiveCount 허용 범위는 1~1000입니다.</div>
+<div class="comment-content">정답은 C입니다. 회사에서는 처리 중 인스턴스에 대한 축소 보호를 구성하여 문제를 해결할 수 있습니다. 이렇게 하면 비디오를 처리하는 동안 인스턴스가 종료되지 않습니다. 이렇게 하면 메시지가 배달 못한 편지 대기열로 이동하는 것을 방지하고 비디오가 제대로 처리되도록 할 수 있습니다. 옵션 A는 올바르지 않습니다. EC2 인스턴스에 대한 종료 방지 기능을 켜도 대기열의 비디오 수에 따라 인스턴스를 확장 및 축소하는 Auto Scaling 그룹의 기능에 영향을 미치기 때문에 문제가 해결되지 않기 때문입니다. 회사가 표시 제한 시간을 1시간으로 지정했기 때문에 옵션 B는 올바르지 않습니다. 이는 인스턴스가 비디오를 처리하는 데 충분한 시간이며 제한 시간을 3시간으로 업데이트할 필요가 없습니다. 회사에서 maxReceiveCount를 1로 설정했고 이를 0으로 변경해도 문제가 해결되지 않기 때문에 옵션 D는 올바르지 않습니다. maxReceiveCount 허용 범위는 1~1000입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -289,11 +332,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 20일 목요일 15:04">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">전적으로 동의합니다. 0은 maxReceiveCount에 대한 유효하지 않은 값이므로 옵션 d는 잘못된 것입니다.</div>
+<div class="comment-content">완전히 동의합니다. 0은 maxReceiveCount의 유효하지 않은 값이므로 옵션 d는 정확하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,7 +345,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -330,24 +373,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				브위치
+				개자식
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일 수 13:44">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 13:44">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ChatGPT는 이 추론을 확인합니다.</div>
+<div class="comment-content">ChatGPT는 이러한 추론을 확인합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 14:23">
-			12시간 22분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 14:23">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">D에는 maxReceiveCount 값이 0으로 설정되어 있기 때문에 C만 사용합니다.</div>
+<div class="comment-content">D의 maxReceiveCount 값이 0으로 설정되어 있으므로 C만 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,8 +478,8 @@
 				rtguru
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 00:50">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 18일 화 00:50">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,13 +523,13 @@
 				요다마스터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 5일 수요일 06:23">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 5일 수 06:23">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. AWS는 "대기열의 가시성 제한 시간을 함수 제한 시간의 6배로 설정하도록 권장"하므로 3시간이 완벽합니다. 출처: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
+<div class="comment-content">B. AWS는 "대기열의 가시성 제한 시간을 기능 제한 시간의 6배로 설정할 것을 권장합니다". 이는 3시간이 완벽합니다. 출처: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -495,7 +538,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,13 +569,13 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 3일 월요일 21:11">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 21:11">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 더 가능성이</div>
+<div class="comment-content">C 가능성이 더 높음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,11 +616,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 17:27">
-			1개월, 4주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">수동으로 수행하는 것 외에는 처리 중에 인스턴스에 대한 스케일 인 보호를 구성하는 방법을 찾을 수 없었습니다. 이는 미친 연습이 될 것입니다. 결국 처리의 일부로 응용 프로그램에서 수행할 수 있지만 답변에서 더 많은 컨텍스트를 기대합니다.</div>
+<div class="comment-content">수동으로 수행하는 것 외에는 처리 중에 인스턴스에 대한 축소 보호를 구성하는 방법을 찾을 수 없었습니다. 이는 엄청난 작업이 될 것입니다. 결국 이는 처리의 일부로 애플리케이션에 의해 수행될 수 있지만 답변에서 더 많은 컨텍스트를 기대합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,12 +661,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 22일 월요일 13:42">
-			2개월, 4주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 말이 됩니다. D 답변에 오타가 있는 것 같아요! 아마도 그들은 텍스트를 제대로 복사하지 않았을 것입니다 https://repost.aws/knowledge-center/lambda-retrying-valid-sqs-messages</div>
+<div class="comment-content">D 말이 되는군요. D 답변에 오타가 있는 것 같습니다! 아마도 그들은 텍스트를 제대로 복사하지 않았을 것입니다 https://repost.aws/knowledge-center/lambda-retrying-valid-sqs-messages</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,12 +707,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 00:25">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">처리 중 인스턴스에 대한 축소 보호를 구성하는 옵션 C는 문제와 직접적인 관련이 없습니다. 축소 보호는 Auto Scaling 이벤트 중에 인스턴스가 종료되는 것을 방지하지만 성공적인 처리 없이 메시지가 데드-레터 대기열로 이동되는 문제는 해결하지 않습니다. https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-protection.html D가 tyoe라고 생각하고 읽어야 합니다. D. 리드라이브 정책을 업데이트하고 maxReceiveCount를 10으로 설정합니다.</div>
+<div class="comment-content">처리 중 인스턴스에 대한 축소 보호를 구성하는 옵션 C는 문제와 직접적인 관련이 없습니다. 축소 보호는 Auto Scaling 이벤트 중에 인스턴스가 종료되는 것을 방지하지만 메시지가 성공적으로 처리되지 않은 채 배달 못한 편지 대기열로 이동되는 문제는 해결하지 않습니다. https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-protection.html 제 생각에는 D가 tyoe이고 읽어야 할 것 같습니다. D. 리드라이브 정책을 업데이트하고 maxReceiveCount를 10으로 설정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,13 +752,13 @@
 				파슨스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 17:02">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 17:02">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 "maxReceiveCount를 10으로 설정"해야 합니다. 오타일 수도 있습니다. 설명: 이 설정은 처리에 실패한 모든 메시지가 다른 소비자가 선택하고 다시 처리할 수 있도록 대기열로 다시 전송되도록 합니다. --- C가 잘못된 이유는 무엇입니까? Auto Scaling 그룹은 대기열의 메시지 수에 응답합니다. 축소 보호는 SQS 대기열에 메시지가 없을 때 비용 효율적이지 않습니다.</div>
+<div class="comment-content">D는 "maxReceiveCount를 10으로 설정"해야 합니다. 그거, 어쩌면 오타일 수도 있어요. 설명: 이 설정을 사용하면 처리에 실패한 모든 메시지가 다른 소비자가 선택하여 다시 처리할 수 있도록 큐로 다시 전송됩니다. --- 왜 C가 틀렸나요? Auto Scaling 그룹은 대기열의 메시지 수에 응답합니다. SQS 대기열에 메시지가 없으면 축소 보호는 비용 효율적이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -747,12 +790,12 @@
 				rbm2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 20일 (토) 23:48">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 20일 토요일 23:48">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">애플리케이션 로그에 오류가 없으므로 비디오를 처리하는 동안 인스턴스가 Auto Scaling에 의해 종료되고 있다고 믿게 됩니다. SQS 계층의 모든 해결 방법이 문제를 해결하지 못할 수 있음</div>
+<div class="comment-content">애플리케이션 로그에 오류가 없으면 비디오 처리 중 자동 크기 조정으로 인해 인스턴스가 종료되는 것으로 믿게 됩니다. SQS 계층의 해결 방법으로는 문제가 해결되지 않을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -761,7 +804,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,16 +840,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				파울로C
+				파울로씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 24일 (월) 11:46">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 24일 월요일 11:46">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EC2에 대한 SQS 지침을 찾을 수 없지만 Lambda에 대한 지침은 있습니다. 대기열의 가시성 제한 시간을 함수 제한 시간의 6배에 MaximumBatchingWindowInSeconds 값을 더한 값으로 설정하는 것이 좋습니다. 이렇게 하면 Lambda 함수가 이벤트의 각 배치를 처리하고 조절 오류 발생 시 재시도할 시간이 생깁니다. 프로세스가 30분 걸리고 3시간은 이것의 6배이므로 여기에 적용할 수 있다고 생각합니다. https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
+<div class="comment-content">EC2에 대한 SQS 지침을 찾을 수 없지만 Lambda에 대한 지침은 있습니다. 대기열의 표시 제한 시간을 함수 제한 시간의 6배에 MaximumBatchingWindowInSeconds 값을 더한 값으로 설정하는 것이 좋습니다. 이를 통해 Lambda 함수가 각 이벤트 배치를 처리하고 조절 오류가 발생할 경우 재시도할 시간을 확보할 수 있습니다. 이 과정은 30분 정도 걸리고 3시간은 이것의 6배이기 때문에 여기에 적용해도 될 것 같아요. https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -815,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,11 +886,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 08:27">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -881,15 +924,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 08:30">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">가시성 제한 시간을 여전히 조정해야 할 수도 있지만 스케일 인 보호는 처리 중에 인스턴스가 종료되어 메시지가 배달 못한 편지 대기열에 들어가는 것을 방지하는 기본 솔루션입니다.</div>
+<div class="comment-content">표시 제한 시간을 조정해야 할 수도 있지만 축소 보호는 처리 중에 인스턴스가 종료되어 메시지가 배달 못한 편지 대기열에 들어가는 것을 방지하는 기본 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -898,7 +941,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,16 +977,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 19:15">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Amazon SQS 대기열의 리드라이브 정책에서 maxReceiveCount를 0으로 설정하면 메시지가 한 번의 시도 후 소비자에 의해 성공적으로 처리되지 않으면 메시지가 배달 못한 편지 대기열로 이동되는 대신 대기열에서 즉시 삭제됩니다. .</div>
+<div class="comment-content">Amazon SQS 대기열의 다시 드라이브 정책에서 maxReceiveCount를 0으로 설정하면 메시지가 한 번의 시도 이후 소비자에 의해 성공적으로 처리되지 않으면 메시지가 배달 못한 편지 대기열로 이동되지 않고 대기열에서 즉시 삭제됩니다. .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -952,7 +995,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -972,15 +1015,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				제수이슬레온
+				예수이슬레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 15:34">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 15:34">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변은 맞지만 maxReceiveCount에 대한 설명이 잘못되었습니다. amxReceiveCount는 메시지가 항상 데드-레터 큐로 이동된 후 앱이 메시지를 처리하지 못하는 경우 최대 수를 나타냅니다. " maxReceiveCount는 배달 못한 편지 대기열로 이동되기 전에 소비자가 대기열에서 메시지를 삭제하지 않고 수신하려고 시도하는 횟수입니다. " https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/ sqs-dead-letter-queues.html</div>
+<div class="comment-content">귀하의 답변은 맞지만 maxReceiveCount에 대한 설명은 잘못되었습니다. amxReceiveCount는 앱이 메시지 처리에 실패한 경우의 최대 개수를 나타내며, 그 후 메시지는 항상 배달 못한 편지 대기열로 이동됩니다. "maxReceiveCount는 소비자가 배달 못한 편지 대기열로 이동되기 전에 메시지를 삭제하지 않고 대기열에서 메시지 수신을 시도하는 횟수입니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/를 참조하세요. sqs-dead-letter-queues.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -989,7 +1032,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,7 +1072,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 19일 일요일 20:46">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1075,12 +1118,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 16:40">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 이 질문에 대해 갈등을 겪고 있습니다. D 재드라이브를 업데이트하는 것이 근본 원인을 해결하기 때문에 최상의 솔루션처럼 들립니다. C는 비디오 처리 문제를 해결하는 것이 아니라 해결 방법입니다.</div>
+<div class="comment-content">나는 이 질문에 대해 갈등을 겪고 있습니다. D 재드라이브를 업데이트하는 것이 근본 원인을 해결하기 때문에 최선의 해결책처럼 들립니다. C는 비디오 처리 문제를 해결하는 것이 아니라 해결 방법입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1089,7 +1132,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1113,11 +1156,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 16:50">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">중재자는 승인하지 않습니다. 알아 냈습니다.</div>
+<div class="comment-content">중재자가 승인하지 않아서 알아냈습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1126,7 +1169,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1150,11 +1193,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 17일 금요일 16:52">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 올바른 선택입니다. 문제는 비디오가 가시성 제한 시간보다 더 오래 걸려서 아직 처리 중인데도 데드 레터 대기열로 보내지고 있는 것 같습니다. SQS 대기열의 가시성 제한 시간을 3시간으로 업데이트하면 동영상이 배달 못한 편지 대기열로 전송되기 전에 처리할 시간이 더 많아져 문제가 해결됩니다.</div>
+<div class="comment-content">B가 올바른 선택입니다. 문제는 동영상을 처리하는 데 표시 제한 시간보다 더 오랜 시간이 걸리기 때문에 아직 처리 중임에도 불구하고 배달 못한 편지 대기열로 전송되는 것 같습니다. SQS 대기열의 표시 제한 시간을 3시간으로 업데이트하면 비디오가 배달 못한 편지 대기열로 전송되기 전에 처리할 시간이 더 늘어나 문제가 해결됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1163,7 +1206,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1187,11 +1230,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 3일 금요일 13:43">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">흥미로운 점은 문제를 다른 방식으로 이해했다는 것입니다. 문제는 Ec2 인스턴스가 여전히 비디오에서 작동하는 동안 축소 이벤트가 있었고 해당 인스턴스가 종료 대상으로 선택되었다는 것입니다. 저는 개인적으로 수명 주기 후크를 사용할 것입니다. 옵션 C는 해결 방법이라고 말씀하신 것처럼 어떤 방식으로 AutoScaling의 목적을 무효화합니다.</div>
+<div class="comment-content">흥미로운 점은 문제를 다른 방식으로 이해했다는 것입니다. 문제는 Ec2 인스턴스가 영상을 계속 작업하는 동안 축소 이벤트가 발생하여 해당 인스턴스가 종료되도록 선택되었다는 것입니다. 개인적으로 수명 주기 후크를 사용하겠습니다. 옵션 C는 해결 방법이라고 말씀하신 것처럼 AutoScaling의 목적을 무너뜨립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1200,7 +1243,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1255,13 +1298,13 @@
 				zozza2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 30일 (월) 02:11">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 30일 월요일 02:11">
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나를 위해, C 여야합니다</div>
+<div class="comment-content">나에게는 C가 되어야 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1270,7 +1313,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1298,15 +1341,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장규20000
+				장유20000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 15:45">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 15:45">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 맞음 A: EC2의 종료 보호가 ASG에 영향을 미침 B: 30분만 소요, 3시간 필요 없음 C: ASG는 대기열 깊이를 기반으로 하며 ASG는 대기열 길이가 0일 때 확장됩니다. 그러나 maxreceivecount는 1로 설정됩니다. D: maxreceivecount 허용 범위는 1~1000입니다.</div>
+<div class="comment-content">C가 정확함 A: EC2의 종료 보호가 ASG에 영향을 미칩니다. B: 30분만 소요되며 3시간은 필요하지 않습니다. C: ASG는 대기열 깊이를 기반으로 하며 대기열 길이가 0일 때 ASG가 축소됩니다. 그러나 maxreceivecount는 1로 설정됩니다. D: maxreceivecount 허용 범위는 1~1000입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1315,7 +1358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1370,7 +1413,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 19:04">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1414,7 +1457,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Jul 2023 15:04">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1459,7 +1502,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 13:44">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1471,7 +1514,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1515,7 +1558,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 14:23">
-			12 hours, 22 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1561,7 +1604,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 00:50">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1606,7 +1649,7 @@ Option D is incorrect because the company has set the maxReceiveCount to 1 and c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Jul 2023 06:23">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1654,7 +1697,7 @@ source: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 21:11">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1700,7 +1743,7 @@ source: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 17:27">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1745,7 +1788,7 @@ source: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 13:42">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1793,7 +1836,7 @@ https://repost.aws/knowledge-center/lambda-retrying-valid-sqs-messages</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 May 2023 00:25">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1843,7 +1886,7 @@ D.	Update the redrive policy and set maxReceiveCount to 10.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 17:02">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1888,7 +1931,7 @@ Well, the Auto Scaling group responds to the number of messages on the queue, sc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 23:48">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1941,7 +1984,7 @@ Well, the Auto Scaling group responds to the number of messages on the queue, sc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Apr 2023 11:46">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1989,7 +2032,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 08:27">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2027,7 +2070,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 08:30">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2080,7 +2123,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 19:15">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2118,7 +2161,7 @@ https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 17 May 2023 15:34">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2175,7 +2218,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 20:46">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2221,7 +2264,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 16:40">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2259,7 +2302,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 16:50">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2296,7 +2339,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Feb 2023 16:52">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2335,7 +2378,7 @@ The issue seems to be that the videos are taking longer than the visibility time
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Mar 2023 13:43">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2404,7 +2447,7 @@ The issue seems to be that the videos are taking longer than the visibility time
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 30 Jan 2023 02:11">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2450,7 +2493,7 @@ The issue seems to be that the videos are taking longer than the visibility time
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 15:45">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 프로페셔널 SAP-C02 주제 1 질문 12 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Professional SAP-C02 시험 문제 12 문제 12 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1 question 12 discussion</h1>
@@ -60,10 +123,10 @@
 <div class="col-12">
 <div class="discussion-header-container">
 <!-- Question -->
-<div class="question-discussion-header"><a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02</a> 
+<div class="question-discussion-header">
 						
-							시험 문제
-						<a class="discussion-link"></a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Professional SAP-C02 시험문제</a>
 <div>
 							질문 #: 12 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="856127">
 <p class="card-text">
 							
-								회사에서 타사 SaaS(Software-as-a-Service) 애플리케이션을 사용하려고 합니다. 타사 SaaS 애플리케이션은 여러 API 호출을 통해 사용됩니다. 타사 SaaS 애플리케이션도 VPC 내부의 AWS에서 실행됩니다. <br/>회사는 VPC 내부에서 타사 SaaS 애플리케이션을 사용합니다. 회사에는 인터넷을 통과하지 않는 개인 연결 사용을 의무화하는 내부 보안 정책이 있습니다. 회사 VPC에서 실행되는 리소스는 회사 VPC 외부에서 액세스할 수 없습니다. 모든 권한은 최소 권한 원칙을 준수해야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
+								회사에서는 타사 SaaS(Software-as-a-Service) 애플리케이션을 사용하려고 합니다. 타사 SaaS 애플리케이션은 여러 API 호출을 통해 사용됩니다. 타사 SaaS 애플리케이션도 VPC 내부의 AWS에서 실행됩니다. <br/>회사는 VPC 내부에서 타사 SaaS 애플리케이션을 사용합니다. 회사에는 인터넷을 통과하지 않는 개인 연결의 사용을 의무화하는 내부 보안 정책이 있습니다. 회사 VPC에서 실행되는 리소스는 회사 VPC 외부에서 액세스할 수 없습니다. 모든 권한은 최소 권한의 원칙을 준수해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS PrivateLink 인터페이스 VPC 엔드포인트를 생성합니다. 타사 SaaS 애플리케이션이 제공하는 엔드포인트 서비스에 이 엔드포인트를 연결합니다. 엔드포인트에 대한 액세스를 제한하는 보안 그룹을 생성합니다. 보안 그룹을 엔드포인트와 연결합니다.
+											AWS PrivateLink 인터페이스 VPC 엔드포인트를 생성합니다. 이 끝점을 타사 SaaS 애플리케이션이 제공하는 끝점 서비스에 연결합니다. 엔드포인트에 대한 액세스를 제한하려면 보안 그룹을 생성하십시오. 보안 그룹을 엔드포인트와 연결합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											타사 SaaS 애플리케이션과 회사 VPC 간에 AWS Site-to-Site VPN 연결을 생성합니다. VPN 터널을 통한 액세스를 제한하도록 네트워크 ACL을 구성합니다.
+											타사 SaaS 애플리케이션과 회사 VPC 간에 AWS Site-to-Site VPN 연결을 생성합니다. VPN 터널 전반에 걸쳐 액세스를 제한하도록 네트워크 ACL을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											피어링 연결에 필요한 경로를 추가하여 타사 SaaS 애플리케이션과 회사 VPUpdate 경로 테이블 간에 VPC 피어링 연결을 생성합니다.
+											피어링 연결에 필요한 경로를 추가하여 타사 SaaS 애플리케이션과 회사 VPUpdate 라우팅 테이블 간에 VPC 피어링 연결을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS PrivateLink 엔드포인트 서비스를 생성합니다. 타사 SaaS 공급자에게 이 엔드포인트 서비스에 대한 인터페이스 VPC 엔드포인트를 생성하도록 요청하십시오. 타사 SaaS 공급자의 특정 계정에 끝점 서비스에 대한 권한을 부여합니다.
+											AWS PrivateLink 엔드포인트 서비스를 생성합니다. 타사 SaaS 공급자에게 이 엔드포인트 서비스에 대한 인터페이스 VPC 엔드포인트를 생성하도록 요청하세요. 타사 SaaS 공급자의 특정 계정에 엔드포인트 서비스에 대한 권한을 부여합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="31 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="31 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2022년 12월 11일, 오후 1:54</i> 
-							
-							의 <a class="title-username" style="">
-								로베르토하이에나
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								robertohyena
-							</a>
-							
-							at <i>
-							Dec. 11, 2022, 1:54 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,10 +295,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 09:49">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 09:49">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -297,14 +340,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 17:07">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 17:07">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,15 +381,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 18:11">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. AWS PrivateLink 인터페이스 VPC 엔드포인트를 생성합니다. 타사 SaaS 애플리케이션이 제공하는 엔드포인트 서비스에 이 엔드포인트를 연결합니다. 엔드포인트에 대한 액세스를 제한하는 보안 그룹을 생성합니다. 보안 그룹을 엔드포인트와 연결합니다. 이 솔루션은 인터넷을 통과하는 트래픽 없이 회사의 VPC와 타사 SaaS 애플리케이션 VPC 간에 안전한 비공개 연결을 생성하는 AWS PrivateLink를 사용합니다. 보안 그룹을 사용하고 엔드포인트 서비스에 대한 액세스를 제한하는 것은 최소 권한 원칙을 준수합니다.</div>
+<div class="comment-content">A. AWS PrivateLink 인터페이스 VPC 엔드포인트를 생성합니다. 이 끝점을 타사 SaaS 애플리케이션이 제공하는 끝점 서비스에 연결합니다. 엔드포인트에 대한 액세스를 제한하려면 보안 그룹을 생성하십시오. 보안 그룹을 엔드포인트와 연결합니다. 이 솔루션은 인터넷을 통과하는 트래픽 없이 회사의 VPC와 타사 SaaS 애플리케이션 VPC 간에 안전한 비공개 연결을 생성하는 AWS PrivateLink를 사용합니다. 보안 그룹을 사용하고 엔드포인트 서비스에 대한 액세스를 제한하는 것은 최소 권한의 원칙을 따릅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +398,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,19 +434,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언제부터
+				언제보다
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 14:20">
-			12시간 26분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 14:20">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-saas.html https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws -비공개링크/</div>
+<div class="comment-content">https://docs.aws.amazon.com/vpc/latest/privatelink/privatelink-access-saas.html https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws -비공개 링크/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -412,7 +455,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,16 +483,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				소_레이
+				소 레이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 24일 (월) 01:58">
-			3주, 6일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 시나리오에서는 서비스를 제공하지 않고 서비스를 소비하므로 E를 제거하므로 A입니다.</div>
+<div class="comment-content">이 시나리오에서는 서비스를 제공하는 것이 아니라 서비스를 소비하므로 E가 제거되기 때문에 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -458,7 +501,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -489,8 +532,8 @@
 				니키디키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 03:03">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 03:03">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -504,7 +547,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -535,8 +578,8 @@
 				스카이제로Zx
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 04:29">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 04:29">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -550,7 +593,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -578,16 +621,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				2알두스
+				2aldous
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 18일 화요일 20:18">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 18일 (화) 20:18">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Private Link를 통해 Saas 제품에 액세스하는 것이 답입니다.</div>
+<div class="comment-content">AWS Private Link를 통해 SaaS 제품에 액세스하는 것이 답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -596,7 +639,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,11 +667,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mfsec
+				밀리초
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 06:53">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 (화) 06:53">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -642,7 +685,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -670,11 +713,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				kiran15789
+				키란15789
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 7일 화요일 11:12">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -688,7 +731,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -716,15 +759,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ptpho
+				프토
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 07:30">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 07:30">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A입니다.분명히</div>
+<div class="comment-content">그것은 A입니다. 분명히</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -733,7 +776,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -761,11 +804,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				spencer_sharp
+				스펜서_샤프
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 09:08">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -779,7 +822,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -810,8 +853,8 @@
 				로베르토하이에나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 13:54">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 13:54">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -824,7 +867,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -879,7 +922,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 09:49">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -928,7 +971,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 17:07">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -966,7 +1009,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 18:11">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1023,7 +1066,7 @@ This solution uses AWS PrivateLink, which creates a secure and private connectio
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 14:20">
-			12 hours, 26 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1070,7 +1113,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 01:58">
-			3 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1116,7 +1159,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 03:03">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1162,7 +1205,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 04:29">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1208,7 +1251,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 20:18">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1254,7 +1297,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 06:53">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1300,7 +1343,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Mar 2023 11:12">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1346,7 +1389,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 07:30">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1391,7 +1434,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 09:08">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1437,7 +1480,7 @@ https://aws.amazon.com/blogs/apn/enabling-new-saas-strategies-with-aws-privateli
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 13:54">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
