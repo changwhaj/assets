@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1 question 378 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C02 주제 1 문제 378 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C02 시험 주제 1 문제 378 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1 question 378 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C02 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C02 시험 문제</a>
 <div>
 							질문 #: 378 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="808351">
 <p class="card-text">
 							
-								회사에는 Amazon RDS MySQL DB 인스턴스에서 정보를 검색하는 자격 증명이 내장된 사용자 지정 애플리케이션이 있습니다. 경영진은 최소한의 프로그래밍 노력으로 애플리케이션을 더 안전하게 만들어야 한다고 말합니다. <br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?<br/>
+								회사에는 Amazon RDS MySQL DB 인스턴스에서 정보를 검색하는 자격 증명이 내장된 사용자 지정 애플리케이션이 있습니다. 경영진은 최소한의 프로그래밍 노력으로 애플리케이션을 더욱 안전하게 만들어야 한다고 말합니다. <br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="808351" type="application/json">[{"voted_answers": "C", "vote_count": 10, "is_most_voted": true}]</script>
@@ -91,14 +154,14 @@
 													B.
 												</span> 
 											
-											애플리케이션 사용자를 위해 RDS for MySQL 데이터베이스에서 자격 증명을 생성하고 자격 증명을 AWS Secrets Manager에 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secret Manager에서 자격 증명을 교체하는 AWS Lambda 함수를 생성합니다.
+											애플리케이션 사용자를 위한 RDS for MySQL 데이터베이스에 자격 증명을 생성하고 AWS Secrets Manager에 자격 증명을 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secret Manager에서 자격 증명을 교체하는 AWS Lambda 함수를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											애플리케이션 사용자를 위해 RDS for MySQL 데이터베이스에서 자격 증명을 생성하고 자격 증명을 AWS Secrets Manager에 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secrets Manager를 사용하여 RDS for MySQL 데이터베이스에서 애플리케이션 사용자의 자격 증명 교체 일정을 설정합니다.
+											애플리케이션 사용자를 위한 RDS for MySQL 데이터베이스에 자격 증명을 생성하고 AWS Secrets Manager에 자격 증명을 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secrets Manager를 사용하여 MySQL용 RDS 데이터베이스에서 애플리케이션 사용자에 대한 자격 증명 교체 일정을 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											애플리케이션 사용자를 위해 RDS for MySQL 데이터베이스에서 자격 증명을 생성하고 자격 증명을 AWS Systems Manager Parameter Store에 저장합니다. Parameter Store에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Parameter Store를 사용하여 RDS for MySQL 데이터베이스에서 애플리케이션 사용자에 대한 자격 증명 교체 일정을 설정합니다.
+											애플리케이션 사용자를 위한 RDS for MySQL 데이터베이스에 자격 증명을 생성하고 AWS Systems Manager Parameter Store에 자격 증명을 저장합니다. Parameter Store에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Parameter Store를 사용하여 MySQL용 RDS 데이터베이스에서 애플리케이션 사용자에 대한 자격 증명 교체 일정을 설정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2021 <i>
-							년 3월 11일, 오후 6:14 </i><a class="title-username" style="">
-								dmscountera
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								dmscountera
-							</a>
-							
-							at <i>
-							March 11, 2021, 6:14 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,27 +289,27 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				dms카운터
+				dmscountera
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 22일 수 12:53">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 22일 수요일 12:53">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. 애플리케이션 사용자를 위해 RDS for MySQL 데이터베이스에서 자격 증명을 생성하고 자격 증명을 AWS Secrets Manager에 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secrets Manager를 사용하여 RDS for MySQL 데이터베이스에서 애플리케이션 사용자의 자격 증명 교체 일정을 설정합니다.</div>
+<div class="comment-content">C. 애플리케이션 사용자를 위한 RDS for MySQL 데이터베이스에 자격 증명을 생성하고 AWS Secrets Manager에 자격 증명을 저장합니다. Secrets Manager에서 데이터베이스 자격 증명을 로드하도록 애플리케이션을 구성합니다. Secrets Manager를 사용하여 MySQL용 RDS 데이터베이스에서 애플리케이션 사용자에 대한 자격 증명 교체 일정을 설정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">33</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				찬성 <span class="upvote-count">33</span> 회
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,12 +332,12 @@
 				Alcpt
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 21일 화요일 07:40">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 21일 (화) 07:40">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C Secrets Manager가 Amazon RDS, Amazon DocumentDB 및 Amazon Redshift 비밀에 대한 완전한 교체 템플릿을 제공한다는 것입니다. Secrets Manager는 시작점으로 사용할 수 있는 일반 교체 함수 템플릿을 제공합니다. Secrets Manager 콘솔을 사용하여 템플릿에서 함수를 생성하면 Lambda 실행 역할도 자동으로 설정됩니다. https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_turn-on-for-other.html</div>
+<div class="comment-content">대답은 C Secrets Manager가 Amazon RDS, Amazon DocumentDB 및 Amazon Redshift 암호에 대한 완전한 교체 템플릿을 제공한다는 것입니다. Secrets Manager는 시작점으로 사용할 수 있는 일반 교체 기능 템플릿을 제공합니다. Secrets Manager 콘솔을 사용하여 템플릿에서 함수를 생성하면 Lambda 실행 역할도 자동으로 설정됩니다. https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_turn-on-for-other.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,14 +386,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 20:03">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 20:03">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C라고 생각합니다. Parameter Store는 암호 교체를 지원하지 않습니다.</div>
+<div class="comment-content">C인 것 같아요. Parameter Store에서는 비밀번호 교체를 지원하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -387,14 +430,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라이프1991
+				인생1991
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 15일 화요일 07:16">
-			1일, 7시간 전
+			2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,16 +479,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				etheng1970
+				에텡1970
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 7월 27일 수 14:38">
-			1 년 전
+			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답은 C입니다. A - out KMS는 Tranist에서 암호화되지 않습니다. B - 가능하지만 회전을 위한 lamba를 개발해야 하기 때문에 더 복잡합니다. D - 가능하지만 키를 회전하려면 Lamda에서 작업을 추가해야 합니다. 그래서 대답은 C, 가장 간단한 솔루션입니다</div>
+<div class="comment-content">대답은 C입니다. A - out KMS는 Tranist B의 암호화가 아닙니다. B - 가능하지만 회전을 위한 람바를 개발해야 하기 때문에 더 복잡합니다. D - 가능하지만 키를 회전하려면 Lamda에서 추가 작업이 필요합니다. 따라서 답은 C입니다. 가장 간단한 해결 방법입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,12 +528,12 @@
 				cloud_collector
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 7월 16일 (토) 05:41">
+<span class="comment-date align-middle" title="2022년 7월 16일 토요일 05:41">
 			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 올바른 Secrets Manager입니다. 주어진 시간에 비밀을 전환할 수 있는 기능을 제공하고 요구 사항에 따라 정기적으로 교체하도록 구성할 수 있습니다. RDS, Redshift, DocumentDB와 같은 몇 가지 AWS 서비스와 완전한 키 순환 통합을 제공합니다. 다른 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. Parameter Store: Parameter Store에서 관리하는 자격 증명을 업데이트하고 CloudWatch 예약 이벤트 또는 Eventbridge를 통해 호출하는 자체 함수를 작성할 수 있습니다. https://medium.com/awesome-cloud/aws-difference-between-secrets-manager-and-parameter-store-systems-manager-f02686604eae</div>
+<div class="comment-content">C는 정답입니다 Secrets Manager: 언제든지 비밀을 전환할 수 있는 기능을 제공하며 요구 사항에 따라 정기적으로 교체하도록 구성할 수 있습니다. RDS, Redshift, DocumentDB와 같은 소수의 AWS 서비스와 완전한 키 순환 통합을 제공합니다. 다른 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. Parameter Store: Parameter Store에서 관리하는 자격 증명을 업데이트하고 CloudWatch 예약 이벤트 또는 Eventbridge를 통해 호출하는 함수를 직접 작성할 수 있습니다. https://medium.com/awesome-cloud/aws-difference-between-secrets-manager-and-parameter-store-systems-manager-f02686604eae</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -535,7 +578,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 B와 C 사이에 약간 혼란 스럽습니다. SM은 암호 오른쪽 회전에만 Lambda 함수를 사용하기 때문에</div>
+<div class="comment-content">B와 C가 좀 헷갈립니다. SM은 비밀번호 권한 회전에만 Lambda 함수를 사용하기 때문에</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -564,15 +607,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				나베나구르자라
+				나비나구자라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 6월 29일 수 18:03">
-			1년, 1개월 전
+<span class="comment-date align-middle" title="2022년 6월 29일 수요일 18:03">
+			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SM에서 키를 교체하기 위해 Lambda가 필요하지 않습니다. SM 자체에 그런 기능이 있습니다.</div>
+<div class="comment-content">SM에서 키를 교체하는 데 Lambda가 필요하지 않습니다. SM 자체에 그런 기능이 있어요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -581,7 +624,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,7 +660,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이러한 이유로 인해 우리는 C Rotate 비밀을 안전하게 선택해야 한다고 가정합니다. 애플리케이션을 중단하지 않고 암호를 자동으로 교체하도록 Secrets Manager를 구성할 수 있습니다. Secrets Manager는 MySQL, PostgreSQL 및 Amazon Aurora용 Amazon RDS 데이터베이스의 자격 증명 교체를 위한 내장형 통합을 제공합니다. 개인적으로 Postgres에 대한 RDS 회전을 작업에 구현했습니다. 그러나 내부적으로는 SM과 Lambda 통합을 사용했기 때문에 이것이 나에게는 약간 까다롭습니다. 이제 C에 대한 마음을 바꿉니다.</div>
+<div class="comment-content">이러한 이유로 인해 우리는 C Rotate 비밀을 안전하게 선택해야 한다고 가정합니다. 애플리케이션을 중단하지 않고 비밀을 자동으로 교체하도록 Secrets Manager를 구성할 수 있습니다. Secrets Manager는 MySQL, PostgreSQL 및 Amazon Aurora용 Amazon RDS 데이터베이스에 대한 자격 증명 교체를 위한 내장 통합을 제공합니다. 나는 내 작업에서 postgres에 대한 RDS 회전을 개인적으로 구현했습니다. 하지만 내부적으로는 SM과 Lambda 통합을 사용했기 때문에 이것이 약간 까다롭습니다. 이제 C에 대한 마음이 바뀌었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -626,7 +669,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,11 +709,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 5월 30일 월요일 07:41">
-			1년, 2개월 전
+			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 C</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -707,7 +750,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				락슈미
+				락스미
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 4월 5일 화요일 15:32">
@@ -716,7 +759,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">ㄷ 확실히. Secrets Manager에서 자격 증명 교체를 설정할 수 있으므로 B와 D는 답이 될 수 없습니다.</div>
+<div class="comment-content">ㄷ 확실히요. 자격 증명 순환은 비밀 관리자에서 설정할 수 있으므로 B와 D는 답이 될 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -725,7 +768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -756,13 +799,13 @@
 				이반얀
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 09:41">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 09:41">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">교체가 있는 AWS Secrets Manager - C</div>
+<div class="comment-content">교체가 포함된 AWS Secrets Manager - C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -807,7 +850,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">완전히 D입니다.</div>
+<div class="comment-content">완전히 D야.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -816,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -836,15 +879,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				광고
+				광고다다아빠
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 1월 27일 목요일 07:51">
-			1년, 6개월 전
+			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 ? 논리적으로 c는 유일한 옵션입니다.</div>
+<div class="comment-content">왜 ? 논리적으로 c가 유일한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -853,7 +896,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,16 +932,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				솔루션 설계자
+				솔루션설계자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 31일 금 16:09">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 31일 금요일 16:09">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Parameter Store와 Secrets Manager 모두 자격 증명을 저장하는 데 사용할 수 있습니다. Parameter Store는 무료이지만 암호를 자동으로 교체하는 기능은 없습니다. 그래서 답은 C</div>
+<div class="comment-content">Parameter Store와 Secrets Manager를 모두 사용하여 자격 증명을 저장할 수 있습니다. Parameter Store는 무료이지만 암호를 자동으로 교체하는 기능은 없습니다. 그럼 답은 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -907,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -938,13 +981,13 @@
 				토토
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 30일 목요일 15:43">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 30일 목 15:43">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 그것이 C라고 믿는다</div>
+<div class="comment-content">나는 그것이 C라고 믿는다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -981,15 +1024,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				androidx
+				안드로이드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 25일 목요일 04:27">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 25일 (목) 04:27">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C여야 합니다. Secrets Manager는 암호 교체를 지원하며 매개 변수 저장소를 통해 수행할 수 있지만 이를 위해 고유한 함수를 생성해야 합니다.</div>
+<div class="comment-content">대답은 C입니다. Secrets Manager는 비밀번호 교체를 지원하며 매개변수 저장소를 통해 이를 수행할 수 있지만 이를 위해서는 고유한 기능을 생성해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -998,7 +1041,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,12 +1072,12 @@
 				가르가디티야
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 23일 화요일 19:01">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 23일 (화) 19:01">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C Secrets Manager: 암호화해야 하는 기밀 정보(예: 데이터베이스 자격 증명, API 키)를 위해 특별히 설계되었으므로 비밀 항목 생성 시 기본적으로 암호화가 활성화됩니다. 또한 키 회전과 같은 추가 기능을 제공합니다. ========================= Systems Manager Parameter Store: 비밀이나 암호뿐만 아니라 응용 프로그램에 이르기까지 더 넓은 사용 사례에 맞게 설계되었습니다. URL, 사용자 지정 설정, AMI ID, 라이선스 키 등과 같은 구성 변수 -------------- Secrets Manager는 내장된 키 회전을 제공합니다. 그것은 RDS와 잘 통합됩니다.</div>
+<div class="comment-content">C Secrets Manager: 암호화해야 하는 기밀 정보(예: 데이터베이스 자격 증명, API 키)를 위해 특별히 설계되었으므로 비밀 항목을 생성하면 기본적으로 암호화가 활성화됩니다. 또한 키 회전과 같은 추가 기능도 제공합니다. ========================= 시스템 관리자 매개변수 저장소: 비밀이나 비밀번호뿐만 아니라 애플리케이션까지 더 폭넓은 사용 사례를 수용하도록 설계되었습니다. URL, 사용자 지정 설정, AMI ID, 라이선스 키 등과 같은 구성 변수 -------------- Secrets Manager는 기본적으로 키 순환 기능을 제공합니다. RDS와 잘 통합됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1066,12 +1109,12 @@
 				가르가디티야
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 23일 화요일 19:01">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 23일 (화) 19:01">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">==================== KMS는 암호화 키(데이터 키가 아닌 '고객 마스터 키')를 관리하는 서비스입니다. 실제 데이터 데이터를 암호화하기 위해 '데이터 키'가 사용됩니다. CMK는 기본적으로 데이터 암호화에 사용되는 데이터 키를 보호하는 데 사용됩니다. 데이터를 해독하려면 KMS 서비스를 호출하고 CMK를 사용하여 '데이터 키'를 해독합니다. 해독된(일반 텍스트) 데이터 키가 있으면 이를 사용하여 실제 데이터를 해독합니다. KMS/CMK를 생각할 때--- -Cx 관리/Aws 관리 키를 옵션으로 생각하십시오.</div>
+<div class="comment-content">==================== KMS는 암호화 키(데이터 키가 아닌 '고객 마스터 키')를 관리하는 서비스입니다. 실제 데이터 데이터를 암호화하기 위해 '데이터 키'가 사용됩니다. CMK는 기본적으로 데이터 암호화에 사용되는 데이터 키를 보호하는 데 사용됩니다. 데이터를 해독하려면 KMS 서비스를 호출하고 CMK를 사용하여 '데이터 키'를 해독합니다. 해독된(일반 텍스트) 데이터 키가 있으면 동일한 키를 사용하여 실제 데이터를 해독합니다. KMS/CMK를 생각할 때--- -Cx 관리형/Aws 관리형 키를 옵션으로 생각하십시오. -미사용 암호화를 생각하십시오. -데이터 키가 아닌 마스터 키 암호화를 생각하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1080,7 +1123,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1119,12 +1162,12 @@
 				코터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 10:20">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 10:20">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CCCCCCCCCCCCCC.</div>
+<div class="comment-content">CCCCCCCCCCCCCCC.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1133,7 +1176,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1161,15 +1204,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				체탄77
+				Chethan77
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 04일 목요일 15:20">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 (목) 15:20">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C Secrets Manager: 암호화해야 하는 기밀 정보(예: 데이터베이스 자격 증명, API 키)를 위해 특별히 설계되었으므로 비밀 항목 생성 시 기본적으로 암호화가 활성화됩니다. 또한 키 회전과 같은 추가 기능을 제공합니다. Systems Manager Parameter Store: 비밀이나 암호뿐만 아니라 URL, 사용자 지정 설정, AMI ID, 라이선스 키 등과 같은 애플리케이션 구성 변수와 같은 더 넓은 사용 사례에 맞게 설계되었습니다. 비교</div>
+<div class="comment-content">C Secrets Manager: 암호화해야 하는 기밀 정보(예: 데이터베이스 자격 증명, API 키)를 위해 특별히 설계되었으므로 비밀 항목 생성 시 기본적으로 암호화가 활성화됩니다. 또한 키 회전과 같은 추가 기능도 제공합니다. Systems Manager 매개변수 저장소: 비밀이나 비밀번호뿐만 아니라 URL, 사용자 정의 설정, AMI ID, 라이선스 키 등과 같은 애플리케이션 구성 변수까지 더 광범위한 사용 사례를 제공하도록 설계되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1206,15 +1249,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				KK_uniq
+				KK_유니크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 31일 일 08:11">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 31일 일요일 08:11">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">A는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1223,7 +1266,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1251,11 +1294,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				윌라인
+				윌린
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 29일 금 09:23">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1268,7 +1311,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1300,11 +1343,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 19:04">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">교체를 활성화하도록 선택하면 Secrets Manager는 AWS에서 작성하고 테스트한 Lambda 교체 함수 템플릿과 교체 프로세스의 전체 구성을 사용하여 다음 Amazon Relational Database Service(Amazon RDS) 데이터베이스를 지원합니다. Amazon RDS의 Amazon Aurora Amazon RDS PostgreSQL의 MySQL Amazon RDS의 Amazon RDS Oracle Amazon RDS의 MariaDB Amazon RDS의 Microsoft SQL Server Amazon RDS의 Microsoft SQL Server는 Lambda를 생성할 필요가 없기 때문에 C라고 생각합니다. AWS는 Lambda 템플릿을 제공합니다.</div>
+<div class="comment-content">교체를 활성화하도록 선택하면 Secrets Manager는 AWS에서 작성하고 테스트한 Lambda 교체 함수 템플릿과 교체 프로세스의 전체 구성을 사용하여 다음 Amazon Relational Database Service(Amazon RDS) 데이터베이스를 지원합니다. Amazon Aurora on Amazon RDS MySQL on Amazon RDS PostgreSQL Amazon RDS의 Amazon RDS Oracle Amazon RDS Amazon RDS의 MariaDB Amazon RDS의 Microsoft SQL Server AWS가 제공하는 Lambda 템플릿을 생성할 필요가 없기 때문에 C라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1313,7 +1356,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1341,15 +1384,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Nilya08
+				닐야08
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 22:36">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 22:36">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C AWS Secrets Manager는 애플리케이션, 서비스 및 IT 리소스에 액세스하는 데 필요한 암호를 보호하는 데 도움이 됩니다. 이 서비스를 사용하면 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 쉽게 교체, 관리 및 검색할 수 있습니다. 자격 증명을 교체하기 위해 Lamda가 필요하지 않습니다.</div>
+<div class="comment-content">C AWS Secrets Manager는 애플리케이션, 서비스 및 IT 리소스에 액세스하는 데 필요한 암호를 보호하는 데 도움이 됩니다. 이 서비스를 사용하면 수명주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 쉽게 교체, 관리 및 검색할 수 있습니다. 자격 증명을 회전시키기 위해 Lamda가 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1358,7 +1401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1390,11 +1433,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 21일 목요일 22:12">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C RDS에는 Lambda가 필요하지 않지만 다른 DB에는 Lambda가 필요합니다. 보안 서비스 또는 데이터베이스에 대한 암호를 자동으로 교체하도록 AWS Secrets Manager를 구성할 수 있습니다. Secrets Manager는 기본적으로 지원되는 Amazon RDS 데이터베이스의 비밀을 교체하는 방법을 알고 있습니다. 그러나 Secrets Manager를 사용하면 다른 데이터베이스 또는 타사 서비스에 대한 암호를 교체할 수도 있습니다. 각 서비스 또는 데이터베이스에는 암호를 구성하는 고유한 방법이 있을 수 있으므로 Secrets Manager는 선택한 데이터베이스 또는 서비스와 함께 작동하도록 사용자 지정할 수 있는 Lambda 함수를 사용합니다. 암호 교체에 대한 서비스별 세부 정보를 구현하도록 Lambda 함수를 사용자 지정합니다.</div>
+<div class="comment-content">답변: C RDS에는 Lambda가 필요하지 않지만 다른 DB에는 Lambda가 필요합니다. 보안 서비스 또는 데이터베이스에 대한 암호를 자동으로 교체하도록 AWS Secrets Manager를 구성할 수 있습니다. Secrets Manager는 지원되는 Amazon RDS 데이터베이스에 대한 암호를 교체하는 방법을 기본적으로 알고 있습니다. 하지만 Secrets Manager를 사용하면 다른 데이터베이스나 타사 서비스에 대한 보안 암호를 교체할 수도 있습니다. 각 서비스 또는 데이터베이스에는 비밀을 구성하는 고유한 방법이 있을 수 있으므로 Secrets Manager는 선택한 데이터베이스 또는 서비스와 함께 작동하도록 사용자 정의할 수 있는 Lambda 함수를 사용합니다. 보안 암호 교체에 대한 서비스별 세부 정보를 구현하도록 Lambda 함수를 사용자 지정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1403,7 +1446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1434,12 +1477,12 @@
 				안드라스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 17:36">
+<span class="comment-date align-middle" title="2021년 10월 19일 화 17:36">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"또한 AWS에서 작성하고 테스트한 Lambda 교체 함수 템플릿과 교체 프로세스의 전체 구성으로 완벽하게 지원되는 다음 서비스에서 교체를 활성화하도록 선택할 수 있습니다. Amazon DocumentDB Amazon Redshift 거의 모든 다른 종류의 데이터베이스에 대한 암호를 저장할 수도 있습니다. 그러나 암호를 자동으로 교체하려면 사용자 지정 Lambda 교체 함수를 생성하고 구성해야 합니다." 회전에 Lambda 함수가 필요한 것 같습니다 -&gt; B</div>
+<div class="comment-content">"AWS가 작성하고 테스트한 Lambda 교체 함수 템플릿과 교체 프로세스의 전체 구성을 통해 완벽하게 지원되는 다음 서비스에서 교체를 활성화하도록 선택할 수도 있습니다. Amazon DocumentDB Amazon Redshift 거의 모든 종류의 데이터베이스에 대한 비밀을 저장할 수도 있습니다. 서비스. 그러나 비밀을 자동으로 교체하려면 사용자 지정 Lambda 교체 기능을 생성하고 구성해야 합니다." 회전 -&gt; B에는 Lambda 함수가 필요한 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1448,7 +1491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1468,15 +1511,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				애국자
+				패트릭트레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 19:36">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 19:36">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">RDS 이외의 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. -하지만 여기에 RDS가 있으므로 C가 맞습니다.</div>
+<div class="comment-content">RDS 이외의 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. -하지만 여기에는 RDS가 있으므로 C가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1485,7 +1528,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1524,12 +1567,12 @@
 				jkwek
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 15:26">
+<span class="comment-date align-middle" title="2021년 10월 19일 화 15:26">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C입니다. https://aws.amazon.com/secrets-manager/ AWS Secrets Manager는 애플리케이션, 서비스 및 IT 리소스에 액세스하는 데 필요한 비밀을 보호하는 데 도움이 됩니다. 이 서비스를 사용하면 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 쉽게 교체, 관리 및 검색할 수 있습니다.</div>
+<div class="comment-content">대답은 C입니다. https://aws.amazon.com/secrets-manager/ AWS Secrets Manager는 애플리케이션, 서비스 및 IT 리소스에 액세스하는 데 필요한 암호를 보호하는 데 도움이 됩니다. 이 서비스를 사용하면 수명주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 쉽게 교체, 관리 및 검색할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1538,7 +1581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1569,12 +1612,12 @@
 				aesr10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 17일 일 18:18">
+<span class="comment-date align-middle" title="2021년 10월 17일 일요일 18:18">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실한 사람을 위한 C</div>
+<div class="comment-content">C 물론이지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1583,7 +1626,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1614,12 +1657,12 @@
 				렐리오데수자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 16일 (토) 11:38">
+<span class="comment-date align-middle" title="2021년 10월 16일 토요일 11:38">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C입니다.</div>
+<div class="comment-content">답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1628,7 +1671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1656,15 +1699,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				haaris786
+				하리스786
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 05:16">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 05:16">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 C가 가장 좋은 대답입니다.</div>
+<div class="comment-content">C가 여기서 가장 좋은 대답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1673,7 +1716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1704,7 +1747,7 @@
 				sebavazquez06
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 09일 (토) 02:08">
+<span class="comment-date align-middle" title="2021년 10월 9일 토요일 02:08">
 			1년, 10개월 전
 		</span>
 </div>
@@ -1718,7 +1761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1741,12 +1784,12 @@
 				sebavazquez06
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 10일 일 19:30">
+<span class="comment-date align-middle" title="2021년 10월 10일 일요일 19:30">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 잘못이야. 올바른 것은 "C"입니다. 옵션 B는 "Lambda 함수 생성"이라고 말합니다. 그러나 AWS Secret Manager는 이미 Lambda 기능을 제공합니다.</div>
+<div class="comment-content">내 잘못이야. 올바른 것은 "C"입니다. 옵션 B는 "Lambda 함수 생성"이라고 말합니다. 하지만 AWS Secret Manager는 이미 Lambda 기능을 제공하고 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1755,7 +1798,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1783,15 +1826,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스웨이디
+				스와디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 07일 일 09:41">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 7일 일요일 09:41">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">비밀 교체 AWS Secrets Manger의 또 다른 고유 기능은 비밀 값을 교체하는 기능입니다. 기본적으로 AWS Secrets Manager는 RDS와의 완전한 키 순환 통합을 제공합니다. 이는 AWS Secrets Manager가 키를 교체하고 RDS에서 실제로 새 키/암호를 적용할 수 있음을 의미합니다. RDS 이외의 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. AWS Secrets Manager 키 순환에 대한 추가 정보는 찾을 수 있습니다.</div>
+<div class="comment-content">비밀 교체 AWS Secrets Manger의 또 다른 고유 기능은 비밀 값을 교체하는 기능입니다. 기본적으로 AWS Secrets Manager는 RDS와의 전체 키 교체 통합을 제공합니다. 이는 AWS Secrets Manager가 키를 교체하고 실제로 RDS에 새 키/암호를 적용할 수 있음을 의미합니다. RDS 이외의 서비스의 경우 AWS에서는 AWS Lambda 함수를 사용하여 사용자 지정 키 교체 논리를 작성할 수 있습니다. AWS Secrets Manager 키 교체에 관한 추가 정보를 확인할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1800,7 +1843,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1839,12 +1882,12 @@
 				syu31svc
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 2일 (토) 10:28">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 10월 2일 토요일 10:28">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 Secrets Manager를 사용하므로 A와 D는 B보다 C입니다. 자격 증명 교체에 Lambda 함수가 필요하지 않음</div>
+<div class="comment-content">여기에서는 Secrets Manager를 사용하여 A와 D가 B보다 C를 벗어났습니다. 자격 증명 교체에는 Lambda 함수가 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1853,7 +1896,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1884,8 +1927,8 @@
 				기술자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 19:41">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 19:41">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1898,7 +1941,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1929,12 +1972,12 @@
 				우카스젝
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 30일 목요일 03:45">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 30일 목 03:45">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. https://www.1strategy.com/blog/2019/02/28/aws-parameter-store-vs-aws-secrets-manager/ Lambda는 RDS 순환에 필요하지 않습니다.</div>
+<div class="comment-content">C. https://www.1strategy.com/blog/2019/02/28/aws-parameter-store-vs-aws-secrets-manager/ RDS 순환에는 Lambda가 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1943,7 +1986,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1998,7 +2041,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 22 Sep 2021 12:53">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2035,7 +2078,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Dec 2021 07:40">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2141,7 +2184,7 @@ https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_turn-
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 15 Aug 2023 07:16">
-			1 day, 7 hours ago
+			2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2187,7 +2230,7 @@ https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_turn-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Jul 2022 14:38">
-			1 year ago
+			1 year, 1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2325,7 +2368,7 @@ https://medium.com/awesome-cloud/aws-difference-between-secrets-manager-and-para
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Jun 2022 18:03">
-			1 year, 1 month ago
+			1 year, 2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2425,7 +2468,7 @@ I have personally implemented RDS rotation for postgres in my work. But internal
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 30 May 2022 07:41">
-			1 year, 2 months ago
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2599,7 +2642,7 @@ I have personally implemented RDS rotation for postgres in my work. But internal
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Jan 2022 07:51">
-			1 year, 6 months ago
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2652,7 +2695,7 @@ I have personally implemented RDS rotation for postgres in my work. But internal
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Dec 2021 16:09">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2700,7 +2743,7 @@ So the answer is C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Dec 2021 15:43">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2746,7 +2789,7 @@ So the answer is C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 Nov 2021 04:27">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2791,7 +2834,7 @@ So the answer is C</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 Nov 2021 19:01">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2834,7 +2877,7 @@ Secrets Manager offers rotation of keys inbuilt. It is integrated well with RDS.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 Nov 2021 19:01">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2988,7 +3031,7 @@ a comparison</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 31 Oct 2021 08:11">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3033,7 +3076,7 @@ a comparison</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 29 Oct 2021 09:23">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3079,7 +3122,7 @@ https://aws.amazon.com/blogs/security/rotate-amazon-rds-database-credentials-aut
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 19:04">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3133,7 +3176,7 @@ I think its C because you dont need to create the lambda AWS provide Lambda temp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 22:36">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3182,7 +3225,7 @@ and you don't need Lamda to rotate creds.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 21 Oct 2021 22:12">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3274,7 +3317,7 @@ It seems Lambda function is needed for the rotation -&gt; B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 19:36">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3648,7 +3691,7 @@ Another feature unique to AWS Secrets Manger is the ability to rotate the secret
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 02 Oct 2021 10:28">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3695,7 +3738,7 @@ C over B; Lambda function not needed for rotation of credentials</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 01 Oct 2021 19:41">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3740,7 +3783,7 @@ C over B; Lambda function not needed for rotation of credentials</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Sep 2021 03:45">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

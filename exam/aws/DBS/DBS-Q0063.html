@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 63 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 63 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 63 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 63 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807305">
 <p class="card-text">
 							
-								데이터베이스 전문가가 간단한 데이터베이스 동작을 확인하기 위해 작은 인스턴스를 사용하여 Amazon Aurora로 개념 증명을 수행하고 있습니다. 대용량 데이터 세트를 로드하고 인덱스를 생성할 때 데이터베이스 전문가는 Aurora에서 다음과 같은 오류 메시지를 보게 됩니다. <br/>ERROR: cloud not write block 7507718 of temporary file: No space left on device <br/>이 오류의 원인은 무엇이며 데이터베이스 전문가는 이 문제를 해결하려면 어떻게 해야 합니까?<br/>
+								데이터베이스 전문가가 간단한 데이터베이스 동작을 확인하기 위해 소규모 인스턴스를 사용하여 Amazon Aurora에 대한 개념 증명을 수행하고 있습니다. 대규모 데이터 세트를 로드하고 인덱스를 생성할 때 데이터베이스 전문가는 Aurora에서 다음과 같은 오류 메시지를 발견합니다. <br/>ERROR: cloud not write block 7507718 of temporary file: No space left on device <br/>이 오류의 원인은 무엇이며 데이터베이스 전문가는 어떻게 해야 합니까? 이 문제를 해결하려면 어떻게 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807305" type="application/json">[{"voted_answers": "C", "vote_count": 10, "is_most_voted": true}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											Aurora 스토리지의 확장은 데이터 로드를 따라잡을 수 없습니다. 데이터베이스 전문가는 데이터를 느리게 로드하도록 워크로드를 수정해야 합니다.
+											Aurora 스토리지의 확장은 데이터 로딩을 따라잡을 수 없습니다. 데이터베이스 전문가는 데이터를 천천히 로드하도록 워크로드를 수정해야 합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Aurora 스토리지의 확장이 데이터 로드를 따라잡을 수 없습니다. 데이터베이스 전문가는 Aurora 스토리지 확장을 활성화해야 합니다.
+											Aurora 스토리지의 확장이 데이터 로딩을 따라잡을 수 없습니다. 데이터베이스 전문가는 Aurora 스토리지 확장을 활성화해야 합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											임시 테이블을 저장하는 데 사용되는 로컬 스토리지가 가득 찼습니다. 데이터베이스 전문가는 인스턴스를 확장해야 합니다.
+											임시 테이블을 저장하는 데 사용되는 로컬 저장소가 가득 찼습니다. 데이터베이스 전문가가 인스턴스를 확장해야 합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											임시 테이블을 저장하는 데 사용되는 로컬 스토리지가 가득 찼습니다. 데이터베이스 전문가는 로컬 스토리지 확장을 활성화해야 합니다.
+											임시 테이블을 저장하는 데 사용되는 로컬 저장소가 가득 찼습니다. 데이터베이스 전문가는 로컬 스토리지 확장을 활성화해야 합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://serverfault.com/questions/109828/how-can-i-tune-postgres-to-avoid-this-error<br/><img class="in-exam-image" src="/assets/media/exam-media/04237/0004400001.jpg"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a> 
-							
-							시간: <i>
-							2021년 11월 12일, 오후 7:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a>
-							
-							at <i>
-							Nov. 12, 2021, 7:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,8 +294,8 @@
 				아델콜드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 07:01">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 07:01">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 16:53">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 16:53">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">임시 테이블을 저장하는 데 사용되는 로컬 저장소가 가득 찼습니다. 그리고 로컬 스토리지를 늘리는 유일한 방법은 인스턴스 유형을 업그레이드하는 것입니다. 데이터베이스 전문가는 인스턴스를 확장해야 합니다.</div>
+<div class="comment-content">임시 테이블을 저장하는 데 사용되는 로컬 저장소가 가득 찼습니다. 로컬 스토리지를 늘리는 유일한 방법은 인스턴스 유형을 업그레이드하는 것입니다. 데이터베이스 전문가가 인스턴스를 확장해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,7 +386,7 @@
 				괴물
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 11일 화요일 10:20">
+<span class="comment-date align-middle" title="2022년 1월 11일 (화) 10:20">
 			1년, 7개월 전
 		</span>
 </div>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,7 +424,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 2월 27일 일요일 21:36">
-			1년, 5개월 전
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -394,7 +437,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,8 +476,8 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 22일 수 15:58">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 22일 수요일 15:58">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,11 +519,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				G마티넬리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 7일 화요일 13:57">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 7일 (화) 13:57">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,11 +565,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				leunamE
+				르남E
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 12일 금 19:38">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 12일 금요일 19:38">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -539,7 +582,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -565,7 +608,7 @@
 <a class="badge reveal-comment" href="#">Show Comments</a>
 <a class="badge hide-comment d-none" href="#">Hide Comments</a>
 <div class="discussion-page-comments-section-en" data-discussion-question-id="65905" style="display: none">
-<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">코멘트</h4></div>
+<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">Comments</h4></div>
 <!-- discussion.html -->
 <!-- Discussion start -->
 <div class="container outer-discussion-container">
@@ -587,25 +630,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아델콜드
+				adelcold
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 07:01">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="Tue 27 Jun 2023 07:01">
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
 <div class="comment-content">https://stackoverflow.com/questions/52610114/aurora-postgresql-engine-no-space-left-on-device</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -633,25 +676,27 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				초보자_전문가
+				novice_expert
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 16:53">
-			1년, 3개월 전
+<span class="comment-date align-middle" title="Sat 30 Apr 2022 16:53">
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">임시 테이블을 저장하는 데 사용되는 로컬 저장소가 가득 찼습니다. 그리고 로컬 스토리지를 늘리는 유일한 방법은 인스턴스 유형을 업그레이드하는 것입니다. 데이터베이스 전문가는 인스턴스를 확장해야 합니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
+<div class="comment-content">The local storage used to store temporary tables is full. 
+And only way to increase local storage is to upgrade instance type.
+The Database Specialist needs to scale up the instance.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">4</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -679,24 +724,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				괴물
+				awsmonster
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 11일 화요일 10:20">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Tue 11 Jan 2022 10:20">
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답: C</div>
+<div class="comment-content">Answer: C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -716,24 +761,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				사용자0001
+				user0001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 27일 일요일 21:36">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="Sun 27 Feb 2022 21:36">
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">true, 로컬 스토리지 크기를 변경할 수 없습니다. 유일한 방법은 인스턴스 유형을 변경하는 것입니다.</div>
+<div class="comment-content">true , you cant change local storage  size , the only way is the change the instance type</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -769,25 +814,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				주피터
+				jove
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 22일 수 15:58">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Wed 22 Dec 2021 15:58">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
+<div class="comment-content">Option C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -815,25 +860,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				GMartinelli
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 7일 화요일 13:57">
-			1년 8개월 전
+<span class="comment-date align-middle" title="Tue 07 Dec 2021 13:57">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
+<div class="comment-content">Option C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -864,21 +909,21 @@
 				leunamE
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 12일 금 19:38">
-			1년 9개월 전
+<span class="comment-date align-middle" title="Fri 12 Nov 2021 19:38">
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C.</div>
+<div class="comment-content">Option C.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">

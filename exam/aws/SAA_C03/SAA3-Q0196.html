@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 196 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 196 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 196 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 196 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850799">
 <p class="card-text">
 							
-								회사는 대규모 Amazon EC2 인스턴스 플릿에서 애플리케이션을 실행합니다. 애플리케이션은 항목을 읽고 Amazon DynamoDB 테이블에 씁니다. DynamoDB 테이블의 크기는 지속적으로 증가하지만 애플리케이션에는 지난 30일 동안의 데이터만 필요합니다. 회사는 비용과 개발 노력을 최소화하는 솔루션이 필요합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
+								한 회사가 대규모 Amazon EC2 인스턴스에서 애플리케이션을 실행하고 있습니다. 애플리케이션은 Amazon DynamoDB 테이블의 항목을 읽고 씁니다. DynamoDB 테이블의 크기는 지속적으로 증가하지만 애플리케이션에는 지난 30일 동안의 데이터만 필요합니다. 회사에는 비용과 개발 노력을 최소화하는 솔루션이 필요합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											AWS CloudFormation 템플릿을 사용하여 전체 솔루션을 배포합니다. 30일마다 CloudFormation 스택을 재배포하고 원래 스택을 삭제합니다.
+											AWS CloudFormation 템플릿을 사용하여 전체 솔루션을 배포하십시오. 30일마다 CloudFormation 스택을 재배포하고 원본 스택을 삭제합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											AWS Marketplace에서 모니터링 애플리케이션을 실행하는 EC2 인스턴스를 사용합니다. Amazon DynamoDB Streams를 사용하여 테이블에 새 항목이 생성될 때 타임스탬프를 저장하도록 모니터링 애플리케이션을 구성합니다. EC2 인스턴스에서 실행되는 스크립트를 사용하여 30일보다 오래된 타임스탬프가 있는 항목을 삭제합니다.
+											AWS Marketplace에서 모니터링 애플리케이션을 실행하는 EC2 인스턴스를 사용하십시오. 테이블에 새 항목이 생성될 때 Amazon DynamoDB 스트림을 사용하여 타임스탬프를 저장하도록 모니터링 애플리케이션을 구성합니다. EC2 인스턴스에서 실행되는 스크립트를 사용하여 30일보다 오래된 타임스탬프가 있는 항목을 삭제합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											테이블에 새 항목이 생성될 때 AWS Lambda 함수를 호출하도록 Amazon DynamoDB Streams를 구성합니다. 테이블에서 30일보다 오래된 항목을 삭제하도록 Lambda 함수를 구성합니다.
+											테이블에 새 항목이 생성될 때 AWS Lambda 함수를 호출하도록 Amazon DynamoDB 스트림을 구성합니다. 테이블에서 30일이 지난 항목을 삭제하도록 Lambda 함수를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,13 +171,13 @@
 													D.
 												</span> 
 											
-											애플리케이션을 확장하여 현재 타임스탬프에 30일을 더한 값을 테이블에 생성된 각 새 항목에 추가하는 속성을 추가합니다. 속성을 TTL 속성으로 사용하도록 DynamoDB를 구성합니다.
+											테이블에 생성된 각 새 항목에 현재 타임스탬프에 30일을 더한 값을 갖는 속성을 추가하도록 애플리케이션을 확장합니다. 해당 속성을 TTL 속성으로 사용하도록 DynamoDB를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,21 +187,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="51 votes." data-toggle="tooltip" role="progressbar" style="width: 91%; display: flex;" title="">D (91%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="51 votes." data-toggle="tooltip" role="progressbar" style="width: 91%; display: flex;" title="">D (91%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 4:56</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -213,16 +266,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 4:56 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -254,15 +297,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 20:18">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">조금 조사한 후 답을 D로 변경합니다. DynamoDB TTL 기능을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다.</div>
+<div class="comment-content">조금 조사한 후 내 대답을 D로 변경했습니다. DynamoDB TTL 기능을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후에 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,12 +349,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:29">
-			19시간 39분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D. 애플리케이션을 확장하여 현재 타임스탬프에 30일을 더한 값을 테이블에 생성된 각 새 항목에 추가하는 속성을 추가합니다. 속성을 TTL 속성으로 사용하도록 DynamoDB를 구성합니다. 주된 이유는 다음과 같습니다. DynamoDB의 내장 TTL 기능을 사용하는 것이 데이터 만료를 처리하는 가장 직접적인 방법입니다. 옵션 C에서 트리거, 스트림 및 람다 함수의 복잡성을 피합니다. TTL 특성을 추가하도록 애플리케이션 코드를 수정하는 것은 비교적 간단하며 운영 오버헤드를 최소화합니다.</div>
+<div class="comment-content">D. 테이블에 생성된 각 새 항목에 현재 타임스탬프에 30일을 더한 값을 갖는 속성을 추가하도록 애플리케이션을 확장합니다. 해당 속성을 TTL 속성으로 사용하도록 DynamoDB를 구성합니다. 주요 이유는 다음과 같습니다. DynamoDB에 내장된 TTL 기능을 사용하는 것이 데이터 만료를 처리하는 가장 직접적인 방법입니다. 옵션 C에서 트리거, 스트림 및 람다 함수의 복잡성을 방지합니다. TTL 속성을 추가하도록 애플리케이션 코드를 수정하는 것은 상대적으로 간단하며 운영 오버헤드를 최소화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -320,7 +363,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -352,12 +395,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:05">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">DynamoDB 테이블에 TTL 속성을 추가하고 현재 타임스탬프에 30일을 더한 값으로 설정하면 DynamoDB는 30일보다 오래된 항목을 자동으로 삭제합니다. 이 솔루션을 사용하면 수동 삭제 또는 추가 인프라 구성 요소가 필요하지 않습니다. A. 30일마다 CloudFormation 스택을 재배포하고 원래 스택을 삭제하면 불필요한 복잡성과 운영 오버헤드가 발생합니다. B. EC2 인스턴스를 모니터링 애플리케이션 및 스크립트와 함께 사용하여 30일보다 오래된 항목을 삭제하면 인프라 및 유지 관리 노력이 추가됩니다. C. 30일이 지난 항목을 삭제하는 Lambda 함수를 호출하도록 DynamoDB 스트림을 구성하면 DynamoDB의 기본 제공 TTL 기능을 사용할 때보다 복잡성이 추가되고 추가 개발 및 운영 노력이 필요합니다.</div>
+<div class="comment-content">DynamoDB 테이블에 TTL 속성을 추가하고 이를 현재 타임스탬프에 30일을 더한 값으로 설정하면 DynamoDB는 30일보다 오래된 항목을 자동으로 삭제합니다. 이 솔루션을 사용하면 수동으로 삭제하거나 인프라 구성 요소를 추가할 필요가 없습니다. A. 30일마다 CloudFormation 스택을 재배포하고 원본 스택을 삭제하면 불필요한 복잡성과 운영 오버헤드가 발생합니다. B. 모니터링 애플리케이션과 함께 EC2 인스턴스를 사용하고 30일이 지난 항목을 삭제하는 스크립트를 사용하면 인프라 및 유지 관리 노력이 추가됩니다. C. 30일이 지난 항목을 삭제하기 위해 Lambda 함수를 호출하도록 DynamoDB 스트림을 구성하면 DynamoDB에 내장된 TTL 기능을 사용할 때보다 복잡성이 더해지고 추가 개발 및 운영 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -366,7 +409,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -398,7 +441,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 08:11">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -411,7 +454,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -442,8 +485,8 @@
 				아브라2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 28일 일 12:11">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 28일 일요일 12:11">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -456,7 +499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,16 +527,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 15:38">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 15:38">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C는 오래된 데이터를 삭제하는 데 15분 이상 걸릴 수 있으므로 올바르지 않습니다. 람다가 작동하지 않습니다</div>
+<div class="comment-content">C는 오래된 데이터를 삭제하는 데 15분 이상 걸릴 수 있으므로 정답이 아닙니다. 람다가 작동하지 않습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -534,12 +577,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 9일 화요일 17:06">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">TTL용 투명 케이스 - 일정 시간이 지나면 모든 개체가 삭제됩니다.</div>
+<div class="comment-content">TTL의 명확한 사례 - 특정 기간이 지나면 모든 객체가 삭제됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -576,11 +619,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 6일 토요일 05:10">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -594,7 +637,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -625,13 +668,13 @@
 				jdr75
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 10일 (월) 11:50">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 10일 월요일 11:50">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C는 터무니없다. DynamoDB는 일반적으로 iops(테이블에 대한 읽기/쓰기 작업)가 높은 RDS이므로 항목을 삽입할 때마다 Lambda 함수를 실행하는 것은 비용 효율적이지 않습니다. 질문에서 제안하는 필드를 생성하고 SQL 삭제 문장: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.DeleteData.html</div>
+<div class="comment-content">C는 말도 안 돼요. DynamoDB는 일반적으로 iops(테이블에 대한 읽기/쓰기 작업)가 높은 RDS이므로 항목을 삽입할 때마다 Lambda 함수를 실행하는 것은 비용 효율적이지 않습니다. 질문에서 제안하는 필드를 생성하고 삭제를 관리하는 것이 훨씬 좋습니다. SQL 삭제 문장: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.DeleteData.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -640,7 +683,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -672,12 +715,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 20:11">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다. TTL은 워크로드 요구 사항에 따라 최신 상태로 유지되는 항목만 유지하여 저장된 데이터 볼륨을 줄이는 수단으로 추가 비용 없이 제공됩니다. TTL은 특정 시간이 지나면 관련성을 잃는 항목을 저장할 때 유용합니다.</div>
+<div class="comment-content">Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후에 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다. TTL은 워크로드 요구 사항에 맞게 최신 상태로 유지되는 항목만 유지하여 저장된 데이터 볼륨을 줄이는 수단으로 추가 비용 없이 제공됩니다. TTL은 특정 시간 이후 관련성을 잃는 항목을 저장하는 경우 유용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -686,7 +729,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,16 +757,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				데이비드나미
+				데이비드네이미
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 11일 수 09:55">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 11일 수요일 09:55">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D: 이 솔루션은 추가 리소스와 유지 관리가 필요한 대안보다 더 효율적이고 비용 효율적입니다.</div>
+<div class="comment-content">D: 이 솔루션은 추가 리소스와 유지 관리가 필요한 대안보다 더 효율적이고 비용 효과적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -732,7 +775,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -760,16 +803,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				익명의 클라우드가이
+				익명의 클라우드 녀석
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 27일 화요일 19:53">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 27일 (화) 19:53">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D DyanmoDB TTL은 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html 항목을 만료합니다.</div>
+<div class="comment-content">D DyanmoDB TTL은 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html 항목을 만료시킵니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -778,7 +821,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,16 +849,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:42">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:42">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">비용과 개발 노력을 최소화하려면 기존 애플리케이션과 인프라에 최소한의 변경만 필요한 솔루션이 가장 적절할 것입니다. 옵션 D는 DynamoDB의 TTL(Time-To-Live) 기능을 사용하여 이러한 요구 사항을 충족합니다. 이 기능을 사용하면 항목 만료 시기를 나타내는 타임스탬프가 있는 테이블의 각 항목에 대한 속성을 지정할 수 있습니다. 이 솔루션에서 애플리케이션은 현재 타임스탬프 값에 30일을 더한 속성을 테이블에 생성된 각각의 새 항목에 추가하도록 확장됩니다. 그런 다음 DynamoDB는 이 속성을 TTL 속성으로 사용하도록 구성되어 TTL 값에 도달하면 항목이 테이블에서 자동으로 삭제됩니다. 이 솔루션은 기존 애플리케이션 및 인프라에 대한 최소한의 변경이 필요하며 추가 리소스나 복잡한 설정이 필요하지 않습니다.</div>
+<div class="comment-content">비용과 개발 노력을 최소화하려면 기존 애플리케이션과 인프라에 대한 변경을 최소화하는 솔루션이 가장 적합할 것입니다. 옵션 D는 항목이 만료되어야 하는 시점을 나타내는 타임스탬프가 있는 테이블의 각 항목에 속성을 지정할 수 있는 DynamoDB의 TTL(Time-To-Live) 기능을 사용하여 이러한 요구 사항을 충족합니다. 이 솔루션에서는 테이블에 생성된 각 새 항목에 현재 타임스탬프에 30일을 더한 값을 갖는 속성을 추가하도록 애플리케이션이 확장됩니다. 그런 다음 DynamoDB는 이 속성을 TTL 속성으로 사용하도록 구성되어 TTL 값에 도달하면 항목이 테이블에서 자동으로 삭제됩니다. 이 솔루션은 기존 애플리케이션 및 인프라에 대한 최소한의 변경만 필요하며 추가 리소스나 복잡한 설정이 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -824,7 +867,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -844,15 +887,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:43">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:43">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A에는 AWS CloudFormation을 사용하여 30일마다 솔루션을 재배포하는 것이 포함되지만 이렇게 하려면 상당한 개발 노력이 필요하고 애플리케이션 가동 중지 시간이 발생할 수 있습니다. 옵션 B는 EC2 인스턴스 및 모니터링 애플리케이션을 사용하여 30일보다 오래된 항목을 삭제하는 것과 관련이 있지만 추가 인프라 및 유지 관리 노력이 필요합니다. 옵션 C에는 DynamoDB Streams 및 Lambda 함수를 사용하여 30일보다 오래된 항목을 삭제하는 것이 포함되지만 추가 인프라 및 유지 관리 노력이 필요합니다.</div>
+<div class="comment-content">옵션 A에는 AWS CloudFormation을 사용하여 30일마다 솔루션을 재배포하는 것이 포함되지만, 이를 위해서는 상당한 개발 노력이 필요하고 애플리케이션 가동 중지 시간이 발생할 수 있습니다. 옵션 B에는 EC2 인스턴스와 모니터링 애플리케이션을 사용하여 30일이 지난 항목을 삭제하는 것이 포함되지만 이를 위해서는 추가 인프라 및 유지 관리 노력이 필요합니다. 옵션 C에는 DynamoDB Streams 및 Lambda 함수를 사용하여 30일이 지난 항목을 삭제하는 작업이 포함되지만 이를 위해서는 추가 인프라 및 유지 관리 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,11 +940,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 19:45">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 19:45">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -915,7 +958,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -947,12 +990,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 16:59">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다. - 이 링크 확인 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
+<div class="comment-content">Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후에 DynamoDB는 쓰기 처리량을 소비하지 않고 테이블에서 항목을 삭제합니다. - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html 링크를 확인하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -961,7 +1004,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -989,11 +1032,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예열하다
+				예습하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 18일 일 11:09">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 18일 일요일 11:09">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1007,7 +1050,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1035,11 +1078,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 09:07">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 09:07">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1053,7 +1096,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1085,7 +1128,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 14:22">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1099,7 +1142,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1131,11 +1174,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 10:03">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C Amazon DynamoDB Streams는 테이블에 새 항목이 생성될 때 AWS Lambda 함수를 호출합니다. 그런 다음 테이블에서 30일보다 오래된 항목을 삭제하도록 Lambda 함수를 구성할 수 있습니다. 이 솔루션은 기존 AWS 서비스를 사용하고 추가 인프라나 코드 개발이 필요하지 않기 때문에 비용과 개발 노력을 최소화합니다. 옵션 D는 저에게 적합하지 않습니다. DynamoDB TTL(Time-to-Live)이 비용과 개발 노력을 최소화하는 가장 효과적인 솔루션이 아니기 때문입니다. DynamoDB TTL을 사용하여 일정 시간이 지나면 테이블의 항목을 자동으로 삭제할 수 있지만 테이블의 각 항목에 대한 TTL 속성을 수동으로 구성해야 합니다. 이 솔루션은 애플리케이션에 TTL 속성을 추가하기 위해 추가적인 개발 노력이 필요합니다.</div>
+<div class="comment-content">C Amazon DynamoDB Streams는 테이블에 새 항목이 생성될 때 AWS Lambda 함수를 호출합니다. 그런 다음 테이블에서 30일이 지난 항목을 삭제하도록 Lambda 함수를 구성할 수 있습니다. 이 솔루션은 기존 AWS 서비스를 사용하고 추가 인프라나 코드 개발이 필요하지 않기 때문에 비용과 개발 노력을 최소화합니다. 옵션 D는 나에게 적합하지 않습니다. 왜냐하면 DynamoDB TTL(Time-to-Live)이 비용과 개발 노력을 최소화하는 데 가장 효과적인 솔루션이 아니기 때문입니다. DynamoDB TTL을 사용하면 일정 시간이 지나면 테이블의 항목을 자동으로 삭제할 수 있지만, 테이블의 각 항목에 대한 TTL 속성을 수동으로 구성해야 합니다. 이 솔루션을 사용하려면 애플리케이션에 TTL 속성을 추가하기 위한 추가 개발 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1144,7 +1187,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1164,15 +1207,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:11">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 비효율적입니다. 이 함수는 항목이 추가될 때마다 실행되고 실행될 때마다 비용이 발생하며 일반적으로 항목을 삭제할 필요가 없습니다. 그 날의 첫 번째 실행은 30일이 지난 항목을 삭제하기 때문입니다. 또한 람다 함수를 만들려면 개발 노력이 필요합니다.</div>
+<div class="comment-content">이는 비효율적입니다. 항목이 추가될 때마다 함수가 실행되고, 실행될 때마다 비용이 발생하며, 일반적으로 해당 날짜의 첫 번째 실행에서는 30일이 지난 항목이 삭제되므로 항목을 삭제할 필요가 없습니다. 람다 함수를 생성하려면 개발 노력도 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1181,7 +1224,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1220,13 +1263,13 @@
 				비모포
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 19:11">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 19:11">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"AWS Lambda는 기능에 대한 요청 수와 코드 실행에 필요한 기간에 따라 사용자에게 비용을 청구합니다." 질문에서 "A LARGE FLEET OF EC2"라고 언급한 것처럼 테이블에서 삭제하기 위해 람다 호출을 사용하여 많은 돈을 벌 수 있습니다. TTL은 "무료"로 사용할 수 있으며 테이블에서 데이터도 제거합니다. 따라서 "D"가 최상의 솔루션이 될 것입니다.</div>
+<div class="comment-content">"AWS Lambda는 기능에 대한 요청 수와 기간(코드 실행에 필요한 시간)을 기준으로 사용자에게 비용을 청구합니다." 질문에 "A LARGE FLEET OF EC2"라고 적혀 있듯이 람다 호출을 사용하여 테이블에서 삭제하면 많은 돈을 벌 수 있습니다. TTL은 "무료"로 사용할 수 있으며 테이블에서 데이터도 제거합니다. 따라서 "D"가 가장 좋은 솔루션이 될 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1235,7 +1278,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1266,8 +1309,8 @@
 				유리엔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 23:30">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 23:30">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1281,7 +1324,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1309,16 +1352,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 7일 수 13:04">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 7일 수요일 13:04">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞습니다. CI의 경우 람다를 개발하는 것이 속성을 포함하는 것보다 더 많은 노력이 필요하다고 생각합니다. 즉, 2줄 코드입니다. 그리고 물론 의미가 없는 각 항목에 대해 람다를 호출하는 것보다 저렴합니다.</div>
+<div class="comment-content">D 맞습니다. CI의 경우 람다 개발에는 속성을 포함하는 것보다 더 많은 노력이 필요하다고 생각합니다. 즉, 두 줄의 코드가 됩니다. 물론 각 단일 항목에 대해 람다를 호출하는 것보다 저렴합니다. 이는 의미가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1327,7 +1370,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1358,13 +1401,13 @@
 				emohar01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 6일 화요일 22:35">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 6일 (화) 22:35">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜 및 시간 직후 DynamoDB는 쓰기를 소비하지 않고 테이블에서 항목을 삭제합니다. 처리량. TTL은 워크로드 요구 사항에 맞게 최신 상태로 유지되는 항목만 유지하여 저장된 데이터 볼륨을 줄이는 수단으로 추가 비용 없이 제공됩니다."</div>
+<div class="comment-content">"Amazon DynamoDB TTL(Time to Live)을 사용하면 항목별 타임스탬프를 정의하여 항목이 더 이상 필요하지 않은 시기를 결정할 수 있습니다. 지정된 타임스탬프의 날짜와 시간 직후에 DynamoDB는 쓰기를 소비하지 않고 테이블에서 항목을 삭제합니다. TTL은 워크로드 요구 사항에 맞게 최신 상태로 유지되는 항목만 유지하여 저장된 데이터 볼륨을 줄이는 수단으로 추가 비용 없이 제공됩니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1373,7 +1416,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1404,13 +1447,13 @@
 				침략자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 6일 화요일 14:55">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 6일 (화) 14:55">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C 왜냐면 TTL이 좋아도 비용절감이 목적이니까 DB크기를 줄이면 비용절감이 되니까요.</div>
+<div class="comment-content">C. TTL이 괜찮더라도 목표는 비용 절감이기 때문에 DB 크기를 줄이면 비용도 절감됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1419,7 +1462,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1442,12 +1485,12 @@
 				FNJ1111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 금요일 00:50">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 30일 금 00:50">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">목표는 또한 "개발 노력 최소화"이며 람다 기능은 개발 노력입니다. 그래서 D입니다.</div>
+<div class="comment-content">목표는 "개발 노력을 최소화"하는 것이며 람다 함수는 개발 노력입니다. 그래서 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1456,7 +1499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1496,11 +1539,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:13">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">안은 C</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1509,7 +1552,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1537,15 +1580,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토니고스트R05
+				TonyghostR05
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 02:32">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">제 생각에는 C가 답입니다</div>
+<div class="comment-content">내 생각에는 C가 답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1554,7 +1597,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1585,13 +1628,13 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 20:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 20:15">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">원래는 D라고 생각했지만 이 기사를 보고 마음이 바뀌었습니다. 20and%20Lambda%20to%20archive%20TTL%20deleted%20항목</div>
+<div class="comment-content">원래는 D라고 생각했지만 이 기사로 인해 마음이 바뀌었습니다 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/time-to-live-ttl-streams.html#:~:text=Using%20DynamoDB%20Streams% 20and%20Lambda%20to%20archive%20TTL%20deleted%20items</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1600,7 +1643,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1620,15 +1663,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:16">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 10일 화 07:16">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 마음이 바뀌나요? C는 30일 후에 항목을 반드시 삭제하지는 않습니다. 람다 함수는 새 데이터가 추가된 경우에만 실행됩니다. 새 데이터 추가와 이전 데이터 삭제는 전혀 관련이 없기 때문에 이전 데이터를 삭제해야 하는지 여부에 관계없이 새 데이터가 추가될 때마다 함수가 실행됩니다. C는 내 마음에 좋지 않은 선택입니다. 다르게 생각하신다면 그 이유를 설명해주세요.</div>
+<div class="comment-content">왜 마음이 바뀌나요? C는 30일 후에 반드시 항목을 삭제할 필요는 없습니다. 람다 함수는 새 데이터가 추가된 경우에만 실행됩니다. 새로운 데이터를 추가하는 것과 기존 데이터를 삭제하는 것은 전혀 관련이 없기 때문에 기존 데이터를 삭제해야 하는지 여부에 관계없이 새로운 데이터가 추가될 때마다 이 기능이 실행됩니다. 내 생각에는 C가 좋지 않은 선택이다. 다르게 생각한다면 그 이유를 설명해주세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1637,7 +1680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1676,8 +1719,8 @@
 				허양
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 14:06">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 14:06">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1691,7 +1734,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1722,12 +1765,12 @@
 				길80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 14:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 14:02">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C에 대한 이전 투표에 대한 추가 정보. 질문은 개발 노력을 최소화하도록 요청합니다. D는 "응용 프로그램을 확장하여 현재 타임스탬프 값이 있는 속성을 추가하세요..."라고 말합니다. 응용 프로그램을 확장하면 개발 노력이 증가하므로 D가 답이 아닌 또 다른 이유입니다. 마지막으로 Amazon은 항상 고객이 자신의 솔루션을 사용하기를 원하므로 자체 솔루션을 개발(애플리케이션 확장)하는 대신 DynamoDB를 사용하기를 원할 것입니다.</div>
+<div class="comment-content">C에 대한 이전 투표에 대한 추가 정보입니다. 이 질문은 개발 노력을 최소화하라는 질문입니다. D는 다음과 같이 말합니다. "현재 타임스탬프 값을 갖는 속성을 추가하기 위해 애플리케이션을 확장합니다..." 애플리케이션을 확장하면 개발 노력이 증가하므로 D가 답이 아닌 또 다른 이유입니다. 마지막으로 Amazon은 항상 고객이 자신의 솔루션을 사용하기를 열망하므로 고객이 자체 솔루션을 개발(애플리케이션 확장)하는 대신 DynamoDB를 사용하기를 원할 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1736,7 +1779,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1756,15 +1799,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 7일 수 13:04">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 7일 수요일 13:04">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 람다를 개발하는 것이 2줄 코드가 될 속성을 포함하는 것보다 더 많은 노력이 필요하다고 생각합니다. 그리고 물론 의미가 없는 각 항목에 대해 람다를 호출하는 것보다 저렴합니다. 디이다</div>
+<div class="comment-content">나는 람다를 개발하는 것이 속성을 포함하는 것보다 더 많은 노력이 필요하다고 생각합니다. 즉, 두 줄의 코드가 될 것입니다. 물론 각 단일 항목에 대해 람다를 호출하는 것보다 저렴합니다. 이는 의미가 없습니다. D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1773,7 +1816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1812,13 +1855,13 @@
 				길80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 11:28">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 11:28">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">처음에는 절대 데이터 삭제를 원하지 않으니 D라고 생각했는데, 질문 끝에 "회사에서 비용을 최소화하는 솔루션이 필요해..."라고 나오네요. DynamoDB 크기를 줄이므로 C가 올바른 것 같습니다.</div>
+<div class="comment-content">처음에는 데이터를 삭제하고 싶지 않기 때문에 D라고 생각했는데, 질문 끝에 "회사는 비용을 최소화하는 솔루션이 필요합니다..."라고 나오네요. DynamoDB 크기를 줄였으므로 C가 올바른 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1827,7 +1870,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1858,8 +1901,8 @@
 				크브소무
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 04:14">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 04:14">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1872,7 +1915,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1895,8 +1938,8 @@
 				길80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 13:50">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 13:50">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1909,7 +1952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1948,12 +1991,12 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 04:00">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 04:00">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 : D</div>
+<div class="comment-content">답 : 디</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1962,7 +2005,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1994,7 +2037,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 16:56">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2008,7 +2051,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2063,7 +2106,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 20:18">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2114,7 +2157,7 @@ The DynamoDB TTL feature allows you to define a per-item timestamp to determine 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:29">
-			19 hours, 39 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2166,7 +2209,7 @@ Modifying the application code to add the TTL attribute is relatively simple and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:05">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2218,7 +2261,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 08:11">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2263,7 +2306,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 28 May 2023 12:11">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2308,7 +2351,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 15:38">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2354,7 +2397,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 09 May 2023 17:06">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2400,7 +2443,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 06 May 2023 05:10">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2446,7 +2489,7 @@ C. Configuring DynamoDB Streams to invoke a Lambda function to delete items olde
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Apr 2023 11:50">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2493,7 +2536,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.Dele
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 20:11">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2541,7 +2584,7 @@ TTL is useful if you store items that lose relevance after a specific time.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 11 Jan 2023 09:55">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2587,7 +2630,7 @@ TTL is useful if you store items that lose relevance after a specific time.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Dec 2022 19:53">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2635,7 +2678,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:42">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2675,7 +2718,7 @@ In this solution, the application is extended to add an attribute that has a val
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:43">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2732,7 +2775,7 @@ Option C involves using DynamoDB Streams and a Lambda function to delete items t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 19:45">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2778,7 +2821,7 @@ Option C involves using DynamoDB Streams and a Lambda function to delete items t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 16:59">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2824,7 +2867,7 @@ Option C involves using DynamoDB Streams and a Lambda function to delete items t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Dec 2022 11:09">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2870,7 +2913,7 @@ Option C involves using DynamoDB Streams and a Lambda function to delete items t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 09:07">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2916,7 +2959,7 @@ Option C involves using DynamoDB Streams and a Lambda function to delete items t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 14:22">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2964,7 +3007,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/ttl-dynamodb/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 10:03">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3003,7 +3046,7 @@ Option D is not correct for me, it is because,  DynamoDB Time-to-Live (TTL) is n
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:11">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3058,7 +3101,7 @@ It would also require development effort to create the lambda function.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 19:11">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3104,7 +3147,7 @@ It would also require development effort to create the lambda function.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 23:30">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3151,7 +3194,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 13:04">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3197,7 +3240,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 22:35">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3243,7 +3286,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 14:55">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3281,7 +3324,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Dec 2022 00:50">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3334,7 +3377,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:13">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3379,7 +3422,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 02:32">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3424,7 +3467,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 20:15">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3463,7 +3506,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/time-to-live-tt
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:16">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3516,7 +3559,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/time-to-live-tt
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 14:06">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3562,7 +3605,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/time-to-live-tt
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 14:02">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3602,7 +3645,7 @@ Lastly, Amazon will always aspire to have the customers use their solution, so t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 13:04">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3655,7 +3698,7 @@ Lastly, Amazon will always aspire to have the customers use their solution, so t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 11:28">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3703,7 +3746,7 @@ So in this case, I believe cost reduction will happen when we reduce DynamoDB si
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 04:14">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3740,7 +3783,7 @@ So in this case, I believe cost reduction will happen when we reduce DynamoDB si
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 13:50">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3793,7 +3836,7 @@ So in this case, I believe cost reduction will happen when we reduce DynamoDB si
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 04:00">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3838,7 +3881,7 @@ So in this case, I believe cost reduction will happen when we reduce DynamoDB si
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 16:56">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

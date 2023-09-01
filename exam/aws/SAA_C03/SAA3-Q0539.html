@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 539 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 539 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 539 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 539 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="885810">
 <p class="card-text">
 							
-								회사에서 AWS 클라우드를 사용하여 온프레미스 DR(재해 복구) 구성을 개선하려고 합니다. 회사의 핵심 프로덕션 비즈니스 애플리케이션은 가상 머신(VM)에서 실행되는 Microsoft SQL Server Standard를 사용합니다. 애플리케이션의 RPO(복구 시점 목표)는 30초 이하이고 RTO(복구 시간 목표)는 60분입니다. DR 솔루션은 가능한 한 비용을 최소화해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사에서는 AWS 클라우드를 사용하여 온프레미스 재해 복구(DR) 구성을 개선하려고 합니다. 회사의 핵심 프로덕션 비즈니스 애플리케이션은 가상 머신(VM)에서 실행되는 Microsoft SQL Server Standard를 사용합니다. 애플리케이션의 RPO(복구 지점 목표)는 30초 이하이고 RTO(복구 시간 목표)는 60분입니다. DR 솔루션은 가능한 한 비용을 최소화해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="885810" type="application/json">[{"voted_answers": "B", "vote_count": 7, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="885810" type="application/json">[{"voted_answers": "B", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Always On 가용성 그룹과 함께 Microsoft SQL Server Enterprise를 사용하여 온프레미스 서버와 AWS 간에 다중 사이트 활성/활성 설정을 구성합니다.
+											Always On 가용성 그룹이 포함된 Microsoft SQL Server Enterprise를 사용하여 온프레미스 서버와 AWS 간에 다중 사이트 활성/활성 설정을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											AWS에서 SQL Server 데이터베이스용 웜 대기 Amazon RDS를 구성합니다. 변경 데이터 캡처(CDC)를 사용하도록 AWS DMS(AWS Database Migration Service)를 구성합니다.
+											AWS의 SQL Server 데이터베이스에 대한 웜 대기 Amazon RDS를 구성합니다. 변경 데이터 캡처(CDC)를 사용하도록 AWS Database Migration Service(AWS DMS)를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											디스크 변경 사항을 AWS에 파일럿 라이트로 복제하도록 구성된 AWS Elastic Disaster Recovery를 사용합니다.
+											디스크 변경 사항을 AWS에 복제하도록 구성된 AWS Elastic Disaster Recovery를 파일럿 라이트로 사용합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 70%; display: flex;" title="">B (70%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">씨 (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">B (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">C (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Bill1000
-							</a> 
-							
-							2023 <i>
-							년 6월 6일 오후 6:25</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="885810" type="application/json">[{"voted_answers": "B", "vote_count": 7, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="885810" type="application/json">[{"voted_answers": "B", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 70%; display: flex;" title="">B (70%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 30%; display: flex;" title="">C (30%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 67%; display: flex;" title="">B (67%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">C (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Bill1000
-							</a>
-							
-							at <i>
-							June 6, 2023, 6:25 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -233,6 +276,97 @@
 <!-- New comment start -->
 <!-- New comment end -->
 <div class="discussion-container">
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987416" id="comment-987416">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 13:55">
+			4일 9시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
+<div class="comment-content">AWS의 SQL Server 데이터베이스에 대해 웜 대기 Amazon RDS를 구성합니다. 변경 데이터 캡처(CDC)를 사용하도록 AWS Database Migration Service(AWS DMS)를 구성합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987540" id="comment-987540">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				에미넨자22
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 17:10">
+			4일 6시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">웜 스탠바이는 파일럿 라이트보다 비용이 더 많이 듭니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984805" id="comment-984805">
 <a class="minimize-comment comment-toggle" href="#">
@@ -250,21 +384,21 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 19일 토요일 00:02">
-			16시간 4분 전
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS DRS는 초 단위의 RPO와 분 단위의 RTO를 지원합니다. 파일럿 라이트도 웜 스탠바이보다 저렴합니다. https://aws.amazon.com/disaster-recovery/</div>
+<div class="comment-content">AWS DRS는 초 단위의 RPO와 분 단위의 RTO를 지원합니다. 표시등도 따뜻한 대기보다 저렴합니다. https://aws.amazon.com/disaster-recovery/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,15 +426,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				BlueAI새
+				블루AI버드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 1일 화요일 17:52">
-			2주, 3일 전
+			3주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 맞습니다. 항상 실행되는 것은 핵심 요소만이 아니기 때문에 웜 대기는 일반적으로 파일럿 라이트보다 비용이 더 많이 듭니다. 웜 대기는 활성/수동 장애 조치 구성의 또 다른 예입니다. 서버는 가능한 가장 작은 크기의 최소 수의 EC2 인스턴스에서 계속 실행될 수 있습니다. 참조: https://tutorialsdojo.com/backup-and-restore-vs-pilot-light-vs-warm-standby-vs-multi-site/#:~:text=Since%20it%20is%20not%20only, %20에서%20가장 작은%20크기%20가능합니다.</div>
+<div class="comment-content">C가 맞습니다. 항상 실행되는 것은 핵심 요소 뿐만이 아니기 때문에 웜 스탠바이는 일반적으로 파일럿 라이트보다 비용이 더 많이 듭니다. 웜 대기는 활성/수동 장애 조치 구성의 또 다른 예입니다. 서버는 가능한 가장 작은 크기의 최소한의 EC2 인스턴스에서 계속 실행될 수 있습니다. 참조: https://tutorialsdojo.com/backup-and-restore-vs-pilot-light-vs-warm-standby-vs-multi-site/#:~:text=Since%20it%20is%20not%20only, %20the%20가장 작은%20크기%20가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -309,7 +443,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -337,16 +471,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				hozy_
+				호지_
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 19일 수 17:55">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 19일 수요일 17:55">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/ko/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-iii-pilot-light-and-warm-standby/ Pilot Light 비용이 Warm보다 저렴하다고 합니다. 대기.</div>
+<div class="comment-content">https://aws.amazon.com/ko/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-iii-pilot-light-and-warm-standby/ Pilot Light 비용이 Warm보다 저렴하다고 나와 있습니다. 대기.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,11 +517,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				나드러
+				나더러
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 9일 일 16:22">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 9일 일요일 16:22">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -401,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,13 +566,13 @@
 				Zox42
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 9일 일 16:02">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 9일 일요일 16:02">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답변 C. RPO는 초 단위이고 RTO는 5-20분입니다. 파일럿 라이트 비용은 웜 스탠바이보다 저렴합니다(물론 활성-활성보다 저렴함). https://docs.aws.amazon.com/drs/latest/userguide/failback-overview.html#recovery-objectives</div>
+<div class="comment-content">답변 C. RPO는 초 단위이고 RTO는 5~20분입니다. 지시등 비용은 따뜻한 대기보다 저렴합니다(물론 활성-활성보다 저렴합니다). https://docs.aws.amazon.com/drs/latest/userguide/failback-overview.html#recovery-objectives</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -478,13 +612,13 @@
 				하오AWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 02:22">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 02:22">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">대답은 B여야 합니다. ACD는 30초 동안만 RPO를 만들 수 없습니다.</div>
+<div class="comment-content">대답은 B여야 합니다. ACD는 단 30초 동안만 RPO를 수행할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -516,12 +650,12 @@
 				하오AWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 02:38">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 화 02:38">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">실수해서 죄송합니다. A도 RPO를 매우 낮게 만들 수 있지만 A가 B보다 비쌉니다.</div>
+<div class="comment-content">실수해서 죄송합니다. A도 RPO를 매우 낮출 수 있지만 A는 B보다 비쌉니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -530,7 +664,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,13 +703,13 @@
 				MrAWSA어소시에이트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 18:32">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 18:32">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이 질문에는 두 가지 대답이 필요하다고 생각합니다. 나는 답이 B &amp; D 둘 다일 것이라고 생각한다.</div>
+<div class="comment-content">이 질문에는 두 가지 답변이 필요한 것 같습니다. 답은 B&amp;D 둘 다일 것 같아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -607,8 +741,8 @@
 				하오AWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 02:20">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 02:20">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -621,7 +755,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -660,8 +794,8 @@
 				아브라2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 07:28">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 07:28">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -675,7 +809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -703,16 +837,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알렉산더 카마초
+				알렉산더카마초프
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 7일 수요일 22:08">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답입니다. C와 D는 의미가 없으므로 폐기됩니다. A와 B 사이는 B가 관리 서비스인 RDS이기 때문에 필요할 때 사용한 리소스에 대해서만 비용을 지불하는 데에도 사용할 수 있습니다. AWS DMS를 활용하여 데이터를 복제/동기화합니다.</div>
+<div class="comment-content">B가 정답입니다. C와 D는 말이 안 되기 때문에 폐기됩니다. A와 B 사이는 B가 매니지드 서비스인 RDS이기 때문에 필요할 때 사용한 리소스에 대해서만 비용을 지불하는 것도 가능합니다. AWS DMS를 활용하여 데이터를 복제/동기화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -721,7 +855,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -741,15 +875,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				maver144
+				메이버144
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 12일 (월) 13:27">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 12일 월요일 13:27">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 말이 됩니다. 그러나 디스크 변경 사항을 복제하도록 구성된 AWS Elastic Disaster Recovery를 사용하는 것은 파일럿 라이트보다 백업 및 복원일 가능성이 높습니다.</div>
+<div class="comment-content">C는 말이 됩니다. 그러나 디스크 변경 사항을 복제하도록 구성된 AWS Elastic Disaster Recovery를 사용하는 것은 파일럿 라이트보다 백업 및 복원 가능성이 더 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -758,7 +892,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -798,11 +932,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 6일 화요일 18:25">
-			2개월, 1주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 '디'? 누군가 설명할 수 있습니까? 'D'는 어떻게 30대 RPO를 만날 수 있을까?</div>
+<div class="comment-content">왜 'D'인가요? 누군가 설명해줄 수 있나요? 'D'는 어떻게 30년대 RPO를 충족할 수 있을까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -811,7 +945,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -847,6 +981,97 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987416" id="comment-987416">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 13:55">
+			4 days, 9 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Configure a warm standby Amazon RDS for SQL Server database on AWS. Configure AWS Database Migration Service (AWS DMS) to use change data capture (CDC).</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987540" id="comment-987540">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Eminenza22
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 17:10">
+			4 days, 6 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">Warm standby is costlier than Pilot Light</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984805" id="comment-984805">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -863,7 +1088,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 00:02">
-			16 hours, 4 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -877,7 +1102,7 @@ https://aws.amazon.com/disaster-recovery/</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -910,7 +1135,7 @@ https://aws.amazon.com/disaster-recovery/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 01 Aug 2023 17:52">
-			2 weeks, 3 days ago
+			3 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -957,7 +1182,7 @@ Ref: https://tutorialsdojo.com/backup-and-restore-vs-pilot-light-vs-warm-standby
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 17:55">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1005,7 +1230,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Jul 2023 16:22">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1051,7 +1276,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Jul 2023 16:02">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1097,7 +1322,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 02:22">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1135,7 +1360,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 02:38">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1188,7 +1413,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 18:32">
-			1 month, 4 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1226,7 +1451,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 02:20">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1279,7 +1504,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 07:28">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1325,7 +1550,7 @@ It says Pilot Light costs less than Warm Standby.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Jun 2023 22:08">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1365,7 +1590,7 @@ Between A and B is because B is RDS which is a manged service, we can use even t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Jun 2023 13:27">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1419,7 +1644,7 @@ However using AWS Elastic Disaster Recovery configured to replicate disk changes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Jun 2023 18:25">
-			2 months, 1 week ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 4 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 질문 4 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 4 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 4 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839761">
 <p class="card-text">
 							
-								애플리케이션은 VPC의 Amazon EC2 인스턴스에서 실행됩니다. 애플리케이션은 Amazon S3 버킷에 저장된 로그를 처리합니다. EC2 인스턴스는 인터넷 연결 없이 S3 버킷에 액세스해야 합니다. <br/>Amazon S3에 프라이빗 네트워크 연결을 제공하는 솔루션은 무엇입니까?
+								애플리케이션은 VPC의 Amazon EC2 인스턴스에서 실행됩니다. 애플리케이션은 Amazon S3 버킷에 저장된 로그를 처리합니다. EC2 인스턴스는 인터넷에 연결하지 않고 S3 버킷에 액세스해야 합니다. <br/>Amazon S3에 프라이빗 네트워크 연결을 제공하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839761" type="application/json">[{"voted_answers": "A", "vote_count": 77, "is_most_voted": true}]</script>
+<script id="839761" type="application/json">[{"voted_answers": "A", "vote_count": 78, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Amazon EC2에서 인스턴스 프로필을 생성하여 S3 액세스를 허용합니다.
+											S3 액세스를 허용하려면 Amazon EC2에 인스턴스 프로필을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											S3 엔드포인트에 액세스하기 위한 프라이빗 링크가 있는 Amazon API Gateway API를 생성합니다.
+											S3 엔드포인트에 액세스하기 위한 프라이빗 링크가 포함된 Amazon API Gateway API를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="77 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="78 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								D2w
-							</a> 2022년 
-							
-							10 <i>
-							월 10일 오전 11:27</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839761" type="application/json">[{"voted_answers": "A", "vote_count": 77, "is_most_voted": true}]</script>
+<script id="839761" type="application/json">[{"voted_answers": "A", "vote_count": 78, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -205,22 +258,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="77 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="78 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								D2w
-							</a>
-							
-							at <i>
-							Oct. 10, 2022, 11:27 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,15 +295,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 10일 (월) 11:27">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 10일 월요일 11:27">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">VPC 종단점을 사용하면 공용 인터넷을 사용하는 대신 사설 네트워크를 사용하여 AWS 서비스에 연결할 수 있습니다.</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 공용 인터넷을 사용하는 대신 프라이빗 네트워크를 사용하여 AWS 서비스에 연결할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -297,26 +340,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				푹부
+				푸크부
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 02:53">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 02:53">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">키워드: - VPC의 EC2 - EC2 인스턴스가 인터넷 연결 없이 S3 버킷에 액세스해야 함 A: 맞음 - 게이트웨이 VPC 엔드포인트가 추가 비용 없이 S3 버킷에 비공개로 연결할 수 있음 B: 올바르지 않음 - CloudWatch Logs에 대한 인터페이스 VPC 엔드포인트를 설정할 수 있음 EC2에서 CloudWatch로의 사설 네트워크용. 그러나 CloudWatch에서 S3 버킷으로: 로그 데이터를 내보낼 수 있는 데 최대 12시간이 걸릴 수 있으며 요구 사항은 EC2에서 S3로만 필요합니다. - 외부 사이트에서 네트워크를 수신하고 AWS Lambda, Amazon EC2, Application Load Balancer 또는 Classic Load Balancer와 같은 Elastic Load Balancing 제품, Amazon DynamoDB, Amazon Kinesis 또는 공개적으로 사용 가능한 HTTPS 기반으로 요청을 전달하는 프록시와 같은 API 게이트웨이 끝점.</div>
+<div class="comment-content">키워드: - VPC의 EC2 - EC2 인스턴스는 인터넷에 연결하지 않고 S3 버킷에 액세스해야 합니다. A: 올바름 - 게이트웨이 VPC 엔드포인트는 추가 비용 없이 S3 버킷에 비공개로 연결할 수 있습니다. B: 올바르지 않음 - CloudWatch Logs에 대한 인터페이스 VPC 엔드포인트를 설정할 수 있습니다. EC2에서 CloudWatch까지의 프라이빗 네트워크용. 그러나 CloudWatch에서 S3 버킷으로: 로그 데이터를 내보낼 수 있게 되기까지 최대 12시간이 걸릴 수 있으며 요구 사항에는 EC2에서 S3으로만 필요합니다. C: 올바르지 않음 - 인스턴스 프로필을 생성하면 액세스 권한만 부여되지만 EC2가 S3에 비공개로 연결하는 데 도움이 되지 않음 D: 올바르지 않음 - 외부 사이트에서 네트워크를 수신하고 AWS Lambda, Amazon EC2, Application Load Balancer 또는 Classic Load Balancers, Amazon DynamoDB, Amazon Kinesis 또는 공개적으로 사용 가능한 HTTPS 기반과 같은 Elastic Load Balancing 제품으로 요청을 전달하는 프록시와 같은 API 게이트웨이 끝점.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">16</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">17</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -352,13 +395,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 13:35">
-			13시간 12분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 13:35">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">게이트웨이 엔드포인트를 사용하면 VPC용 인터넷 게이트웨이나 NAT 장치 없이 추가 비용 없이 VPC에서 Amazon S3에 액세스할 수 있습니다. 그러나 게이트웨이 엔드포인트는 온프레미스 네트워크, 다른 AWS 리전의 피어링된 VPC 또는 전송 게이트웨이를 통한 액세스를 허용하지 않습니다. 참조 https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html</div>
+<div class="comment-content">게이트웨이 엔드포인트를 사용하면 VPC에 인터넷 게이트웨이나 NAT 디바이스가 필요하지 않고 추가 비용 없이 VPC에서 Amazon S3에 액세스할 수 있습니다. 그러나 게이트웨이 엔드포인트는 온프레미스 네트워크, 다른 AWS 리전의 피어링된 VPC 또는 전송 게이트웨이를 통한 액세스를 허용하지 않습니다. 참조. https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -367,7 +410,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -399,12 +442,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 27일 목요일 06:32">
-			3주, 2일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">VPC 엔드포인트를 사용하면 고객이 지원되는 AWS 서비스 및 AWS PrivateLink에서 제공하는 VPC 엔드포인트 서비스에 비공개로 연결할 수 있습니다. https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endpoints.html#:~:text=A-,VPC%20endpoint,-enables%20customers%20to</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 고객은 지원되는 AWS 서비스 및 AWS PrivateLink에서 제공하는 VPC 엔드포인트 서비스에 비공개로 연결할 수 있습니다. https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endpoints.html#:~:text=A-,VPC%20endpoint,-enables%20customers%20to</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -413,7 +456,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -444,13 +487,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 16:53">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 16:53">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A입니다. S3 버킷에 대한 게이트웨이 VPC 엔드포인트를 생성합니다. 게이트웨이 VPC 엔드포인트는 인터넷을 사용하지 않고 AWS 서비스에 연결하는 비공개 방법입니다. EC2 인스턴스가 인터넷 연결 없이 S3 버킷에 액세스할 수 있기 때문에 주어진 시나리오에 가장 적합한 솔루션입니다.</div>
+<div class="comment-content">대답은 A입니다. S3 버킷에 대한 게이트웨이 VPC 엔드포인트를 생성합니다. 게이트웨이 VPC 엔드포인트는 인터넷을 사용하지 않고 AWS 서비스에 연결하는 비공개 방법입니다. 이는 EC2 인스턴스가 인터넷 연결 없이 S3 버킷에 액세스할 수 있도록 허용하므로 주어진 시나리오에 가장 적합한 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -459,7 +502,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -490,13 +533,13 @@
 				제임스2033
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 15일 (토) 07:39">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 15일 토요일 07:39">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">키워드 (1) VPC의 EC2. (2)EC2 인스턴스는 인터넷 없이 S3 버킷에 액세스해야 합니다. 따라서 A는 정답입니다. S3 버킷에 대한 게이트웨이 VPC 엔드포인트를 생성합니다.</div>
+<div class="comment-content">키워드 (1) VPC의 EC2. (2)EC2 인스턴스는 인터넷 없이 S3 버킷에 액세스해야 합니다. 따라서 A가 정답입니다. S3 버킷에 대한 게이트웨이 VPC 엔드포인트를 생성하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -505,7 +548,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,15 +576,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				miki111
+				미키111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 12일 수 17:37">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 12일 수요일 17:37">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A가 요구 사항을 충족함</div>
+<div class="comment-content">옵션 A가 요구 사항을 충족했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -550,7 +593,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -581,13 +624,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 18:23">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 18:23">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A가 올바른 선택인 이유는 다음과 같습니다. 게이트웨이 VPC 엔드포인트: 게이트웨이 VPC 엔드포인트를 사용하면 VPC를 지원되는 AWS 서비스에 비공개로 연결할 수 있습니다. S3용 게이트웨이 VPC 엔드포인트를 생성하면 인터넷 연결 없이도 VPC와 S3 서비스 간에 프라이빗 연결을 설정할 수 있습니다. 프라이빗 네트워크 연결: S3용 게이트웨이 VPC 엔드포인트를 사용하면 VPC 내의 EC2 인스턴스가 프라이빗 네트워크를 통해 S3 버킷에 액세스할 수 있으므로 EC2 인스턴스와 S3 간의 안전하고 직접적인 통신이 보장됩니다. 인터넷 연결 필요 없음: 요구 사항은 인터넷 연결 없이 S3 버킷에 액세스하는 것이므로 게이트웨이 VPC 엔드포인트는 인터넷을 통해 트래픽을 라우팅할 필요 없이 S3에 대한 비공개 및 직접 연결을 제공합니다. 최소한의 운영 복잡성: 게이트웨이 VPC 엔드포인트를 설정하는 것은 간단한 프로세스입니다. 여기에는 엔드포인트를 생성하고 VPC에서 적절한 라우팅을 구성하는 작업이 포함됩니다. 이 솔루션은 필요한 사설 네트워크 연결을 제공하면서 운영 복잡성을 최소화합니다.</div>
+<div class="comment-content">옵션 A가 올바른 선택인 이유는 다음과 같습니다. 게이트웨이 VPC 엔드포인트: 게이트웨이 VPC 엔드포인트를 사용하면 VPC를 지원되는 AWS 서비스에 비공개로 연결할 수 있습니다. S3용 게이트웨이 VPC 엔드포인트를 생성하면 인터넷 연결 없이도 VPC와 S3 서비스 간에 프라이빗 연결을 설정할 수 있습니다. 프라이빗 네트워크 연결: S3용 게이트웨이 VPC 엔드포인트를 사용하면 VPC 내의 EC2 인스턴스가 프라이빗 네트워크를 통해 S3 버킷에 액세스할 수 있으므로 EC2 인스턴스와 S3 간의 안전하고 직접적인 통신이 보장됩니다. 인터넷 연결이 필요하지 않음: 인터넷 연결 없이 S3 버킷에 액세스해야 하기 때문에 게이트웨이 VPC 엔드포인트는 인터넷을 통해 트래픽을 라우팅할 필요 없이 S3에 대한 비공개 및 직접 연결을 제공합니다. 최소한의 운영 복잡성: 게이트웨이 VPC 엔드포인트 설정은 간단한 프로세스입니다. 여기에는 엔드포인트를 생성하고 VPC에서 적절한 라우팅을 구성하는 작업이 포함됩니다. 이 솔루션은 필요한 개인 네트워크 연결을 제공하는 동시에 운영 복잡성을 최소화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -596,7 +639,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -628,7 +671,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 14:34">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -642,7 +685,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -674,12 +717,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 14일 일요일 08:26">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -688,7 +731,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -720,12 +763,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 08:01">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 B) S3에 대한 사설 네트워크 연결을 제공하지 않습니다. 옵션 C) S3에 대한 사설 네트워크 연결을 제공하지 않습니다. 옵션 D) 프라이빗 링크가 있는 API 게이트웨이는 S3가 아닌 VPC와 HTTP(S) 엔드포인트 간에 프라이빗 네트워크 연결을 제공합니다.</div>
+<div class="comment-content">옵션 B) S3에 개인 네트워크 연결을 제공하지 않습니다. 옵션 C) S3에 대한 개인 네트워크 연결을 제공하지 않습니다. 옵션 D) 프라이빗 링크가 있는 API 게이트웨이는 S3가 아닌 VPC와 HTTP(S) 엔드포인트 간의 프라이빗 네트워크 연결을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -734,7 +777,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -766,12 +809,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 18:48">
-			4개월, 3주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 Amazon S3용 VPC 엔드포인트 생성을 제안합니다. VPC 종단점은 인터넷 게이트웨이나 NAT 장치를 사용하지 않고 VPC와 S3 간의 프라이빗 연결을 가능하게 합니다. 이렇게 하면 EC2 인스턴스에 S3 버킷에 대한 사설 네트워크 연결이 제공됩니다.</div>
+<div class="comment-content">옵션 A는 Amazon S3용 VPC 엔드포인트 생성을 제안합니다. VPC 엔드포인트를 사용하면 인터넷 게이트웨이나 NAT 장치를 사용하지 않고도 VPC와 S3 간의 프라이빗 연결이 가능해집니다. 이렇게 하면 EC2 인스턴스에 S3 버킷에 대한 프라이빗 네트워크 연결이 제공됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -780,7 +823,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -808,15 +851,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				dee_pandey
+				디팬디
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 18:08">
-			4개월, 3주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">누군가이 덤프의 pdf를 보내 주시겠습니까? 미리 감사드립니다!</div>
+<div class="comment-content">누군가 나에게 이 덤프의 PDF를 보내주실 수 있나요? 미리 감사드립니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -825,7 +868,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -853,15 +896,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				수바짓팔
+				수하짓팔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 20:48">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 20:48">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">누구든지 나에게 이 전체 덤프의 pdf를 보내주실 수 있나요... 정말 감사합니다. 미리 감사드립니다. 이메일- subhajeet.pal08@gmail.com</div>
+<div class="comment-content">누구든지 이 전체 덤프의 PDF를 나에게 보내주실 수 있나요? 정말 감사하겠습니다. 미리 감사드립니다. 이메일- subhajeet.pal08@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -870,7 +913,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -901,13 +944,13 @@
 				티엔호보스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 07:56">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 07:56">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">감사합니다 :)</div>
+<div class="comment-content">안녕하세요 :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -916,7 +959,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -944,11 +987,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				iamRohan카우식
+				iamRohanKaushik
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 05:48">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 05:48">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -962,7 +1005,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -990,15 +1033,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				폴리잉카
+				폴리인카
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 27일 (월) 20:37">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">VPC 엔드포인트를 사용하면 인터넷을 사용하지 않고 VPC에서 VPC 외부의 다른 AWS 서비스에 연결할 수 있습니다.</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 인터넷을 사용하지 않고도 VPC에서 VPC 외부의 다른 AWS 서비스에 연결할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1007,7 +1050,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1038,13 +1081,13 @@
 				빌렐500
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 13:35">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 13:35">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">VPC 엔드포인트를 사용하면 지원되는 AWS 서비스에 대한 VPC와 프라이빗 IP 주소를 사용하여 PrivateLink에서 제공하는 VPC 엔드포인트 서비스 사이에 프라이빗 연결을 생성할 수 있습니다. VPC와 AWS 서비스 간의 트래픽은 Amazon 네트워크를 벗어나지 않습니다.</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 VPC와 지원되는 AWS 서비스 및 프라이빗 IP 주소를 사용하여 PrivateLink에서 제공하는 VPC 엔드포인트 서비스 간에 프라이빗 연결을 생성할 수 있습니다. VPC와 AWS 서비스 간의 트래픽은 Amazon 네트워크를 벗어나지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1053,7 +1096,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1084,8 +1127,8 @@
 				부이두부
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 04:28">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 04:28">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1099,7 +1142,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1127,16 +1170,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				dvoaviarison
+				드보아비아리슨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 04:48">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">VPC 종단점을 사용하면 공용 인터넷을 사용하는 대신 사설 네트워크를 사용하여 AWS 서비스에 연결할 수 있습니다.</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 공용 인터넷을 사용하는 대신 프라이빗 네트워크를 사용하여 AWS 서비스에 연결할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1145,7 +1188,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1173,15 +1216,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비스와10
+				비슈와10
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 14일 토요일 05:25">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1190,7 +1233,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1222,12 +1265,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 6일 금요일 15:54">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">게이트웨이 VPC 엔드포인트는 서비스에 대한 프라이빗 연결을 가능하게 하는 VPC와 AWS 서비스 간의 연결입니다. S3용 게이트웨이 VPC 엔드포인트를 사용하면 EC2 인스턴스가 인터넷 연결 없이도 S3 버킷에 액세스할 수 있습니다.</div>
+<div class="comment-content">게이트웨이 VPC 엔드포인트는 서비스에 대한 프라이빗 연결을 활성화하는 VPC와 AWS 서비스 간의 연결입니다. S3용 게이트웨이 VPC 엔드포인트를 사용하면 EC2 인스턴스가 인터넷 연결 없이 S3 버킷에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1236,7 +1279,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1268,11 +1311,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 05:37">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">게이트웨이 엔드포인트와 인터페이스 엔드포인트(AWS PrivateLink 사용)라는 두 가지 유형의 VPC 엔드포인트를 사용하여 Amazon S3에 액세스할 수 있습니다.</div>
+<div class="comment-content">두 가지 유형의 VPC 엔드포인트를 사용하여 Amazon S3에 액세스할 수 있습니다. 게이트웨이 엔드포인트와 인터페이스 엔드포인트(AWS PrivateLink 사용).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1281,7 +1324,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1309,16 +1352,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 16:35">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 16:35">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">***올바른 답변*** Amazon S3에 대한 프라이빗 네트워크 연결을 제공하는 올바른 솔루션은 옵션 A: S3 버킷에 대한 게이트웨이 VPC 엔드포인트 생성입니다. ***설명*** 옵션 A에는 Amazon 네트워크를 통해 서비스에 비공개로 연결할 수 있는 VPC의 네트워크 인터페이스인 게이트웨이 VPC 엔드포인트 생성이 포함됩니다. Amazon S3용 게이트웨이 VPC 엔드포인트를 생성하면 VPC의 EC2 인스턴스가 인터넷에 연결하지 않고도 S3 버킷에 액세스할 수 있습니다. 옵션 B에는 로그를 Amazon CloudWatch Logs로 스트리밍한 다음 로그를 S3 버킷으로 내보내는 작업이 포함됩니다. 이 옵션은 인터넷을 통해 로그를 내보내야 하므로 S3에 대한 사설 네트워크 연결을 제공하지 않습니다.</div>
+<div class="comment-content">***정답*** Amazon S3에 프라이빗 네트워크 연결을 제공하는 올바른 솔루션은 옵션 A: S3 버킷에 대한 게이트웨이 VPC 엔드포인트 생성입니다. ***설명*** 옵션 A에는 Amazon 네트워크를 통해 서비스에 비공개로 연결할 수 있는 VPC의 네트워크 인터페이스인 게이트웨이 VPC 엔드포인트 생성이 포함됩니다. Amazon S3용 게이트웨이 VPC 엔드포인트를 생성하면 VPC의 EC2 인스턴스가 인터넷에 연결하지 않고도 S3 버킷에 액세스할 수 있습니다. 옵션 B에는 로그를 Amazon CloudWatch Logs로 스트리밍한 다음 로그를 S3 버킷으로 내보내는 작업이 포함됩니다. 로그를 인터넷을 통해 내보내야 하므로 이 옵션은 S3에 대한 프라이빗 네트워크 연결을 제공하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1327,7 +1370,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1347,15 +1390,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 16:35">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 16:35">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C에는 S3 액세스를 허용하기 위해 EC2 인스턴스에 인스턴스 프로파일을 생성하는 작업이 포함됩니다. 이 옵션은 잠재적으로 작동할 수 있지만 EC2 인스턴스가 여전히 인터넷을 통해 S3에 액세스해야 하므로 S3에 대한 사설 네트워크 연결을 제공하지 않습니다. 옵션 D에는 S3 엔드포인트에 액세스하기 위한 프라이빗 링크가 있는 Amazon API Gateway API 생성이 포함됩니다. API Gateway API는 S3에 비공개로 연결하는 데 사용할 수 있는 네트워크 인터페이스가 아니므로 이 옵션은 S3에 대한 비공개 네트워크 연결을 제공하지 않습니다. 전반적으로 옵션 A는 VPC의 EC2 인스턴스에서 Amazon S3에 대한 프라이빗 네트워크 연결을 제공하기 위한 올바른 솔루션입니다.</div>
+<div class="comment-content">옵션 C에는 S3 액세스를 허용하기 위해 EC2 인스턴스에 인스턴스 프로필을 생성하는 작업이 포함됩니다. 이 옵션은 잠재적으로 작동할 수 있지만 EC2 인스턴스는 여전히 인터넷을 통해 S3에 액세스해야 하므로 S3에 대한 프라이빗 네트워크 연결을 제공하지 않습니다. 옵션 D에는 S3 엔드포인트에 액세스하기 위한 프라이빗 링크가 포함된 Amazon API Gateway API를 생성하는 작업이 포함됩니다. API 게이트웨이 API는 S3에 비공개로 연결하는 데 사용할 수 있는 네트워크 인터페이스가 아니기 때문에 이 옵션은 S3에 대한 비공개 네트워크 연결을 제공하지 않습니다. 전반적으로 옵션 A는 VPC의 EC2 인스턴스에서 Amazon S3에 프라이빗 네트워크 연결을 제공하기 위한 올바른 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1364,7 +1407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1403,12 +1446,12 @@
 				착하게 굴 어라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 04:50">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 04:50">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 정답입니다</div>
+<div class="comment-content">A가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1417,7 +1460,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1449,12 +1492,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 07:24">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">게이트웨이 엔드포인트: https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html 게이트웨이 엔드포인트는 사용되는 접두사 목록 형식으로 Amazon VPC 라우팅 테이블의 특정 IP 경로를 대상으로 합니다. Amazon DynamoDB 또는 Amazon S3로 향하는 트래픽의 경우. 게이트웨이 엔드포인트는 AWS PrivateLink를 활성화하지 않습니다.</div>
+<div class="comment-content">게이트웨이 엔드포인트: https://docs.aws.amazon.com/vpc/latest/privatelink/gateway-endpoints.html 게이트웨이 엔드포인트는 접두사 목록 형식으로 Amazon VPC 라우팅 테이블의 특정 IP 경로를 대상으로 합니다. Amazon DynamoDB 또는 Amazon S3로 향하는 트래픽의 경우. 게이트웨이 엔드포인트는 AWS PrivateLink를 활성화하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1463,7 +1506,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1494,8 +1537,8 @@
 				믹사
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 16일 금요일 13:01">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 16일 금 13:01">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1508,7 +1551,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1540,11 +1583,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 17:17">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">VPC 엔드포인트는 AWS 서비스 연결을 허용하며 공용 네트워크를 사용할 필요가 없습니다.</div>
+<div class="comment-content">VPC 엔드포인트를 사용하면 AWS 서비스에 연결할 수 있으며 공용 네트워크를 사용할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1553,7 +1596,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1581,15 +1624,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스텝맨
+				의붓맨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 05:00">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">오늘 시험을 봤는데 이런 문제가 있었습니다.</div>
+<div class="comment-content">오늘 시험을 봤는데 이런 질문이 있었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1598,7 +1641,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1630,11 +1673,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 9일 금요일 11:17">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1643,7 +1686,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1671,16 +1714,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 4일 일요일 10:32">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1689,7 +1732,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1721,12 +1764,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 23일 수 08:35">
-			8개월, 4주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">연결성을 제공하기 위한 대답은 "A"입니다. 연결을 승인하기 위해 인스턴스 프로파일을 사용할 수 있습니다.</div>
+<div class="comment-content">연결성을 제공하려면 대답은 "A"입니다. 연결을 승인하기 위해 인스턴스 프로필을 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1735,7 +1778,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1766,8 +1809,8 @@
 				치즈929
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 15:01">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 15:01">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1781,7 +1824,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1812,12 +1855,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 13:20">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 13:20">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1826,7 +1869,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1854,11 +1897,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그제브
+				그제프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 19일 (토) 22:17">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 19일 토요일 22:17">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1872,7 +1915,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1900,15 +1943,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오후2229
+				pm2229
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 19:06">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 19:06">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS 서비스가 퍼블릭 인터넷을 통과하지 않고 VPC 내의 리소스에 비공개로 연결할 수 있도록 하는 것은 A, VPC 내의 프라이빗 엔드포인트입니다(저렴함).</div>
+<div class="comment-content">A는 AWS 서비스가 공용 인터넷을 통과하지 않고도 VPC 내의 리소스에 비공개로 연결할 수 있도록 하는 VPC 내의 프라이빗 엔드포인트입니다(저렴함).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1917,7 +1960,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1945,16 +1988,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				내이에로키
+				내네이에로키
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 4일 금요일 16:50">
-			9개월, 2주 전
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html 게이트웨이 VPC 엔드포인트를 사용하여 VPC에서 Amazon S3에 액세스할 수 있습니다. 게이트웨이 엔드포인트를 생성한 후 VPC에서 Amazon S3로 향하는 트래픽에 대한 라우팅 테이블의 대상으로 추가할 수 있습니다. aws:VpcSourceIp 조건 키를 사용하여 특정 IP 주소 범위에 대한 액세스를 제한하는 정책을 생성할 수 있습니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html 게이트웨이 VPC 엔드포인트를 사용하여 VPC에서 Amazon S3에 액세스할 수 있습니다. 게이트웨이 엔드포인트를 생성한 후 이를 VPC에서 Amazon S3로 향하는 트래픽에 대한 라우팅 테이블의 대상으로 추가할 수 있습니다. aws:VpcSourceIp 조건 키를 사용하여 특정 IP 주소 범위에 대한 액세스를 제한하는 정책을 생성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1963,7 +2006,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1994,8 +2037,8 @@
 				아드리안하비에르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 31일 (월) 23:55">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 31일 월요일 23:55">
+			9개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2009,7 +2052,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2041,12 +2084,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 28일 금 23:56">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">안은 A이다</div>
+<div class="comment-content">ans는 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2055,7 +2098,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2086,13 +2129,13 @@
 				빌렐500
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 18일 화요일 22:08">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 18일 (화) 22:08">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A입니다.</div>
+<div class="comment-content">대답은 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2101,7 +2144,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2132,12 +2175,12 @@
 				퀸101
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 16일 일 20:50">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 16일 일요일 20:50">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2146,7 +2189,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2177,13 +2220,13 @@
 				보보차우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 04:29">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 04:29">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">분명히 A다.</div>
+<div class="comment-content">분명 A야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2192,7 +2235,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2223,8 +2266,8 @@
 				미케도도
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 11일 화요일 03:26">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 11일 화 03:26">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2238,7 +2281,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2293,7 +2336,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 10 Oct 2022 11:27">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2342,7 +2385,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 02:53">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2362,7 +2405,7 @@ D: Incorrect - API Gateway like the proxy which receive network from out site an
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">16</span> times
+				upvoted <span class="upvote-count">17</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2398,7 +2441,7 @@ D: Incorrect - API Gateway like the proxy which receive network from out site an
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 13:35">
-			13 hours, 12 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2445,7 +2488,7 @@ Ref. https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Jul 2023 06:32">
-			3 weeks, 2 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2493,7 +2536,7 @@ https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 16:53">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2541,7 +2584,7 @@ A gateway VPC endpoint is a private way to connect to AWS services without using
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Jul 2023 07:39">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2587,7 +2630,7 @@ A gateway VPC endpoint is a private way to connect to AWS services without using
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Jul 2023 17:37">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2632,7 +2675,7 @@ A gateway VPC endpoint is a private way to connect to AWS services without using
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 18:23">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2686,7 +2729,7 @@ Minimal operational complexity: Setting up a gateway VPC endpoint is a straightf
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 14:34">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2732,7 +2775,7 @@ Minimal operational complexity: Setting up a gateway VPC endpoint is a straightf
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 14 May 2023 08:26">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2778,7 +2821,7 @@ Minimal operational complexity: Setting up a gateway VPC endpoint is a straightf
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 08:01">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2826,7 +2869,7 @@ Option D) API Gateway with a private link provide private network connectivity b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 18:48">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2872,7 +2915,7 @@ Option D) API Gateway with a private link provide private network connectivity b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 18:08">
-			4 months, 3 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2917,7 +2960,7 @@ Option D) API Gateway with a private link provide private network connectivity b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 20:48">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2963,7 +3006,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 07:56">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3009,7 +3052,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Mar 2023 05:48">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3055,7 +3098,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 20:37">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3100,7 +3143,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 13:35">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3146,7 +3189,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Feb 2023 04:28">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3192,7 +3235,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 04:48">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3238,7 +3281,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 05:25">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3283,7 +3326,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 06 Jan 2023 15:54">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3329,7 +3372,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 05:37">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3374,7 +3417,7 @@ email- subhajeet.pal08@gmail.com</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 16:35">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3418,7 +3461,7 @@ Option B involves streaming the logs to Amazon CloudWatch Logs and then exportin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 16:35">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3475,7 +3518,7 @@ Overall, Option A is the correct solution for providing private network connecti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 04:50">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3520,7 +3563,7 @@ Overall, Option A is the correct solution for providing private network connecti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 07:24">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3567,7 +3610,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 13:01">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3612,7 +3655,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 17:17">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3657,7 +3700,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 05:00">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3702,7 +3745,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Dec 2022 11:17">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3747,7 +3790,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Dec 2022 10:32">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3793,7 +3836,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Nov 2022 08:35">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3839,7 +3882,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 15:01">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3885,7 +3928,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 13:20">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3930,7 +3973,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Nov 2022 22:17">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3976,7 +4019,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 19:06">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4021,7 +4064,7 @@ A gateway endpoint targets specific IP routes in an Amazon VPC route table, in t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Nov 2022 16:50">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4069,7 +4112,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 31 Oct 2022 23:55">
-			9 months, 3 weeks ago
+			9 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4115,7 +4158,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Oct 2022 23:56">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4161,7 +4204,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Oct 2022 22:08">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4207,7 +4250,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Oct 2022 20:50">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4252,7 +4295,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 04:29">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4298,7 +4341,7 @@ You can create a policy that restricts access to specific IP address ranges by u
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Oct 2022 03:26">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

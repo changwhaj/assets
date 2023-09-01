@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 85 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 85 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 85 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 85 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 85 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839842">
 <p class="card-text">
 							
-								회사에는 사용자가 웹 인터페이스 또는 모바일 앱을 통해 문서를 업로드하는 프로덕션 웹 애플리케이션이 있습니다. 새로운 규제 요구 사항에 따라. 새 문서는 저장된 후에 수정하거나 삭제할 수 없습니다. <br/>솔루션 설계자는 이 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								회사에는 사용자가 웹 인터페이스나 모바일 앱을 통해 문서를 업로드하는 프로덕션 웹 애플리케이션이 있습니다. 새로운 규제 요구 사항에 따라. 새 문서를 저장한 후에는 수정하거나 삭제할 수 없습니다. <br/>이 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											업로드된 문서를 S3 버전 관리가 활성화된 Amazon S3 버킷에 저장합니다. 모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성합니다.
+											S3 버전 관리가 활성화된 Amazon S3 버킷에 업로드된 문서를 저장합니다. 모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											업로드된 문서를 Amazon Elastic File System(Amazon EFS) 볼륨에 저장합니다. 읽기 전용 모드로 볼륨을 마운트하여 데이터에 액세스하십시오.
+											업로드된 문서를 Amazon Elastic File System(Amazon EFS) 볼륨에 저장합니다. 읽기 전용 모드로 볼륨을 마운트하여 데이터에 액세스합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="36 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="36 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2022년 10월 17일 오후</i> 
-							
-							8:59 <a class="title-username" style="">
-								123jhl0
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								123jhl0
-							</a>
-							
-							at <i>
-							Oct. 17, 2022, 8:59 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,15 +295,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 20:59">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 20:59">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">S3 객체 잠금을 사용하여 WORM(Write-Once-Read-Many) 모델을 사용하여 객체를 저장할 수 있습니다. 개체 잠금은 개체가 고정된 시간 동안 또는 무기한 삭제되거나 덮어쓰이는 것을 방지하는 데 도움이 됩니다. S3 객체 잠금을 사용하여 WORM 스토리지가 필요한 규정 요구 사항을 충족하거나 객체 변경 및 삭제에 대한 추가 보호 계층을 추가할 수 있습니다. 버전 관리가 필요하며 객체 잠금이 활성화되면 자동으로 활성화됩니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html</div>
+<div class="comment-content">S3 객체 잠금을 사용하면 WORM(Write Once Read Many) 모델을 사용하여 객체를 저장할 수 있습니다. 객체 잠금은 고정된 시간 동안 또는 무기한으로 객체가 삭제되거나 덮어쓰이는 것을 방지하는 데 도움이 됩니다. S3 객체 잠금을 사용하여 WORM 스토리지가 필요한 규제 요구 사항을 충족하거나 객체 변경 및 삭제에 대한 추가 보호 계층을 추가할 수 있습니다. 버전 관리가 필요하며 객체 잠금이 활성화되면 자동으로 활성화됩니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -297,19 +340,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 05:02">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">***올바름*** A. 업로드된 문서를 S3 버전 관리 및 S3 객체 잠금이 활성화된 Amazon S3 버킷에 저장합니다. S3 버전 관리를 통해 객체의 여러 버전을 동일한 버킷에 저장할 수 있습니다. 즉, 개체가 수정되거나 삭제될 때 이전 버전이 유지됩니다. S3 객체 잠금은 객체를 삭제하거나 수정할 수 없는 법적 보류 또는 보존 기간에 두도록 허용하여 추가적인 보호 기능을 추가합니다. S3 버전 관리 및 S3 객체 잠금을 함께 사용하여 문서가 저장된 후 수정 또는 삭제를 허용하지 않는 요구 사항을 충족할 수 있습니다.</div>
+<div class="comment-content">***올바름*** A. S3 버전 관리 및 S3 객체 잠금이 활성화된 Amazon S3 버킷에 업로드된 문서를 저장합니다. S3 버전 관리를 사용하면 객체의 여러 버전을 동일한 버킷에 저장할 수 있습니다. 이는 객체가 수정되거나 삭제될 때 이전 버전이 보존된다는 의미입니다. S3 객체 잠금은 객체를 삭제하거나 수정할 수 없는 법적 보존 또는 보존 기간을 허용하여 추가 보호 기능을 추가합니다. S3 버전 관리와 S3 객체 잠금을 함께 사용하면 문서가 저장된 후 수정되거나 삭제되지 않도록 하는 요구 사항을 충족할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,7 +361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,15 +381,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 05:03">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">***잘못됨*** S3 버킷에 문서를 저장하고 문서를 주기적으로 보관하도록 S3 수명 주기 정책을 구성하는 옵션 B는 문서가 수정되거나 삭제되는 것을 막지 않습니다. S3 버전 관리가 활성화된 상태에서 S3 버킷에 문서를 저장하고 모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성하는 옵션 C도 문서가 수정되거나 삭제되는 것을 막지 않습니다. 수정되거나 삭제되는 것을 막지 마십시오. Amazon Elastic File System(Amazon EFS) 볼륨에 문서를 저장하고 읽기 전용 모드에서 데이터에 액세스하는 옵션 D는 문서 수정을 방지하지만 삭제를 방지하지는 않습니다.</div>
+<div class="comment-content">***잘못*** 문서를 S3 버킷에 저장하고 S3 수명 주기 정책을 구성하여 문서를 주기적으로 보관하는 옵션 B는 문서 수정 또는 삭제를 방지하지 못합니다. S3 버전 관리가 활성화된 S3 버킷에 문서를 저장하고 모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성하는 옵션 C도 문서가 수정되거나 삭제되는 것을 방지하지 못합니다. 수정되거나 삭제되는 것을 방지하지 마십시오. Amazon Elastic File System(Amazon EFS) 볼륨에 문서를 저장하고 읽기 전용 모드로 데이터에 액세스하는 옵션 D는 문서 수정을 방지하지만 삭제를 방지하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +398,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -398,12 +441,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 11일 금요일 14:40">
-			5일, 6시간 전
+			2주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">S3 버전 관리는 덮어쓰거나 삭제될 때 개체의 모든 버전이 유지되도록 하여 삭제를 방지합니다. S3 객체 잠금을 사용하면 전체 권한이 있는 사용자라도 객체를 덮어쓰거나 삭제하지 못하도록 객체에 보존 기간 및 법적 보류를 적용할 수 있습니다. 옵션 B는 일정에 따라 개체를 보관할 뿐 수정이나 삭제를 막지는 않습니다. 옵션 C는 전체 권한이 있는 사용자가 여전히 재정의할 수 있는 ACL을 사용합니다. 옵션 D는 애플리케이션에 의존하여 마운트를 읽기 전용으로 강제 적용하며 이는 S3 객체 잠금을 사용하는 것만큼 강력하지 않습니다.</div>
+<div class="comment-content">S3 버전 관리는 덮어쓰거나 삭제할 때 객체의 모든 버전이 유지되도록 보장하여 삭제를 방지합니다. S3 객체 잠금을 사용하면 객체에 보존 기간과 법적 보존을 적용하여 전체 권한을 가진 사용자라도 객체를 덮어쓰거나 삭제하는 것을 방지할 수 있습니다. 옵션 B는 일정에 따라 객체만 보관하지만 수정이나 삭제를 방지하지는 않습니다. 옵션 C는 전체 권한을 가진 사용자가 계속 재정의할 수 있는 ACL을 사용합니다. 옵션 D는 애플리케이션을 사용하여 읽기 전용으로 마운트를 강제하는데, 이는 S3 객체 잠금을 사용하는 것만큼 강력하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -412,7 +455,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -443,13 +486,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 19:15">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 19:15">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">S3 버전 관리를 사용하면 문서가 업로드되거나 수정될 때 문서의 모든 버전을 보존할 수 있습니다. 이렇게 하면 우발적이거나 의도적인 문서 수정 또는 삭제를 방지할 수 있습니다. S3 Object Loc을 사용하면 객체에 대한 보존 기간 또는 법적 보류를 설정하여 지정된 기간 동안 객체를 변경할 수 없게 만들 수 있습니다. 이렇게 하면 권한이 있는 사용자나 관리자라도 저장된 문서를 수정하거나 삭제할 수 없습니다. B. 문서를 주기적으로 보관하도록 S3 수명 주기 정책을 구성해도 문서가 저장된 후 문서 수정 또는 삭제 방지가 보장되지 않습니다. C. S3 버전 관리를 활성화하는 것만으로는 개체의 수정 또는 삭제가 방지되지 않습니다. ACL을 구성해도 인증된 사용자의 수정 또는 삭제 방지가 보장되지는 않습니다. 디.</div>
+<div class="comment-content">S3 버전 관리를 사용하면 문서가 업로드되거나 수정될 때 문서의 모든 버전을 보존할 수 있습니다. 이를 통해 실수로 또는 의도적으로 문서를 수정하거나 삭제하는 것을 방지할 수 있습니다. S3 Object Loc을 사용하면 객체에 대한 보존 기간이나 법적 보존을 설정하여 지정된 기간 동안 객체를 변경할 수 없게 만들 수 있습니다. 이렇게 하면 권한이 있는 사용자나 관리자라도 저장된 문서를 수정하거나 삭제할 수 없습니다. B. 문서를 주기적으로 보관하도록 S3 수명 주기 정책을 구성한다고 해서 문서가 저장된 후 문서 수정이나 삭제가 방지되는 것은 아닙니다. C. S3 버전 관리를 활성화하는 것만으로는 객체 수정이나 삭제를 방지할 수 없습니다. ACL을 구성한다고 해서 승인된 사용자가 수정하거나 삭제하는 것을 방지할 수 있는 것은 아닙니다. 디.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -458,7 +501,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -490,12 +533,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 08:55">
-			2개월, 3주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">S3 버전 관리 및 활성화된 S3 객체 잠금이 요구 사항을 충족하므로 A가 정답입니다.</div>
+<div class="comment-content">S3 버전 관리 및 S3 객체 잠금이 활성화되어 요구 사항을 충족하므로 A가 정확합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -504,7 +547,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -536,12 +579,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 16:13">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A. S3 버전 관리 및 S3 객체 잠금이 활성화된 Amazon S3 버킷에 업로드된 문서를 저장합니다. 이렇게 하면 문서가 저장된 후에 수정하거나 삭제할 수 없으며 규정 요구 사항을 충족할 수 있습니다. S3 버전 관리를 사용하면 동일한 버킷에 객체의 여러 버전을 저장할 수 있으며 S3 객체 잠금을 사용하면 버킷의 객체에 보관 정책을 적용하여 삭제를 방지할 수 있습니다.</div>
+<div class="comment-content">옵션 A. S3 버전 관리 및 S3 객체 잠금이 활성화된 Amazon S3 버킷에 업로드된 문서를 저장합니다. 이렇게 하면 문서를 저장한 후 수정하거나 삭제할 수 없으며 규제 요구 사항을 충족할 수 있습니다. S3 버전 관리를 사용하면 동일한 버킷에 객체의 여러 버전을 저장할 수 있으며, S3 객체 잠금을 사용하면 버킷의 객체에 보존 정책을 적용하여 삭제를 방지할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -550,7 +593,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -578,11 +621,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 01:27">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 01:27">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -596,7 +639,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,15 +667,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				해리Z
+				해리즈
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 7일 수 03:01">
-			8개월, 1주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아닌 이유</div>
+<div class="comment-content">C는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -641,7 +684,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,15 +704,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 09:14">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성하면 애초에 문서를 버킷에 쓸 수 없습니다.</div>
+<div class="comment-content">모든 액세스를 읽기 전용으로 제한하도록 ACL을 구성하면 처음부터 버킷에 문서를 쓸 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -717,12 +760,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 17:25">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 17:25">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -731,7 +774,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -762,8 +805,8 @@
 				플브코브라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 10일 목요일 02:02">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 10일 (목) 02:02">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -777,7 +820,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -809,7 +852,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 20일 목요일 12:04">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -823,7 +866,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -855,11 +898,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 20일 목요일 12:04">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -868,7 +911,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -923,7 +966,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 20:59">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -974,7 +1017,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html<
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 05:02">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1015,7 +1058,7 @@ S3 Versioning allows multiple versions of an object to be stored in the same buc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 05:03">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1076,7 +1119,7 @@ Option D, storing the documents on an Amazon Elastic File System (Amazon EFS) vo
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 11 Aug 2023 14:40">
-			5 days, 6 hours ago
+			2 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1126,7 +1169,7 @@ Option D relies on the application to enforce mounting as read-only, which is no
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 19:15">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1180,7 +1223,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 May 2023 08:55">
-			2 months, 3 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1226,7 +1269,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 16:13">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1272,7 +1315,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 01:27">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1318,7 +1361,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 03:01">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1355,7 +1398,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 09:14">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1408,7 +1451,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 17:25">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1453,7 +1496,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 10 Nov 2022 02:02">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1499,7 +1542,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Oct 2022 12:04">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1545,7 +1588,7 @@ D. Using EFS does not prevent modifications or deletions of the documents by use
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Oct 2022 12:04">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

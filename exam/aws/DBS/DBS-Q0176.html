@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 176 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 176 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 176 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 176 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807418">
 <p class="card-text">
 							
-								회사는 500GB Amazon Aurora MySQL DB 클러스터에서 중요한 프로덕션 워크로드를 실행하고 있습니다. 데이터베이스 엔지니어는 <br/>데이터 손실 없이 워크로드를 새로운 Amazon Aurora 서버리스 MySQL DB 클러스터로 이동해야 합니다. <br/>가동 중지 시간과 애플리케이션에 미치는 영향을 최소화하면서 이동을 수행할 솔루션은 무엇입니까?<br/>
+								한 회사가 500GB Amazon Aurora MySQL DB 클러스터에서 중요한 프로덕션 워크로드를 실행하고 있습니다. 데이터베이스 엔지니어는 <br/>데이터 손실 없이 워크로드를 새로운 Amazon Aurora Serverless MySQL DB 클러스터로 이동해야 합니다. <br/>다운타임을 최소화하고 애플리케이션에 미치는 영향을 최소화하면서 이전을 달성할 수 있는 솔루션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807418" type="application/json">[{"voted_answers": "D", "vote_count": 11, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 2, "is_most_voted": false}]</script>
@@ -84,34 +147,34 @@
 													A.
 												</span> 
 											
-											기존 DB 클러스터를 수정하고 Aurora 구성을 "서버리스"로 업데이트합니다.
+											기존 DB 클러스터를 수정하고 Aurora 구성을 "Serverless"로 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											기존 DB 클러스터의 스냅샷을 생성하고 새 Aurora Serverless DB 클러스터로 복원합니다.
+											기존 DB 클러스터의 스냅샷을 생성하고 이를 새로운 Aurora Serverless DB 클러스터로 복원합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											기존 DB 클러스터에서 Aurora Serverless 복제본을 생성하고 복제 지연이 최소화되면 기본 복제본으로 승격합니다.
+											기존 DB 클러스터에서 Aurora Serverless 복제본을 생성하고 복제본 지연이 최소화되면 기본으로 승격합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											CDC(변경 데이터 캡처)가 활성화된 상태에서 AWS DMS(AWS Database Migration Service)를 사용하여 기존 DB 클러스터와 새로운 Aurora Serverless DB 클러스터 간에 데이터를 복제합니다.
+											변경 데이터 캡처(CDC)가 활성화된 AWS Database Migration Service(AWS DMS)를 사용하여 기존 DB 클러스터와 새로운 Aurora 서버리스 DB 클러스터 간에 데이터를 복제합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replication.html
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">디 (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">씨 (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="11 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">D (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">C (15%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cynthiacy
-							</a> 
-							
-							시간: <i>
-							2021년 12월 2일, 오후 12:10</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cynthiacy
-							</a>
-							
-							at <i>
-							Dec. 2, 2021, 12:10 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -249,12 +292,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 25일 화요일 12:40">
-			3주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 25일 (화) 12:40">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 서버리스 V2의 B입니다.</div>
+<div class="comment-content">서버리스 V2의 경우 대답은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -263,7 +306,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -291,15 +334,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				SamDDD
+				샘DDD
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 8일 (토) 23:21">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 8일 토요일 23:21">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그런데 서버리스 V2에서는 장애 조치가 가능합니다. from-provisioned 이 질문은 약간 오래된 질문입니다.</div>
+<div class="comment-content">그런데 Serverless V2에서는 장애 조치가 가능합니다: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.upgrade.html#aurora-serverless-v2.switch- from-provisioned 이 질문은 약간 오래되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,15 +379,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				매니그
+				매니큐어
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 19일 금요일 21:04">
-			2개월, 4주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">서버리스 읽기 복제본을 만들고 지연이 최소화될 때마다 승격하는 것이 내가 할 수 있는 최선의 선택입니다. C DMS는 가장 긴 경로입니다.</div>
+<div class="comment-content">서버리스 읽기 복제본을 생성하고 지연이 최소화될 때마다 승격하는 것이 제가 할 수 있는 최선의 옵션입니다. C DMS가 가장 긴 경로입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -353,7 +396,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,16 +424,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				테오2157
+				teo2157
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 8일 수요일 15:01">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">기존 Aurora DB 클러스터에서 Aurora Serverless 복제본을 생성할 수 없습니다. 가동 중지 시간이 없으면 대답은 확실히 D입니다.</div>
+<div class="comment-content">기존 Aurora DB 클러스터에서는 Aurora Serverless 복제본을 생성할 수 없습니다. 가동 중지 시간이 없으면 대답은 확실히 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -399,7 +442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -427,15 +470,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				parle101
+				팔레101
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 27일 화요일 02:58">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 27일 (화) 02:58">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 B입니다 https://aws.amazon.com/premiumsupport/knowledge-center/aurora-migrate-provisioned-serverless/</div>
+<div class="comment-content">대답은 B입니다 https://aws.amazon.com/premiumsupport/knowledge-center/aurora- migration-provisioned-serverless/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,13 +518,13 @@
 				RBSK
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 12:21">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 12:21">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">여기서 정말 혼란 스럽습니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html을 참조하십시오. "Aurora 복제본은 기본 DB 인스턴스와 동일한 스토리지 볼륨에 연결되지만 읽기 작업만". 즉, 지정된 모든 읽기 복제본이 동일한 스토리지에 연결되는 데 지연이 없습니다. 따라서 운영 관점에서 가장 간단한 "C"로 이동합니다.</div>
+<div class="comment-content">저는 여기서 정말 혼란스러워요. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html을 참조하십시오. "Aurora 복제본은 기본 DB 인스턴스와 동일한 스토리지 볼륨에 연결되지만 읽기 작업만 가능합니다." 즉, 읽기 전용 복제본이 동일한 스토리지에 연결되어 있으면 지연이 전혀 발생하지 않습니다. 따라서 나는 운영 관점에서 가장 간단한 "C"를 선택하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -513,12 +556,12 @@
 				lehoang15tuoi
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 27일 (토) 19:25">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 27일 토요일 19:25">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정말 다시 공부해야 합니다. 매우 신중하게요. 복제본은 RDS 및 Aurora의 기본 개념입니다. 복제본과 기본은 *SAME* 클러스터의 노드 유형이며 RDS 클러스터 또는 Aurora 클러스터입니다. 따라서 "Aurora 서버리스 복제본"을 생성할 때 먼저 Aurora *서버리스* 기본이 있어야 합니다. 그것은 질문에 존재하지 않습니다. "Aurora MySQL DB 클러스터"만 있습니다. 즉, "기존 Aurora DB 클러스터에서 Aurora Serverless 복제본을 생성할 수 없습니다."</div>
+<div class="comment-content">정말 신중하게 다시 공부해야 합니다. 복제본은 RDS와 Aurora의 기본 개념입니다. 복제본과 기본은 RDS 클러스터이든 Aurora 클러스터이든 *SAME* 클러스터의 노드 유형입니다. 따라서 "Aurora 서버리스 복제본"을 생성할 때 먼저 Aurora *서버리스* 기본이 있어야 합니다. 질문에는 해당 내용이 없습니다. "Aurora MySQL DB 클러스터"만 있습니다. 즉, "기존 Aurora DB 클러스터에서 Aurora Serverless 복제본을 생성할 수 없습니다."라는 뜻입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -527,7 +570,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -566,12 +609,12 @@
 				Jiang_aws1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 11일 화요일 23:22">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 11일 화 23:22">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C vs D: 최종 데이터 동기화를 수행하는 데 동일한 양의 시간이 소요되며 C는 D보다 훨씬 간단합니다. C: Aurora Replica로 자동 동기화만 수행 D: CDC로 데이터 동기화</div>
+<div class="comment-content">C 대 D: 최종 데이터 동기화를 수행하는 데 동일한 양이 소요되는 것으로 보이며 C는 D보다 훨씬 간단합니다. C: Aurora Replica에 의한 자동 동기화 D: CDC에 의한 데이터 동기화</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -580,7 +623,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -611,12 +654,12 @@
 				rlnd2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 5월 29일 일 15:36">
+<span class="comment-date align-middle" title="2022년 5월 29일 일요일 15:36">
 			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C와 D는 모두 가동 중지 시간이 거의 0에 가깝지만 옵션 C는 "...복제 지연이 최소일 때"라고 말합니다. 이는 "비즈니스의 미션 크리티컬 프로덕션 워크로드"에 허용되지 않으며 B는 중단 없이 불가능합니다. 나는 D와 함께 갈 것이다</div>
+<div class="comment-content">C와 D는 모두 가동 중지 시간이 거의 0에 가깝지만 C 옵션에는 "...복제 지연이 최소화된 경우"라고 표시되어 있으며 이는 "비즈니스의 핵심 프로덕션 워크로드"에 허용되지 않으며 B는 가동 중지 시간 없이는 불가능합니다. 나는 D와 함께 갈 것이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -625,7 +668,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,7 +705,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D. CDC(변경 데이터 캡처)가 활성화된 상태에서 AWS DMS(AWS Database Migration Service)를 사용하여 기존 DB 클러스터와 새로운 Aurora Serverless DB 클러스터 간에 데이터를 복제합니다. DMS의 경우: Aurora 서버리스는 소스가 될 수 없지만 대상이 될 수 있습니다.</div>
+<div class="comment-content">D. 변경 데이터 캡처(CDC)가 활성화된 AWS Database Migration Service(AWS DMS)를 사용하여 기존 DB 클러스터와 새로운 Aurora 서버리스 DB 클러스터 간에 데이터를 복제합니다. DMS의 경우: Aurora Serverless는 소스가 될 수 없지만 대상이 될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -671,7 +714,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -702,13 +745,13 @@
 				크렛
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 13일 수 09:17">
+<span class="comment-date align-middle" title="2022년 4월 13일 수요일 09:17">
 			1년, 4개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">다운타임이 제한되어 있기 때문에 DMS와 D를 사용하겠습니다.</div>
+<div class="comment-content">가동 중지 시간 요구 사항이 제한되어 있으므로 DMS와 D를 사용하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -717,7 +760,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -745,7 +788,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:01">
@@ -754,7 +797,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">B는 유혹적으로 보이지만 중단 시간이 발생합니다. D는 중단 시간이 없습니다.</div>
+<div class="comment-content">B는 매력적으로 보이지만 가동 중지 시간이 발생합니다. D에는 가동 중지 시간이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -795,7 +838,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 1월 26일 수 21:39">
-			1년, 6개월 전
+			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -808,7 +851,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -832,11 +875,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 1월 26일 수 21:43">
-			1년, 6개월 전
+			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Aurora Serverless DB 클러스터에서는 AWS Database Migration Service 및 Change Data Capture(CDC)를 사용할 수 없습니다. 프로비저닝된 Aurora DB 클러스터만 AWS DMS를 소스로 사용하는 CDC를 지원합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html#aurora-serverless.limitations</div>
+<div class="comment-content">Aurora 서버리스 DB 클러스터에서는 AWS Database Migration Service 및 변경 데이터 캡처(CDC)를 사용할 수 없습니다. 프로비저닝된 Aurora DB 클러스터만 AWS DMS를 소스로 사용하는 CDC를 지원합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.html#aurora-serverless.limitations</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -845,7 +888,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -869,11 +912,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 1월 26일 수 21:45">
-			1년, 6개월 전
+			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. D가 맞습니다. 소스로 지원하지 않는 문서 상태이지만 이 질문의 Aurora Serverless는 대상입니다.</div>
+<div class="comment-content">죄송합니다. D가 맞습니다. 문서 상태는 소스로 지원되지 않지만 이 질문의 Aurora Serverless는 대상입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -882,7 +925,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -926,16 +969,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				순핀
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 28일 화요일 12:12">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 28일 (화) 12:12">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">최소 가동 중지 시간 및 프로비저닝에서 서버리스로의 요구 사항. 최선의 선택은 DMS입니다.</div>
+<div class="comment-content">최소 가동 중지 시간 및 프로비저닝에서 서버리스로의 요구 사항입니다. 최선의 선택은 DMS입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -944,7 +987,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -976,7 +1019,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 24일 금 20:41">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -989,7 +1032,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1020,12 +1063,12 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 7일 화요일 20:03">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 7일 (화) 20:03">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. https://aws.amazon.com/rds/aurora/faqs/ Amazon Aurora는 기존 MySQL 오픈 소스 데이터베이스와 즉시 호환되며 새 릴리스에 대한 지원을 정기적으로 추가합니다. 즉, 표준 가져오기/내보내기 도구 또는 스냅샷을 사용하여 Aurora에서 MySQL 데이터베이스를 쉽게 마이그레이션할 수 있습니다. 또한 현재 MySQL 데이터베이스에서 이미 사용하고 있는 대부분의 코드, 애플리케이션, 드라이버 및 도구를 거의 또는 전혀 변경하지 않고 Aurora에서 사용할 수 있음을 의미합니다.</div>
+<div class="comment-content">B. https://aws.amazon.com/rds/aurora/faqs/ Amazon Aurora는 기존 MySQL 오픈 소스 데이터베이스와 드롭인 호환되며 정기적으로 새 릴리스에 대한 지원을 추가합니다. 이는 표준 가져오기/내보내기 도구 또는 스냅샷을 사용하여 MySQL 데이터베이스를 Aurora로 쉽게 마이그레이션할 수 있음을 의미합니다. 이는 또한 현재 MySQL 데이터베이스에서 이미 사용하고 있는 대부분의 코드, 애플리케이션, 드라이버 및 도구를 거의 또는 전혀 변경하지 않고 Aurora에서 사용할 수 있음을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1034,7 +1077,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1054,7 +1097,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:00">
@@ -1062,7 +1105,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, 하지만 스냅샷 복원에는 다운타임이 있습니다.</div>
+<div class="comment-content">예, 하지만 스냅샷 복원에는 가동 중지 시간이 있습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1071,7 +1114,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1099,7 +1142,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:08">
@@ -1107,7 +1150,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 작동하려면 소스에서 쓰기를 중지해야 하므로 &gt; 스냅샷을 찍고 복원합니다. 그런 다음 앱을 다시 지정합니다. 데이터베이스의 크기에 따라 이는 상당할 수 있습니다. DMS를 사용하면 0이 되고 문제는 가동 중지 시간과 애플리케이션에 미치는 영향을 최소화하는 것입니다.</div>
+<div class="comment-content">이 작업을 수행하려면 소스에 대한 쓰기를 중지해야 하므로 &gt; 스냅샷을 만들고 복원합니다. 그런 다음 앱을 다시 지정하세요. 데이터베이스 크기에 따라 이는 상당할 수 있습니다. DMS를 사용하면 0이 되며 문제는 최소 가동 중지 시간과 최소 애플리케이션 영향에 대해 묻는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1116,7 +1159,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1156,11 +1199,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 2일 목요일 12:10">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. https://medium.com/@souri29/how-to-migrate-from-amazon-rds-aurora-or-mysql-to-amazon-aurora-serverless-55f9a4a74078</div>
+<div class="comment-content">D. https://medium.com/@souri29/how-to- migration-from-amazon-rds-aurora-or-mysql-to-amazon-aurora-serverless-55f9a4a74078</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1169,7 +1212,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1221,7 +1264,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Jul 2023 12:40">
-			3 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1266,7 +1309,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 23:21">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1312,7 +1355,7 @@ This question is a bit old.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 19 May 2023 21:04">
-			2 months, 4 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1358,7 +1401,7 @@ DMS is the longest route</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 15:01">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1404,7 +1447,7 @@ DMS is the longest route</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Dec 2022 02:58">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1450,7 +1493,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-migrate-provisione
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 12:21">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1488,7 +1531,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-migrate-provisione
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 27 May 2023 19:25">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1542,7 +1585,7 @@ In other words, "You can´t create an Aurora Serverless replica from the existin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Oct 2022 23:22">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1774,7 +1817,7 @@ for DMS: Aurora Serverless can not be source but can be target</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Jan 2022 21:39">
-			1 year, 6 months ago
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1811,7 +1854,7 @@ for DMS: Aurora Serverless can not be source but can be target</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Jan 2022 21:43">
-			1 year, 6 months ago
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1850,7 +1893,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Jan 2022 21:45">
-			1 year, 6 months ago
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1911,7 +1954,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Dec 2021 12:12">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1957,7 +2000,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless.h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 20:41">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

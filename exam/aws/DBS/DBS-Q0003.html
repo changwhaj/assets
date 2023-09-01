@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 3 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 3 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 3 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 3 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807245">
 <p class="card-text">
 							
-								데이터베이스 전문가가 지난 2개월 동안 아무 문제 없이 실행되었던 여러 Aurora 복제본이 있는 Amazon Aurora DB 클러스터에서 애플리케이션 연결 실패 문제를 해결하고 있습니다. 연결 실패는 5분 동안 지속되었으며 그 후 자체적으로 수정되었습니다. 데이터베이스 전문가는 Amazon <br/>RDS 이벤트를 검토하고 해당 시간에 발생한 장애 조치 이벤트를 확인했습니다. 장애 조치 프로세스를 완료하는 데 약 15초가 걸렸습니다. <br/>5분간의 연결 중단의 가장 가능성 있는 원인은 무엇입니까?<br/>
+								데이터베이스 전문가가 지난 2개월 동안 문제 없이 실행되었던 여러 Aurora 복제본이 있는 Amazon Aurora DB 클러스터의 애플리케이션 연결 오류를 해결하고 있습니다. 연결 실패는 5분간 지속되다가 그 후 자체적으로 수정되었습니다. 데이터베이스 전문가는 Amazon <br/>RDS 이벤트를 검토하고 그 당시 장애 조치 이벤트가 발생했음을 확인했습니다. 장애 조치 프로세스를 완료하는 데 약 15초가 걸렸습니다. <br/>5분간 연결이 끊긴 가장 큰 원인은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807245" type="application/json">[{"voted_answers": "B", "vote_count": 6, "is_most_voted": true}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											데이터베이스 충돌 후 Aurora는 마지막 데이터베이스 체크포인트에서 리두 로그를 재생해야 했습니다.
+											데이터베이스 충돌 후 Aurora는 마지막 데이터베이스 체크포인트에서 다시 실행 로그를 재생해야 했습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											클라이언트 측 애플리케이션이 DNS 데이터를 캐싱하고 있으며 TTL이 너무 높게 설정됨
+											클라이언트 측 애플리케이션이 DNS 데이터를 캐싱하고 있으며 해당 TTL이 너무 높게 설정되어 있습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -100,18 +163,18 @@
 													C.
 												</span> 
 											
-											장애 조치 후 Aurora DB 클러스터는 클라이언트 연결을 수락하기 전에 워밍업할 시간이 필요합니다.
+											장애 조치 후 Aurora DB 클러스터는 클라이언트 연결을 수락하기 전에 준비 시간이 필요합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Aurora DB 클러스터에 활성 Aurora 복제본이 없습니다.
+											Aurora DB 클러스터에는 활성 Aurora 복제본이 없습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								chicagomassageseeker
-							</a> 
-							
-							시간: <i>
-							2020년 7월 7일 오후 3:11</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								chicagomassageseeker
-							</a>
-							
-							at <i>
-							July 7, 2020, 3:11 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 23일 목요일 04:33">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 23일 (목) 04:3">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답: B 이 질문은 장애 조치가 이미 발생했음을 나타냅니다. TTL이 너무 높게 설정되었습니다.</div>
+<div class="comment-content">답변: B 이 질문은 장애 조치가 이미 발생했음을 나타냅니다. TTL이 너무 높게 설정되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,11 +329,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 01일 월요일 21:16">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 1일 (월) 21:16">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -303,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,14 +382,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				렌도
+				렌프도
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 25일 수 19:35">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 25일 수요일 19:35">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,7 +435,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 13:04">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,8 +480,8 @@
 				사친고엘
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 12:20">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 12:20">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -452,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,15 +523,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				트리머
+				프리머
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 2일 수요일 22:22">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 2일 수 22:22">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B는 정확하다</div>
+<div class="comment-content">B는 달리고 있다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,11 +568,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				서판
+				시르판
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 23일 일 17:41">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 23일 일요일 17:41">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,15 +614,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				niteshdba
+				니테쉬드바
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 23일 금 13:39">
-			10개월, 3주 전
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -619,13 +662,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 23:03">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 23:03">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 클라이언트 측 애플리케이션이 DNS 데이터를 캐싱하고 있으며 TTL이 너무 높게 설정됨 클라이언트 애플리케이션이 DB 인스턴스의 DNS(도메인 이름 서비스) 데이터를 캐싱하는 경우 TTL(time-to-live) 값을 다음으로 설정합니다. 30초 미만. 장애 조치 후 DB 인스턴스의 기본 IP 주소가 변경될 수 있으므로 DNS 데이터를 장시간 캐싱하면 애플리케이션이 더 이상 서비스되지 않는 IP 주소에 연결하려고 하면 연결 실패가 발생할 수 있습니다.</div>
+<div class="comment-content">B. 클라이언트 측 애플리케이션이 DNS 데이터를 캐싱하고 해당 TTL이 너무 높게 설정되었습니다. 클라이언트 애플리케이션이 DB 인스턴스의 DNS(도메인 이름 서비스) 데이터를 캐싱하는 경우 TTL(수명) 값을 다음과 같이 설정합니다. 30초 미만. 장애 조치 후에 DB 인스턴스의 기본 IP 주소가 변경될 수 있으므로, DNS 데이터를 장기간 캐싱하면 애플리케이션이 더 이상 서비스되지 않는 IP 주소에 연결을 시도할 경우 연결 오류가 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,7 +705,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 7일 (월) 12:50">
@@ -670,7 +713,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 시험에서이 질문을 받았습니다. (나는 그것을 지웠다). B가 맞다</div>
+<div class="comment-content">시험에서 이런 질문이 나왔습니다. (나는 그것을 지웠다). B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -703,11 +746,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 24일 (월) 20:12">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그걸 어떻게 알겠어? 결과에 합격/불합격 및 %% 섹션이 있습니다.</div>
+<div class="comment-content">그걸 어떻게 알겠어요? 결과에는 통과/통과되지 않았으며 섹션 %%가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -716,7 +759,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -756,11 +799,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 2월 26일 토요일 02:59">
-			1년, 5개월 전
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 클라이언트 애플리케이션이 DB 인스턴스의 DNS(Domain Name Service) 데이터를 캐싱하는 경우 TTL(time-to-live) 값을 30초 미만으로 설정합니다. 장애 조치 후 DB 인스턴스의 기본 IP 주소가 변경될 수 있으므로 DNS 데이터를 장시간 캐싱하면 애플리케이션이 더 이상 서비스되지 않는 IP 주소에 연결하려고 하면 연결 실패가 발생할 수 있습니다.</div>
+<div class="comment-content">B 클라이언트 애플리케이션이 DB 인스턴스의 DNS(도메인 이름 서비스) 데이터를 캐싱하는 경우 TTL(수명) 값을 30초 미만으로 설정하십시오. 장애 조치 후에 DB 인스턴스의 기본 IP 주소가 변경될 수 있으므로, DNS 데이터를 장기간 캐싱하면 애플리케이션이 더 이상 서비스되지 않는 IP 주소에 연결을 시도할 경우 연결 오류가 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -769,7 +812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,15 +840,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aws4myself
+				aws4나 자신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 18:43">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 18:43">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 정답이며 캐시는 가능한 가장 낮은 시간으로 설정해야 합니다.</div>
+<div class="comment-content">B가 정답입니다. 캐시는 가능한 가장 짧은 시간으로 설정해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -814,7 +857,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -845,8 +888,8 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 5일 금요일 06:14">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 5일 금 06:14">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -859,7 +902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -890,8 +933,8 @@
 				Dr_Kiko
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 5일 금요일 02:10">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 5일 금 02:10">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -904,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,12 +978,12 @@
 				딥11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 4일 목요일 23:41">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 (목) 23:41">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"Reveal Solution" 답변이 대부분 잘못된 이유는 무엇입니까? 내가 토론에 올 때 나는 정확/논리적으로 보이는 다른 사람들의 답변을 봅니다. "솔루션 공개"는 신뢰할 수 없습니까?</div>
+<div class="comment-content">"솔루션 공개" 답변이 대부분 잘못된 이유는 무엇입니까? 토론에 참여하면 다른 사람들이 제공한 답변이 정확하고 논리적으로 보입니다. "솔루션 공개"는 신뢰할 수 없나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -949,7 +992,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -969,11 +1012,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				주피터
+				젊은 사람
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 24일 금요일 04:40">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 24일 금 04:40">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -986,7 +1029,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1025,12 +1068,12 @@
 				뮤트란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 30일 (토) 09:23">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 30일 토요일 09:23">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: B</div>
+<div class="comment-content">답: B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1039,7 +1082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1067,15 +1110,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				킬카
+				킬카르
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 29일 금 06:55">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: B/TTL 설정으로 장애 연결 시간 단축</div>
+<div class="comment-content">답: B/TTL 설정으로 연결 실패 시간을 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1084,7 +1127,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1116,11 +1159,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 28일 목요일 08:12">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B - DNS 캐시 시간 초과 감소 애플리케이션이 장애 조치 후 연결 설정을 시도할 때 새 Aurora PostgreSQL 작성자는 DNS 업데이트가 완전히 전파되기 전에 Aurora 읽기 전용 엔드포인트를 사용하여 찾을 수 있는 이전 리더가 됩니다. Java DNS TTL을 낮은 값으로 설정하면 후속 연결 시도에서 판독기 노드 사이를 순환하는 데 도움이 됩니다.</div>
+<div class="comment-content">B - DNS 캐시 시간 초과 줄이기 애플리케이션이 장애 조치 후 연결 설정을 시도하면 새 Aurora PostgreSQL 작성자는 DNS 업데이트가 완전히 전파되기 전에 Aurora 읽기 전용 엔드포인트를 사용하여 찾을 수 있는 이전 리더가 됩니다. Java DNS TTL을 낮은 값으로 설정하면 후속 연결 시도 시 리더 노드 간 순환에 도움이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1129,7 +1172,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1165,7 +1208,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 확실히 맞습니다. 이미 DB 장애 조치가 자동으로 발생한다고 언급한 질문</div>
+<div class="comment-content">B는 확실히 맞습니다. 이미 언급한 질문에 DB 장애 조치가 자동으로 발생하고 있었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1174,7 +1217,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1202,7 +1245,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				goodh32
+				좋아32
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 11일 (월) 04:22">
@@ -1210,7 +1253,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 B입니다. 즉각적인 충돌 복구 Amazon Aurora는 거의 즉각적으로 충돌을 복구하고 애플리케이션 데이터를 계속 제공하도록 설계되었습니다. 다른 데이터베이스와 달리 충돌 후 Amazon Aurora는 데이터베이스를 작업에 사용할 수 있게 만들기 전에 마지막 데이터베이스 체크포인트에서 다시 실행 로그를 재생할 필요가 없습니다. Amazon Aurora는 병렬 스레드에서 비동기식으로 충돌 복구를 수행하므로 충돌 직후 데이터베이스가 열려 있고 사용할 수 있습니다. 스토리지는 각각 자체 리두 로그가 있는 많은 작은 세그먼트로 구성되기 때문에 기본 스토리지는 충돌 후 디스크 읽기의 일부로 요청 시 리두 레코드를 병렬 및 비동기식으로 재생할 수 있습니다. 이 접근 방식은 대부분의 경우 데이터베이스 재시작 시간을 60초 미만으로 줄입니다.</div>
+<div class="comment-content">대답은 B입니다. 즉각적인 충돌 복구 Amazon Aurora는 거의 즉시 충돌을 복구하고 애플리케이션 데이터를 계속 제공하도록 설계되었습니다. 다른 데이터베이스와 달리 충돌 후 Amazon Aurora는 데이터베이스를 작업에 사용할 수 있게 만들기 전에 마지막 데이터베이스 체크포인트에서 다시 실행 로그를 재생할 필요가 없습니다. Amazon Aurora는 병렬 스레드에서 비동기식으로 충돌 복구를 수행하므로 충돌 후 즉시 데이터베이스가 열려 있고 사용할 수 있습니다. 스토리지는 각각 자체 리두 로그를 포함하는 많은 작은 세그먼트로 구성되므로 기본 스토리지는 충돌 후 디스크 읽기의 일부로 요청 시 리두 레코드를 병렬 및 비동기적으로 재생할 수 있습니다. 이 접근 방식은 대부분의 경우 데이터베이스 재시작 시간을 60초 미만으로 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1219,7 +1262,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1250,12 +1293,12 @@
 				빌리매디슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 3일 일 15:10">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 15:10">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 C일 가능성이 있는 이유입니다. Q: 데이터베이스가 실패할 경우 복구 경로는 무엇입니까? Amazon Aurora는 3개의 가용 영역에 걸쳐 6개의 데이터 복사본을 자동으로 유지하고 데이터 손실 없이 정상적인 AZ에서 자동으로 데이터베이스 복구를 시도합니다. 드문 경우지만 Amazon Aurora 스토리지 내에서 데이터를 사용할 수 없는 경우 DB 스냅샷에서 복원하거나 특정 시점 복원 작업을 새 인스턴스로 수행할 수 있습니다. 특정 시점 복원 작업의 복원 가능한 마지막 시간은 최대 과거 5분까지 가능합니다. https://aws.amazon.com/rds/aurora/faqs/</div>
+<div class="comment-content">이것이 C일 가능성이 있는 이유입니까? Q: 데이터베이스가 실패할 경우 복구 경로는 무엇입니까? Amazon Aurora는 3개의 가용 영역에 걸쳐 6개의 데이터 복사본을 자동으로 유지 관리하며 데이터 손실 없이 정상적인 AZ에서 데이터베이스 복구를 자동으로 시도합니다. 드물지만 Amazon Aurora 스토리지 내에서 데이터를 사용할 수 없는 경우 DB 스냅샷에서 복원하거나 특정 시점 복원 작업을 새 인스턴스로 수행할 수 있습니다. 특정 시점 복원 작업의 복원 가능한 최신 시간은 과거 최대 5분까지 가능합니다. https://aws.amazon.com/rds/aurora/faqs/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1264,7 +1307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1287,12 +1330,12 @@
 				빌리매디슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 04일 (월) 09:25">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 09:25">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Q: Aurora는 데이터베이스 충돌 후 복구 시간을 어떻게 개선합니까? 다른 데이터베이스와 달리 Amazon Aurora는 데이터베이스 충돌 후 마지막 데이터베이스 체크포인트(일반적으로 5분)에서 다시 실행 로그를 재생하고 데이터베이스를 작업에 사용할 수 있도록 하기 전에 모든 변경 사항이 적용되었는지 확인할 필요가 없습니다. 이렇게 하면 대부분의 경우 데이터베이스 재시작 시간이 60초 미만으로 단축됩니다. Amazon Aurora는 데이터베이스 프로세스에서 버퍼 캐시를 이동하고 다시 시작할 때 즉시 사용할 수 있도록 합니다. 이렇게 하면 전압 저하를 방지하기 위해 캐시가 다시 채워질 때까지 액세스를 제한하지 않아도 됩니다.</div>
+<div class="comment-content">Q: Aurora는 데이터베이스 충돌 후 복구 시간을 어떻게 개선합니까? 다른 데이터베이스와 달리, 데이터베이스 충돌 후 Amazon Aurora는 데이터베이스를 작업에 사용할 수 있게 만들기 전에 마지막 데이터베이스 체크포인트(일반적으로 5분)에서 다시 실행 로그를 재생하고 모든 변경 사항이 적용되었는지 확인할 필요가 없습니다. 이렇게 하면 대부분의 경우 데이터베이스 재시작 시간이 60초 미만으로 단축됩니다. Amazon Aurora는 버퍼 캐시를 데이터베이스 프로세스 밖으로 이동하여 재시작 시 즉시 사용할 수 있도록 합니다. 이렇게 하면 정전을 방지하기 위해 캐시가 다시 채워질 때까지 액세스를 제한할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1301,7 +1344,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1329,7 +1372,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				goodh32
+				좋아32
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 15일 금 02:09">
@@ -1337,7 +1380,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">스냅샷 복원은 자동이 아닙니다. 질문이 자동 충돌 장애 조치를 말하는 동안 복원입니다. 따라서 복제본 문제가 없음을 나타내는 스토리지 문제가 아님을 의미합니다.</div>
+<div class="comment-content">스냅샷 복원은 자동이 아닙니다. 질문에 자동 크래시 장애 조치가 나와 있는 동안 복원 중입니다. 즉, 이는 스토리지 문제가 아니었고 결과적으로 복제본 문제가 없음을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1346,7 +1389,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1382,15 +1425,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				거물
+				큰소리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 18:03">
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 18:03">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B여야 합니다. 질문에 복제본이 있다고 나와 있습니다. Aurora는 트랜잭션을 재생할 필요가 없으며 "워밍업"해야 할 이유가 없습니다!</div>
+<div class="comment-content">B여야 합니다. 질문에 복제본이 있다고 나와 있습니다. Aurora는 트랜잭션을 재생할 필요가 없으며 "워밍업"이 필요한 이유도 없습니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1399,7 +1442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1431,11 +1474,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 09:17">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 정답입니다</div>
+<div class="comment-content">B가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1444,7 +1487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1472,15 +1515,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 26일 일 13:07">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 26일 일요일 13:07">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">수정된 답변 B.</div>
+<div class="comment-content">답변 B를 수정했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1489,7 +1532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1517,15 +1560,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빌리C
+				빌리씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 23일 목요일 07:46">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 23일 목 07:4">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나에게는 B가 맞다</div>
+<div class="comment-content">나한테는 B가 맞다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1534,7 +1577,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1562,15 +1605,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 22일 수 16:26">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 22일 수요일 16:26">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: D Amazon Aurora Replica(즉, 단일 인스턴스)가 없고 Aurora Serverless를 실행하지 않는 경우 Aurora는 원래 인스턴스와 동일한 가용 영역에서 새 DB 인스턴스를 생성하려고 시도합니다.</div>
+<div class="comment-content">답변: D Amazon Aurora 복제본(즉, 단일 인스턴스)이 없고 Aurora Serverless를 실행하지 않는 경우 Aurora는 원본 인스턴스와 동일한 가용 영역에 새 DB 인스턴스를 생성하려고 시도합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1579,7 +1622,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1599,7 +1642,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에비
+				가족
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 6일 수 10:12">
@@ -1607,7 +1650,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 B입니다. 질문에서 이미 "여러 Aurora 복제본이 있는 Amazon Aurora DB 클러스터"를 지웁니다.</div>
+<div class="comment-content">대답은 B입니다. 문제의 경우 "여러 Aurora 복제본이 있는 Amazon Aurora DB 클러스터"가 이미 지워졌습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1616,7 +1659,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1679,7 +1722,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 23 Sep 2021 04:33">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1773,7 +1816,7 @@ The question indicates failover has already taken place. The TTL is set too high
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 19:35">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1821,7 +1864,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-redirected-e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 13:04">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1867,7 +1910,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-redirected-e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 12:20">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1913,7 +1956,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-redirected-e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Nov 2022 22:22">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1958,7 +2001,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-redirected-e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Oct 2022 17:41">
-			9 months, 3 weeks ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2004,7 +2047,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/aurora-mysql-redirected-e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Sep 2022 13:39">
-			10 months, 3 weeks ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2134,7 +2177,7 @@ If your client application is caching the Domain Name Service (DNS) data of your
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Apr 2023 20:12">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2188,7 +2231,7 @@ in the result there is passed / not passed and a section %%</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Feb 2022 02:59">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2406,7 +2449,7 @@ If your client application is caching the Domain Name Service (DNS) data of your
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 04:40">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2459,7 +2502,7 @@ If your client application is caching the Domain Name Service (DNS) data of your
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 30 Oct 2021 09:23">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2504,7 +2547,7 @@ If your client application is caching the Domain Name Service (DNS) data of your
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 29 Oct 2021 06:55">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2549,7 +2592,7 @@ If your client application is caching the Domain Name Service (DNS) data of your
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 28 Oct 2021 08:12">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2885,7 +2928,7 @@ Unlike other databases, after a database crash Amazon Aurora does not need to re
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 09:17">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2930,7 +2973,7 @@ Unlike other databases, after a database crash Amazon Aurora does not need to re
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Sep 2021 13:07">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2975,7 +3018,7 @@ Unlike other databases, after a database crash Amazon Aurora does not need to re
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Sep 2021 07:46">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3020,7 +3063,7 @@ Unlike other databases, after a database crash Amazon Aurora does not need to re
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Sep 2021 16:26">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

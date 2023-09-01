@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 20 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 20 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 20 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 20 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807262">
 <p class="card-text">
 							
-								대기업에서 Java 애플리케이션과 함께 Oracle 다중 AZ DB 인스턴스용 Amazon RDS를 사용하고 있습니다. 재해 복구 연간 테스트의 일환으로 회사는 가용 영역 장애를 시뮬레이션하고 DB 인스턴스 장애 조치 활동 중에 애플리케이션이 어떻게 반응하는지 기록하려고 합니다. 회사는 이 활동에 대한 코드 변경을 원하지 않습니다. <br/>최단 시간 내에 이를 달성하기 위해 회사는 무엇을 해야 합니까?<br/>
+								한 대기업이 Java 애플리케이션과 함께 Oracle 다중 AZ DB 인스턴스용 Amazon RDS를 사용하고 있습니다. 재해 복구 연간 테스트의 일환으로 회사는 가용 영역 오류를 시뮬레이션하고 DB 인스턴스 장애 조치 활동 중에 애플리케이션이 어떻게 반응하는지 기록하려고 합니다. 회사는 이 활동에 대한 코드 변경을 원하지 않습니다. <br/>이를 최단 시간 내에 달성하려면 회사는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807262" type="application/json">[{"voted_answers": "B", "vote_count": 10, "is_most_voted": true}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											완전한 애플리케이션 수준 장애 조치 테스트와 함께 청록색 배포 사용
+											완전한 애플리케이션 수준 장애 조치 테스트와 함께 블루-그린 배포를 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											장애 조치와 함께 재부팅하는 옵션을 선택하여 RDS 콘솔을 사용하여 DB 인스턴스를 재부팅합니다.
+											RDS 콘솔을 사용하여 장애 조치로 재부팅하는 옵션을 선택하여 DB 인스턴스를 재부팅합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											NACL에 규칙을 추가하여 단일 가용 영역과 연결된 서브넷의 모든 트래픽을 거부합니다.
+											단일 가용 영역과 연결된 서브넷의 모든 트래픽을 거부하도록 NACL에 규칙을 추가합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://wellarchitectedlabs.com/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Lab_Guide.html<br/><img class="in-exam-image" src="/assets/media/exam-media/04237/0001400001.png"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a> 
-							
-							시간: <i>
-							2021년 11월 10일, 오후 11:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a>
-							
-							at <i>
-							Nov. 10, 2021, 11:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,14 +295,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 11월 15일 (월) 10:15">
-			1년 9개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 올바른 선택입니다. RDS 오류 삽입 쿼리를 사용하여 기본 인스턴스 오류를 시뮬레이션합니다. 이것은 트릭 옵션입니다. 결함 주입 쿼리를 사용하여 Aurora DB 클러스터의 내결함성을 테스트할 수 있습니다. 오류 주입 쿼리는 Aurora 인스턴스에 대한 SQL 명령으로 실행됩니다. 시험 알림: 결함 주입 쿼리는 RDS DB 클러스터가 아닌 Aurora DB 클러스터에서만 사용할 수 있습니다.</div>
+<div class="comment-content">B가 올바른 선택입니다. RDS 오류 주입 쿼리를 사용하여 기본 인스턴스 오류를 시뮬레이션합니다. 이는 트릭 옵션입니다. 결함 주입 쿼리를 사용하여 Aurora DB 클러스터의 내결함성을 테스트할 수 있습니다. 오류 주입 쿼리는 Aurora 인스턴스에 대한 SQL 명령으로 실행됩니다. 시험 경고: 오류 주입 쿼리는 Aurora DB 클러스터에서만 사용할 수 있으며 RDS DB 클러스터에서는 사용할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,12 +346,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 4일 화요일 13:11">
-			1개월, 1주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">시험 알림: 결함 주입 쿼리는 RDS DB 클러스터가 아닌 Aurora DB 클러스터에서만 사용할 수 있습니다.</div>
+<div class="comment-content">시험 경고: 오류 주입 쿼리는 Aurora DB 클러스터에서만 사용할 수 있으며 RDS DB 클러스터에서는 사용할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -317,7 +360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,11 +392,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 1일 월요일 15:34">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C - 수동으로 수행하지 않고 AZ를 시뮬레이션하는 것과 같은 질문입니다.</div>
+<div class="comment-content">C - AZ를 수동으로 수행하지 않고 시뮬레이션하는 것에 대한 질문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,12 +437,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 11:38">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">결함 주입 쿼리는 엔진을 실패시키는 데 너무 많은 시간이 걸리기 때문에</div>
+<div class="comment-content">결함 주입 쿼리가 엔진을 실패시키는 데 너무 많은 시간이 걸리기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -439,13 +482,13 @@
 				im_not_robot
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 17:33">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 17:33">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A는 관련이 없습니다. B는 빠르기 때문에 정확합니다. C는 B보다 느리기 때문에 정확하지 않습니다. D는 ec2, alb 등과 같은 여러 리소스가 있는 전체 서브넷에 영향을 미치기 때문에 정확하지 않습니다.</div>
+<div class="comment-content">A는 관련이 없습니다. B는 속도가 빠르기 때문에 정확합니다. C는 B보다 느리기 때문에 정확하지 않습니다. D는 ec2, alb 등과 같은 여러 리소스가 있는 전체 서브넷에 영향을 주기 때문에 정확하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,11 +525,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 02:58">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,13 +574,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 19:50">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 19:50">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">장애 조치 옵션으로 재부팅합니다. ALTER SYSTEM CRASH 오류 삽입 쿼리를 사용하여 Amazon Aurora 인스턴스를 강제로 충돌시킬 수 있습니다.</div>
+<div class="comment-content">장애 조치 옵션으로 재부팅하십시오. ALTER SYSTEM CRASH 오류 주입 쿼리를 사용하여 Amazon Aurora 인스턴스를 강제로 충돌시킬 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,13 +620,13 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 22:01">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 22:01">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">장애 조치와 함께 재부팅을 통해 장애 조치 테스트 수행</div>
+<div class="comment-content">장애 조치 테스트는 장애 조치가 포함된 재부팅을 통해 수행됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,15 +663,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				순핀
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 27일 (월) 10:28">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저는 B를 선호합니다. 요점은 실제 애플리케이션 동작을 시뮬레이션할 수 없다는 것입니다. 예를 들어 JDBC 연결에서 TCP 소켓 연결 해제 감지가 Java Coder에 없는 경우. 장애 조치 중에 연결이 중단되었습니다.</div>
+<div class="comment-content">저는 B를 선호합니다. 요점은 실제 애플리케이션 동작을 시뮬레이션할 수 없다는 것입니다. 예를 들어 JDBC 연결에서 TCP 소켓 연결 해제 감지가 Java 코더에 없는 경우입니다. 장애 조치 중에 연결이 중단되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -668,12 +711,12 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 13일 (토) 23:21">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 13일 토요일 23:21">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">RDS 결함 주입 쿼리는 Aurora에서만 지원되는 것 같습니다. .</div>
+<div class="comment-content">RDS 결함 주입 쿼리는 Aurora에서만 지원되는 것 같습니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Managing.FaultInjectionQueries.html 따라서 Oracle을 테스트하려면 B가 올바른 옵션이어야 합니다. .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -682,7 +725,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -702,15 +745,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				leunamE
+				르남E
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 14일 일 14:19">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 14일 일요일 14:19">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, 하지만 RDS가 아닌 Aurora인 경우에도 DB 인스턴스 장애 조치 활동 중에 애플리케이션이 어떻게 작동하는지 테스트하고 싶다는 질문이 핵심이라고 생각합니다. 이 경우 항상 장애 조치 옵션으로 재부팅합니다.</div>
+<div class="comment-content">예, 하지만 RDS가 아닌 Aurora라고 하더라도 DB 인스턴스 장애 조치 활동 중에 애플리케이션이 어떻게 작동하는지 테스트하고 싶다는 질문이 핵심이라고 생각합니다. 이 경우 항상 장애 조치 옵션을 사용하여 재부팅됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -719,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -751,11 +794,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 8일 수 21:41">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 HA 테스트의 정답이지만 RDS는 결함 주입도 지원합니다. 300_labs/300_testing_for_resiliency_of_ec2_rds_and_s3/</div>
+<div class="comment-content">B가 HA 테스트의 정답이지만 RDS는 결함 주입도 지원합니다 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/disaster-recovery-resiliency.html https://wellarchitectedlabs.com/reliability/ 300_labs/300_testing_for_resiliency_of_ec2_rds_and_s3/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -764,7 +807,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -800,11 +843,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				leunamE
+				르남E
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 11월 10일 수 23:38">
-			1년 9개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -817,7 +860,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -843,7 +886,7 @@
 <a class="badge reveal-comment" href="#">Show Comments</a>
 <a class="badge hide-comment d-none" href="#">Hide Comments</a>
 <div class="discussion-page-comments-section-en" data-discussion-question-id="65817" style="display: none">
-<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">코멘트</h4></div>
+<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">Comments</h4></div>
 <!-- discussion.html -->
 <!-- Discussion start -->
 <div class="container outer-discussion-container">
@@ -865,27 +908,31 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				주제26
+				toppic26
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 11월 15일 (월) 10:15">
-			1년 9개월 전
+<span class="comment-date align-middle" title="Mon 15 Nov 2021 10:15">
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 올바른 선택입니다. RDS 오류 삽입 쿼리를 사용하여 기본 인스턴스 오류를 시뮬레이션합니다. 이것은 트릭 옵션입니다. 결함 주입 쿼리를 사용하여 Aurora DB 클러스터의 내결함성을 테스트할 수 있습니다. 오류 주입 쿼리는 Aurora 인스턴스에 대한 SQL 명령으로 실행됩니다. 시험 알림: 결함 주입 쿼리는 RDS DB 클러스터가 아닌 Aurora DB 클러스터에서만 사용할 수 있습니다.</div>
+<div class="comment-content">B is the correct option. Use the RDS fault injection query to simulate the primary instance failure - This is a trick option. You can test the fault tolerance of your Aurora DB cluster by using fault injection queries. Fault injection queries are issued as SQL commands to an Aurora instance.
+
+Exam Alert:
+
+Fault injection queries can be only used with Aurora DB cluster and NOT with an RDS DB cluster.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">13</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">13</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -913,28 +960,30 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				므라론시몬
+				mraronsimon
 			</h5>
 </a>
 <span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
+				Most Recent <i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 4일 화요일 13:11">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="Tue 04 Jul 2023 13:11">
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">시험 알림: 결함 주입 쿼리는 RDS DB 클러스터가 아닌 Aurora DB 클러스터에서만 사용할 수 있습니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Exam Alert:
+
+Fault injection queries can be only used with Aurora DB cluster and NOT with an RDS DB cluster.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -962,24 +1011,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				판카즈24시간
+				Pankaj24hrs
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 1일 월요일 15:34">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="Mon 01 May 2023 15:34">
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C - 수동으로 수행하지 않고 AZ를 시뮬레이션하는 것과 같은 질문입니다.</div>
+<div class="comment-content">C - As question as to simulate AZ not doing it manually.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1010,22 +1059,22 @@
 				ken_test1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 11:38">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="Tue 28 Mar 2023 11:38">
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">결함 주입 쿼리는 엔진을 실패시키는 데 너무 많은 시간이 걸리기 때문에</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Because the fault injection queries wiil take too much time to fail the engine</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1056,22 +1105,25 @@
 				im_not_robot
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 17:33">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="Mon 06 Feb 2023 17:33">
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A는 관련이 없습니다. B는 빠르기 때문에 정확합니다. C는 B보다 느리기 때문에 정확하지 않습니다. D는 ec2, alb 등과 같은 여러 리소스가 있는 전체 서브넷에 영향을 미치기 때문에 정확하지 않습니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">A is not relevant.
+B is correct because it is fast to do
+C is incorrect because it is slower than B
+D is incorrect because it affects the whole subnets with multiple resources like ec2, alb,...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1102,22 +1154,22 @@
 				lollyj
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 15일 목요일 02:58">
-			8개월 전
+<span class="comment-date align-middle" title="Thu 15 Dec 2022 02:58">
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 올바른 선택입니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">B is the correct option.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1145,25 +1197,27 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				초보자_전문가
+				novice_expert
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 19:50">
-			1년, 3개월 전
+<span class="comment-date align-middle" title="Fri 29 Apr 2022 19:50">
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">장애 조치 옵션으로 재부팅합니다. ALTER SYSTEM CRASH 오류 삽입 쿼리를 사용하여 Amazon Aurora 인스턴스를 강제로 충돌시킬 수 있습니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">reboot with failover option.
+
+You can force a crash of an Amazon Aurora instance using the ALTER SYSTEM CRASH fault injection query.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1191,25 +1245,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예인선
+				tugboat
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 22:01">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="Thu 24 Feb 2022 22:01">
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">장애 조치와 함께 재부팅을 통해 장애 조치 테스트 수행</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Test for failover is done via reboot with failover</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1237,24 +1291,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				Shunpin
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 27일 (월) 10:28">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Mon 27 Dec 2021 10:28">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저는 B를 선호합니다. 요점은 실제 애플리케이션 동작을 시뮬레이션할 수 없다는 것입니다. 예를 들어 JDBC 연결에서 TCP 소켓 연결 해제 감지가 Java Coder에 없는 경우. 장애 조치 중에 연결이 중단되었습니다.</div>
+<div class="comment-content">I prefer B.
+My point is that you can't simulate real application behaviors. For example in JDBC connection, if the TCP socket disconnect detection is not in the java coder. Your connection is stuck while failover.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1282,24 +1337,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				주피터
+				jove
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 13일 (토) 23:21">
-			1년 9개월 전
+<span class="comment-date align-middle" title="Sat 13 Nov 2021 23:21">
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">RDS 결함 주입 쿼리는 Aurora에서만 지원되는 것 같습니다. .</div>
+<div class="comment-content">It seems the RDS fault injection queries are supported only on Aurora :
+https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Managing.FaultInjectionQueries.html
+So, for testing Oracle, B should be the correct option.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">4</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1322,21 +1379,21 @@
 				leunamE
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 14일 일 14:19">
-			1년 9개월 전
+<span class="comment-date align-middle" title="Sun 14 Nov 2021 14:19">
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, 하지만 RDS가 아닌 Aurora인 경우에도 DB 인스턴스 장애 조치 활동 중에 애플리케이션이 어떻게 작동하는지 테스트하고 싶다는 질문이 핵심이라고 생각합니다. 이 경우 항상 장애 조치 옵션으로 재부팅합니다.</div>
+<div class="comment-content">Yes, but even if it's Aurora instead of RDS, I think the key is that the question says they want to test how the application behaves during DB instance failover activity. in this case it is always the reboot with failover option.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1367,21 +1424,23 @@
 				2025flakyt
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 8일 수 21:41">
-			1년 8개월 전
+<span class="comment-date align-middle" title="Wed 08 Dec 2021 21:41">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 HA 테스트의 정답이지만 RDS는 결함 주입도 지원합니다. 300_labs/300_testing_for_resiliency_of_ec2_rds_and_s3/</div>
+<div class="comment-content">Although B is the correct answer for HA testing but RDS also support fault injection
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/disaster-recovery-resiliency.html
+https://wellarchitectedlabs.com/reliability/300_labs/300_testing_for_resiliency_of_ec2_rds_and_s3/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1420,21 +1479,21 @@
 				leunamE
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 10일 수 23:38">
-			1년 9개월 전
+<span class="comment-date align-middle" title="Wed 10 Nov 2021 23:38">
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B.</div>
+<div class="comment-content">Option B.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">

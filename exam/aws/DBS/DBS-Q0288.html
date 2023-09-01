@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 288 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 288 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 288 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 288 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="875970">
 <p class="card-text">
 							
-								회사에서 Amazon DynamoDB를 다중 테넌트 데이터용 데이터 스토어로 사용합니다. 회사 애플리케이션의 읽기 중 약 70%가 강력한 일관성을 갖습니다. DynamoDB 테이블의 현재 키 스키마는 다음과 같습니다. <br/><br/>파티션 키: OrgID - <br/><br/>정렬 키: TenantID#Version - <br/><br/>디자인 및 액세스 패턴의 변경으로 인해 회사는 아래의 새 스키마를 기반으로 강력하게 일관된 조회를 지원해야 합니다. <br/><br/>파티션 키: OrgID#TenantID - <br/><br/>정렬 키: 버전 - <br/><br/>데이터베이스 전문가는 이 변경 사항을 어떻게 구현할 수 있습니까?
+								한 회사는 Amazon DynamoDB를 멀티 테넌트 데이터용 데이터 스토어로 사용합니다. 회사 애플리케이션의 읽기 중 약 70%가 강력한 일관성을 갖습니다. DynamoDB 테이블의 현재 키 스키마는 다음과 같습니다. <br/><br/>파티션 키: OrgID - <br/><br/>정렬 키: TenantID#Version - <br/><br/>디자인 및 액세스 패턴의 변경으로 인해 회사는 아래의 새 스키마를 기반으로 강력하게 일관된 조회를 지원해야 합니다. <br/><br/>파티션 키: OrgID#TenantID - <br/><br/>정렬 키: 버전 - <br/><br/>데이터베이스 전문가가 이 변경 사항을 어떻게 구현할 수 있나요?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,25 +155,25 @@
 													B.
 												</span> 
 											
-											지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 LSI(local secondary index)를 생성합니다.
+											지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 LSI(로컬 보조 인덱스)를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											지정된 파티션 및 정렬 키로 새 테이블을 생성합니다. AWS Glue ETL 작업을 생성하여 변환을 수행하고 변환된 데이터를 새 테이블에 씁니다.
+											지정된 파티션과 정렬 키를 사용하여 새 테이블을 생성합니다. 변환을 수행하고 변환된 데이터를 새 테이블에 쓰는 AWS Glue ETL 작업을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											지정된 파티션 및 정렬 키로 새 테이블을 생성합니다. AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 새 테이블로 마이그레이션합니다.
+											지정된 파티션과 정렬 키를 사용하여 새 테이블을 생성합니다. AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 새 테이블로 마이그레이션합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +183,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a> 
-							
-							시간: <i>
-							2023년 3월 29일 오후 6:17</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a>
-							
-							at <i>
-							March 29, 2023, 6:17 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -247,12 +290,12 @@
 				rn30
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 10일 (월) 15:52">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 10일 월요일 15:52">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 테이블이 프로비저닝된 후에는 정렬 키를 업데이트할 수 없습니다. 단, 새로운 테이블을 생성하여 새로 생성된 테이블에 기존 데이터를 넣고 기존 테이블을 삭제할 수 있습니다.</div>
+<div class="comment-content">C 테이블이 프로비저닝된 후에는 정렬 키를 업데이트할 수 없습니다. 그러나 새 테이블을 생성하여 새로 생성된 테이블에 기존 데이터를 넣고, 기존 테이블을 삭제할 수는 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -261,7 +304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -289,16 +332,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 25일 목요일 08:59">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 25일 (목) 08:59">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">xA. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 GSI(Global Secondary Index)를 생성합니다. - GSI는 강력한 일관된 검색 xB를 지원하지 않습니다. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 LSI(local secondary index)를 생성합니다. - 보조 인덱스는 정렬 키만 포함하고 파티션 키에 도움이 되지 않으며 테이블이 생성된 후에는 추가할 수 없습니다. C. 지정된 파티션 및 정렬 키로 새 테이블을 생성합니다. AWS Glue ETL 작업을 생성하여 변환을 수행하고 변환된 데이터를 새 테이블에 씁니다. - 소거법에 의해 정답 xD가 되어야 합니다. 지정된 파티션 및 정렬 키로 새 테이블을 만듭니다. AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 새 테이블로 마이그레이션합니다. - DMS는 DynamoDB만 대상으로 지원합니다.</div>
+<div class="comment-content">xA. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 글로벌 보조 인덱스(GSI)를 생성합니다. - GSI는 강력하게 일관된 검색 xB을 지원하지 않습니다. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 LSI(로컬 보조 인덱스)를 생성합니다. - 보조 인덱스에는 정렬 키만 포함되어 있으며 파티션 키에는 도움이 되지 않으며 테이블 생성 후에는 추가할 수 없습니다. C. 지정된 파티션과 정렬 키를 사용하여 새 테이블을 생성합니다. 변환을 수행하고 변환된 데이터를 새 테이블에 쓰는 AWS Glue ETL 작업을 생성합니다. - 제거를 통해 이것이 정답이 되어야 합니다 xD. 지정된 파티션과 정렬 키를 사용하여 새 테이블을 만듭니다. AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 새 테이블로 마이그레이션합니다. - DMS는 DynamoDB만 대상으로 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -307,7 +350,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -335,16 +378,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마우스맨
+				수리공
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 19일 수 14:47">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 19일 수요일 14:47">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">GSI는 동일한 데이터를 사용하며 결과적으로 일관성이 있습니다. 두 열을 결합하여 새 기본 키를 생성해야 하며 강력하게 일관성이 있어야 합니다. 따라서 새로운 테이블과 풀이 필요하지만 최소한의 노력이 필요하기 때문에 약간의 까다로운 질문입니다.</div>
+<div class="comment-content">GSI는 동일한 데이터를 사용하며 최종 일관성을 유지합니다. 새 기본 키를 생성하려면 두 열을 결합해야 하며 강력한 일관성도 필요합니다. 따라서 새 테이블과 접착제가 필요하지만 최소한의 노력이 필요하기 때문에 약간의 까다로운 질문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -353,7 +396,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,11 +428,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 4일 화요일 01:55">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 글로벌 보조 인덱스(GSI)를 생성합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.scenario "새 파티션과 정렬 키로 GSI를 생성하면 기존 테이블을 계속 사용할 수 있으며 새 테이블을 만들거나 데이터를 마이그레이션할 필요가 없습니다. 이 접근 방식은 기존 액세스 패턴을 유지하면서 새로운 액세스 패턴에 대해 강력하게 일관된 조회를 지원할 수 있습니다. GSI는 테이블의 기본 키를 변경하지 않고 다른 액세스 패턴으로 쿼리를 처리하는 데 이상적입니다. ."</div>
+<div class="comment-content">A. 지정된 파티션 및 정렬 키를 사용하여 기존 테이블에 글로벌 보조 인덱스(GSI)를 생성합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.scenario "새 파티션과 정렬 키로 GSI를 생성하면 기존 테이블을 계속 사용할 수 있으며, 새 테이블을 생성하거나 데이터를 마이그레이션할 필요가 없습니다. 이 접근 방식은 기존 액세스 패턴을 유지하면서 새 액세스 패턴에 대한 강력하고 일관된 조회를 지원할 수 있습니다. GSI는 테이블의 기본 키를 변경하지 않고 다양한 액세스 패턴으로 쿼리를 처리하는 데 이상적입니다. ."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -421,12 +464,12 @@
 				민트워터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 02:03">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 02:03">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답이 아닐 수 있습니다. -- "테이블과 글로벌 보조 인덱스 간의 데이터 동기화 DynamoDB는 각 글로벌 보조 인덱스를 기본 테이블과 자동으로 동기화합니다. 애플리케이션이 테이블의 항목을 쓰거나 삭제할 때 해당 테이블의 모든 글로벌 보조 인덱스는 비동기식으로 업데이트됩니다. , 결과적으로 일관된 모델 사용 응용 프로그램은 인덱스에 직접 쓰지 않습니다.</div>
+<div class="comment-content">A는 정답이 아닐 수도 있습니다. "테이블과 Global Secondary Index 간의 데이터 동기화 DynamoDB는 각 글로벌 보조 인덱스를 기본 테이블과 자동으로 동기화합니다. 애플리케이션이 테이블의 항목을 쓰거나 삭제할 때 해당 테이블의 모든 글로벌 보조 인덱스는 비동기식으로 업데이트됩니다. , 최종 일관성 모델 사용 애플리케이션은 인덱스에 직접 쓰지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -435,7 +478,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -474,13 +517,13 @@
 				르디아즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 18:17">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 18:17">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A. KO - GSI는 강력한 일관성이 없습니다. B. KO - 일단 테이블이 존재하면 LSI를 생성할 수 없습니다. C. 확인 - 새 테이블 + 접착제 D. KO - Dynamo는 DMS와 호환되는 소스가 아닙니다. https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.html</div>
+<div class="comment-content">A. KO - GSI는 강력한 일관성을 갖지 않습니다. B. KO - 테이블이 존재하면 LSI를 생성할 수 없습니다. C. 확인 - 새 테이블 + 접착제 D. KO - Dynamo는 DMS와 호환되는 소스가 아닙니다: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -489,7 +532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -512,12 +555,12 @@
 				민트워터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 04:06">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 04:06">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">글루는 복잡합니다. 나는 D를 선호한다</div>
+<div class="comment-content">GLUE는 복잡합니다. 나는 D를 선호한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -526,7 +569,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -550,7 +593,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 19일 수 03:30">
-			3개월, 4주 전
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -563,7 +606,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -631,7 +674,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Jul 2023 15:52">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -677,7 +720,7 @@ you can not update the sort key after the table is provisioned. However, you can
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 08:59">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -726,7 +769,7 @@ xD. Create a new table with the specified partition and sort key. Use AWS Databa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 14:47">
-			3 months, 4 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -772,7 +815,7 @@ xD. Create a new table with the specified partition and sort key. Use AWS Databa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 01:55">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -811,7 +854,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html#GSI.sc
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 02:03">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -866,7 +909,7 @@ DynamoDB automatically synchronizes each global secondary index with its base ta
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 18:17">
-			4 months, 2 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -907,7 +950,7 @@ D. KO - Dynamo is not a compatible source for DMS: https://docs.aws.amazon.com/d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 04:06">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -944,7 +987,7 @@ D. KO - Dynamo is not a compatible source for DMS: https://docs.aws.amazon.com/d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 03:30">
-			3 months, 4 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 305 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 305 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 305 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 305 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 305 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="868776">
 <p class="card-text">
 							
-								회사는 AWS 클라우드에서 호스팅되는 게임 애플리케이션을 위한 공유 스토리지 솔루션을 설계하고 있습니다. 회사는 SMB 클라이언트를 사용하여 데이터에 액세스할 수 있는 기능이 필요합니다. 솔루션은 완전히 관리되어야 합니다. <br/><br/>어떤 AWS 솔루션이 이러한 요구 사항을 충족합니까?
+								한 회사가 AWS 클라우드에서 호스팅되는 게임 애플리케이션용 공유 스토리지 솔루션을 설계하고 있습니다. 회사는 SMB 클라이언트를 사용하여 데이터에 액세스할 수 있는 기능이 필요합니다. 솔루션은 완전히 관리되어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 AWS 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											탑재 가능한 파일 시스템으로 데이터를 공유하는 AWS DataSync 작업을 생성합니다. 파일 시스템을 애플리케이션 서버에 마운트하십시오.
+											데이터를 탑재 가능한 파일 시스템으로 공유하는 AWS DataSync 작업을 생성합니다. 파일 시스템을 애플리케이션 서버에 마운트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon EC2 Windows 인스턴스를 생성합니다. 인스턴스에 Windows 파일 공유 역할을 설치하고 구성합니다. 응용 프로그램 서버를 파일 공유에 연결합니다.
+											Amazon EC2 Windows 인스턴스를 생성합니다. 인스턴스에 Windows 파일 공유 역할을 설치하고 구성합니다. 애플리케이션 서버를 파일 공유에 연결합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Windows 파일 서버 파일 시스템용 Amazon FSx를 생성합니다. 원본 서버에 파일 시스템을 연결합니다. 애플리케이션 서버를 파일 시스템에 연결하십시오.
+											Windows 파일 서버용 Amazon FSx 파일 시스템을 생성합니다. 원본 서버에 파일 시스템을 연결합니다. 애플리케이션 서버를 파일 시스템에 연결합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon S3 버킷을 생성합니다. 애플리케이션에 IAM 역할을 할당하여 S3 버킷에 대한 액세스 권한을 부여합니다. S3 버킷을 애플리케이션 서버에 마운트합니다.
+											Amazon S3 버킷을 생성합니다. S3 버킷에 대한 액세스 권한을 부여하려면 애플리케이션에 IAM 역할을 할당합니다. S3 버킷을 애플리케이션 서버에 마운트합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Neha999
-							</a> 2023년 2월 18 
-							
-							일 <i>
-							오후 3:13</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Neha999
-							</a>
-							
-							at <i>
-							Feb. 18, 2023, 3:13 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,18 +291,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라리스
+				라해리스
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 19:53">
-			5개월, 4주 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C - SMB = 스토리지 게이트웨이 또는 FSx입니다.</div>
+<div class="comment-content">대답은 C입니다. SMB = 스토리지 게이트웨이 또는 FSx</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -268,7 +311,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -300,10 +343,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 15:13">
-			5개월, 4주 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -350,13 +393,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 19:33">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 19:33">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">• Amazon FSx for Windows File Server는 업계 표준 SMB 프로토콜을 사용하여 액세스할 수 있는 완전히 관리되는 기본 Windows 파일 시스템을 제공합니다. 이를 통해 게임 응용 프로그램과 같은 Windows 클라이언트가 파일 데이터에 직접 액세스할 수 있습니다. • FSx for Windows File Server는 프로비저닝, 설정, 유지 관리, 파일 공유 관리, 백업, 보안 및 소프트웨어 패치와 같은 시간 소모적인 파일 시스템 관리 작업을 처리하여 운영 오버헤드를 줄입니다. • FSx for Windows File Server는 높은 파일 시스템 처리량, IOPS 및 성능에 민감한 워크로드에 필요한 지속적으로 낮은 대기 시간을 지원합니다. 이것은 게임 응용 프로그램에 적합합니다. • 파일 시스템을 EC2 인스턴스에 직접 연결할 수 있어 게임 서버를 위한 고성능 공유 스토리지 솔루션을 제공합니다.</div>
+<div class="comment-content">• Windows 파일 서버용 Amazon FSx는 업계 표준 SMB 프로토콜을 사용하여 액세스할 수 있는 완전관리형 기본 Windows 파일 시스템을 제공합니다. 이를 통해 게임 애플리케이션과 같은 Windows 클라이언트가 파일 데이터에 직접 액세스할 수 있습니다. • Windows 파일 서버용 FSx는 프로비저닝, 설정, 유지 관리, 파일 공유 관리, 백업, 보안, 소프트웨어 패치 등 시간이 많이 걸리는 파일 시스템 관리 작업을 처리하여 운영 오버헤드를 줄입니다. • Windows 파일 서버용 FSx는 성능에 민감한 워크로드에 필요한 높은 파일 시스템 처리량, IOPS 및 일관되고 낮은 대기 시간을 지원합니다. 이는 게임 애플리케이션에 적합합니다. • 파일 시스템을 EC2 인스턴스에 직접 연결하여 게임 서버를 위한 고성능 공유 스토리지 솔루션을 제공할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -365,7 +408,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,12 +431,12 @@
 				크루아산
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 29일 (토) 19:33">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 29일 토요일 19:33">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A - DataSync는 데이터 전송용이며 공유 파일 시스템을 제공하지 않습니다. 마운트하거나 직접 액세스할 수 없습니다. 옵션 B - 자체 관리형 EC2 파일 공유는 Windows 파일 시스템 및 공유를 수동으로 설치, 구성 및 유지 관리해야 합니다. 이를 위해서는 운영에 상당한 오버헤드가 필요합니다. 옵션 D - Amazon S3는 기본 파일 시스템이 아닌 객체 스토리지입니다. 파일 공유 액세스를 제공하려면 S3의 데이터를 변환/포맷해야 하므로 복잡성이 추가됩니다. S3는 직접 마운트하거나 FSx의 성능을 제공할 수 없습니다.</div>
+<div class="comment-content">옵션 A - DataSync는 공유 파일 시스템을 제공하지 않고 데이터 전송을 위한 것입니다. 마운트하거나 직접 액세스할 수 없습니다. 옵션 B - 자체 관리형 EC2 파일 공유에는 Windows 파일 시스템 및 공유를 수동으로 설치, 구성 및 유지 관리해야 합니다. 이를 위해서는 운영에 상당한 오버헤드가 필요합니다. 옵션 D - Amazon S3는 기본 파일 시스템이 아닌 객체 스토리지입니다. 파일 공유 액세스를 제공하려면 S3의 데이터를 변환/형식화해야 하므로 복잡성이 가중됩니다. S3는 직접 마운트할 수 없거나 FSx 수준의 성능을 제공할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -442,7 +485,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 13:23">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -456,7 +499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,7 +531,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 23:34">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -534,12 +577,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 22일 수 01:37">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS FSx for Windows File Server는 SMB 프로토콜을 통해 액세스할 수 있는 완전 관리형 기본 Microsoft Windows 파일 시스템입니다. Amazon S3와 통합된 파일 시스템 백업, 사용자 인증 및 액세스 제어를 위한 Active Directory 통합과 같은 기능을 제공합니다. 이 솔루션을 사용하면 SMB 클라이언트를 사용하여 데이터에 액세스할 수 있으며 완벽하게 관리되므로 회사에서 기본 인프라를 관리할 필요가 없습니다.</div>
+<div class="comment-content">Windows 파일 서버용 AWS FSx는 SMB 프로토콜을 통해 액세스할 수 있는 완전 관리형 기본 Microsoft Windows 파일 시스템입니다. Amazon S3와 통합된 파일 시스템 백업, 사용자 인증 및 액세스 제어를 위한 Active Directory 통합과 같은 기능을 제공합니다. 이 솔루션을 사용하면 SMB 클라이언트를 사용하여 데이터에 액세스할 수 있고 완벽하게 관리되므로 회사에서 기본 인프라를 관리할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,13 +622,13 @@
 				바바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 20:48">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 20:48">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나를 위해 C</div>
+<div class="comment-content">나에게는 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -594,7 +637,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -649,7 +692,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 19:53">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -697,7 +740,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 15:13">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -745,7 +788,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 29 Apr 2023 19:33">
-			3 months, 2 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -786,7 +829,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Apr 2023 19:33">
-			3 months, 2 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -841,7 +884,7 @@ Option D - Amazon S3 is object storage, not a native file system. The data in S3
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 13:23">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -887,7 +930,7 @@ Option D - Amazon S3 is object storage, not a native file system. The data in S3
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 23:34">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -933,7 +976,7 @@ Option D - Amazon S3 is object storage, not a native file system. The data in S3
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 01:37">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -979,7 +1022,7 @@ Option D - Amazon S3 is object storage, not a native file system. The data in S3
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Feb 2023 20:48">
-			5 months, 3 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

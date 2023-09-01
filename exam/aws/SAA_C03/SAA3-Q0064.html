@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 64 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 64 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 64 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 64 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 64 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839821">
 <p class="card-text">
 							
-								회사는 온프레미스에서 실행되는 Windows 파일 서버에 5TB 이상의 파일 데이터를 보유하고 있습니다. 사용자와 애플리케이션은 매일 데이터와 상호 작용합니다. <br/>이 회사는 Windows 워크로드를 AWS로 이전하고 있습니다. 회사가 이 프로세스를 계속 진행함에 따라 회사는 최소한의 대기 시간으로 AWS 및 온프레미스 파일 스토리지에 액세스해야 합니다. 회사는 운영 오버헤드를 최소화하고 기존 파일 액세스 패턴을 크게 변경할 필요가 없는 솔루션이 필요합니다. 이 회사는 AWS에 연결하기 위해 AWS Site-to-Site VPN 연결을 사용합니다. <br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								회사는 온프레미스에서 실행되는 Windows 파일 서버에 5TB가 넘는 파일 데이터를 보유하고 있습니다. 사용자와 애플리케이션은 매일 데이터와 상호 작용합니다. <br/>회사는 Windows 워크로드를 AWS로 이전하고 있습니다. 회사가 이 프로세스를 계속 진행함에 따라 회사는 최소한의 지연 시간으로 AWS 및 온프레미스 파일 스토리지에 액세스해야 합니다. 회사에는 운영 오버헤드를 최소화하고 기존 파일 액세스 패턴을 크게 변경할 필요가 없는 솔루션이 필요합니다. 회사는 AWS에 연결하기 위해 AWS Site-to-Site VPN 연결을 사용합니다. <br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839821" type="application/json">[{"voted_answers": "D", "vote_count": 52, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="839821" type="application/json">[{"voted_answers": "D", "vote_count": 52, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 7, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,34 +148,34 @@
 													A.
 												</span> 
 											
-											AWS에서 Windows File Server용 Amazon FSx를 배포하고 구성합니다. 온프레미스 파일 데이터를 FSx for Windows File Server로 이동합니다. AWS에서 Windows File Server용 FSx를 사용하도록 워크로드를 재구성합니다.
+											AWS에서 Windows 파일 서버용 Amazon FSx를 배포하고 구성합니다. 온프레미스 파일 데이터를 FSx for Windows File Server로 이동합니다. AWS에서 FSx for Windows File Server를 사용하도록 워크로드를 재구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											온프레미스에 Amazon S3 파일 게이트웨이를 배포하고 구성합니다. 온프레미스 파일 데이터를 S3 파일 게이트웨이로 이동합니다. S3 파일 게이트웨이를 사용하도록 온프레미스 워크로드 및 클라우드 워크로드를 재구성합니다.
+											Amazon S3 파일 게이트웨이를 온프레미스에 배포하고 구성합니다. 온프레미스 파일 데이터를 S3 파일 게이트웨이로 이동합니다. S3 파일 게이트웨이를 사용하도록 온프레미스 워크로드와 클라우드 워크로드를 재구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											온프레미스에 Amazon S3 파일 게이트웨이를 배포하고 구성합니다. 온프레미스 파일 데이터를 Amazon S3로 이동합니다. Amazon S3를 직접 사용하거나 S3 파일 게이트웨이를 사용하도록 워크로드를 재구성합니다. 각 워크로드의 위치에 따라 다릅니다.
+											Amazon S3 파일 게이트웨이를 온프레미스에 배포하고 구성합니다. 온프레미스 파일 데이터를 Amazon S3로 이동합니다. Amazon S3를 직접 사용하거나 S3 파일 게이트웨이를 사용하도록 워크로드를 재구성합니다. 각 워크로드의 위치에 따라 다릅니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS에서 Windows 파일 서버용 Amazon FSx를 배포하고 구성합니다. 온프레미스에 Amazon FSx 파일 게이트웨이를 배포하고 구성합니다. 온프레미스 파일 데이터를 FSx 파일 게이트웨이로 이동합니다. AWS에서 Windows File Server용 FSx를 사용하도록 클라우드 워크로드를 구성합니다. FSx 파일 게이트웨이를 사용하도록 온프레미스 워크로드를 구성합니다.
+											AWS에서 Windows 파일 서버용 Amazon FSx를 배포하고 구성합니다. Amazon FSx 파일 게이트웨이를 온프레미스에 배포하고 구성합니다. 온프레미스 파일 데이터를 FSx 파일 게이트웨이로 이동합니다. AWS에서 Windows 파일 서버용 FSx를 사용하도록 클라우드 워크로드를 구성합니다. FSx 파일 게이트웨이를 사용하도록 온프레미스 워크로드를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="52 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">디 (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="52 votes." data-toggle="tooltip" role="progressbar" style="width: 84%; display: flex;" title="">D (84%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								oldcardigan
-							</a> 
-							
-							시간: <i>
-							2022년 10월 11일, 오후 6:17</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839821" type="application/json">[{"voted_answers": "D", "vote_count": 52, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 6, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="839821" type="application/json">[{"voted_answers": "D", "vote_count": 52, "is_most_voted": true}, {"voted_answers": "A", "vote_count": 7, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="52 votes." data-toggle="tooltip" role="progressbar" style="width: 85%; display: flex;" title="">D (85%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: flex;" title="">Other</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="52 votes." data-toggle="tooltip" role="progressbar" style="width: 84%; display: flex;" title="">D (84%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">Other</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								oldcardigan
-							</a>
-							
-							at <i>
-							Oct. 11, 2022, 6:17 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,10 +293,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 10월 13일 목요일 10:45">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -291,11 +334,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 7일 금요일 20:17">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동의 대답은 D) --- 요구 사항은 다음과 같습니다. - "사용자와 애플리케이션은 매일 데이터와 상호 작용합니다." - "회사는 최소한의 대기 시간으로 AWS 및 온프레미스 파일 스토리지에 액세스해야 합니다." --- 설명: 답변 A)는 둘 다 VPN 연결을 사용하므로 답변 D에서와 동일한 온프레미스 &lt;&gt; aws 대기 시간으로 작업합니다. D) 시나리오에서 언급한 것처럼 온프레미스에서 Amazon FSx 파일 게이트웨이를 사용하면 모든 사용자는 FSx 파일 게이트웨이가 일상적인 워크로드에 가지고 있는 캐시를 사용하여 큰 이점을 얻을 수 있습니다. 그리고 그것은 요구 사항의 일부입니다: "사용자", "매일", "대기 시간"</div>
+<div class="comment-content">동의하는 답변은 D)입니다. --- 요구 사항은 다음과 같습니다. - "사용자 및 애플리케이션은 매일 데이터와 상호 작용합니다." - "회사는 최소 지연 시간으로 AWS 및 온프레미스 파일 스토리지에 액세스해야 합니다." --- 설명: 답변 A)는 둘 다 VPN 연결을 사용하므로 답변 D와 동일한 온프레미스 &lt;&gt; AWS 대기 시간으로 작업합니다. 즉, D) 시나리오에서 언급한 것처럼 온프레미스에서 Amazon FSx 파일 게이트웨이를 사용하면 모든 사용자는 FSx 파일 게이트웨이가 일일 워크로드에 있는 캐시를 사용하는 데 큰 이점을 갖게 됩니다. 그리고 이는 "사용자", "매일", "대기 시간"과 같은 요구 사항의 일부입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,10 +387,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 21일 금요일 07:35">
-			9개월, 4주 전
+<span class="comment-date align-middle" title="2022년 10월 21일 금 07:35">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -384,12 +427,12 @@
 				FNJ1111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 15:27">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 15:27">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">해당 공유 문서에서: "Amazon FSx 파일 게이트웨이(FSx 파일 게이트웨이)는 온프레미스 시설에서 Windows File Server 파일 공유를 위해 클라우드 내 FSx에 짧은 지연 시간과 효율적인 액세스를 제공하는 새로운 파일 게이트웨이 유형입니다. -지연 시간 또는 대역폭 요구 사항으로 인해 구내 파일 스토리지를 사용하는 경우 대신 FSx File Gateway를 사용하여 FSx for Windows File Server에서 AWS 클라우드에서 제공하는 완전 관리형의 고도로 안정적이며 거의 무제한인 Windows 파일 공유에 원활하게 액세스할 수 있습니다."</div>
+<div class="comment-content">해당 공유 문서에서: "Amazon FSx 파일 게이트웨이(FSx 파일 게이트웨이)는 온프레미스 시설에서 클라우드 내 FSx for Windows File Server 파일 공유에 대한 짧은 대기 시간과 효율적인 액세스를 제공하는 새로운 파일 게이트웨이 유형입니다. 대기 시간 또는 대역폭 요구 사항으로 인해 온프레미스 파일 스토리지를 사용하는 대신 FSx 파일 게이트웨이를 사용하여 Windows 파일 서버용 FSx가 AWS 클라우드에서 제공하는 완전 관리형, 안정성이 뛰어나고 거의 무제한인 Windows 파일 공유에 원활하게 액세스할 수 있습니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -413,6 +456,55 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990606" id="comment-990606">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				bahaa_shaker
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 26일 토요일 11:05">
+			10시간 41분 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">IT A와 회사는 사이트 2 사이트 VPN을 사용하므로 fsx에 연결할 수 있습니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -437,16 +529,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 10일 목요일 14:28">
-			6일, 6시간 전
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">요구 사항은 최소한의 대기 시간으로 온프레미스 및 AWS 파일 스토리지에 대한 액세스를 제공하는 동시에 운영 오버헤드를 최소화하고 기존 파일 액세스 패턴에 대한 중대한 변경을 방지하는 것입니다. 또한 연결을 위한 AWS Site-to-Site VPN 연결이 있습니다.</div>
+<div class="comment-content">요구 사항은 최소한의 지연 시간으로 온프레미스 및 AWS 파일 스토리지 모두에 대한 액세스를 제공하는 동시에 운영 오버헤드를 최소화하고 기존 파일 액세스 패턴에 대한 중대한 변경을 방지하는 것입니다. 또한 연결을 위해 AWS Site-to-Site VPN 연결이 마련되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,15 +572,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				miki111
+				미키111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 19일 수 18:02">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 19일 수요일 18:02">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 D가 정답입니다.</div>
+<div class="comment-content">보기 D가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,13 +620,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 14:23">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 14:23">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Amazon FSx 파일 게이트웨이(FSx 파일 게이트웨이)는 온프레미스 시설에서 Windows File Server 파일 공유용 클라우드 내 FSx에 짧은 지연 시간과 효율적인 액세스를 제공하는 새로운 파일 게이트웨이 유형입니다. 지연 시간 또는 대역폭 요구 사항으로 인해 온프레미스 파일 스토리지를 유지하는 경우 대신 FSx File Gateway를 사용하여 AWS Cloud by FSx for Windows File Server에서 제공하는 완벽하게 관리되고 매우 안정적이며 거의 무제한인 Windows 파일 공유에 원활하게 액세스할 수 있습니다. FSx File Gateway는 다음과 같은 이점을 제공합니다. 1. 온프레미스 파일 서버를 제거하고 모든 데이터를 AWS에 통합하여 클라우드 스토리지의 규모와 경제성을 활용합니다. 2. 클라우드 데이터에 대한 온프레미스 액세스가 필요한 작업을 포함하여 모든 파일 작업에 사용할 수 있는 옵션을 제공합니다. 삼.</div>
+<div class="comment-content">Amazon FSx 파일 게이트웨이(FSx 파일 게이트웨이)는 온프레미스 시설에서 클라우드 내 FSx for Windows File Server 파일 공유에 대한 짧은 지연 시간과 효율적인 액세스를 제공하는 새로운 파일 게이트웨이 유형입니다. 지연 시간 또는 대역폭 요구 사항으로 인해 온프레미스 파일 스토리지를 유지 관리하는 경우 대신 FSx 파일 게이트웨이를 사용하여 Windows 파일 서버용 FSx가 AWS 클라우드에서 제공하는 완전 관리형, 안정성이 뛰어나고 거의 무제한인 Windows 파일 공유에 원활하게 액세스할 수 있습니다. FSx 파일 게이트웨이는 다음과 같은 이점을 제공합니다. 1. 온프레미스 파일 서버를 제거하고 모든 데이터를 AWS에 통합하여 클라우드 스토리지의 규모와 경제성을 활용합니다. 2. 클라우드 데이터에 대한 온프레미스 액세스가 필요한 워크로드를 포함하여 모든 파일 워크로드에 사용할 수 있는 옵션을 제공합니다. 삼.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,8 +666,8 @@
 				브마로디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 5일 월요일 18:49">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 5일 (월) 18:49">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -592,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,16 +709,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				초심자클라우드
+				초보자클라우드
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 18일 목요일 12:07">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞습니다 https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premises-with-file-gateway/</div>
+<div class="comment-content">D가 정확합니다 https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premise-with-file-gateway/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,15 +755,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라훌빗34
+				Rahulbit34
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 2일 화요일 01:17">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">짧은 지연 시간과 Windows 파일 서버용 클라우드 내 FSx에 대한 효율적인 액세스를 위한 Amazon Fix File Gateway.</div>
+<div class="comment-content">Windows 파일 서버용 클라우드 내 FSx에 대한 짧은 지연 시간과 효율적인 액세스를 위한 Amazon Fix File Gateway.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -683,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -715,12 +804,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 13일 목요일 02:38">
-			4 개월 전에
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premises-with-file-gateway/</div>
+<div class="comment-content">https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premise-with-file-gateway/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -729,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -761,12 +850,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 3일 월요일 20:38">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">1. 저장소가 제한되어 있고 캐싱에만 사용되기 때문에 온프레미스 파일을 FSX FGW로 이동할 수 없습니다. 2. 온프레미스 파일 서버를 Windows용 aws fsx 파일 서버로 마이그레이션하고 온프레미스 사용자가 sfx FGW를 통해 파일 서버에 액세스할 수 있도록 해야 합니다. 3. 온프레미스 앱에 aws 파일 서버를 사용하도록 앱을 구성합니다. 4. 앱을 통해 직접 fsx 파일에 액세스하도록 aws 앱을 구성합니다. 5. A가 정답입니다.</div>
+<div class="comment-content">1. 온프레미스 파일은 저장 공간이 제한되어 있고 캐싱에만 사용되므로 FSX FGW로 이동할 수 없습니다. 2. 온프레미스 파일 서버를 Windows용 aws fsx 파일 서버로 마이그레이션하고 온프레미스 사용자가 sfx FGW를 통해 파일 서버에 액세스할 수 있도록 해야 합니다. 3. 온프레미스 앱용 aws 파일 서버를 사용하도록 앱을 구성합니다. 4. 앱을 통해 직접 fsx 파일에 액세스하도록 aws 앱을 구성합니다. 5. A가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -775,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,13 +895,13 @@
 				로티2807
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 26일 목요일 00:22">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 26일 목 00:22">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">회사는 '낮은 대기 시간'과 '현재 파일 액세스 패턴에 대한 변경 없음'으로 온프레미스에서 AWS로 데이터를 이동하기를 원한다고 밝혔습니다. 보안 데이터/파일 이동. Site2Site VPN은 구내 네트워크 내에서 온프레미스 및 클라우드의 데이터에 액세스하는 사용자를 위한 것입니다. 결론 섹션에서 요약을 확인하십시오. https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premises-with-file-gateway/</div>
+<div class="comment-content">회사는 '낮은 대기 시간' 및 '현재 파일 액세스 패턴 변경 없음'으로 온프레미스에서 AWS로 데이터를 이동하고 싶다고 밝혔습니다. 따라서 온프레미스에서는 데이터를 캐시한 다음 클라우드로 전송하기 위해 여전히 FSx 파일 게이트웨이가 필요합니다. 안전한 데이터/파일 이동. Site2Site VPN은 온프레미스 네트워크 내 클라우드 및 온프레미스의 데이터에 액세스하는 사용자를 위한 것입니다. 요약을 보려면 결론 섹션을 확인하세요. https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premise-with-file-gateway/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +910,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -853,11 +942,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 23:47">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D IS WRONG - 캐싱에 사용됩니다. '온프레미스 파일 데이터를 FSx 파일 게이트웨이로 이동'할 수 없습니다. 답변 D에 명시되어 있습니다. AWS 직원이 의도적으로 잘못된 답변으로 이 사이트에 스팸을 보내는 것이 확실합니다.</div>
+<div class="comment-content">D IS WRONG - 캐싱에 사용됩니다. '온프레미스 파일 데이터를 FSx 파일 게이트웨이로 이동'할 수 없습니다. 이는 답변 D에 명시되어 있습니다. AWS 직원이 의도적으로 잘못된 답변으로 이 사이트에 스팸을 보내고 있는 것이 확실합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -866,7 +955,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,13 +986,13 @@
 				사일런트밀리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 03:21">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 03:21">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">이 솔루션은 회사가 기존 파일 액세스 패턴에 대한 최소한의 변경으로 파일 서버를 계속 사용할 수 있기 때문에 요구 사항을 충족합니다. FSx for Windows File Server는 온프레미스 Active Directory와 통합되므로 사용자는 기존 자격 증명으로 파일 데이터에 계속 액세스할 수 있습니다. Site-to-Site VPN 연결을 사용하여 온프레미스 파일 서버와 FSx for Windows File Server on AWS 간에 지연 시간이 짧은 연결을 설정할 수 있습니다. FSx for Windows File Server는 가용성과 확장성이 높기 때문에 워크로드의 파일 스토리지 요구 사항을 처리할 수 있습니다.</div>
+<div class="comment-content">이 솔루션을 사용하면 회사에서 기존 파일 액세스 패턴을 최소한으로 변경하면서 파일 서버를 계속 사용할 수 있으므로 요구 사항을 충족합니다. FSx for Windows File Server는 온프레미스 Active Directory와 통합되므로 사용자는 기존 자격 증명을 사용하여 파일 데이터에 계속 액세스할 수 있습니다. Site-to-Site VPN 연결을 사용하면 온프레미스 파일 서버와 AWS의 FSx for Windows File Server 간에 지연 시간이 짧은 연결을 설정할 수 있습니다. Windows 파일 서버용 FSx는 가용성과 확장성이 뛰어나므로 워크로드의 파일 스토리지 요구 사항을 처리할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -912,7 +1001,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -940,16 +1029,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				구스타프
+				구스타브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 19:51">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">FSx는 Windows 파일용이며 S3와 같은 다른 옵션은 확실히 파일을 처리할 수 있지만 호환성 문제가 발생할 수 있습니다. FSx 게이트웨이에는 사용자가 로컬 파일 시스템에 액세스하고 있다고 느끼게 하는 일종의 캐시 메커니즘이 있을 수 있습니다.</div>
+<div class="comment-content">FSx는 Windows 파일용입니다. S3와 같은 다른 옵션은 확실히 파일을 처리할 수 있지만 호환성 문제가 발생할 수 있습니다. FSx 게이트웨이에는 사용자가 로컬 파일 시스템에 액세스하고 있다고 느끼게 만드는 일종의 캐시 메커니즘이 있을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -958,7 +1047,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -990,11 +1079,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 23:44">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon FSx File Gateway 사용의 이점 ****WINDOWS FILE SERVERS*** FSx File Gateway는 다음과 같은 이점을 제공합니다. 온프레미스 파일 서버를 제거하고 모든 데이터를 AWS에 통합하여 클라우드 스토리지의 규모와 경제성을 활용합니다. . 클라우드 데이터에 대한 온프레미스 액세스가 필요한 작업을 포함하여 모든 파일 작업에 사용할 수 있는 옵션을 제공합니다. 온프레미스에 있어야 하는 애플리케이션은 이제 네트워크에 부담을 주거나 가장 까다로운 애플리케이션이 경험하는 지연 시간에 영향을 주지 않고 AWS에서와 동일한 짧은 지연 시간과 높은 성능을 경험할 수 있습니다.</div>
+<div class="comment-content">Amazon FSx 파일 게이트웨이 사용의 이점 ****WINDOWS FILE SERVERS*** FSx 파일 게이트웨이는 다음과 같은 이점을 제공합니다. 온프레미스 파일 서버를 제거하고 모든 데이터를 AWS에 통합하여 클라우드 스토리지의 규모와 경제성을 활용합니다. . 클라우드 데이터에 대한 온프레미스 액세스가 필요한 워크로드를 포함하여 모든 파일 워크로드에 사용할 수 있는 옵션을 제공합니다. 온프레미스에 있어야 하는 애플리케이션은 이제 네트워크에 부담을 주거나 가장 까다로운 애플리케이션에서 경험하는 지연 시간에 영향을 주지 않고 AWS에서와 동일한 짧은 지연 시간과 높은 성능을 경험할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1003,7 +1092,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1034,13 +1123,13 @@
 				kurinei021
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 20:41">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 20:41">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C라고 생각합니다. 이러한 요구 사항을 충족하기 위해 솔루션 설계자는 AWS Storage Gateway를 사용하여 온프레미스 파일 서버와 AWS 간에 파일 기반 스토리지 액세스를 제공하도록 권장할 수 있습니다. AWS Storage Gateway는 온프레미스 스토리지 환경을 AWS 스토리지 인프라와 연결하는 하이브리드 스토리지 서비스입니다. AWS에 대한 지연 시간이 짧은 파일 기반 스토리지 액세스를 제공하므로 사용자와 애플리케이션이 마치 온프레미스에 저장된 것처럼 AWS의 데이터에 액세스할 수 있습니다.</div>
+<div class="comment-content">C인 것 같습니다. 이러한 요구 사항을 충족하기 위해 솔루션 설계자는 AWS Storage Gateway를 사용하여 온프레미스 파일 서버와 AWS 간에 파일 기반 스토리지 액세스를 제공하도록 권장할 수 있습니다. AWS Storage Gateway는 온프레미스 스토리지 환경을 AWS 스토리지 인프라와 연결하는 하이브리드 스토리지 서비스입니다. AWS에 대한 지연 시간이 짧은 파일 기반 스토리지 액세스를 제공하므로 사용자와 애플리케이션은 마치 온프레미스에 저장된 것처럼 AWS의 데이터에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1049,7 +1138,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1077,16 +1166,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 18:36">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 18:36">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">올바른 솔루션은 C입니다. 온프레미스에 Amazon S3 파일 게이트웨이를 배포하고 구성합니다. 온프레미스 파일 데이터를 Amazon S3로 이동합니다. 각 워크로드의 위치에 따라 Amazon S3를 직접 사용하거나 S3 파일 게이트웨이를 사용하도록 워크로드를 재구성합니다. Amazon S3는 내구성과 확장성이 뛰어난 객체 스토리지 서비스로 대량의 파일 데이터를 저장하는 데 매우 적합합니다. 온프레미스 파일 데이터를 Amazon S3로 이동하면 내구성, 확장성 및 글로벌 가용성을 활용하는 동시에 사용자와 애플리케이션이 기존 파일 액세스 패턴을 사용하여 데이터에 액세스할 수 있습니다. Amazon S3 파일 게이트웨이는 온프레미스에 배포할 수 있으며 Amazon S3에 저장된 데이터에 대한 파일 기반 액세스를 제공하도록 구성할 수 있습니다.</div>
+<div class="comment-content">올바른 솔루션은 C입니다. Amazon S3 파일 게이트웨이를 온프레미스에 배포하고 구성합니다. 온프레미스 파일 데이터를 Amazon S3로 이동합니다. 각 워크로드의 위치에 따라 Amazon S3를 직접 사용하거나 S3 파일 게이트웨이를 사용하도록 워크로드를 재구성합니다. Amazon S3는 내구성과 확장성이 뛰어난 객체 스토리지 서비스로, 대용량 파일 데이터를 저장하는 데 적합합니다. 온프레미스 파일 데이터를 Amazon S3로 이동하면 내구성, 확장성 및 글로벌 가용성을 활용하는 동시에 사용자와 애플리케이션이 기존 파일 액세스 패턴을 사용하여 데이터에 액세스할 수 있습니다. Amazon S3 파일 게이트웨이는 온프레미스에 배포할 수 있으며 Amazon S3에 저장된 데이터에 대한 파일 기반 액세스를 제공하도록 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1095,7 +1184,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1115,15 +1204,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 18:36">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 18:36">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS에서 Windows 파일 서버용 Amazon FSx를 배포 및 구성하는 옵션 A는 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 않습니다. Amazon S3 파일 게이트웨이를 온프레미스에 배포 및 구성하고 온프레미스 파일 데이터를 S3 파일 게이트웨이로 이동하는 옵션 B는 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 않습니다. . 옵션 D, AWS의 Windows 파일 서버용 Amazon FSx 및 온프레미스의 Amazon FSx 파일 게이트웨이 배포 및 구성은 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 않습니다.</div>
+<div class="comment-content">AWS에서 Windows 파일 서버용 Amazon FSx를 배포 및 구성하는 옵션 A는 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 못합니다. 온프레미스에 Amazon S3 파일 게이트웨이를 배포 및 구성하고 온프레미스 파일 데이터를 S3 파일 게이트웨이로 이동하는 옵션 B는 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 않습니다. . AWS에 Amazon FSx for Windows File Server와 Amazon FSx File Gateway를 온프레미스에 배포 및 구성하는 옵션 D는 기존 파일 액세스 패턴을 크게 변경해야 하므로 운영 오버헤드를 최소화하기 위한 요구 사항을 충족하지 못합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1132,7 +1221,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1168,11 +1257,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 19일 (월) 03:38">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 19일 월요일 03:38">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1186,7 +1275,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1217,12 +1306,12 @@
 				샤샤1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 15:27">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 15:27">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Answer C 옵션 C는 온프레미스와 AWS 환경 모두에서 파일 데이터에 대한 짧은 대기 시간 액세스를 제공하고 기존 파일 액세스 패턴을 크게 변경하지 않아도 되므로 운영 오버헤드를 최소화합니다. 또한 AWS Site-to-Site VPN 연결을 사용하면 온프레미스와 AWS 환경 간의 안전하고 원활한 연결이 보장됩니다. 옵션 A는 AWS에서 파일 데이터에 액세스하기 위한 요구 사항만 처리하기 때문에 올바르지 않지만 최소한의 대기 시간으로 온프레미스에서 파일 데이터에 액세스하기 위한 요구 사항을 다루지는 않습니다. 옵션 D는 서로 다른 두 파일 스토리지를 배포하고 구성해야 하기 때문에 올바르지 않습니다. 서비스(Windows 파일 서버용 FSx 및 FSx 파일 게이트웨이)로 인해 복잡성과 운영 오버헤드가 추가됩니다.</div>
+<div class="comment-content">답변 C 옵션 C는 온프레미스 및 AWS 환경 모두에서 파일 데이터에 대한 짧은 지연 시간 액세스를 제공하며 기존 파일 액세스 패턴을 크게 변경할 필요가 없어 운영 오버헤드를 최소화합니다. 또한 AWS Site-to-Site VPN 연결을 사용하면 온프레미스와 AWS 환경 간의 안전하고 원활한 연결이 보장됩니다. 옵션 A는 AWS의 파일 데이터에 액세스하기 위한 요구 사항만 다루기 때문에 올바르지 않습니다. 그러나 최소한의 지연 시간으로 온프레미스에서 파일 데이터에 액세스하기 위한 요구 사항을 다루지는 않습니다. 옵션 D는 두 개의 서로 다른 파일 스토리지를 배포하고 구성하는 것과 관련되므로 올바르지 않습니다. 서비스(Windows 파일 서버용 FSx 및 FSx 파일 게이트웨이)로 인해 복잡성과 운영 오버헤드가 추가됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1231,7 +1320,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1255,11 +1344,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 12:03">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"회사는 AWS 및 온프레미스 파일 스토리지에 대한 액세스가 필요합니다" C는 온프레미스 요구 사항을 제외합니다.</div>
+<div class="comment-content">"회사는 AWS 및 온프레미스 파일 스토리지에 대한 액세스가 필요합니다." C는 온프레미스 요구 사항을 제외합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1268,7 +1357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1307,13 +1396,13 @@
 				베스페리아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 16:09">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 16:09">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변 A가 맞습니다. 회사에는 이미 사이트 간 VPN이 있습니다. 온프레미스에 파일 게이트웨이를 설치할 필요가 없습니다. https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-on-premises.html</div>
+<div class="comment-content">답변 A가 맞습니다. 회사에는 이미 사이트 간 VPN이 있습니다. 온프레미스에 파일 게이트웨이를 설치할 필요가 없습니다. https://docs.aws.amazon.com/fsx/latest/LustreGuide/mounting-on-premise.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1322,7 +1411,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1345,12 +1434,12 @@
 				wh1t4k3r
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 20:23">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 20:23">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 이것과 혼동되었지만 D에 투표할 것입니다. 내 생각: 실제로 게이트웨이가 필요합니다... VPC 피어링의 경우에는 필요하지 않습니다. 사이트 간 VPN은 여전히 ​​엔드포인트 역할을 하는 게이트웨이가 필요합니다. https://bluexp.netapp.com/blog/aws-fsxo-blg-fsx-gateway-amazon-fsx-for-windows-at-on-premises-speed</div>
+<div class="comment-content">나는 이것에 대해 혼란스러워했지만 D에 투표하겠습니다. 내 생각: 실제로 게이트웨이가 필요합니다. VPC 피어링의 경우에는 필요하지 않습니다. 사이트 간 VPN에는 여전히 게이트웨이가 엔드포인트 역할을 해야 합니다. https://bluexp.netapp.com/blog/aws-fsxo-blg-fsx-gateway-amazon-fsx-for-windows-at-on-premise-speed</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1359,7 +1448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1379,11 +1468,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				제크
+				지크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 3일 화요일 09:55">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1396,7 +1485,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1443,12 +1532,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:25">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:25">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1457,7 +1546,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1488,8 +1577,8 @@
 				카펠로10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 14일 월요일 19:04">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 14일 (월) 19:04">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1503,7 +1592,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1531,16 +1620,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				goku58
+				손오공58
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 28일 금요일 05:11">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 28일 금 05:11">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Windows 파일 서버 == FSx. 온프레미스 및 AWS 모두에서 액세스가 필요하므로 A로는 충분하지 않습니다. 그래서 디.</div>
+<div class="comment-content">Windows 파일 서버 == FSx. 온프레미스와 AWS 모두에서 액세스해야 하므로 A로는 충분하지 않습니다. 그래서 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1549,7 +1638,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1572,8 +1661,8 @@
 				17마스터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 12일 (토) 17:37">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 12일 토요일 17:37">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1586,7 +1675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1606,15 +1695,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rewdboy
+				리워드보이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 25일 금요일 01:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 25일 금 01:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이지만 다른 요구 사항은 "기존 파일 액세스 패턴에 대한 중요한 변경"이 아니므로 마이그레이션 중에 워크로드를 FSx로 이동하는 동안 온프레미스 위치에 파일 게이트웨이 공유를 마운트해야 합니다. 그래서 디.</div>
+<div class="comment-content">사실이지만 다른 요구 사항은 마이그레이션 중에 워크로드를 FSx로 이동하는 동안 온프레미스 위치에 파일 게이트웨이 공유를 마운트하는 것을 의미하는 "기존 파일 액세스 패턴에 대한 중요한 변경"이 아닙니다. 그래서 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1623,7 +1712,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1667,16 +1756,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				욕조 탭
+				욕조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 15:58">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 15:58">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">dddddddddd</div>
+<div class="comment-content">dddddddd</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1685,7 +1774,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1713,16 +1802,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				올드 카디건
+				낡은 카디건
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 11일 화요일 18:17">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 11일 화 18:17">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 그것이 D라고 생각한다</div>
+<div class="comment-content">내 생각엔 D인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1731,7 +1820,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1786,7 +1875,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 10:45">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1824,7 +1913,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 20:17">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1886,7 +1975,7 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 21 Oct 2022 07:35">
-			9 months, 4 weeks ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1924,7 +2013,7 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 15:27">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1961,6 +2050,55 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990606" id="comment-990606">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				bahaa_shaker
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Sat 26 Aug 2023 11:05">
+			10 hours, 41 minutes ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">ITs A and the company use site 2 site VPN which means they can connect to fsx.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="977645" id="comment-977645">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1976,11 +2114,8 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Thu 10 Aug 2023 14:28">
-			6 days, 6 hours ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2026,7 +2161,7 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 18:02">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2071,7 +2206,7 @@ Explanation: Answer A) will work with the same on-prem &lt;&gt; aws latency as i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 14:23">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2122,7 +2257,7 @@ FSx File Gateway provides the following benefits:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Jun 2023 18:49">
-			2 months, 1 week ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2168,7 +2303,7 @@ FSx File Gateway provides the following benefits:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 18 May 2023 12:07">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2216,7 +2351,7 @@ https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 May 2023 01:17">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2261,7 +2396,7 @@ https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Apr 2023 02:38">
-			4 months ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2307,7 +2442,7 @@ https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Apr 2023 20:38">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2357,7 +2492,7 @@ https://aws.amazon.com/blogs/storage/accessing-your-file-workloads-from-on-premi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 00:22">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2405,7 +2540,7 @@ Check on the Conclusion section for summary: https://aws.amazon.com/blogs/storag
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 23:47">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2450,7 +2585,7 @@ Check on the Conclusion section for summary: https://aws.amazon.com/blogs/storag
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 03:21">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2496,7 +2631,7 @@ Check on the Conclusion section for summary: https://aws.amazon.com/blogs/storag
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 01 Jan 2023 19:51">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2542,7 +2677,7 @@ Check on the Conclusion section for summary: https://aws.amazon.com/blogs/storag
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 23:44">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2595,7 +2730,7 @@ Applications that need to stay on premises can now experience the same low laten
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 20:41">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2643,7 +2778,7 @@ AWS Storage Gateway is a hybrid storage service that connects on-premises storag
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 18:36">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2685,7 +2820,7 @@ The Amazon S3 File Gateway can be deployed on-premises and configured to provide
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 18:36">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2742,7 +2877,7 @@ Option D, deploying and configuring Amazon FSx for Windows File Server on AWS an
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 03:38">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2788,7 +2923,7 @@ Option D, deploying and configuring Amazon FSx for Windows File Server on AWS an
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 15:27">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2826,7 +2961,7 @@ Option C will provide low-latency access to the file data from both on-premises 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 12:03">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2879,7 +3014,7 @@ Option C will provide low-latency access to the file data from both on-premises 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 16:09">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2917,7 +3052,7 @@ Option C will provide low-latency access to the file data from both on-premises 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 20:23">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2956,7 +3091,7 @@ https://bluexp.netapp.com/blog/aws-fsxo-blg-fsx-gateway-amazon-fsx-for-windows-a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 09:55">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3018,7 +3153,7 @@ mazon FSx File Gateway is a way to access your Amazon FSx file system from on-pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 15:25">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3063,7 +3198,7 @@ mazon FSx File Gateway is a way to access your Amazon FSx file system from on-pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 14 Nov 2022 19:04">
-			9 months ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3109,7 +3244,7 @@ mazon FSx File Gateway is a way to access your Amazon FSx file system from on-pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Oct 2022 05:11">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3148,7 +3283,7 @@ Since access from both on-prem and AWS is needed, A isn't sufficient. So D.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 12 Nov 2022 17:37">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3185,7 +3320,7 @@ Since access from both on-prem and AWS is needed, A isn't sufficient. So D.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 25 Nov 2022 01:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3246,7 +3381,7 @@ Since access from both on-prem and AWS is needed, A isn't sufficient. So D.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 15:58">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3292,7 +3427,7 @@ Since access from both on-prem and AWS is needed, A isn't sufficient. So D.</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Oct 2022 18:17">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

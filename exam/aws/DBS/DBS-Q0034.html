@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 34 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 34 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 34 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 34 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807276">
 <p class="card-text">
 							
-								회사는 고가용성 및 읽기 전용 워크로드 확장을 위해 xlarge 기본 인스턴스 마스터와 2개의 대형 Aurora 복제본이 있는 Amazon Aurora PostgreSQL DB 클러스터를 사용하고 있습니다. 장애 조치 이벤트가 발생하고 애플리케이션 성능이 몇 분 동안 저하됩니다. 이 시간 동안 모든 가용 <br/>영역의 애플리케이션 서버는 정상 상태이며 정상적으로 응답합니다. <br/>이 애플리케이션 성능 문제를 해결하기 위해 회사는 무엇을 해야 합니까?<br/>
+								한 회사는 고가용성 및 읽기 전용 워크로드 확장을 위해 초대형 기본 인스턴스 마스터와 두 개의 대형 Aurora 복제본이 포함된 Amazon Aurora PostgreSQL DB 클러스터를 사용하고 있습니다. 장애 조치 이벤트가 발생하고 애플리케이션 성능이 몇 분 동안 저하됩니다. 이 기간 동안 모든 가용 <br/>영역의 애플리케이션 서버는 정상이며 정상적으로 응답합니다. <br/>이 애플리케이션 성능 문제를 제거하려면 회사는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807276" type="application/json">[{"voted_answers": "C", "vote_count": 21, "is_most_voted": true}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											두 Aurora 복제본을 기본 DB 인스턴스와 동일한 인스턴스 클래스로 구성합니다. DB 클러스터에서 캐시 일관성을 활성화하고 기본 DB 인스턴스 장애 조치 우선 순위를 Tier-0으로 설정하고 장애 조치 우선 순위 Tier-1을 복제본에 할당합니다.
+											두 Aurora 복제본을 모두 기본 DB 인스턴스와 동일한 인스턴스 클래스로 구성합니다. DB 클러스터에서 캐시 일관성을 활성화하고, 기본 DB 인스턴스 장애 조치 우선 순위를 Tier-0으로 설정하고, 복제본에 장애 조치 우선 순위 Tier-1을 할당합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											어떤 인스턴스가 실패했는지 확인하기 위해 DescribeDBInstances 작업을 호출하는 AWS Lambda 함수를 배포한 다음 PromoteReadReplica 작업을 사용하여 하나의 Aurora 복제본을 기본 DB 인스턴스로 승격합니다. Lambda 함수가 구독하는 Amazon SNS 주제로 알림을 보내도록 Amazon RDS 이벤트 구독을 구성합니다.
+											설명DBInstances 작업을 호출하는 AWS Lambda 함수를 배포하여 어떤 인스턴스가 실패했는지 확인한 다음 PromoteReadReplica 작업을 사용하여 하나의 Aurora 복제본을 기본 DB 인스턴스로 승격합니다. Lambda 함수가 구독되는 Amazon SNS 주제에 알림을 보내도록 Amazon RDS 이벤트 구독을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											기본 DB 인스턴스와 동일한 인스턴스 클래스를 갖도록 하나의 Aurora 복제본을 구성합니다. Aurora PostgreSQL DB 클러스터 캐시 관리를 구현합니다. 기본 DB 인스턴스와 인스턴스 클래스가 동일한 하나의 복제본에 대해 장애 조치 우선 순위를 Tier-0으로 설정합니다. 다른 복제본에 대해 장애 조치 우선 순위를 Tier-1로 설정합니다.
+											기본 DB 인스턴스와 동일한 인스턴스 클래스를 갖도록 하나의 Aurora 복제본을 구성합니다. Aurora PostgreSQL DB 클러스터 캐시 관리를 구현합니다. 기본 DB 인스턴스와 인스턴스 클래스가 동일한 복제본 1개에 대해 장애 조치 우선순위를 Tier-0으로 설정합니다. 다른 복제본에 대한 장애 조치 우선순위를 Tier-1로 설정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											기본 DB 인스턴스와 동일한 인스턴스 클래스를 갖도록 두 Aurora 복제본을 구성합니다. Aurora PostgreSQL DB 클러스터 캐시 관리를 구현합니다. 장애 조치 우선 순위를 기본 DB 인스턴스의 경우 Tier-0으로 설정하고 복제본의 경우 Tier-1로 설정합니다.
+											기본 DB 인스턴스와 동일한 인스턴스 클래스를 갖도록 두 Aurora 복제본을 구성합니다. Aurora PostgreSQL DB 클러스터 캐시 관리를 구현합니다. 장애 조치 우선순위를 기본 DB 인스턴스의 경우 Tier-0으로 설정하고 복제본의 경우 Tier-1로 설정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="21 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2020 <i>
-							년 7월 14일, 오후 3:28 </i><a class="title-username" style="">
-								Mickysingh
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mickysingh
-							</a>
-							
-							at <i>
-							July 14, 2020, 3:28 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,16 +289,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				IhorK
+				이호르K
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 2일 수 09:21">
-			2주 전
+<span class="comment-date align-middle" title="2023년 8월 2일 수요일 09:21">
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">"클러스터에 다음과 같이 구성된 Aurora Reader 인스턴스가 있는 경우 Aurora PostgreSQL DB 클러스터에서 클러스터 캐시 관리가 활성화됩니다. Aurora Reader 인스턴스는 클러스터의 Writer 인스턴스와 동일한 DB 인스턴스 클래스 유형 및 크기를 사용합니다. Aurora Reader 인스턴스는 Tier로 구성됩니다. 클러스터의 경우 -0. 클러스터에 둘 이상의 리더가 있는 경우 이것이 유일한 Tier-0 리더입니다. 둘 이상의 리더를 Tier-0으로 설정하면 CCM이 비활성화됩니다." https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/aurora_ccm_status.html</div>
+<div class="comment-content">"클러스터에 다음과 같이 구성된 Aurora Reader 인스턴스가 있는 경우 Aurora PostgreSQL DB 클러스터에서 클러스터 캐시 관리가 활성화됩니다. Aurora Reader 인스턴스는 클러스터의 Writer 인스턴스와 동일한 DB 인스턴스 클래스 유형 및 크기를 사용합니다. Aurora Reader 인스턴스는 Tier로 구성됩니다. 클러스터의 경우 -0입니다. 클러스터에 리더가 두 개 이상 있는 경우 이것이 유일한 Tier-0 리더입니다. 리더를 두 개 이상 Tier-0으로 설정하면 CCM이 비활성화됩니다." https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/aurora_ccm_status.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +339,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 04:55">
-			7개월, 2주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Tier-0은 CCM이 작동하기 위한 요구 사항입니다. 또한 Tier-0에 1개 이상의 읽기 전용 복제본이 있으면 CCM도 비활성화됩니다. - https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/aurora_ccm_status.html</div>
+<div class="comment-content">Tier-0은 CCM이 작동하기 위한 요구 사항입니다. 또한 Tier-0을 사용하는 읽기 전용 복제본이 2개 이상 있으면 CCM도 비활성화됩니다. - https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/aurora_ccm_status.html 이렇게 하면 Option-D가 명확하게 제거됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,13 +384,13 @@
 				말했다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 19일 수 14:48">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 19일 수요일 14:48">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">CCM이 작동하려면 C 1- 라이터 인스턴스와 동일한 인스턴스 클래스 유형 및 크기를 가진 하나의 RR이 있어야 합니다. .aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
+<div class="comment-content">CCM이 작동하려면 C 1 - 작성자 인스턴스와 동일한 인스턴스 클래스 유형 및 크기를 가진 하나의 RR이 있어야 합니다. 2 - 작성자와 RR 모두에 대해 승격 우선순위를 0으로 설정해야 합니다. 여기에 세부 정보가 필요합니다 https://docs .aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,7 +431,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 6월 23일 목요일 05:42">
-			1년, 1개월 전
+			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,13 +475,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 21:24">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 21:24">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">기본 DB와 동일한 인스턴스 클래스의 Aurora 복제본 1개 -&gt; Aurora PostgreSQL DB 클러스터 캐시 관리 -&gt; 기본 DB 인스턴스의 경우 Tier-0에 대한 장애 조치 우선 순위 및 동일한 인스턴스 클래스의 복제본 1개 -&gt; 기본 DB 인스턴스에 대한 장애 조치 우선 순위는 Tier-1 다른 복제본</div>
+<div class="comment-content">기본 DB와 인스턴스 클래스가 동일한 Aurora 복제본 1개 -&gt; Aurora PostgreSQL DB 클러스터 캐시 관리 -&gt; 기본 DB 인스턴스의 경우 장애 조치 우선순위를 Tier-0으로, 인스턴스 클래스가 동일한 복제본 1개 -&gt; 장애 조치 우선순위는 Tier-1로 다른 복제본</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,7 +518,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 5일 토요일 06:11">
@@ -484,7 +527,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞습니다. 클러스터 캐시 관리에는 다음 세 가지가 필요합니다. - 하나의 복제본이 기본과 동일한 우선순위를 갖도록 설정 - 해당 인스턴스 클래스를 기본과 동일하게 설정</div>
+<div class="comment-content">C가 맞습니다. 클러스터 캐시 관리에는 다음 세 가지가 필요합니다. - 하나의 복제본을 기본과 동일한 우선순위로 설정 - 해당 인스턴스 클래스를 기본과 동일하게 설정</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,12 +567,12 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 22:53">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 22:53">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 경제적이지만 가장 큰 복제본이 항상 장애 조치의 첫 번째 대상 옵션이 되므로 우선 순위를 설정할 필요가 없습니다.</div>
+<div class="comment-content">C는 경제적이지만 가장 큰 복제본이 항상 장애 조치의 첫 번째 대상 옵션이 되므로 우선순위를 설정할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,7 +618,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">CCM은 하나의 복제본으로만 설정할 수 있습니다. 그렇기 때문에 CCM 지원 복제본으로의 장애 조치를 보장하기 위해 계층 0에 배치합니다.</div>
+<div class="comment-content">CCM은 하나의 복제본으로만 설정할 수 있습니다. 이것이 바로 CCM 지원 복제본에 대한 장애 조치를 보장하기 위해 Tier-0에 배치한 이유입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,12 +658,12 @@
 				젊은이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 1일 화요일 17:12">
+<span class="comment-date align-middle" title="2022년 2월 1일 (화) 17:12">
 			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 D입니다. 복제본은 클러스터 캐시 관리를 사용할 때 기본 크기와 같아야 합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
+<div class="comment-content">답은 D입니다. 클러스터 캐시 관리를 사용할 때 복제본은 기본 복제본과 크기가 동일해야 합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -629,7 +672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -652,12 +695,12 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 21:27">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 21:27">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 복제본이 아니라 장애 조치하려는 복제본이므로 ans는 C입니다.</div>
+<div class="comment-content">모든 복제본은 없지만 장애 조치하려는 복제본이 있으므로 ans는 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -666,7 +709,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,13 +748,13 @@
 				슈라오시포프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 02일 목요일 00:31">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 2일 목요일 00:31">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">정답은 C입니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
+<div class="comment-content">대답은 C입니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -720,7 +763,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -748,7 +791,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">해당 링크에서 - "클러스터 캐시 관리를 위해서는 지정된 리더 인스턴스가 라이터와 동일한 인스턴스 클래스 유형 및 크기(예: db.r5.2xlarge 또는 db.r5.xlarge)를 가져야 합니다." 기본 크기와 동일합니다. 답 D로 갑니다</div>
+<div class="comment-content">해당 링크에서 - "클러스터 캐시 관리를 위해서는 지정된 판독기 인스턴스가 기록기와 동일한 인스턴스 클래스 유형 및 크기(예: db.r5.2xlarge 또는 db.r5.xlarge)를 가져야 합니다." 따라서 두 복제본 모두 기본과 같은 크기. 나는 답 D로 갈거야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -757,7 +800,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -780,12 +823,12 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 21:28">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 21:28">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">둘 다 아니고 하나만 좋다</div>
+<div class="comment-content">둘 다는 아니고 하나만 좋다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -794,7 +837,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -838,11 +881,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				G마티넬리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 11월 24일 수 12:26">
-			1년 8개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -856,7 +899,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -887,12 +930,12 @@
 				딥11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 30일 (토) 05:21">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 30일 토요일 05:21">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Ans는 C입니다. 이 문서 https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/는 기본 및 하나의 복제본의 우선 순위를 0으로 설정한다고 말합니다. D의 경우는 그렇지 않습니다.</div>
+<div class="comment-content">Ans는 C입니다. 이 문서 https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/에서는 기본 및 하나의 복제본의 우선 순위를 0으로 설정하라고 나와 있기 때문입니다. D의 경우는 그렇지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -901,7 +944,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -933,11 +976,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 17:24">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C Answer Tier Priority 0은 D를 제거하기 위한 단서입니다.</div>
+<div class="comment-content">C 답변 계층 우선순위 0은 D를 제거하는 단서입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -946,7 +989,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -970,11 +1013,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 22:00">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">둘 이상의 복제본이 동일한 우선 순위를 가질 수 있으므로 우선 순위 0은 이와 관련이 없습니다. 유일한 차이점은 비용이며 C가 더 저렴할 것입니다. "각 복제본에 우선 순위를 할당하여 장애 발생 후 Aurora 복제본이 기본 인스턴스로 승격되는 순서를 사용자 지정할 수 있습니다. 우선 순위 범위는 첫 번째 우선 순위가 0부터 마지막 ​​우선 순위가 15입니다. 기본 인스턴스가 실패하면 Amazon RDS는 우선 순위가 더 높은 Aurora 복제본을 새 기본 인스턴스로 승격합니다. 언제든지 Aurora 복제본의 우선 순위를 수정할 수 있습니다. 우선 순위를 수정해도 장애 조치가 트리거되지 않습니다. 둘 이상의 Aurora 복제본이 동일한 우선 순위를 공유할 수 있으므로 결과적으로 2개 이상의 Aurora 복제본이 동일한 우선 순위를 공유하는 경우 Amazon RDS는 크기가 가장 큰 복제본을 승격합니다. 둘 이상의 Aurora 복제본이 동일한 우선 순위와 크기를 공유하는 경우 Amazon RDS는 동일한 승격 계층에서 임의의 복제본을 승격합니다. "</div>
+<div class="comment-content">둘 이상의 복제본이 동일한 우선순위를 가질 수 있으므로 우선순위 0은 이와 관련이 없습니다. 유일한 차이점은 비용인 것으로 보이며 C가 더 저렴할 것입니다. "각 복제본에 우선순위를 할당하여 오류 발생 후 Aurora 복제본이 기본 인스턴스로 승격되는 순서를 사용자 정의할 수 있습니다. 우선순위 범위는 첫 번째 우선순위인 0부터 마지막 ​​우선순위인 15까지입니다. 기본 인스턴스가 실패하면 Amazon RDS 우선 순위가 더 높은 Aurora 복제본을 새 기본 인스턴스로 승격합니다. 언제든지 Aurora 복제본의 우선 순위를 수정할 수 있습니다. 우선 순위를 수정해도 장애 조치가 트리거되지 않습니다. 둘 이상의 Aurora 복제본이 동일한 우선 순위를 공유할 수 있으므로 승격 티어 두 개 이상의 Aurora 복제본이 동일한 우선순위를 공유하는 경우 Amazon RDS는 크기가 가장 큰 복제본을 승격시킵니다. 두 개 이상의 Aurora 복제본이 동일한 우선순위와 크기를 공유하는 경우 Amazon RDS는 동일한 승격 티어에서 임의의 복제본을 승격합니다. "</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -983,7 +1026,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1006,12 +1049,12 @@
 				im_not_robot
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 03:30">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 03:30">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CCM에는 계층 0이 있는 하나의 복제본이 필요합니다.</div>
+<div class="comment-content">CCM에는 계층 0이 있는 복제본 하나가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1020,7 +1063,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1064,15 +1107,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 13:05">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 13:05">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C와 D는 문제를 해결하는 데 똑같이 좋아 보이지만 읽기 전용 복제본을 1개만 업그레이드하는 것이 아니라 모든 읽기 복제본을 업그레이드할 때 D의 비용이 더 많이 듭니다. 따라서 비용 절감을 위해 Answer C를 사용하는 것이 좋습니다.</div>
+<div class="comment-content">C와 D는 문제를 해결하는 데 똑같이 좋아 보이지만 1이 아닌 모든 읽기 전용 복제본을 업그레이드하면 D의 비용이 더 많이 듭니다. 따라서 비용 절감을 위해 답변 C를 사용하는 것이 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1081,7 +1124,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1112,12 +1155,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 04:56">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 04:56">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나를 위해 C.</div>
+<div class="comment-content">나에게는 C.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1126,7 +1169,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1158,11 +1201,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 04:11">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C</div>
+<div class="comment-content">답: C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1171,7 +1214,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1207,7 +1250,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C &amp; D 사이에서 찢어졌습니다. 장애 조치 후 성능 문제는 짧은 기간 동안만 지속되므로 인스턴스 크기 조정보다 캐시 관리와 더 관련이 있습니다. CCM은 확실히 해결책입니다. C와 D 사이에서 저는 원래 읽기 전용 복제본이 비용 절감을 위해 더 낮은 구성이라는 사실을 고려하여 C로 갈 것입니다. 따라서 기본 인스턴스 크기와 일치하는 하나의 읽기 전용 복제본을 갖고 비용이 문제가 되는 경우 더 낮은 구성을 갖는 것이 이상적입니다. .</div>
+<div class="comment-content">C와 D 사이에서 고민 중입니다. 장애 조치 후 성능 문제는 짧은 기간 동안만 지속됩니다. 즉, 인스턴스 크기 조정보다 캐시 관리와 더 많은 관련이 있음을 의미합니다. CCM이 확실히 해결책입니다. C와 D 사이에서는 원래 읽기 전용 복제본이 비용 절감을 위해 더 낮은 구성이었다는 점을 고려하여 C를 선택하겠습니다. 따라서 기본 인스턴스 크기와 일치하는 읽기 전용 복제본 하나를 보유하고 비용이 우려되는 경우 다른 읽기 전용 복제본을 더 낮은 구성으로 갖는 것이 이상적입니다. .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1216,7 +1259,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1252,7 +1295,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C여야 함 리더 DB 인스턴스에 대한 승격 티어 우선 순위 설정 클러스터 캐시 관리를 위해 하나의 리더 DB 인스턴스를 설정합니다. 이렇게 하려면 라이터 DB 인스턴스와 동일한 인스턴스 클래스인 Aurora PostgreSQL 클러스터에서 리더를 선택합니다. 그런 다음 프로모션 계층 우선순위를 0으로 설정합니다.</div>
+<div class="comment-content">C여야 합니다. 리더 DB 인스턴스의 승격 티어 우선순위 설정 클러스터 캐시 관리를 위해 리더 DB 인스턴스 1개를 설정합니다. 이렇게 하려면 라이터 DB 인스턴스와 동일한 인스턴스 클래스인 Aurora PostgreSQL 클러스터에서 리더를 선택하십시오. 그런 다음 승격 계층 우선순위를 0으로 설정합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1261,7 +1304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1289,7 +1332,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 13일 수 01:22">
@@ -1297,7 +1340,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 기본 및 하나의 복제본에는 대형 인스턴스 유형, 높은 장애 조치 계층 0 및 클러스터 캐시 관리 기능이 있습니다.</div>
+<div class="comment-content">C 기본 및 하나의 복제본에는 대규모 인스턴스 유형, 높은 장애 조치 계층 0 및 클러스터 캐시 관리가 포함됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1306,7 +1349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1342,7 +1385,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨가 맞다! https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/</div>
+<div class="comment-content">C가 맞아요! https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1351,7 +1394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1379,15 +1422,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시험 2019
+				2019년 시험
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 06일 수 07:08">
+<span class="comment-date align-middle" title="2021년 10월 6일 수 07:08">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 맞습니다. 다음 문서의 '클러스터 캐시 관리 구성' 부분을 참조하십시오. 클러스터 캐시 관리 및 승격 계층 우선 순위를 구성하는 방법을 보여줍니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
+<div class="comment-content">C가 맞습니다. 다음 문서의 '클러스터 캐시 관리 구성' 부분을 참조하세요. 클러스터 캐시 관리 및 승격 계층 우선 순위를 구성하는 방법을 보여줍니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.cluster-cache-mgmt.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1396,7 +1439,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1427,12 +1470,12 @@
 				에비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 5일 화요일 20:51">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 20:51">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변은 C입니다. 동일한 클래스의 캐시 관리 작성기 인스턴스 및 복제본을 활성화하려면 승격 우선 순위로 Tier-0이 있어야 합니다. D 답변은 올바르지 않습니다. 두 판독기 인스턴스 모두 승격 우선 순위로 Tier-1이 있는데 이는 잘못된 것입니다.</div>
+<div class="comment-content">대답은 C입니다. 캐시 관리 쓰기 인스턴스를 활성화하려면 동일한 클래스의 복제본과 승격 우선 순위가 Tier-0이어야 합니다. 대답 D는 올바르지 않습니다. 두 리더 인스턴스 모두 승격 우선 순위가 Tier-1이므로 잘못된 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1441,7 +1484,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1472,12 +1515,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 15:32">
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 15:32">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C라고 생각하는데, 확실하지 않다</div>
+<div class="comment-content">내 생각엔 C인 것 같은데, 잘 모르겠어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1486,7 +1529,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1518,11 +1561,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 17:32">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 또는 D. 캐시 클러스터 관리는 확실히 답변에 있어야 합니다. -cache-management/#:~:text=%20cluster%20cache%20management%2C%20사용자,%20read%2Dwrite%20인스턴스의%20cache.</div>
+<div class="comment-content">C 또는 D 중 하나입니다. 캐시 클러스터 관리는 확실히 https://aws.amazon.com/about-aws/whats-new/2019/06/amazon-aurora-with-postgresql-compatibility-supports-cluster에 답이 있어야 합니다. -cache-management/#:~:text=%20cluster%20cache%20management%2C%20you로,%20read%2Dwrite%20인스턴스의%20캐시.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1531,7 +1574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1551,15 +1594,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스티브
+				스티브스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 30일 목요일 18:41">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 30일 목 18:41">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C여야 합니다. PostgreSQL과 호환되는 Amazon Aurora는 이제 클러스터 캐시 관리를 지원하여 장애 조치가 있는 경우 전체 성능에 대한 더 빠른 경로를 제공합니다. 클러스터 캐시 관리를 통해 Aurora PostgreSQL 클러스터의 특정 리더 DB 인스턴스를 장애 조치 대상으로 지정합니다. 클러스터 캐시 관리는 지정된 판독기 캐시의 데이터를 읽기-쓰기 인스턴스 캐시의 데이터와 동기화된 상태로 유지합니다. 장애 조치가 발생하면 지정된 판독기가 새로운 읽기-쓰기 인스턴스로 승격되고 워크로드는 캐시의 데이터에서 즉시 이점을 얻습니다.</div>
+<div class="comment-content">C여야 합니다. PostgreSQL과 호환되는 Amazon Aurora는 이제 클러스터 캐시 관리를 지원하여 장애 조치가 있는 경우 최대 성능을 발휘할 수 있는 더 빠른 경로를 제공합니다. 클러스터 캐시 관리를 사용하면 Aurora PostgreSQL 클러스터의 특정 리더 DB 인스턴스를 장애 조치 대상으로 지정합니다. 클러스터 캐시 관리는 지정된 판독기 캐시의 데이터를 읽기-쓰기 인스턴스 캐시의 데이터와 동기화된 상태로 유지합니다. 장애 조치가 발생하면 지정된 판독기가 새로운 읽기/쓰기 인스턴스로 승격되고 워크로드는 즉시 캐시의 데이터를 활용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1568,7 +1611,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1591,12 +1634,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 05일 금요일 16:30">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 5일 금요일 16:30">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 C</div>
+<div class="comment-content">답 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1605,7 +1648,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1633,15 +1676,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슈멀더
+				슈물더
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 16:44">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 16:44">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아니라 D입니다. D에는 동일한 인스턴스 클래스를 갖는 두 Aurora 복제본이 모두 포함됩니다. C 구성 하나의 복제본만 크기가 같고 장애 조치가 연속으로 두 번 발생하면?</div>
+<div class="comment-content">C가 아닌 D입니다. D에는 동일한 인스턴스 클래스를 갖기 위해 두 Aurora 복제본이 모두 포함됩니다. C의 경우 하나의 복제본만 동일한 크기를 가지며 장애 조치가 두 번 연속 발생한다면 어떻게 될까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1650,7 +1693,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1670,15 +1713,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				RDS봇
+				RDSBot
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 14:22">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 14:22">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">문서에는 복제본 중 하나(전부는 아님)를 지정해야 한다고 명확하게 언급되어 있습니다. https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/#:~:text=The%20cluster%20cache%20management%20(CCM,replica%20as% 20the%20failover%20target. "CCM(클러스터 캐시 관리) 기능은 장애 조치가 발생한 후 새로운 기본/작성기 인스턴스의 성능을 향상시킵니다. 복제본은 기본/작성기 인스턴스에서 캐시된 자주 액세스하는 버퍼를 선제적으로 읽습니다. CCM을 사용하면 다음을 지정할 수 있습니다. 장애 조치 대상으로 특정 Aurora PostgreSQL 복제본. CCM은 지정된 복제본 캐시의 데이터가 기본 DB 인스턴스 캐시의 데이터와 동기화되도록 합니다."</div>
+<div class="comment-content">문서에는 복제본 중 하나(전체는 아님)를 지정해야 한다고 명확하게 언급되어 있습니다. https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-cache-management/#:~:text=The%20cluster%20cache%20management%20(CCM,replica%20as% 20the%20failover%20target. "CCM(클러스터 캐시 관리) 기능은 장애 조치가 발생한 후 새로운 기본/작성기 인스턴스의 성능을 향상시킵니다. 복제본은 기본/작성기 인스턴스에서 캐싱된 자주 액세스되는 버퍼를 선제적으로 읽습니다. CCM을 사용하면 다음을 지정할 수 있습니다. 특정 Aurora PostgreSQL 복제본을 장애 조치 대상으로 지정 CCM은 지정된 복제본 캐시의 데이터가 기본 DB 인스턴스 캐시의 데이터와 동기화되도록 보장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1687,7 +1730,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1710,12 +1753,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 2일 화요일 18:07">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 18:07">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 C</div>
+<div class="comment-content">답 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1724,7 +1767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1760,7 +1803,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것이 D가 아닌 핵심입니다. D의 경우 Aurora는 Tier-1 복제본 중 하나를 임의로 선택하고(동일한 인스턴스 클래스이므로) 50% 확률로 구성된 것과 동일한 인스턴스가 아닐 것입니다. CCM. 답은 C입니다.</div>
+<div class="comment-content">이것이 D를 선택하지 않는 핵심입니다. D의 경우 Aurora는 Tier-1 복제본 중 하나를 임의로 선택하고(동일한 인스턴스 클래스이기 때문에) 구성한 것과 동일한 인스턴스가 아닐 확률이 50%입니다. CCM. 답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1769,7 +1812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1833,11 +1876,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 24일 금 14:30">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Ans D가 맞습니다.</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1846,7 +1889,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1898,7 +1941,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 09:21">
-			2 weeks ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1948,7 +1991,7 @@ https://docs.amazonaws.cn/en_us/AmazonRDS/latest/AuroraUserGuide/aurora_ccm_stat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 04:55">
-			7 months, 2 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1996,7 +2039,7 @@ This clearly eliminates Option-D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 14:48">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2048,7 +2091,7 @@ the details here https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Au
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Jun 2022 05:42">
-			1 year, 1 month ago
+			1 year, 2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2191,7 +2234,7 @@ https://aws.amazon.com/blogs/database/introduction-to-aurora-postgresql-cluster-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 22:53">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2511,7 +2554,7 @@ Therefore both replicas are required to be the same size as the primary. I'm goi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 Nov 2021 12:26">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2557,7 +2600,7 @@ Therefore both replicas are required to be the same size as the primary. I'm goi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 30 Oct 2021 05:21">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2602,7 +2645,7 @@ Therefore both replicas are required to be the same size as the primary. I'm goi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 17:24">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2640,7 +2683,7 @@ Tier Priority 0 is the clue to eliminate D:</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 22:00">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2681,7 +2724,7 @@ More than one Aurora Replica can share the same priority, resulting in promotion
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 03:30">
-			6 months, 1 week ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2742,7 +2785,7 @@ More than one Aurora Replica can share the same priority, resulting in promotion
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 13:05">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2787,7 +2830,7 @@ More than one Aurora Replica can share the same priority, resulting in promotion
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 04:56">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2832,7 +2875,7 @@ More than one Aurora Replica can share the same priority, resulting in promotion
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 04:11">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3204,7 +3247,7 @@ Answer D is NOT correct, both reader instances have tier-1 as promotion priority
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 17:32">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3242,7 +3285,7 @@ https://aws.amazon.com/about-aws/whats-new/2019/06/amazon-aurora-with-postgresql
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Sep 2021 18:41">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3524,7 +3567,7 @@ Answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Sep 2021 14:30">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

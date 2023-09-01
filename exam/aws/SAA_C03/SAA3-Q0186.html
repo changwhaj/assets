@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 186 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 186 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 186 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 186 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="847013">
 <p class="card-text">
 							
-								회사에 AWS로 마이그레이션해야 하는 Windows 기반 애플리케이션이 있습니다. 이 애플리케이션은 여러 가용 영역에 배포된 여러 Amazon EC2 Windows 인스턴스에 연결된 공유 Windows 파일 시스템을 사용해야 합니다. <br/><br/>솔루션 설계자는 이 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								회사에 AWS로 마이그레이션해야 하는 Windows 기반 애플리케이션이 있습니다. 애플리케이션을 사용하려면 여러 가용 영역에 배포된 여러 Amazon EC2 Windows 인스턴스에 연결된 공유 Windows 파일 시스템을 사용해야 합니다. <br/><br/>솔루션 아키텍트는 이 요구 사항을 충족하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -101,7 +164,7 @@
 													C.
 												</span> 
 											
-											Amazon Elastic File System(Amazon EFS)을 사용하여 파일 시스템을 구성합니다. EFS 파일 시스템을 각 Windows 인스턴스에 마운트합니다.
+											Amazon Elastic File System(Amazon EFS)을 사용하여 파일 시스템을 구성합니다. 각 Windows 인스턴스에 EFS 파일 시스템을 탑재합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a> 
-							
-							시간: <i>
-							2022년 11월 16일, 오후 2:14</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a>
-							
-							at <i>
-							Nov. 16, 2022, 2:14 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,10 +295,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 14:14">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -303,7 +346,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 12:05">
-			1일, 4시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -317,7 +360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -349,12 +392,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:39">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">옵션 B: Windows 파일 서버용 Amazon FSx를 구성합니다. 이 서비스는 여러 EC2 Windows 인스턴스에서 쉽게 공유할 수 있는 완전히 관리되는 Windows 파일 시스템을 제공합니다. 고성능을 제공하며 파일 스토리지가 필요한 Windows 애플리케이션을 지원합니다. 옵션 A는 볼륨 게이트웨이 모드의 AWS Storage Gateway가 공유 파일 시스템용으로 설계되지 않았기 때문에 올바르지 않습니다. 옵션 C는 Amazon EFS가 여러 인스턴스에 탑재될 수 있지만 Linux 기반 파일 시스템이고 Windows 애플리케이션에 적합하지 않을 수 있기 때문에 올바르지 않습니다. Amazon EBS 볼륨을 여러 인스턴스에 동시에 연결하고 탑재하는 것은 지원되지 않기 때문에 옵션 D는 올바르지 않습니다.</div>
+<div class="comment-content">옵션 B: Windows 파일 서버용 Amazon FSx를 구성합니다. 이 서비스는 여러 EC2 Windows 인스턴스에서 쉽게 공유할 수 있는 완전관리형 Windows 파일 시스템을 제공합니다. 고성능을 제공하며 파일 저장이 필요한 Windows 애플리케이션을 지원합니다. 볼륨 게이트웨이 모드의 AWS Storage Gateway는 공유 파일 시스템용으로 설계되지 않았기 때문에 옵션 A는 올바르지 않습니다. Amazon EFS는 여러 인스턴스에 탑재될 수 있지만 Linux 기반 파일 시스템이므로 Windows 애플리케이션에 적합하지 않을 수 있으므로 옵션 C는 올바르지 않습니다. Amazon EBS 볼륨을 여러 인스턴스에 동시에 연결하고 탑재하는 것은 지원되지 않으므로 옵션 D는 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,13 +437,13 @@
 				브마로디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 25일 목요일 07:09">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 25일 (목) 07:09">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">옵션 B가 정답입니다.</div>
+<div class="comment-content">보기 B가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,13 +483,13 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 25일 일 13:36">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 25일 일요일 13:36">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">참조: https://www.examtopics.com/discussions/amazon/view/28006-exam-aws-certified-solutions-architect-associate-saa-c02/ https://docs.aws.amazon.com/AmazonECS/ 최신/developerguide/wfsx-volumes.html</div>
+<div class="comment-content">참고 자료: https://www.examtopics.com/discussions/amazon/view/28006-exam-aws-certified-solutions-architect-associate-saa-c02/ https://docs.aws.amazon.com/AmazonECS/ 최신/developerguide/wfsx-volumes.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,11 +526,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 17:55">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 17:55">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,16 +572,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 04:17">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 04:17">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A. 볼륨 게이트웨이 모드에서 AWS Storage Gateway를 구성합니다. 각 Windows 인스턴스에 볼륨을 마운트합니다. AWS Storage Gateway는 파일 스토리지 서비스가 아니기 때문에 이 옵션은 올바르지 않습니다. 자주 액세스하는 데이터에 대한 낮은 대기 시간 액세스를 유지하면서 클라우드에 데이터를 저장할 수 있는 하이브리드 스토리지 서비스입니다. Amazon EC2 인스턴스에 대한 파일 스토리지를 제공하지 않고 온프레미스 스토리지 시스템과 통합하도록 설계되었습니다. B. Windows 파일 서버용 Amazon FSx를 구성합니다. Amazon FSx 파일 시스템을 각 Windows 인스턴스에 탑재합니다. 이것이 정답입니다. Amazon FSx for Windows File Server는 SMB 프로토콜을 통해 액세스할 수 있는 네이티브 Windows 파일 시스템을 제공하는 완전 관리형 파일 스토리지 서비스입니다. Windows 기반 응용 프로그램과 함께 사용하도록 특별히 설계되었으며,</div>
+<div class="comment-content">A. 볼륨 게이트웨이 모드에서 AWS Storage Gateway를 구성합니다. 각 Windows 인스턴스에 볼륨을 마운트합니다. AWS Storage Gateway는 파일 스토리지 서비스가 아니기 때문에 이 옵션은 올바르지 않습니다. 자주 액세스하는 데이터에 대해 낮은 지연 시간을 유지하면서 데이터를 클라우드에 저장할 수 있는 하이브리드 스토리지 서비스입니다. Amazon EC2 인스턴스에 파일 스토리지를 제공하는 것이 아니라 온프레미스 스토리지 시스템과 통합하도록 설계되었습니다. B. Windows 파일 서버용 Amazon FSx를 구성합니다. Amazon FSx 파일 시스템을 각 Windows 인스턴스에 탑재합니다. 이것이 정답입니다. Windows 파일 서버용 Amazon FSx는 SMB 프로토콜을 통해 액세스할 수 있는 기본 Windows 파일 시스템을 제공하는 완전관리형 파일 스토리지 서비스입니다. Windows 기반 응용 프로그램과 함께 사용하도록 특별히 설계되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,15 +610,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 04:18">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 04:18">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. Amazon Elastic File System(Amazon EFS)을 사용하여 파일 시스템을 구성합니다. EFS 파일 시스템을 각 Windows 인스턴스에 마운트합니다. Amazon EFS는 Linux 기반 애플리케이션과 함께 사용하도록 설계된 파일 스토리지 서비스이기 때문에 이 옵션은 올바르지 않습니다. Windows 기반 응용 프로그램과 호환되지 않으며 SMB 프로토콜을 통해 액세스할 수 없습니다. D. 필요한 크기로 Amazon Elastic Block Store(Amazon EBS) 볼륨을 구성합니다. 각 EC2 인스턴스를 볼륨에 연결합니다. 볼륨 내의 파일 시스템을 각 Windows 인스턴스에 마운트합니다. Amazon EBS는 파일 스토리지 서비스가 아니라 블록 스토리지 서비스이기 때문에 이 옵션은 올바르지 않습니다. 한 번에 단일 EC2 인스턴스에서 액세스할 수 있는 원시 블록 수준 데이터를 저장하도록 설계되었습니다. 여러 인스턴스에서 액세스할 수 있는 공유 파일 시스템으로 사용하도록 설계되지 않았습니다.</div>
+<div class="comment-content">C. Amazon Elastic File System(Amazon EFS)을 사용하여 파일 시스템을 구성합니다. 각 Windows 인스턴스에 EFS 파일 시스템을 탑재합니다. Amazon EFS는 Linux 기반 애플리케이션과 함께 사용하도록 설계된 파일 스토리지 서비스이기 때문에 이 옵션은 올바르지 않습니다. Windows 기반 응용 프로그램과 호환되지 않으며 SMB 프로토콜을 통해 액세스할 수 없습니다. D. 필요한 크기로 Amazon Elastic Block Store(Amazon EBS) 볼륨을 구성합니다. 각 EC2 인스턴스를 볼륨에 연결합니다. 볼륨 내의 파일 시스템을 각 Windows 인스턴스에 마운트합니다. Amazon EBS는 파일 스토리지 서비스가 아닌 블록 스토리지 서비스이기 때문에 이 옵션은 올바르지 않습니다. 한 번에 단일 EC2 인스턴스에서 액세스할 수 있는 원시 블록 수준 데이터를 저장하도록 설계되었습니다. 여러 인스턴스에서 액세스할 수 있는 공유 파일 시스템으로 사용하도록 설계되지 않았습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -623,12 +666,12 @@
 				착하게 굴 어라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:03">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 05:03">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B - 맞습니다</div>
+<div class="comment-content">B - 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,11 +708,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 19:12">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 19:12">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,12 +757,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 17:57">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 17:57">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -728,7 +771,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -759,12 +802,12 @@
 				xua81376
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 20일 일 13:39">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 20일 일요일 13:39">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Windows용 B FSx</div>
+<div class="comment-content">B FSx(윈도우용)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,11 +848,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 18일 금요일 12:10">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B는 올바른 선택입니다</div>
+<div class="comment-content">B가 올바른 선택입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -850,7 +893,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 15:04">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -864,7 +907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -919,7 +962,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 14:14">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -969,7 +1012,7 @@ EFS --&gt; Linux NFS</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 12:05">
-			1 day, 4 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1015,7 +1058,7 @@ EFS --&gt; Linux NFS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:39">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1067,7 +1110,7 @@ Option D is incorrect because attaching and mounting an Amazon EBS volume to mul
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 07:09">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1113,7 +1156,7 @@ Option D is incorrect because attaching and mounting an Amazon EBS volume to mul
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 13:36">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1162,7 +1205,7 @@ https://docs.aws.amazon.com/AmazonECS/latest/developerguide/wfsx-volumes.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 17:55">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1209,7 +1252,7 @@ https://pilotcoresystems.com/insights/ebs-efs-fsx-s3-how-these-storage-options-d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 04:17">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1253,7 +1296,7 @@ This is the correct answer. Amazon FSx for Windows File Server is a fully manage
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 04:18">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1312,7 +1355,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:03">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1357,7 +1400,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 19:12">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1403,7 +1446,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 17:57">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1448,7 +1491,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 20 Nov 2022 13:39">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1493,7 +1536,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Nov 2022 12:10">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1538,7 +1581,7 @@ This option is incorrect because Amazon EBS is a block storage service, not a fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 15:04">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

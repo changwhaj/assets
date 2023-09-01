@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 41 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 41 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 41 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 41 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807283">
 <p class="card-text">
 							
-								한 회사에 크기가 200GB이고 RPO가 6시간인 Amazon RDS 다중 AZ DB 인스턴스가 있습니다. 회사의 재해 복구 정책을 충족하려면 데이터베이스 백업을 다른 리전에 복사해야 합니다. 이 회사는 솔루션이 비용 효율적이고 운영상 효율적이어야 한다고 요구합니다. <br/>데이터베이스 전문가가 데이터베이스 백업을 다른 지역으로 복사하려면 어떻게 해야 합니까?<br/>
+								한 회사에 크기가 200GB이고 RPO가 6시간인 Amazon RDS 다중 AZ DB 인스턴스가 있습니다. 회사의 재해 복구 정책을 충족하려면 데이터베이스 백업을 다른 지역에 복사해야 합니다. 회사는 비용 효율적이고 운영 효율성이 뛰어난 솔루션을 요구합니다. <br/>데이터베이스 백업을 다른 지역에 복사하려면 데이터베이스 전문가가 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807283" type="application/json">[{"voted_answers": "C", "vote_count": 3, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											Amazon RDS 자동 스냅샷을 사용하고 AWS Lambda를 사용하여 스냅샷을 다른 지역으로 복사
+											Amazon RDS 자동 스냅샷을 사용하고 AWS Lambda를 사용하여 스냅샷을 다른 리전에 복사합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -98,7 +161,7 @@
 													C.
 												</span> 
 											
-											6시간마다 Amazon RDS 스냅샷을 생성하는 AWS Lambda 함수를 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 다른 리전에 복사합니다.
+											6시간마다 Amazon RDS 스냅샷을 찍는 AWS Lambda 함수를 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 다른 리전으로 복사합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -109,10 +172,10 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">D </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -120,22 +183,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-with-amazon-rds/
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2020 <i>
-							년 7월 14일, 오전 9:59 </i><a class="title-username" style="">
-								Mickysingh
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mickysingh
-							</a>
-							
-							at <i>
-							July 14, 2020, 9:59 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,14 +291,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 30일 목요일 06:49">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 30일 목 06:49">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 C입니다. Amazon RDS 자동 스냅샷을 사용하고 AWS Lambda를 사용하여 스냅샷을 다른 지역으로 복사합니다. 자동 스냅샷은 하루에 한 번만 생성되며 RPO는 6시간이므로 옵션이 아닙니다. B. 6시간마다 Amazon RDS 자동 스냅샷을 사용하고 Amazon S3 교차 리전 복제를 사용하여 스냅샷을 다른 리전으로 복사 6시간마다 자동 스냅샷을 생성할 수 없습니다. C. AWS Lambda 함수를 생성하여 6시간마다 Amazon RDS 스냅샷을 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 복사합니다. 다른 지역에서만 가능한 옵션 D. 다른 지역에서 Amazon RDS에 대한 교차 지역 읽기 전용 복제본을 생성하고 읽기 전용 복제본의 자동 스냅샷 생성 비용 효율적이지 않은 복제본은 가장 비싼 DR 옵션입니다.</div>
+<div class="comment-content">답은 C입니다. Amazon RDS 자동 스냅샷을 사용하고 AWS Lambda를 사용하여 스냅샷을 다른 리전에 복사합니다. 자동 스냅샷은 하루에 한 번만 생성되며 RPO는 6시간이므로 옵션이 아닙니다. B. 6시간마다 Amazon RDS 자동 스냅샷을 사용하고 Amazon S3 교차 리전 복제를 사용하여 스냅샷을 다른 리전에 복사합니다. 6시간마다 자동 스냅샷을 생성할 수 없습니다. C. AWS Lambda 함수를 생성하여 6시간마다 Amazon RDS 스냅샷을 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 다른 리전으로 복사합니다. 다른 지역에서만 가능한 옵션 D. 다른 지역의 Amazon RDS에 대한 지역 간 읽기 전용 복제본을 생성하고 읽기 전용 복제본의 자동 스냅샷을 생성합니다. 비용 효율적이지 않으며 복제본은 가장 비싼 DR 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -284,15 +327,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슈멀더
+				슈물더
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 2일 (토) 13:46">
+<span class="comment-date align-middle" title="2021년 10월 2일 토요일 13:46">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">선택하기가 어렵습니다. 정답은 RDS가 특정 시점으로 복원할 수 있으므로 6시간마다 스냅샷을 수행할 필요가 없다는 것입니다.</div>
+<div class="comment-content">선택하기가 어렵습니다. 정답은 RDS가 특정 시점으로 복원할 수 있으므로 6시간마다 스냅샷을 생성할 필요가 없다는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -301,7 +344,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -332,12 +375,12 @@
 				잔시에
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 00:37">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 00:37">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C에 동의합니다. '자동 스냅샷'을 언급/사용하는 모든 옵션은 삭제되어야 하므로 ABD는 없습니다. RDS에서 AWS 콘솔을 통해 확인되었습니다. RDS 자동 백업 기간의 시간 간격을 0으로 변경하면 자동 백업이 비활성화됩니다. 참조: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html</div>
+<div class="comment-content">C에 동의합니다. '자동화된 스냅샷'을 언급하거나 사용하는 모든 옵션은 삭제되어야 하므로 ABD가 없습니다. RDS의 AWS 콘솔을 통해 확인되었습니다. RDS 자동 백업 기간의 시간 간격을 0으로 변경하면 자동 백업이 비활성화됩니다. 참조: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -346,7 +389,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,14 +425,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 08:37">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,12 +476,12 @@
 				사친
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 7월 10일 일 08:41">
+<span class="comment-date align-middle" title="2022년 7월 10일 일요일 08:41">
 			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">리전 전체에서 6시간마다 200GB의 스냅샷을 복사하는 것은 비용이 더 많이 드는 접근 방식이며 람다가 15분 동안 200GB 스냅샷을 처리하는 작업을 완료하도록 하는 것도 실행 가능하지 않습니다. 그래서 저는 D가 최선의 선택이라고 생각합니다.</div>
+<div class="comment-content">지역 전체에서 6시간마다 200GB의 스냅샷을 복사하는 것은 비용이 많이 드는 접근 방식이며 람다가 15분 안에 200GB 스냅샷을 복사하는 작업을 완료하도록 보장하는 것도 실행 가능하지 않습니다. 그래서 저는 D가 최선의 선택이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,15 +518,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsguys
+				나쁜 놈들
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 5월 22일 일요일 14:18">
-			1년, 2개월 전
+			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">c가 맞습니다.</div>
+<div class="comment-content">c 말이 맞아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -492,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,13 +566,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 22:07">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 22:07">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">x A &amp; B 출력: 하루에 자동 스냅샷만 허용됨 4C가 필요합니다. 6시간마다 Amazon RDS 스냅샷을 생성하는 AWS Lambda 함수를 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 다른 리전으로 복사합니다(비용 효율적) D. 다른 리전에서 Amazon RDS에 대한 교차 리전 읽기 전용 복제본을 생성하고 읽기 전용 복제본의 자동 스냅샷 생성(비용이 많이듦)</div>
+<div class="comment-content">x A 및 B 출력: 하루에 자동 스냅샷만 허용 4 C. AWS Lambda 함수를 생성하여 6시간마다 Amazon RDS 스냅샷을 생성하고 두 번째 Lambda 함수를 사용하여 스냅샷을 다른 리전으로 복사(비용 효율적) D. 다른 리전에서 Amazon RDS에 대한 리전 간 읽기 전용 복제본을 생성하고 읽기 전용 복제본의 자동 스냅샷을 생성합니다(비용이 많이 듭니다).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -566,16 +609,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 19:12">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 19:12">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">확실히 (C) - Udemy 과정에서 Stephen Maarek과 Riyaz가 논의한 pfficial 샘플 시험의 질문이기도 합니다.</div>
+<div class="comment-content">확실히(C) - Udemy 과정에서 Stephen Maarek과 Riyaz가 논의한 공식 샘플 시험의 질문이기도 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -612,16 +655,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				순핀
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 28일 화요일 08:31">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 28일 (화) 08:31">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">시스템 스냅샷은 6시간 요구 사항을 충족할 수 없습니다. https://aws.amazon.com/blogs/database/%C2%AD%C2%AD%C2%ADautomating-cross-region-cross-account-snapshot-copies-with-the- 스크립트로 제어해야 합니다. Amazon-Aurora용 스냅샷 도구/</div>
+<div class="comment-content">시스템 스냅샷은 6시간 요구 사항을 충족할 수 없습니다. https://aws.amazon.com/blogs/database/%C2%AD%C2%AD%C2%ADautomating-cross-region-cross-account-snapshot-copies-with-the- 스크립트로 제어해야 합니다. 스냅샷 도구-amazon-aurora/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,12 +704,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 15:32">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 15:32">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">시험 준비하시는 분 계신가요? 우리는 학습 자료를 서로 공유할 수 있으며, 이는 모두에게 유익할 것입니다. "awsdbguru at gmail"에서 저에게 이메일을 보내실 수 있습니다.</div>
+<div class="comment-content">시험을 계획하고 있는 사람이 있나요? 우리는 학습 자료를 서로 공유할 수 있으며, 이는 두 사람 모두에게 유익할 것입니다. "awsdbguru at gmail"로 이메일을 보내실 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -675,7 +718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,12 +749,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 04일 목요일 16:00">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 (목) 16:00">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 ==&gt;&gt; C입니다. 여기 있는 Q에서 실제 시험에서 얼마나 많은 Q를 얻을 수 있는지 아십니까? 이 시험을 준비하는 사람 중 그룹 스터디를 함께 하고 싶은 사람은 메일 아이디로 댓글을 달아주세요.</div>
+<div class="comment-content">정답은 ==&gt;&gt; C입니다. 여기 있는 Q에서 실제 시험에서 Q를 얼마나 받을지 아시나요? 이 시험을 준비하고 있고 우리와 함께 그룹 스터디를 하고 싶은 사람은 메일 ID로 댓글을 달아주세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -720,7 +763,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,11 +795,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 11월 3일 수 13:41">
-			1년 9개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-with-amazon-rds/ 자동 백업은 매일이므로 6시간 RPO는 불가능합니다. C만 정답입니다.</div>
+<div class="comment-content">https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-with-amazon-rds/ 자동 백업은 매일 이루어지므로 6시간 RPO는 불가능합니다. C만 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -765,7 +808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -796,12 +839,12 @@
 				딥11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 31일 일 19:20">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 31일 일요일 19:20">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 C입니다. D를 제거한 이유는 RDS SQL SERVER가 지역 간 읽기 전용 복제본을 지원하지 않고 질문에 RDS에서 사용된 데이터베이스 엔진이 명시되어 있지 않기 때문입니다.</div>
+<div class="comment-content">답은 C입니다. D를 제거하는 이유는 RDS SQL SERVER가 지역 간 읽기 복제본을 지원하지 않고 질문에 RDS에서 사용되는 데이터베이스 엔진이 명시되어 있지 않기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -810,7 +853,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -838,11 +881,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 30일 (토) 02:40">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 30일 토요일 02:40">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -855,7 +898,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -887,11 +930,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 29일 금 03:09">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C라고 생각합니다.</div>
+<div class="comment-content">제 생각엔 C인 것 같아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -900,7 +943,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -932,11 +975,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 12:37">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: "운영 효율성"이라는 키가 있는 D. 옵션 C를 사용하면 6시간마다 한 지역에서 다른 지역으로 200GB의 데이터를 복사해야 합니다.</div>
+<div class="comment-content">답변: "운영 효율성"이라는 키가 있는 D입니다. 옵션 C를 사용하면 6시간마다 한 지역에서 다른 지역으로 200GB의 데이터를 복사해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -945,7 +988,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -976,12 +1019,12 @@
 				조빈아카조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 21:31">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 21:31">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A - 틀렸습니다. 자동 스냅샷을 다른 지역으로 복사할 수 없는 것 같습니다. 먼저 동일한 리전에서 자동 스냅샷의 복사본을 생성해야 합니다. B - 틀렸음 - 자동화된 스냅샷은 하루에 한 번 생성되며, 혼자서는 제안된 RPO인 6시간을 충족하지 못합니다. C - 요구 사항에 대한 최선의 대답입니다. D - 지역 간 DR에 가장 적합한 옵션입니다. 그러나 다른 지역에 읽기 복제본을 갖는 것이 옵션 C보다 비용이 많이 듭니다.</div>
+<div class="comment-content">A - 틀렸어요 - 자동 스냅샷을 다른 지역으로 복사할 수 없는 것 같아요. 먼저 동일한 리전에서 자동 스냅샷의 복사본을 생성해야 합니다. B - 잘못됨 - 자동화된 스냅샷이 하루에 한 번 생성되며 그것만으로는 제안된 RPO인 6시간을 충족할 수 없습니다. C - 현재 요구 사항에 대한 최선의 답변입니다. D - 교차 지역 DR에 가장 적합한 옵션입니다. 그러나 다른 지역에 읽기 전용 복제본을 두는 것은 옵션 C보다 비용이 더 많이 듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -990,7 +1033,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1021,12 +1064,12 @@
 				물h30
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 07:37">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 07:37">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ANS: B 데이터베이스 스냅샷은 전체 백업 역할을 하는 전체 DB 인스턴스의 수동(사용자 시작) 백업입니다. Amazon S3에 저장되며 명시적으로 삭제할 때까지 유지됩니다. 이러한 스냅샷은 다른 리전 및 계정에 복사 및 공유할 수 있습니다. 지역 복제가 빠른 방법입니다. 비용이 얼마인지 확실하지 않음</div>
+<div class="comment-content">ANS: B 데이터베이스 스냅샷은 전체 백업 역할을 하는 전체 DB 인스턴스의 수동(사용자 시작) 백업입니다. Amazon S3에 저장되며 명시적으로 삭제할 때까지 유지됩니다. 이러한 스냅샷은 다른 리전 및 계정에 복사하고 공유할 수 있습니다. 지역 복제는 빠른 방법입니다. 비용이 얼마나 드는지 잘 모르겠습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1035,7 +1078,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1058,8 +1101,8 @@
 				물h30
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 14:31">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 14:31">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1072,7 +1115,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1108,15 +1151,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				사바스
+				SA압바스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 23일 (토) 13:48">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 23일 토요일 13:48">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"운영 효율성"의 핵심을 명심하십시오. 두 개의 람다 기능은 관리하기 어려울 수 있습니다. 그래서 디.</div>
+<div class="comment-content">"운영 효율적인" 두 가지 람다 기능의 핵심은 관리하기 어려울 수 있다는 점을 명심하세요. 그래서 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1125,7 +1168,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1153,7 +1196,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 20일 수 12:05">
@@ -1161,7 +1204,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C여야 합니다. 스냅샷 솔루션은 복제본에 비해 비용 효율적입니다. 복사하는 데 시간이 오래 걸릴 수 있으므로 실행할 두 개의 람다</div>
+<div class="comment-content">C는 그래야 한다. 스냅샷 솔루션은 복제본에 비해 비용 효율적입니다. 복사하는 데 시간이 오래 걸릴 수 있으므로 실행할 람다 두 개</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1170,7 +1213,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1201,12 +1244,12 @@
 				사류
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 05:28">
+<span class="comment-date align-middle" title="2021년 10월 19일 (화) 05:28">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1215,7 +1258,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1251,7 +1294,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C의 문제는 마지막 분/시간에 스냅샷을 생성하고 다른 지역으로 복사하는 것입니다. 시간이 걸립니다. 이 기간 동안 주요 지역이 다운되면 어떻게 될까요? RPO가 충족되지 않습니다. D는 가능성만 보인다...</div>
+<div class="comment-content">C의 문제는 마지막 분/시간에 스냅샷을 생성하고 다른 지역으로 복사하는 것입니다. 시간이 걸립니다. 이 와중에 메인 지역이 다운되면 어떻게 될까요? RPO가 충족되지 않습니다. 그렇다면 D는 가능성이 있는 것 같습니다...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1260,7 +1303,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1284,11 +1327,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 23일 목요일 22:46">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">귀하의 우려는 RTO에 관한 것이며 질문은 RPO에 대해 묻습니다.</div>
+<div class="comment-content">귀하의 우려 사항은 RTO에 관한 것이며 질문은 RPO에 대해 묻습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1297,7 +1340,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1341,7 +1384,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C입니다. 자동 스냅샷이 표시되지 않습니다.</div>
+<div class="comment-content">답은 C입니다. 자동 스냅샷은 표시되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1350,7 +1393,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1381,8 +1424,8 @@
 				피르바트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 27일 (월) 18:14">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 27일 월요일 18:14">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1395,7 +1438,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1426,12 +1469,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 24일 금 19:14">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 24일 금요일 19:14">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1440,7 +1483,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1471,12 +1514,12 @@
 				빌리매디슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 23일 목요일 16:21">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 23일 목 16:21">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 다음 링크의 테이블당 읽기 복제본이 너무 비싸기 때문에 틀렸습니다. 표에 따르면 A가 가장 저렴합니다. https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-with-amazon-rds/ https://aws.amazon.com/blogs/database/implementing-a-disaster- 복구 전략 with-amazon-rds/</div>
+<div class="comment-content">다음 링크의 테이블당 읽기 전용 복제본이 너무 비싸기 때문에 D는 틀렸습니다. 표에 따르면 A가 가장 저렴합니다. https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-with-amazon-rds/ https://aws.amazon.com/blogs/database/implementing-a-disaster- Amazon-rds를 사용한 복구 전략/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1485,7 +1528,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1508,12 +1551,12 @@
 				빌리매디슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 04일 (월) 03:42">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 03:42">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">자동 스냅샷은 하루에 한 번 발생하고 여기에서 RPO 목표는 6시간이므로 응답을 C로 변경합니다.</div>
+<div class="comment-content">자동 스냅샷은 하루에 한 번 발생하고 여기서 RPO 목표는 6시간이므로 대답을 C로 변경합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1522,7 +1565,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1561,12 +1604,12 @@
 				미키싱
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 21일 화요일 05:36">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 21일 (화) 05:36">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Ans D는 비용 효율성을 충족하지 못하지만 정확합니다.</div>
+<div class="comment-content">Ans D는 비용 효율성을 만족시키지 못하지만 정확합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1575,7 +1618,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1630,7 +1673,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 30 Sep 2021 06:49">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1781,7 +1824,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomated
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 08:37">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1874,7 +1917,7 @@ So i think D is best choice.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 May 2022 14:18">
-			1 year, 2 months ago
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2013,7 +2056,7 @@ D. Create a cross-Region read replica for Amazon RDS in another Region and take 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Dec 2021 08:31">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2243,7 +2286,7 @@ Only C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 30 Oct 2021 02:40">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2288,7 +2331,7 @@ Only C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 29 Oct 2021 03:09">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2333,7 +2376,7 @@ Only C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 12:37">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2379,7 +2422,7 @@ With option C, it is necessary to copy 200GB of data from one region to another 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 21:31">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2427,7 +2470,7 @@ D - best option for cross region DR. However having a read-replica in another re
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 07:37">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2466,7 +2509,7 @@ and region replication is fast way. not sure how much cost</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 14:31">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2519,7 +2562,7 @@ and region replication is fast way. not sure how much cost</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 23 Oct 2021 13:48">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2694,7 +2737,7 @@ D seems only possibility then...</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Dec 2021 22:46">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2793,7 +2836,7 @@ Automated snapshot are not visible</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Sep 2021 18:14">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2839,7 +2882,7 @@ https://lgallardo.com/2017/02/11/usando-aws-lambda-para-copiar-snapshots-de-rds-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Sep 2021 19:14">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2884,7 +2927,7 @@ https://lgallardo.com/2017/02/11/usando-aws-lambda-para-copiar-snapshots-de-rds-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Sep 2021 16:21">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2976,7 +3019,7 @@ https://aws.amazon.com/blogs/database/implementing-a-disaster-recovery-strategy-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Sep 2021 05:36">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

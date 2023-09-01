@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 35 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 35 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 35 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 35 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807277">
 <p class="card-text">
 							
-								회사에는 SQL Server 환경용 Amazon RDS에 Amazon CloudWatch를 사용하는 데이터베이스 모니터링 솔루션이 있습니다. <br/>수집된 표준 메트릭을 사용하여 최근 CPU 사용률이 급증한 원인을 확인하지 못했습니다. CPU 스파이크로 인해 애플리케이션 성능이 저하되어 사용자에게 영향을 미쳤습니다. 데이터베이스 <br/>전문가는 CPU 스파이크의 원인을 파악해야 합니다. <br/>CPU 로드가 증가하는 동안 실행 중인 프로세스 및 쿼리에 대한 가시성을 높이려면 어떤 단계 조합을 수행해야 합니까? (두 가지를 선택하세요.)<br/>
+								한 회사에는 SQL Server용 Amazon RDS 환경에 Amazon CloudWatch를 사용하는 데이터베이스 모니터링 솔루션이 있습니다. 최근 CPU 사용률이 급증한 원인은 <br/>수집된 표준 측정항목을 사용하여 확인되지 않았습니다. CPU 스파이크로 인해 애플리케이션 성능이 저하되어 사용자에게 영향을 미쳤습니다. 데이터베이스 <br/>전문가는 CPU 스파이크의 원인을 파악해야 합니다. <br/>CPU 로드가 증가하는 동안 실행되는 프로세스 및 쿼리에 대한 더 많은 가시성을 제공하려면 어떤 단계 조합을 수행해야 합니까? (2개를 선택하세요.)<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807277" type="application/json">[{"voted_answers": "BE", "vote_count": 3, "is_most_voted": false}]</script>
@@ -84,39 +147,39 @@
 													A.
 												</span> 
 											
-											Amazon CloudWatch Events를 활성화하고 CPU 스파이크를 유발하는 수신 T-SQL 문을 봅니다.
+											Amazon CloudWatch Events를 활성화하고 CPU 급증을 유발하는 수신 T-SQL 문을 확인합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Enhanced Monitoring 메트릭을 활성화하여 RDS SQL Server DB 인스턴스 수준에서 CPU 사용률을 봅니다.
+											Enhanced Monitoring 지표를 활성화하여 RDS SQL Server DB 인스턴스 수준에서 CPU 사용률을 확인합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											RDS SQL Server DB 인스턴스에서 반복되는 쿼리를 지원하는 캐싱 계층을 구현합니다.
+											RDS SQL Server DB 인스턴스에 대한 반복 쿼리를 지원하기 위해 캐싱 계층을 구현합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon QuickSight를 사용하여 실행 중인 SQL 문을 봅니다.
+											Amazon QuickSight를 사용하여 실행 중인 SQL 문을 확인합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											Amazon RDS 성능 개선 도우미를 활성화하여 데이터베이스 로드를 보고 대기, SQL 문, 호스트 또는 사용자별로 로드를 필터링합니다.
+											Amazon RDS 성능 개선 도우미를 활성화하여 데이터베이스 로드를 확인하고 대기, SQL 문, 호스트 또는 사용자별로 로드를 필터링합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -126,22 +189,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">BE (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mickysingh
-							</a> 
-							
-							시간: <i>
-							2020년 7월 14일 오후 3:29</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -219,16 +272,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mickysingh
-							</a>
-							
-							at <i>
-							July 14, 2020, 3:29 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -260,14 +303,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 04일 (월) 23:17">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 23:17">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B&amp;E도 https://aws.amazon.com/premiumsupport/knowledge-center/rds-instance-high-cpu/ "몇 가지 요인으로 인해 CPU 사용률이 증가할 수 있습니다. 예를 들어 사용자가 시작한 과도한 워크로드, 분석 쿼리, 장기간의 교착 상태 및 잠금 대기, 여러 동시 트랜잭션, 장기 실행 트랜잭션 또는 CPU 리소스를 활용하는 기타 프로세스. 먼저 다음을 통해 CPU 사용량의 소스를 식별할 수 있습니다. 향상된 모니터링 사용 성능 개선 도우미 사용"</div>
+<div class="comment-content">B&amp;E도 https://aws.amazon.com/premiumsupport/knowledge-center/rds-instance-high-cpu/ "여러 요인으로 인해 CPU 사용률이 증가할 수 있습니다. 예를 들어 사용자가 시작한 과도한 워크로드, 분석 쿼리, 장기간 교착 상태 및 잠금 대기, 다중 동시 트랜잭션, 장기 실행 트랜잭션 또는 CPU 리소스를 활용하는 기타 프로세스. 먼저 다음을 통해 CPU 사용량의 소스를 식별할 수 있습니다. 성능 개선 도우미를 사용하여 향상된 모니터링 사용"</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,18 +347,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 17일 일 04:28">
+<span class="comment-date align-middle" title="2021년 10월 17일 일요일 04:28">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나도 B &amp; E</div>
+<div class="comment-content">나에게도 B &amp; E</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -324,7 +367,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -358,13 +401,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 19:54">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 19:54">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">성능 개선 도우미를 사용하여 향상된 모니터링을 사용하여 CPU 사용량의 소스를 식별할 수 있습니다."</div>
+<div class="comment-content">성능 개선 도우미를 사용하여 향상된 모니터링 사용"을 통해 CPU 사용량의 소스를 식별할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -373,7 +416,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -404,13 +447,13 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 22:03">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 22:03">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">시인성이 좋다</div>
+<div class="comment-content">가시성이 좋아진다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -419,7 +462,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -450,12 +493,12 @@
 				뮤트란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 14일 목요일 20:08">
+<span class="comment-date align-middle" title="2021년 10월 14일 (목) 20:08">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: BE</div>
+<div class="comment-content">답: BE</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -464,7 +507,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -495,12 +538,12 @@
 				에비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 06일 수 07:24">
+<span class="comment-date align-middle" title="2021년 10월 6일 수 07:24">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B,E</div>
+<div class="comment-content">답은 B,E이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -509,7 +552,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -540,12 +583,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 4일 월요일 06:14">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 06:14">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예 B와 E 여기</div>
+<div class="comment-content">네 여기 B와 E가 있어요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -554,7 +597,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -586,7 +629,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 11:34">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -599,7 +642,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,7 +846,7 @@ Using Performance Insights"</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 22:03">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -984,7 +1027,7 @@ Using Performance Insights"</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 11:34">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

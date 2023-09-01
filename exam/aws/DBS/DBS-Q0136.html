@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 136 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 136 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 136 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 136 discussion</h1>
@@ -72,10 +135,10 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807378">
 <p class="card-text">
 							
-								한 회사에서 Application Load Balancer 뒤의 Amazon EC2 인스턴스에 배포되는 새로운 애플리케이션을 개발했습니다. EC2 인스턴스는 sg-application-servers라는 보안 그룹을 사용합니다. 이 회사는 애플리케이션의 데이터를 저장할 데이터베이스가 필요하며 Amazon RDS for MySQL DB 인스턴스를 사용하기로 결정했습니다. DB 인스턴스는 프라이빗 DB 서브넷에 배포됩니다. <br/>DB 인스턴스 보안 그룹에 대한 가장 제한적인 구성은 무엇입니까?<br/>
+								한 회사는 Application Load Balancer 뒤의 Amazon EC2 인스턴스에 배포되는 새로운 애플리케이션을 개발했습니다. EC2 인스턴스는 sg-application-servers라는 보안 그룹을 사용합니다. 회사는 애플리케이션의 데이터를 저장하기 위해 데이터베이스가 필요하며 MySQL DB 인스턴스용 Amazon RDS를 사용하기로 결정했습니다. DB 인스턴스는 프라이빗 DB 서브넷에 배포됩니다. <br/>DB 인스턴스 보안 그룹에 대해 가장 제한적인 구성은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807378" type="application/json">[{"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="807378" type="application/json">[{"voted_answers": "A", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,9 @@
 												</span> 
 											
 											포트 3306의 sg-application-servers 보안 그룹에서 들어오는 트래픽만 허용합니다.
-										</li>
+										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
+                최다 투표
+            </span></li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
@@ -109,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -119,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a> 
-							
-							2021 <i>
-							년 4월 3일 오전 3:55</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -155,7 +210,7 @@
 								A company developed a new application that is deployed on Amazon EC2 instances behind an Application Load Balancer. The EC2 instances use the security group named sg-application-servers. The company needs a database to store the data from the application and decides to use an Amazon RDS for MySQL DB instance. The DB instance is deployed in a private DB subnet.<br/>What is the MOST restrictive configuration for the DB instance security group?<br/>
 </p>
 <div class="voted-answers-tally d-none">
-<script id="807378" type="application/json">[{"voted_answers": "A", "vote_count": 3, "is_most_voted": false}]</script>
+<script id="807378" type="application/json">[{"voted_answers": "A", "vote_count": 5, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -165,7 +220,9 @@
 												</span>
 											
 											Only allow incoming traffic from the sg-application-servers security group on port 3306.
-										</li>
+										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
+                Most Voted
+            </span></li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
@@ -199,22 +256,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a>
-							
-							at <i>
-							April 3, 2021, 3:55 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 9월 24일 금 09:34">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 데이터베이스 포트 3306으로 응답하고 전체 서브넷 대신 특정 서브넷만 허용하는 것이 좋습니다.</div>
+<div class="comment-content">A. 데이터베이스 포트 3306을 선택하고 전체 서브넷 대신 특정 서브넷만 허용하는 것이 더 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -299,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -323,6 +370,55 @@
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988199" id="comment-988199">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				프라나바_GCP
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 23일 수요일 12:47">
+			3일, 19시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">A. 포트 3306의 sg-application-servers 보안 그룹에서 들어오는 트래픽만 허용합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="901874" id="comment-901874">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -335,28 +431,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 5월 19일 금요일 13:29">
-			2개월, 4주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 "정답"은 도대체 어디에서 오는 것입니까? sg-application-servers 구성원의 연결만 허용하는 것이 전체 서브넷의 트래픽을 허용하는 것보다 더 제한적입니다. 3306이 아마도 RDS의 올바른 포트일 것입니다. 그러므로 A</div>
+<div class="comment-content">도대체 이런 '정답'은 어디서 나오는 걸까요? sg-application-servers 구성원의 연결만 허용하는 것이 전체 서브넷의 트래픽을 허용하는 것보다 더 제한적입니다. 3306은 아마도 RDS의 올바른 포트일 것입니다. 그러므로 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,11 +481,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 4일 금요일 00:56">
-			9개월, 2주 전
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C로 가겠습니다. 보안 그룹에는 지정된 IP 주소 및 TCP 포트에 대한 액세스를 허용하거나 거부하는 규칙이 포함되어 있습니다. 그런 다음 리소스(예: ec2, rds 등)와 연결됩니다. 질문은 EC2가 보안 그룹 sg-application-servers를 사용한다고 말합니다. 즉, sg-application-servers에는 현재 ec2 통신이 작동하도록 하는 규칙이 포함되어 있습니다. RDS 인스턴스가 이 ec2와 통신하도록 허용하려면 SG를 생성하고 포트 3306을 참조하여 수신 규칙에 ec2 인스턴스의 주소를 지정해야 합니다. 또는 이 동일한 포트에서 전체 서브넷의 트래픽을 허용합니다. 나는 보안 그룹 문서를 다시 읽었으며 A 대답이 말하는 것처럼 일종의 "보안 리소스 그룹"으로 참조하기 위해 aws 리소스를 그룹화하는 것에 대해 아무것도 보지 못했습니다. https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html</div>
+<div class="comment-content">C를 선택하겠습니다. 보안 그룹에는 지정된 IP 주소 및 TCP 포트에 대한 액세스를 허용하거나 거부하는 규칙이 포함되어 있습니다. 그런 다음 리소스(예: ec2, rds 등)와 연결됩니다. 질문에 따르면 EC2는 보안 그룹 sg-application-servers를 사용합니다. 즉, sg-application-servers에는 현재 EC2 통신이 작동하도록 하는 규칙이 포함되어 있습니다. RDS 인스턴스가 이 ec2와 통신하도록 허용하려면 SG를 생성하고 포트 3306을 참조하여 수신 규칙에 ec2 인스턴스의 주소를 지정해야 합니다. 또는 이 동일한 포트에서 전체 서브넷의 트래픽을 허용해야 합니다. 나는 보안 그룹 문서를 다시 읽었으며 A 답변에서 말하는 것처럼 일종의 "보안 리소스 그룹"으로 참조하기 위해 aws 리소스를 그룹화하는 것에 대해 아무것도 보지 못했습니다. https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -424,12 +517,12 @@
 				im_not_robot
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 11일 (토) 04:07">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 11일 토요일 04:07">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">씨가 틀렸습니다. 전체 서브넷을 허용한다는 것은 해당 서브넷의 모든 애플리케이션을 허용한다는 의미이기 때문에 --&gt; 안전하지 않습니다. 참고: 보안 그룹에는 '거부' 규칙이 없습니다. A가 답입니다. 보안 A가 보안 B의 트래픽을 허용한다는 것은 보안 A가 보안 B를 사용하는 모든 리소스를 허용한다는 것을 의미합니다.</div>
+<div class="comment-content">C는 틀렸습니다. 전체 서브넷을 허용한다는 것은 해당 서브넷의 모든 애플리케이션을 허용한다는 의미이므로 보안되지 않습니다. 참고: 보안 그룹에는 '거부' 규칙이 없습니다. A가 답이다. 보안 A가 보안 B의 트래픽을 허용한다는 것은 보안 A가 보안 B를 사용하는 모든 리소스를 허용한다는 의미입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -438,7 +531,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -492,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,12 +616,12 @@
 				괴물
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 12일 수 14:04">
+<span class="comment-date align-middle" title="2022년 1월 12일 수요일 14:04">
 			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: A</div>
+<div class="comment-content">답: A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,8 +661,8 @@
 				조회수_23
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 00:00">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 00:00">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -582,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,11 +707,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 13:10">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -627,7 +720,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -655,10 +748,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 04일 (월) 02:21">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 02:21">
 			1년, 10개월 전
 		</span>
 </div>
@@ -672,7 +765,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -727,7 +820,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 24 Sep 2021 09:34">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -805,6 +898,55 @@ from resources that are assigned to the same security group ?</div>
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988199" id="comment-988199">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Pranava_GCP
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Wed 23 Aug 2023 12:47">
+			3 days, 19 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">A. Only allow incoming traffic from the sg-application-servers security group on port 3306.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="901874" id="comment-901874">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -820,11 +962,8 @@ from resources that are assigned to the same security group ?</div>
 				aviathor
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Fri 19 May 2023 13:29">
-			2 months, 4 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -839,7 +978,7 @@ Allowing connections only from members of sg-application-servers is more restric
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -872,7 +1011,7 @@ Allowing connections only from members of sg-application-servers is more restric
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Nov 2022 00:56">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -914,7 +1053,7 @@ https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 04:07">
-			6 months ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1105,7 +1244,7 @@ A is the answer. Security A allow traffic from Security B mean that Security A a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 13:10">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

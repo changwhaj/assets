@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 312 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 주제 1 문제 312 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 312 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 312 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 312 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="868783">
 <p class="card-text">
 							
-								한 회사에 여러 Amazon EC2 인스턴스에서 실행되는 애플리케이션이 있습니다. 각 EC2 인스턴스에는 여러 Amazon Elastic Block Store(Amazon EBS) 데이터 볼륨이 연결되어 있습니다. 애플리케이션의 EC2 인스턴스 구성 및 데이터는 야간에 백업해야 합니다. 또한 애플리케이션은 다른 AWS 리전에서 복구 가능해야 합니다. <br/><br/>운영상 가장 효율적인 방식으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사에 여러 Amazon EC2 인스턴스에서 실행되는 애플리케이션이 있습니다. 각 EC2 인스턴스에는 여러 Amazon Elastic Block Store(Amazon EBS) 데이터 볼륨이 연결되어 있습니다. 애플리케이션의 EC2 인스턴스 구성과 데이터는 매일 밤 백업해야 합니다. 또한 애플리케이션은 다른 AWS 리전에서도 복구 가능해야 합니다. <br/><br/>어떤 솔루션이 운영상 가장 효율적인 방식으로 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											야간 백업을 수행하기 위해 AWS Backup을 사용하여 백업 계획을 생성합니다. 백업을 다른 리전에 복사합니다. 애플리케이션의 EC2 인스턴스를 리소스로 추가합니다.
+											AWS Backup을 사용하여 야간 백업을 수행하여 백업 계획을 만듭니다. 백업을 다른 리전에 복사합니다. 애플리케이션의 EC2 인스턴스를 리소스로 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											야간 백업을 수행하기 위해 AWS Backup을 사용하여 백업 계획을 만듭니다. 백업을 다른 리전에 복사합니다. 애플리케이션의 EBS 볼륨을 리소스로 추가합니다.
+											AWS Backup을 사용하여 야간 백업을 수행하여 백업 계획을 만듭니다. 백업을 다른 리전에 복사합니다. 애플리케이션의 EBS 볼륨을 리소스로 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											애플리케이션 EBS 볼륨의 야간 스냅샷을 예약하고 스냅샷을 다른 가용 영역에 복사하는 AWS Lambda 함수를 작성합니다.
+											애플리케이션 EBS 볼륨의 야간 스냅샷을 예약하고 해당 스냅샷을 다른 가용 영역에 복사하는 AWS Lambda 함수를 작성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">B (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">B (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zTopic
-							</a> 
-							
-							2023 <i>
-							년 2월 18일 오후 12:57</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								zTopic
-							</a>
-							
-							at <i>
-							Feb. 18, 2023, 12:57 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,28 +289,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				퉁팜
+				텅팜
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 14:56">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 14:56">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/vi/blogs/aws/aws-backup-ec2-instances-efs-single-file-restore-and-cross-region-backup/ EC2 인스턴스를 백업할 때 AWS Backup 인스턴스에 연결된 모든 EBS 볼륨을 보호하고 원래 EC2 인스턴스에서 2개를 제외한 모든 매개변수를 저장하는 AMI에 볼륨을 연결합니다.</div>
+<div class="comment-content">https://aws.amazon.com/vi/blogs/aws/aws-backup-ec2-instances-efs-single-file-restore-and-cross-region-backup/ EC2 인스턴스를 백업할 때 AWS 백업 인스턴스에 연결된 모든 EBS 볼륨을 보호하고 두 개를 제외한 원래 EC2 인스턴스의 모든 매개 변수를 저장하는 AMI에 연결합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -295,18 +338,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				카스포츠
+				카스포트
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 13:21">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 13:21">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 답이므로 요구 사항은 "애플리케이션의 EC2 인스턴스 구성 및 데이터를 야간에 백업해야 합니다"이므로 "애플리케이션의 EC2 인스턴스를 리소스로 추가"해야 합니다. 이 옵션은 EC2 구성과 데이터를 모두 백업합니다.</div>
+<div class="comment-content">B가 대답이므로 요구 사항은 "애플리케이션의 EC2 인스턴스 구성 및 데이터를 야간에 백업해야 합니다"이므로 "애플리케이션의 EC2 인스턴스를 리소스로 추가"해야 합니다. 이 옵션은 EC2 구성과 데이터를 모두 백업합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -315,7 +358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,14 +386,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				긱보이
+				괴짜
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 13:53">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,11 +434,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				긱보이
+				괴짜
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 13:52">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,11 +479,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알메로시니어
+				알메로수석
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 22일 수 08:03">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,13 +528,13 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수요일 05:33">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수 05:33">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 EC2 인스턴스 및 EBS 볼륨의 백업 프로세스를 자동화하고 백업을 다른 지역으로 복사하는 백업 계획을 생성할 수 있으므로 가장 적합한 솔루션입니다. 또한 애플리케이션의 EC2 인스턴스를 리소스로 추가하여 해당 구성 및 데이터가 야간에 백업되도록 할 수 있습니다. A와 D에는 사용자 지정 Lambda 함수를 작성하여 스냅샷 프로세스를 자동화하는 작업이 포함되며, 이는 복잡할 수 있고 더 많은 유지 관리 노력이 필요할 수 있습니다. 또한 이러한 옵션은 백업 및 복구를 관리하고 스냅샷을 다른 지역으로 복사하기 위한 통합 솔루션을 제공하지 않습니다. 옵션 C에는 EBS 볼륨에 대해서만 백업을 수행하기 위해 AWS Backup으로 백업 계획을 생성하는 것이 포함됩니다. 이 접근 방식은 EC2 인스턴스와 해당 구성을 백업하지 않습니다.</div>
+<div class="comment-content">B는 EC2 인스턴스 및 EBS 볼륨의 백업 프로세스를 자동화하고 백업을 다른 지역에 복사하는 백업 계획을 생성할 수 있기 때문에 가장 적합한 솔루션입니다. 또한 애플리케이션의 EC2 인스턴스를 리소스로 추가하여 해당 구성과 데이터가 매일 밤 백업되도록 할 수 있습니다. A와 D에는 스냅샷 프로세스를 자동화하기 위한 사용자 지정 Lambda 함수 작성이 포함되는데, 이는 복잡할 수 있고 더 많은 유지 관리 노력이 필요할 수 있습니다. 또한 이러한 옵션은 백업 및 복구를 관리하고 스냅샷을 다른 지역에 복사하기 위한 통합 솔루션을 제공하지 않습니다. 옵션 C에는 AWS Backup을 사용하여 EBS 볼륨에 대해서만 백업을 수행하는 백업 계획을 생성하는 것이 포함됩니다. 이 접근 방식은 EC2 인스턴스와 해당 구성을 백업하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,11 +567,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 8일 토요일 08:18">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">데이터는 EBS 스토리지 볼륨에 저장되며 EC2는 데이터를 보유하지 않습니다. "애플리케이션의 EBS 볼륨을 리소스로 추가"해야 한다고 생각합니다.</div>
+<div class="comment-content">데이터는 EBS 스토리지 볼륨에 저장되는데, EC2는 데이터를 보관하지 않습니다. "애플리케이션의 EBS 볼륨을 리소스로 추가"가 필요하다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,16 +616,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에버플라이
+				항상
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 10:50">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 10:50">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">애플리케이션의 EC2 인스턴스 구성 및 데이터는 EBS 볼륨에 저장됩니다.</div>
+<div class="comment-content">애플리케이션의 EC2 인스턴스 구성과 데이터는 EBS 볼륨에 저장되는 거죠?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -591,7 +634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -619,11 +662,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Rehan33
+				레한33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 09:00">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 09:00">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,12 +702,12 @@
 				오바툰데
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 20일 월요일 20:07">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 20일 (월) 20:07">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"애플리케이션의 EC2 인스턴스 구성 및 데이터를 야간에 백업해야 하기 때문에"</div>
+<div class="comment-content">"애플리케이션의 EC2 인스턴스 구성 및 데이터를 매일 밤 백업해야 하기 때문입니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,16 +752,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				후링규288
+				푸링유288
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 19일 일 16:45">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 19일 일요일 16:45">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS Backup을 사용하여 EC2 인스턴스, Amazon EBS 스냅샷 및 복구에 필요한 기타 리소스를 포함하는 백업 계획을 생성합니다. 야간 일정으로 실행되도록 백업 계획을 구성할 수 있습니다.</div>
+<div class="comment-content">AWS Backup을 사용하여 EC2 인스턴스, Amazon EBS 스냅샷 및 복구에 필요한 기타 리소스를 포함하는 백업 계획을 생성합니다. 백업 계획은 야간 일정에 따라 실행되도록 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -727,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,13 +801,13 @@
 				z주제
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 18일 (토) 12:57">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 18일 토요일 12:57">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">애플리케이션의 EC2 인스턴스 구성 및 데이터를 야간에 백업해야 함 &gt;&gt; B</div>
+<div class="comment-content">애플리케이션의 EC2 인스턴스 구성 및 데이터를 매일 밤 백업해야 함 &gt;&gt; B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -796,12 +839,12 @@
 				놀라홀라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 19일 일 17:24">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 19일 일요일 17:24">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">하지만 데이터는 EBS에 백업이 필요하지 않나요?</div>
+<div class="comment-content">그런데 데이터는 EBS에 백업해야 하는 거 아닌가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -810,7 +853,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -873,7 +916,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 14:56">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -923,7 +966,7 @@ When you back up an EC2 instance, AWS Backup will protect all EBS volumes attach
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 13:21">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -971,7 +1014,7 @@ When you back up an EC2 instance, AWS Backup will protect all EBS volumes attach
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 13:53">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1016,7 +1059,7 @@ When you back up an EC2 instance, AWS Backup will protect all EBS volumes attach
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 13:52">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1061,7 +1104,7 @@ When you back up an EC2 instance, AWS Backup will protect all EBS volumes attach
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 08:03">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1109,7 +1152,7 @@ https://aws.amazon.com/blogs/aws/aws-backup-ec2-instances-efs-single-file-restor
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 05:33">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1150,7 +1193,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 08:18">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1203,7 +1246,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 10:50">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1249,7 +1292,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Feb 2023 09:00">
-			5 months, 3 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1286,7 +1329,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Feb 2023 20:07">
-			5 months, 3 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1339,7 +1382,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 16:45">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1385,7 +1428,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 12:57">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1423,7 +1466,7 @@ Option C involves creating a backup plan with AWS Backup to perform backups for 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 17:24">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

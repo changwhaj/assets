@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 78 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 78 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 78 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 78 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 78 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839835">
 <p class="card-text">
 							
-								회사는 사용자 트랜잭션 데이터를 Amazon DynamoDB 테이블에 보관해야 합니다. 회사는 데이터를 7년간 보관해야 합니다. <br/>이러한 요구 사항을 충족하는 운영상 가장 효율적인 솔루션은 무엇입니까?
+								회사는 Amazon DynamoDB 테이블에 사용자 트랜잭션 데이터를 보관해야 합니다. 회사는 해당 데이터를 7년간 보관해야 합니다. <br/>이러한 요구 사항을 충족하는 가장 운영 효율적인 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											DynamoDB point-in-time recovery를 사용하여 테이블을 지속적으로 백업하십시오.
+											DynamoDB 특정 시점 복구를 사용하여 테이블을 지속적으로 백업하세요.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											DynamoDB 콘솔을 사용하여 테이블의 온디맨드 백업을 생성합니다. Amazon S3 버킷에 백업을 저장합니다. S3 버킷에 대한 S3 수명 주기 구성을 설정합니다.
+											DynamoDB 콘솔을 사용하여 테이블의 주문형 백업을 생성합니다. Amazon S3 버킷에 백업을 저장합니다. S3 버킷에 대한 S3 수명 주기 구성을 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS Lambda 함수를 호출하는 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성합니다. 테이블을 백업하고 백업을 Amazon S3 버킷에 저장하도록 Lambda 함수를 구성합니다. S3 버킷에 대한 S3 수명 주기 구성을 설정합니다.
+											AWS Lambda 함수를 호출하는 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성합니다. 테이블을 백업하고 Amazon S3 버킷에 백업을 저장하도록 Lambda 함수를 구성합니다. S3 버킷에 대한 S3 수명 주기 구성을 설정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="56 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="56 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2022년 10월 17일 오후</i> 
-							
-							6:48 <a class="title-username" style="">
-								123jhl0
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								123jhl0
-							</a>
-							
-							at <i>
-							Oct. 17, 2022, 6:48 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,15 +295,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 18:48">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 18:48">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B입니다. "Amazon DynamoDB는 PITR(특정 시점 복구) 및 온디맨드 백업의 두 가지 백업 유형을 제공합니다. (==&gt; D는 정답이 아닙니다.) PITR은 테이블을 특정 시점으로 복구하는 데 사용됩니다. 고객이 잘못된 코드, 악의적인 액세스 또는 사용자 오류로 인해 실수로 테이블을 삭제하거나 쓰는 것을 완화하는 데 사용되는 롤링 35일 기간입니다.(==&gt; A는 답이 아닙니다.) 온디맨드 백업은 장기간 아카이빙 및 보존이라는 용어는 일반적으로 고객이 규정 준수 및 규제 요구 사항을 충족하도록 지원하는 데 사용됩니다. 이것은 AWS Backup을 사용하여 Amazon DynamoDB에 대한 예약된 온디맨드 백업을 설정하는 방법에 대한 두 개의 블로그 게시물 시리즈 중 두 번째입니다. 1부에서는 단계를 설명합니다. AWS Management 콘솔에서 DynamoDB 테이블에 대한 예약 백업을 설정합니다." (==&gt; DynamoBD 콘솔이 아니며 C도 답이 아닙니다.) https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon-dynamodb- 사용-aws-backup/</div>
+<div class="comment-content">대답은 B입니다. "Amazon DynamoDB는 특정 시점 복구(PITR)와 온디맨드 백업이라는 두 가지 유형의 백업을 제공합니다. (==&gt; D는 답이 아닙니다.) PITR은 테이블을 특정 시점으로 복구하는 데 사용됩니다. 고객이 잘못된 코드, 악의적인 액세스 또는 사용자 오류로 인해 테이블에 실수로 삭제하거나 쓰는 것을 완화하는 데 사용되는 연속 35일 창입니다. (==&gt; A는 답이 아닙니다.) 주문형 백업은 장기간 백업을 위해 설계되었습니다. 고객이 규정 준수 및 규제 요구 사항을 충족하는 데 일반적으로 사용되는 보관 및 보존이라는 용어는 AWS Backup을 사용하여 Amazon DynamoDB에 대한 예약된 온디맨드 백업을 설정하는 방법에 대한 두 개의 블로그 게시물 시리즈 중 두 번째입니다. 1부에서는 단계를 제시합니다. AWS Management Console에서 DynamoDB 테이블에 대한 예약된 백업을 설정합니다." (==&gt; DynamoBD 콘솔이 아니며 C도 답이 아닙니다.) https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon-dynamodb- 사용-aws-backup/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -292,8 +335,8 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 8일 (토) 15:51">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 8일 토요일 15:51">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -337,12 +380,12 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 21:45">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 21:45">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저장 시간 때문에 대답은 C라고 생각합니다.</div>
+<div class="comment-content">저장시간 때문에 정답은 C인 것 같아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,19 +430,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 03:52">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이러한 요구 사항을 충족하는 운영상 가장 효율적인 솔루션은 AWS Backup을 사용하여 테이블에 대한 백업 일정 및 보존 정책을 생성하는 옵션 B를 사용하는 것입니다. AWS Backup은 AWS 리소스 전체에서 데이터 백업을 쉽게 중앙 집중화하고 자동화할 수 있는 완전 관리형 백업 서비스입니다. 이를 통해 DynamoDB 테이블을 정기적으로 자동 백업하는 백업 정책 및 일정을 생성할 수 있습니다. 필요한 기간 동안 백업이 보존되도록 보존 정책을 지정할 수도 있습니다. 이 솔루션은 완전히 자동화되어 있으며 최소한의 유지 관리가 필요하므로 운영상 가장 효율적인 옵션입니다.</div>
+<div class="comment-content">이러한 요구 사항을 충족하는 가장 운영 효율적인 솔루션은 AWS Backup을 사용하여 테이블에 대한 백업 일정 및 보존 정책을 생성하는 옵션 B를 사용하는 것입니다. AWS Backup은 AWS 리소스 전반에 걸쳐 데이터 백업을 쉽게 중앙 집중화하고 자동화할 수 있게 해주는 완전관리형 백업 서비스입니다. 이를 통해 정기적으로 DynamoDB 테이블을 자동으로 백업하는 백업 정책 및 일정을 생성할 수 있습니다. 필요한 기간 동안 백업이 보존되도록 보존 정책을 지정할 수도 있습니다. 이 솔루션은 완전히 자동화되어 최소한의 유지 관리만 필요하므로 운영상 가장 효율적인 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -428,15 +471,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 03:52">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB point-in-time recovery를 사용하는 옵션 A도 실행 가능한 옵션이지만 지속적인 백업이 필요하므로 AWS Backup을 사용하는 것보다 더 리소스 집약적일 수 있고 더 높은 비용이 발생할 수 있습니다. 테이블의 온디맨드 백업을 생성하고 S3 버킷에 저장하는 옵션 C도 실행 가능한 옵션이지만 수동 개입이 필요하고 AWS 백업의 자동화 및 예약 기능을 제공하지 않습니다. Amazon EventBridge(CloudWatch Events) 및 Lambda 함수를 사용하여 테이블을 백업하고 S3 버킷에 저장하는 옵션 D도 실행 가능한 옵션이지만 AWS Backup을 사용할 때보다 설정 및 유지 관리가 더 복잡합니다.</div>
+<div class="comment-content">DynamoDB 특정 시점 복구를 사용하는 옵션 A도 실행 가능한 옵션이지만 지속적인 백업이 필요하므로 AWS Backup을 사용할 때보다 리소스 집약적이고 비용이 더 많이 발생할 수 있습니다. 테이블의 온디맨드 백업을 생성하여 S3 버킷에 저장하는 옵션 C도 실행 가능한 옵션이지만 수동 개입이 필요하고 AWS Backup의 자동화 및 예약 기능을 제공하지 않습니다. Amazon EventBridge(CloudWatch Events) 및 Lambda 함수를 사용하여 테이블을 백업하고 S3 버킷에 저장하는 옵션 D도 실행 가능한 옵션이지만 AWS Backup을 사용할 때보다 더 복잡한 설정 및 유지 관리가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,12 +531,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 10일 목요일 21:18">
-			5일, 23시간 전
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS Backup 사용의 주요 이점은 다음과 같습니다. 최소한의 운영 오버헤드가 필요한 완전관리형 백업 서비스 기본 제공 일정, 보존 정책 및 백업 모니터링 DynamoDB에 대한 특정 시점 복원 지원 자동화되고 확장 가능한 솔루션</div>
+<div class="comment-content">AWS Backup 사용의 주요 이점은 다음과 같습니다. 최소한의 운영 오버헤드가 필요한 완전 관리형 백업 서비스 내장된 예약, 보존 정책 및 백업 모니터링 DynamoDB에 대한 특정 시점 복원 지원 자동화되고 확장 가능한 솔루션</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,13 +576,13 @@
 				tamefi5512
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 1일 (토) 16:21">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 1일 토요일 16:21">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B - AWS 백업을 통해 쉽게 설정할 수 있고 "가장 효율적인 운영"이라는 키워드를 나타내기 때문에 대답입니다. 다른 답변은 비용 효율적임을 나타냅니다.</div>
+<div class="comment-content">B - AWS 백업을 통해 쉽게 설정할 수 있기 때문에 대답입니다. 이는 "MOST Operational Efficient"라는 키워드를 나타냅니다. 다른 답변은 비용 효율성을 나타냅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,12 +622,12 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 18:31">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 18:31">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS Backup은 DynamoDB를 비롯한 다양한 AWS 서비스에서 백업 생성 및 관리 프로세스를 간소화하는 완전관리형 백업 서비스입니다. 백업 일정 및 보존 정책을 정의하여 자동으로 백업을 수행하고 원하는 기간 동안 보존할 수 있습니다. AWS Backup을 사용하면 백업 관리의 운영 오버헤드를 서비스 자체로 오프로드하여 지정된 보존 기간에 따라 데이터를 보호하고 보존할 수 있습니다. 이 솔루션은 AWS 서비스용으로 특별히 설계된 중앙 집중식 자동 백업 관리 접근 방식을 제공하기 때문에 다른 옵션에 비해 더 효율적입니다. 백업 프로세스를 수동으로 구성하고 유지 관리할 필요가 없으므로 상당한 운영 노력 없이 데이터 보존 규정 준수를 보다 쉽게 ​​보장할 수 있습니다.</div>
+<div class="comment-content">AWS Backup은 DynamoDB를 포함한 다양한 AWS 서비스에서 백업을 생성하고 관리하는 프로세스를 단순화하는 완전 관리형 백업 서비스입니다. 이를 통해 백업 일정 및 보존 정책을 정의하여 자동으로 백업을 수행하고 원하는 기간 동안 보존할 수 있습니다. AWS Backup을 사용하면 백업 관리에 따른 운영 오버헤드를 서비스 자체로 오프로드하여 지정된 보존 기간에 따라 데이터를 보호하고 보관할 수 있습니다. 이 솔루션은 AWS 서비스용으로 특별히 설계된 중앙 집중식 자동 백업 관리 접근 방식을 제공하므로 다른 옵션에 비해 더 효율적입니다. 백업 프로세스를 수동으로 구성하고 유지 관리할 필요가 없으므로 상당한 운영 노력 없이도 데이터 보존 규정 준수를 보다 쉽게 ​​보장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -593,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -625,11 +668,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 15일 목요일 05:29">
-			2 달전
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">PITR은 롤링 35일 창의 특정 시점으로 테이블을 복구하는 데 사용되며, 이는 고객이 잘못된 코드, 악의적인 액세스 또는 사용자 오류로 인해 테이블에 실수로 삭제하거나 쓰는 것을 완화하는 데 사용됩니다. (==&gt; A가 정답입니다)</div>
+<div class="comment-content">PITR은 35일 기간 내 원하는 시점으로 테이블을 복구하는 데 사용됩니다. 이는 고객이 잘못된 코드, 악의적인 액세스 또는 사용자 오류로 인해 테이블에 실수로 삭제하거나 쓰는 것을 줄이는 데 도움이 됩니다. (==&gt; A가 답이다)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -670,11 +713,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 26일 금요일 18:49">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB point-in-time recovery보다 저렴한 AWS Backup 사용</div>
+<div class="comment-content">DynamoDB 특정 시점 복구보다 저렴한 AWS Backup 사용</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,8 +757,8 @@
 				크라켄21
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 04:32">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 04:32">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -729,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,16 +800,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				클레이테크
+				클레이텍
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 19:42">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 19:42">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon DynamoDB 테이블에 7년 동안 데이터를 보관하려면 AWS Backup을 사용하여 테이블에 대한 백업 일정 및 보관 정책을 생성할 수 있습니다. DynamoDB 특정 시점 복구를 사용하여 테이블을 지속적으로 백업할 수도 있습니다.</div>
+<div class="comment-content">Amazon DynamoDB 테이블에 데이터를 7년 동안 보관하려면 AWS Backup을 사용하여 테이블에 대한 백업 일정과 보관 정책을 생성하면 됩니다. DynamoDB 특정 시점 복구를 사용하여 테이블을 지속적으로 백업할 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -807,7 +850,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 08:23">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,15 +892,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				직스007
+				지그스007
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 13:07">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 13:07">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">7년 동안 S3 버킷에 대한 S3 수명 주기 구성과 s3에 데이터를 저장해야 하기 때문에 C가 맞습니다. DynamoDB 콘솔을 사용하여 테이블의 온디맨드 백업을 사용했습니다. 35일 이상인 경우 주문형 백업을 사용할 수 있습니다. 주문형은 테이블 데이터의 완전히 일관된 스냅샷을 제공하고 테이블이 삭제된 후에도 영원히 유지됩니다.</div>
+<div class="comment-content">C는 s3에 데이터를 저장해야 하고 S3 버킷에 대한 S3 수명 주기 구성을 7년 동안 저장해야 하기 때문에 정확합니다. 그리고 DynamoDB 콘솔을 사용하여 테이블의 온디맨드 백업을 사용했습니다. 35일 이상인 경우 주문형 백업을 사용할 수 있습니다. 온디맨드는 테이블 데이터의 완전히 일관된 스냅샷을 제공하며 테이블이 삭제된 후에도 영원히 유지됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -866,7 +909,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,12 +932,12 @@
 				메인로드4822
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 15일 수 08:40">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 15일 수요일 08:40">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWSBackup Plan에서 매일, 매주 또는 매월 주기로 7년 보존을 선택할 수 있습니다. 운영상으로는 B가 맞다고 생각합니다.</div>
+<div class="comment-content">AWSBackup Plan에서는 매일, 매주 또는 매월 빈도로 7년 보존을 선택할 수 있습니다. 운영적인 관점에서는 B가 맞다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -903,7 +946,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,12 +977,12 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 21:45">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 21:45">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 당신이 옳다고 생각합니다</div>
+<div class="comment-content">내 생각엔 당신 말이 맞는 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -948,7 +991,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -988,12 +1031,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 16:03">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. AWS Backup을 사용하여 테이블에 대한 백업 일정 및 보존 정책을 생성합니다. AWS Backup은 AWS 리소스 전체에서 데이터 백업을 쉽게 중앙 집중화하고 자동화할 수 있는 완전 관리형 서비스입니다. DynamoDB 테이블에 대한 백업 일정 및 보존 정책을 생성하는 데 사용할 수 있으며 원하는 7년 동안 데이터를 보존할 수 있습니다. 이 솔루션은 설치 및 관리에 최소한의 노력이 필요하기 때문에 요구 사항을 충족하기 위한 운영상 가장 효율적인 방법을 제공합니다.</div>
+<div class="comment-content">B. AWS Backup을 사용하여 테이블에 대한 백업 일정 및 보존 정책을 생성합니다. AWS Backup은 AWS 리소스 전반에 걸쳐 데이터 백업을 쉽게 중앙 집중화하고 자동화할 수 있게 해주는 완전 관리형 서비스입니다. DynamoDB 테이블에 대한 백업 일정 및 보존 정책을 생성하는 데 사용할 수 있으며, 이를 통해 원하는 기간인 7년 동안 데이터를 보존할 수 있습니다. 이 솔루션은 설정 및 관리에 최소한의 노력만 필요하므로 요구 사항을 충족하기 위한 가장 운영상 효율적인 방법을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1030,11 +1073,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 03:01">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1048,7 +1091,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1076,11 +1119,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 01:36">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 01:36">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1094,7 +1137,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1125,12 +1168,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 16:01">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 16:01">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1171,7 +1214,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 18일 금요일 18:58">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1185,7 +1228,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1216,8 +1259,8 @@
 				사이먼박
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 30일 일 02:06">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 10월 30일 일요일 02:06">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1231,7 +1274,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1286,7 +1329,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 18:48">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1329,7 +1372,7 @@ https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Jul 2023 15:51">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1376,7 +1419,7 @@ https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 21 Jan 2023 21:45">
-			6 months, 3 weeks ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1432,7 +1475,7 @@ https://aws.amazon.com/blogs/database/part-2-set-up-scheduled-backups-for-amazon
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 03:52">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1472,7 +1515,7 @@ AWS Backup is a fully managed backup service that makes it easy to centralize an
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 03:52">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1532,7 +1575,7 @@ Option D, using Amazon EventBridge (CloudWatch Events) and a Lambda function to 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 10 Aug 2023 21:18">
-			5 days, 23 hours ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1583,7 +1626,7 @@ Automated and scalable solution</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Jul 2023 16:21">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1629,7 +1672,7 @@ Automated and scalable solution</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 18:31">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1676,7 +1719,7 @@ This solution is more efficient compared to the other options because it provide
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Jun 2023 05:29">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1722,7 +1765,7 @@ PITR is used to recover your table to any point in time in a rolling 35 day wind
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 26 May 2023 18:49">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1767,7 +1810,7 @@ PITR is used to recover your table to any point in time in a rolling 35 day wind
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 04:32">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1814,7 +1857,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 19:42">
-			4 months, 2 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1860,7 +1903,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 08:23">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1906,7 +1949,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 13:07">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1943,7 +1986,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Mar 2023 08:40">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1988,7 +2031,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 21 Jan 2023 21:45">
-			6 months, 3 weeks ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2041,7 +2084,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/backuprestore_H
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 16:03">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2089,7 +2132,7 @@ AWS Backup is a fully managed service that makes it easy to centralize and autom
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 03:01">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2135,7 +2178,7 @@ AWS Backup is a fully managed service that makes it easy to centralize and autom
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 01:36">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2181,7 +2224,7 @@ AWS Backup is a fully managed service that makes it easy to centralize and autom
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 16:01">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2226,7 +2269,7 @@ AWS Backup is a fully managed service that makes it easy to centralize and autom
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Nov 2022 18:58">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2273,7 +2316,7 @@ https://docs.aws.amazon.com/aws-backup/latest/devguide/deleting-backups.html</di
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Oct 2022 02:06">
-			9 months, 2 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

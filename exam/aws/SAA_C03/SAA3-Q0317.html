@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 317 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 317 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 317 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 317 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 317 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="868788">
 <p class="card-text">
 							
-								회사에서 레거시 애플리케이션을 사용하여 데이터를 CSV 형식으로 생성합니다. 레거시 애플리케이션은 출력 데이터를 Amazon S3에 저장합니다. 이 회사는 복잡한 SQL 쿼리를 수행하여 Amazon Redshift 및 Amazon S3에만 저장된 데이터를 분석할 수 있는 새로운 상용 기성품(COTS) 애플리케이션을 배포하고 있습니다. 그러나 COTS 애플리케이션은 레거시 애플리케이션이 생성하는 .csv 파일을 처리할 수 없습니다. <br/><br/>회사는 레거시 애플리케이션을 업데이트하여 다른 형식으로 데이터를 생성할 수 없습니다. 회사는 COTS 애플리케이션이 레거시 애플리케이션이 생성하는 데이터를 사용할 수 있도록 솔루션을 구현해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 레거시 애플리케이션을 사용하여 CSV 형식으로 데이터를 생성합니다. 레거시 애플리케이션은 출력 데이터를 Amazon S3에 저장합니다. 이 회사는 Amazon Redshift 및 Amazon S3에만 저장된 데이터를 분석하기 위해 복잡한 SQL 쿼리를 수행할 수 있는 새로운 상용(COTS) 애플리케이션을 배포하고 있습니다. 그러나 COTS 애플리케이션은 레거시 애플리케이션이 생성하는 .csv 파일을 처리할 수 없습니다. <br/><br/>회사는 다른 형식으로 데이터를 생성하기 위해 레거시 애플리케이션을 업데이트할 수 없습니다. 회사는 레거시 애플리케이션이 생성하는 데이터를 COTS 애플리케이션이 사용할 수 있도록 솔루션을 구현해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											일정에 따라 실행되는 AWS Glue 추출, 변환 및 로드(ETL) 작업을 생성합니다. .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift에 저장하도록 ETL 작업을 구성합니다.
+											일정에 따라 실행되는 AWS Glue ETL(추출, 변환 및 로드) 작업을 생성합니다. .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift에 저장하도록 ETL 작업을 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Amazon EC2 인스턴스에서 실행되는 Python 스크립트를 개발하여 .csv 파일을 .sql 파일로 변환합니다. Cron 일정에서 Python 스크립트를 호출하여 출력 파일을 Amazon S3에 저장합니다.
+											Amazon EC2 인스턴스에서 실행되어 .csv 파일을 .sql 파일로 변환하는 Python 스크립트를 개발합니다. cron 일정에 따라 Python 스크립트를 호출하여 Amazon S3에 출력 파일을 저장합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon EventBridge를 사용하여 매주 일정에 따라 Amazon EMR 클러스터를 시작합니다. 추출, 변환 및 로드(ETL) 작업을 수행하여 .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift 테이블에 저장하도록 EMR 클러스터를 구성합니다.
+											Amazon EventBridge를 사용하여 매주 일정에 따라 Amazon EMR 클러스터를 시작합니다. ETL(추출, 변환 및 로드) 작업을 수행하여 .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift 테이블에 저장하도록 EMR 클러스터를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">A (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">A (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 2월 18 일 <i>
-							오후 3:25 </i><a class="title-username" style="">
-								클라우드 버스팅
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								cloudbusting
-							</a>
-							
-							at <i>
-							Feb. 18, 2023, 3:25 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,12 +293,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 1일 토요일 23:43">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Glue는 서버가 적고 EMR보다 운영 헤드가 적습니다.</div>
+<div class="comment-content">Glue는 EMR보다 서버가 적고 운영 헤드도 적으므로 A.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +339,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 13:56">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A, AWS Glue는 다양한 소스에서 데이터를 추출하여 필요한 형식으로 변환하고 대상 데이터 스토어에 로드할 수 있는 완전관리형 ETL 서비스입니다. 이 경우 Amazon S3에서 CSV 파일을 읽고 데이터를 Amazon Redshift에 로드할 수 있는 형식으로 변환하고 Amazon Redshift 테이블에 로드하도록 ETL 작업을 구성할 수 있습니다. B는 CSV 파일을 SQL 파일로 변환하기 위해 사용자 지정 스크립트를 개발해야 합니다. 이는 시간이 많이 걸리고 추가 운영 오버헤드를 유발할 수 있습니다. C는 서버리스 기술을 사용하는 동안 처리된 데이터를 저장하기 위해 DynamoDB를 추가로 사용해야 합니다. 데이터가 Amazon Redshift에서만 필요한 경우에는 필요하지 않을 수 있습니다. D는 옵션이지만 비용이 많이 들고 관리가 복잡할 수 있는 EMR 클러스터를 생성해야 하므로 가장 효율적인 솔루션은 아닙니다.</div>
+<div class="comment-content">A, AWS Glue는 다양한 소스에서 데이터를 추출하여 필요한 형식으로 변환하고 대상 데이터 스토어에 로드할 수 있는 완전 관리형 ETL 서비스입니다. 이 경우 Amazon S3에서 CSV 파일을 읽고, 데이터를 Amazon Redshift에 로드할 수 있는 형식으로 변환하고, Amazon Redshift 테이블에 로드하도록 ETL 작업을 구성할 수 있습니다. B에서는 CSV 파일을 SQL 파일로 변환하기 위해 사용자 정의 스크립트를 개발해야 하는데, 이는 시간이 많이 걸리고 추가 운영 오버헤드가 발생할 수 있습니다. C는 서버리스 기술을 사용하는 반면 처리된 데이터를 저장하기 위해 DynamoDB를 추가로 사용해야 하는데, 데이터가 Amazon Redshift에서만 필요한 경우에는 필요하지 않을 수도 있습니다. D는 옵션이기는 하지만 관리 비용이 많이 들고 복잡할 수 있는 EMR 클러스터를 생성해야 하므로 가장 효율적인 솔루션은 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,13 +384,13 @@
 				dcp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 20일 월요일 00:31">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 20일 (월) 00:31">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">o 최소한의 운영 오버헤드로 요구 사항을 충족하려면 서버리스 접근 방식을 사용해야 합니다. 제공되는 옵션 중 옵션 C는 AWS Lambda, S3 및 DynamoDB를 사용하는 서버리스 솔루션을 제공합니다. 따라서 해결책은 AWS Lambda 함수와 Amazon DynamoDB 테이블을 생성하는 것입니다. S3 이벤트를 사용하여 Lambda 함수를 호출합니다. ETL(추출, 변환 및 로드) 작업을 수행하여 .csv 파일을 처리하고 처리된 데이터를 DynamoDB 테이블에 저장하도록 Lambda 함수를 구성합니다. 옵션 A도 유효한 솔루션이지만 옵션 C보다 더 많은 운영 오버헤드가 포함될 수 있습니다. 옵션 A를 사용하면 AWS Glue 작업을 설정하고 관리해야 하므로 AWS Lambda 함수를 생성하는 것보다 설정 시간이 더 필요합니다. 또한 AWS Glue 작업의 최소 실행 시간은 10분입니다. 이 사용 사례에 필요하지 않거나 바람직하지 않을 수 있습니다. 그러나 데이터 처리가 특히 복잡하거나 많은 데이터 변환이 필요한 경우 AWS Glue가 더 적합한 솔루션일 수 있습니다.</div>
+<div class="comment-content">o 최소한의 운영 오버헤드로 요구 사항을 충족하려면 서버리스 접근 방식을 사용해야 합니다. 제공되는 옵션 중 옵션 C는 AWS Lambda, S3, DynamoDB를 활용한 서버리스 솔루션을 제공합니다. 따라서 솔루션은 AWS Lambda 함수와 Amazon DynamoDB 테이블을 생성하는 것입니다. S3 이벤트를 사용하여 Lambda 함수를 호출합니다. ETL(추출, 변환 및 로드) 작업을 수행하여 .csv 파일을 처리하고 처리된 데이터를 DynamoDB 테이블에 저장하도록 Lambda 함수를 구성합니다. 옵션 A도 유효한 솔루션이지만 옵션 C보다 운영 오버헤드가 더 많을 수 있습니다. 옵션 A를 사용하면 AWS Glue 작업을 설정하고 관리해야 하며, 이는 AWS Lambda 함수를 생성하는 것보다 더 많은 설정 시간이 필요합니다. 또한 AWS Glue 작업의 최소 실행 시간은 10분입니다. 이 사용 사례에는 필요하지 않거나 바람직하지 않을 수 있습니다. 그러나 데이터 처리가 특히 복잡하거나 많은 데이터 변환이 필요한 경우 AWS Glue가 더 적합한 솔루션일 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,12 +422,12 @@
 				MssP
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 16:22">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 16:22">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">중요 사항: COTS는 복잡한 SQL 쿼리를 수행하여 Amazon Redshift의 데이터를 분석합니다. DynamoDB를 사용하는 경우 -&gt; SQL 쿼리 없음. 옵션 A가 더 합리적입니다.</div>
+<div class="comment-content">중요 사항: COTS는 복잡한 SQL 쿼리를 수행하여 Amazon Redshift의 데이터를 분석합니다. DynamoDB를 사용하는 경우 -&gt; SQL 쿼리가 없습니다. 옵션 A가 더 합리적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -393,7 +436,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,13 +475,13 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 16:11">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 16:11">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 운영 오버헤드가 가장 적기 때문에 최상의 솔루션입니다. 이 솔루션을 사용하면 .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift에 직접 저장하기 위해 AWS Glue ETL 작업이 생성됩니다. 이는 인프라를 프로비저닝, 구성 또는 유지 관리할 필요가 없는 서버리스 접근 방식입니다. AWS Glue는 S3에서 데이터를 처리하고 Amazon Redshift로 로드하도록 쉽게 구성할 수 있는 완전관리형 종량제 ETL 서비스를 제공합니다. 이 접근 방식을 통해 레거시 애플리케이션은 현재 사용하는 CSV 형식으로 데이터를 계속 생성하는 동시에 복잡한 SQL 쿼리를 사용하여 데이터를 분석할 수 있는 기능을 새로운 COTS 애플리케이션에 제공할 수 있습니다.</div>
+<div class="comment-content">A는 최소한의 운영 오버헤드를 포함하므로 최상의 솔루션이 될 것입니다. 이 솔루션을 사용하면 .csv 파일을 처리하고 처리된 데이터를 Amazon Redshift에 직접 저장하기 위한 AWS Glue ETL 작업이 생성됩니다. 이는 인프라를 프로비저닝, 구성 또는 유지 관리할 필요가 없는 서버리스 접근 방식입니다. AWS Glue는 S3의 데이터를 처리하고 Amazon Redshift에 로드하도록 쉽게 구성할 수 있는 완전 관리형 종량제 ETL 서비스를 제공합니다. 이 접근 방식을 사용하면 레거시 애플리케이션이 현재 사용하는 CSV 형식으로 데이터를 계속 생성하는 동시에 새로운 COTS 애플리케이션에 복잡한 SQL 쿼리를 사용하여 데이터를 분석할 수 있는 기능을 제공할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,7 +490,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,11 +518,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				jennyka76
+				제니카76
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 19일 일요일 22:10">
-			5개월, 4주 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -492,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,8 +566,8 @@
 				클라우드 버스팅
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 18일 (토) 15:25">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 18일 토요일 15:25">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -589,7 +632,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Apr 2023 23:43">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -635,7 +678,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 13:56">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -682,7 +725,7 @@ B requires the development of a custom script to convert the CSV files to SQL fi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 00:31">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -721,7 +764,7 @@ Option A is also a valid solution, but it may involve more operational overhead 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 16:22">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -774,7 +817,7 @@ Option A is also a valid solution, but it may involve more operational overhead 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 16:11">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -820,7 +863,7 @@ Option A is also a valid solution, but it may involve more operational overhead 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 22:10">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -867,7 +910,7 @@ I AGREE AFTER READING LINK</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 15:25">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

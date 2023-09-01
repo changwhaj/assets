@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 479 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 479 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 479 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 479 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="883613">
 <p class="card-text">
 							
-								회사에서 필요한 인프라를 수동으로 프로비저닝하여 새 웹 사이트의 인프라 프로토타입을 만들고 있습니다. 이 인프라에는 Auto Scaling 그룹, Application Load Balancer 및 Amazon RDS 데이터베이스가 포함됩니다. 구성이 철저히 검증된 후 회사는 자동화된 방식으로 두 가용 영역에서 개발 및 프로덕션 사용을 위한 인프라를 즉시 배포할 수 있는 기능을 원합니다. <br/><br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 무엇을 권장해야 합니까?
+								한 회사는 필요한 인프라를 수동으로 프로비저닝하여 새 웹사이트에 대한 인프라 프로토타입을 만들고 있습니다. 이 인프라에는 Auto Scaling 그룹, Application Load Balancer 및 Amazon RDS 데이터베이스가 포함됩니다. 구성이 철저하게 검증된 후 회사는 자동화된 방식으로 두 개의 가용 영역에서 개발 및 프로덕션 사용을 위한 인프라를 즉시 배포할 수 있는 기능을 원합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 권장해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											AWS Systems Manager를 사용하여 2개의 가용 영역에서 프로토타입 인프라를 복제하고 프로비저닝합니다.
+											AWS Systems Manager를 사용하여 두 개의 가용 영역에서 프로토타입 인프라를 복제하고 프로비저닝합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의합니다. AWS CloudFormation으로 인프라를 배포하십시오.
+											프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의합니다. AWS CloudFormation을 사용하여 인프라를 배포합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											AWS Config를 사용하여 프로토타입 인프라에서 사용되는 리소스 인벤토리를 기록합니다. AWS Config를 사용하여 프로토타입 인프라를 두 개의 가용 영역에 배포합니다.
+											AWS Config를 사용하여 프로토타입 인프라에서 사용되는 리소스의 인벤토리를 기록합니다. AWS Config를 사용하여 프로토타입 인프라를 두 개의 가용 영역에 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS Elastic Beanstalk를 사용하고 프로토타입 인프라에 대한 자동 참조를 사용하도록 구성하여 2개의 가용 영역에 새 환경을 자동으로 배포합니다.
+											AWS Elastic Beanstalk를 사용하고 프로토타입 인프라에 대한 자동화된 참조를 사용하여 두 개의 가용 영역에 새 환경을 자동으로 배포하도록 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								nosense
-							</a> 
-							
-							시간: <i>
-							2023년 5월 16일, 오후 9:13</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								nosense
-							</a>
-							
-							at <i>
-							May 16, 2023, 9:13 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -235,6 +278,51 @@
 <!-- New comment start -->
 <!-- New comment end -->
 <div class="discussion-container">
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988471" id="comment-988471">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 23일 수요일 18:30">
+			3일 4시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">인프라를 코드로 생각하세요=== 클라우드 형성</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="985093" id="comment-985093">
 <a class="minimize-comment comment-toggle" href="#">
@@ -251,13 +339,13 @@
 				카피노
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 11:45">
-			15시간 5분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 11:45">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">인프라를 코드로 생각하십시오=== 클라우드 형성</div>
+<div class="comment-content">인프라를 코드로 생각하세요=== 클라우드 형성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -298,11 +386,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 23:34">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 D가 정확하지 않습니까?</div>
+<div class="comment-content">왜 D가 옳지 않나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -331,11 +419,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Kiki_Pass
+				키키_패스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 31일 월요일 13:04">
-			2주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 31일 (월) 13:04">
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -348,7 +436,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,15 +464,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				wRhlH
+				ㅋㅋㅋ
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 25일 일 13:04">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 25일 일요일 13:04">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"템플릿"이 CloudFormation으로 이어지는 것 같습니다.</div>
+<div class="comment-content">"TEMPLATE"가 CloudFormation으로 연결되는 것 같아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -393,7 +481,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,7 +521,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 06:25">
-			1개월, 4주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -447,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,11 +563,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				앞발
+				안트로포
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 5일 월요일 12:22">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 5일 (월) 12:22">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -493,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,12 +613,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 4일 일요일 14:23">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">AWS CloudFormation은 인프라를 코드로 정의하고 프로비저닝할 수 있는 서비스입니다. 즉, 생성하려는 리소스를 설명하는 템플릿을 생성한 다음 CloudFormation을 사용하여 이러한 리소스를 자동화된 방식으로 배포할 수 있습니다. 이 경우 솔루션 설계자는 프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의해야 합니다. 템플릿에는 Auto Scaling 그룹, Application Load Balancer 및 Amazon RDS 데이터베이스에 대한 리소스가 포함되어야 합니다. 템플릿이 생성되면 솔루션 설계자는 CloudFormation을 사용하여 두 가용 영역에 인프라를 배포할 수 있습니다.</div>
+<div class="comment-content">AWS CloudFormation은 인프라를 코드로 정의하고 프로비저닝할 수 있는 서비스입니다. 즉, 생성하려는 리소스를 설명하는 템플릿을 생성한 다음 CloudFormation을 사용하여 자동화된 방식으로 해당 리소스를 배포할 수 있습니다. 이 경우 솔루션 설계자는 프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의해야 합니다. 템플릿에는 Auto Scaling 그룹, Application Load Balancer 및 Amazon RDS 데이터베이스에 대한 리소스가 포함되어야 합니다. 템플릿이 생성되면 솔루션 설계자는 CloudFormation을 사용하여 두 개의 가용 영역에 인프라를 배포할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,15 +655,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오마킨
+				오모아킨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수요일 03:15">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수 03:15">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의합니다. AWS CloudFormation으로 인프라 배포</div>
+<div class="comment-content">B 프로토타입 인프라를 가이드로 사용하여 인프라를 템플릿으로 정의합니다. AWS CloudFormation을 사용하여 인프라 배포</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,8 +703,8 @@
 				말이되지 않는다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 16일 화요일 21:13">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 16일 (화) 21:13">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -630,7 +718,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,6 +754,51 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988471" id="comment-988471">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Wed 23 Aug 2023 18:30">
+			3 days, 4 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">Just Think Infrastructure as Code=== Cloud Formation</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="985093" id="comment-985093">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -682,7 +815,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 11:45">
-			15 hours, 5 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -728,7 +861,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 23:34">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -765,7 +898,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 31 Jul 2023 13:04">
-			2 weeks, 5 days ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -810,7 +943,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Jun 2023 13:04">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -863,7 +996,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 06:25">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -909,7 +1042,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Jun 2023 12:22">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -955,7 +1088,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Jun 2023 14:23">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1003,7 +1136,7 @@ In this case, the solutions architect should define the infrastructure as a temp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 03:15">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1049,7 +1182,7 @@ Define the infrastructure as a template by using the prototype infrastructure as
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 16 May 2023 21:13">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

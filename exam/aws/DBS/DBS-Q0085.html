@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 85 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 85 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 85 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 85 discussion</h1>
@@ -70,9 +133,9 @@
 						</div>
 </div>
 <div class="question-body mt-3 pt-3 border-top" data-id="807327">
-<p class="card-text">
+<p class="card-text"><br/>데이터베이스 전문가가 새로운 Amazon Neptune DB 클러스터를 생성 중이며 Neptune 벌크 로더 API를 
 							
-								데이터베이스 전문가가 새로운 Amazon Neptune DB 클러스터를 생성하고 있으며 Neptune <br/>벌크 로더 API를 사용하여 Amazon S3에서 Neptune DB 클러스터로 데이터를 로드하려고 시도하고 있습니다. 데이터베이스 전문가는 다음 오류를 수신합니다. <br/>`s3 끝점에 연결할 수 없습니다. 제공된 소스 = s3://mybucket/graphdata/ 및 리전 = us-east-1. <br/>S3 구성을 확인하십시오 <br/>.` 데이터베이스 전문가가 문제를 해결하기 위해 취해야 할 조치 조합은 무엇입니까? (두 가지를 선택하세요.)<br/>
+								사용하여 Amazon S3에서 Neptune DB 클러스터로 데이터를 로드하려고 합니다 . 데이터베이스 전문가는 <br/>'s3 엔드포인트에 연결할 수 없습니다.'라는 오류를 수신합니다. 제공된 소스 = s3://mybucket/graphdata/ 및 지역 = us-east-1. <br/>S3 구성을 확인하십시오 <br/>.` 문제를 해결하기 위해 데이터베이스 전문가가 수행해야 하는 작업 조합은 무엇입니까? (2개를 선택하세요.)<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807327" type="application/json">[{"voted_answers": "BE", "vote_count": 8, "is_most_voted": true}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											Amazon S3에 Neptune에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인합니다.
+											Amazon S3에 Neptune에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인하십시오.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon S3 VPC 엔드포인트가 존재하는지 확인
+											Amazon S3 VPC 엔드포인트가 존재하는지 확인하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,20 +170,20 @@
 													D.
 												</span> 
 											
-											Amazon EC2에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인
+											Amazon EC2에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											Neptune에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인
+											Neptune에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인하십시오.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,22 +194,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://aws.amazon.com/premiumsupport/knowledge-center/s3-could-not-connect-endpoint-url/
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">BE (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k115
-							</a> 
-							
-							2020 <i>
-							년 7월 20일 오후 1:37</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -229,16 +282,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								k115
-							</a>
-							
-							at <i>
-							July 20, 2020, 1:37 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -270,14 +313,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 19일 일 23:58">
+<span class="comment-date align-middle" title="2021년 9월 19일 일요일 23:58">
 			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B&amp;E https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-IAM.html</div>
+<div class="comment-content">B &amp; E https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-IAM.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -318,14 +361,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 10일 일 01:41">
+<span class="comment-date align-middle" title="2021년 10월 10일 일요일 01:41">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BE https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html “Neptune DB 인스턴스가 다음의 데이터 파일에 대한 액세스를 허용하는 IAM 정책이 있다고 가정하는 IAM 역할 S3 버킷. 정책은 읽기 및 나열 권한을 부여해야 합니다.” “Amazon S3 VPC 엔드포인트. 자세한 내용은 Amazon S3 VPC 엔드포인트 생성 섹션을 참조하십시오.”</div>
+<div class="comment-content">BE https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html “Neptune DB 인스턴스에 대한 IAM 역할은 데이터 파일에 대한 액세스를 허용하는 IAM 정책이 있다고 가정합니다. S3 버킷. 정책은 읽기 및 나열 권한을 부여해야 합니다.” “Amazon S3 VPC 엔드포인트. 자세한 내용은 Amazon S3 VPC 엔드포인트 생성 섹션을 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -334,7 +377,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -362,14 +405,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 22:44">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 22:44">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -383,7 +426,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -420,7 +463,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html B. Amazon S3 VPC 엔드포인트가 존재하는지 확인 E. Neptune에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인 S3 버킷의 데이터 파일에 대한 액세스를 허용하는 IAM 정책이 있다고 가정하는 Neptune DB 인스턴스의 IAM 역할. 정책은 읽기 및 나열 권한을 부여해야 합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html B. Amazon S3 VPC 엔드포인트가 존재하는지 확인 E. Neptune에 Amazon S3에 대한 읽기 액세스 권한을 부여하는 IAM 역할이 있는지 확인 S3 버킷의 데이터 파일에 대한 액세스를 허용하는 IAM 정책이 있다고 가정하는 Neptune DB 인스턴스에 대한 IAM 역할입니다. 정책은 읽기 및 나열 권한을 부여해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -429,7 +472,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -457,16 +500,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 05:19">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 05:19">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">BE가 정답입니다. - S3 VPC 엔드포인트가 있어야 합니다. - Neptune에는 S3 버킷에 대한 액세스 권한이 있는 IAM 역할 및 정책이 있어야 합니다.</div>
+<div class="comment-content">BE가 정답입니다. - S3 VPC 엔드포인트가 존재해야 합니다. - Neptune에는 S3 버킷에 액세스할 수 있는 IAM 역할과 정책이 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -475,7 +518,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -506,8 +549,8 @@
 				소요다리오
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 23일 일 11:57">
-			1년, 6개월 전
+<span class="comment-date align-middle" title="2022년 1월 23일 일요일 11:57">
+			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -521,7 +564,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -549,11 +592,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 10:25">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 10:25">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -566,7 +609,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -594,15 +637,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				manan728
+				마난728
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 04일 목요일 20:52">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 (목) 20:52">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">얘들아 내가 합격한 시험에서 이 질문을 받았어. B와 E가 맞습니다.</div>
+<div class="comment-content">여러분, 제가 합격한 시험에서 이 질문이 나왔습니다. B와 E가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -611,7 +654,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -642,12 +685,12 @@
 				뮤트란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 01일 월요일 00:26">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 1일 (월) 00:26">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: BE</div>
+<div class="comment-content">답: BE</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -656,7 +699,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -684,15 +727,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				우머24
+				우메르24
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 17:43">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정확한 답변을 찾기 위해 새로운 aws 데이터베이스 질문에 대해 yahoo에서 ryan23680이라는 메모를 보내주십시오.</div>
+<div class="comment-content">올바른 답변을 찾으려면 새로운 AWS 데이터베이스 질문에 대해 Yahoo에서 ryan23680으로 메모를 보내주세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -701,7 +744,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -729,15 +772,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				우머24
+				우메르24
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 14:14">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Question-121 한 회사의 데이터베이스 전문가가 벤치마킹 테스트를 수행하기 위해 Amazon DocumentDB 클러스터에서 TLS를 비활성화했습니다. 이 변경 사항이 구현된 지 며칠 후 데이터베이스 전문가 연수생이 실수로 여러 테이블을 삭제했습니다. 데이터베이스 전문가가 사용 가능한 스냅샷에서 데이터베이스를 복원했습니다. 클러스터 복원 후 1시간. 데이터베이스 전문가는 여전히 새 클러스터 끝점에 연결할 수 없습니다. 데이터베이스 전문가는 새 데이터베이스에 연결하기 위해 무엇을 해야 합니까? 복원된 Amazon DocumentDB 클러스터? A. 복원된 클러스터의 파라미터 그룹을 원래 클러스터의 사용자 지정 파라미터 그룹으로 변경합니다. B. 복원된 클러스터의 파라미터 그룹을 Amazon DocumentDB 기본 파라미터 그룹으로 변경합니다. C. 인터페이스 VPC 엔드포인트를 구성하고 새 Amazon DocumentDB 클러스터를 연결합니다. 디.</div>
+<div class="comment-content">질문-121 한 회사의 데이터베이스 전문가가 벤치마킹 테스트를 수행하기 위해 Amazon DocumentDB 클러스터에서 TLS를 비활성화했습니다. 이 변경 사항이 구현된 지 며칠 후, 데이터베이스 전문가 연수생이 실수로 여러 테이블을 삭제했습니다. 데이터베이스 전문가가 사용 가능한 스냅샷에서 데이터베이스를 복원했습니다. 클러스터를 복원한 지 1시간 후입니다. 데이터베이스 전문가가 여전히 새 클러스터 엔드포인트에 연결할 수 없습니다. 데이터베이스 전문가가 새로운 데이터베이스에 연결하려면 어떻게 해야 합니까? Amazon DocumentDB 클러스터를 복원하시겠습니까? A. 복원된 클러스터의 파라미터 그룹을 원래 클러스터의 사용자 지정 파라미터 그룹으로 변경합니다. B. 복원된 클러스터의 매개변수 그룹을 Amazon DocumentDB 기본 매개변수 그룹으로 변경합니다. C. 인터페이스 VPC 엔드포인트를 구성하고 새 Amazon DocumentDB 클러스터를 연결합니다. 디.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -746,7 +789,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -766,11 +809,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				글렌든
+				글렌던
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 17:27">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -783,7 +826,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -827,7 +870,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B와 E 내 선택</div>
+<div class="comment-content">B와 E는 내 선택</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -836,7 +879,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -864,7 +907,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 13일 수 10:23">
@@ -872,7 +915,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변은 B&amp;E입니다.</div>
+<div class="comment-content">Ans는 B&amp;E입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -881,7 +924,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -917,7 +960,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 BE입니다</div>
+<div class="comment-content">대답은 BE이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -926,7 +969,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -957,12 +1000,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 9일 (토) 02:01">
+<span class="comment-date align-middle" title="2021년 10월 9일 토요일 02:01">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 B와 E</div>
+<div class="comment-content">여기 B와 E</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -971,7 +1014,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -999,15 +1042,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				키티0403
+				Kitty0403
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 8일 금 22:02">
+<span class="comment-date align-middle" title="2021년 10월 8일 금요일 22:02">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B와 E</div>
+<div class="comment-content">답은 B와 E이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1016,7 +1059,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1047,8 +1090,8 @@
 				사울굿맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 07:35">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 07:35">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1061,7 +1104,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1215,7 +1258,7 @@ https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 22:44">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1358,7 +1401,7 @@ An IAM role for the Neptune DB instance to assume that has an IAM policy that al
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Jan 2022 11:57">
-			1 year, 6 months ago
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1541,7 +1584,7 @@ https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 17:43">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1586,7 +1629,7 @@ https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-data.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 14:14">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1628,7 +1671,7 @@ D. Run the synclnstances command in AWS DataSync.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 17:27">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1906,7 +1949,7 @@ D. Run the synclnstances command in AWS DataSync.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 01 Oct 2021 07:35">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

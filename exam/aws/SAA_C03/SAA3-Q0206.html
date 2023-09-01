@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 206 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 206 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 206 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 206 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 206 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850809">
 <p class="card-text">
 							
-								회사에서 Amazon 머신 이미지(AMI)를 관리하려고 합니다. 회사는 현재 AMI가 생성된 동일한 AWS 리전에 AMI를 복사합니다. 회사는 AWS API 호출을 캡처하고 회사 계정 내에서 Amazon EC2 CreateImage API 작업이 호출될 때마다 알림을 보내는 애플리케이션을 설계해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사에서 Amazon 머신 이미지(AMI)를 관리하려고 합니다. 회사는 현재 AMI가 생성된 동일한 AWS 리전에 AMI를 복사하고 있습니다. 회사는 회사 계정 내에서 Amazon EC2 CreateImage API 작업이 호출될 때마다 AWS API 호출을 캡처하고 알림을 보내는 애플리케이션을 설계해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											업데이트된 로그가 Amazon S3로 전송될 때 발생하는 Amazon Simple Notification Service(Amazon SNS) 알림으로 AWS CloudTrail을 구성합니다. Amazon Athena를 사용하여 새 테이블을 생성하고 API 호출이 감지되면 CreateImage에서 쿼리합니다.
+											업데이트된 로그가 Amazon S3로 전송될 때 발생하는 Amazon Simple 알림 서비스(Amazon SNS) 알림으로 AWS CloudTrail을 구성합니다. API 호출이 감지되면 Amazon Athena를 사용하여 새 테이블을 생성하고 CreateImage에 대해 쿼리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											CreateImage API 호출에 대한 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성합니다. CreateImage API 호출이 감지되면 알림을 보내도록 대상을 Amazon Simple Notification Service(Amazon SNS) 주제로 구성합니다.
+											CreateImage API 호출에 대한 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성합니다. CreateImage API 호출이 감지되면 알림을 보내도록 대상을 Amazon SNS(Amazon SNS) 주제로 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon Simple Queue Service(Amazon SQS) FIFO 대기열을 AWS CloudTrail 로그의 대상으로 구성합니다. CreateImage API 호출이 감지되면 Amazon Simple Notification Service(Amazon SNS) 주제에 알림을 보내는 AWS Lambda 함수를 생성합니다.
+											Amazon Simple Queue Service(Amazon SQS) FIFO 대기열을 AWS CloudTrail 로그의 대상으로 구성합니다. CreateImage API 호출이 감지되면 Amazon Simple 알림 서비스(Amazon SNS) 주제에 알림을 보내는 AWS Lambda 함수를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="36 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">씨 (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">A (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="11%" data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="36 votes." data-toggle="tooltip" role="progressbar" style="width: 68%; display: flex;" title="">C (68%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 19%; display: flex;" title="">A (19%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="11%" data-toggle="tooltip" role="progressbar" style="width: 13%; display: flex;" title="">11%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 3:34</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 3:34 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 20:41">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 20:41">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">저는 팀 C입니다. https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:~:text=For%20example%2C%20you%20can%20create%20an %20EventBridge%20rule%20그%20감지%20when%20the%20AMI%20creation%20process%20has%20completed%20and%20then%20invokes%20an%20Amazon%20SNS%20topic%20to%20send%20an%20email%20notification%20to%20you .</div>
+<div class="comment-content">저는 C팀입니다. https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:~:text=For%20example%2C%20you%20can%20create%20an %20EventBridge%20rule%20%20%20the%20AMI%20creation%20process%20has%20completed%20and%20then%20invokes%20an%20Amazon%20SNS%20topic%20to%20send%20an%20email%20notification%20to%20you .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -288,12 +331,12 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 24일 월요일 21:52">
-			3주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 24일 (월) 21:52">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 맞습니다 &gt; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-ami-events.html</div>
+<div class="comment-content">C가 정확함 &gt; https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitor-ami-events.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,7 +345,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -330,15 +373,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 16:17">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">해당 링크에는 정확한 사용 사례가 포함되어 있으며 C를 사용할 수 있는 방법이 설명되어 있습니다. 옵션 B는 S3에 로그를 보내고 필요하지 않은 2개의 추가 서비스인 Athena를 사용해야 하므로 "가장 적은 운영 오버헤드"를 충족하지 않습니다. 관리가 필요한 추가 서비스이기 때문입니다.</div>
+<div class="comment-content">해당 링크에는 정확한 사용 사례가 포함되어 있으며 C를 사용하는 방법을 설명합니다. 옵션 B에서는 S3에 로그를 보내고 Athena, 필요하지 않은 2가지 추가 서비스를 사용해야 하므로 "최소 운영 오버헤드?"를 충족하지 못합니다. 이는 관리가 필요한 추가 서비스이기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -347,7 +390,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,24 +430,24 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 25일 일 02:47">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 25일 일요일 02:47">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 아닌 이유는 무엇입니까? API 호출은 이미 Cloudtrail에 기록되어 있습니다.</div>
+<div class="comment-content">A는 왜 안되나요? API 호출은 이미 Cloudtrail에 기록되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -438,13 +481,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 7일 금요일 06:25">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 7일 금 06:25">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">회사는 AWS API 호출을 캡처하고 회사 계정 내에서 Amazon EC2 CreateImage API 작업이 호출될 때마다 알림을 보내는 애플리케이션을 설계해야 합니다. 옵션 C를 사용하면 "회사에서 AWS API 호출을 캡처하는 애플리케이션을 설계해야 합니다"가 아닙니다. "CreateImage API" 이벤트만 전송합니다. AWS API 호출도 저장해야 합니다.</div>
+<div class="comment-content">회사는 회사 계정 내에서 Amazon EC2 CreateImage API 작업이 호출될 때마다 AWS API 호출을 캡처하고 알림을 보내는 애플리케이션을 설계해야 합니다. 옵션 C를 사용하면 "회사는 AWS API 호출을 캡처하는 애플리케이션을 설계해야 합니다"가 아닙니다. "CreateImage API" 이벤트만 보냅니다. AWS API 호출도 저장해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,12 +527,12 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 09:27">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 09:27">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">EventBridge(이전의 CloudWatch Events)는 AWS 환경 내에서 이벤트를 모니터링하고 대응할 수 있는 완전 관리형 이벤트 버스 서비스입니다. CreateImage API 호출에 대해 특별히 EventBridge 규칙을 생성하면 이 이벤트를 쉽게 감지하고 캡처할 수 있습니다. 대상을 SNS 주제로 구성하면 CreateImage API 호출이 발생할 때마다 경고를 보낼 수 있습니다. 이 솔루션은 EventBridge 및 SNS가 완전히 관리되는 서비스이므로 최소한의 운영 오버헤드가 필요합니다. A. Lambda를 사용하여 CloudTrail 로그를 쿼리하고 알림을 보내면 원하는 결과를 얻을 수 있지만 EventBridge 및 SNS를 직접 사용하는 것에 비해 추가 운영 오버헤드가 발생합니다. 비. SNS 알림으로 CloudTrail을 구성하고 Athena를 사용하여 CreateImage API 호출을 쿼리하려면 EventBridge 및 SNS를 사용할 때보다 더 많은 설정과 유지 관리가 필요합니다. D. SQS FIFO 대기열을 CloudTrail 로그의 대상으로 구성하고 SNS 주제에 알림을 보내는 기능을 사용하면 솔루션에 불필요한 복잡성이 추가되고 운영 오버헤드가 증가합니다. EventBridge와 SNS를 직접 사용하는 것이 더 간단하고 효율적인 접근 방식입니다.</div>
+<div class="comment-content">EventBridge(이전 CloudWatch Events)는 AWS 환경 내에서 이벤트를 모니터링하고 이에 응답할 수 있는 완전관리형 이벤트 버스 서비스입니다. CreateImage API 호출을 위해 특별히 EventBridge 규칙을 생성하면 이 이벤트를 쉽게 감지하고 캡처할 수 있습니다. 대상을 SNS 주제로 구성하면 CreateImage API 호출이 발생할 때마다 경고를 보낼 수 있습니다. EventBridge와 SNS는 완전 관리형 서비스이므로 이 솔루션에는 최소한의 운영 오버헤드가 필요합니다. A. Lambda를 사용하여 CloudTrail 로그를 쿼리하고 알림을 보내면 원하는 결과를 얻을 수 있지만 EventBridge 및 SNS를 직접 사용할 때보다 추가 운영 오버헤드가 발생합니다. 비. SNS 알림으로 CloudTrail을 구성하고 Athena를 사용하여 CreateImage API 호출을 쿼리하려면 EventBridge 및 SNS를 사용할 때보다 더 많은 설정과 유지 관리가 필요합니다. D. SQS FIFO 대기열을 CloudTrail 로그의 대상으로 구성하고 SNS 주제에 경고를 보내는 기능을 사용하면 솔루션이 불필요하게 복잡해지고 운영 오버헤드가 늘어납니다. EventBridge와 SNS를 직접 사용하는 것이 더 간단하고 효율적인 접근 방식입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,11 +573,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 08:47">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 의미가 없으며 FIFO가 필요하지 않으며 SQS는 알림 전송에 사용되지 않습니다...C</div>
+<div class="comment-content">D는 의미가 없습니다. FIFO가 필요하지 않으며 SQS는 알림 전송에 사용되지 않습니다...C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,16 +614,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				edric1998
+				에드릭1998
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 11:11">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 11:11">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C를 선택한 사람이 공유한 링크로 EventBrigde가 이벤트를 포착할 수 있다고 말했습니다(사용 가능/실패/등록 취소됨). 이 문서에서 CreateImage는 CopyImage/RegisterImage/CreateRestoreImageTask와 구별되지 않습니다. 따라서 C가 아닙니다. B가 아닙니다. 오버헤드가 매우 높기 때문입니다. 그리고 "언제든지"라는 질문은 가능한 빨리를 의미하므로 A가 아닙니다. 정답은 D입니다.</div>
+<div class="comment-content">C를 선택한 사람이 공유한 링크에 따르면 EventBrigde가 이벤트(사용 가능/실패/등록 취소)를 포착할 수 있다고 나와 있습니다. 이 문서에서 CreateImage는 CopyImage/RegisterImage/CreateRestoreImageTask와 구별되지 않습니다. 따라서 C가 아닙니다. 너무 오버헤드가 크기 때문에 B가 아닙니다. 그리고 "언제든지"라는 질문은 가능한 빨리라는 의미이므로 A가 아닙니다. 정답은 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -589,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -621,12 +664,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 4일 화요일 11:49">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:~:text=For%20example%2C%20you%20can%20create%20an %20EventBridge%20regla%20que %20detecta%20cuando%20el%20creación%20AMI%20proceso%20ha%20comletado%20y%20entonces%20invoca%20un%20Amazon%20SNS%20tema%20para%20enviar%20un%20correoelectronico%20notificación%20para%20usted</div>
+<div class="comment-content">https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:~:text=For%20example%2C%20you%20can%20create%20an %20EventBridge%20regla%20que %20Detecta%20cuando%20el%20creación%20AMI%20proceso%20ha%20completado%20y%20entonces%20invoca%20un%20Amazon%20SNS%20tema%20para%20enviar%20un%20correoelectrónico%20notificación%20para%20usted</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -667,7 +710,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 19:26">
-			4개월, 4주 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,7 +748,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 00:31">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,8 +800,8 @@
 				Zerotn3
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 2일 월요일 09:24">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 2일 (월) 09:24">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -772,7 +815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -800,16 +843,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 19:44">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 19:44">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">올바른 솔루션은 옵션 C입니다. CreateImage API 호출에 대한 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성하고 대상을 Amazon Simple Notification Service(Amazon SNS) 주제로 구성하여 CreateImage API 호출이 감지될 때 알림을 보내도록 하면 충족됩니다. 운영 오버헤드가 가장 적은 요구 사항. Amazon EventBridge는 자체 애플리케이션, 통합 SaaS(Software as a Service) 애플리케이션 및 AWS 서비스의 데이터를 사용하여 애플리케이션을 쉽게 함께 연결할 수 있게 해주는 서버리스 이벤트 버스입니다. CreateImage API 호출에 대한 EventBridge 규칙을 생성하여 회사는 계정 내에서 이 작업이 호출될 때마다 경고를 설정할 수 있습니다. 경고는 SNS 주제로 보낼 수 있으며, 그런 다음 회사의 이메일 또는 기타 원하는 대상으로 알림을 보내도록 구성할 수 있습니다.</div>
+<div class="comment-content">올바른 해결 방법은 옵션 C입니다. CreateImage API 호출에 대한 Amazon EventBridge(Amazon CloudWatch Events) 규칙을 생성하고 CreateImage API 호출이 감지될 때 알림을 보내도록 대상을 Amazon Simple Notification Service(Amazon SNS) 주제로 구성하면 충족됩니다. 최소한의 운영 오버헤드로 요구 사항을 충족합니다. Amazon EventBridge는 자체 애플리케이션, 통합 SaaS(Software as a Service) 애플리케이션 및 AWS 서비스의 데이터를 사용하여 애플리케이션을 쉽게 연결할 수 있게 해주는 서버리스 이벤트 버스입니다. CreateImage API 호출에 대한 EventBridge 규칙을 생성함으로써 회사는 계정 내에서 이 작업이 호출될 때마다 경고를 설정할 수 있습니다. 알림은 SNS 주제로 전송될 수 있으며, 그런 다음 회사 이메일이나 기타 원하는 대상으로 알림을 보내도록 구성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -846,16 +889,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 08:02">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 08:02">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C가 정답입니다. Eventbridge는 이벤트 소스로 CloudTrail과 통합됩니다(파이프 사용). Cloudtrail이 API 이벤트 로그를 SQS에 자동으로 보낼 수 없으므로 옵션 D는 올바르지 않습니다.</div>
+<div class="comment-content">보기 C가 정답입니다. Eventbridge는 이벤트 소스로 CloudTrail과 통합되어 있습니다(파이프 사용). Cloudtrail은 API 이벤트 로그를 SQS에 자동으로 보낼 수 없으므로 옵션 D는 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -864,7 +907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -895,12 +938,12 @@
 				샤샤1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 14:33">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 14:33">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 옵션 B는 Amazon Athena를 사용하여 시간이 많이 걸리고 오류가 발생하기 쉬운 프로세스인 AWS CloudTrail 로그를 쿼리해야 하기 때문에 올바르지 않습니다. 또한 회사에서 Amazon Athena의 기본 인프라를 관리해야 하므로 운영 오버헤드가 추가됩니다.</div>
+<div class="comment-content">C 옵션 B는 Amazon Athena를 사용하여 AWS CloudTrail 로그를 쿼리하는 작업을 포함하므로 시간이 많이 걸리고 오류가 발생하기 쉬운 프로세스이므로 올바르지 않습니다. 또한 회사는 Amazon Athena의 기본 인프라를 관리해야 하므로 운영 오버헤드가 추가됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -909,7 +952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -940,13 +983,13 @@
 				사힐바이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 08:28">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 08:28">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">대답은 c</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -955,7 +998,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -983,16 +1026,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 7일 수 18:38">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 7일 수요일 18:38">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">그것은 C입니다</div>
+<div class="comment-content">그것은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1001,7 +1044,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1033,12 +1076,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 6일 화요일 15:16">
-			8개월, 1주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">목표는 API 호출에서 AMI 생성 이벤트를 트리거하는 것입니다. C가 EventBridge가 상태 변경(사용 가능, 실패, 등록 취소됨)에만 초점을 맞출 것이라고 언급했기 때문에 B의 경우 질문에 따라 이러한 세부 정보가 필요하지 않습니다.</div>
+<div class="comment-content">목표는 API 호출에서 AMI 생성 이벤트를 트리거하는 것입니다. C가 EventBridge를 언급했기 때문에 B는 상태 변경(사용 가능, 실패, 등록 취소)에만 초점을 맞추기 때문에 질문에 따라 이러한 세부 정보가 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1047,7 +1090,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1071,11 +1114,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 09:41">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">설명서를 읽으십시오. "AMI 생성 프로세스가 완료된 시점을 감지한 다음 Amazon SNS 주제를 호출하여 이메일 알림을 보내는 EventBridge 규칙을 생성할 수 있습니다." 따라서 AMI가 생성될 때 이벤트를 보내므로 C가 맞습니다.</div>
+<div class="comment-content">문서를 읽어 보십시오. "AMI 생성 프로세스가 완료된 시기를 감지한 다음 Amazon SNS 주제를 호출하여 이메일 알림을 보내는 EventBridge 규칙을 생성할 수 있습니다." 따라서 AMI가 생성될 때 이벤트를 보내므로 C가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1084,7 +1127,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1108,7 +1151,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 10:45">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1121,7 +1164,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1169,12 +1212,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 4일 일요일 21:09">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 B와 C가 맞는 것 같지만 "최소 운영 오버헤드"는 B를 제거합니다. 따라서 C가 정답입니다.</div>
+<div class="comment-content">옵션 B와 C는 옳은 것처럼 보이지만 "최소 운영 오버헤드"는 B를 제거합니다. 따라서 C가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1183,7 +1226,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1215,7 +1258,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:36">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1229,7 +1272,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1253,11 +1296,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:36">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">오타 - C입니다</div>
+<div class="comment-content">오타 - C예요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1266,7 +1309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1305,12 +1348,12 @@
 				크마네이스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 30일 수요일 05:11">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 30일 수 05:11">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 D가 아닌가? 이게 정답인 것 같아요</div>
+<div class="comment-content">왜 D가 아니지? 내 생각엔 이게 정답인 것 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1319,7 +1362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1339,15 +1382,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 19:41">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 19:41">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 회사가 SQS FIFO 대기열을 CloudTrail 로그의 대상으로 구성하고 Lambda 함수를 생성하고 SNS 주제에 알림을 보내야 하기 때문에 정답이 아닙니다. 이 옵션은 EventBridge 규칙을 생성하는 것보다 더 복잡하고 더 많은 운영 오버헤드가 필요합니다. 따라서 올바른 솔루션은 옵션 C입니다.</div>
+<div class="comment-content">D는 정답이 아닙니다. 회사가 SQS FIFO 대기열을 CloudTrail 로그의 대상으로 구성하고, Lambda 함수를 생성하고, SNS 주제에 알림을 보내야 하기 때문입니다. 이 옵션은 EventBridge 규칙을 생성하는 것보다 더 복잡하고 더 많은 운영 오버헤드가 필요합니다. 따라서 올바른 해결책은 옵션 C입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1356,7 +1399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1395,8 +1438,8 @@
 				락쉬밀니
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 21:29">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 21:29">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1409,7 +1452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1433,7 +1476,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:35">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1446,7 +1489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1470,11 +1513,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:36">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">오타 - C입니다</div>
+<div class="comment-content">오타 - C예요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1483,7 +1526,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1530,12 +1573,12 @@
 				JCH760310
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 12:28">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 12:28">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"회사는 AWS API 호출을 캡처하는 애플리케이션을 설계해야 합니다"라는 핵심은 AWS API 호출을 캡처하는 방법이 아닙니다 :-)</div>
+<div class="comment-content">"회사는 AWS API 호출을 캡처하는 애플리케이션을 설계해야 합니다"라는 핵심은 AWS API 호출을 어떻게 캡처할 수 있는지가 아닙니다. :-)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1544,7 +1587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1575,8 +1618,8 @@
 				잠바주스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 00:04">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 00:04">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1590,7 +1633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1618,16 +1661,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 18:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 18:02">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">그것은 나에게 C입니다 : https://www.examtopics.com/discussions/amazon/view/82701-exam-aws-certified-solutions-architect-associate-saa-c02/ Use Event bridge가 최선의 선택인 것 같습니다</div>
+<div class="comment-content">나에게는 C입니다. https://www.examtopics.com/discussions/amazon/view/82701-exam-aws-certified-solutions-architect-associate-saa-c02/ 이벤트 브리지를 사용하는 것이 최선의 선택인 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1659,12 +1702,12 @@
 				KADSM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 08:24">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 08:24">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 옵션 C - 그들은 Cloudwatch 이벤트에 대해 언급하려고 합니다. Eventbridge는 AMI의 상태 변경을 모니터링합니다. 옵션 B를 선택합니다</div>
+<div class="comment-content">그러나 옵션 C - Cloudwatch 이벤트에 대해 언급하려고 합니다. Eventbridge는 AMI의 상태 변경을 모니터링합니다. 옵션 B를 선택하겠습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1673,7 +1716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1712,8 +1755,8 @@
 				레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 17:18">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:18">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1727,7 +1770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1758,13 +1801,13 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 15:34">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 15:34">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답변 : C</div>
+<div class="comment-content">답 : C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1773,7 +1816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1796,8 +1839,8 @@
 				잠바주스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 00:44">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 00:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1810,7 +1853,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1833,8 +1876,8 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:10">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:10">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1847,7 +1890,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1918,7 +1961,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 20:41">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1957,7 +2000,7 @@ https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 21:52">
-			3 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2002,7 +2045,7 @@ https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/monitor-ami-events.html#:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 16:17">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2059,7 +2102,7 @@ Option B requires you to send logs to S3 and use Athena, 2 additional services t
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 02:47">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2108,7 +2151,7 @@ Option B requires you to send logs to S3 and use Athena, 2 additional services t
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 06:25">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2156,7 +2199,7 @@ With option C, it won't "The company needs to design an application that capture
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 09:27">
-			1 month, 2 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2207,7 +2250,7 @@ D. Configuring an SQS FIFO queue as a target for CloudTrail logs and using a fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 08:47">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2252,7 +2295,7 @@ D. Configuring an SQS FIFO queue as a target for CloudTrail logs and using a fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 11:11">
-			1 month, 3 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2302,7 +2345,7 @@ The right answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 11:49">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2348,7 +2391,7 @@ The right answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 19:26">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2386,7 +2429,7 @@ The right answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 00:31">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2439,7 +2482,7 @@ The right answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 09:24">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2485,7 +2528,7 @@ The right answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 19:44">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2535,7 +2578,7 @@ This solution does not require the company to create a Lambda function or query 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 08:02">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2583,7 +2626,7 @@ Option D is incorrect as Cloudtrail can not automatically send its API event log
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 14:33">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2629,7 +2672,7 @@ Option B is not correct because it involves using Amazon Athena to query AWS Clo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 08:28">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2675,7 +2718,7 @@ Option B is not correct because it involves using Amazon Athena to query AWS Clo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 18:38">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2721,7 +2764,7 @@ Option B is not correct because it involves using Amazon Athena to query AWS Clo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 15:16">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2759,7 +2802,7 @@ Option B is not correct because it involves using Amazon Athena to query AWS Clo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 09:41">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2799,7 +2842,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 10:45">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2860,7 +2903,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Dec 2022 21:09">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2906,7 +2949,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:36">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2944,7 +2987,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:36">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2997,7 +3040,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 05:11">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3034,7 +3077,7 @@ So it do send event when AMI is created, so C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 19:41">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3091,7 +3134,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 21:29">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3128,7 +3171,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:35">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3165,7 +3208,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:36">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3226,7 +3269,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 12:28">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3271,7 +3314,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 00:04">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3317,7 +3360,7 @@ Hence, the correct solution is Option C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 18:02">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3356,7 +3399,7 @@ Use Event bridge seems to be the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 08:24">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3409,7 +3452,7 @@ Use Event bridge seems to be the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:18">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3455,7 +3498,7 @@ Use Event bridge seems to be the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 15:34">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3493,7 +3536,7 @@ Use Event bridge seems to be the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 00:44">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3530,7 +3573,7 @@ Use Event bridge seems to be the best choice</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:10">
-			8 months, 2 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

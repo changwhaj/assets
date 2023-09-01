@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 292 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 292 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 문제 292 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 292 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="875974">
 <p class="card-text">
 							
-								데이터베이스 전문가가 Amazon RDS for MySQL DB 인스턴스에서 여러 유휴 연결을 관찰합니다. DB 인스턴스는 RDS 프록시를 사용하고 있습니다. 프록시 엔드포인트에 연결하도록 애플리케이션이 구성되었습니다. <br/><br/>데이터베이스 전문가는 데이터베이스의 유휴 연결을 제어하기 위해 무엇을 해야 합니까?
+								데이터베이스 전문가가 MySQL용 Amazon RDS DB 인스턴스에서 여러 유휴 연결을 관찰합니다. DB 인스턴스가 RDS Proxy를 사용하고 있습니다. 애플리케이션이 프록시 끝점에 연결되도록 구성되었습니다. <br/><br/>데이터베이스 전문가는 데이터베이스의 유휴 연결을 제어하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,25 +155,25 @@
 													B.
 												</span> 
 											
-											SHOW FULL PROCESSLIST 명령에서 반환되는 IDLE 스레드에 대해 CALL mysql.rds_kill(thread-id)를 사용합니다.
+											SHOW FULL PROCESSLIST 명령에서 반환된 IDLE 스레드에 대해 CALL mysql.rds_kill(thread-id)를 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											RDS 프록시에 대한 MaxIdleConnectionsPercent 매개변수를 수정합니다.
+											RDS 프록시의 MaxIdleConnectionsPercent 매개 변수를 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											DB 인스턴스에 대한 max_connections 구성 설정을 수정합니다. RDS 프록시에 대한 ConnectionBorrowTimeout 매개변수를 수정합니다.
+											DB 인스턴스의 max_connections 구성 설정을 수정합니다. RDS 프록시에 대한 ConnectionBorrowTimeout 매개 변수를 수정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +183,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a> 
-							
-							시간: <i>
-							2023년 3월 26일, 오후 4:19</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a>
-							
-							at <i>
-							March 26, 2023, 4:19 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,7 +291,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 19일 수 01:57">
-			4주 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -261,7 +304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,8 +335,8 @@
 				르디아즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 16:19">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 16:19">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -307,7 +350,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -331,11 +374,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 4일 화요일 13:27">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">MaxIdleConnectionsPercent "RDS Proxy가 연결 풀에서 유지할 수 있는 유휴 데이터베이스 연결 수를 제어할 수 있습니다. RDS Proxy는 5분 동안 연결에 대한 활동이 없을 때 풀의 데이터베이스 연결을 유휴 상태로 간주합니다. 제한을 다음과 같이 지정합니다. 데이터베이스에 사용할 수 있는 최대 연결의 백분율입니다. 기본값은 MaxConnectionsPercent의 50%이고 상한값은 MaxConnectionsPercent 값입니다. 높은 값을 사용하면 프록시가 높은 비율의 유휴 데이터베이스 연결을 열어 둡니다. 낮은 값을 사용하면 프록시가 높은 비율의 유휴 데이터베이스 연결을 닫습니다. 워크로드를 예측할 수 없는 경우 MaxIdleConnectionsPercent에 대해 높은 값을 설정하는 것이 좋습니다.이렇게 하면 RDS Proxy가 많은 새 데이터베이스 연결을 열지 않고도 급증하는 활동을 수용할 수 있습니다."</div>
+<div class="comment-content">MaxIdleConnectionsPercent "RDS Proxy가 연결 풀에 유지할 수 있는 유휴 데이터베이스 연결 수를 제어할 수 있습니다. RDS Proxy는 5분 동안 연결에 대한 활동이 없을 때 해당 풀의 데이터베이스 연결을 유휴 상태로 간주합니다. 제한을 다음과 같이 지정합니다. 데이터베이스에 사용할 수 있는 최대 연결의 백분율입니다. 기본값은 MaxConnectionsPercent의 50%이고 상한은 MaxConnectionsPercent의 값입니다. 값이 높을수록 프록시는 유휴 데이터베이스 연결의 높은 비율을 열어 둡니다. 낮을 경우 값을 설정하면 프록시는 유휴 데이터베이스 연결의 높은 비율을 닫습니다. 작업 부하를 예측할 수 없는 경우 MaxIdleConnectionsPercent에 대해 높은 값을 설정하는 것이 좋습니다.그렇게 하면 RDS Proxy가 새로운 데이터베이스 연결을 많이 열지 않고도 활동 급증을 수용할 수 있다는 의미입니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -344,7 +387,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -404,7 +447,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 01:57">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -449,7 +492,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 16:19">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -487,7 +530,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 13:27">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

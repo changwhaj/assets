@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 200 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 200 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 200 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 200 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850803">
 <p class="card-text">
 							
-								회사는 AWS에서 애플리케이션을 호스팅합니다. 이 회사는 Amazon Cognito를 사용하여 사용자를 관리합니다. 사용자가 애플리케이션에 로그인하면 애플리케이션은 Amazon API Gateway에서 호스팅되는 REST API를 사용하여 Amazon DynamoDB에서 필요한 데이터를 가져옵니다. 이 회사는 개발 노력을 줄이기 위해 REST API에 대한 액세스를 제어하는 ​​AWS 관리형 솔루션을 원합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 AWS에서 애플리케이션을 호스팅합니다. 회사는 Amazon Cognito를 사용하여 사용자를 관리합니다. 사용자가 애플리케이션에 로그인하면 애플리케이션은 Amazon API Gateway에서 호스팅되는 REST API를 사용하여 Amazon DynamoDB에서 필요한 데이터를 가져옵니다. 회사는 개발 노력을 줄이기 위해 REST API에 대한 액세스를 제어하는 ​​AWS 관리형 솔루션을 원합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											모든 요청과 함께 헤더에 사용자의 이메일 주소를 보냅니다. 해당 이메일 주소를 가진 사용자에게 적절한 액세스 권한이 있는지 확인하려면 AWS Lambda 함수를 호출하십시오.
+											요청할 때마다 헤더에 사용자의 이메일 주소를 보냅니다. AWS Lambda 함수를 호출하여 해당 이메일 주소를 가진 사용자에게 적절한 액세스 권한이 있는지 확인하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 96%; display: flex;" title="">D (96%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="25 votes." data-toggle="tooltip" role="progressbar" style="width: 96%; display: flex;" title="">D (96%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 5:05</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 5:05 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:02">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:02">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">키워드: 최소한의 운영 오버헤드 REST API에 대한 액세스를 제어하고 개발 노력을 줄이기 위해 회사는 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 사용할 수 있습니다. 이를 통해 Amazon Cognito는 각 요청을 검증하고 인증된 사용자만 API에 액세스할 수 있도록 합니다. 이 솔루션은 회사가 추가 인프라나 코드를 개발하고 유지 관리할 필요가 없으므로 운영 오버헤드가 가장 적습니다. 따라서 옵션 D가 정답입니다. 옵션 D. Amazon Cognito가 각 요청을 검증할 수 있도록 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성합니다.</div>
+<div class="comment-content">키워드: 최소 운영 오버헤드 REST API에 대한 액세스를 제어하고 개발 노력을 줄이기 위해 회사는 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 사용할 수 있습니다. 이를 통해 Amazon Cognito는 각 요청을 검증하고 인증된 사용자만 API에 액세스할 수 있도록 할 수 있습니다. 이 솔루션은 회사에서 추가 인프라나 코드를 개발하고 유지 관리할 필요가 없으므로 운영 오버헤드가 가장 적습니다. 따라서 보기 D가 정답입니다. 옵션 D. Amazon Cognito가 각 요청을 검증할 수 있도록 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -302,12 +345,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:46">
-			19시간 21분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D는 운영 오버헤드가 가장 적은 최고의 솔루션입니다. Amazon Cognito가 각 요청을 검증할 수 있도록 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성합니다. 주요 이유는 다음과 같습니다. º Cognito 사용자 풀 권한 부여자는 액세스 제어를 위해 Cognito와 API 게이트웨이 간의 원활한 통합을 허용합니다. º API Gateway는 사용자 지정 코드 없이 자동으로 Cognito의 액세스 토큰 유효성 검사를 처리합니다. º 운영 오버헤드가 최소화된 완전 관리형 솔루션입니다.</div>
+<div class="comment-content">옵션 D는 운영 오버헤드가 가장 적은 최상의 솔루션입니다. Amazon Cognito가 각 요청을 검증할 수 있도록 API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성합니다. 주요 이유는 다음과 같습니다. º Cognito 사용자 풀 권한 부여자는 액세스 제어를 위해 Cognito와 API 게이트웨이 간의 원활한 통합을 허용합니다. º API 게이트웨이는 사용자 정의 코드 없이 자동으로 Cognito의 액세스 토큰 유효성 검사를 처리합니다. º 이는 최소한의 운영 오버헤드로 완벽하게 관리되는 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,11 +391,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:17">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성하면 Amazon Cognito의 내장 기능을 활용하여 사용자를 인증하고 권한을 부여할 수 있습니다. 이렇게 하면 사용자 지정 개발 또는 액세스 키 관리가 필요하지 않습니다. Amazon Cognito는 사용자 인증을 처리하고 사용자 ID를 안전하게 관리하며 REST API에 대한 액세스를 제어하기 위해 API Gateway와의 원활한 통합을 제공합니다. A. API Gateway에서 AWS Lambda 함수를 권한 부여자로 구성하려면 권한 부여 논리의 사용자 지정 구현 및 관리가 필요합니다. B. 각 사용자에 대해 API 키를 생성하고 할당하려면 AWS Lambda 함수에 추가 관리 및 검증 로직이 필요합니다. 씨. 헤더에 있는 사용자의 이메일 주소를 전송하고 AWS Lambda 함수로 이를 검증하려면 권한 부여 논리의 사용자 지정 구현 및 관리도 필요합니다. Amazon Cognito 사용자 풀 권한 부여자를 사용하는 옵션 D는 최소한의 운영 오버헤드로 REST API에 대한 액세스를 제어하기 위한 간소화되고 관리되는 솔루션을 제공합니다.</div>
+<div class="comment-content">API Gateway에서 Amazon Cognito 사용자 풀 권한 부여자를 구성하면 Amazon Cognito의 내장 기능을 활용하여 사용자를 인증하고 권한을 부여할 수 있습니다. 이를 통해 맞춤형 개발이나 액세스 키 관리가 필요하지 않습니다. Amazon Cognito는 사용자 인증을 처리하고, 사용자 ID를 안전하게 관리하며, REST API에 대한 액세스를 제어하기 위해 API Gateway와의 원활한 통합을 제공합니다. A. API Gateway에서 AWS Lambda 함수를 권한 부여자로 구성하려면 권한 부여 로직의 사용자 지정 구현 및 관리가 필요합니다. B. 각 사용자에 대한 API 키를 생성하고 할당하려면 AWS Lambda 함수에 추가 관리 및 검증 로직이 필요합니다. 씨. 헤더에 있는 사용자의 이메일 주소를 보내고 AWS Lambda 함수를 사용하여 이를 검증하려면 인증 로직의 사용자 지정 구현 및 관리도 필요합니다. Amazon Cognito 사용자 풀 권한 부여자를 사용하는 옵션 D는 최소한의 운영 오버헤드로 REST API에 대한 액세스를 제어하기 위한 간소화되고 관리되는 솔루션을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,12 +436,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 25일 목요일 15:25">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">솔루션은 이러한 요구 사항을 충족하며 최소 운영 오버헤드는 옵션 D입니다.</div>
+<div class="comment-content">솔루션은 옵션 D의 운영 오버헤드를 최소화하면서 이러한 요구 사항을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,16 +478,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 15:57">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 15:57">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">최소한의 운영 오버헤드 = 서버리스 = Cognito 사용자 풀</div>
+<div class="comment-content">최소 운영 오버헤드 = 서버리스 = Cognito 사용자 풀</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,12 +528,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 03:30">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 맞습니다.</div>
+<div class="comment-content">D 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -530,13 +573,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:55">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:55">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">답변 : D</div>
+<div class="comment-content">답 : 디</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,15 +616,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				헬로포미
+				안녕하세요4미
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 22일 수 15:03">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 22일 수요일 15:03">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -621,13 +664,13 @@
 				마하데바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 9일 월요일 18:07">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 9일 (월) 18:07">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">"액세스 권한 부여"(Cognito 사용자 풀에서 수행한 인증)와 API에 대한 "액세스 제어"(IAM 정책, 사용자 지정 권한 부여자, 연합 자격 증명 풀을 사용한 권한 부여) 사이에는 차이가 있습니다. 이 질문은 *REST API에 대한 액세스 제어*에 대해 매우 구체적으로 묻습니다. 이는 인증이 아닌 권한 부여의 명확한 경우입니다. 따라서 API Gateway에서 Lambda를 사용하는 사용자 지정 권한 부여자가 솔루션입니다. 다음 블로그를 참조하세요. https://aws.amazon.com/blogs/security/building-fine-grained-authorization-using-amazon-cognito-api-gateway-and-iam/</div>
+<div class="comment-content">"액세스 권한 부여"(Cognito 사용자 풀에서 수행된 인증)와 API에 대한 "액세스 제어"(IAM 정책, 사용자 지정 권한 부여자, 연동 자격 증명 풀을 사용한 승인)에는 차이가 있습니다. 이 질문은 인증이 아닌 승인의 명확한 사례인 *REST API에 대한 액세스 제어*에 대해 매우 구체적으로 묻습니다. 따라서 API Gateway에서 Lambda를 사용하는 사용자 정의 Authorizer가 솔루션입니다. 다음 블로그를 참조하세요: https://aws.amazon.com/blogs/security/building-fine-grained-authorization-using-amazon-cognito-api-gateway-and-iam/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -656,15 +699,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:45">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 답변은 완전히 잘못된 것 같습니다. 이 문서에서는 수행할 수 없다고 주장하는 작업을 수행하는 방법을 설명합니다. IAM 역할 및 정책 또는 Lambda 권한 부여자(이전에는 사용자 지정 권한 부여자라고 함)를 사용하는 대신 Amazon Cognito 사용자 풀을 사용하여 Amazon API Gateway에서 API에 액세스할 수 있는 사람을 제어할 수 있습니다." 이것은 Amazon Cognito 사용자 풀이 권한 부여에 사용될 수 있음을 시사하며 위에서 수행할 수 없다고 말했습니다. 또한 이를 수행하는 방법을 설명합니다... "API에서 Amazon Cognito 사용자 풀을 사용하려면 먼저 COGNITO_USER_POOLS 유형의 권한 부여자를 만든 다음 해당 권한 부여자를 사용하도록 API 메서드를 구성해야 합니다." 접근하다,</div>
+<div class="comment-content">이 답변은 완전히 잘못된 것 같습니다. 이 문서에서는 귀하가 수행할 수 없다고 주장하는 작업을 수행하는 방법을 설명합니다. https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html 시작됩니다. IAM 역할 및 정책이나 Lambda 권한 부여자(이전에는 사용자 지정 권한 부여자)를 사용하는 대신 Amazon Cognito 사용자 풀을 사용하여 Amazon API Gateway에서 API에 액세스할 수 있는 사람을 제어할 수 있습니다. 이는 Amazon Cognito 사용자 풀을 권한 부여에 사용할 수 있음을 의미합니다. 위에서는 이를 수행할 수 없습니다. 또한 이를 수행하는 방법에 대해 설명합니다... "API와 함께 Amazon Cognito 사용자 풀을 사용하려면 먼저 COGNITO_USER_POOLS 유형의 권한 부여자를 생성한 다음 해당 권한 부여자를 사용하도록 API 메서드를 구성해야 합니다." 따라서 A는 유효합니다. 접근하다,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -701,11 +744,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				퉁팜
+				텅팜
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 7일 화요일 16:00">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 7일 (화) 16:00">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -750,11 +793,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 9일 월요일 18:13">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 D: Cognito 사용자 풀 권한 부여자라는 것이 없습니다. Lambda를 통한 사용자 정의 권한 부여자 기능만 있습니다.</div>
+<div class="comment-content">옵션 D: Cognito 사용자 풀 권한 부여자라는 것이 없습니다. Lambda를 통한 사용자 정의 Authorizer 기능만 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -783,15 +826,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:45">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">오 예 있습니다 :)</div>
+<div class="comment-content">아 그렇군요 :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -800,7 +843,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -847,8 +890,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 25일 일 14:14">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 25일 일요일 14:14">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -862,7 +905,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -885,8 +928,8 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 24일 월요일 14:07">
-			3주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 24일 (월) 14:07">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -899,7 +942,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,16 +978,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 04:50">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 04:50">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D - 회사가 이미 Cognito에 모든 사용자 인증 정보를 가지고 있기 때문에</div>
+<div class="comment-content">옵션 D - 회사가 이미 Cognito에 모든 사용자 인증 정보를 가지고 있으므로</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -985,12 +1028,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 15:51">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -999,7 +1042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1031,11 +1074,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:20">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">API + Cognito 통합 - Answer D</div>
+<div class="comment-content">API + Cognito 통합 - 답변 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1075,13 +1118,13 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 04:17">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 04:17">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">답변 : D Gabs90 링크 확인 Amazon Cognito 콘솔, CLI/SDK 또는 API를 사용하여 사용자 풀을 생성하거나 다른 AWS 계정이 소유한 풀을 사용하십시오.</div>
+<div class="comment-content">답변 : D Gabs90 링크를 확인하십시오. Amazon Cognito 콘솔, CLI/SDK 또는 API를 사용하여 사용자 풀을 생성하거나 다른 AWS 계정이 소유한 풀을 사용하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1090,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1121,8 +1164,8 @@
 				TMM369
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 00:05">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 00:05">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1136,7 +1179,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1164,16 +1207,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:45">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나에게 D 인 것 같습니다 : https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html</div>
+<div class="comment-content">나에게는 D인 것 같습니다: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrate-with-cognito.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1182,7 +1225,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1213,13 +1256,13 @@
 				레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 17:05">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:05">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1228,7 +1271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1283,7 +1326,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:02">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1338,7 +1381,7 @@ Option D. Configure an Amazon Cognito user pool authorizer in API Gateway to all
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:46">
-			19 hours, 21 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1392,7 +1435,7 @@ The key reasons are:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:17">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1445,7 +1488,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 15:25">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1491,7 +1534,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 15:57">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1537,7 +1580,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 07 May 2023 03:30">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1583,7 +1626,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:55">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1629,7 +1672,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Mar 2023 15:03">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1674,7 +1717,7 @@ Option D, using an Amazon Cognito user pool authorizer, provides a streamlined a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 09 Jan 2023 18:07">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1714,7 +1757,7 @@ Pls refer to this blog: https://aws.amazon.com/blogs/security/building-fine-grai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:45">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1771,7 +1814,7 @@ So whilst A is a valid approach, it looks like D achieves the same with "the LEA
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Mar 2023 16:00">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1817,7 +1860,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 09 Jan 2023 18:13">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1854,7 +1897,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:45">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1915,7 +1958,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 14:14">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1953,7 +1996,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 24 Jul 2023 14:07">
-			3 weeks, 5 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2006,7 +2049,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 04:50">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2052,7 +2095,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 15:51">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2098,7 +2141,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:20">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2143,7 +2186,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-integrat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 04:17">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2192,7 +2235,7 @@ Use the Amazon Cognito console, CLI/SDK, or API to create a user pool—or use o
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 00:05">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2238,7 +2281,7 @@ Use the Amazon Cognito console, CLI/SDK, or API to create a user pool—or use o
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2284,7 +2327,7 @@ Use the Amazon Cognito console, CLI/SDK, or API to create a user pool—or use o
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:05">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

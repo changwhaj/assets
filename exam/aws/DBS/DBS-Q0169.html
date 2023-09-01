@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 169 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 169 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 169 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 169 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807411">
 <p class="card-text">
 							
-								회사에 온-프레미스 SQL Server 데이터베이스가 있습니다. 사용자는 Active Directory 인증을 사용하여 데이터베이스에 액세스합니다. 이 회사는 데이터베이스를 SQL Server용 Amazon RDS로 성공적으로 마이그레이션했습니다. 그러나 회사는 AWS Cloud 환경에서 사용자 인증에 대해 우려하고 있습니다. <br/>데이터베이스 전문가는 사용자 인증을 위해 어떤 솔루션을 제공해야 합니까?<br/>
+								회사에 온-프레미스 SQL Server 데이터베이스가 있습니다. 사용자는 Active Directory 인증을 사용하여 데이터베이스에 액세스합니다. 이 회사는 데이터베이스를 SQL Server용 Amazon RDS로 성공적으로 마이그레이션했습니다. 하지만 회사에서는 AWS 클라우드 환경에서의 사용자 인증에 대해 우려하고 있습니다. <br/>사용자 인증을 위해 데이터베이스 전문가는 어떤 솔루션을 제공해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807411" type="application/json">[{"voted_answers": "D", "vote_count": 16, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
@@ -84,37 +147,37 @@
 													A.
 												</span> 
 											
-											온프레미스에 AD FS(Active Directory Federation Services)를 배포하고 온프레미스 Active Directory로 구성합니다. 온프레미스 AD FS와 AWS Security Token Service(AWS STS) 간에 위임을 설정하여 AmazonRDSDirectoryServiceAccess 관리형 IAM 정책을 사용하여 사용자 자격 증명을 역할에 매핑합니다.
+											온프레미스에 AD FS(Active Directory Federation Services)를 배포하고 온프레미스 Active Directory로 구성합니다. AmazonRDSDirectoryServiceAccess 관리형 IAM 정책을 사용하여 사용자 자격 증명을 역할에 매핑하도록 온프레미스 AD FS와 AWS Security Token Service(AWS STS) 간에 위임을 설정합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											온프레미스 Active Directory와 Microsoft Active Directory용 AWS Directory Service 간에 포리스트 트러스트를 설정합니다. AWS SSO를 사용하여 SQL Server용 RDS의 데이터베이스에 액세스하도록 위임된 Active Directory 사용자를 구성합니다.
+											온프레미스 Active Directory와 Microsoft Active Directory용 AWS Directory Service 간에 포리스트 신뢰를 설정합니다. AWS SSO를 사용하여 SQL Server용 RDS의 데이터베이스에 액세스하도록 위임된 Active Directory 사용자를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Active Directory Connector를 사용하여 클라우드에 정보를 캐싱하지 않고 디렉터리 요청을 회사의 온프레미스 Active Directory로 리디렉션합니다. RDS 마스터 사용자 자격 증명을 사용하여 DB 인스턴스에 연결하고 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 구성합니다.
+											Active Directory Connector를 사용하여 클라우드의 정보를 캐싱하지 않고 디렉터리 요청을 회사의 온프레미스 Active Directory로 리디렉션합니다. RDS 마스터 사용자 자격 증명을 사용하여 DB 인스턴스에 연결하고 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											온프레미스 Active Directory와 Microsoft Active Directory용 AWS Directory Service 간에 포리스트 트러스트를 설정합니다. SQL Server용 RDS가 혼합 모드 인증을 사용하는지 확인합니다. RDS 마스터 사용자 자격 증명을 사용하여 DB 인스턴스에 연결하고 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 구성합니다.
+											온프레미스 Active Directory와 Microsoft Active Directory용 AWS 디렉터리 서비스 간에 포리스트 신뢰를 설정합니다. SQL Server용 RDS가 혼합 모드 인증을 사용하고 있는지 확인하세요. RDS 마스터 사용자 자격 증명을 사용하여 DB 인스턴스에 연결하고 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">B </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -122,21 +185,11 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_tutorial_setup_trust.html
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 84%; display: flex;" title="">D (84%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">B (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 84%; display: flex;" title="">D (84%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">B (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a> 
-							
-							시간: <i>
-							2021년 11월 9일, 오후 11:56</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a>
-							
-							at <i>
-							Nov. 9, 2021, 11:56 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 5월 15일 일 13:46">
+<span class="comment-date align-middle" title="2022년 5월 15일 일요일 13:46">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D =&gt; Active Directory 사용자 및 그룹의 SQL Server 로그인 및 사용자를 구성하기 위해 마스터 사용자 자격 증명과 함께 SQL 인증을 사용해야 하므로 저에게는 혼합 모드 인증이 필수입니다. D를 사용합니다. 출처: https://docs .aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html ... 6. Amazon RDS 마스터 사용자 자격 증명을 사용하여 다른 DB 인스턴스와 마찬가지로 SQL Server DB 인스턴스에 연결합니다. DB 인스턴스가 AWS Managed Microsoft AD 도메인에 가입되어 있으므로 해당 도메인의 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 프로비저닝할 수 있습니다. (이를 SQL Server "Windows" 로그인이라고 합니다.) 데이터베이스 권한은 이러한 Windows 로그인에 부여 및 취소된 표준 SQL Server 권한을 통해 관리됩니다. ...</div>
+<div class="comment-content">D =&gt; SQL Server 로그인과 Active Directory 사용자 및 그룹의 사용자를 구성하려면 마스터 사용자 자격 증명과 함께 SQL 인증을 사용해야 하므로 혼합 모드 인증이 필수입니다. 저는 D를 사용합니다. https://docs .aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html ... 6. 다른 DB 인스턴스와 마찬가지로 Amazon RDS 마스터 사용자 자격 증명을 사용하여 SQL Server DB 인스턴스에 연결합니다. DB 인스턴스는 AWS Managed Microsoft AD 도메인에 조인되어 있으므로 해당 도메인의 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 프로비저닝할 수 있습니다. (이것을 SQL Server "Windows" 로그인이라고 합니다.) 데이터베이스 권한은 이러한 Windows 로그인에 부여되고 취소되는 표준 SQL Server 권한을 통해 관리됩니다. ...</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -267,7 +310,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -295,14 +338,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 14일 금 22:03">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 14일 금요일 22:03">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,15 +379,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 14일 금 22:05">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 14일 금요일 22:05">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html Amazon RDS 마스터 사용자 자격 증명을 사용하여 다른 DB 인스턴스와 마찬가지로 SQL Server DB 인스턴스에 연결합니다. DB 인스턴스가 AWS Managed Microsoft AD 도메인에 가입되어 있으므로 해당 도메인의 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 프로비저닝할 수 있습니다. (이를 SQL Server "Windows" 로그인이라고 합니다.) 데이터베이스 권한은 이러한 Windows 로그인에 부여 및 취소된 표준 SQL Server 권한을 통해 관리됩니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html Amazon RDS 마스터 사용자 자격 증명을 사용하여 다른 DB 인스턴스와 마찬가지로 SQL Server DB 인스턴스에 연결합니다. DB 인스턴스는 AWS Managed Microsoft AD 도메인에 조인되어 있으므로 해당 도메인의 Active Directory 사용자 및 그룹에서 SQL Server 로그인 및 사용자를 프로비저닝할 수 있습니다. (이것을 SQL Server "Windows" 로그인이라고 합니다.) 데이터베이스 권한은 이러한 Windows 로그인에 부여되고 취소되는 표준 SQL Server 권한을 통해 관리됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -353,7 +396,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,12 +419,12 @@
 				민트워터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수 16:04">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수요일 16:04">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon RDS는 Windows 인증에 혼합 모드를 사용합니다. 이 접근 방식은 마스터 사용자(SQL Server DB 인스턴스를 생성하는 데 사용되는 이름과 암호)가 SQL 인증을 사용함을 의미합니다. 마스터 사용자 계정은 권한 있는 자격 증명이므로 이 계정에 대한 액세스를 제한해야 합니다. 온프레미스 또는 자체 호스팅 Microsoft Active Directory를 사용하여 Windows 인증을 받으려면 포리스트 트러스트를 만듭니다. 신뢰는 단방향 또는 양방향일 수 있습니다. AWS Directory Service를 사용하여 포리스트 트러스트를 설정하는 방법에 대한 자세한 내용은 AWS Directory Service Administration Guide의 트러스트 관계를 생성해야 하는 경우를 참조하십시오.</div>
+<div class="comment-content">Amazon RDS는 Windows 인증에 혼합 모드를 사용합니다. 이 접근 방식은 마스터 사용자(SQL Server DB 인스턴스를 생성하는 데 사용되는 이름과 암호)가 SQL 인증을 사용한다는 것을 의미합니다. 마스터 사용자 계정은 권한 있는 자격 증명이므로 이 계정에 대한 액세스를 제한해야 합니다. 온프레미스 또는 자체 호스팅 Microsoft Active Directory를 사용하여 Windows 인증을 받으려면 포리스트 트러스트를 생성하십시오. 신뢰는 단방향 또는 양방향일 수 있습니다. AWS Directory Service를 사용하여 포리스트 신뢰를 설정하는 방법에 대한 자세한 내용은 AWS Directory Service 관리 안내서의 신뢰 관계를 생성해야 하는 경우를 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -390,7 +433,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,19 +477,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 25일 일요일 00:40">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 제 대답입니다. 왜 다른 사람들이 D를 선택하는지 이해할 수 없습니다. 이유를 계속 읽을 것입니다.</div>
+<div class="comment-content">B가 내 대답이다. 왜 다른 사람들이 D를 선택하는지 이해가 되지 않습니다. 계속해서 그 이유를 읽어보겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,16 +526,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오미
+				오미즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 6월 28일 화요일 01:41">
-			1년, 1개월 전
+<span class="comment-date align-middle" title="2022년 6월 28일 (화) 01:41">
+			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">링크 참조는 포리스트 트러스트 후에 sso 또는 액세스 링크로 연결할 수 있음을 명확하게 보여줍니다. 옵션 D에는 여러 가지 문제가 있습니다. 1. 마스터 자격 증명을 사용하여 연결 [필수 및 원치 않는] 2. 혼합 모드는 AD와 클라이언트가 처음에 원하지 않는 일반 연결을 모두 허용합니다.</div>
+<div class="comment-content">링크 참조는 포리스트 신뢰 후에 SSO 또는 액세스 링크로 연결할 수 있음을 명확하게 보여줍니다. 옵션 D에는 여러 가지 문제가 있습니다. 1. 마스터 자격 증명을 사용하여 연결[필수 및 원치 않음] 2. 혼합 모드에서는 클라이언트가 처음에 원하지 않았던 AD와 일반 연결을 모두 허용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,12 +575,12 @@
 				사친
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 6월 21일 화요일 18:04">
-			1년, 1개월 전
+<span class="comment-date align-middle" title="2022년 6월 21일 (화) 18:04">
+			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,7 +620,7 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 17:38">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 17:38">
 			1년, 3개월 전
 		</span>
 </div>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -629,7 +672,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D입니다.</div>
+<div class="comment-content">정답은 D 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,7 +709,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 4일 금요일 20:57">
@@ -675,7 +718,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -715,13 +758,13 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 01:27">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 01:27">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Per - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html Amazon RDS는 Windows 인증에 혼합 모드를 사용합니다. 이 접근 방식은 마스터 사용자(SQL Server DB 인스턴스를 생성하는 데 사용되는 이름과 암호)가 SQL 인증을 사용함을 의미합니다. 마스터 사용자 계정은 권한 있는 자격 증명이므로 이 계정에 대한 액세스를 제한해야 합니다. 온프레미스 또는 자체 호스팅 Microsoft Active Directory를 사용하여 Windows 인증을 받으려면 포리스트 트러스트를 만듭니다.</div>
+<div class="comment-content">기준 - https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html Amazon RDS는 Windows 인증에 혼합 모드를 사용합니다. 이 접근 방식은 마스터 사용자(SQL Server DB 인스턴스를 생성하는 데 사용되는 이름과 암호)가 SQL 인증을 사용한다는 것을 의미합니다. 마스터 사용자 계정은 권한 있는 자격 증명이므로 이 계정에 대한 액세스를 제한해야 합니다. 온프레미스 또는 자체 호스팅 Microsoft Active Directory를 사용하여 Windows 인증을 받으려면 포리스트 트러스트를 생성하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -730,7 +773,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -762,11 +805,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 9일 목요일 15:46">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나를 위한 D https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html</div>
+<div class="comment-content">D 나를 위한 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,15 +846,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				유스투
+				저스투
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 02일 목요일 18:20">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 2일 목요일 18:20">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아니요, 정답은 D입니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html 읽고 이해하십시오.</div>
+<div class="comment-content">아니요, 정답은 D입니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html 읽고 이해하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -820,7 +863,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -852,11 +895,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 11월 12일 금요일 12:29">
-			1년 9개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 D가 아닙니다. 혼합 모드는 AD 및 Sql 사용자 모두를 위한 것입니다. 질문은 그것을 요구하지 않습니다. 대답은 B입니다</div>
+<div class="comment-content">대답은 D가 아닙니다. 혼합 모드는 AD 및 Sql 사용자 모두를 위한 것입니다. 질문에는 그럴 필요가 없습니다. 답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -865,7 +908,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -888,12 +931,12 @@
 				palanikumar_n
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 13일 (토) 02:42">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 13일 토요일 02:42">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최근에 시험을 보셨나요? 덤프에서 나온 질문 수</div>
+<div class="comment-content">최근에 시험을 보셨나요? 덤프에서 얼마나 많은 질문이 나왔는지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -902,7 +945,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -933,12 +976,12 @@
 				존코너
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 22일 월요일 06:31">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 22일 (월) 06:31">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 당신이 옳다고 생각합니다. 나는 B에 투표합니다</div>
+<div class="comment-content">내 생각엔 당신 말이 맞는 것 같아, 나는 B에 투표한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -947,7 +990,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -967,11 +1010,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				grek001
+				grekh001
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 9일 목요일 13:24">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -984,7 +1027,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1028,15 +1071,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				leunamE
+				르남E
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 9일 화요일 23:56">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 9일 (화) 23:56">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D입니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html</div>
+<div class="comment-content">대답은 D입니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAuth.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1045,7 +1088,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1154,7 +1197,7 @@ from: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAu
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 22:03">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1192,7 +1235,7 @@ from: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_SQLServerWinAu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 22:05">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1230,7 +1273,7 @@ Use the Amazon RDS master user credentials to connect to the SQL Server DB insta
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 16:04">
-			4 months, 1 week ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1296,7 +1339,7 @@ To get Windows Authentication using an on-premises or self-hosted Microsoft Acti
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 00:40">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1342,7 +1385,7 @@ To get Windows Authentication using an on-premises or self-hosted Microsoft Acti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Jun 2022 01:41">
-			1 year, 1 month ago
+			1 year, 2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1388,7 +1431,7 @@ To get Windows Authentication using an on-premises or self-hosted Microsoft Acti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Jun 2022 18:04">
-			1 year, 1 month ago
+			1 year, 2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1571,7 +1614,7 @@ To get Windows Authentication using an on-premises or self-hosted Microsoft Acti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 01:27">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1795,7 +1838,7 @@ Read it and understand.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 Nov 2021 06:31">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

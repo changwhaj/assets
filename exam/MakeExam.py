@@ -363,7 +363,7 @@ def save_html(driver, did, fname):
     
     return question_data_id
 
-def make_filename(qtitle, qid):
+def make_filename(qtitle, qid, dataid):
     fname = ""
 
     exams = [
@@ -371,76 +371,79 @@ def make_filename(qtitle, qid):
             "qtitle": "Exam CISM topic 1",
             "prefname": "isaca/CISM/CISM-Q",
             "qlength": 920,
-        },
-        {
-            "qtitle": "Exam CISM topic 2",
-            "prefname": "isaca/CISM2/CISM-Q",
-            "qlength": 50,
+            "first_id": 818826,
         },
         { 
             "qtitle": "Exam CISA topic 1",
             "prefname": "isaca/CISA/CISA-Q",
             "qlength": 1195,
-        },
-        {
-            "qtitle": "Exam CISA topic 2",
-            "prefname": "isaca/CISA2/CISA-Q",
-            "qlength": 50,
+            "first_id": 818026,
         },
         {
             "qtitle": "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1",
             "prefname": "aws/ANS_C01/ANS-Q",
             "qlength": 167,
+            "first_id": 875171,
         },
         {
             "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
             "prefname": "aws/DAS-C01/DAS-Q",
             "qlength": 164,
+            "first_id": 781767,
         },
         {
             "qtitle": "Exam AWS Certified Database - Specialty topic 1",
             "prefname": "aws/DBS/DBS-Q",
             "qlength": 327,
+            "first_id": 807243,
         },
         {
             "qtitle": "Exam AWS Certified Developer Associate topic 1",
             "prefname": "aws/DVA/DVA-Q",
             "qlength": 443,
+            "first_id": 807501,
         },
         {
             "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
             "prefname": "aws/DVA_C02/DVA2-Q",
             "qlength": 142,
+            "first_id": 874573,
         },
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
             "qlength": 134,
+            "first_id": 879465,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1",
             "prefname": "aws/SAA_C02/SAA2-Q",
             "qlength": 822,
+            "first_id": 807974,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
             "prefname": "aws/SAA_C03/SAA3-Q",
             "qlength": 583,
+            "first_id": 839758,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional topic 1",
             "prefname": "aws/SAP/SAP-Q",
             "qlength": 1019,
+            "first_id": 808796,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
             "prefname": "aws/SAP_C02/SAP2-Q",
             "qlength": 298,
+            "first_id": 856116,
         },
         {
             "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
             "prefname": "aws/SOA_C02/SOA2-Q",
             "qlength": 377,
+            "first_id": 809742,
         },
         # aws/MLS_C01/MLS-Q	Exam AWS Certified Machine Learning - Specialty topic 1
         # aws/SES/SES-Q	Exam AWS Certified Security - Specialty topic 1
@@ -450,6 +453,8 @@ def make_filename(qtitle, qid):
     findexam = next((exam for exam in exams if exam["qtitle"] == qtitle), None)
 
     if findexam:
+        if dataid > 0 & dataid < findexam["first_id"]:
+            return fname
         fname = findexam["prefname"] + format(int(qid), '04') + '.html'
     else:
         if qtitle == "Exam CISM topic 1":
@@ -610,6 +615,7 @@ def refresh_from_forum(discuss_list, forum_name):
             if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
                 print("Same question found !!!")
 
+                data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
                 LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
                 if LastPost == last_post:
                     print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
@@ -626,9 +632,10 @@ def refresh_from_forum(discuss_list, forum_name):
                     # df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
             else:
                 print("New question found !!!")
+                data_id = 0
 
             # try:
-            fname = make_filename(qtitle, qid)
+            fname = make_filename(qtitle, qid, data_id)
             if (len(fname) <= 0): 
                 new_data_id = 0
             else:
@@ -773,12 +780,13 @@ def refresh_all_exam(exam_list_file, qtitle):
     for i in range(len(df))[idx_from:2]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
+        dataid = int(df.at[i, 'DataNo'])
         if did == 0:
             continue
         url = str(df.at[i, 'DiscussURL'])
         print(qtitle+"\t"+str(qid)+"\t"+url, flush=True)
         try:
-            fname = make_filename(qtitle, qid)
+            fname = make_filename(qtitle, qid, dataid)
             if (len(fname) <= 0): 
                 new_data_id = 0
             else:
@@ -833,8 +841,8 @@ if __name__ == "__main__":
     # SAA2 = "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1"
     # refresh_all_exam('SAA2_Exam.csv', SAA2)
     
-    SAP = "Exam AWS Certified Solutions Architect - Professional topic 1"
-    refresh_all_exam('SAP_Exam.csv', SAP)
+    # SAP = "Exam AWS Certified Solutions Architect - Professional topic 1"
+    # refresh_all_exam('SAP_Exam.csv', SAP)
     
     # SOA2 = "Exam AWS Certified SysOps Administrator - Associate topic 1"
     # refresh_all_exam('SOA2_Exam.csv', SOA2)       # NOK 377 -340, -341
@@ -845,14 +853,14 @@ if __name__ == "__main__":
     # DVA = 'Exam AWS Certified Developer Associate topic 1'
     # refresh_all_exam('DVA_Exam.csv', DVA)         # OK 443
 
-    CISM = 'Exam CISM topic 1'
-    refresh_all_exam('CISM_Exam.csv', CISM)
+    # CISM = 'Exam CISM topic 1'
+    # refresh_all_exam('CISM_Exam.csv', CISM)
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
     AMAZON_DISCUSS = 'AmazonDiscuss.txt'
-    # FORUM_NAME = 'amazon'
-    # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
+    FORUM_NAME = 'amazon'
+    refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
 
     # ISACA_DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'

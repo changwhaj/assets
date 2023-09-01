@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 65 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 65 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 65 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 65 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807307">
 <p class="card-text">
 							
-								회사에서 5TB Amazon RDS DB 인스턴스를 사용 중이며 규정 준수를 위해 5년 동안 월간 데이터베이스 백업을 유지해야 합니다. 데이터베이스 <br/>관리자는 24시간 이내에 감사자에게 데이터를 제공해야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족하고 운영상 가장 효율적입니까?<br/>
+								회사는 5TB Amazon RDS DB 인스턴스를 사용하고 있으며 규정 준수를 위해 5년 동안 월별 데이터베이스 백업을 유지해야 합니다. 데이터베이스 <br/>관리자는 24시간 이내에 감사자에게 데이터를 제공해야 합니다. <br/>이러한 요구 사항을 충족하고 운영상 가장 효율적인 솔루션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807307" type="application/json">[{"voted_answers": "A", "vote_count": 13, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -93,7 +156,7 @@
 													B.
 												</span> 
 											
-											수동 RDS 스냅샷을 생성하기 위해 매월 1일에 실행할 AWS Lambda 함수를 생성합니다.
+											매월 1일에 실행되어 수동 RDS 스냅샷을 찍을 AWS Lambda 함수를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -102,18 +165,18 @@
 													C.
 												</span> 
 											
-											AWS Management Console에서 RDS 스냅샷 일정을 생성하여 30일마다 스냅샷을 찍습니다.
+											AWS Management Console에서 RDS 스냅샷 일정을 생성하여 30일마다 스냅샷을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											자동화된 RDS 스냅샷을 생성하기 위해 매월 1일에 실행할 AWS Lambda 함수를 생성합니다.
+											매월 1일에 실행할 AWS Lambda 함수를 생성하여 자동화된 RDS 스냅샷을 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -123,20 +186,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 59%; display: flex;" title="">A (59%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 36%; display: flex;" title="">B (36%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="13 votes." data-toggle="tooltip" role="progressbar" style="width: 59%; display: flex;" title="">A (59%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 36%; display: flex;" title="">B (36%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								lui
-							</a> 
-							
-							시간: <i>
-							2020년 7월 25일, 오전 3:19</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								lui
-							</a>
-							
-							at <i>
-							July 25, 2020, 3:19 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 10월 11일 (월) 14:10">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 자동 백업과 달리 수동 스냅샷은 백업 보존 기간이 적용되지 않습니다. 스냅샷은 만료되지 않습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 주 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html</div>
+<div class="comment-content">A. 자동 백업과 달리 수동 스냅샷에는 백업 보존 기간이 적용되지 않습니다. 스냅샷은 만료되지 않습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 메이저 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,7 +329,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				도우미
+				헬퍼
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 8월 11일 목요일 22:04">
@@ -294,7 +337,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">따라서 여기서 키워드는 "S3로 이동"입니다. 이동은 S3에 복사한 다음 RDS에서 삭제하는 것을 의미합니다. 질문은 감사인에게 보고할 "운영 효율성"과 "24시간"을 요구합니다. RDS에 그대로 두면 만료되지 않고 즉시 쉽게 공유할 수 있습니다. B가 답입니다.</div>
+<div class="comment-content">따라서 여기서 키워드는 "S3으로 이동"입니다. 이동은 S3에 복사한 다음 RDS에서 삭제하는 것을 의미합니다. 질문에는 '운영 효율성'과 감사인에게 보고할 '24시간'을 묻는다. RDS에 남겨두면 만료되지 않고 바로 쉽게 공유할 수 있습니다. B가 답이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,23 +386,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 7월 18일 (월) 05:56">
-			1 년 전
+			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">스냅샷 복사/공유와 내보내기에는 차이가 있습니다. S3로 내보내기 옵션은 DB 스냅샷을 내보낼 때 Amazon RDS가 스냅샷에서 데이터를 추출하여 Amazon S3 버킷에 저장합니다. 데이터는 압축되고 일관된 Apache Parquet 형식으로 저장됩니다. 다른 리전이나 다른 AWS 계정에 있는 그대로 수동 스냅샷을 복사할 수 있는 옵션이 있습니다. 따라서 기본적으로 수동 스냅샷을 S3로 직접 이동할 수 없습니다. B가 맞습니다.</div>
+<div class="comment-content">스냅샷 복사/공유와 내보내기에는 차이가 있습니다. S3으로 내보내기 옵션은 DB 스냅샷을 내보내면 Amazon RDS가 스냅샷에서 데이터를 추출하여 Amazon S3 버킷에 저장합니다. 데이터는 압축되고 일관된 Apache Parquet 형식으로 저장됩니다. 수동 스냅샷을 있는 그대로 다른 리전이나 다른 AWS 계정에 복사할 수 있는 옵션이 있습니다. 따라서 기본적으로 수동 스냅샷을 S3으로 직접 이동할 수는 없습니다. B가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">8</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,11 +426,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 7월 18일 (월) 06:00">
-			1 년 전
+			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 자동 백업과 달리 수동 스냅샷에는 백업 보존 기간이 적용되지 않습니다. 스냅샷은 만료되지 않습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 주 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. 여기서 백업 이동은 규정 준수만을 위한 것입니다. 해당 백업을 쿼리할 필요가 없습니다.( athena 또는 rds redshift 스펙트럼을 통해 parquet 형식 쿼리 사용)</div>
+<div class="comment-content">또한 자동 백업과 달리 수동 스냅샷에는 백업 보존 기간이 적용되지 않습니다. 스냅샷은 만료되지 않습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 메이저 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. 여기서 백업 이동은 규정 준수를 위한 것입니다. 해당 백업을 쿼리할 필요가 없습니다.(Athena 또는 rds redshift 스펙트럼을 통해 parquet 형식 쿼리 사용)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -396,7 +439,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,19 +475,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				milan9527
+				밀라노9527
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 8일 목요일 09:14">
-			2개월, 1주 전
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">S3로의 이동은 효율성 없는 추가 작업</div>
+<div class="comment-content">S3로의 이동은 효율성이 없는 추가 작업입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -481,16 +524,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 15:20">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">실제로 수동 스냅샷을 찍을 필요조차 없습니다. 자동 스냅샷도 S3로 내보낼 수 있습니다. 수동 스냅샷, 자동 시스템 스냅샷, AWS Backup 서비스에서 생성한 스냅샷을 포함하여 모든 유형의 DB 스냅샷을 내보낼 수 있습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html</div>
+<div class="comment-content">실제로는 수동 스냅샷을 찍을 필요조차 없습니다. 자동화된 스냅샷도 S3로 내보낼 수 있습니다. 수동 스냅샷, 자동 시스템 스냅샷, AWS Backup 서비스에서 생성된 스냅샷을 포함하여 모든 유형의 DB 스냅샷을 내보낼 수 있습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,16 +570,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ninjalight25
+				닌자라이트25
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 5일 일요일 06:42">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">30일마다 스냅샷을 생성하기 위해 AWS Management Console에서 RDS 스냅샷 일정을 생성하는 옵션 C는 이 시나리오에서 운영상 가장 효율적인 솔루션이 될 것입니다.</div>
+<div class="comment-content">AWS Management Console에서 RDS 스냅샷 일정을 생성하여 30일마다 스냅샷을 찍는 옵션 C는 이 시나리오에서 운영상 가장 효율적인 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -565,15 +608,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				나이스_가이
+				Nice_Guy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 6일 월요일 06:43">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 6일 (월) 06:43">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">자동 백업의 최대 보존 기간은 35일이라고 생각합니다.</div>
+<div class="comment-content">자동백업의 최대 보관기간은 35일인 것 같아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,16 +661,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 19일 (월) 23:57">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 19일 월요일 23:57">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">어쨌든 수동 스냅샷이 s3에서 끝나는 것을 허용하지 않기 때문에 혼란스럽습니까?</div>
+<div class="comment-content">어쨌든 수동 스냅샷이 s3에서 끝나는 것을 허용하지 않기 때문에 혼란스럽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -667,12 +710,12 @@
 				미로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 02:48">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 02:48">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 수동 스냅샷은 제한이 있습니다. (각 지원 리전: 100개) 이 경우 고객은 5년 동안 백업을 유지하기를 원합니다.. 그래서 5년(365*5) 동안 스냅샷을 유지할 수 없다고 생각합니다. https://docs.aws.amazon.com /AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limits.Limits</div>
+<div class="comment-content">A. 수동 스냅샷에는 제한이 있습니다. (지원되는 리전별 : 100개) 이 경우 고객이 5년 동안 백업을 유지하고 싶어하는데.. 그래서 5년 동안(365*5) 스냅샷을 유지하는 것은 불가능할 것 같습니다. https://docs.aws.amazon.com /AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limits.Limits</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,12 +747,12 @@
 				레오토라스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 12일 수 20:26">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 12일 수요일 20:26">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 제한은 조정 가능하며 실제로 지역당 100개 이상의 스냅을 가질 수 있습니다.</div>
+<div class="comment-content">이 제한은 조정 가능하며 실제로 지역당 100개 이상의 스냅을 보유할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -746,15 +789,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				MrAliMohsan
+				MrAli모산
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 12:30">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 12:30">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 그들은 "운영상 효율적인" 옵션을 요청했기 때문에 B가 더 나은 대답이라고 생각합니다.</div>
+<div class="comment-content">또한 그들은 "운영 효율성" 옵션을 요청했기 때문에 B가 더 나은 대답이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -794,12 +837,12 @@
 				미로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 08일 목요일 03:00">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 8일 (목) 03:00">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 실수... B가 더 정확해. 한 달 동안만 백업하면 되므로 12*5 = 60의 스냅샷만 있으면 됩니다. rds 스냅샷의 제한에 도달하지 않습니다.</div>
+<div class="comment-content">내 실수야... B가 더 정확해. 왜냐하면 한 달 동안만 백업하면 되기 때문입니다.. 따라서 12*5 = 60개의 스냅샷만 필요합니다. rds 스냅샷의 제한에 도달하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -808,7 +851,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -844,16 +887,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 19일 수 04:42">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 답입니다. aws는 장기 백업을 s3로 내보낼 것을 권장합니다.</div>
+<div class="comment-content">A가 답이다. AWS는 장기 백업을 s3로 내보낼 것을 권장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -862,7 +905,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -890,16 +933,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 00:17">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 00:17">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 주 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html</div>
+<div class="comment-content">MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다. DB 엔진의 메이저 버전이 더 이상 지원되지 않으면 스냅샷에서 해당 버전으로 복원할 수 없습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -908,7 +951,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -940,7 +983,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 28일 수 02:18">
-			10개월, 3주 전
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -985,12 +1028,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 6월 24일 금요일 15:27">
-			1년, 1개월 전
+			1년, 2개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">개별 S3로 스냅샷을 이동할 수 없다고 생각하므로 대답은 아마도 B일 것입니다.</div>
+<div class="comment-content">스냅샷을 개별 S3로 옮길 수는 없을 것 같아서 답은 B일 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -999,7 +1042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1027,15 +1070,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsguys
+				나쁜 놈들
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 5월 22일 일 15:06">
-			1년, 2개월 전
+<span class="comment-date align-middle" title="2022년 5월 22일 일요일 15:06">
+			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 B가 맞는 것 같습니다. 하지만 저는 A를 선택합니다. 스냅샷을 회사의 Amazon S3 버킷으로 이동합니다. 소리가 더 좋아.</div>
+<div class="comment-content">A와 B가 맞는 것 같습니다. 하지만 나는 A를 선택해요. 스냅샷을 회사의 Amazon S3 버킷으로 이동합니다. 소리가 더 좋아하는 것 같아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1090,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1118,7 +1161,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:26">
@@ -1126,7 +1169,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 또한 Tutorials DOJO 질문(매우 존경받는 사이트)이며 그들의 선택도 (A)입니다. 그들이 (A)라고 말하면 공식 RDS에 찍힌 것과 거의 비슷합니다.</div>
+<div class="comment-content">이것은 또한 Tutorials DOJO 질문(매우 존경받는 사이트)이며 그들의 선택도 (A)입니다. 그들이 (A)라고 말하면 공식 RDS의 도장을 찍는 것과 거의 비슷합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1135,7 +1178,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1163,7 +1206,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:22">
@@ -1217,7 +1260,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A: 5년 동안 스냅샷을 보관해야 한다는 요구 사항이 있습니다. RDS는 최대 100개의 스냅샷만 허용합니다. Exia의 링크에 따라 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html. 권장 사항이 있습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다.</div>
+<div class="comment-content">A: 스냅샷을 5년 동안 보관해야 한다는 요구 사항이 있습니다. RDS는 최대 100개의 스냅샷만 허용합니다. Exia의 링크에 따라 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html. 권장 사항이 있습니다. MariaDB, MySQL 및 PostgreSQL 데이터를 장기간 백업하려면 스냅샷 데이터를 Amazon S3로 내보내는 것이 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1226,7 +1269,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1258,12 +1301,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 27일 (월) 16:39">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">월별 수동 스냅샷이 필요하지만 스냅샷을 S3 버킷으로 이동할 수 없고 마루 형식으로 내보낼 수 있지만 이동하거나 복사할 수는 없습니다.</div>
+<div class="comment-content">확실히 월별 수동 스냅샷이 필요하지만 스냅샷을 S3 버킷으로 이동할 수 없으며 쪽모이 세공 형식으로 내보낼 수는 있지만 이동하거나 복사할 수는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1272,7 +1315,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1300,15 +1343,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				SMAZ
+				스마즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 25일 (토) 23:25">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 25일 토요일 23:25">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A - 회사 소유의 s3 버킷이라고 합니다.</div>
+<div class="comment-content">A - 회사가 s3 버킷을 소유한다고 나와 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1317,7 +1360,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1348,12 +1391,12 @@
 				dkay16
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 03일 수 18:04">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 3일 수 18:04">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 "스냅샷 내보내기" 대신 "스냅샷 이동"이라는 문구가 사용되므로 B와 함께 사용되지만 실제 사례에서는 옵션 A를 사용하고 스냅샷 내보내기</div>
+<div class="comment-content">또한 "스냅샷 내보내기" 대신 "스냅샷 이동"이라는 표현이 사용되므로 B를 사용하지만 실제 경우에는 옵션 A를 사용하고 스냅샷 내보내기를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1362,7 +1405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1393,12 +1436,12 @@
 				dkay16
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 2일 화요일 18:51">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 18:51">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">RDS 스냅샷을 S3로 이동/내보내기하면 감사자가 Athena 또는 다른 방법을 사용하여 볼 수 있기 때문에 A라고 생각합니다. B의 경우 스냅샷은 S3에 있지만 24시간 내에 감사자에게 데이터를 제공하려면 DB를 복원하고 데이터를 추출하거나 여러 인스턴스에 대해 24시간 내에 가능하거나 불가능할 수 있는 DB에 액세스할 수 있는 권한을 부여해야 합니다. https://aws.amazon.com/blogs/database/building-data-lakes-and-implementing-data-retention-policies-with-amazon-rds-snapshot-export-to-amazon-s3/. 세부 요구 사항이 없는 유효한 질문은 아니지만 다시 테스트입니다.</div>
+<div class="comment-content">RDS 스냅샷을 S3으로 이동/내보내면 감사자가 Athena 또는 다른 방법을 사용하여 볼 수 있기 때문에 A라고 생각합니다. B의 경우 예, 스냅샷은 S3에 있지만 24시간 내에 감사자에게 데이터를 제공하려면 DB를 복원하고 데이터를 추출하거나 여러 인스턴스에 대해 24시간 내에 가능하거나 불가능할 수 있는 DB에 액세스할 수 있는 권한을 부여해야 합니다. https://aws.amazon.com/blogs/database/building-data-lakes-and-implementing-data-retention-policies-with-amazon-rds-snapshot-export-to-amazon-s3/. 세부 요구 사항이 없으면 실제로 유효한 질문은 아니지만 다시 한번 테스트입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1407,7 +1450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1430,12 +1473,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 05일 금 04:56">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 5일 금 04:56">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">시험 계획 ?</div>
+<div class="comment-content">시험 계획?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1444,7 +1487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1475,8 +1518,8 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 24일 금 16:49">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 24일 금요일 16:49">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1489,7 +1532,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1512,8 +1555,8 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 24일 금 16:59">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 24일 금요일 16:59">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1526,7 +1569,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1573,12 +1616,12 @@
 				LB
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 2일 화요일 12:20">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 12:20">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 수동 스냅샷을 저장하는 데 사용되는 버킷은 AWS 소유권에 있으며 수명 주기 정책을 제어할 수 없습니다. 회사 소유 버킷으로 이동하면 수명 주기를 구성하는 데 도움이 됩니다.</div>
+<div class="comment-content">A. 수동 스냅샷을 저장하는 데 사용되는 버킷은 AWS 소유이므로 수명 주기 정책을 제어할 수 없습니다. 회사 소유 버킷으로 이동하면 수명 주기를 구성하는 데 도움이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1587,7 +1630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1619,11 +1662,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 16:59">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BBBBBBBBBBBBBBBBBBBB A - 함정 답이 보입니다. 수동 스냅샷은 제거될 때까지 유지되므로 S3로 이동할 필요가 없습니다. C, D - 방정식에서 제외됨</div>
+<div class="comment-content">BBBBBBBBBBBBBBBBBBBB A - 트랩 답변으로 보입니다. 수동 스냅샷은 제거될 때까지 유지되므로 S3으로 이동할 필요가 없습니다. C, D - 방정식에서 제외됨</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1632,7 +1675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1655,8 +1698,8 @@
 				2025flakyt
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 10일 (금) 16:28">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 10일 금요일 16:28">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1669,7 +1712,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1708,12 +1751,12 @@
 				오전
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 05:55">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 05:55">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞는 것 같습니다. 수동 백업은 만료되지 않습니다. S3로 이동할 필요가 없습니다.</div>
+<div class="comment-content">B가 맞는 것 같다. 수동 백업은 만료되지 않습니다. S3로 이동할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1722,7 +1765,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1754,11 +1797,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 21일 목요일 23:13">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C와 D는 불가능한 것으로 제외됩니다. A와 B의 스냅샷은 이미 S3에 저장되어 있으므로 별도로 이동할 필요가 없습니다. 그리고 질문은 S3로 내보내기에 대해 언급하지 않습니다. 따라서 대답은 B여야 합니다.</div>
+<div class="comment-content">C와 D는 불가능하다고 판단됩니다. A와 B의 스냅샷은 이미 S3에 저장되어 있으므로 별도로 이동할 필요가 없습니다. 그리고 S3로의 내보내기에 대한 질문은 언급되지 않습니다. 따라서 답은 B가 되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1767,7 +1810,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1803,7 +1846,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B,C 및 D는 고정 부분을 다루지 않습니다. 데이터를 유지하려면 S3로 이동해야 합니다.</div>
+<div class="comment-content">B, C, D는 고정 부분을 다루지 않습니다. 데이터를 유지하려면 S3로 이동해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1812,7 +1855,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1832,15 +1875,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 21일 목요일 14:03">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">수동 스냅샷은 삭제할 때까지 유지되므로 s3로 이동할 필요가 없습니다. 또한 데이터를 s3로 "이동"할 수 없으며 내보낼 수만 있고 mariadb, mysql, postgre 및 여기에 설명된 몇 가지 추가 제한 사항이 있습니다. .html#USER_ExportSnapshot.Limits 나에게 대답 B는 정확합니다.</div>
+<div class="comment-content">수동 스냅샷은 삭제할 때까지 유지됩니다. s3로 이동할 필요가 없습니다. 또한 데이터를 s3으로 "이동"할 수 없으며 내보낼 수만 있고 mariadb, mysql, postgre 및 여기에 설명된 몇 가지 추가 제한 사항이 있습니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot .html#USER_ExportSnapshot.Limits 제 생각에는 B가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1849,7 +1892,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1888,12 +1931,12 @@
 				뮤트란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 17일 일 13:26">
+<span class="comment-date align-middle" title="2021년 10월 17일 일요일 13:26">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: B</div>
+<div class="comment-content">답: B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1902,7 +1945,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1933,12 +1976,12 @@
 				지라잔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 15일 금 06:15">
+<span class="comment-date align-middle" title="2021년 10월 15일 금요일 06:15">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 답변 중 하나만 데이터를 S3로 이동합니다. 데이터는 5TB이고 S3는 이를 보유할 수 있으며 Lambda는 이벤트 트리거에서 작업할 수 있습니다. S3에서 데이터를 LifeCycle Object의 Glacier로 이동하고 필요한 기간 동안 보관할 수 있으며 3-5시간의 검색 옵션이 있습니다.</div>
+<div class="comment-content">A. 답변 중 하나만 데이터를 S3로 이동합니다. 데이터는 5TB이고 S3는 이를 보유할 수 있으며 Lambda는 이벤트 트리거 작업을 수행할 수 있습니다. S3에서 데이터는 LifeCycle Object의 Glacier로 이동할 수 있으며 필요한 기간 동안 보관할 수 있으며 3~5시간의 검색 옵션이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1947,7 +1990,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1975,15 +2018,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				코닉
+				코니에츠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 10일 일 17:32">
+<span class="comment-date align-middle" title="2021년 10월 10일 일요일 17:32">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B - 모든 RDS DB를 S3로 내보낼 수 있는 것은 아니며 정의되지 않은 여러 RDS 인스턴스가 있습니다.</div>
+<div class="comment-content">B - 모든 RDS DB를 S3로 내보낼 수 있는 것은 아니며 여기에는 정의되지 않은 여러 RDS 인스턴스가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1992,7 +2035,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2020,10 +2063,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				파브스1
+				Pavs1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 09일 (토) 11:31">
+<span class="comment-date align-middle" title="2021년 10월 9일 토요일 11:31">
 			1년, 10개월 전
 		</span>
 </div>
@@ -2037,7 +2080,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2065,11 +2108,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 27일 (월) 06:46">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 27일 월요일 06:46">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2082,7 +2125,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2102,7 +2145,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 17:24">
@@ -2110,7 +2153,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon 소유의 s3 버킷에서 수동 스냅샷을 공유할 수 없습니다.</div>
+<div class="comment-content">Amazon이 소유한 s3 버킷에서는 수동 스냅샷을 공유할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2119,7 +2162,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2158,12 +2201,12 @@
 				빅스316
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 26일 일 23:25">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 26일 일요일 23:25">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 A입니다. 감사자에게 제공할 수 있도록 수동 스냅샷을 s3 버킷으로 이동해야 합니다.</div>
+<div class="comment-content">대답은 A입니다. 감사자에게 제공하려면 수동 스냅샷을 s3 버킷으로 이동해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2172,7 +2215,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2196,11 +2239,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 02:41">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B</div>
+<div class="comment-content">답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2209,7 +2252,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2240,12 +2283,12 @@
 				조빈아카조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 05:23">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 05:23">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것은 단지 가정입니다. 감사자(내부일 수 있음)가 백업에서 복원된 db를 원하면 어떻게 됩니까? B가 가장 좋은 답변입니다</div>
+<div class="comment-content">그것은 단지 가정일 뿐입니다. 감사자(내부일 수 있음)가 백업에서 DB를 복원하기를 원한다면 어떻게 될까요? B가 가장 좋은 대답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2254,7 +2297,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2274,7 +2317,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				중카이
+				종카이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 18일 (월) 13:40">
@@ -2282,7 +2325,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">s3에서 db를 복원할 수 있습니다.</div>
+<div class="comment-content">s3에서 db를 복원할 수 있습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2291,7 +2334,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2339,11 +2382,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 23일 목요일 17:45">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나에게는 B가 맞다</div>
+<div class="comment-content">나한테는 B가 맞다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2352,7 +2395,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2383,12 +2426,12 @@
 				루이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 23일 목요일 07:54">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 23일 목 07:54">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. 자동 백업 기능을 위해 RDS는 보존 기간이라고 하는 제한된 사용자 지정 기간 동안 DB 인스턴스의 백업을 보존합니다. 기본적으로 7일이지만 최대 35일까지 설정할 수 있습니다.</div>
+<div class="comment-content">B. 자동 백업 기능의 경우 RDS는 보존 기간이라고 하는 제한된 사용자 지정 기간 동안 DB 인스턴스의 백업을 보존합니다. 이 기간은 기본적으로 7일이지만 최대 35일까지 설정할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2397,7 +2440,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2550,7 +2593,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html<
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 18 Jul 2022 05:56">
-			1 year ago
+			1 year, 1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2566,7 +2609,7 @@ B is correct.</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">8</span> times
+				upvoted <span class="upvote-count">9</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2591,7 +2634,7 @@ B is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 18 Jul 2022 06:00">
-			1 year ago
+			1 year, 1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2652,7 +2695,7 @@ Here the backup movement is only for compliance. there is no requirement to quer
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 08 Jun 2023 09:14">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2698,7 +2741,7 @@ Here the backup movement is only for compliance. there is no requirement to quer
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 15:20">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2748,7 +2791,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Mar 2023 06:42">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2786,7 +2829,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Mar 2023 06:43">
-			5 months, 1 week ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2839,7 +2882,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 23:57">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2885,7 +2928,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ExportSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 02:48">
-			8 months, 3 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2926,7 +2969,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Jul 2023 20:26">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2971,7 +3014,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 12:30">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3016,7 +3059,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 08 Dec 2022 03:00">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3072,7 +3115,7 @@ it does not reach the rds snapshot's limitation.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 04:42">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3118,7 +3161,7 @@ it does not reach the rds snapshot's limitation.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 00:17">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3166,7 +3209,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Sep 2022 02:18">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3211,7 +3254,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Jun 2022 15:27">
-			1 year, 1 month ago
+			1 year, 2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3257,7 +3300,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_CreateSnapshot.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 May 2022 15:06">
-			1 year, 2 months ago
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3491,7 +3534,7 @@ For very long-term backups of MariaDB, MySQL, and PostgreSQL data, we recommend 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Dec 2021 16:39">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3537,7 +3580,7 @@ For very long-term backups of MariaDB, MySQL, and PostgreSQL data, we recommend 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Dec 2021 23:25">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3709,7 +3752,7 @@ For very long-term backups of MariaDB, MySQL, and PostgreSQL data, we recommend 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 16:49">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3746,7 +3789,7 @@ For very long-term backups of MariaDB, MySQL, and PostgreSQL data, we recommend 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 16:59">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3855,7 +3898,7 @@ The bucket used to store the manual snapshot is in the AWS ownership and we cann
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 16:59">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3949,7 +3992,7 @@ C, D - ruled out of equation</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 05:55">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3994,7 +4037,7 @@ C, D - ruled out of equation</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 21 Oct 2021 23:13">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4076,7 +4119,7 @@ C, D - ruled out of equation</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 21 Oct 2021 14:03">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4310,7 +4353,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Sep 2021 06:46">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4400,7 +4443,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Sep 2021 23:25">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4437,7 +4480,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 02:41">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4482,7 +4525,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 01 Oct 2021 05:23">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4580,7 +4623,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Sep 2021 17:45">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4625,7 +4668,7 @@ For me answer B is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Sep 2021 07:54">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

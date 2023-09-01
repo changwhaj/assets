@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 주제 1 문제 190 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 190 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 190 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 190 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="847017">
 <p class="card-text">
 							
-								회사에 Java 및 PHP 기반 웹 애플리케이션이 있습니다. 회사는 애플리케이션을 온프레미스에서 AWS로 옮길 계획입니다. 회사는 새로운 사이트 기능을 자주 테스트할 수 있는 능력이 필요합니다. 회사는 또한 최소한의 운영 오버헤드를 필요로 하는 가용성이 높고 관리되는 솔루션이 필요합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사에 Java 및 PHP를 기반으로 하는 웹 애플리케이션이 있습니다. 회사는 애플리케이션을 온프레미스에서 AWS로 이동할 계획입니다. 회사는 새로운 사이트 기능을 자주 테스트할 수 있는 능력이 필요합니다. 또한 회사에는 최소한의 운영 오버헤드가 필요한 고가용성 관리형 솔루션이 필요합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon S3 버킷을 생성합니다. S3 버킷에서 정적 웹 호스팅을 활성화합니다. 정적 콘텐츠를 S3 버킷에 업로드합니다. AWS Lambda를 사용하여 모든 동적 콘텐츠를 처리합니다.
+											Amazon S3 버킷을 생성합니다. S3 버킷에서 정적 웹 호스팅을 활성화합니다. S3 버킷에 정적 콘텐츠를 업로드합니다. AWS Lambda를 사용하여 모든 동적 콘텐츠를 처리합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											웹 애플리케이션을 AWS Elastic Beanstalk 환경에 배포합니다. 기능 테스트를 위해 URL 스와핑을 사용하여 여러 Elastic Beanstalk 환경 간에 전환합니다.
+											웹 애플리케이션을 AWS Elastic Beanstalk 환경에 배포합니다. 기능 테스트를 위해 URL 교환을 사용하여 여러 Elastic Beanstalk 환경 간에 전환합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											Java 및 PHP로 구성된 Amazon EC2 인스턴스에 웹 애플리케이션을 배포합니다. Auto Scaling 그룹과 Application Load Balancer를 사용하여 웹 사이트의 가용성을 관리하십시오.
+											Java 및 PHP로 구성된 Amazon EC2 인스턴스에 웹 애플리케이션을 배포합니다. Auto Scaling 그룹과 Application Load Balancer를 사용하여 웹 사이트의 가용성을 관리합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											웹 애플리케이션을 컨테이너화합니다. 웹 애플리케이션을 Amazon EC2 인스턴스에 배포합니다. AWS 로드 밸런서 컨트롤러를 사용하여 테스트용 새 사이트 기능이 포함된 컨테이너 간에 트래픽을 동적으로 라우팅합니다.
+											웹 애플리케이션을 컨테이너화합니다. 웹 애플리케이션을 Amazon EC2 인스턴스에 배포합니다. AWS 로드 밸런서 컨트롤러를 사용하면 테스트용 새 사이트 기능이 포함된 컨테이너 간에 트래픽을 동적으로 라우팅할 수 있습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">B (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 90%; display: flex;" title="">B (90%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 10%; display: flex;" title="">10%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sdasdawa
-							</a> 
-							
-							시간: <i>
-							2022년 11월 15일, 오후 4:53</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sdasdawa
-							</a>
-							
-							at <i>
-							Nov. 15, 2022, 4:53 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 21:23">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 21:23">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B Elastic Beanstalk는 AWS에서 애플리케이션을 쉽게 배포하고 실행할 수 있게 해주는 완전 관리형 서비스입니다. 새 사이트 기능을 자주 테스트하려면 URL 스와핑을 사용하여 여러 Elastic Beanstalk 환경 간에 전환할 수 있습니다.</div>
+<div class="comment-content">B Elastic Beanstalk는 AWS에서 애플리케이션을 쉽게 배포하고 실행할 수 있게 해주는 완전관리형 서비스입니다. 새로운 사이트 기능을 자주 테스트하려면 URL 교환을 사용하여 여러 Elastic Beanstalk 환경 간에 전환할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -290,11 +333,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 2일 수요일 22:19">
-			2주, 2일 전
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D입니다. AWS Elastic Beanstalk는 AWS 클라우드에서 웹 애플리케이션을 쉽게 배포하고 관리할 수 있게 해주는 서비스입니다. 그러나 여러 Elastic Beanstalk 환경 간에 전환하기 어려울 수 있으므로 새 사이트 기능을 자주 테스트하는 데는 좋은 솔루션이 아닙니다.</div>
+<div class="comment-content">정답은 D입니다. AWS Elastic Beanstalk는 AWS 클라우드에서 웹 애플리케이션을 쉽게 배포하고 관리할 수 있게 해주는 서비스입니다. 그러나 여러 Elastic Beanstalk 환경 간에 전환하기 어려울 수 있으므로 새로운 사이트 기능을 자주 테스트하는 데는 좋은 솔루션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -303,7 +346,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -346,12 +389,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:04">
-			20시간 6분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답입니다. AWS Elastic Beanstalk를 사용하면 웹 애플리케이션을 배포할 수 있는 완전히 관리되는 플랫폼이 제공됩니다. Elastic Beanstalk는 EC2 인스턴스 프로비저닝, 로드 밸런싱, 자동 확장 및 애플리케이션 상태 모니터링을 처리합니다. 여러 환경을 지원하고 URL을 교환하는 Elastic Beanstalk의 기능을 통해 프로덕션으로 전환하기 전에 새로운 기능을 쉽게 테스트할 수 있습니다. 이를 위해서는 인프라를 직접 관리하는 것에 비해 최소한의 오버헤드가 필요합니다.</div>
+<div class="comment-content">B가 정답입니다. AWS Elastic Beanstalk을 사용하면 웹 애플리케이션을 배포할 수 있는 완전관리형 플랫폼이 제공됩니다. Elastic Beanstalk는 EC2 인스턴스 프로비저닝, 로드 밸런싱, 자동 크기 조정 및 애플리케이션 상태 모니터링을 처리합니다. 여러 환경을 지원하고 URL을 교환하는 Elastic Beanstalk의 기능을 사용하면 프로덕션으로 전환하기 전에 새로운 기능을 쉽게 테스트할 수 있습니다. 이를 위해서는 인프라를 직접 관리하는 것에 비해 최소한의 오버헤드가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,11 +435,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 2일 수요일 22:19">
-			2주, 2일 전
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D입니다. AWS Elastic Beanstalk는 AWS 클라우드에서 웹 애플리케이션을 쉽게 배포하고 관리할 수 있게 해주는 서비스입니다. 그러나 여러 Elastic Beanstalk 환경 간에 전환하기 어려울 수 있으므로 새 사이트 기능을 자주 테스트하는 데는 좋은 솔루션이 아닙니다.</div>
+<div class="comment-content">정답은 D입니다. AWS Elastic Beanstalk는 AWS 클라우드에서 웹 애플리케이션을 쉽게 배포하고 관리할 수 있게 해주는 서비스입니다. 그러나 여러 Elastic Beanstalk 환경 간에 전환하기 어려울 수 있으므로 새로운 사이트 기능을 자주 테스트하는 데는 좋은 솔루션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,12 +480,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:54">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 최소한의 운영 오버헤드로 가용성이 높고 관리되는 솔루션을 제공합니다. 웹 애플리케이션을 EBS에 배포하면 인프라 및 플랫폼 관리가 추상화되어 쉽게 배포하고 확장할 수 있습니다. URL 스와핑을 사용하면 새로운 사이트 기능을 테스트하기 위해 다양한 환경을 생성할 수 있으며 다운타임 없이 이러한 환경 간에 트래픽을 라우팅할 수 있습니다. A. 정적 콘텐츠 호스팅에는 S3를 사용하고 동적 콘텐츠에는 Lambda를 사용할 것을 제안합니다. 정적 콘텐츠에 대한 단순성을 제공하지만 Java 및 PHP 기반 웹 응용 프로그램에 필요한 유연성과 동적 기능을 제공하지 않습니다. C. EC2, ASG 및 ELB의 수동 관리가 포함되어 있어 더 많은 운영 오버헤드가 필요하고 원하는 수준의 가용성과 테스트 용이성을 제공하지 못할 수 있습니다. D. 컨테이너화 도입,</div>
+<div class="comment-content">B. 최소한의 운영 오버헤드로 가용성이 높고 관리되는 솔루션을 제공합니다. 웹 애플리케이션을 EBS에 배포함으로써 인프라 및 플랫폼 관리가 추상화되어 배포와 확장이 용이해집니다. URL 교환을 사용하면 새로운 사이트 기능을 테스트하기 위한 다양한 환경을 생성할 수 있으며 가동 중지 시간 없이 이러한 환경 간에 트래픽을 라우팅할 수 있습니다. A. 정적 콘텐츠 호스팅에는 S3를 사용하고 동적 콘텐츠에는 Lambda를 사용하는 것이 좋습니다. 정적 컨텐츠에 대한 단순성을 제공하지만 Java 및 PHP 기반 웹 애플리케이션에 필요한 유연성과 동적 기능을 제공하지 않습니다. C. EC2, ASG 및 ELB의 수동 관리가 필요하므로 더 많은 운영 오버헤드가 필요하고 원하는 수준의 가용성과 테스트 용이성을 제공하지 못할 수 있습니다. D. 컨테이너화 도입</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,11 +526,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 31일 수 08:59">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">S3는 동적 웹사이트나 애플리케이션이 아닌 정적 웹사이트를 호스팅하기 위한 것입니다. Beanstalk가 이를 처리합니다.</div>
+<div class="comment-content">S3는 동적 웹사이트나 애플리케이션이 아닌 정적 웹사이트를 호스팅하기 위한 것이며 Beanstalk가 이를 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,13 +570,13 @@
 				크루아산
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 17:13">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 17:13">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">빈번한 기능 테스트 - - 개발, 테스트 및 프로덕션 사용 사례를 위해 여러 Elastic Beanstalk 환경을 쉽게 생성할 수 있습니다. - 간단한 URL 스와핑 기술을 사용하여 A/B 테스트 및 기능 반복을 위한 환경 간에 트래픽을 라우팅할 수 있습니다. 복잡한 라우팅 규칙이나 인프라 변경이 필요하지 않습니다.</div>
+<div class="comment-content">빈번한 기능 테스트 - - 개발, 테스트 및 프로덕션 사용 사례를 위해 여러 Elastic Beanstalk 환경을 쉽게 생성할 수 있습니다. - 간단한 URL 교환 기술을 사용하여 A/B 테스트 및 기능 반복을 위해 환경 간에 트래픽을 라우팅할 수 있습니다. 복잡한 라우팅 규칙이나 인프라 변경이 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,7 +617,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 7일 금요일 11:18">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -607,15 +650,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aadityaravi8
+				아디티야라비8
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 7일 금요일 04:04">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 7일 금 04:04">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">chatGPT는 항상 답변을 변경합니다. 오답을 말하면 매번 새로운 답이 나올 것입니다. chatGPT는 전혀 신뢰할 수 없습니다.</div>
+<div class="comment-content">chatGPT는 항상 답변을 변경합니다. 그냥 틀린 답을 말하면, 그는 정당성을 가지고 매번 새로운 답을 내놓을 것입니다. chatGPT는 전혀 신뢰할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -624,7 +667,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,12 +706,12 @@
 				케린
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 16:58">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 16:58">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최소 운영 오버헤드가 있는 옵션 B</div>
+<div class="comment-content">옵션 B는 최소 운영 오버헤드를 갖습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -677,7 +720,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,11 +748,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마키크마에크
+				마치크마시엑
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 12일 일 15:59">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 12일 일요일 15:59">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -723,7 +766,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -755,7 +798,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 11일 토요일 06:47">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -769,7 +812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,15 +840,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				구스타프
+				구스타브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 21:34">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아까 말했듯이 Elastic Beanstalk는 비싼 서비스죠?</div>
+<div class="comment-content">아까 말했듯이 Elastic Beanstalk는 비용이 많이 드는 서비스죠?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -814,7 +857,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -838,11 +881,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 5일 목요일 10:06">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그래서 뭐? 질문에 가장 비용 효율적인 솔루션이 필요하지 않습니다.</div>
+<div class="comment-content">그래서 뭐? 이 질문에는 가장 비용 효율적인 솔루션이 필요하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -887,11 +930,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 16:55">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 16:55">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -905,7 +948,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -936,12 +979,12 @@
 				착하게 굴 어라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:01">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 05:01">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B -- 정답입니다.</div>
+<div class="comment-content">B -- 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -950,7 +993,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -978,16 +1021,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 20:13">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 20:13">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">최소 운영 오버헤드가 있는 옵션 B</div>
+<div class="comment-content">옵션 B는 최소 운영 오버헤드를 갖습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -996,7 +1039,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1028,12 +1071,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 14:36">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 맞는 것 같다</div>
+<div class="comment-content">B 맞는거같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1042,7 +1085,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1070,16 +1113,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				피핏
+				hpipit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 6일 화요일 13:28">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 맞습니다. 100%. 나는 확인을 가지고</div>
+<div class="comment-content">B가 맞습니다. 100%. 나한테 확인이 있어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1088,7 +1131,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1120,11 +1163,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 21:50">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 B</div>
+<div class="comment-content">답 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1133,7 +1176,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1165,11 +1208,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 20:56">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">컨테이너의 경우 소스 이미지가 필요합니다. Beanstalk는 구성 가능한 런타임 환경입니다. 스택(java, php, ..) 및 해당 버전을 선택할 수 있습니다. 컨테이너에 비해 배포 및 사용이 훨씬 쉽습니다.</div>
+<div class="comment-content">컨테이너의 경우 소스 이미지가 필요합니다. Beanstalk는 구성 가능한 런타임 환경입니다. 스택(java, php, ..)과 해당 버전을 선택할 수 있습니다. 컨테이너에 비해 배포 및 사용이 훨씬 쉽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1178,7 +1221,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1210,21 +1253,26 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 23일 수 13:55">
-			8개월, 4주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">와우, B에 대한 많은 투표가 있습니다. 응용 프로그램에 런타임 java 또는 php 중 하나가 필요한 경우 B가 맞을 것입니다. Elastic Beanstallk는 런타임을 하나만 지정할 수 있습니다. 요구 사항은 "Java 및 PHP를 기반으로 하는 웹 응용 프로그램"이므로 B는 제외됩니다. D는 자체 컨테이너를 설정할 수 있으며 시스템에 필요한 만큼 설치할 수 있습니다.</div>
+<div class="comment-content">wow, so many votes for B.
+
+B will be correct if application requires one of runtime java or php, elastic Beanstallk allows to specify only one runtime. In requirement is "web application that is based on Java and PHP"
+so B is out.
+
+D allows to setup own container and there you may install as many as system needs</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1247,21 +1295,21 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 18:41">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 18:41">
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 누구든지 리소스를 유지 관리하는 운영 오버헤드인 Java와 PHP를 모두 사용하여 앱을 만드는 이유는 무엇입니까? 자바나 php로. 잘 잡았다. 오타가 아니길 바랍니다. 그 한 마디가 답을 바꾼다.</div>
+<div class="comment-content">Why would anyone create app with both java and php that itself is an operational overhead maintaining resources...anyway, "and" is the keyword...in fast reading we typically miss that part and in our mind we are thinking oh well app with java or php. good catch. hope that is not a typo. that one word changes the answer.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1292,21 +1340,21 @@
 				mikey2000
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 01:09">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 01:09">
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ec2에서 컨테이너화된 애플리케이션을 설정할 수 없습니다.</div>
+<div class="comment-content">You can’t set up a containerized application on ec2.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1337,21 +1385,21 @@
 				javitech83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 7일 수 12:40">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 7일 수요일 12:40">
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">맞습니다. Beanstalk는 Java 또는 PHP를 허용하지만 둘 다 허용하지는 않습니다. 질문 텍스트에 오류가 있을 수 있다고 생각합니다. 또한 관리형 서비스여야 하고 새로운 기능을 자주 테스트할 수 있어야 한다고 언급하므로 URL 교환이 이에 적합합니다. 나는 B를 선택할 것이다</div>
+<div class="comment-content">You are right, Beanstalk allows Java or PHP, but not both. I think there could be an error in the question text, as it also mentions that it needs to be a managed service and also able to test new features frequently, so url swapping  is great for this. I would choose B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1379,24 +1427,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시즐라7049
+				Cizzla7049
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 16:50">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 16:50">
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 Elastic Beanstalk에서도 수행할 수 있습니다. 대답은 B입니다. Beanstalk를 사용하면 오버헤드가 제거되기 때문입니다. AWS Elastic Beanstalk는 AWS에서 웹 애플리케이션을 시작하고 실행하는 가장 빠른 방법입니다. 애플리케이션 코드를 업로드하기만 하면 리소스 프로비저닝, 로드 밸런싱, 자동 확장 및 모니터링과 같은 세부 정보가 서비스에서 자동으로 처리됩니다. Elastic Beanstalk는 PHP, Java, Python, Ruby, Node.js, .NET, Go 또는 Docker 웹 애플리케이션이 있는 경우 이상적입니다. Elastic Beanstalk는 Amazon Elastic Compute Cloud(EC2), Amazon Elastic Container Service(ECS), AWS Auto Scaling 및 Elastic Load Balancing(ELB)과 같은 핵심 AWS 서비스를 사용하여 수백만 명의 사용자에게 서비스를 제공하도록 확장해야 하는 애플리케이션을 쉽게 지원합니다.</div>
+<div class="comment-content">D can also be done by Elastic Beanstalk. Answer is B, as it using beanstalk removes the overhead
+
+AWS Elastic Beanstalk is the fastest way to get web applications up and running on AWS. You can simply upload your application code, and the service automatically handles details such as resource provisioning, load balancing, auto scaling, and monitoring. Elastic Beanstalk is ideal if you have a PHP, Java, Python, Ruby, Node.js, .NET, Go, or Docker web application. Elastic Beanstalk uses core AWS services such as Amazon Elastic Compute Cloud (EC2), Amazon Elastic Container Service (ECS), AWS Auto Scaling, and Elastic Load Balancing (ELB) to easily support applications that need to scale to serve millions of users.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">4</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1416,24 +1466,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				롬코
+				romko
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 14:34">
-			8개월, 3주 전
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 Elastic Beanstalk 구성은 한 번에 하나의 런타임만 지원하므로 EC2로 직접 이동하여 다른 런타임을 설치하지 않는 한 Java와 PHP를 자동으로 가질 수 없습니다.</div>
+<div class="comment-content">But Elastic Beanstalk configs only support one runtime at once, so you cannot automatically have Java and PHP,  unless you go to EC2 directly and install another runtime.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1453,24 +1503,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아미
+				Aamee
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 03일 (토) 03:14">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 3일 토요일 03:14">
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기서 요점을 이해하지 마십시오... 앱을 컨테이너화하고 관련된 Auto-Scaling 그룹 없이 EC2에 컨테이너를 배포할 때 '고가용성' 및 '관리형' 솔루션에 대한 옵션 D를 어떻게 정당화할 수 있습니까? ?...문제의 필요성은 관련된 다른 계산 계층을 관리하는 오버헤드를 제거하는 것입니다.</div>
+<div class="comment-content">Don't get your point here... how can you justify Option D for a 'High Available' and 'managed' solution when you're containorizing your apps and deploying your containers on EC2s w/o any Auto-scaling groups involved??...the need in the question is about removing the overhead of managing different layers of computation involved.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1490,24 +1540,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				롬코
+				romko
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 10:52">
-			8개월 전
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, EC2를 ECS로 처음 읽은 것처럼 D가 정확하지 않다는 데 동의하므로 ECS와 컨테이너가 잘 맞습니다. 나는 그것이 D라고 생각하지 않습니다. B라고 생각하지 않습니다. 기본적으로 ElasticBeanstalk는 PHP와 JAVA를 동시에 허용하지 않기 때문입니다.</div>
+<div class="comment-content">Yeah, agree that D doesn't look as correct I had read EC2 as ECS first time, so ECS and containers are good fit.
+
+I don't think it's D as well I don't think it's B, because by default ElasticBeanstalk doesn't allow to have PHP and JAVA in the same time.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1570,21 +1622,21 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 18:03">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 18:03">
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B is correct</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1612,25 +1664,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				잼
+				rjam
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 15:23">
-			9개월 전
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">스와핑 URL: ElasticBeanStalk https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Swapping URL : ElasticBeanStalk
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1658,24 +1711,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				니그마
+				Nigma
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 14:34">
-			9개월 전
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 답이다</div>
+<div class="comment-content">B is the answer</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1703,24 +1756,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				르글루피에
+				LeGloupier
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 11:25">
-			9개월 전
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 아닌가요?</div>
+<div class="comment-content">isn't it B ?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1748,25 +1801,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				테어
+				taer
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 10:29">
-			9개월 전
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B https://www.examtopics.com/discussions/amazon/view/81534-exam-aws-certified-solutions-architect-associate-saa-c02/</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">B
+https://www.examtopics.com/discussions/amazon/view/81534-exam-aws-certified-solutions-architect-associate-saa-c02/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1797,13 +1851,13 @@
 				sdasdawa
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 15일 화요일 16:53">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 15일 (화) 16:53">
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Elastic Beanstalk는 이것에 딱 맞는 것 같습니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Elastic Beanstalk는 이 작업에 완벽한 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1812,7 +1866,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1867,7 +1921,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 21:23">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1905,7 +1959,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 22:19">
-			2 weeks, 2 days ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1963,7 +2017,7 @@ AWS Elastic Beanstalk is a service that makes it easy to deploy and manage web a
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:04">
-			20 hours, 6 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2013,7 +2067,7 @@ Elastic Beanstalk's ability to support multiple environments and swap URLs allow
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 22:19">
-			2 weeks, 2 days ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2060,7 +2114,7 @@ AWS Elastic Beanstalk is a service that makes it easy to deploy and manage web a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:54">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2112,7 +2166,7 @@ D. Introduces containerization, which adds complexity and operational overhead f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 08:59">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2158,7 +2212,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 17:13">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2206,7 +2260,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Apr 2023 11:18">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2243,7 +2297,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 04:04">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2296,7 +2350,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 16:58">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2341,7 +2395,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 12 Feb 2023 15:59">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2387,7 +2441,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Feb 2023 06:47">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2433,7 +2487,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 21:34">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2470,7 +2524,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 05 Jan 2023 10:06">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2523,7 +2577,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 16:55">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2569,7 +2623,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:01">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2614,7 +2668,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 20:13">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2660,7 +2714,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 14:36">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2706,7 +2760,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Dec 2022 13:28">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2752,7 +2806,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 21:50">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2797,7 +2851,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 20:56">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2842,7 +2896,7 @@ Beanstalk will take care of this.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Nov 2022 13:55">
-			8 months, 4 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2885,7 +2939,7 @@ D allows to setup own container and there you may install as many as system need
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 18:41">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2930,7 +2984,7 @@ D allows to setup own container and there you may install as many as system need
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 01:09">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2975,7 +3029,7 @@ D allows to setup own container and there you may install as many as system need
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 12:40">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3020,7 +3074,7 @@ D allows to setup own container and there you may install as many as system need
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 16:50">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3059,7 +3113,7 @@ AWS Elastic Beanstalk is the fastest way to get web applications up and running 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 14:34">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3096,7 +3150,7 @@ AWS Elastic Beanstalk is the fastest way to get web applications up and running 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 03 Dec 2022 03:14">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3133,7 +3187,7 @@ AWS Elastic Beanstalk is the fastest way to get web applications up and running 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 10:52">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3212,7 +3266,7 @@ I don't think it's D as well I don't think it's B, because by default ElasticBea
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 18:03">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3257,7 +3311,7 @@ I don't think it's D as well I don't think it's B, because by default ElasticBea
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 15:23">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3304,7 +3358,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 14:34">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3349,7 +3403,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 11:25">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3394,7 +3448,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.CNAMESwap.
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 10:29">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3441,7 +3495,7 @@ https://www.examtopics.com/discussions/amazon/view/81534-exam-aws-certified-solu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 15 Nov 2022 16:53">
-			9 months ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

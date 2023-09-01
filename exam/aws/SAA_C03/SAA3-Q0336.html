@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 336 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 336 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 336 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 336 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 336 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="868807">
 <p class="card-text">
 							
-								회사는 Amazon Aurora MySQL DB 클러스터를 스토리지로 사용하는 다중 계층 웹 애플리케이션을 호스팅합니다. 애플리케이션 계층은 Amazon EC2 인스턴스에서 호스팅됩니다. 회사의 IT 보안 지침에 따라 데이터베이스 자격 증명을 암호화하고 14일마다 교체해야 합니다. <br/><br/>최소한의 운영 노력으로 이 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
+								한 회사에서 Amazon Aurora MySQL DB 클러스터를 저장용으로 사용하는 다중 계층 웹 애플리케이션을 호스팅하고 있습니다. 애플리케이션 계층은 Amazon EC2 인스턴스에서 호스팅됩니다. 회사의 IT 보안 지침에서는 데이터베이스 자격 증명을 14일마다 암호화하고 교체하도록 규정하고 있습니다. <br/><br/>최소한의 운영 노력으로 이 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											새 AWS Key Management Service(AWS KMS) 암호화 키를 생성합니다. AWS Secrets Manager를 사용하여 적절한 자격 증명과 함께 KMS 키를 사용하는 새 암호를 생성합니다. 암호를 Aurora DB 클러스터와 연결합니다. 14일의 사용자 지정 순환 기간을 구성합니다.
+											새로운 AWS Key Management Service(AWS KMS) 암호화 키를 생성합니다. AWS Secrets Manager를 사용하여 적절한 자격 증명과 함께 KMS 키를 사용하는 새 비밀을 생성하십시오. 암호를 Aurora DB 클러스터와 연결합니다. 사용자 지정 순환 기간을 14일로 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											AWS Systems Manager Parameter Store에서 두 개의 매개변수를 생성합니다. 하나는 사용자 이름을 문자열 매개변수로 사용하고 다른 하나는 SecureString 유형을 암호로 사용합니다. 암호 매개변수에 대해 AWS Key Management Service(AWS KMS) 암호화를 선택하고 애플리케이션 계층에서 이러한 매개변수를 로드합니다. 14일마다 암호를 교체하는 AWS Lambda 함수를 구현합니다.
+											AWS 시스템 관리자 매개변수 저장소에서 두 개의 매개변수를 생성합니다. 하나는 문자열 매개변수인 사용자 이름용이고 다른 하나는 암호용으로 SecureString 유형을 사용하는 매개변수입니다. 암호 매개변수로 AWS Key Management Service(AWS KMS) 암호화를 선택하고 애플리케이션 계층에 이러한 매개변수를 로드합니다. 14일마다 비밀번호를 교체하는 AWS Lambda 함수를 구현합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											자격 증명이 포함된 파일을 AWS KMS(AWS Key Management Service) 암호화 Amazon Elastic File System(Amazon EFS) 파일 시스템에 저장합니다. 애플리케이션 계층의 모든 EC2 인스턴스에 EFS 파일 시스템을 탑재합니다. 응용 프로그램이 파일을 읽을 수 있고 슈퍼 사용자만 파일을 수정할 수 있도록 파일 시스템의 파일에 대한 액세스를 제한합니다. 14일마다 Aurora에서 키를 교체하고 새 자격 증명을 파일에 쓰는 AWS Lambda 함수를 구현합니다.
+											AWS KMS(AWS Key Management Service) 암호화 Amazon Elastic File System(Amazon EFS) 파일 시스템에 자격 증명이 포함된 파일을 저장합니다. 애플리케이션 계층의 모든 EC2 인스턴스에 EFS 파일 시스템을 탑재합니다. 응용 프로그램이 파일을 읽을 수 있고 슈퍼 사용자만 파일을 수정할 수 있도록 파일 시스템의 파일에 대한 액세스를 제한합니다. 14일마다 Aurora에서 키를 교체하고 파일에 새 자격 증명을 쓰는 AWS Lambda 함수를 구현합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											애플리케이션이 자격 증명을 로드하는 데 사용하는 AWS KMS(AWS Key Management Service) 암호화 Amazon S3 버킷에 자격 증명이 포함된 파일을 저장합니다. 올바른 자격 증명이 사용되도록 정기적으로 파일을 응용 프로그램에 다운로드하십시오. 14일마다 Aurora 자격 증명을 교체하고 이 자격 증명을 S3 버킷의 파일에 업로드하는 AWS Lambda 함수를 구현합니다.
+											애플리케이션이 자격 증명을 로드하는 데 사용하는 AWS Key Management Service(AWS KMS) 암호화 Amazon S3 버킷에 자격 증명이 포함된 파일을 저장합니다. 올바른 자격 증명이 사용되도록 정기적으로 파일을 응용 프로그램에 다운로드하십시오. 14일마다 Aurora 자격 증명을 교체하고 이러한 자격 증명을 S3 버킷의 파일에 업로드하는 AWS Lambda 함수를 구현합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Neha999
-							</a> 2023년 2월 18 
-							
-							일 <i>
-							오후 1:31</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Neha999
-							</a>
-							
-							at <i>
-							Feb. 18, 2023, 1:31 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,12 +295,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 15:30">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Secrets Manager를 사용하면 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 쉽게 교체, 관리 및 검색할 수 있습니다. 이 서비스를 사용하면 선택한 일정에 따라 데이터베이스 자격 증명과 같은 비밀의 순환을 자동화할 수 있습니다. 이 솔루션을 사용하면 적절한 자격 증명으로 새 비밀을 생성하고 이를 Aurora DB 클러스터와 연결할 수 있습니다. 그런 다음 IT 보안 지침에서 요구하는 대로 자격 증명이 2주마다 자동으로 교체되도록 14일의 사용자 지정 교체 기간을 구성할 수 있습니다. 이 접근 방식은 애플리케이션 코드나 인프라를 수정하지 않고 중앙에서 비밀을 관리할 수 있으므로 최소한의 운영 노력이 필요합니다.</div>
+<div class="comment-content">AWS Secrets Manager를 사용하면 수명 주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 쉽게 교체, 관리 및 검색할 수 있습니다. 이 서비스를 사용하면 선택한 일정에 따라 데이터베이스 자격 증명과 같은 보안 비밀 교체를 자동화할 수 있습니다. 이 솔루션을 사용하면 적절한 자격 증명으로 새 비밀을 생성하고 이를 Aurora DB 클러스터와 연결할 수 있습니다. 그런 다음 IT 보안 지침에서 요구하는 대로 자격 증명이 2주마다 자동으로 교체되도록 사용자 지정 교체 기간을 14일로 구성할 수 있습니다. 이 접근 방식을 사용하면 애플리케이션 코드나 인프라를 수정하지 않고도 비밀을 중앙에서 관리할 수 있으므로 최소한의 운영 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,13 +340,13 @@
 				이러닝타카이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 17:34">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 17:34">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A: AWS Secrets Manager. 단순히 이 회전 기능을 지원하고 EFS 또는 S3 대신 자격 증명을 저장하도록 보호합니다.</div>
+<div class="comment-content">A: AWS Secrets Manager. 간단히 말해서 이 회전 기능은 지원되며 EFS 또는 S3 대신 자격 증명을 안전하게 저장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,12 +387,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 3일 금요일 22:19">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">투표 A</div>
+<div class="comment-content">A 투표</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,13 +432,13 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 07:00">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 07:00">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 새 AWS KMS 암호화 키를 생성하고 AWS Secrets Manager를 사용하여 적절한 자격 증명과 함께 KMS 키를 사용하는 새 암호를 생성할 것을 제안합니다. 그런 다음 비밀이 Aurora DB 클러스터와 연결되고 14일의 사용자 지정 교체 기간이 구성됩니다. AWS Secrets Manager는 데이터베이스 자격 증명 교체 프로세스를 자동화하여 IT 보안 지침을 충족하는 데 필요한 운영 노력을 줄여줍니다.</div>
+<div class="comment-content">A는 새로운 AWS KMS 암호화 키를 생성하고 AWS Secrets Manager를 사용하여 적절한 자격 증명과 함께 KMS 키를 사용하는 새로운 비밀을 생성할 것을 제안합니다. 그런 다음 비밀이 Aurora DB 클러스터와 연결되고 14일의 사용자 지정 교체 기간이 구성됩니다. AWS Secrets Manager는 데이터베이스 자격 증명 교체 프로세스를 자동화하여 IT 보안 지침을 충족하는 데 필요한 운영 노력을 줄여줍니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,15 +475,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				jennyka76
+				제니카76
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 19:50">
-			5개월, 4주 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변은 A입니다. 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager를 사용하여 수명 주기 동안 데이터베이스 자격 증명, API 키 및 기타 암호를 교체, 관리 및 검색할 수 있습니다. https://aws.amazon.com/blogs/security/how-to-use-aws-secrets-manager-rotate-credentials-amazon-rds-database-types-oracle/</div>
+<div class="comment-content">대답은 A입니다. 암호 교체 수명 주기를 구현하려면 AWS Secrets Manager를 사용하십시오. Secrets Manager를 사용하면 수명 주기 전반에 걸쳐 데이터베이스 자격 증명, API 키 및 기타 비밀을 교체, 관리 및 검색할 수 있습니다. https://aws.amazon.com/blogs/security/how-to-use-aws-secrets-manager-rotate-credentials-amazon-rds-database-types-oracle/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,8 +523,8 @@
 				네하999
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 18일 (토) 13:31">
-			5개월, 4주 전
+<span class="comment-date align-middle" title="2023년 2월 18일 토요일 13:31">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -546,7 +589,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 15:30">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -592,7 +635,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 17:34">
-			4 months, 2 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -638,7 +681,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Mar 2023 22:19">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -684,7 +727,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 07:00">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -730,7 +773,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 19:50">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -777,7 +820,7 @@ https://aws.amazon.com/blogs/security/how-to-use-aws-secrets-manager-rotate-cred
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 13:31">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

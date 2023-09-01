@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 134 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 134 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 134 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 134 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807376">
 <p class="card-text">
 							
-								회사에서 SaaS(Software as a Service) 애플리케이션을 구축하고 있습니다. 새로운 사용자 로그인 워크플로의 일부로 Python 스크립트는 <br/>Amazon DynamoDB API를 사용하여 CreateTable 작업을 호출합니다. 호출이 반환된 후 스크립트는 PutItem 호출을 시도합니다. <br/>경우에 따라 PutItem 요청이 ResourceNotFoundException 오류와 함께 실패하여 워크플로가 실패합니다. 개발팀은 두 API 호출에서 동일한 테이블 이름이 사용되는 것을 확인했습니다. <br/>데이터베이스 전문가는 이 문제를 어떻게 해결해야 합니까?<br/>
+								한 회사가 서비스 애플리케이션으로서의 소프트웨어를 구축하고 있습니다. 새로운 사용자 로그인 워크플로의 일부로 Python 스크립트는 <br/>Amazon DynamoDB API를 사용하여 CreateTable 작업을 호출합니다. 호출이 반환된 후 스크립트는 PutItem 호출을 시도합니다. <br/>경우에 따라 PutItem 요청이 ResourceNotFoundException 오류와 함께 실패하여 워크플로가 실패하게 됩니다. 개발팀에서는 두 API 호출에서 동일한 테이블 이름이 사용되는 것을 확인했습니다. <br/>데이터베이스 전문가는 이 문제를 어떻게 해결해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807376" type="application/json">[{"voted_answers": "C", "vote_count": 3, "is_most_voted": false}, {"voted_answers": "D", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,35 +147,35 @@
 													A.
 												</span> 
 											
-											테이블을 생성하는 애플리케이션에서 사용하는 역할에 연결된 정책에서 dynamodb:PutItem 작업에 대한 허용 문을 추가합니다.
+											테이블을 생성하는 애플리케이션에서 사용하는 역할에 연결된 정책에 dynamodb:PutItem 작업에 대한 허용 문을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											StreamSpecification 파라미터의 StreamEnabled 속성을 true로 설정한 다음 PutItem을 호출합니다.
+											StreamSpecification 매개변수의 StreamEnabled 속성을 true로 설정한 다음 PutItem을 호출합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											TableStatus가 ACTIVE가 될 때까지 주기적으로 DescribeTable을 호출하도록 애플리케이션을 변경한 다음 PutItem을 호출합니다.
+											TableStatus가 ACTIVE가 될 때까지 주기적으로 DescriptionTable을 호출하도록 애플리케이션을 변경한 다음 PutItem을 호출합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											PutItem 요청에 ConditionExpression 파라미터를 추가합니다.
+											PutItem 요청에 ConditionExpression 매개변수를 추가합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">D </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -120,21 +183,11 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">씨 (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">디 (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">C (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">D (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2021년 4월 4일 오전 <i>
-							8시 30분 </i><a class="title-username" style="">
-								Jaypdv
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Jaypdv
-							</a>
-							
-							at <i>
-							April 4, 2021, 8:30 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,9 +289,9 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 05일 화요일 19:00">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 19:00">
 			1년, 10개월 전
 		</span>
 </div>
@@ -260,9 +303,9 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,19 +333,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				SamDDD
+				샘DDD
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 02:10">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 02:10">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">DynamoDB는 존재하지 않거나 활성 상태가 아닌 테이블에 대해 작업을 실행하려고 할 때 이 오류로 응답합니다.</div>
+<div class="comment-content">존재하지 않거나 활성이 아닌 테이블에 대해 작업을 실행하려고 하면 DynamoDB가 이 오류로 응답합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,16 +382,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				산토스스크
+				산토스크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 13:13">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">ConditionExpression 조건부 PutItem 작업이 성공하기 위해 충족되어야 하는 조건입니다. 식은 다음 중 하나를 포함할 수 있습니다. 함수: attribute_exists | attribute_not_exists | 속성_유형 | 포함 | 시작_으로 | 크기 이 함수 이름은 대소문자를 구분합니다. 비교 연산자: = | &lt;&gt; | &lt; | &gt; | &lt;= | &gt;= | 사이 | IN 논리 연산자: AND | 또는 | 아니다</div>
+<div class="comment-content">ConditionExpression 조건부 PutItem 작업이 성공하기 위해 충족되어야 하는 조건입니다. 표현식에는 다음 중 하나가 포함될 수 있습니다. 함수: attribute_exists | attribute_not_exists | 속성_유형 | 포함 | 시작_부터 | size 이러한 함수 이름은 대소문자를 구분합니다. 비교 연산자: = | &lt;&gt; | &lt; | &gt; | &lt;= | &gt;= | 사이 | IN 논리 연산자: AND | 또는 | 아니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -385,15 +428,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				산토스스크
+				산토스크
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 13:12">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. 답변. ConditionExpression 조건부 PutItem 작업이 성공하기 위해 충족되어야 하는 조건입니다. 식은 다음 중 하나를 포함할 수 있습니다. 함수: attribute_exists | attribute_not_exists | 속성_유형 | 포함 | 시작_으로 | 크기 이 함수 이름은 대소문자를 구분합니다. 비교 연산자: = | &lt;&gt; | &lt; | &gt; | &lt;= | &gt;= | 사이 | IN 논리 연산자: AND | 또는 | 아니다</div>
+<div class="comment-content">D. 답변. ConditionExpression 조건부 PutItem 작업이 성공하기 위해 충족되어야 하는 조건입니다. 표현식에는 다음 중 하나가 포함될 수 있습니다. 함수: attribute_exists | attribute_not_exists | 속성_유형 | 포함 | 시작_부터 | size 이러한 함수 이름은 대소문자를 구분합니다. 비교 연산자: = | &lt;&gt; | &lt; | &gt; | &lt;= | &gt;= | 사이 | IN 논리 연산자: AND | 또는 | 아니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,12 +477,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 19:44">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">정답은 C입니다.</div>
+<div class="comment-content">답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,11 +523,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 20일 목요일 18:54">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 C입니다. ResourceNotFoundException 존재하지 않는 테이블이나 인덱스에 액세스하려고 했습니다. 리소스가 올바르게 지정되지 않았거나 해당 상태가 ACTIVE가 아닐 수 있습니다. https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html</div>
+<div class="comment-content">대답은 C입니다. ResourceNotFoundException 작업이 존재하지 않는 테이블이나 인덱스에 액세스하려고 했습니다. 리소스가 올바르게 지정되지 않았거나 해당 상태가 ACTIVE가 아닐 수 있습니다. https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,7 +572,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">조건 표현식은 PutItem DML 조건에 사용됩니다. 조건식을 지정하여 수정해야 하는 항목을 결정할 수 있습니다. 조건식이 true로 평가되면 작업이 성공합니다. 그렇지 않으면 작업이 실패합니다. 키 속성이 동일한 경우 업데이트 또는 새 항목을 작성해야 하는지 평가합니다. 예 : PutItem 작업은 동일한 키(있는 경우)로 항목을 덮어씁니다. 이를 피하려면 조건식을 사용하십시오. 이렇게 하면 문제의 항목에 이미 동일한 키가 없는 경우에만 쓰기가 진행될 수 있습니다. C가 맞습니다.</div>
+<div class="comment-content">조건 표현식은 PutItem DML 조건에 사용됩니다. 수정해야 할 항목을 결정하기 위해 조건 표현식을 지정할 수 있습니다. 조건 표현식이 true로 평가되면 작업이 성공합니다. 그렇지 않으면 작업이 실패합니다. 키 속성이 동일한 경우 업데이트 또는 새 등록을 수행해야 하는지 평가합니다. 예: PutItem 작업은 동일한 키(존재하는 경우)로 항목을 덮어씁니다. 이를 방지하려면 조건 표현식을 사용하세요. 이렇게 하면 문제의 항목에 이미 동일한 키가 없는 경우에만 쓰기가 진행될 수 있습니다. C가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,13 +612,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 15:34">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 15:34">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">TableStatus는 ACTIVE여야 합니다.</div>
+<div class="comment-content">TableStatus는 활성 상태여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +627,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,8 +658,8 @@
 				스커닝햄99
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 01일 월요일 15:45">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 1일 (월) 15:45">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -629,7 +672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -657,11 +700,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 09:38">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 09:38">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -674,7 +717,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,12 +748,12 @@
 				초투_DBA
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 02:07">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 02:07">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 정답이다</div>
+<div class="comment-content">C가 맞네요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -719,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -822,7 +865,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 02:10">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -868,7 +911,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 13:13">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -925,7 +968,7 @@ Logical operators: AND | OR | NOT</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 13:12">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -981,7 +1024,7 @@ Logical operators: AND | OR | NOT</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 19:44">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1027,7 +1070,7 @@ Logical operators: AND | OR | NOT</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Oct 2022 18:54">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1216,7 +1259,7 @@ C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 09:38">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1261,7 +1304,7 @@ C is correct.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 02:07">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

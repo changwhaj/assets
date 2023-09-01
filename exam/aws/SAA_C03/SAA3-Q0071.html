@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 71 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 71 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 71 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 71 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 71 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839828">
 <p class="card-text">
 							
-								회사는 Amazon DynamoDB를 사용하여 고객 정보를 저장하는 쇼핑 애플리케이션을 실행합니다. 데이터 손상의 경우 솔루션 설계자는 15분의 RPO(복구 지점 목표)와 1시간의 RTO(복구 시간 목표)를 충족하는 솔루션을 설계해야 합니다. <br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 무엇을 권장해야 합니까?
+								한 회사에서 Amazon DynamoDB를 사용하여 고객 정보를 저장하는 쇼핑 애플리케이션을 실행하고 있습니다. 데이터가 손상되는 경우 솔루션 설계자는 15분의 복구 지점 목표(RPO)와 1시간의 복구 시간 목표(RTO)를 충족하는 솔루션을 설계해야 합니다. <br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 무엇을 권장해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											DynamoDB 전역 테이블을 구성합니다. RPO 복구의 경우 애플리케이션이 다른 AWS 리전을 가리키도록 합니다.
+											DynamoDB 전역 테이블을 구성합니다. RPO 복구의 경우 애플리케이션이 다른 AWS 리전을 가리키도록 하십시오.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											DynamoDB 특정 시점으로 복구를 구성합니다. RPO 복구를 위해 원하는 시점으로 복원합니다.
+											DynamoDB 특정 시점 복구를 구성합니다. RPO 복구를 위해서는 원하는 시점으로 복원하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											15분마다 DynamoDB 테이블에 대한 Amazon Elastic Block Store(Amazon EBS) 스냅샷을 예약합니다. RPO 복구의 경우 EBS 스냅샷을 사용하여 DynamoDB 테이블을 복원합니다.
+											15분마다 DynamoDB 테이블에 대한 Amazon Elastic Block Store(Amazon EBS) 스냅샷을 예약합니다. RPO 복구를 위해 EBS 스냅샷을 사용하여 DynamoDB 테이블을 복원합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="42 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="42 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								priya2224
-							</a> 2022년 10월 16 
-							
-							일 <i>
-							, 오후 2:37</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								priya2224
-							</a>
-							
-							at <i>
-							Oct. 16, 2022, 2:37 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,15 +295,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 17:37">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 17:37">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A - DynamoDB 전역 테이블은 다중 리전 및 다중 활성 데이터베이스를 제공하지만 "데이터 손상의 경우" 유효하지 않습니다. 이 경우 백업이 필요합니다. 이 솔루션은 유효하지 않습니다. **B** - 특정 시점 복구는 빠른 복구를 위해 연속 백업으로 설계되었습니다. RPO와 아마도 RTO를 완벽하게 다룹니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html C - 일일 내보내기는 15분의 RPO를 포함하지 않습니다. D - DynamoDB는 서버리스입니다... 그래서 이 EBS 스냅샷은 무엇에서 가져옵니까???</div>
+<div class="comment-content">A - DynamoDB 전역 테이블은 다중 리전 및 다중 활성 데이터베이스를 제공하지만 "데이터 손상 시"에는 유효하지 않습니다. 이 경우 백업이 필요합니다. 이 솔루션은 유효하지 않습니다. **B** - 특정 시점 복구는 빠른 복구를 위해 연속 백업으로 설계되었습니다. 이는 RPO와 아마도 RTO를 완벽하게 포괄합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PointInTimeRecovery.html C - 일일 내보내기에는 15분의 RPO가 포함되지 않습니다. D - DynamoDB는 서버리스입니다. 그렇다면 이러한 EBS 스냅샷은 무엇에서 촬영됩니까???</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -293,11 +336,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 09:20">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예. DynamoDB 테이블의 EBS 스냅샷을 생성할 수 있습니다. 이를 수행하는 프로세스에는 다음 단계가 포함됩니다. DynamoDB 테이블에서 새 Amazon Elastic Block Store(EBS) 볼륨을 생성합니다. 인스턴스에서 DynamoDB 서비스를 중지합니다. 인스턴스에서 EBS 볼륨을 분리합니다. EBS 볼륨의 스냅샷을 생성합니다. EBS 볼륨을 인스턴스에 다시 연결합니다. 인스턴스에서 DynamoDB 서비스를 시작합니다. 또한 AWS 데이터 파이프라인을 사용하여 위의 프로세스를 자동화하고 DynamoDB 테이블의 정기적인 스냅샷을 예약할 수 있습니다. 테이블이 커서 스냅샷을 찍고 싶은 경우 시간이 오래 걸리고 많은 대역폭을 소비할 수 있으므로 다중 리전을 생성하려면 DynamoDB의 글로벌 테이블 기능을 사용하는 것이 좋습니다. 및 멀티 마스터 DynamoDB 테이블, 각 리전을 개별적으로 스냅샷할 수 있습니다.</div>
+<div class="comment-content">예, DynamoDB 테이블의 EBS 스냅샷을 생성할 수 있습니다. 이를 수행하는 프로세스에는 다음 단계가 포함됩니다. DynamoDB 테이블에서 새 Amazon Elastic Block Store(EBS) 볼륨을 생성합니다. 인스턴스에서 DynamoDB 서비스를 중지합니다. 인스턴스에서 EBS 볼륨을 분리합니다. EBS 볼륨의 스냅샷을 생성합니다. EBS 볼륨을 인스턴스에 다시 연결합니다. 인스턴스에서 DynamoDB 서비스를 시작합니다. 또한 AWS 데이터 파이프라인을 사용하여 위 프로세스를 자동화하고 DynamoDB 테이블의 정기적인 스냅샷을 예약할 수 있습니다. 테이블이 크고 스냅샷을 생성하려는 경우 시간이 오래 걸리고 대역폭을 많이 소모할 수 있으므로 다중 리전을 갖기 위해 DynamoDB의 전역 테이블 기능을 사용하는 것이 좋습니다. 및 멀티 마스터 DynamoDB 테이블이 있으며 각 리전을 개별적으로 스냅샷할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -330,7 +373,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 5일 수요일 23:55">
-			4개월, 1주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -343,7 +386,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,19 +430,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 21일 수요일 00:11">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수 00:11">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">RPO 및 RTO 요구 사항을 충족하는 최상의 솔루션은 DynamoDB 특정 시점 복구(PITR)를 사용하는 것입니다. 이 기능을 사용하면 DynamoDB 테이블을 초 단위로 지난 35일 내의 특정 시점으로 복원할 수 있습니다. 15분 RPO 내에서 데이터를 복구하려면 지난 35일 내의 원하는 시점으로 테이블을 복원하기만 하면 됩니다. 1시간의 RTO 요구 사항을 충족하려면 DynamoDB 콘솔, AWS CLI 또는 AWS SDK를 사용하여 테이블에서 PITR을 활성화할 수 있습니다. 일단 활성화되면 PITR은 S3 버킷에 있는 테이블 데이터의 특정 시점 복사본을 지속적으로 캡처합니다. 그런 다음 이러한 특정 시점 복사본을 사용하여 보존 기간 내의 특정 시점으로 테이블을 복원할 수 있습니다. ***정확*** 옵션 B. DynamoDB 특정 시점 복구를 구성합니다. RPO 복구를 위해 원하는 시점으로 복원합니다.</div>
+<div class="comment-content">RPO 및 RTO 요구 사항을 충족하는 가장 좋은 솔루션은 DynamoDB PITR(특정 시점 복구)을 사용하는 것입니다. 이 기능을 사용하면 DynamoDB 테이블을 지난 35일 이내의 특정 시점으로 초 단위로 복원할 수 있습니다. 15분 RPO 내에 데이터를 복구하려면 지난 35일 이내의 원하는 시점으로 테이블을 복원하기만 하면 됩니다. 1시간의 RTO 요구 사항을 충족하려면 DynamoDB 콘솔, AWS CLI 또는 AWS SDK를 사용하여 테이블에서 PITR을 활성화할 수 있습니다. 활성화되면 PITR은 S3 버킷에 있는 테이블 데이터의 특정 시점 복사본을 지속적으로 캡처합니다. 그런 다음 이러한 특정 시점 복사본을 사용하여 보존 기간 내의 특정 시점으로 테이블을 복원할 수 있습니다. ***올바름*** 옵션 B. DynamoDB 특정 시점 복구를 구성합니다. RPO 복구를 위해서는 원하는 시점으로 복원하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -428,15 +471,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 00:12">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">***잘못됨*** 옵션 A(DynamoDB 전역 테이블 구성)는 RPO 요구 사항을 충족하지 않습니다. 전역 테이블은 고가용성을 위해 데이터를 여러 리전에 복제하도록 설계되었지만 특정 리전으로 데이터를 복원하는 방법을 제공하지 않기 때문입니다. 시점. S3 Glacier는 검색 시간이 몇 시간인 콜드 스토리지 서비스이므로 옵션 C(S3 Glacier로 데이터 내보내기)는 RPO 또는 RTO 요구 사항을 충족하지 않습니다. 옵션 D(EBS 스냅샷 예약)는 EBS 스냅샷이 지속적이 아닌 일정에 따라 생성되므로 RPO 요구 사항을 충족하지 않습니다. 또한 EBS 스냅샷에서 DynamoDB 테이블을 복원하는 데 1시간 이상 걸릴 수 있으므로 RTO 요구 사항을 충족하지 않습니다.</div>
+<div class="comment-content">***잘못됨*** 옵션 A(DynamoDB 전역 테이블 구성)는 RPO 요구 사항을 충족하지 않습니다. 전역 테이블은 고가용성을 위해 데이터를 여러 지역에 복제하도록 설계되었지만 데이터를 특정 지역으로 복원하는 방법을 제공하지 않기 때문입니다. 시점. 옵션 C(S3 Glacier로 데이터 내보내기)는 RPO 또는 RTO 요구 사항을 충족하지 않습니다. S3 Glacier는 검색 시간이 몇 시간이 걸리는 콜드 스토리지 서비스이기 때문입니다. 옵션 D(EBS 스냅샷 예약)는 EBS 스냅샷이 연속이 아닌 일정에 따라 생성되므로 RPO 요구 사항을 충족하지 않습니다. 또한 EBS 스냅샷에서 DynamoDB 테이블을 복원하는 데 1시간 이상이 걸릴 수 있으므로 RTO 요구 사항을 충족하지 못합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,12 +531,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 10일 목요일 19:49">
-			6 일 전
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">RPO 15분 및 RTO 1시간을 충족하는 최상의 옵션은 B) DynamoDB 특정 시점 복구를 구성하는 것입니다. RPO 복구를 위해 원하는 시점으로 복원합니다. 핵심 사항: DynamoDB 특정 시점 복구는 지난 35일 내의 모든 시점으로 복원할 수 있습니다. 이는 15분의 RPO를 지원합니다. 특정 시점 백업에서 복원하면 1시간 RTO를 충족합니다. 지정 시간 복구는 DynamoDB 테이블을 두 번째 수준의 세분성으로 복원하도록 특별히 설계되었습니다.</div>
+<div class="comment-content">15분의 RPO와 1시간의 RTO를 충족하는 가장 좋은 옵션은 B) DynamoDB 특정 시점 복구를 구성하는 것입니다. RPO 복구를 위해서는 원하는 시점으로 복원하세요. 핵심 사항: DynamoDB 특정 시점 복구는 지난 35일 이내의 어느 시점으로든 복원할 수 있습니다. 이는 15분의 RPO를 지원합니다. 특정 시점 백업에서 복원하면 1시간 RTO를 충족합니다. 특정 시점 복구는 두 번째 수준의 세분성으로 DynamoDB 테이블을 복원하도록 특별히 설계되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -502,7 +545,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,12 +576,12 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 16:16">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 16:16">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 전역 테이블은 재해 복구 목적으로 다중 지역 복제를 제공하며 추가 구성 및 잠재적인 데이터 손실 없이는 15분의 원하는 RPO를 충족하지 못할 수 있습니다. C. 매일 데이터를 내보내고 가져오는 것이 원하는 RPO인 15분과 일치하지 않습니다. D. EBS 스냅샷은 데이터 백업에 사용할 수 있지만 DynamoDB에 직접 적용할 수 없으며 사용자 지정 구현 없이는 원하는 RPO 및 RTO를 제공할 수 없습니다. 이에 비해 DynamoDB의 내장된 지정 시간 복구 기능을 활용하는 옵션 B는 지정된 RPO 15분과 RTO 1시간을 충족하는 가장 간단하고 효과적인 솔루션을 제공합니다. PITR을 활성화하고 테이블을 원하는 시점으로 복원함으로써 회사는 데이터 손실을 최소화하고 필요한 시간 내에 고객 정보를 복구할 수 있습니다.</div>
+<div class="comment-content">A. 글로벌 테이블은 재해 복구 목적을 위해 다중 지역 복제를 제공합니다. 추가 구성 및 잠재적인 데이터 손실 없이는 원하는 RPO인 15분을 충족하지 못할 수 있습니다. C. 매일 데이터를 내보내고 가져오는 것이 원하는 RPO인 15분에 맞지 않습니다. D. EBS 스냅샷은 데이터 백업에 사용할 수 있지만 DynamoDB에 직접 적용할 수 없으며 사용자 지정 구현 없이는 원하는 RPO 및 RTO를 제공할 수 없습니다. 이에 비해 DynamoDB에 내장된 특정 시점 복구 기능을 활용하는 옵션 B는 지정된 RPO 15분과 RTO 1시간을 충족하는 가장 간단하고 효과적인 솔루션을 제공합니다. PITR을 활성화하고 테이블을 원하는 시점으로 복원함으로써 회사는 데이터 손실을 최소화하고 필요한 시간 내에 고객 정보를 복구할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -547,7 +590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -579,11 +622,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 20일 토요일 07:52">
-			2개월, 4주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 질문에 있습니다. 문제를 다시 읽어보세요!!! 옵션 B. DynamoDB 특정 시점 복구를 구성합니다. RPO 복구를 위해 원하는 시점으로 복원합니다.</div>
+<div class="comment-content">대답은 질문에 있습니다. 질문을 다시 읽어보세요!!! 옵션 B. DynamoDB 특정 시점 복구를 구성합니다. RPO 복구를 위해서는 원하는 시점으로 복원하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -623,12 +666,12 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 18:03">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 18:03">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">기여자 액세스를 기꺼이 공유하려는 사람이 있으면 vinaychethi99@gmail.com으로 편지를 보내주십시오.</div>
+<div class="comment-content">기여자 액세스 권한을 공유하고 싶은 사람이 있으면 vinaychethi99@gmail.com으로 이메일을 보내주세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -637,7 +680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,11 +708,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 02:47">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -683,7 +726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -714,12 +757,12 @@
 				샤샤1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 18:43">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 18:43">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B는 올바른 DynamoDB 특정 시점 복구를 통해 솔루션 설계자가 DynamoDB 테이블을 15분의 RPO를 충족하는 특정 시점으로 복구할 수 있습니다. 이 기능은 또한 애플리케이션에 대해 원하는 복구 시간 목표인 1시간의 RTO를 제공합니다. 또한 DynamoDB 특정 시점 복구를 구성하는 데 추가 인프라나 운영 노력이 필요하지 않으므로 이 시나리오에 가장 적합한 솔루션입니다. 15분마다 DynamoDB 테이블에 대한 Amazon EBS 스냅샷을 예약하면 RPO 또는 RTO 요구 사항을 충족하지 못하므로 옵션 D는 올바르지 않습니다. EBS 스냅샷을 사용하여 DynamoDB 테이블에서 데이터를 복구할 수 있지만 실시간 데이터 보호 또는 복구 기능을 제공하도록 설계되지 않았습니다.</div>
+<div class="comment-content">B가 맞습니다. DynamoDB 특정 시점 복구를 사용하면 솔루션 설계자가 DynamoDB 테이블을 특정 시점으로 복구할 수 있으며, 이는 15분의 RPO를 충족합니다. 또한 이 기능은 애플리케이션에 대해 원하는 복구 시간 목표인 1시간의 RTO를 제공합니다. 또한 DynamoDB 특정 시점 복구를 구성하는 데는 추가적인 인프라나 운영 노력이 필요하지 않으므로 이 시나리오에 가장 적합한 솔루션입니다. 15분마다 DynamoDB 테이블에 대한 Amazon EBS 스냅샷을 예약하면 RPO 또는 RTO 요구 사항을 충족하지 못하기 때문에 옵션 D는 올바르지 않습니다. EBS 스냅샷은 DynamoDB 테이블에서 데이터를 복구하는 데 사용할 수 있지만 실시간 데이터 보호 또는 복구 기능을 제공하도록 설계되지 않았습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -728,7 +771,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -759,12 +802,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 15:55">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 15:55">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -773,7 +816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,8 +847,8 @@
 				사이먼박
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 29일 (토) 11:28">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 29일 토요일 11:28">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -819,7 +862,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -851,12 +894,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 21일 금요일 08:56">
-			9개월, 4주 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">DynamoDB 전역 테이블도 여기에서 작동한다고 생각하지만 Point in Time Recovery가 더 나은 선택입니다.</div>
+<div class="comment-content">DynamoDB 전역 테이블도 여기에서 작동한다고 생각하지만 특정 시점 복구가 더 나은 선택입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -865,7 +908,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,11 +940,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 19일 수 02:14">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B라고 생각합니다. https://dynobase.dev/dynamodb-point-in-time-recovery/</div>
+<div class="comment-content">나는 B라고 생각한다. https://dynobase.dev/dynamodb-point-in-time-recovery/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -910,7 +953,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -941,12 +984,12 @@
 				프리야2224
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 16일 일 14:37">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 16일 일요일 14:37">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 D</div>
+<div class="comment-content">답은 D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -955,7 +998,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -978,12 +1021,12 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 19일 수 11:15">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 19일 수요일 11:15">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">bhk gandu chutiye glt ans btata 하이</div>
+<div class="comment-content">bhk gandu chutiye glt ans btata hai</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -992,7 +1035,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1012,15 +1055,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AZ900500
+				Az900500
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 13:33">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 13:33">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">청중을 위해 영어로 의사 소통을 시도하십시오</div>
+<div class="comment-content">청중을 위해 영어로 소통해보세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1029,7 +1072,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1068,12 +1111,12 @@
 				123jhl0
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 17:40">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 17:40">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB는 서버리스이므로 사용 가능한 스토리지 스냅샷이 없습니다. https://aws.amazon.com/dynamodb/</div>
+<div class="comment-content">DynamoDB는 서버리스이므로 스토리지 스냅샷을 사용할 수 없습니다. https://aws.amazon.com/dynamodb/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1082,7 +1125,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1145,7 +1188,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 17:37">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1186,7 +1229,7 @@ D - DynamoDB is serverless... so what are these EBS snapshots taken from???</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 09:20">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1239,7 +1282,7 @@ Note that, if your table is large and you want to take a snapshot of it, it coul
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 23:55">
-			4 months, 1 week ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1303,7 +1346,7 @@ Note that, if your table is large and you want to take a snapshot of it, it coul
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 00:11">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1346,7 +1389,7 @@ Option B. Configure DynamoDB point-in-time recovery. For RPO recovery, restore t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 00:12">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1407,7 +1450,7 @@ Option D (scheduling EBS snapshots) would not meet the RPO requirement, as EBS s
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 10 Aug 2023 19:49">
-			6 days ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1459,7 +1502,7 @@ Point-in-time recovery is specifically designed to restore DynamoDB tables with 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 16:16">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1510,7 +1553,7 @@ In comparison, option B utilizing DynamoDB's built-in point-in-time recovery fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 07:52">
-			2 months, 4 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1555,7 +1598,7 @@ In comparison, option B utilizing DynamoDB's built-in point-in-time recovery fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 18:03">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1600,7 +1643,7 @@ In comparison, option B utilizing DynamoDB's built-in point-in-time recovery fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 02:47">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1646,7 +1689,7 @@ In comparison, option B utilizing DynamoDB's built-in point-in-time recovery fun
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 18:43">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1693,7 +1736,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 15:55">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1738,7 +1781,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Oct 2022 11:28">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1784,7 +1827,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Oct 2022 08:56">
-			9 months, 4 weeks ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1830,7 +1873,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 02:14">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1876,7 +1919,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Oct 2022 14:37">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1913,7 +1956,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 11:15">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1950,7 +1993,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 13:33">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2003,7 +2046,7 @@ Option D is not correct because scheduling Amazon EBS snapshots for the DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 17:40">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

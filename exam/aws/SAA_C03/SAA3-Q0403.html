@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 403 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 403 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 403 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 403 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 403 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="873774">
 <p class="card-text">
 							
-								개발자에게는 AWS Lambda 함수를 사용하여 파일을 Amazon S3에 업로드하는 애플리케이션이 있으며 작업을 수행하는 데 필요한 권한이 필요합니다. 개발자에게는 이미 Amazon S3에 필요한 유효한 IAM 자격 증명이 있는 IAM 사용자가 있습니다. <br/><br/>권한을 부여하려면 솔루션 설계자가 무엇을 해야 합니까?
+								개발자는 AWS Lambda 함수를 사용하여 Amazon S3에 파일을 업로드하는 애플리케이션을 보유하고 있으며 작업을 수행하는 데 필요한 권한이 필요합니다. 개발자에게는 Amazon S3에 필요한 유효한 IAM 자격 증명을 가진 IAM 사용자가 이미 있습니다. <br/><br/>솔루션 설계자는 권한을 부여하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											Lambda 함수에서 기존 IAM 자격 증명을 사용하여 서명된 요청을 생성합니다.
+											Lambda 함수의 기존 IAM 자격 증명을 사용하여 서명된 요청을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											새 IAM 사용자를 생성하고 Lambda 함수에서 기존 IAM 자격 증명을 사용합니다.
+											새로운 IAM 사용자를 생성하고 Lambda 함수에서 기존 IAM 자격 증명을 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2023년 3 월 <i>
-							10일 오후 5:11 </i><a class="title-username" style="">
-								태혜키
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								taehyeki
-							</a>
-							
-							at <i>
-							March 10, 2023, 5:11 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 23:35">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 23:35">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon S3에 파일을 업로드하기 위해 AWS Lambda 함수에 필요한 권한을 부여하려면 솔루션 설계자는 필요한 권한이 있는 IAM 실행 역할을 생성하고 IAM 역할을 Lambda 함수에 연결해야 합니다. 이 접근 방식은 최소 권한 원칙을 따르며 Lambda 함수가 특정 작업을 수행하는 데 필요한 리소스에만 액세스할 수 있도록 합니다. 따라서 정답은 D입니다. 필요한 권한이 있는 IAM 실행 역할을 생성하고 IAM 역할을 Lambda 함수에 연결합니다.</div>
+<div class="comment-content">Amazon S3에 파일을 업로드하기 위해 AWS Lambda 함수에 필요한 권한을 부여하려면 솔루션 아키텍트는 필요한 권한이 있는 IAM 실행 역할을 생성하고 IAM 역할을 Lambda 함수에 연결해야 합니다. 이 접근 방식은 최소 권한의 원칙을 따르며 Lambda 함수가 특정 작업을 수행하는 데 필요한 리소스에만 액세스할 수 있도록 합니다. 따라서 정답은 D입니다. 필요한 권한이 있는 IAM 실행 역할을 생성하고 IAM 역할을 Lambda 함수에 연결합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -293,15 +336,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				빌랄글그93350
+				Bilalglg93350
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 21일 화요일 15:15">
-			4개월, 4주 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. Créez un rôle d'execution IAM avec les autorisations requises et attachez le rôle IAM à la fonction Lambda. L'architecte de Solutions doit créer un rôle d'execution IAM ayant les autorisations nécessaires pour accéder à Amazon S3 et effectuer les operations requises(par exemple, charger des fichiers). Ensuite, le role doit être associé à la fonction Lambda, de sorte que la fonction puisse assumer ce rôle et avoir les autorisations nécessaires pour interagir avec Amazon S3.</div>
+<div class="comment-content">D. Créez un rôle d'execution IAM avec les autorisations requises et attachmentez le rôle IAM à la fonction Lambda. L'architecte de Solutions doit créer un rôle d'execution IAM ayant les autorisations Nécessaires pour accéder à Amazon S3 et effectuer les opérations requises(예: 충전기 충전기). Ensuite, le rôle doit être associé à la fonction Lambda, de sorte que la fonction puisse 가정자 ce rôle et avoir les autorisations Nécessaires는 Amazon S3와 상호 작용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,16 +381,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				나일쉴그
+				나일레쉬그
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 05:35">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">답은 D</div>
+<div class="comment-content">답은 D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,8 +430,8 @@
 				캄파트라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 16일 목요일 09:03">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 16일 (목) 09:03">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,13 +476,13 @@
 				시타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 11일 (토) 19:01">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 11일 토요일 19:01">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Lambda 실행 역할을 생성하고 기존 S3 IAM 역할을 lambda 함수에 연결</div>
+<div class="comment-content">Lambda 실행 역할을 생성하고 기존 S3 IAM 역할을 람다 함수에 연결</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -479,8 +522,8 @@
 				ktulu2602
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 11일 (토) 11:36">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 11일 토요일 11:36">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,13 +568,13 @@
 				니틴1119
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 11일 (토) 04:58">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 11일 토요일 04:58">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">ㄷㄷㄷㄷ</div>
+<div class="comment-content">dddddd</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,11 +611,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				태혜기
+				태혜키
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 10일 금요일 17:11">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -638,7 +681,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 23:35">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -685,7 +728,7 @@ Therefore, the correct answer is D. Create an IAM execution role with the requir
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Mar 2023 15:15">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -732,7 +775,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 05:35">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -778,7 +821,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 09:03">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -824,7 +867,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Mar 2023 19:01">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -870,7 +913,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Mar 2023 11:36">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -916,7 +959,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Mar 2023 04:58">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -962,7 +1005,7 @@ L'architecte de solutions doit créer un rôle d'exécution IAM ayant les autori
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Mar 2023 17:11">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

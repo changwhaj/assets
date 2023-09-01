@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 95 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 95 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 95 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 95 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807337">
 <p class="card-text">
 							
-								데이터베이스 전문가는 성능 문제가 발생한 Amazon DynamoDB 테이블을 검토하고 최적화해야 합니다. 데이터베이스 전문가의 철저한 조사 결과 파티션 키가 핫 파티션을 유발하는 것으로 밝혀져 새 파티션 키가 생성됩니다. 데이터베이스 전문가는 이 새로운 파티션 키를 모든 기존 데이터와 새로운 데이터에 효과적으로 적용해야 합니다. <br/>이 솔루션은 어떻게 구현될 수 있습니까?<br/>
+								데이터베이스 전문가는 성능 문제가 있는 Amazon DynamoDB 테이블을 검토하고 최적화해야 합니다. 데이터베이스 전문가의 철저한 조사 결과 파티션 키로 인해 핫 파티션이 발생하여 새 파티션 키가 생성된 것으로 나타났습니다. 데이터베이스 전문가는 이 새로운 파티션 키를 모든 기존 데이터와 새 데이터에 효과적으로 적용해야 합니다. <br/>이 솔루션을 어떻게 구현할 수 있나요?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807337" type="application/json">[{"voted_answers": "A", "vote_count": 8, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 2, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 1, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											Amazon EMR을 사용하여 현재 DynamoDB 테이블에서 Amazon S3로 데이터를 내보냅니다. 그런 다음 Amazon EMR을 다시 사용하여 Amazon S3에서 새 파티션 키가 있는 새 DynamoDB 테이블로 데이터를 가져옵니다.
+											Amazon EMR을 사용하여 현재 DynamoDB 테이블의 데이터를 Amazon S3로 내보냅니다. 그런 다음 Amazon EMR을 다시 사용하여 Amazon S3의 데이터를 새 파티션 키가 있는 새 DynamoDB 테이블로 가져옵니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -93,7 +156,7 @@
 													B.
 												</span> 
 											
-											AWS DMS를 사용하여 현재 DynamoDB 테이블에서 Amazon S3로 데이터를 복사합니다. 그런 다음 DynamoDB 테이블을 가져와 새 파티션 키로 새 DynamoDB 테이블을 생성합니다.
+											AWS DMS를 사용하여 현재 DynamoDB 테이블의 데이터를 Amazon S3에 복사합니다. 그런 다음 DynamoDB 테이블을 가져와 새 파티션 키로 새 DynamoDB 테이블을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											AWS CLI를 사용하여 DynamoDB 테이블을 백업합니다. 그런 다음 restore-table-from-backup 명령을 사용하고 파티션 키를 수정합니다.
+											AWS CLI를 사용하여 DynamoDB 테이블을 백업합니다. 그런 다음 Restore-table-from-backup 명령을 사용하고 파티션 키를 수정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,20 +184,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">B (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">B (18%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 9%; display: flex;" title="">9%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								std2021
-							</a> 
-							
-							2021 <i>
-							년 4월 1일 오후 8:57</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								std2021
-							</a>
-							
-							at <i>
-							April 1, 2021, 8:57 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,9 +289,9 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 05일 화요일 20:13">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 20:13">
 			1년, 10개월 전
 		</span>
 </div>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -294,9 +337,9 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 15일 금 09:49">
+<span class="comment-date align-middle" title="2021년 10월 15일 금요일 09:49">
 			1년, 10개월 전
 		</span>
 </div>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,19 +381,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 5일 월요일 15:03">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 5일 (월) 15:03">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Amazon EMR을 사용하여 현재 DynamoDB 테이블에서 Amazon S3로 데이터를 내보냅니다. 그런 다음 Amazon EMR을 다시 사용하여 Amazon S3에서 새 파티션 키가 있는 새 DynamoDB 테이블로 데이터를 가져옵니다. 최다 투표 xB. DynamoDB는 AWS DMS xC의 유효한 소스가 아닙니다. 파티션 키는 xD로 수정할 수 없습니다. 보조 인덱스 없이 DynamoDB 테이블을 복원하도록 선택할 수 있지만 파티션 키는 복원 중에 수정할 수 없습니다.</div>
+<div class="comment-content">A. Amazon EMR을 사용하여 현재 DynamoDB 테이블의 데이터를 Amazon S3로 내보냅니다. 그런 다음 Amazon EMR을 다시 사용하여 Amazon S3의 데이터를 새 파티션 키가 있는 새 DynamoDB 테이블로 가져옵니다. 가장 많이 투표된 xB. DynamoDB는 AWS DMS xC의 유효한 소스가 아닙니다. 파티션 키는 xD로 수정할 수 없습니다. 보조 인덱스 없이 DynamoDB 테이블을 복원하도록 선택할 수 있지만 복원 중에 파티션 키를 수정자로 사용할 수는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -359,7 +402,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -387,11 +430,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ninjalight25
+				닌자라이트25
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 5일 일요일 08:24">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -405,7 +448,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,11 +476,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 18:58">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 18:58">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,11 +518,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 03:56">
-			7개월, 2주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Dynamodb는 타겟이 될 수 있지만 소스는 아닙니다. 따라서 A</div>
+<div class="comment-content">Dynamodb는 대상이 될 수 있지만 소스는 될 수 없습니다. 따라서 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -488,7 +531,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,12 +570,12 @@
 				치란탄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 7월 10일 일 06:15">
+<span class="comment-date align-middle" title="2022년 7월 10일 일요일 06:15">
 			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DynamoDB에서 파티션 키를 변경할 수 있습니까? 아니요. 일단 테이블이 설정되면 키 스키마를 수정할 수 없습니다. 새 테이블을 프로비저닝하고 그곳으로 데이터를 이동한 다음 첫 번째 테이블을 제거하는 것만 가능합니다.</div>
+<div class="comment-content">DynamoDB에서 파티션 키를 변경할 수 있습니까? 아니요. 테이블이 설정되면 해당 키 스키마를 수정할 수 없습니다. 새 테이블을 프로비저닝하고 거기로 데이터를 이동한 다음 첫 번째 테이블을 제거하는 것만 가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,7 +615,7 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 29일 금요일 15:58">
+<span class="comment-date align-middle" title="2022년 4월 29일 금 15:58">
 			1년, 3개월 전
 		</span>
 </div>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,13 +661,13 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 00:49">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 00:49">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">DynamoDB는 DMS의 소스가 될 수 없습니다. -https://dynobase.com/dynamodb-keys/ 당 DynamoDB에서 파티션 키를 변경할 수 있습니까? 아니요. 일단 테이블이 설정되면 키 스키마를 수정할 수 없습니다. 새 테이블을 프로비저닝하고 그곳으로 데이터를 이동한 다음 첫 번째 테이블을 제거하는 것만 가능합니다. Per - https://aws.amazon.com/premiumsupport/knowledge-center/back-up-dynamodb-s3/ 백업 생성 프로세스를 사용자 지정하려면 Amazon EMR, AWS Glue 또는 AWS Data Pipeline을 사용할 수 있습니다. 따라서 EMR을 사용하는 것이 유일한 유효한 옵션입니다.</div>
+<div class="comment-content">DynamoDB는 DMS의 소스가 될 수 없습니다. Per -https://dynobase.com/dynamodb-keys/ DynamoDB에서 파티션 키를 변경할 수 있습니까? 아니요. 테이블이 설정되면 해당 키 스키마를 수정할 수 없습니다. 새 테이블을 프로비저닝하고 거기로 데이터를 이동한 다음 첫 번째 테이블을 제거하는 것만 가능합니다. 기준 - https://aws.amazon.com/premiumsupport/knowledge-center/back-up-dynamodb-s3/ 백업 생성 프로세스를 사용자 지정하려면 Amazon EMR, AWS Glue 또는 AWS Data Pipeline을 사용할 수 있습니다. 따라서 EMR을 사용하는 것이 유일한 유효한 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,7 +708,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 2월 23일 수 23:17">
-			1년, 5개월 전
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -698,7 +741,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 3월 6일 일요일 14:50">
@@ -706,7 +749,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 동일한 파티션 키를 다시 생성합니다</div>
+<div class="comment-content">그러면 동일한 파티션 키가 다시 생성됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -715,7 +758,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -751,7 +794,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 13일 수 18:11">
@@ -759,7 +802,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A, 다른 옵션은 불가능합니다.</div>
+<div class="comment-content">A. 다른 옵션은 불가능합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -768,7 +811,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -796,15 +839,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				std2021
+				2021년 표준
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 07:25">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B로 가겠습니다. restore-table-from-backup은 파티션 키를 변경할 수 없는 것 같습니다. 여기서는 확실하지 않습니다.</div>
+<div class="comment-content">B를 선택하겠습니다. Restore-table-from-backup은 파티션 키를 변경할 수 없는 것 같습니다. 여기서는 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -813,7 +856,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -836,8 +879,8 @@
 				주제26
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 12일 금요일 12:00">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 12일 금 12:00">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -850,7 +893,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1014,7 +1057,7 @@ EMR to backup and restore</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 05 Jun 2023 15:03">
-			2 months, 1 week ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1063,7 +1106,7 @@ xD. Although you can choose to restore a DynamoDB table without the secondary in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Mar 2023 08:24">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1109,7 +1152,7 @@ xD. Although you can choose to restore a DynamoDB table without the secondary in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 18:58">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1149,7 +1192,7 @@ https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.DynamoDB.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 03:56">
-			7 months, 2 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1295,7 +1338,7 @@ DynamoDB to S3 is possible by EMR, AWS Glue, or AWS Data Pipeline.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 00:49">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1351,7 +1394,7 @@ So, using EMR is the only valid option.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 23 Feb 2022 23:17">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1487,7 +1530,7 @@ https://docs.aws.amazon.com/cli/latest/reference/dynamodb/restore-table-from-bac
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 07:25">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

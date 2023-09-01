@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 195 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 195 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 195 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 195 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850798">
 <p class="card-text">
 							
-								회사의 주문 시스템은 클라이언트의 요청을 Amazon EC2 인스턴스로 보냅니다. EC2 인스턴스는 주문을 처리한 다음 Amazon RDS의 데이터베이스에 주문을 저장합니다. 사용자는 시스템이 실패하면 주문을 다시 처리해야 한다고 보고합니다. 회사는 시스템 중단이 발생할 경우 주문을 자동으로 처리할 수 있는 탄력적인 솔루션을 원합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								회사의 주문 시스템은 클라이언트의 요청을 Amazon EC2 인스턴스로 보냅니다. EC2 인스턴스는 주문을 처리한 다음 Amazon RDS의 데이터베이스에 주문을 저장합니다. 사용자들은 시스템에 오류가 발생하면 주문을 다시 처리해야 한다고 보고합니다. 회사는 시스템 중단이 발생할 경우 자동으로 주문을 처리할 수 있는 탄력적인 솔루션을 원합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											Application Load Balancer(ALB) 뒤에 있는 Auto Scaling 그룹으로 EC2 인스턴스를 이동합니다. ALB 엔드포인트에 메시지를 보내도록 주문 시스템을 업데이트합니다.
+											EC2 인스턴스를 ALB(Application Load Balancer) 뒤의 Auto Scaling 그룹으로 이동합니다. ALB 엔드포인트에 메시지를 보내도록 주문 시스템을 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열로 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다.
+											EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											Amazon Simple Notification Service(Amazon SNS) 주제를 생성합니다. AWS Lambda 함수를 생성하고 함수를 SNS 주제에 구독합니다. SNS 주제에 메시지를 보내도록 주문 시스템을 구성합니다. AWS Systems Manager Run Command를 사용하여 메시지를 처리하도록 EC2 인스턴스에 명령을 보냅니다.
+											Amazon Simple 알림 서비스(Amazon SNS) 주제를 생성합니다. AWS Lambda 함수를 생성하고 함수를 SNS 주제에 구독합니다. SNS 주제에 메시지를 보내도록 주문 시스템을 구성합니다. AWS Systems Manager Run Command를 사용하여 메시지를 처리하도록 EC2 인스턴스에 명령을 보냅니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 92%; display: flex;" title="">씨 (92%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4%" data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="22 votes." data-toggle="tooltip" role="progressbar" style="width: 92%; display: flex;" title="">C (92%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="4%" data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a> 
-							
-							2022 <i>
-							년 11월 28일 오후 4:50</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 4:50 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,12 +293,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:24">
-			19시간 45분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">주요 이유는 다음과 같습니다. Auto Scaling 그룹을 사용하면 주문을 처리하는 EC2 인스턴스의 가용성과 확장성이 높아집니다. SQS를 사용하면 비동기 대기열을 통해 주문을 처리하는 인스턴스에서 주문이 분리됩니다. 인스턴스가 실패하거나 중단되면 주문은 새 인스턴스가 선택할 수 있을 때까지 대기열에 남아 있습니다. 이는 자동화된 복원력을 제공합니다. 실패한 처리는 메시지를 대기열로 다시 전송하여 재시도할 수 있습니다.</div>
+<div class="comment-content">주요 이유는 다음과 같습니다. Auto Scaling 그룹을 사용하면 주문을 처리하는 EC2 인스턴스의 가용성과 확장성이 높아집니다. SQS를 사용하면 주문이 비동기 대기열을 통해 처리하는 인스턴스에서 분리됩니다. 인스턴스가 실패하거나 다운되면 주문은 새 인스턴스가 해당 주문을 선택할 수 있을 때까지 대기열에 남아 있습니다. 이는 자동화된 탄력성을 제공합니다. 실패한 처리는 메시지를 큐로 다시 보내 재시도할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +307,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -296,12 +339,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 13:54">
-			1일, 2시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다. 로드 밸런서 뒤에 EC2 인스턴스가 있는 Auto Scaling 그룹을 사용하면 고가용성과 확장성이 제공됩니다. 주문을 SQS 대기열로 보내면 주문 시스템이 처리 시스템에서 분리됩니다. EC2 인스턴스는 중단 중에도 새 주문에 대한 대기열을 폴링하고 처리할 수 있습니다. 실패한 주문은 재처리를 위해 대기열로 되돌아갑니다.</div>
+<div class="comment-content">C가 정답입니다. 로드 밸런서 뒤의 EC2 인스턴스와 함께 Auto Scaling 그룹을 사용하면 고가용성과 확장성이 제공됩니다. SQS 대기열로 주문을 보내면 주문 시스템이 처리 시스템에서 분리됩니다. EC2 인스턴스는 새 주문에 대한 대기열을 폴링하고 중단 중에도 이를 처리할 수 있습니다. 실패한 주문은 재처리를 위해 대기열로 다시 이동됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,12 +385,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:03">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EC2를 ASG로 이동하고 SQS의 메시지를 사용하도록 구성함으로써 시스템은 주문 시스템 자체에서 주문 처리를 분리할 수 있습니다. 이를 통해 주문 시스템 또는 EC2에 중단이 발생하더라도 시스템에서 오류를 처리하고 주문을 자동으로 처리할 수 있습니다. A. ECS 작업을 대상으로 하는 EventBridge 규칙과 함께 ASG를 사용하면 정전 시 자동 주문 처리에 필요한 분리 및 메시지 대기열이 제공되지 않습니다. B. EC2 인스턴스를 ALB 뒤의 ASG로 이동해도 중단 시 메시지 대기열 및 자동 처리의 필요성이 해결되지 않습니다. D. SNS 및 Lambda를 사용하면 알림 및 오케스트레이션 기능을 제공할 수 있지만 중단 시 자동 주문 처리에 필요한 메시지 대기 및 소비를 제공하지 않습니다. 추가적으로,</div>
+<div class="comment-content">EC2를 ASG로 이동하고 SQS의 메시지를 소비하도록 구성함으로써 시스템은 주문 시스템 자체에서 주문 처리를 분리할 수 있습니다. 이를 통해 주문 시스템이나 EC2에 중단이 발생하더라도 시스템은 오류를 처리하고 자동으로 주문을 처리할 수 있습니다. A. ECS 작업을 대상으로 하는 EventBridge 규칙과 함께 ASG를 사용하면 중단 시 자동 주문 처리에 필요한 분리 및 메시지 대기열이 제공되지 않습니다. B. EC2 인스턴스를 ALB 뒤의 ASG로 이동해도 중단 시 메시지 대기열 및 자동 처리의 필요성이 해결되지 않습니다. D. SNS 및 Lambda를 사용하면 알림 및 오케스트레이션 기능을 제공할 수 있지만 중단 시 자동 주문 처리에 필요한 메시지 대기열 및 소비는 제공되지 않습니다. 추가적으로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -356,7 +399,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,11 +431,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 08:10">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 너무 불필요합니다 .... 이것은 사람들을 혼란스럽게합니다</div>
+<div class="comment-content">D는 너무 불필요해....이게 사람들을 혼란스럽게 해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -425,11 +468,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:02">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">투표 시스템을 위한 Thx Allmightly! (커뮤니티가 아닌) 사이트에서 제공한 답변은 20% 틀렸습니다.</div>
+<div class="comment-content">투표 시스템에 대해 감사드립니다! 커뮤니티가 아닌 사이트에서 제공한 답변의 20%는 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -438,7 +481,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -477,12 +520,12 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 22:53">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 22:53">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답 D는 너무 복잡하고 불필요합니다. 갈등이 심할 때 중재자가 답변에 대한 설명을 제공하지 않는 이유. 이러한 종류의 답변은 시험에 들어가는 것이 좋지 않은 지식에 의문을 제기합니다.</div>
+<div class="comment-content">답 D는 너무 복잡하고 불필요합니다. 갈등이 심할 때 중재자가 답변에 대한 설명을 제공하지 않는 이유는 무엇입니까? 이러한 종류의 답변은 귀하의 지식에 의문을 제기하여 시험에 좋지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -491,7 +534,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -523,12 +566,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 6일 목요일 16:13">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">시스템 중단 시 자동으로 주문을 처리할 수 있는 탄력적인 솔루션을 보유해야 한다는 회사의 요구 사항을 충족하려면 솔루션 설계자가 내결함성 아키텍처를 구현해야 합니다. 주어진 시나리오에 따라 가능한 솔루션은 EC2 인스턴스를 Auto Scaling 그룹으로 이동하고 메시지를 Amazon Simple Queue Service(Amazon SQS) 대기열로 보내도록 주문 시스템을 구성하는 것입니다. 그런 다음 EC2 인스턴스는 대기열의 메시지를 사용할 수 있습니다.</div>
+<div class="comment-content">시스템 중단 시 자동으로 주문을 처리할 수 있는 탄력적인 솔루션을 보유해야 한다는 회사의 요구 사항을 충족하려면 솔루션 설계자는 내결함성 아키텍처를 구현해야 합니다. 주어진 시나리오에 따라 잠재적인 해결책은 EC2 인스턴스를 Auto Scaling 그룹으로 이동하고 Amazon Simple Queue Service(Amazon SQS) 대기열로 메시지를 보내도록 주문 시스템을 구성하는 것입니다. 그러면 EC2 인스턴스가 대기열의 메시지를 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,13 +611,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:52">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:52">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답변 : C</div>
+<div class="comment-content">답 : C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -583,7 +626,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,13 +657,13 @@
 				니콜라이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 19:18">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 19:18">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열로 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다. 회사의 요구 사항을 충족하기 위해 솔루션 설계자는 시스템이 탄력적이며 시스템 중단 시 주문을 자동으로 처리할 수 있는지 확인해야 합니다. 이를 위해서는 EC2 인스턴스를 Auto Scaling 그룹으로 이동하는 것이 좋은 첫 단계입니다. 이렇게 하면 시스템이 수요 및 가용성에 따라 인스턴스를 자동으로 추가하거나 제거할 수 있습니다.</div>
+<div class="comment-content">C. EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다. 회사의 요구 사항을 충족하려면 솔루션 설계자는 시스템이 복원력이 있고 시스템 중단 시 자동으로 주문을 처리할 수 있는지 확인해야 합니다. 이를 달성하려면 EC2 인스턴스를 Auto Scaling 그룹으로 이동하는 것이 좋은 첫 번째 단계입니다. 이를 통해 시스템은 수요와 가용성에 따라 인스턴스를 자동으로 추가하거나 제거할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -629,7 +672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -652,12 +695,12 @@
 				니콜라이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 19:19">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 19:19">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 시스템 중단이 발생할 경우 주문이 손실되지 않도록 하는 것도 필요합니다. 이를 위해 Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 보내도록 주문 시스템을 구성할 수 있습니다. SQS는 가용성이 높고 내구성이 뛰어난 메시징 서비스로, 시스템 장애 시 메시지가 손실되지 않도록 합니다. 마지막으로 EC2 인스턴스는 대기열의 메시지를 소비하고 주문을 처리한 다음 Amazon RDS의 데이터베이스에 저장하도록 구성할 수 있습니다. 이 접근 방식을 통해 주문이 손실되지 않고 시스템 중단이 발생할 경우 자동으로 처리될 수 있습니다. 따라서 보기 C가 정답입니다.</div>
+<div class="comment-content">그러나 시스템 중단이 발생하더라도 주문이 손실되지 않도록 하는 것도 필요합니다. 이를 달성하기 위해 Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 보내도록 주문 시스템을 구성할 수 있습니다. SQS는 시스템 장애 시 메시지가 손실되지 않도록 보장하는 데 도움이 되는 가용성과 내구성이 뛰어난 메시징 서비스입니다. 마지막으로 EC2 인스턴스는 대기열의 메시지를 사용하고 주문을 처리한 다음 Amazon RDS의 데이터베이스에 저장하도록 구성할 수 있습니다. 이 접근 방식을 사용하면 주문이 손실되지 않고 시스템 중단이 발생하는 경우 자동으로 처리될 수 있습니다. 따라서 보기 C가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -666,7 +709,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -689,12 +732,12 @@
 				니콜라이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 15일 수 19:19">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 15일 수요일 19:19">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A는 Amazon Elastic Container Service(ECS) 작업을 대상으로 하는 Amazon EventBridge 규칙 생성을 제안하므로 올바르지 않습니다. 경우에 따라 이것이 유효한 솔루션이 될 수 있지만 이 시나리오에서는 필요하지 않습니다. 옵션 B는 EC2 인스턴스를 Application Load Balancer(ALB) 뒤에 있는 Auto Scaling 그룹으로 이동하고 주문 시스템을 업데이트하여 ALB 엔드포인트에 메시지를 보내도록 제안하기 때문에 올바르지 않습니다. 이 접근 방식은 탄력성과 확장성을 제공할 수 있지만 주문 처리 문제와 시스템 중단이 발생할 경우 주문이 손실되지 않도록 해야 하는 필요성을 해결하지 못합니다. 옵션 D는 Amazon Simple Notification Service(SNS)를 사용하여 AWS Lambda 함수에 메시지를 보낼 것을 제안하기 때문에 올바르지 않습니다. 그런 다음 AWS Systems Manager Run Command를 사용하여 메시지를 처리하도록 EC2 인스턴스에 명령을 보냅니다. 이 접근 방식은 효과가 있을 수 있지만 필요 이상으로 복잡하고 SQS의 내구성과 가용성을 활용하지 않습니다.</div>
+<div class="comment-content">옵션 A는 Amazon Elastic Container Service(ECS) 작업을 대상으로 하는 Amazon EventBridge 규칙 생성을 제안하므로 올바르지 않습니다. 이는 경우에 따라 유효한 솔루션일 수 있지만 이 시나리오에서는 필요하지 않습니다. 옵션 B는 EC2 인스턴스를 ALB(Application Load Balancer) 뒤의 Auto Scaling 그룹으로 이동하고 ALB 엔드포인트에 메시지를 보내도록 주문 시스템을 업데이트하도록 제안하므로 올바르지 않습니다. 이 접근 방식은 탄력성과 확장성을 제공할 수 있지만 주문 처리 문제와 시스템 중단이 발생할 경우 주문이 손실되지 않도록 보장해야 하는 필요성을 해결하지는 않습니다. 옵션 D는 Amazon Simple Notification Service(SNS)를 사용하여 AWS Lambda 함수에 메시지를 보낼 것을 제안하므로 올바르지 않습니다. 그런 다음 AWS Systems Manager Run Command를 사용하여 메시지를 처리하도록 EC2 인스턴스에 명령을 보냅니다. 이 접근 방식은 효과가 있을 수 있지만 필요 이상으로 복잡하고 SQS의 내구성과 가용성을 활용하지 못합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -703,7 +746,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -751,12 +794,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 19:52">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">내 질문은; 주문을 SQS 대기열로 직접 보낼 수 있습니까? 대기열의 메시지 관리를 위한 프로토콜은 어떻습니까? EC2 인스턴스를 Lambda처럼 처리하도록 프로그래밍할 수 있습니까?</div>
+<div class="comment-content">내 질문은 다음과 같습니다. 주문을 SQS 대기열로 직접 보낼 수 있습니까? 큐의 메시지 관리를 위한 프로토콜은 어떻습니까? EC2 인스턴스를 Lambda처럼 처리하도록 프로그래밍할 수 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -765,7 +808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -796,8 +839,8 @@
 				버크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 25일 일 07:55">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 25일 일요일 07:55">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -811,7 +854,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -839,16 +882,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:51">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:51">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">회사의 요구 사항을 충족하려면 시스템 중단이 발생할 경우 자동으로 주문을 처리할 수 있는 솔루션을 구현해야 합니다. 옵션 C는 시스템 중단이 발생하더라도 주문을 처리할 수 있도록 Auto Scaling 그룹과 Amazon Simple Queue Service(SQS)를 사용하여 이러한 요구 사항을 충족합니다. 이 솔루션에서 EC2 인스턴스는 Auto Scaling 그룹에 배치되어 수요에 따라 인스턴스 수가 자동으로 확장 또는 축소될 수 있습니다. 주문 시스템은 버퍼 역할을 하는 SQS 대기열로 메시지를 보내도록 구성되어 있으며 EC2 인스턴스에서 메시지를 처리할 수 있을 때까지 메시지를 저장합니다. EC2 인스턴스는 대기열의 메시지를 소비하고 처리하도록 구성됩니다. 시스템 중단이 발생하면,</div>
+<div class="comment-content">회사의 요구 사항을 충족하려면 시스템 중단이 발생할 경우 자동으로 주문을 처리할 수 있는 솔루션을 구현해야 합니다. 옵션 C는 시스템 중단이 발생하더라도 주문을 처리할 수 있도록 Auto Scaling 그룹과 Amazon Simple Queue Service(SQS)를 사용하여 이러한 요구 사항을 충족합니다. 이 솔루션에서는 EC2 인스턴스가 Auto Scaling 그룹에 배치되어 수요에 따라 인스턴스 수가 자동으로 확장되거나 축소될 수 있습니다. 주문 시스템은 버퍼 역할을 하고 EC2 인스턴스에서 처리될 수 있을 때까지 메시지를 저장하는 SQS 대기열로 메시지를 보내도록 구성됩니다. EC2 인스턴스는 대기열의 메시지를 소비하고 처리하도록 구성됩니다. 시스템 중단이 발생하는 경우,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -857,7 +900,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -885,16 +928,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 20:24">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 20:24">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">c가 옳다</div>
+<div class="comment-content">c 말이 맞아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -903,7 +946,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,12 +977,12 @@
 				니카CZ
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 19:41">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 19:41">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열로 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다.</div>
+<div class="comment-content">C. EC2 인스턴스를 Auto Scaling 그룹으로 이동합니다. Amazon Simple Queue Service(Amazon SQS) 대기열에 메시지를 보내도록 주문 시스템을 구성합니다. 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -948,7 +991,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -980,12 +1023,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 09:32">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C, 응용 프로그램과 기능을 분리하고 네트워킹 문제로 인해 실패하거나 다른 시스템에 과부하가 걸린 경우 메시지를 다시 처리할 수 있는 기능을 제공합니다.</div>
+<div class="comment-content">C, 애플리케이션과 기능을 분리하고, 네트워킹 문제로 인해 실패하거나 다른 시스템에 과부하가 걸린 경우 메시지를 재처리하는 기능을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -994,7 +1037,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1026,11 +1069,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 09:51">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C SQS 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성하면 시스템 중단이 발생하더라도 인스턴스가 주문을 자동으로 처리할 수 있습니다. 이자형.</div>
+<div class="comment-content">C SQS 대기열의 메시지를 사용하도록 EC2 인스턴스를 구성하면 시스템 중단이 발생하더라도 인스턴스가 자동으로 주문을 처리할 수 있습니다. 이자형.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1039,7 +1082,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1067,11 +1110,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토니고스트R05
+				TonyghostR05
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 30일 수요일 02:30">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 30일 수 02:30">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1084,7 +1127,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1115,8 +1158,8 @@
 				길80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 11:25">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 11:25">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1130,7 +1173,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1161,13 +1204,13 @@
 				학습자2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 08:57">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 08:57">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 정답입니다</div>
+<div class="comment-content">C가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1176,7 +1219,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1207,8 +1250,8 @@
 				크브소무
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 04:13">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 04:13">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1221,7 +1264,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1252,12 +1295,12 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 03:55">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 03:55">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 : C</div>
+<div class="comment-content">답 : C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1266,7 +1309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1297,13 +1340,13 @@
 				미6
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 02:04">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 02:04">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답변: SQS로 인한 C</div>
+<div class="comment-content">답: SQS 때문에 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1312,7 +1355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1344,12 +1387,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 23:53">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C - Amazon Simple Queue Service(Amazon SQS)로 메시지를 보내는 시스템</div>
+<div class="comment-content">C - Amazon Simple Queue Service(Amazon SQS)에 메시지를 보내는 시스템</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1358,7 +1401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1386,11 +1429,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:33">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1404,7 +1447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1436,12 +1479,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 16:50">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">SQS는 이 요구 사항을 충족하는 데 SNS보다 낫습니다.</div>
+<div class="comment-content">SQS는 이 요구 사항을 충족하는 데 있어 SNS보다 낫습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1450,7 +1493,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1502,7 +1545,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:24">
-			19 hours, 45 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1553,7 +1596,7 @@ Any failed processing can retry by resending messages back to the queue</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 13:54">
-			1 day, 2 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1603,7 +1646,7 @@ Sending the orders to an SQS queue decouples the ordering system from the proces
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:03">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1656,7 +1699,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 08:10">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1693,7 +1736,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:02">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1746,7 +1789,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 22:53">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1791,7 +1834,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Apr 2023 16:13">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1837,7 +1880,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:52">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1883,7 +1926,7 @@ D. Using SNS and Lambda can provide notifications and orchestration capabilities
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 19:18">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1923,7 +1966,7 @@ To meet the requirements of the company, a solutions architect should ensure tha
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 19:19">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1962,7 +2005,7 @@ Finally, the EC2 instances can be configured to consume messages from the queue,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Feb 2023 19:19">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2027,7 +2070,7 @@ Option D is incorrect because it suggests using Amazon Simple Notification Servi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 19:52">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2073,7 +2116,7 @@ Option D is incorrect because it suggests using Amazon Simple Notification Servi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 07:55">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2119,7 +2162,7 @@ Option D is incorrect because it suggests using Amazon Simple Notification Servi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:51">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2167,7 +2210,7 @@ In this solution, the EC2 instances are placed in an Auto Scaling group, which e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 20:24">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2213,7 +2256,7 @@ In this solution, the EC2 instances are placed in an Auto Scaling group, which e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 19:41">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2258,7 +2301,7 @@ In this solution, the EC2 instances are placed in an Auto Scaling group, which e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 09:32">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2304,7 +2347,7 @@ In this solution, the EC2 instances are placed in an Auto Scaling group, which e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 09:51">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2351,7 +2394,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 02:30">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2396,7 +2439,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 11:25">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2442,7 +2485,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 08:57">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2488,7 +2531,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 04:13">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2533,7 +2576,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 03:55">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2578,7 +2621,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 02:04">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2624,7 +2667,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 23:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2670,7 +2713,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:33">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2716,7 +2759,7 @@ e.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 16:50">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

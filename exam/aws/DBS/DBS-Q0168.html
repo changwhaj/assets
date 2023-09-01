@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 168 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 168 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 168 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 168 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807410">
 <p class="card-text">
 							
-								회사는 3TB Amazon Aurora MySQL DB 클러스터에서 프로덕션 데이터베이스를 실행하고 있습니다. DB 클러스터는 us-east-1 리전에 배포됩니다. DR(재해 복구)을 위해 회사의 데이터베이스 전문가는 2시간 미만의 RTO로 프로덕션 로드를 처리하기 위해 다른 AWS 리전에서 DB 클러스터를 신속하게 사용할 수 있도록 해야 합니다. <br/>이러한 요구 사항을 충족하는 운영상 가장 효율적인 솔루션은 무엇입니까?<br/>
+								한 회사가 3TB Amazon Aurora MySQL DB 클러스터에서 프로덕션 데이터베이스를 실행하고 있습니다. DB 클러스터는 us-east-1 리전에 배포됩니다. 재해 복구(DR) 목적을 위해 회사의 데이터베이스 전문가는 2시간 미만의 RTO로 프로덕션 로드를 처리하기 위해 다른 AWS 리전에서 DB 클러스터를 신속하게 사용할 수 있도록 해야 합니다. <br/>이러한 요구 사항을 충족하는 가장 운영 효율적인 솔루션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807410" type="application/json">[{"voted_answers": "B", "vote_count": 7, "is_most_voted": true}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											2시간마다 프로덕션 DB 클러스터의 스냅샷을 생성하고 해당 스냅샷을 DR 지역의 Amazon S3 버킷에 복사하는 AWS Lambda 함수를 구현합니다. DR 리전에서 적절한 크기의 DB 클러스터로 스냅샷을 복원합니다.
+											AWS Lambda 함수를 구현하여 2시간마다 프로덕션 DB 클러스터의 스냅샷을 찍고 해당 스냅샷을 DR 지역의 Amazon S3 버킷에 복사합니다. DR 지역에서 적절한 크기의 DB 클러스터로 스냅샷을 복원합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											현재 기본 인스턴스와 동일한 인스턴스 유형으로 DR 지역에 교차 지역 읽기 전용 복제본을 추가합니다. DR 리전의 읽기 전용 복제본을 프로덕션에 사용해야 하는 경우 읽기 전용 복제본을 독립 실행형 DB 클러스터로 승격합니다.
+											현재 기본 인스턴스와 동일한 인스턴스 유형을 사용하여 DR 지역에 지역 간 읽기 전용 복제본을 추가합니다. DR 리전의 읽기 전용 복제본을 프로덕션에 사용해야 하는 경우 읽기 전용 복제본을 독립형 DB 클러스터로 승격하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -100,18 +163,18 @@
 													C.
 												</span> 
 											
-											DR 지역에서 더 작은 DB 클러스터를 생성합니다. 현재 프로덕션 DB 클러스터에서 DR 리전의 DB 클러스터로 데이터를 복제하도록 변경 데이터 캡처(CDC)가 활성화된 AWS DMS(AWS Database Migration Service) 작업을 구성합니다.
+											DR 지역에 더 작은 DB 클러스터를 생성합니다. 현재 프로덕션 DB 클러스터에서 DR 리전의 DB 클러스터로 데이터를 복제할 수 있도록 변경 데이터 캡처(CDC)가 활성화된 AWS Database Migration Service(AWS DMS) 작업을 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											두 지역에 걸쳐 있는 Aurora 글로벌 데이터베이스를 생성합니다. AWS Database Migration Service(AWS DMS)를 사용하여 기존 데이터베이스를 새로운 글로벌 데이터베이스로 마이그레이션합니다.
+											두 지역에 걸쳐 있는 Aurora 글로벌 데이터베이스를 생성합니다. AWS Database Migration Service(AWS DMS)를 사용하여 기존 데이터베이스를 새 글로벌 데이터베이스로 마이그레이션합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html<br/><img class="in-exam-image" src="/assets/media/exam-media/04237/0010800001.png"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								jove
-							</a> 
-							
-							2021 <i>
-							년 12월 24일 오후 8:47</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								jove
-							</a>
-							
-							at <i>
-							Dec. 24, 2021, 8:47 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,12 +294,12 @@
 				tsk9921
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 10일 수 12:09">
-			3개월, 1주 전
+<span class="comment-date align-middle" title="2023년 5월 10일 수요일 12:09">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -265,7 +308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -297,11 +340,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 7일 토요일 19:19">
-			7개월, 1주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A가 아닌 이유는 무엇입니까? 복제본은 인스턴스 및 데이터 비용을 소비하는 반면 스냅샷 비용은 저렴하고 2시간의 RTO를 달성하기 위해 2시간 이내에 3TB의 복원이 수행될 수 있습니다.</div>
+<div class="comment-content">왜 옵션 A가 아닌가? 복제본은 인스턴스 및 데이터 비용을 소비하는 반면, 스냅샷 비용은 더 저렴하고 3TB 복원은 2시간 이내에 수행되어 2시간의 RTO를 달성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -310,7 +353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -330,15 +373,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				보타5키
+				보타5ky
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 06:53">
-			3주, 4일 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 06:53">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">lamdba를 사용하여 3TB 스냅샷을 다른 지역으로 복사하기 때문에 비용이 15분이 훨씬 넘습니다.</div>
+<div class="comment-content">lamdba를 사용하여 3TB 스냅샷을 다른 지역으로 복사하기 때문에 15분을 훨씬 넘는 시간이 소요됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -347,7 +390,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -392,7 +435,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Replication.CrossRegion.html RTO는 2시간입니다. 3TB 데이터베이스를 사용하면 지역 간 복제 글로벌 데이터베이스가 좋았지 만 DMS ?</div>
+<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Replication.CrossRegion.html RTO는 2시간입니다. 3TB 데이터베이스로 리전 간 복제 글로벌 데이터베이스는 좋았는데 DMS ?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,12 +475,12 @@
 				딥클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 12일 수 17:44">
+<span class="comment-date align-middle" title="2022년 1월 12일 수요일 17:44">
 			1년, 7개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">글로벌 데이터베이스를 선택했을 것이지만 거기에는 DMS가 필요하지 않습니다. 그래서 D는 틀렸다.</div>
+<div class="comment-content">글로벌 데이터베이스를 선택했을 텐데 거기에는 DMS가 필요하지 않습니다. 그럼 D는 틀렸어요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -446,7 +489,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -474,16 +517,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				순핀
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 28일 화요일 12:19">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 28일 (화) 12:19">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">RTO는 2시간입니다. 3TB 데이터베이스의 경우 지역 간 복제본이 더 나은 옵션입니다.</div>
+<div class="comment-content">RTO는 2시간입니다. 3TB 데이터베이스를 사용하면 지역 간 복제가 더 나은 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -492,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,12 +567,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 24일 금 20:47">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">대답은 B입니다</div>
+<div class="comment-content">답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -590,7 +633,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 10 May 2023 12:09">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -635,7 +678,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 19:19">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -672,7 +715,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 06:53">
-			3 weeks, 4 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -820,7 +863,7 @@ Global Database was good but DMS ?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Dec 2021 12:19">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -866,7 +909,7 @@ Global Database was good but DMS ?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 20:47">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

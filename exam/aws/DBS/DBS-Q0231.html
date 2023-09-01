@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 231 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 231 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 주제 1 문제 231 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 231 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807473">
 <p class="card-text">
 							
-								전자상거래 회사는 AWS DMS(AWS Database Migration Service)를 실행하여 온프레미스 Microsoft SQL Server 데이터베이스를 SQL Server용 Amazon RDS로 복제합니다. 이 회사는 온프레미스 데이터 센터에서 AWS로의 AWS Direct Connect 연결을 설정했습니다. 마이그레이션 중에 회사의 보안 팀은 마이그레이션과 관련된 알람을 받습니다. 보안 팀은 공용 <br/>IP 주소에서 DMS 복제 인스턴스에 액세스할 수 없도록 지정합니다. <br/>이 요구 사항을 충족하려면 데이터베이스 전문가는 어떻게 해야 합니까?<br/>
+								전자 상거래 회사는 온프레미스 Microsoft SQL Server 데이터베이스를 SQL Server용 Amazon RDS에 복제하기 위해 AWS Database Migration Service(AWS DMS)를 실행하고 있습니다. 회사는 온프레미스 데이터 센터에서 AWS로 AWS Direct Connect 연결을 설정했습니다. 마이그레이션 중에 회사의 보안팀은 마이그레이션과 관련된 알람을 받습니다. 보안팀에서는 공용 <br/>IP 주소에서 DMS 복제 인스턴스에 액세스할 수 없도록 규정하고 있습니다. <br/>이 요구 사항을 충족하려면 데이터베이스 전문가가 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807473" type="application/json">[{"voted_answers": "C", "vote_count": 16, "is_most_voted": true}, {"voted_answers": "D", "vote_count": 7, "is_most_voted": false}, {"voted_answers": "B", "vote_count": 3, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											Direct Connect 연결을 통한 트래픽을 암호화하도록 VPN 연결을 설정합니다.
+											Direct Connect 연결을 통한 트래픽을 암호화하려면 VPN 연결을 설정하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -98,7 +161,7 @@
 													C.
 												</span> 
 											
-											DMS 복제 인스턴스를 삭제합니다. 공개적으로 액세스 가능한 옵션을 비활성화하여 DMS 복제 인스턴스를 다시 생성합니다.
+											DMS 복제 인스턴스를 삭제한다. 공개적으로 액세스 가능한 옵션을 비활성화하여 DMS 복제 인스턴스를 다시 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											프라이빗 서브넷이 있는 새 복제 VPC 서브넷 그룹을 생성합니다. 새로 생성된 VPC 서브넷 그룹을 선택하여 DMS 복제 인스턴스를 수정합니다.
+											프라이빗 서브넷을 사용하여 새 복제 VPC 서브넷 그룹을 생성합니다. 새로 생성된 VPC 서브넷 그룹을 선택하여 DMS 복제 인스턴스를 수정합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,20 +184,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 62%; display: flex;" title="">씨 (62%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">디 (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 12%; display: flex;" title="">12%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 62%; display: flex;" title="">C (62%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">D (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 12%; display: flex;" title="">12%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 7 일 <i>
-							, 오전 9:55 </i><a class="title-username" style="">
-								mbar94
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mbar94
-							</a>
-							
-							at <i>
-							Sept. 7, 2022, 9:55 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,23 +289,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 00:41">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 00:41">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 문제를 해결하는 가장 쉬운 방법입니다. https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/ 복제 인스턴스에 대한 퍼블릭 액세스를 비활성화하려면 복제 인스턴스를 삭제한 다음 다시 생성하십시오. 복제 인스턴스를 삭제하려면 먼저 복제 인스턴스를 사용하는 모든 작업을 삭제해야 합니다. 복제 인스턴스를 재생성하는 대신 복제 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 프라이빗 서브넷으로 변경할 수 있습니다.</div>
+<div class="comment-content">D는 문제를 해결하는 가장 쉬운 방법입니다. https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/ 복제 인스턴스에 대한 퍼블릭 액세스를 비활성화하려면 복제 인스턴스를 삭제한 다음 다시 생성하십시오. 복제 인스턴스를 삭제하려면 먼저 해당 복제 인스턴스를 사용하는 모든 작업을 삭제해야 합니다. 복제 인스턴스를 다시 생성하는 대신 복제 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 프라이빗 서브넷으로 변경할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">6</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,19 +333,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 16:09">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 16:09">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">인스턴스를 퍼블릭에서 프라이빗으로 변경하려면 모든 작업을 삭제하고, 복제 인스턴스를 삭제하고, 인스턴스를 다시 생성하고, 작업을 다시 생성해야 합니다... 지식 센터에서: "복제 인스턴스를 다시 생성하는 대신 복제 인스턴스에 있는 서브넷을 변경할 수 있습니다. 프라이빗 서브넷에 대한 복제 인스턴스와 연결된 서브넷 그룹입니다."</div>
+<div class="comment-content">인스턴스를 Public에서 Private으로 변경하려면 모든 작업을 삭제하고, 복제 인스턴스를 삭제하고, 인스턴스를 다시 생성하고, 작업을 다시 생성해야 합니다... 지식 센터에서: "복제 인스턴스를 다시 생성하는 대신에 있는 서브넷을 변경할 수 있습니다. 복제 인스턴스와 연결된 서브넷 그룹을 프라이빗 서브넷에 연결합니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -311,7 +354,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,12 +386,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 18:55">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C가 맞습니다. 옵션 D에는 약간의 주의 사항이 있습니다. 프라이빗 서브넷이 있는 새 DMS 서브넷 그룹(DMS 콘솔 내)을 생성할 수 있지만 이 새 서브넷 그룹을 기존 DMS 인스턴스에 연결할 수는 없습니다. 이것은 지원되지 않으며 AWS 콘솔에서 테스트했습니다. 이 메모(https://repost.aws/knowledge-center/dms-disable-public-access)에서 설명하는 내용은 우리 중 일부가 옵션 D를 해석하고 선택하는 것과 약간 다릅니다. 이 메모에 따라 공개를 제거할 수 있습니다. 서브넷 및 EXISTING SUBNET 그룹의 개인 서브넷만 선택하고 이것을 시도했습니다. 기존 DMS 인스턴스의 기존 서브넷 그룹을 수정했습니다. 모든 퍼블릭 서브넷을 제거하고 2개의 프라이빗 서브넷만 선택했습니다. 그러나 이것은 효과가 있었지만 옵션 D는 기존 서브넷 그룹 수정에 대해 말하는 것이 아닙니다. 새 서브넷 그룹을 만들고 위에서 이미 언급한 기존 DMS 인스턴스와 연결해야 한다는 것은 현재 지원되지 않는 옵션입니다. 따라서 옵션 D는 올바르지 않습니다.</div>
+<div class="comment-content">옵션 C가 맞습니다. 옵션 D에는 약간의 주의 사항이 있습니다. 프라이빗 서브넷을 사용하여 DMS 콘솔 내에서 새 DMS 서브넷 그룹을 생성할 수 있지만 이 새 서브넷 그룹을 기존 DMS 인스턴스에 연결할 수는 없습니다. 이는 지원되지 않으며 AWS 콘솔에서 테스트했습니다. 이 노트(https://repost.aws/knowledge-center/dms-disable-public-access)에서 설명하는 내용은 우리 중 일부가 옵션 D를 해석하고 선택하는 것과 약간 다릅니다. 이 노트에 따라 공개를 제거할 수 있습니다. 서브넷을 선택하고 기존 서브넷 그룹의 개인 서브넷만 선택했는데 이것을 시도했습니다. 기존 DMS 인스턴스의 기존 서브넷 그룹을 수정했습니다. 퍼블릭 서브넷을 모두 제거하고 프라이빗 서브넷 2개만 선택했습니다. 그러나 이것은 효과가 있었습니다. 옵션 D는 기존 서브넷 그룹 수정에 대해 이야기하지 않습니다. 새로운 서브넷 그룹을 생성하고 이를 위에서 이미 언급한 기존 DMS 인스턴스와 연결해야 한다는 의미는 현재 지원되지 않는 옵션입니다. 따라서 옵션 D가 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,11 +432,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 4일 토요일 17:38">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/ - C가 답입니다.</div>
+<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/ - C가 답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,13 +476,13 @@
 				구아우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 14일 화요일 16:19">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 14일 (화) 16:19">
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 D를 시도하고 댓글을 보는 것이 문제가 되지 않아야 합니다.</div>
+<div class="comment-content">나는 D를 시도해 볼 것이고, 댓글을 보는 것은 아무런 문제가 되지 않을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,16 +519,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				lollyj
+				롤리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 30일 (금) 16:59">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 30일 금 16:59">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"복제 인스턴스는 공용에서 액세스할 수 없어야 합니다."라는 질문은 혼란스럽습니다. 즉, 전용 서브넷 그룹에 있어야 하며 인스턴스를 삭제하고 전용 서브넷 그룹에서 다시 만들어야 하지만 옵션이 인스턴스를 다시 만들라고 말하지 않습니다. IP 주소.</div>
+<div class="comment-content">"복제 인스턴스는 퍼블릭에서 액세스할 수 없어야 합니다."라고 되어 있기 때문에 질문이 혼란스럽습니다. 이는 프라이빗 서브넷 그룹에 있어야 함을 의미하며, 이는 또한 인스턴스를 프라이빗 서브넷 그룹에서 삭제하고 다시 생성해야 함을 의미하지만 옵션은 인스턴스를 다시 생성하라고 말하지 않습니다. IP 주소.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,15 +565,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				트리머
+				프리머
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 28일 수 17:27">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 28일 수요일 17:27">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 D입니다. 복제 인스턴스를 다시 생성하는 대신 복제 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 프라이빗 서브넷으로 변경할 수 있습니다. 프라이빗 서브넷은 인터넷 게이트웨이로 라우팅되지 않는 서브넷입니다. 프라이빗 서브넷의 인스턴스는 퍼블릭 IP 주소가 있더라도 퍼블릭 IP 주소와 통신할 수 없습니다. 자세한 내용은 복제 인스턴스에 대한 네트워크 설정 단원을 참조하십시오. https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.VPC.html</div>
+<div class="comment-content">답은 D입니다. 복제 인스턴스를 다시 생성하는 대신 복제 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 프라이빗 서브넷으로 변경할 수 있습니다. 프라이빗 서브넷은 인터넷 게이트웨이로 라우팅되지 않는 서브넷입니다. 프라이빗 서브넷의 인스턴스는 퍼블릭 IP 주소가 있더라도 퍼블릭 IP 주소와 통신할 수 없습니다. 자세한 내용은 복제 인스턴스에 대한 네트워크 설정을 참조하세요. https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.VPC.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +582,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,13 +613,13 @@
 				투코바드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 28일 수 13:35">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 28일 수요일 13:35">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access에 따라 서브넷 그룹을 비공개로 변경할 수 있으므로 실제로 C와 D는 정확하지만 D가 더 쉬울 수 있습니다.</div>
+<div class="comment-content">D https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access에 따라 서브넷 그룹을 비공개로 변경하는 것이 실제로 가능하기 때문입니다. 실제로 C와 D는 정확하지만 D가 더 쉬울 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -585,7 +628,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,12 +659,12 @@
 				사브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 20:50">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 20:50">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C.D가 잘못되었습니다. 프라이빗 서브넷이 있는 새 서브넷 그룹을 할당하기 위해 DMS 인스턴스를 수정할 수 없습니다.</div>
+<div class="comment-content">C.D가 틀렸어요. 프라이빗 서브넷이 포함된 새 서브넷 그룹을 할당하기 위해 DMS 인스턴스를 수정할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -653,12 +696,12 @@
 				투코바드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 28일 수 13:33">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 28일 수요일 13:33">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/의 내용: "복제 인스턴스를 재생성하는 대신 복제 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 변경할 수 있습니다. 복제 인스턴스를 프라이빗 서브넷으로. 프라이빗 서브넷은 인터넷 게이트웨이로 라우팅되지 않는 서브넷입니다. 프라이빗 서브넷의 인스턴스는 퍼블릭 IP 주소가 있더라도 퍼블릭 IP 주소와 통신할 수 없습니다."</div>
+<div class="comment-content">https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/에서는 "복제 인스턴스를 다시 생성하는 대신 인스턴스와 연결된 서브넷 그룹에 있는 서브넷을 변경할 수 있습니다. 프라이빗 서브넷에 대한 복제 인스턴스입니다. 프라이빗 서브넷은 인터넷 게이트웨이로 라우팅되지 않는 서브넷입니다. 프라이빗 서브넷의 인스턴스는 퍼블릭 IP 주소가 있더라도 퍼블릭 IP 주소와 통신할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -667,7 +710,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -703,16 +746,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 15일 (토) 20:14">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 15일 토요일 20:14">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 공개 액세스가 없도록 보장합니다.</div>
+<div class="comment-content">C는 공개 접근이 없도록 보장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -721,7 +764,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,8 +795,8 @@
 				창화
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 9일 일 08:01">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 9일 일요일 08:01">
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -767,7 +810,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -795,11 +838,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				클라우드 선라이저
+				구름 일출
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 17:07">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 17:07">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -813,7 +856,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -841,16 +884,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장갓
+				진갓
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 16:54">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 16:54">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">제공된 링크에서 분명히 C 또는 D가 작동합니다. 더 쉬운 수정이 될 것이므로 D에 투표하겠습니다. 두 가지 정당한 답변이 있기 때문에 바보 같은 질문입니다.</div>
+<div class="comment-content">제공된 링크에서 분명히 C 또는 D가 작동합니다. 더 쉬운 수정이 가능하므로 D에 투표하겠습니다. 두 가지 합법적인 답변이 있기 때문에 일종의 바보 같은 질문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -859,7 +902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -887,16 +930,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				소남딩라
+				소남딩그라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 14일 수 11:12">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 14일 수요일 11:12">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -905,7 +948,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -937,12 +980,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 9일 금요일 14:35">
-			11개월, 1주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">공개적으로 액세스할 수 있는 새 옵션으로 삭제하고 다시 생성합니다. https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/</div>
+<div class="comment-content">공개적으로 액세스할 수 있는 새로운 옵션을 사용하여 삭제하고 다시 생성하세요. https://aws.amazon.com/premiumsupport/knowledge-center/dms-disable-public-access/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -951,7 +994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -983,12 +1026,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 9일 금요일 04:34">
-			11개월, 1주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">복제 인스턴스를 생성한 후에는 공개적으로 액세스 가능한 옵션을 수정할 수 없습니다.</div>
+<div class="comment-content">복제 인스턴스를 생성한 후에는 공개적으로 액세스 가능 옵션을 수정할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -997,7 +1040,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1028,8 +1071,8 @@
 				mbar94
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 7일 수 09:55">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 7일 수요일 09:55">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1098,7 +1141,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 00:41">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1115,7 +1158,7 @@ Instead of recreating the replication instance, you can change the subnets that 
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">6</span> times
+				upvoted <span class="upvote-count">7</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1151,7 +1194,7 @@ Instead of recreating the replication instance, you can change the subnets that 
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 23 May 2023 16:09">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1200,7 +1243,7 @@ From the Knowledge Center:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 18:55">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1246,7 +1289,7 @@ From the Knowledge Center:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Mar 2023 17:38">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1291,7 +1334,7 @@ From the Knowledge Center:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Feb 2023 16:19">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1337,7 +1380,7 @@ From the Knowledge Center:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Dec 2022 16:59">
-			7 months, 2 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1384,7 +1427,7 @@ IP addresses.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 17:27">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1429,7 +1472,7 @@ IP addresses.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 13:35">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1476,7 +1519,7 @@ Actually, C and D are correct, but D could be easier</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 20:50">
-			8 months, 3 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1514,7 +1557,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 13:33">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1568,7 +1611,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Oct 2022 20:14">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1614,7 +1657,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Oct 2022 08:01">
-			10 months, 1 week ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1660,7 +1703,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 17:07">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1706,7 +1749,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 16:54">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1752,7 +1795,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Sep 2022 11:12">
-			11 months ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1798,7 +1841,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Sep 2022 14:35">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1844,7 +1887,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Sep 2022 04:34">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1890,7 +1933,7 @@ D is wrong . We cannot modify DMS instance to assign a new subnet group with pri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Sep 2022 09:55">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

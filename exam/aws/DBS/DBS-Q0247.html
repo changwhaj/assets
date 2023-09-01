@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 247 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 247 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 문제 247 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 247 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807489">
 <p class="card-text">
 							
-								소셜 미디어 회사는 Amazon DynamoDB를 사용하여 사용자 프로필 데이터와 사용자 활동 데이터를 저장하고 있습니다. 개발자가 데이터를 읽고 쓰기 때문에 테이블 크기가 크게 증가합니다. 개발자는 테이블의 성능 병목 현상에 직면하기 시작했습니다. <br/>테이블에 대해 프로비저닝된 처리량을 모두 소모하지 않고 항목을 가장 빠르게 읽으려면 데이터베이스 전문가가 추천해야 하는 솔루션은 무엇입니까?<br/>
+								한 소셜 미디어 회사는 Amazon DynamoDB를 사용하여 사용자 프로필 데이터와 사용자 활동 데이터를 저장하고 있습니다. 개발자가 데이터를 읽고 쓰기 때문에 테이블 크기가 크게 늘어납니다. 개발자는 테이블과 관련하여 성능 병목 현상에 직면하기 시작했습니다. <br/>테이블에 대해 프로비저닝된 처리량을 모두 소비하지 않고 가장 빠르게 항목을 읽으려면 데이터베이스 전문가가 권장해야 하는 솔루션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807489" type="application/json">[{"voted_answers": "B", "vote_count": 2, "is_most_voted": false}]</script>
@@ -84,32 +147,32 @@
 													A.
 												</span> 
 											
-											Scan API 작업을 여러 작업자와 병렬로 사용하여 모든 항목을 읽습니다. 쿼리 API 작업을 사용하여 특정 파티션 키와 정렬 키가 있는 여러 항목을 읽습니다. GetItem API 작업을 사용하여 단일 항목을 읽습니다.
+											Scan API 작업을 여러 작업자와 병행하여 사용하면 모든 항목을 읽을 수 있습니다. 특정 파티션 키와 정렬 키가 있는 여러 항목을 읽으려면 쿼리 API 작업을 사용하세요. GetItem API 작업을 사용하여 단일 항목을 읽습니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											여러 항목을 읽을 수 있는 필터 식과 함께 Scan API 작업을 사용합니다. 쿼리 API 작업을 사용하여 특정 파티션 키와 정렬 키가 있는 여러 항목을 읽습니다. GetItem API 작업을 사용하여 단일 항목을 읽습니다.
+											여러 항목을 읽을 수 있는 필터 표현식과 함께 Scan API 작업을 사용합니다. 특정 파티션 키와 정렬 키가 있는 여러 항목을 읽으려면 쿼리 API 작업을 사용하세요. GetItem API 작업을 사용하여 단일 항목을 읽습니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											여러 항목을 읽을 수 있는 필터 식과 함께 Scan API 작업을 사용합니다. 쿼리 API 작업을 사용하여 특정 기본 키가 있는 단일 항목을 읽습니다. BatchGetItem API 작업을 사용하여 여러 항목을 읽습니다.
+											여러 항목을 읽을 수 있는 필터 표현식과 함께 Scan API 작업을 사용합니다. 특정 기본 키가 있는 단일 항목을 읽으려면 쿼리 API 작업을 사용하세요. 여러 항목을 읽으려면 BatchGetItem API 작업을 사용하십시오.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											많은 작업자와 병렬로 Scan API 작업을 사용하여 모든 항목을 읽습니다. Query API 작업을 사용하여 특정 기본 키가 있는 단일 항목을 읽습니다. BatchGetItem API 작업을 사용하여 여러 항목을 읽습니다.
+											여러 작업자와 병렬로 Scan API 작업을 사용하여 모든 항목을 읽습니다. Query API 작업을 사용하여 특정 기본 키가 있는 단일 항목을 읽습니다. BatchGetItem API 작업을 사용하여 여러 항목을 읽습니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -119,22 +182,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">비(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">B (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
-                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+                </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mbar94
-							</a> 
-							
-							2022 <i>
-							년 9월 7일 오후 12:38</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mbar94
-							</a>
-							
-							at <i>
-							Sept. 7, 2022, 12:38 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -242,15 +285,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				MrAliMohsan
+				MrAli모산
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 06:57">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 06:57">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 D는 모든 용량을 사용할 수 없기 때문에 문제가 되지 않습니다. B와 C 사이. C는 BatchGetItem을 사용하여 한 번에 최대 100개의 항목을 읽을 수 있고 B는 쿼리와 일치하는 만큼의 항목을 읽을 수 있는 Query API를 사용하기 때문입니다. 또한 GetItem을 사용하여 단일 항목을 읽는 것이 C에서 제안한 해당 항목을 쿼리하는 것보다 훨씬 빠릅니다. 그래서 B가 제 대답입니다.</div>
+<div class="comment-content">A와 D는 모든 용량을 소비할 수 없기 때문에 의문의 여지가 없습니다. B와 C 사이. C는 BatchGetItem을 사용하므로 한 번에 최대 100개의 항목을 읽을 수 있고 B는 쿼리와 일치하는 만큼 많은 항목을 읽을 수 있는 Query API를 사용합니다. 게다가 GetItem을 사용하여 단일 항목을 읽는 것이 C에서 제안한 대로 해당 항목을 쿼리하는 것보다 훨씬 빠릅니다. 따라서 B가 제 대답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -259,7 +302,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,12 +333,12 @@
 				Sathish_dbs
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 8일 일요일 23:43">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="일 2023년 1월 8일 23:43">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">병렬 스캔은 "테이블에 대해 프로비저닝된 모든 처리량을 소비하지 않고"라는 요구 사항을 충족하지 않습니다. 주의해서 다루지 않으면 빨리 완전히 소모될 수 있기 때문입니다. 따라서 옵션 B가 올바른 것입니다.</div>
+<div class="comment-content">병렬 스캔은 "테이블에 대해 프로비저닝된 처리량을 모두 소비하지 않고"라는 요구 사항을 충족하지 않습니다. 조심스럽게 다루지 않으면 완전히 빨리 소모될 수 있기 때문입니다. 따라서 옵션 B가 옳습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -332,15 +375,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				사이키란크샤트리야
+				사이키랑샤트리아
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 17일 목요일 02:56">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션은 A여야 합니다. 필터는 여전히 사용 사례에 도움이 되지 않는 관련 레코드를 모두 가져오므로 스캔 작업이 논리적으로 테이블을 여러 세그먼트로 나눌 수 있는 병렬 스캔을 사용합니다.</div>
+<div class="comment-content">옵션은 A여야 합니다. 필터는 사용 사례에 도움이 되지 않는 모든 관련 레코드를 가져오는 대신 스캔 작업이 테이블을 논리적으로 여러 세그먼트로 나눌 수 있는 병렬 스캔을 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -349,7 +392,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -372,12 +415,12 @@
 				Sathish_dbs
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 8일 일요일 23:41">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="일 2023년 1월 8일 23:41">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">모든 처리량을 소비해서는 안 된다고 말하지만 A는 그렇게 합니다. 작업자 수가 많은 병렬 스캔은 스캔 중인 테이블 또는 인덱스에 대해 프로비저닝된 모든 처리량을 쉽게 소비할 수 있습니다. 테이블이나 인덱스가 다른 애플리케이션에서 과도한 읽기 또는 쓰기 작업을 발생시키는 경우 이러한 스캔을 피하는 것이 가장 좋습니다. 요청당 반환되는 데이터의 양을 제어하려면 Limit 파라미터를 사용하십시오. 이렇게 하면 한 작업자가 다른 모든 작업자를 희생시키면서 프로비저닝된 처리량을 모두 소비하는 상황을 방지할 수 있습니다.</div>
+<div class="comment-content">모든 처리량을 소비해서는 안 된다고 되어 있지만 A는 그렇게 합니다. 다수의 작업자가 포함된 병렬 스캔은 스캔 중인 테이블 또는 인덱스에 대해 프로비저닝된 처리량을 모두 쉽게 소비할 수 있습니다. 테이블이나 인덱스가 다른 애플리케이션에서 과도한 읽기 또는 쓰기 활동을 발생시키는 경우에는 이러한 스캔을 피하는 것이 가장 좋습니다. 요청당 반환되는 데이터 양을 제어하려면 Limit 매개 변수를 사용합니다. 이렇게 하면 한 작업자가 다른 모든 작업자를 희생하면서 프로비저닝된 처리량을 모두 소비하는 상황을 방지하는 데 도움이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -386,7 +429,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,11 +469,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 5일 수 02:22">
-			10개월, 2주 전
+			10개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan &gt; 스캔하는 테이블이나 인덱스가 클수록 스캔을 완료하는 데 더 많은 시간이 걸립니다. 또한 순차 스캔이 항상 프로비저닝된 읽기 처리 용량을 완전히 사용하지 못할 수도 있습니다. DynamoDB가 여러 물리적 파티션에 큰 테이블의 데이터를 분산하더라도 스캔 작업은 한 번에 하나의 파티션만 읽을 수 있습니다. 이러한 이유로 스캔 처리량은 단일 파티션의 최대 처리량으로 제한됩니다. 이러한 문제를 해결하기 위해 스캔 작업은 여러 애플리케이션 작업자가 세그먼트를 병렬로 스캔하면서 테이블 또는 보조 인덱스를 여러 세그먼트로 논리적으로 나눌 수 있습니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan &gt; 스캔되는 테이블이나 인덱스가 클수록 스캔을 완료하는 데 더 많은 시간이 걸립니다. 또한 순차 스캔은 프로비저닝된 읽기 처리량 용량을 항상 완전히 사용하지 못할 수도 있습니다. DynamoDB가 대규모 테이블의 데이터를 여러 물리적 파티션에 분산하더라도 스캔 작업은 한 번에 하나의 파티션만 읽을 수 있습니다. 이러한 이유로 스캔 처리량은 단일 파티션의 최대 처리량에 의해 제한됩니다. 이러한 문제를 해결하기 위해 Scan 작업은 여러 애플리케이션 작업자가 세그먼트를 병렬로 스캔하면서 테이블 또는 보조 인덱스를 논리적으로 여러 세그먼트로 나눌 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -439,7 +482,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -467,16 +510,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				장갓
+				진갓
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 20:12">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 20:12">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. BatchGetItem이 마지막 단계인 C와 비교. 이것은 최대 100개의 GetItem 요청을 수행합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.ReadData.html 확실히 A 또는 D가 아닙니다.</div>
+<div class="comment-content">B. 마지막 단계로 BatchGetItem이 있는 C와 비교합니다. 이렇게 하면 최대 100개의 GetItem 요청이 수행됩니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.ReadData.html 확실히 A나 D는 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -485,7 +528,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -516,8 +559,8 @@
 				mbar94
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 7일 수 12:38">
-			11개월, 1주 전
+<span class="comment-date align-middle" title="2022년 9월 7일 수요일 12:38">
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -531,7 +574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -583,7 +626,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 06:57">
-			1 month, 4 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -630,7 +673,7 @@ So B is my answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 23:43">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -675,7 +718,7 @@ So B is my answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 17 Nov 2022 02:56">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -712,7 +755,7 @@ So B is my answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 23:41">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -769,7 +812,7 @@ To control the amount of data returned per request, use the Limit parameter. Thi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Oct 2022 02:22">
-			10 months, 2 weeks ago
+			10 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -818,7 +861,7 @@ To address these issues, the Scan operation can logically divide a table or seco
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 20:12">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -867,7 +910,7 @@ Definitely not A or D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Sep 2022 12:38">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

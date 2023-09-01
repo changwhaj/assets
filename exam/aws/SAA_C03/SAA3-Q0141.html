@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 141 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 141 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 141 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 141 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 141 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839898">
 <p class="card-text">
 							
-								회사는 사용자에게 글로벌 속보, 지역 경보 및 날씨 업데이트를 제공하는 웹 기반 포털을 운영합니다. 포털은 정적 및 동적 콘텐츠를 혼합하여 각 사용자에게 개인화된 보기를 제공합니다. 콘텐츠는 ALB(Application Load Balancer) 뒤의 Amazon EC2 인스턴스에서 실행되는 API 서버를 통해 HTTPS를 통해 제공됩니다. 회사는 포털에서 이 콘텐츠를 전 세계 사용자에게 가능한 한 빨리 제공하기를 원합니다. <br/>솔루션 설계자는 모든 사용자에게 최소한의 대기 시간을 보장하기 위해 애플리케이션을 어떻게 설계해야 합니까?
+								한 회사는 사용자에게 글로벌 속보, 지역 알림, 날씨 업데이트를 제공하는 웹 기반 포털을 운영하고 있습니다. 포털은 정적 콘텐츠와 동적 콘텐츠를 혼합하여 각 사용자에게 개인화된 보기를 제공합니다. 콘텐츠는 ALB(Application Load Balancer) 뒤의 Amazon EC2 인스턴스에서 실행되는 API 서버를 통해 HTTPS를 통해 제공됩니다. 회사는 포털이 이 콘텐츠를 전 세계 사용자에게 가능한 한 빨리 제공하기를 원합니다. <br/>솔루션 설계자는 모든 사용자의 대기 시간을 최소화하기 위해 애플리케이션을 어떻게 설계해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839898" type="application/json">[{"voted_answers": "A", "vote_count": 45, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 17, "is_most_voted": false}]</script>
+<script id="839898" type="application/json">[{"voted_answers": "A", "vote_count": 47, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 17, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											단일 AWS 리전에서 애플리케이션 스택을 배포합니다. Amazon CloudFront를 사용하여 ALB를 오리진으로 지정하여 모든 정적 및 동적 콘텐츠를 제공합니다.
+											단일 AWS 지역에 애플리케이션 스택을 배포합니다. Amazon CloudFront를 사용하면 ALB를 오리진으로 지정하여 모든 정적 및 동적 콘텐츠를 제공할 수 있습니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											두 AWS 리전에 애플리케이션 스택을 배포합니다. Amazon Route 53 지연 시간 라우팅 정책을 사용하여 가장 가까운 리전에서 ALB의 모든 콘텐츠를 제공합니다.
+											두 개의 AWS 지역에 애플리케이션 스택을 배포합니다. Amazon Route 53 지연 시간 라우팅 정책을 사용하여 가장 가까운 지역의 ALB에서 모든 콘텐츠를 제공합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											단일 AWS 리전에서 애플리케이션 스택을 배포합니다. Amazon CloudFront를 사용하여 정적 콘텐츠를 제공합니다. ALB에서 직접 동적 콘텐츠를 제공합니다.
+											단일 AWS 지역에 애플리케이션 스택을 배포합니다. Amazon CloudFront를 사용하여 정적 콘텐츠를 제공합니다. ALB에서 직접 동적 콘텐츠를 제공합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											두 AWS 리전에 애플리케이션 스택을 배포합니다. Amazon Route 53 지리적 위치 라우팅 정책을 사용하여 가장 가까운 리전에서 ALB의 모든 콘텐츠를 제공합니다.
+											두 개의 AWS 지역에 애플리케이션 스택을 배포합니다. Amazon Route 53 지리적 위치 라우팅 정책을 사용하여 가장 가까운 지역의 ALB에서 모든 콘텐츠를 제공합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="45 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="47 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								huiy
-							</a> 
-							
-							시간: <i>
-							2022년 10월 14일, 오전 6:21</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839898" type="application/json">[{"voted_answers": "A", "vote_count": 45, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 17, "is_most_voted": false}]</script>
+<script id="839898" type="application/json">[{"voted_answers": "A", "vote_count": 47, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 17, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="45 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="47 votes." data-toggle="tooltip" role="progressbar" style="width: 73%; display: flex;" title="">A (73%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 27%; display: flex;" title="">B (27%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								huiy
-							</a>
-							
-							at <i>
-							Oct. 14, 2022, 6:21 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,26 +289,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				후이
+				안녕
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 14일 금 06:21">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 14일 금요일 06:21">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변은 A입니다. Amazon CloudFront는 정적 및 동적 웹 콘텐츠 배포 속도를 높이는 웹 서비스입니다 https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solutions-architect-associate -saa-c02/</div>
+<div class="comment-content">대답은 A입니다. Amazon CloudFront는 정적 및 동적 웹 콘텐츠의 배포 속도를 높이는 웹 서비스입니다 https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solutions-architect-associate -saa-c02/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">20</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">21</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -290,12 +333,12 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 19:32">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 19:32">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 옵션 B는 모든 트래픽이 인터넷을 통과한다는 의미인 CloudFront를 사용하지 않습니다. 따라서 두 지역에 리소스를 배포하고 가장 낮은 대기 시간 지점을 사용하더라도 공용 인터넷 연결은 Cloudfront에서 사용할 수 있는 개인 aws 네트워크를 통한 연결보다 느릴 수 있습니다.</div>
+<div class="comment-content">또한 옵션 B는 CloudFront를 사용하지 않습니다. 즉, 모든 트래픽이 인터넷을 통과합니다. 따라서 두 지역에 리소스를 배포하고 대기 시간이 가장 낮은 지점을 사용함에도 불구하고 해당 공용 인터넷 연결은 Cloudfront에서 사용할 수 있는 개인 AWS 네트워크를 통한 연결보다 느릴 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,15 +387,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 10월 26일 수 18:55">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">대답은 B여야 합니다. CloudFront는 정적 콘텐츠만 있는 경우 대기 시간을 줄입니다. 여기서는 그렇지 않습니다. 동적 콘텐츠의 경우 CF는 콘텐츠를 캐시할 수 없으므로 대기 시간을 줄이는 AWS 네트워크를 통해 트래픽을 전송하지만 여전히 다른 지역을 통과해야 합니다. 리전 2개와 Route 53 지연 시간 라우팅이 있는 경우 Route 53은 가장 가까운 리소스(지연 시간이 가장 낮음)를 감지하고 그곳으로 트래픽을 라우팅합니다. 트래픽이 멀리 있는 리소스로 이동할 필요가 없기 때문에 여기에서 이 경우 대기 시간이 가장 짧아야 합니다.</div>
+<div class="comment-content">대답은 B여야 합니다. CloudFront는 정적 콘텐츠만 있는 경우 지연 시간을 줄입니다. 여기서는 그렇지 않습니다. 동적 콘텐츠의 경우 CF는 콘텐츠를 캐시할 수 없으므로 AWS 네트워크를 통해 트래픽을 전송하므로 지연 시간이 줄어들지만 여전히 다른 지역을 통과해야 합니다. 2개 지역 및 Route 53 지연 시간 라우팅이 있는 경우 Route 53은 가장 가까운 리소스(지연 시간이 가장 낮음)를 감지하고 그곳으로 트래픽을 라우팅합니다. 트래픽이 멀리 있는 리소스로 이동할 필요가 없기 때문에 이 경우 대기 시간이 가장 짧아야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -384,12 +427,12 @@
 				마하데바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 18:58">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 18:58">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CloudFront는 동적 콘텐츠를 캐싱하지 않습니다. 그러나 트래픽이 인터넷보다 빠른 AWS 글로벌 네트워크에 있기 때문에 동적 콘텐츠의 지연 시간은 여전히 ​​낮을 수 있습니다.</div>
+<div class="comment-content">CloudFront는 동적 콘텐츠를 캐시하지 않습니다. 그러나 트래픽이 인터넷보다 빠른 AWS 글로벌 네트워크에 있기 때문에 동적 콘텐츠의 경우 지연 시간이 여전히 낮을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -422,20 +465,20 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 15:17">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon CloudFront는 .html, .css, .php, 이미지 및 미디어 파일과 같은 정적 및 동적 웹 콘텐츠의 배포 속도를 높입니다. 사용자가 콘텐츠를 요청하면 CloudFront는 짧은 지연 시간과 고성능을 제공하는 전 세계 엣지 로케이션 네트워크를 통해 콘텐츠를 제공합니다.</div>
+<div class="comment-content">Amazon CloudFront는 .html, .css, .php, 이미지 및 미디어 파일과 같은 정적 및 동적 웹 콘텐츠의 배포 속도를 높입니다. 사용자가 콘텐츠를 요청하면 CloudFront는 짧은 지연 시간과 높은 성능을 제공하는 전 세계 엣지 로케이션 네트워크를 통해 해당 콘텐츠를 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -471,11 +514,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오니몰
+				오니몰레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 12:31">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 12:31">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -520,11 +563,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 22:37">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">당신은 pls 할 수 있습니다. 심판을 제공하십시오. 이 정보가 있는 링크. 추출됐어?</div>
+<div class="comment-content">부탁드려도 될까요? 심판을 제공하십시오. 이 정보가 있는 곳의 링크입니다. 추출됐어?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -533,7 +576,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -553,15 +596,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				manuelemg2007
+				마누엘렘그2007
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 25일 화요일 23:54">
-			3 주 전
+<span class="comment-date align-middle" title="2023년 7월 25일 (화) 23:54">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 https://aws.amazon.com/es/blogs/aws-spanish/cloudfront-para-la-distribucion-de-contenido-estatico-y-dinamico/ 링크입니다.</div>
+<div class="comment-content">이 링크는 https://aws.amazon.com/es/blogs/aws-spanish/cloudfront-para-la-distribusion-de-contenido-estatico-y-dinamico/입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -570,7 +613,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -593,6 +636,55 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="982921" id="comment-982921">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 16일 수요일 21:12">
+			1주 전, 3일 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
+<div class="comment-content">모든 사용자의 지연 시간을 최소화하는 솔루션은 다음과 같습니다. A. 단일 AWS 지역에 애플리케이션 스택을 배포합니다. Amazon CloudFront를 사용하면 ALB를 오리진으로 지정하여 모든 정적 및 동적 콘텐츠를 제공할 수 있습니다. 이유는 다음과 같습니다. 옵션 A(단일 AWS 지역, 정적 및 동적 콘텐츠 모두를 위한 Amazon CloudFront): 단일 AWS 지역에 애플리케이션 스택을 배포하면 여러 지역을 사용할 때 발생할 수 있는 복잡성과 잠재적인 데이터 동기화 문제를 줄이는 데 도움이 됩니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -614,19 +706,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				MM_Korvinus
+				MM_코르비누스
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 6일 일요일 18:51">
-			1주, 3일 전
+			2주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">CloudFront는 이 경우 지연 시간을 개선하지 않는 것 같습니다. CF는 일종의 데이터 캐시로 작동하기 때문입니다. 캐시는 정적 데이터의 경우 잘 작동하지만 여기에서 각 사용자는 고유한 동적으로 생성된 데이터를 가질 수 있으며 모든 사용자는 원본으로 이동해야 합니다. 따라서 이 경우 CF는 대기 시간을 악화시킬 수 있습니다. 반면 다른 지역의 ALB로 라우팅되는 지연 시간이 있는 route53은 실제로 평균 사용자 지연 시간을 증가시킬 수 있습니다.</div>
+<div class="comment-content">CF가 일종의 데이터 캐시 역할을 하기 때문에 CloudFront는 이 경우 지연 시간을 개선하지 못하는 것 같습니다. 캐시는 정적 데이터의 경우 잘 작동하지만 여기에서는 각 사용자가 동적으로 생성된 자체 데이터를 가질 수 있으므로 모든 사용자는 원본으로 이동해야 합니다. 따라서 이 경우 CF는 대기 시간을 더 악화시킬 수 있습니다. 반면에 다른 지역의 ALB로 지연 시간을 라우팅하는 Route53은 실제로 평균 사용자 지연 시간을 증가시킬 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,13 +755,13 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 19:24">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 19:24">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 페이지(https://aws.amazon.com/cloudfront/dynamic-content/)에 따르면 A입니다. CloudFront는 대부분 지역에 국한된 콘텐츠이므로 "뉴스, 스포츠, 지역, 날씨"에 일반적으로 사용됩니다.</div>
+<div class="comment-content">이 페이지(https://aws.amazon.com/cloudfront/dynamic-content/)에 따르면 A입니다. CloudFront는 주로 특정 지역에 한정된 콘텐츠이기 때문에 "뉴스, 스포츠, 지역, 날씨"에 일반적으로 사용됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,12 +793,12 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 19:37">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 19:37">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 옵션 B는 모든 트래픽이 인터넷을 통과한다는 의미인 CloudFront를 사용하지 않습니다. 따라서 두 지역에 리소스를 배포하고 가장 낮은 대기 시간 지점을 사용하더라도 공용 인터넷 연결은 Cloudfront에서 사용할 수 있는 개인 aws 네트워크를 통한 연결보다 느릴 수 있습니다.</div>
+<div class="comment-content">또한 옵션 B는 CloudFront를 사용하지 않습니다. 즉, 모든 트래픽이 인터넷을 통과합니다. 따라서 두 지역에 리소스를 배포하고 대기 시간이 가장 낮은 지점을 사용함에도 불구하고 해당 공용 인터넷 연결은 Cloudfront에서 사용할 수 있는 개인 AWS 네트워크를 통한 연결보다 느릴 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +807,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -754,16 +843,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그래
+				응
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 23일 금요일 19:28">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">CloudFront는 동적 콘텐츠에 잘 맞는 CDN입니다. 이러한 유형의 뉴스, 스포츠, 지역, 날씨 웹 애플리케이션은 종종 최종 사용자를 위한 맞춤형 콘텐츠에 지리적 초점을 두고 있습니다. 콘텐츠 유형에 따라 다양한 시간 동안 엣지 로케이션에서 콘텐츠를 캐싱할 수 있습니다. 예를 들어, 시간별 업데이트는 최대 1시간 동안 캐시할 수 있지만 긴급 알림은 최종 사용자가 항상 최신 정보를 사용할 수 있도록 몇 초 동안만 캐시할 수 있습니다. 콘텐츠 전송 네트워크는 기사, 동적 지도 타일, 오버레이, 예보, 뉴스 속보 또는 경고 티커, 비디오와 같은 뉴스 및 날씨에 대한 일반적인 유형의 경험을 제공하기 위한 훌륭한 플랫폼입니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">CloudFront는 동적 콘텐츠에 잘 맞는 CDN입니다. 뉴스, 스포츠, 지역, 날씨 이러한 유형의 웹 애플리케이션은 최종 사용자를 위한 맞춤형 콘텐츠를 제공하는 지리적 초점을 갖는 경우가 많습니다. 콘텐츠 유형에 따라 다양한 시간 동안 콘텐츠를 엣지 로케이션에 캐시할 수 있습니다. 예를 들어, 시간별 업데이트는 최대 1시간 동안 캐시할 수 있지만 긴급 알림은 몇 초 동안만 캐시할 수 있으므로 최종 사용자는 항상 최신 정보를 사용할 수 있습니다. 콘텐츠 전송 네트워크는 기사, 동적 지도 타일, 오버레이, 예측, 속보 또는 알림 티커, 비디오 등 뉴스 및 날씨에 대한 일반적인 유형의 경험을 제공하기 위한 훌륭한 플랫폼입니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -772,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -800,15 +889,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스마트티그닌
+				스마트그닌
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 13:27">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Elastic Load Balancer(ELB) 또는 Amazon EC2 인스턴스에서 인터넷의 최종 사용자에게 직접 웹 애플리케이션 또는 API와 같은 동적 콘텐츠를 제공하는 경우 다음의 성능, 가용성 및 보안을 개선할 수 있습니다. Amazon CloudFront를 콘텐츠 전송 네트워크로 사용하여 콘텐츠를 https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">Amazon Elastic Load Balancer(ELB) 또는 Amazon EC2 인스턴스에서 웹 애플리케이션이나 API와 같은 동적 콘텐츠를 인터넷의 최종 사용자에게 직접 제공하는 경우 C로 이동하면 성능, 가용성 및 보안을 향상시킬 수 있습니다. Amazon CloudFront를 콘텐츠 전송 네트워크로 사용하여 콘텐츠를 전송합니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -817,7 +906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -845,16 +934,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				앞발
+				안트로포
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 09:52">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞습니다. CF는 콘텐츠를 전 세계적으로 배포합니다. 2개 지역이 아닌 4개 또는 5개 지역에 애플리케이션을 배포하지 않는 이유는 무엇입니까? 그것은 임의의 선택이며 B와 D가 확실한 솔루션이 아닌 이유 중 하나입니다.</div>
+<div class="comment-content">A가 맞습니다. CF는 콘텐츠를 전 세계에 배포합니다. 2개 지역이 아닌 4~5개 지역에 애플리케이션을 배포하면 어떨까요? 이는 임의적인 선택이므로 B와 D가 확실한 솔루션이 아닌 이유 중 하나입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -863,7 +952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -894,13 +983,13 @@
 				브마로디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 13:57">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 13:57">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 옵션 A를 선택합니다. CF는 에지 위치를 사용하여 정적 및 동적 S3 콘텐츠 속도를 높입니다. 따라서 A는 정답입니다.</div>
+<div class="comment-content">옵션 A를 선택하면 CF는 가장자리 위치를 사용하여 정적 및 동적 S3 콘텐츠 속도를 높이므로 A가 옳습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -909,7 +998,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -940,13 +1029,13 @@
 				bgsanata
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 22일 월요일 06:00">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 22일 (월) 06:00">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">더 나은 트래픽 분산을 목표로 한다면 B. 2 지역이 항상 더 낫다고 말하고 싶습니다. 이렇게 하면 단일 EC2 인스턴스로 전송되는 요청 양이 절반으로 분할되어 간접적으로 대기 시간이 개선됩니다. CloudFront가 지연 시간을 개선하는 것은 사실이지만 이것이 모든 사용자에게 해당되는지 여부는 말하기 어렵습니다. 두 번째 지역을 사용하면 사용자의 성능이 확실히 향상되어 대기 시간이 줄어듭니다.</div>
+<div class="comment-content">더 나은 트래픽 분산을 목표로 한다면 B.2 지역이 항상 더 좋다고 말하고 싶습니다. 이렇게 하면 단일 EC2 인스턴스로 전송되는 요청 양이 절반으로 분할되어 간접적으로 지연 시간이 향상됩니다. CloudFront가 지연 시간을 향상시키는 것은 사실이지만 이것이 모든 사용자에게 해당되는지 말하기는 어렵습니다. 두 번째 지역이 있으면 사용자의 성능이 확실히 향상되어 대기 시간이 단축됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -955,7 +1044,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -986,13 +1075,13 @@
 				치즈929
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 30일 일 13:39">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 30일 일요일 13:39">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞습니다. Cloudfront는 정적 및 동적 콘텐츠를 모두 빠르게 제공할 수 있습니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">A가 맞습니다. Cloudfront는 정적 콘텐츠와 동적 콘텐츠를 모두 빠르게 제공할 수 있습니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1001,7 +1090,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,16 +1118,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				케빈
+				케빈크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 30일 일 02:51">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 30일 일요일 02:51">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">가장 낮은 대기 시간(옵션 B)이 가장 가까운 리소스(옵션 D)와 항상 같지는 않습니다. 요구 사항은 최저 대기 시간을 요구합니다.</div>
+<div class="comment-content">가장 낮은 대기 시간(옵션 B)이 항상 가장 가까운 리소스(옵션 D)와 같지는 않습니다. 그리고 요구 사항은 가장 낮은 대기 시간을 요구합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1047,7 +1136,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1078,12 +1167,12 @@
 				슈레스트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 21일 금요일 06:11">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 21일 금 06:11">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. Amazon Elastic Load Balancer(ELB) 또는 Amazon EC2 인스턴스에서 인터넷의 최종 사용자에게 직접 웹 애플리케이션 또는 API와 같은 동적 콘텐츠를 제공하는 경우 다음을 사용하여 콘텐츠의 성능, 가용성 및 보안을 개선할 수 있습니다. 콘텐츠 전송 네트워크로서의 Amazon CloudFront. https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">A. Amazon Elastic Load Balancer(ELB) 또는 Amazon EC2 인스턴스에서 웹 애플리케이션이나 API와 같은 동적 콘텐츠를 인터넷의 최종 사용자에게 직접 제공하는 경우 다음을 사용하여 콘텐츠의 성능, 가용성 및 보안을 향상시킬 수 있습니다. Amazon CloudFront를 콘텐츠 전송 네트워크로 활용하세요. https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1092,7 +1181,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1123,12 +1212,12 @@
 				C_M_M
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 02:58">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 02:58">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CloudFront는 정적 콘텐츠를 캐싱합니다. 또한 동적 콘텐츠에 대한 요청을 수락하고 AWS 백본을 통해 ALB로 전달합니다(매우 빠름).</div>
+<div class="comment-content">CloudFront는 정적 콘텐츠를 캐시합니다. 또한 동적 콘텐츠에 대한 요청을 수락하고 이를 AWS 백본을 통해 ALB로 전달합니다(매우 빠름).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1137,7 +1226,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1169,11 +1258,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 9일 일요일 15:10">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ANSWER -B:모든 사용자에게 최소한의 대기 시간을 달성하기 위한 가장 좋은 방법은 두 개의 AWS 리전에 애플리케이션 스택을 배포하고 Amazon Route 53 대기 시간 라우팅 정책을 사용하여 가장 가까운 리전에서 ALB의 모든 콘텐츠를 제공하는 것입니다. 이 접근 방식은 사용자가 자신의 위치에 따라 사용 가능한 가장 낮은 대기 시간 엔드포인트로 연결되도록 하여 대기 시간을 크게 줄이고 애플리케이션의 성능을 향상시킬 수 있습니다. Amazon CloudFront를 사용하여 ALB를 오리진으로 지정하여 모든 정적 및 동적 콘텐츠를 제공하면 애플리케이션의 성능도 향상될 수 있지만 모든 사용자에게 최소한의 지연 시간을 달성하는 최선의 방법은 아닐 수 있습니다. 이는 CloudFront가 위치에 따라 사용자를 가장 가까운 엔드포인트로 안내하지 않을 수 있기 때문에 일부 사용자의 지연 시간이 길어질 수 있기 때문입니다.</div>
+<div class="comment-content">답변 -B: 모든 사용자에 대한 지연 시간을 최소화하기 위한 가장 좋은 접근 방식은 애플리케이션 스택을 두 AWS 지역에 배포하고 Amazon Route 53 지연 시간 라우팅 정책을 사용하여 가장 가까운 지역에 있는 ALB의 모든 콘텐츠를 제공하는 것입니다. 이 접근 방식을 사용하면 사용자가 해당 위치에 따라 사용 가능한 가장 낮은 대기 시간 엔드포인트로 연결되므로 대기 시간이 크게 줄어들고 애플리케이션 성능이 향상될 수 있습니다. Amazon CloudFront를 사용하여 ALB를 오리진으로 지정함으로써 모든 정적 및 동적 콘텐츠를 제공하면 애플리케이션 성능도 향상될 수 있지만, 모든 사용자에 대해 최소한의 지연 시간을 달성하기 위한 최선의 접근 방식은 아닐 수도 있습니다. 이는 CloudFront가 항상 위치에 따라 사용자를 가장 가까운 엔드포인트로 안내하지 않을 수 있어 일부 사용자의 경우 지연 시간이 길어질 수 있기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1182,7 +1271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1213,13 +1302,13 @@
 				Bang3R
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 5일 수요일 02:20">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 5일 수 02:20">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Cloudfront는 전 세계적이며 모든 지역에 동등하게 서비스를 제공합니다. Route 53 대기 시간 옵션은 두 지역 중 가장 낮은 대기 시간 옵션을 제공하지만 해당 지역 외부의 사용자에게는 여전히 끔찍한 대기 시간이 될 수 있습니다.</div>
+<div class="comment-content">Cloudfront는 전 세계적으로 모든 지역에 동일하게 서비스를 제공합니다. Route 53 지연 시간 옵션은 두 지역 중 가장 낮은 지연 시간 옵션을 제공하지만 해당 지역 외부의 사용자에게는 여전히 끔찍한 지연 시간이 될 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1228,7 +1317,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1259,12 +1348,12 @@
 				자스완
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 20:02">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 20:02">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">포털을 전역적으로 사용해야 하는 경우 두 개의 리전에서 스택을 갖는 것이 하나의 리전보다 항상 낫습니다. 이것은 옵션 A와 C를 가로막습니다. 요구 사항은 최소 대기 시간을 갖는 것이므로 Route 53 지리적 위치 라우팅 정책(옵션 D)을 선택하는 대신 대기 시간 기반 라우팅을 선택해야 합니다. 옵션 B입니다.</div>
+<div class="comment-content">포털을 전 세계적으로 사용해야 하는 경우 두 지역에 스택을 갖는 것이 항상 하나의 지역보다 낫습니다. 이는 옵션 A와 C를 교차합니다. 요구 사항은 최소 지연 시간을 갖는 것이므로 Route 53 Geolocation 라우팅 정책(옵션 D)을 선택하는 대신 지연 시간 기반 라우팅을 선택해야 합니다. 옵션 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1273,7 +1362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1301,15 +1390,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언럭키덕키
+				언럭키더키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 15일 수 19:02">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 15일 수요일 19:02">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문이나 답변에 문제가 있습니다. 가장 좋은 방법은 웹 사이트를 한 지역에 배포하고, CloudFront를 사용하여 대기 시간을 줄이고, 애플리케이션이 로컬 알림 및 날씨 알림을 제공하므로 지리적 위치 Route 53 라우팅 정책을 사용하는 것입니다. 지리적 위치가 없으면 응용 프로그램은 호주에 거주하는 사람들에게 런던 지역 경보를 제공합니다. 답 D는 벽장이지만 틀렸습니다.</div>
+<div class="comment-content">질문이나 답변에 문제가 있습니다. 이를 수행하는 가장 좋은 방법은 웹 사이트를 한 지역에 배포하고, CloudFront를 사용하여 지연 시간을 줄이고, 애플리케이션이 지역 알림 및 날씨 알림을 제공하므로 지리적 위치 Route 53 라우팅 정책을 사용하는 것입니다. 지리적 위치가 없으면 애플리케이션은 호주에 거주하는 사람들에게 런던의 지역 알림을 제공합니다. 그러나 답 D는 벽장입니다. 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1318,7 +1407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1349,8 +1438,8 @@
 				mell1222
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 13일 (월) 17:07">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 13일 월요일 17:07">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1364,7 +1453,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1396,12 +1485,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 1일 수요일 17:40">
-			5개월, 2주 전
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나를 위해.</div>
+<div class="comment-content">나에게는 A.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1410,7 +1499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1442,11 +1531,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 1일 수요일 03:34">
-			5개월, 2주 전
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 불가능하다고 생각합니다. Amazon CloudFront를 사용하여 정적 콘텐츠를 제공할 때 콘텐츠는 Amazon S3 버킷에 저장되어야 하며 CloudFront는 ALB 대신 해당 S3 버킷을 오리진으로 사용하도록 구성해야 합니다.</div>
+<div class="comment-content">A는 불가능하다고 봅니다. Amazon CloudFront를 사용하여 정적 콘텐츠를 제공하는 경우 콘텐츠는 Amazon S3 버킷에 저장되어야 하며 CloudFront는 ALB 대신 해당 S3 버킷을 오리진으로 사용하도록 구성되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1455,7 +1544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1483,15 +1572,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				모아즈86
+				moaaz86
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 08:23">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 08:23">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CloudFront 및 동적 콘텐츠에 대한 사실을 의심하는 사람들은 Slack이 이러한 목적으로 CloudFront를 활용한 방법에 대한 이 비디오를 참조하십시오. 꽤 흥미로운 것들. https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">CloudFront 및 동적 콘텐츠에 대한 사실이 의심스러운 경우 Slack이 이러한 목적으로 CloudFront를 어떻게 활용했는지 설명하는 이 비디오를 시청하세요. 꽤 흥미로운 것들입니다. https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1500,7 +1589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1528,16 +1617,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				anthony2021년
+				앤서니2021
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 20:14">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 20:14">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">새 사이트이므로 정적 콘텐츠도 자주 새로고침되므로 클라우드 프런트에서 콘텐츠를 요청해야 하므로 2개 지역 솔루션이 가장 적합해 보입니다.</div>
+<div class="comment-content">새로운 사이트이므로 정적 콘텐츠도 자주 새로 고쳐지므로 Cloudfront에서 콘텐츠를 요청해야 하며 두 지역 솔루션이 가장 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1546,7 +1635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1574,15 +1663,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Rehan33
+				레한33
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 18일 토요일 09:31">
-			5개월, 4주 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C를 선택하지 않는 이유 정적 콘텐츠에 클라우드 프런트 사용 동적 콘텐츠에 애플리케이션 로드 밸런서 사용</div>
+<div class="comment-content">옵션 C를 선택하지 않는 이유는 정적 콘텐츠에 클라우드 프론트를 사용하고 동적 콘텐츠에 애플리케이션 로드 밸런서를 사용하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1591,7 +1680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1623,12 +1712,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 16일 목요일 13:13">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Cloudfront는 정적 및 동적을 수행합니다. 가능한 한 짧은 시간에 공통 데이터를 제공하는 것이 목적입니다.</div>
+<div class="comment-content">Cloudfront는 정적 및 동적 작업을 수행합니다. 가능한 한 최단 시간 내에 공통 데이터를 제공하는 것이 목적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1637,7 +1726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1669,11 +1758,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 8일 수요일 10:58">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A라고 생각합니다. 단일 AWS 지역에 애플리케이션 스택을 배포하고 Amazon CloudFront를 사용하여 모든 정적 및 동적 콘텐츠를 제공하는 옵션 A는 사용자가 단일 AWS 지역에서 멀리 떨어져 있기 때문에 모든 사용자에게 최소한의 대기 시간을 제공하지 못할 수 있습니다. 지역은 위치와 애플리케이션 스택을 호스팅하는 지역 사이의 거리로 인해 대기 시간이 더 길어질 수 있습니다. 두 AWS 리전에 애플리케이션 스택을 배포하고 Amazon Route 53 지연 시간 라우팅 정책을 사용하여 가장 가까운 리전에서 ALB의 모든 콘텐츠를 제공하는 옵션 B는 애플리케이션이 사용자에게 더 가까워지도록 하므로 더 나은 솔루션입니다. 전 세계 여러 지역에 위치한 사용자의 지연 시간을 단축합니다.</div>
+<div class="comment-content">제 생각에는 A입니다. 단일 AWS 지역에 애플리케이션 스택을 배포하고 Amazon CloudFront를 사용하여 모든 정적 및 동적 콘텐츠를 제공하는 옵션 A는 사용자가 단일 AWS 지역에서 멀리 떨어져 있기 때문에 모든 사용자에게 최소한의 지연 시간을 제공하지 못할 수 있습니다. 지역은 해당 위치와 애플리케이션 스택을 호스팅하는 지역 간의 거리로 인해 더 높은 대기 시간을 경험할 수 있습니다. 두 개의 AWS 지역에 애플리케이션 스택을 배포하고 Amazon Route 53 지연 시간 라우팅 정책을 사용하여 가장 가까운 지역에 있는 ALB의 모든 콘텐츠를 제공하는 옵션 B는 애플리케이션이 사용자에게 더 가까워지도록 하므로 더 나은 솔루션입니다. 세계 여러 지역에 있는 사용자의 대기 시간을 단축합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1682,7 +1771,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1705,12 +1794,12 @@
 				KZM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 9일 목요일 04:05">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 9일 (목) 04:05">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CloudFront는 동적 콘텐츠를 캐싱하도록 설계되지 않았지만 이미지, 비디오 또는 JavaScript 및 CSS 파일과 같은 정적 콘텐츠를 캐싱할 수 있습니다. 동적 콘텐츠는 뉴스 기사, 날씨 업데이트 등 수시로 변경되는 콘텐츠로 각 사용자의 요청에 따라 실시간으로 서버에서 생성됩니다.</div>
+<div class="comment-content">CloudFront는 동적 콘텐츠를 캐시하도록 설계되지 않았지만 이미지, 비디오, JavaScript 및 CSS 파일과 같은 정적 콘텐츠를 캐시할 수 있습니다. 동적 콘텐츠는 뉴스 기사, 날씨 업데이트 등 자주 변경되는 콘텐츠로, 각 사용자의 요청에 따라 실시간으로 서버에서 생성됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1719,7 +1808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1759,7 +1848,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 15:30">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1773,7 +1862,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1805,11 +1894,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 14일 토요일 00:52">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 A는 단일 AWS 지역에 애플리케이션 스택을 배포하고 Amazon CloudFront를 사용하여 모든 정적 및 동적 콘텐츠를 제공하기 때문에 올바르지 않습니다. 이 접근 방식은 에지 위치에서 정적 콘텐츠를 캐시하지만 사용자의 지리적 위치를 고려하지 않으므로 모든 사용자의 대기 시간을 최소화하지 않습니다. 동적 콘텐츠는 ALB인 오리진에서 계속 제공되므로 ALB가 배포된 지역에서 멀리 떨어진 사용자는 높은 대기 시간을 갖게 됩니다. 또한 단일 지역에만 배포되므로 중복성과 내결함성을 제공하지 않습니다. 요약하면 단일 리전에 애플리케이션 스택을 배포하고 CloudFront를 사용하여 모든 콘텐츠를 제공하면 해당 리전에 근접한 사용자의 성능은 향상될 수 있지만 전 세계 모든 사용자의 지연 시간은 최소화되지 않습니다.</div>
+<div class="comment-content">옵션 A는 단일 AWS 지역에 애플리케이션 스택을 배포하고 Amazon CloudFront를 사용하여 모든 정적 및 동적 콘텐츠를 제공하므로 정답이 아닙니다. 이 접근 방식은 엣지 위치에서 정적 콘텐츠를 캐시하지만 사용자의 지리적 위치를 고려하지 않으므로 모든 사용자의 대기 시간을 최소화하지 못합니다. 동적 콘텐츠는 ALB인 원본에서 계속 제공되므로 ALB가 배포된 지역에서 멀리 떨어진 사용자는 대기 시간이 길어집니다. 또한 단일 지역에만 배포되므로 중복성 및 내결함성을 제공하지 않습니다. 요약하면, 단일 지역에 애플리케이션 스택을 배포하고 CloudFront를 사용하여 모든 콘텐츠를 제공하면 해당 지역에 근접한 사용자의 성능이 향상될 수 있지만 전 세계 모든 사용자의 지연 시간이 최소화되지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1818,7 +1907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1850,7 +1939,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 3일 화요일 22:23">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1864,7 +1953,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1892,16 +1981,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 29일 목요일 06:14">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 29일 목 06:14">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답으로 옵션 B를 선택하겠습니다. 두 지역에 애플리케이션 스택을 배포하고 Amazon Route 53 지연 시간 라우팅 정책을 사용하면 가장 가까운 지역의 ALB에서 사용자에게 서비스를 제공하여 지연 시간을 줄일 수 있습니다. Amazon Route 53 지연 시간 라우팅은 사용자와 여러 지역 간의 지연 시간을 모니터링하고 지연 시간이 가장 짧은 지역으로 트래픽을 라우팅하는 방식으로 작동합니다. 옵션 A는 올바르지 않습니다. Amazon CloudFront를 사용하여 정적 및 동적 콘텐츠를 제공하면 애플리케이션의 성능을 개선할 수 있지만 단일 지역에 애플리케이션 스택을 배포하는 것은 세계 여러 지역에 있는 사용자의 지연 시간을 줄이기에 충분하지 않을 수 있습니다. 그러므로,</div>
+<div class="comment-content">정답으로 옵션 B를 선택하겠습니다. 두 지역에 애플리케이션 스택을 배포하고 Amazon Route 53 지연 시간 라우팅 정책을 사용하면 사용자에게 가장 가까운 지역의 ALB에서 서비스를 제공하여 지연 시간을 줄일 수 있습니다. Amazon Route 53 지연 시간 라우팅은 사용자와 다른 지역 간의 지연 시간을 모니터링하고 지연 시간이 가장 낮은 지역으로 트래픽을 라우팅하는 방식으로 작동합니다. 옵션 A는 올바르지 않습니다. Amazon CloudFront를 사용하여 정적 및 동적 콘텐츠를 제공하면 애플리케이션 성능이 향상될 수 있지만, 단일 지역에 애플리케이션 스택을 배포하는 것만으로는 세계 여러 지역에 있는 사용자의 지연 시간을 줄이는 데 충분하지 않을 수 있습니다. 그러므로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1910,7 +1999,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1933,12 +2022,12 @@
 				루키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 22일 (월) 17:35">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 22일 월요일 17:35">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 틀렸어!! 사용할 2개 지역을 어떻게 결정할 수 있습니까? (사용자 위치에 대해 지정된 것은 없음) ... 반면에 CloudFront는 정적 및 동적 콘텐츠를 모두 제공하며 동적 콘텐츠가 캐시되지 않더라도 정보는 최적화된 내부 AWS 네트워크를 통해 전달됩니다 ... 답은 A여야 합니다.</div>
+<div class="comment-content">B 틀렸어!! 사용할 2개 지역을 어떻게 결정할 수 있나요? (사용자 위치에 대해 지정된 것은 없습니다.) ... 반면 CloudFront는 정적 콘텐츠와 동적 콘텐츠를 모두 제공하며, 동적 콘텐츠가 캐시되지 않더라도 정보는 최적화된 내부 AWS 네트워크를 통과합니다. 대답은 A여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1947,7 +2036,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1979,11 +2068,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 15:29">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 A입니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html#CloudFrontRegionaledgecaches</div>
+<div class="comment-content">대답은 A입니다. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html#CloudFrontRegionaledgecaches</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1992,7 +2081,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2020,15 +2109,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 29일 목요일 06:18">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 29일 목 06:18">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Route 53 Latency-Based Routing 설명서 링크: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-latency 이 라우팅 정책을 사용하면 트래픽을 라우팅할 수 있습니다. Amazon EC2 인스턴스, Amazon S3 버킷, Amazon CloudFront 배포 또는 대기 시간이 가장 짧은 기타 리소스에. 대기 시간이 가장 짧은 위치에서 사용자에게 콘텐츠를 제공하려는 경우에 유용합니다.</div>
+<div class="comment-content">Amazon Route 53 지연 시간 기반 라우팅에 대한 문서 링크: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html#routing-policy-latency 이 라우팅 정책을 사용하면 트래픽을 라우팅할 수 있습니다. Amazon EC2 인스턴스, Amazon S3 버킷, Amazon CloudFront 배포 또는 지연 시간이 가장 짧은 기타 리소스에 적용됩니다. 대기 시간이 가장 짧은 위치에서 사용자에게 콘텐츠를 제공하려는 경우 유용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2037,7 +2126,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2073,16 +2162,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 22:49">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 22:49">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 Cloudfront가 전 세계 모든 사용자에게 정적 콘텐츠의 대기 시간이 가장 짧은 Edge 위치에서 콘텐츠를 제공할 수 있으므로 최상의 옵션입니다. 두 지역에서 아직 멀리 떨어져 있는 사용자에게는 두 지역에 배포하는 것만으로는 충분하지 않습니다. 따라서 옵션 B는 여기에서 핵심인 "모든 사용자"에게 가능한 최저 대기 시간을 제공하지 않습니다.</div>
+<div class="comment-content">A는 Cloudfront가 전 세계 모든 사용자에게 정적 콘텐츠에 대한 지연 시간이 가장 낮은 엣지 로케이션의 콘텐츠를 제공할 수 있으므로 가장 좋은 옵션입니다. 두 지역에서 아직 멀리 떨어져 있는 사용자에게는 두 지역에 배포하는 것만으로는 충분하지 않습니다. 따라서 옵션 B는 여기서 핵심인 "모든 사용자"에게 가능한 가장 낮은 대기 시간을 제공하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2091,7 +2180,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2111,15 +2200,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 00:37">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 00:37">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 올바른 옵션인 이유에 대한 다음 두 기사를 읽으십시오. https://aws.amazon.com/blogs/networking-and-content-delivery/deliver-your-apps-dynamic-content-using-amazon-cloudfront-getting-started-template/ https://aws.amazon. com/cloudfront/dynamic-content/</div>
+<div class="comment-content">A가 올바른 옵션인 이유에 대한 다음 두 기사를 읽어보세요. https://aws.amazon.com/blogs/networking-and-content-delivery/deliver-your-apps-dynamic-content-using-amazon-cloudfront-getting-started-template/ https://aws.amazon. com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2128,7 +2217,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2167,13 +2256,13 @@
 				넥서스2020
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 03:39">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 03:39">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">B가 옳지 않은 이유는 사용자가 전 세계에 있기 때문입니다. 따라서 2개의 지역은 전 세계를 포함하지 않으므로 의미가 없습니다. 그래서 A.</div>
+<div class="comment-content">B는 옳지 않습니다. 그 이유는 사용자가 전 세계에 있기 때문입니다. 따라서 2개 지역은 전 세계를 포괄하지 않으므로 의미가 없습니다. 그래서 A.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2182,7 +2271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2213,12 +2302,12 @@
 				Qjb8m9h
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 01:23">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 01:23">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 A- CloudFront는 AWS 글로벌 네트워크와 보안, 엣지 기능, 가용성과 같은 기타 이점을 활용하여 빠른 콘텐츠 전송(정적 및 동적 콘텐츠)에 사용됩니다. CloudFront를 사용하는 목적 중 하나는 오리진 서버가 직접 응답해야 하는 요청 수를 줄이는 것입니다. CloudFront 캐싱을 사용하면 사용자에게 더 가까운 CloudFront 엣지 위치에서 더 많은 객체가 제공됩니다. 이렇게 하면 원본 서버의 부하가 줄어들고 대기 시간이 줄어듭니다.</div>
+<div class="comment-content">대답은 A입니다. CloudFront는 AWS 글로벌 네트워크와 보안, 엣지 기능, 가용성 등의 기타 이점을 활용하여 빠른 콘텐츠 전송(정적 및 동적 콘텐츠)에 사용됩니다. CloudFront를 사용하는 목적 중 하나는 오리진 서버가 직접 응답해야 하는 요청 수를 줄이는 것입니다. CloudFront 캐싱을 사용하면 사용자에게 더 가까운 CloudFront 엣지 로케이션에서 더 많은 객체가 제공됩니다. 이렇게 하면 원본 서버의 로드가 줄어들고 대기 시간이 줄어듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2227,7 +2316,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2258,12 +2347,12 @@
 				tz1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 01:42">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 01:42">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 답입니다. CF는 동적 콘텐츠도 제공할 수 있습니다 https://aws.amazon.com/cloudfront/dynamic-content/</div>
+<div class="comment-content">A가 답이다. CF는 동적 콘텐츠도 제공할 수 있습니다 https://aws.amazon.com/cloudfront/dynamic-content/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2272,7 +2361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2303,8 +2392,8 @@
 				RBSK
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 9일 금요일 10:10">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 9일 금 10:10">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2318,7 +2407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2349,13 +2438,13 @@
 				팜반
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 13일 일 11:53">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 13일 일요일 11:53">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변 A. SAA-C002 https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solutions-architect-associate-saa-c02/의 질문 #: 612 참조</div>
+<div class="comment-content">답변 A. SAA-C002 https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solutions-architect-associate-saa-c02/의 질문 번호: 612를 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2364,7 +2453,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2395,13 +2484,13 @@
 				베베모
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 9일 수요일 01:22">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 9일 수 01:22">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B = 최대한 빨리 = 대기 시간이 가장 짧은 동적 콘텐츠 + 정적 콘텐츠. CloudFront는 정적 및 동적 콘텐츠에 대해 작동하지만 다른 지역에서 오는 경우 동적 콘텐츠 전달이 '최대한 빠르지' 않습니다.</div>
+<div class="comment-content">B = 최대한 빨리 = 지연 시간이 가장 짧은 동적 + 정적 콘텐츠. CloudFront는 정적 및 동적 콘텐츠에 대해 작동하지만, 다른 지역에서 오는 경우 동적 콘텐츠 전달이 '최대한 빠르지' 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2410,7 +2499,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2434,11 +2523,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 7일 수 22:34">
-			8개월, 1주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 스택이 '단일' 지역에 배포된다고 명시되어 있습니다. 어떻게 diff에서 나올 수 있습니까? 지역?..</div>
+<div class="comment-content">그러나 스택이 '단일' 지역에 배포된다고 명시되어 있는데 어떻게 차이점이 발생할 수 있습니까? 지역?..</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2447,7 +2536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2483,11 +2572,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				욕조 탭
+				욕조
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 27일 목요일 05:37">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2501,7 +2590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2529,15 +2618,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				트랜스엑스
+				트렉스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 14일 금 11:31">
-			10개월 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실하지 않지만 A https://aws.amazon.com/blogs/networking-and-content-delivery/deliver-your-apps-dynamic-content-using-amazon-cloudfront-getting-started-template/</div>
+<div class="comment-content">확실하지는 않지만 https://aws.amazon.com/blogs/networking-and-content-delivery/deliver-your-apps-dynamic-content-using-amazon-cloudfront-getting-started-template/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2546,7 +2635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2601,7 +2690,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 06:21">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2616,7 +2705,7 @@ https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solu
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">20</span> times
+				upvoted <span class="upvote-count">21</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2641,7 +2730,7 @@ https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 19:32">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2697,7 +2786,7 @@ https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solu
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 26 Oct 2022 18:55">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2740,7 +2829,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 18:58">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2777,7 +2866,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 15:17">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2789,7 +2878,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2830,7 +2919,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 12:31">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2875,7 +2964,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:37">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2912,7 +3001,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 25 Jul 2023 23:54">
-			3 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2957,6 +3046,63 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="982921" id="comment-982921">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Wed 16 Aug 2023 21:12">
+			1 week, 3 days ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>A</strong></span></div>
+<div class="comment-content">The solution that will ensure the LEAST amount of latency for all users is:
+
+A. Deploy the application stack in a single AWS Region. Use Amazon CloudFront to serve all static and dynamic content by specifying the ALB as an origin.
+
+Here's why:
+
+Option A (Single AWS Region, Amazon CloudFront for both static and dynamic content):
+
+Deploying the application stack in a single AWS Region helps reduce complexity and potential data synchronization issues that might arise from using multiple regions</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="974043" id="comment-974043">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -2972,11 +3118,8 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 				MM_Korvinus
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Sun 06 Aug 2023 18:51">
-			1 week, 3 days ago
+			2 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3022,7 +3165,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 19:24">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3060,7 +3203,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 19:37">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3113,7 +3256,7 @@ For the case with 2 region and Route 53 latency routing, Route 53 detects the ne
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Jun 2023 19:28">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3163,7 +3306,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 13:27">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3211,7 +3354,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 09:52">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3257,7 +3400,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 13:57">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3303,7 +3446,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 06:00">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3351,7 +3494,7 @@ It's true that CloudFront improve latency but it's hard to say if this will be t
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Apr 2023 13:39">
-			3 months, 2 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3399,7 +3542,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Apr 2023 02:51">
-			3 months, 2 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3445,7 +3588,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Apr 2023 06:11">
-			3 months, 3 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3493,7 +3636,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Apr 2023 02:58">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3538,7 +3681,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Apr 2023 15:10">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3585,7 +3728,7 @@ Therefore, using an Amazon Route 53 latency routing policy to serve all content 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 02:20">
-			4 months, 1 week ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3631,7 +3774,7 @@ Therefore, using an Amazon Route 53 latency routing policy to serve all content 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 20:02">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3677,7 +3820,7 @@ Requirement is to have LEAST amount of latency , so instead of choosing Route 53
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Mar 2023 19:02">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3728,7 +3871,7 @@ Answer D is the closet, however - it's wrong.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Mar 2023 17:07">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3774,7 +3917,7 @@ Answer D is the closet, however - it's wrong.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 01 Mar 2023 17:40">
-			5 months, 2 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3820,7 +3963,7 @@ Answer D is the closet, however - it's wrong.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 01 Mar 2023 03:34">
-			5 months, 2 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3865,7 +4008,7 @@ Answer D is the closet, however - it's wrong.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 08:23">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3912,7 +4055,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 20:14">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3958,7 +4101,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 18 Feb 2023 09:31">
-			5 months, 4 weeks ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4005,7 +4148,7 @@ Use application load balancer for dynamic content</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Feb 2023 13:13">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4051,7 +4194,7 @@ Use application load balancer for dynamic content</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 10:58">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4091,7 +4234,7 @@ Option B, deploying the application stack in two AWS Regions and using an Amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 09 Feb 2023 04:05">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4144,7 +4287,7 @@ Option B, deploying the application stack in two AWS Regions and using an Amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 15:30">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4190,7 +4333,7 @@ Option B, deploying the application stack in two AWS Regions and using an Amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 00:52">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4238,7 +4381,7 @@ In summary, deploying the application stack in a single region and using CloudFr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 22:23">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4284,7 +4427,7 @@ In summary, deploying the application stack in a single region and using CloudFr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 06:14">
-			7 months, 2 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4328,7 +4471,7 @@ Therefore, the correct solution to ensure the least amount of latency for all us
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 17:35">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4373,7 +4516,7 @@ Therefore, the correct solution to ensure the least amount of latency for all us
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 15:29">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4419,7 +4562,7 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFront
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 06:18">
-			7 months, 2 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4476,7 +4619,7 @@ This routing policy allows you to route traffic to the Amazon EC2 instance, Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 22:49">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4514,7 +4657,7 @@ This routing policy allows you to route traffic to the Amazon EC2 instance, Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 00:37">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4569,7 +4712,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 03:39">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4615,7 +4758,7 @@ https://aws.amazon.com/cloudfront/dynamic-content/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 01:23">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4662,7 +4805,7 @@ One of the purposes of using CloudFront is to reduce the number of requests that
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 01:42">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4707,7 +4850,7 @@ One of the purposes of using CloudFront is to reduce the number of requests that
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Dec 2022 10:10">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4753,7 +4896,7 @@ One of the purposes of using CloudFront is to reduce the number of requests that
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 13 Nov 2022 11:53">
-			9 months ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4800,7 +4943,7 @@ https://www.examtopics.com/discussions/amazon/view/81081-exam-aws-certified-solu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Nov 2022 01:22">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4839,7 +4982,7 @@ CloudFront works for static and dynamic content, but the dynamic content deliver
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 22:34">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4892,7 +5035,7 @@ CloudFront works for static and dynamic content, but the dynamic content deliver
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Oct 2022 05:37">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4938,7 +5081,7 @@ CloudFront works for static and dynamic content, but the dynamic content deliver
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Oct 2022 11:31">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

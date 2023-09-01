@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 46 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 질문 46 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 46 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 46 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839803">
 <p class="card-text">
 							
-								회사에 매장에 마케팅 서비스를 제공하는 애플리케이션이 있습니다. 서비스는 매장 고객의 이전 구매를 기반으로 합니다. 상점은 SFTP를 통해 거래 데이터를 회사에 업로드하고 데이터를 처리 및 분석하여 새로운 마케팅 제안을 생성합니다. 일부 파일은 크기가 200GB를 초과할 수 있습니다. <br/>최근 회사는 일부 매장에서 포함되어서는 안 되는 개인 식별 정보(PII)가 포함된 파일을 업로드한 것을 발견했습니다. 회사는 PII가 다시 공유될 경우 관리자에게 알림을 받기를 원합니다. 회사는 또한 문제 해결을 자동화하기를 원합니다. <br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하기 위해 솔루션 설계자는 무엇을 해야 합니까?
+								회사에는 매장에 마케팅 서비스를 제공하는 애플리케이션이 있습니다. 이 서비스는 매장 고객의 이전 구매를 기반으로 합니다. 매장에서는 SFTP를 통해 거래 데이터를 회사에 업로드하고, 데이터를 처리하고 분석하여 새로운 마케팅 제안을 생성합니다. 일부 파일의 크기는 200GB를 초과할 수 있습니다. <br/>최근 회사에서는 일부 매장에서 포함되어서는 안 되는 개인 식별 정보(PII)가 포함된 파일을 업로드한 사실을 발견했습니다. 회사에서는 PII가 다시 공유되면 관리자에게 알림을 보내기를 원합니다. 또한 회사에서는 문제 해결을 자동화하려고 합니다. <br/>최소한의 개발 노력으로 이러한 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											Amazon S3 버킷을 안전한 전송 지점으로 사용하십시오. Amazon Inspector를 사용하여 버킷의 객체를 스캔합니다. 개체에 PII가 포함된 경우 S3 수명 주기 정책을 트리거하여 PII가 포함된 개체를 제거합니다.
+											Amazon S3 버킷을 안전한 전송 지점으로 사용하십시오. Amazon Inspector를 사용하여 버킷의 객체를 스캔합니다. 객체에 PII가 포함된 경우 S3 수명 주기 정책을 트리거하여 PII가 포함된 객체를 제거합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon S3 버킷을 안전한 전송 지점으로 사용하십시오. Amazon Macie를 사용하여 버킷의 객체를 스캔합니다. 객체에 PII가 포함된 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 트리거합니다.
+											Amazon S3 버킷을 보안 전송 지점으로 사용하십시오. Amazon Macie를 사용하여 버킷의 객체를 스캔합니다. 객체에 PII가 포함되어 있는 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 보냅니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현합니다. 객체가 버킷에 로드될 때 함수를 트리거합니다. 객체에 PII가 포함된 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 트리거합니다.
+											AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현합니다. 객체가 버킷에 로드되면 기능을 트리거합니다. 객체에 PII가 포함되어 있는 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 보냅니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현합니다. 객체가 버킷에 로드될 때 함수를 트리거합니다. 객체에 PII가 포함된 경우 Amazon Simple Email Service(Amazon SES)를 사용하여 관리자에게 알림을 트리거하고 S3 수명 주기 정책을 트리거하여 PII가 포함된 미트를 제거합니다.
+											AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현합니다. 객체가 버킷에 로드되면 기능을 트리거합니다. 객체에 PII가 포함된 경우 Amazon Simple Email Service(Amazon SES)를 사용하여 관리자에게 알림을 보내고 S3 수명 주기 정책을 트리거하여 PII가 포함된 고기를 제거하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="38 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">B (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 42%; display: flex;" title="">D (42%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="38 votes." data-toggle="tooltip" role="progressbar" style="width: 58%; display: flex;" title="">B (58%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 42%; display: flex;" title="">D (42%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								마세트
-							</a> 
-							
-							로 메인 <i>
-							2022년 10월 12일 오후 12:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								masetromain
-							</a>
-							
-							at <i>
-							Oct. 12, 2022, 12:02 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 11월 13일 일요일 00:17">
-			9개월, 1주 전
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 B에 문제가 있습니다. 질문에 "치료 자동화"라고 나와 있습니다. B는 당신이 관리자에게 알리고 그가 데이터를 수동으로 제거한다고 말하며 그것은 교정을 자동화하는 것이 아닙니다. 매우 이상하게도 D가 옳다는 것을 의미하지만 구현하기가 훨씬 더 어렵습니다.</div>
+<div class="comment-content">답변 B에 문제가 있습니다. 질문에 "교정 자동화"라고 나와 있습니다. B는 관리자에게 알리고 관리자가 수동으로 데이터를 제거하는 것은 교정을 자동화하는 것이 아니라고 말합니다. 매우 이상합니다. 이는 D가 정확하다는 것을 의미하지만 구현하기가 훨씬 어렵습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,24 +329,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쿠아
+				오류
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 18일 화요일 02:13">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 18일 화 02:13">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">문제는... PII를 감지하기 위해 람다를 작성해야 한다는 것입니다. AWS에는 이를 위한 제품이 있으며 그것이 Macie라는 것을 알고 있습니다.</div>
+<div class="comment-content">문제는... PII를 탐지하려면 람다를 작성해야 한다는 것입니다. AWS에는 이를 위한 제품이 있으며 우리는 그것이 Macie라는 것을 알고 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -331,15 +374,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				맥스페인009
+				Maxpayne009
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 00:36">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 00:36">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Macie에는 파일 크기 제한이 있으며 200GB 파일 크기가 가능하다는 질문이 분명히 있습니다. 람다는 갈 길 ..</div>
+<div class="comment-content">Macie에는 파일 크기 제한이 있으며 200GB 파일 크기가 가능하다는 언급이 명확하게 질문되어 있습니다. 람다는 갈 길입니다 ..</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -348,7 +391,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -379,12 +422,12 @@
 				릭150
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 23일 일 02:57">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 23일 일요일 02:57">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"교정"이 반드시 "삭제"를 의미하는 것은 아닙니다. "회사는 관리자에게 경고를 받기를 원합니다"라는 질문이 있기 때문에 이 경우 수정은 자동화를 통해 모든 히트에 대해 관리자에게 경고할 수 있음을 의미할 수 있습니다.</div>
+<div class="comment-content">"수정"이 반드시 "삭제"를 의미하는 것은 아닙니다. 질문에 "회사는 관리자에게 경고를 보내기를 원합니다"라고 명시되어 있으므로 이 경우 문제 해결은 모든 적중이 발생할 때마다 관리자에게 경고하는 자동화를 의미할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -393,7 +436,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -425,11 +468,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 5일 목요일 17:36">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">솔루션 설계자는 최소한의 개발 노력으로 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?에서와 같이 전체 질문에 주의를 기울이십시오. 이것이 Macie가 사용되는 이유입니다. 대답은 B입니다</div>
+<div class="comment-content">최소한의 개발 노력으로 이러한 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?와 같이 전체 질문에 주의를 기울이십시오. 그래서 Macie를 사용합니다. 답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -438,7 +481,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -466,15 +509,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				카르보브
+				카르밥
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 4일 수 22:28">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 4일 수요일 22:28">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"회사는 관리자가 알림을 받길 원합니다. " 액세서리는 보안 주체를 따릅니다. 여기서 보안 주체는 =&gt; 관리자가 알림을 받길 원합니다.</div>
+<div class="comment-content">"회사는 관리자에게 알림을 보내기를 원합니다." 액세서리는 주체를 따릅니다. 여기서 주체는 =&gt; 관리자에게 알림을 주기를 원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -483,7 +526,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -511,15 +554,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로널드초우
+				로날드초우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 22:29">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 22:29">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"수정 자동화"는 Amazon Macie를 사용하여 개인 식별 정보 검색을 자동화하는 것을 의미한다고 생각했습니다. https://aws.amazon.com/macie/ - S3 환경 전체에서 민감한 데이터를 검색하여 가시성을 높이고 데이터 보안 위험을 자동으로 해결합니다.</div>
+<div class="comment-content">"교정 자동화"란 Amazon Macie를 사용하여 개인 식별 정보 검색을 자동화하는 것을 의미한다고 생각했습니다. https://aws.amazon.com/macie/ - S3 환경 전체에서 중요한 데이터를 검색하여 가시성을 높이고 데이터 보안 위험을 자동으로 해결합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -528,7 +571,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -559,12 +602,12 @@
 				호라이이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 12:35">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 12:35">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">맞습니다. B를 선택한 경우 "자동 수정"이 불가능합니다.</div>
+<div class="comment-content">맞습니다. B를 선택한 경우 "교정 자동화"는 불가능합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -573,7 +616,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -593,11 +636,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				카르보브
+				카르밥
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 4일 수 22:34">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 4일 수요일 22:34">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -610,7 +653,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -654,28 +697,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그제브
+				그제프
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 13일 일 14:39">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 13일 일요일 14:39">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Macie는 기계 학습(ML) 및 패턴 일치를 사용하여 중요한 데이터를 검색하고 보호하는 데이터 보안 및 데이터 개인 정보 보호 서비스입니다.</div>
+<div class="comment-content">Amazon Macie는 기계 학습(ML) 및 패턴 일치를 사용하여 민감한 데이터를 검색하고 보호하는 데이터 보안 및 데이터 개인 정보 보호 서비스입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -695,15 +738,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그제브
+				그제프
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 13일 일 14:44">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 13일 일요일 14:44">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Macie는 이름, 주소, 신용카드 번호와 같은 개인 식별 정보(PII)를 포함하여 점점 늘어나는 중요한 데이터 유형 목록을 자동으로 탐지합니다. 또한 Amazon S3에 저장된 데이터의 데이터 보안 및 데이터 프라이버시에 대한 지속적인 가시성을 제공합니다.</div>
+<div class="comment-content">Macie는 이름, 주소, 신용 카드 번호와 같은 개인 식별 정보(PII)를 포함하여 점점 늘어나고 있는 민감한 데이터 유형의 목록을 자동으로 감지합니다. 또한 Amazon S3에 저장된 데이터의 데이터 보안 및 데이터 개인 정보 보호에 대한 지속적인 가시성을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -755,11 +798,11 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 10일 목요일 13:48">
-			1주, 2일 전
+			2주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Macie는 기계 학습 및 패턴 일치를 사용하여 Amazon S3에서 중요한 데이터를 검색하고 분류하는 완전 관리형 데이터 보안 및 데이터 개인 정보 보호 서비스입니다. 업로드된 파일에서 개인 식별 정보(PII)를 자동으로 식별할 수 있습니다. Macie를 사용하면 사용자 지정 스캔 알고리즘을 구현할 필요가 없고 개발 노력을 줄일 수 있으므로 B</div>
+<div class="comment-content">Amazon Macie는 기계 학습 및 패턴 일치를 사용하여 Amazon S3에서 민감한 데이터를 검색하고 분류하는 완전 관리형 데이터 보안 및 데이터 개인 정보 보호 서비스입니다. 업로드된 파일에서 개인 식별 정보(PII)를 자동으로 식별할 수 있습니다. Macie를 사용하면 사용자 지정 검색 알고리즘을 구현할 필요가 없고 개발 노력을 줄일 수 있으므로 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -768,7 +811,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -799,13 +842,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 13:10">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 13:10">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 최선의 선택입니다. 안전한 전송을 위해 S3 버킷을 사용하는 것이 좋습니다. Amazon Macie는 사용자 지정 개발 없이 PII에 대한 개체를 자동으로 스캔할 수 있습니다. SNS는 PII가 감지되면 관리자에게 알려 수정을 처리할 수 있도록 합니다.</div>
+<div class="comment-content">B가 최선의 선택입니다. 안전한 전송을 위해 S3 버킷을 사용하는 것이 좋습니다. Amazon Macie는 사용자 지정 개발 없이 자동으로 객체에서 PII를 검색할 수 있습니다. SNS는 PII가 탐지되면 관리자에게 이를 알리고 교정을 처리할 수 있도록 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -814,7 +857,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -846,12 +889,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 06:44">
-			2주, 1일 전
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Macie가 PII에 있는 것처럼 PII는 Amazon Macie에 있습니다.</div>
+<div class="comment-content">PII는 Amazon Macie에 속하며 Amazon Macie는 PII에 속합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -860,7 +903,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -888,15 +931,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				miki111
+				미키111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 02:19">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 02:19">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B가 정답입니다.</div>
+<div class="comment-content">보기 B가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -905,7 +948,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -933,16 +976,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Kaab_B
+				카브_B
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 14일 금요일 05:56">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 14일 금 05:56">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답이지만 관리자에게 알리고 완전히 자동화하지는 않습니다. Amazin Macie는 PII용으로 특별히 설계되었습니다.</div>
+<div class="comment-content">B가 정답이지만 관리자에게 알리고 완전히 자동화하지는 않습니다. Amazin Macie는 PII를 위해 특별히 설계되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -951,7 +994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -979,15 +1022,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경첩이 없는22
+				힌지가 풀린22
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 3일 월요일 21:42">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 21:42">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B입니다. 이 할당량은 Amazon Macie 콘솔과 Amazon Macie API에만 적용됩니다. Macie가 Amazon EventBridge에 게시하는 검색 이벤트 수 또는 Macie가 각 작업 실행에 대해 생성하는 중요한 데이터 검색 결과 수에 대한 할당량이 없습니다.</div>
+<div class="comment-content">대답은 B입니다. 이 할당량은 Amazon Macie 콘솔과 Amazon Macie API에만 적용됩니다. Macie가 Amazon EventBridge에 게시하는 결과 이벤트 수 또는 Macie가 각 작업 실행에 대해 생성하는 민감한 데이터 검색 결과 수에 대한 할당량이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -996,7 +1039,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1028,12 +1071,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 10:47">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">대답은 D. 회사가 자동 수정을 원하기 때문에 무엇보다도 1st입니다. 둘째, Macie는 분석할 수 있는 파일 크기에 제한이 있습니다. 분석할 개별 파일의 크기: Adobe Portable Document Format(.pdf) 파일: 1,024MB Apache Avro 개체 컨테이너(.avro) 파일: 8GB Apache Parquet (.parquet) 파일: 8GB 이메일 메시지(.eml) 파일: 20GB GNU Zip 압축 아카이브(.gz 또는 .gzip) 파일: 8GB Microsoft Excel 통합 문서(.xls 또는 .xlsx) 파일: 512MB Microsoft Word 문서 (.doc 또는 .docx) 파일: 512MB 비이진 텍스트 파일: 20GB TAR 아카이브(.tar) 파일: 20GB ZIP 압축 아카이브(.zip) 파일: 8GB 파일이 해당 할당량보다 큰 경우, Macie는 파일의 데이터를 분석하지 않습니다. https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html</div>
+<div class="comment-content">대답은 D입니다. 우선 회사가 교정 자동화를 원하기 때문입니다. 둘째, Macie는 분석할 수 있는 파일 크기에 제한이 있습니다. 분석할 개별 파일의 크기: Adobe Portable Document Format(.pdf) 파일: 1,024MB Apache Avro 객체 컨테이너(.avro) 파일: 8GB Apache Parquet (.parquet) 파일: 8GB 이메일 메시지(.eml) 파일: 20GB GNU Zip 압축 아카이브(.gz 또는 .gzip) 파일: 8GB Microsoft Excel 통합 문서(.xls 또는 .xlsx) 파일: 512MB Microsoft Word 문서 (.doc 또는 .docx) 파일: 512MB 비바이너리 텍스트 파일: 20GB TAR 아카이브(.tar) 파일: 20GB ZIP 압축 아카이브(.zip) 파일: 8GB 파일이 해당 할당량보다 큰 경우 Macie는 파일의 어떤 데이터도 분석하지 않습니다. https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1066,11 +1109,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 13:48">
-			1일, 2시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">람다가 그렇게 큰 파일로 시간 초과되지 않을 것이라고 생각하십니까? 문자열 일치를 찾는 200GB의 텍스트를 처리하는 데 15분이 걸리나요?</div>
+<div class="comment-content">람다가 그렇게 큰 파일로 인해 시간 초과되지 않을 것이라고 생각하십니까? 일치하는 문자열을 찾기 위해 200GB의 텍스트를 처리하는 데 15분이 소요됩니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1079,7 +1122,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1118,13 +1161,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 10:52">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 10:52">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Macie는 AWS에서 PII와 같은 민감한 데이터를 자동으로 검색, 분류 및 보호하는 관리형 서비스입니다. S3에서 Macie를 활성화하면 업로드된 객체에서 PII를 검색할 수 있습니다. A. Amazon Inspector를 사용하여 S3의 객체를 스캔하는 것은 PII 데이터 스캔을 위한 최적의 선택이 아닙니다. Amazon Inspector는 콘텐츠 스캔이 아닌 호스트 수준 취약성 평가를 위해 설계되었습니다. C. AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하려면 대용량 파일 검색을 처리하기 위해 상당한 개발 노력이 필요합니다. D. 알림에 SES를 사용하고 S3 수명 주기 정책을 트리거하면 솔루션에 불필요한 복잡성이 추가될 수 있습니다. 따라서 최소한의 개발 노력으로 요구 사항을 충족하는 최상의 옵션은 S3를 안전한 전송 지점으로 사용하고 PII 스캔에 Amazon Macie를 활용하는 것입니다.</div>
+<div class="comment-content">Amazon Macie는 AWS에서 PII와 같은 민감한 데이터를 자동으로 검색, 분류 및 보호하는 관리형 서비스입니다. S3에서 Macie를 활성화하면 업로드된 객체에서 PII를 검색할 수 있습니다. A. Amazon Inspector를 사용하여 S3의 객체를 스캔하는 것은 PII 데이터 스캔을 위한 최적의 선택이 아닙니다. Amazon Inspector는 콘텐츠 검색이 아닌 호스트 수준 취약성 평가를 위해 설계되었습니다. C. AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하려면 대용량 파일 검색을 처리하기 위해 상당한 개발 노력이 필요합니다. D. 알림을 위해 SES를 사용하고 S3 수명 주기 정책을 트리거하면 솔루션이 불필요하게 복잡해질 수 있습니다. 따라서 최소한의 개발 노력으로 요구 사항을 충족하는 최선의 옵션은 S3를 보안 전송 지점으로 사용하고 PII 스캐닝을 위해 Amazon Macie를 활용하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1133,7 +1176,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1161,16 +1204,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				oicic99
+				오이치치99
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 15:18">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 15:18">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">누가 Macie가 그렇게 한다고 말하는지 동의하지만 200GB의 파일 크기와 "회사도 치료 자동화를 원합니다"는 D 답변만 충족하고 다른 가능성은 없습니다.</div>
+<div class="comment-content">Macie가 그렇게 한다고 말하는 사람의 의견에는 동의하지만 파일 크기가 200GB이고 "회사도 교정 자동화를 원합니다"는 D 답변에만 해당되며 다른 가능성은 정확하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1179,7 +1222,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1210,13 +1253,13 @@
 				주이트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 19일 (월) 19:45">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 19:45">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Macie는 잘 들리지만 파일이 너무 큽니다.</div>
+<div class="comment-content">Macie 소리는 좋은데 파일이 너무 큽니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1225,7 +1268,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1253,16 +1296,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				thongvh
+				끈팬티
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수요일 04:20">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수 04:20">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">회사는 관리자가 알림을 받기를 원합니다. -&gt; 최소한의 개발 노력으로 A 요구 사항 제거 -&gt; C, D 제거.</div>
+<div class="comment-content">회사는 관리자에게 경고 -&gt; 최소한의 개발 노력으로 A 요구 사항 제거 -&gt; C,D 제거를 원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1271,7 +1314,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1302,8 +1345,8 @@
 				lfspeers
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 18:44">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 18:44">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1316,7 +1359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1344,11 +1387,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라훌빗34
+				Rahulbit34
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 1일 월요일 22:45">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1361,7 +1404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1389,16 +1432,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				darkknight23
+				다크나이트23
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 00:51">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 00:51">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 가장 논리적으로 들립니다.</div>
+<div class="comment-content">B가 가장 논리적으로 들립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1407,7 +1450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1435,16 +1478,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				맥스페인009
+				Maxpayne009
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 00:42">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 00:42">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">파일 크기는 Macie 할당량을 초과하는 200GB를 초과할 수 있으며 파일을 스캔합니다: https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html 분석할 개별 파일의 크기: Adobe Portable Document 형식(.pdf) 파일: 1,024MB Apache Avro 객체 컨테이너(.avro) 파일: 8GB Apache Parquet(.parquet) 파일: 8GB 이메일 메시지(.eml) 파일: 20GB GNU Zip 압축 아카이브(.gz 또는 . gzip) 파일: 8GB Microsoft Excel 통합 문서(.xls 또는 .xlsx) 파일: 512MB Microsoft Word 문서(.doc 또는 .docx) 파일: 512MB 비이진 텍스트 파일: 20GB TAR 아카이브(.tar) 파일: 20GB ZIP 압축 아카이브(.zip) 파일: 8GB 파일이 해당 할당량보다 큰 경우 Macie는 파일의 데이터를 분석하지 않습니다.</div>
+<div class="comment-content">파일 크기는 Macie 할당량을 초과하는 200GB를 초과할 수 있으며 파일을 검사합니다: https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html 분석할 개별 파일의 크기: Adobe Portable Document 형식(.pdf) 파일: 1,024MB Apache Avro 개체 컨테이너(.avro) 파일: 8GB Apache Parquet(.parquet) 파일: 8GB 이메일 메시지(.eml) 파일: 20GB GNU Zip 압축 아카이브(.gz 또는 . gzip) 파일: 8GB Microsoft Excel 통합 문서(.xls 또는 .xlsx) 파일: 512MB Microsoft Word 문서(.doc 또는 .docx) 파일: 512MB 비바이너리 텍스트 파일: 20GB TAR 아카이브(.tar) 파일: 20GB ZIP 압축 아카이브(.zip) 파일: 8GB 파일이 해당 할당량보다 큰 경우 Macie는 파일의 데이터를 분석하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1453,7 +1496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1481,15 +1524,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Kami_7ken
+				카미_7켄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 11:59">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 11:59">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 B라고 생각한다</div>
+<div class="comment-content">내 생각엔 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1498,7 +1541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1530,12 +1573,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 8일 토요일 09:01">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문에는 개발 노력이 전혀 없는 것이 아니라 최소한의 개발 노력으로 요구 사항을 충족하는 솔루션이 필요합니다. D만이 약간의 개발 노력으로 모든 요구 사항을 충족합니다. A: 알림을 보내지 않음 B 및 C: 자동으로 수정하지 않음</div>
+<div class="comment-content">문제는 개발 노력을 전혀 하지 않는 것이 아니라 최소한의 개발 노력으로 요구 사항을 충족하는 솔루션을 요구합니다. D만이 약간의 개발 노력을 통해 모든 요구 사항을 충족합니다. A: 알림을 수행하지 않습니다. B 및 C: 자동으로 수정하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1544,7 +1587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1576,12 +1619,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 5일 수요일 23:12">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B는 최소한의 개발 노력</div>
+<div class="comment-content">B는 최소한의 개발 노력입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1590,7 +1633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1622,11 +1665,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 16:25">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답 B는 관리자에게 PII가 포함된 개체를 수동으로 제거하라는 알림만 트리거하기 때문에 최선의 대답이 아닙니다. 이를 위해서는 수동 개입이 필요하며 PII 제거가 지연될 수 있습니다. 또한 요구 사항 중 하나인 자동화된 치료를 제공하지 않습니다. 반면 Answer D는 PII가 포함된 객체를 자동으로 제거하기 위해 S3 수명 주기 정책을 트리거하는 AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현합니다. 또한 Amazon SES를 사용하여 관리자에게 알림을 보냅니다. 이 솔루션은 요구 사항을 충족하는 자동 수정 및 관리자 알림을 모두 제공합니다.</div>
+<div class="comment-content">답변 B는 PII가 포함된 개체를 수동으로 제거하도록 관리자에게 알림을 보내기만 하므로 최선의 답변이 아닙니다. 이를 위해서는 수동 개입이 필요하며 PII 제거가 지연될 수 있습니다. 또한 요구 사항 중 하나인 자동 교정 기능도 제공하지 않습니다. 반면, 답변 D는 PII가 포함된 객체를 자동으로 제거하기 위해 S3 수명 주기 정책을 트리거하는 AWS Lambda 함수에 사용자 지정 검색 알고리즘을 구현합니다. 또한 Amazon SES를 사용하여 관리자에게 알림을 보냅니다. 이 솔루션은 요구 사항을 충족하는 자동화된 문제 해결 및 알림 기능을 관리자에게 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1635,7 +1678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1667,12 +1710,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 16:16">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Answer D는 수정 자동화의 추가 기능을 제공하기 때문에 Answer B보다 더 나은 선택입니다. 답변 B에서 관리자는 S3 버킷에 PII가 있다는 알림만 받았지만 문제가 되는 개체를 수동으로 제거해야 합니다. 반대로 Answer D는 AWS Lambda를 사용하여 Amazon SES를 통해 관리자에게 자동으로 알림을 트리거하고 S3 수명 주기 정책을 통해 PII가 포함된 파일을 제거합니다. 즉, 수정 프로세스가 자동화되어 관리자의 수동 작업이 덜 필요합니다. 또한 Amazon SES를 사용하여 알림을 보내면 메시지 콘텐츠 및 전송 옵션 측면에서 더 큰 유연성이 제공됩니다.</div>
+<div class="comment-content">답변 D는 교정 자동화 기능을 추가로 제공하므로 답변 B보다 더 나은 선택입니다. 답변 B에서 관리자는 S3 버킷에 PII가 있다는 알림만 받지만 여전히 문제가 되는 객체를 수동으로 제거해야 합니다. 반면, 답변 D는 AWS Lambda를 사용하여 Amazon SES를 통해 관리자에게 알림을 자동으로 트리거하고 S3 수명 주기 정책을 통해 PII가 포함된 파일을 제거합니다. 이는 수정 프로세스가 자동화되어 관리자의 수동 작업이 덜 필요하다는 것을 의미합니다. 또한 Amazon SES를 사용하여 알림을 보내면 메시지 내용 및 전송 옵션 측면에서 더 큰 유연성을 얻을 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1681,7 +1724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1705,11 +1748,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 3일 수요일 14:21">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">회사도 교정 자동화를 원한다는 문장 때문에 답변 D에 동의합니다.</div>
+<div class="comment-content">회사에서도 교정 자동화를 원한다는 문장 때문에 답변 D에 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1718,7 +1761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1757,12 +1800,12 @@
 				올드맨2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 22일 수 12:50">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 22일 수요일 12:50">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS Macie는 최소한의 노력으로 PII를 감지할 수 있으므로 B를 선택합니다.</div>
+<div class="comment-content">AWS Macie가 최소한의 노력으로 PII를 감지할 수 있기 때문에 B를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1771,7 +1814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1799,15 +1842,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				어디에서 시작할 수 있습니까?
+				어디서부터 시작할 수 있나요?
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 14:28">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문이 모호한 것 같습니다....Macie는 PII를 포함하여 중요한 데이터 유형을 스캔하고 감지하므로 B를 가리킵니다. 그러나 autoremediation 키워드는 문제가 발견될 때 아무 조치도 취하지 않아도 된다고 Architect에게 알려줍니다. 그런 다음 D를 가리키지만 S3 수명 주기는 PII 데이터를 어떻게 제거합니까? 질문은 일정 기간 동안 보관하거나 저장하는 것에 대해 묻지 않습니다. 어떤 대답이 맞는지 혼란스럽습니다....Macie가 데이터 식별을 자동화하기 때문에 아마도 B일 것입니다.</div>
+<div class="comment-content">질문이 모호한 것 같습니다....Macie는 PII를 포함한 민감한 데이터 유형을 스캔하고 감지하므로 B를 가리킵니다. 그러나 자동 교정이라는 키워드는 문제가 발견되면 아무 것도 하지 않아도 된다는 것을 Architect에게 알려줍니다. 그런 다음 D를 가리키지만 S3 수명 주기는 PII 데이터를 어떻게 제거합니까? 질문은 장기간 보관 또는 저장에 대해 묻지 않습니다. 어떤 대답이 맞는지 혼란스럽습니다....Macie가 데이터 식별을 자동화하기 때문에 B일 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1816,7 +1859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1839,12 +1882,12 @@
 				파올로로마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 10:11">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 10:11">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">동의합니다. S3 수명 주기 관리가 PII가 있는 특정 파일을 제거하는 방법이 명확하지 않습니다. S3 수명 주기 규칙을 정의할 때 접두사 및/또는 태그를 사용하여 규칙의 범위를 설정할 수 있으며 "객체가 최신이 아닌 날짜가 된 후"만 조건으로 설정할 수 있습니다.</div>
+<div class="comment-content">귀하의 의견에 동의합니다. S3 수명 주기 관리가 PII가 포함된 특정 파일을 제거하는 방법이 명확하지 않습니다. S3 수명 주기 규칙을 정의할 때 접두사 및/또는 태그를 사용하여 규칙의 범위를 설정할 수 있으며 "객체가 최신이 아닌 날짜"만 조건으로 설정할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1853,7 +1896,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1889,16 +1932,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				호즈가즈
+				호아즈가즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 01:56">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 01:56">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">ChatGPT에게 질문했습니다. 이전 답변에 대해 사과드립니다. 옵션 B는 자동 수정을 제공하지 않을 수 있으며 PII가 포함된 개체를 제거하려면 관리자가 수동으로 개입해야 합니다. 따라서 옵션 B는 자동 수정 요구 사항을 충족하는 데 최선의 선택이 아닙니다. 옵션 D는 최소한의 개발 노력으로 문제 해결 자동화 요구 사항을 충족하는 최선의 선택입니다. 이 옵션에는 AWS Lambda 함수에서 사용자 지정 스캔 알고리즘을 구현하고 객체가 S3 버킷에 로드될 때 함수를 트리거하는 작업이 포함됩니다. 개체에 PII가 포함된 경우 Lambda 함수는 Amazon SES 알림을 트리거하여 관리자에게 경고하고 S3 수명 주기 정책을 트리거하여 PII가 포함된 개체를 자동으로 제거할 수 있습니다. 그러므로,</div>
+<div class="comment-content">ChatGPT에게 물었습니다. 이전 답변에 대해 사과드립니다. 옵션 B가 자동 교정을 제공하지 않을 수 있으며 PII가 포함된 개체를 제거하려면 관리자의 수동 개입이 필요할 수 있다는 점은 맞습니다. 따라서 옵션 B는 교정 자동화 요구 사항을 충족하는 데 가장 적합한 선택이 아닙니다. 옵션 D는 최소한의 개발 노력으로 교정 자동화 요구 사항을 충족하는 최선의 선택입니다. 이 옵션에는 AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하고 객체가 S3 버킷에 로드될 때 함수를 트리거하는 작업이 포함됩니다. 객체에 PII가 포함된 경우 Lambda 함수는 Amazon SES 알림을 트리거하여 관리자에게 알리고 S3 수명 주기 정책을 트리거하여 PII가 포함된 객체를 자동으로 제거할 수 있습니다. 그러므로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1907,7 +1950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1938,13 +1981,13 @@
 				김지유
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 08:16">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 08:16">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B D와 헷갈립니다. 하지만 S3 수명 주기 정책은 다른 AWS 서비스에 의해 트리거되어 개체를 제거하지 않는 것 같습니다.</div>
+<div class="comment-content">B D와 혼동스럽습니다. 하지만 S3 수명 주기 정책은 다른 AWS 서비스에 의해 트리거되어 객체를 제거하지 않는 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1953,7 +1996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1984,13 +2027,13 @@
 				엘로2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 16:35">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 16:35">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 질문은 "최소한의 개발 노력으로?"라고 묻습니다. 자동화를 요구하지 않으므로 약간의 인력이 필요합니다. 이제 Macies 작업은 PII를 스캔하고 식별하는 것입니다. 그런 다음 PII를 확인하는 대신 확인해야 하는 사람에게 100GB의 데이터를 제공하면 이제 그는 1GB에 불과할 수 있는 사람의 정보가 있는 데이터만 얻을 수 있습니다. 그것은 단순히 당신을 위한 PII를 찾고 당신이 해야 할 일은 최종 결정을 내리는 것입니다.</div>
+<div class="comment-content">B. 질문은 "최소 개발 노력으로?"라고 묻습니다. 자동화를 요구하지 않으므로 약간의 인간 노력이 필요합니다. 이제 Macies의 임무는 PII를 스캔하고 식별한 다음 100GB의 데이터를 처리하는 대신 확인해야 하는 인간에게 제공하는 것입니다. 이제 그는 1GB에 불과한 사람들의 정보가 있는 데이터만 얻을 수 있습니다. 이는 단순히 귀하를 위해 PII를 찾아주고 귀하가 해야 할 일은 최종 결정을 내리는 것뿐입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1999,7 +2042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2031,7 +2074,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 30일 (월) 09:05">
-			6개월, 3주 전
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2045,7 +2088,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2076,12 +2119,12 @@
 				kdinesh95
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 22일 일 15:27">
-			6개월, 4주 전
+<span class="comment-date align-middle" title="2023년 1월 22일 일요일 15:27">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 Amazon Macie인가? Amazon Macie는 기계 학습 및 패턴 일치를 사용하여 민감한 데이터를 검색하고 데이터 보안 위험에 대한 가시성을 제공하며 이러한 위험에 대한 자동화된 보호를 가능하게 합니다.</div>
+<div class="comment-content">왜 아마존 메이시인가? Amazon Macie는 기계 학습 및 패턴 일치를 사용하여 민감한 데이터를 검색하고, 데이터 보안 위험에 대한 가시성을 제공하며, 이러한 위험에 대한 자동화된 보호를 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2090,7 +2133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2121,13 +2164,13 @@
 				사일런트밀리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 02:25">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 02:25">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">최소한의 개발 노력으로 이러한 요구 사항을 충족하기 위해 솔루션 설계자는 Amazon S3 버킷을 안전한 전송 지점으로 사용하고 Amazon Macie를 사용하여 버킷의 객체를 스캔할 수 있습니다. Amazon Macie는 기계 학습을 사용하여 AWS에서 민감한 데이터를 자동으로 검색, 분류 및 보호하는 보안 서비스입니다. 회사는 Macie를 사용하여 맞춤형 검색 알고리즘을 개발할 필요 없이 PII용 버킷의 객체를 쉽고 빠르게 검색할 수 있습니다. Macie가 객체에서 PII를 감지하면 관리자에게 Amazon Simple Notification Service(Amazon SNS) 알림을 트리거하여 데이터에 PII가 있음을 알립니다. 그런 다음 관리자는 PII가 포함된 개체를 제거하기 위한 조치를 취할 수 있습니다.</div>
+<div class="comment-content">최소한의 개발 노력으로 이러한 요구 사항을 충족하기 위해 솔루션 설계자는 Amazon S3 버킷을 보안 전송 지점으로 사용하고 Amazon Macie를 사용하여 버킷의 객체를 스캔할 수 있습니다. Amazon Macie는 기계 학습을 사용하여 AWS의 민감한 데이터를 자동으로 검색, 분류 및 보호하는 보안 서비스입니다. Macie를 사용함으로써 회사는 사용자 지정 검색 알고리즘을 개발할 필요 없이 버킷에 있는 개체에서 PII를 빠르고 쉽게 검색할 수 있습니다. Macie가 객체에서 PII를 감지하면 관리자에게 Amazon Simple Notification Service(Amazon SNS) 알림을 트리거하여 데이터에 PII가 있음을 알릴 수 있습니다. 그런 다음 관리자는 PII가 포함된 개체를 제거하기 위한 조치를 취할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2136,7 +2179,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2164,16 +2207,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 4일 수요일 00:37">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 4일 수 00:37">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문이 너무 혼란스럽다고 생각합니다. Macie는 자동 수정을 수행할 수 있습니다. D를 선택했기 때문에 관리자가 이를 수행하기를 원하는 이유는 무엇입니까?</div>
+<div class="comment-content">질문이 너무 혼란스럽다고 생각합니다. Macie는 자동 교정을 수행할 수 있습니다. 단지 D를 선택했기 때문에 관리자가 이를 수행하기를 원하는 이유는 무엇입니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2182,7 +2225,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2213,8 +2256,8 @@
 				스파이디20
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 3일 화요일 09:12">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 3일 (화) 09:12">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2228,7 +2271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2259,8 +2302,8 @@
 				Zerotn3
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 3일 화요일 04:30">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 3일 (화) 04:30">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2274,7 +2317,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2305,13 +2348,13 @@
 				John_Zhuang
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 31일 (토) 12:38">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 31일 토요일 12:38">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이 질문은 Amazon Macie에 관한 것입니다. https://aws.amazon.com/macie/ S3 환경 전체에서 민감한 데이터를 검색하여 가시성을 높이고 데이터 보안 위험을 자동으로 수정하십시오.</div>
+<div class="comment-content">이 질문은 Amazon Macie에 관한 것입니다. https://aws.amazon.com/macie/ S3 환경 전체에서 민감한 데이터를 검색하여 데이터 보안 위험에 대한 가시성과 자동화된 해결을 향상시키세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2320,7 +2363,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2348,15 +2391,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				섹대디
+				초아빠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 31일 (토) 09:49">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 31일 토요일 09:49">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D "고기 제거" - 덤프의 오타?</div>
+<div class="comment-content">D "고기를 제거하세요" - 덤프에 오타가 있었나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2365,7 +2408,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2397,12 +2440,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 01:01">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B, S3는 보안 전송 지점이 될 수 있으며, 그런 다음 Macie를 사용하여 개인 식별 정보에 대한 버킷의 개체를 스캔하고 해당 정보가 있는 경우 이를 제거하여 SNS를 트리거하여 관리자에게 메시지를 보낼 수 있습니다. A, Inspector는 보안 평가이지만 PII를 탐지하도록 설계되지 않았습니다. C, 여기에는 많은 개발 노력이 필요한 람다 함수에서 사용자 지정 관리 알고리즘을 생성하는 작업이 포함됩니다. D, SES는 관리자에게 메시지를 보내는 데 사용될 수 있지만 PII가 포함된 개체를 자동으로 제거하지는 않습니다.</div>
+<div class="comment-content">B, S3는 보안 전송 지점이 될 수 있으며, Macie를 사용하여 버킷의 개체에서 개인 식별 정보를 검색하고 해당 정보가 있는 경우 이를 제거하여 SNS가 관리자에게 메시지를 보내도록 할 수 있습니다. A, Inspector는 보안 평가이지만 PII C를 탐지하도록 설계되지 않았습니다. 여기에는 람다 함수에서 사용자 지정 관리 알고리즘을 생성하는 작업이 포함되며, 이를 위해서는 많은 개발 노력이 필요합니다. D, SES는 관리자에게 메시지를 보내는 데 사용될 수 있지만 PII가 포함된 개체를 자동으로 제거하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2411,7 +2454,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2439,16 +2482,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:27">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 05:27">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">***올바른*** 옵션 B. Amazon S3 버킷을 안전한 전송 지점으로 사용합니다. Amazon Macie를 사용하여 버킷의 객체를 스캔합니다. 객체에 PII가 포함된 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 트리거합니다. Amazon Macie는 기계 학습을 사용하여 S3에서 민감한 데이터를 자동으로 검색, 분류 및 보호하는 보안 서비스입니다. Macie를 사용하여 S3 버킷의 객체를 스캔하고 PII가 포함된 객체를 식별할 수 있습니다. Macie가 PII가 포함된 객체를 찾으면 Amazon Simple Notification Service(SNS) 알림을 트리거하여 관리자에게 알리도록 구성할 수 있습니다. 이 솔루션은 Macie 및 SNS의 기능을 활용하므로 최소한의 개발 노력이 필요합니다.</div>
+<div class="comment-content">***올바름*** 옵션 B. Amazon S3 버킷을 보안 전송 지점으로 사용합니다. Amazon Macie를 사용하여 버킷의 객체를 스캔합니다. 객체에 PII가 포함되어 있는 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 보냅니다. Amazon Macie는 기계 학습을 사용하여 S3의 민감한 데이터를 자동으로 검색, 분류 및 보호하는 보안 서비스입니다. Macie를 사용하여 S3 버킷의 객체를 스캔하고 PII가 포함된 객체를 식별할 수 있습니다. Macie가 PII가 포함된 객체를 발견하면 Amazon Simple Notification Service(SNS) 알림을 트리거하여 관리자에게 알리도록 구성할 수 있습니다. 이 솔루션은 Macie 및 SNS의 기능을 활용하므로 개발 노력이 최소화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2457,7 +2500,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2477,15 +2520,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				섹대디
+				초아빠
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 31일 (토) 09:57">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 31일 토요일 09:57">
+			7개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B는 교정 자동화 요구 사항을 충족하지 않습니다. 두 가지 요구 사항을 모두 충족하는 유일한 답은 개발 노력이 많이 들지만 D입니다. 어색한 질문입니다.</div>
+<div class="comment-content">B는 교정 자동화 요구 사항을 충족하지 않습니다. 두 가지 요구 사항을 모두 충족하는 유일한 대답은 개발 노력이 높음에도 불구하고 D입니다. 어색한 질문이네요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2494,7 +2537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2514,15 +2557,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 27일 월요일 07:41">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 27일 (월) 07:41">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 B가 교정 자동화 요구 사항을 충족하지 않는다는 귀하의 말이 맞습니다. 답변 B는 관리자에게 PII가 포함된 개체를 수동으로 제거하라는 알림만 제공합니다. 그러나 Answer D는 관리자에게 알림을 보내는 것 외에도 PII가 포함된 객체를 자동으로 제거하는 S3 수명 주기 정책을 트리거하여 두 요구 사항을 모두 해결합니다. 따라서 교정 자동화 요구 사항이 필수인 경우 더 많은 개발 노력에도 불구하고 답변 D가 올바른 선택입니다. Answer D는 두 가지 요구 사항을 모두 해결하는 보다 포괄적인 솔루션인 반면 Answer B는 한 가지 요구 사항만 해결합니다. 그러나 Answer D는 사용자 지정 검색 알고리즘을 구현하고 Amazon SES 및 S3 수명 주기 정책과 통합하기 위해 더 많은 개발 노력이 필요하다는 점은 주목할 가치가 있습니다.</div>
+<div class="comment-content">답변 B가 교정 자동화 요구 사항을 충족하지 않는다는 말씀이 맞습니다. 답변 B는 관리자에게 PII가 포함된 개체를 수동으로 제거하라는 알림만 제공합니다. 그러나 답변 D는 관리자에게 알림을 보내는 것 외에도 PII가 포함된 객체를 자동으로 제거하는 S3 수명 주기 정책을 트리거하여 두 가지 요구 사항을 모두 충족합니다. 따라서 교정 자동화 요구 사항이 필수라면 더 높은 개발 노력에도 불구하고 답변 D가 올바른 선택입니다. 답변 D는 두 가지 요구 사항을 모두 해결하는 보다 포괄적인 솔루션인 반면, 답변 B는 하나의 요구 사항만 해결합니다. 그러나 Answer D에는 사용자 지정 검색 알고리즘을 구현하고 Amazon SES 및 S3 수명 주기 정책과 통합하기 위해 더 많은 개발 노력이 필요하다는 점은 주목할 가치가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2531,7 +2574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2551,15 +2594,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 27일 월요일 07:41">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 27일 (월) 07:41">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">두 요구 사항이 똑같이 중요하고 개발 노력이 제약 조건이 아닌 경우 답변 D는 두 요구 사항을 모두 해결하므로 정답이 됩니다. 대답 B는 PII가 다시 공유되는 경우 관리자에게 경고하는 첫 번째 요구 사항만 처리하지만 수정을 위한 자동화는 제공하지 않습니다. 그러나 개발 노력을 최소화하는 데 중점을 두고 문제 해결을 자동화하는 것보다 관리자에게 알리는 데 더 우선 순위가 있는 경우 Answer B가 실행 가능한 옵션이 될 수 있습니다. 궁극적으로 Answer B와 Answer D 사이의 선택은 회사와 프로젝트의 특정 요구 사항과 우선 순위에 따라 다릅니다. 그러나 나는 내 대답 (B)을 고수합니다.</div>
+<div class="comment-content">두 요구 사항이 똑같이 중요하고 개발 노력이 제약 조건이 아닌 경우 두 요구 사항을 모두 다루기 때문에 답변 D가 정답이 됩니다. 답변 B는 PII가 다시 공유되는 경우 관리자에게 알리는 첫 번째 요구 사항만 다루고 교정을 위한 자동화는 제공하지 않습니다. 그러나 개발 노력을 최소화하는 데 중점을 두고 문제 해결 자동화보다 관리자에게 경고하는 것이 더 중요하다면 답변 B가 실행 가능한 옵션이 될 수 있습니다. 궁극적으로 답변 B와 답변 D 사이의 선택은 회사와 프로젝트의 특정 요구 사항과 우선 순위에 따라 달라집니다. 하지만 나는 내 대답(B)을 고수한다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2568,7 +2611,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2612,15 +2655,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:28">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 화 05:28">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">***잘못됨*** Amazon Inspector를 사용하여 버킷의 객체를 스캔하는 옵션 A는 원하는 기능을 제공하지 않습니다. S3 버킷. AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하는 옵션 C는 Macie를 사용할 때보다 더 많은 개발 노력이 필요합니다. Amazon Simple Email Service(SES)를 사용하여 알림을 트리거하는 옵션 D도 SNS를 사용하는 것보다 더 많은 개발 노력이 필요합니다.</div>
+<div class="comment-content">***잘못됨*** Amazon Inspector를 사용하여 버킷의 객체를 스캔하는 옵션 A는 원하는 기능을 제공하지 않습니다. Amazon Inspector는 버킷에 있는 객체의 콘텐츠가 아닌 인프라 리소스의 보안 및 규정 준수를 평가하도록 설계되었기 때문입니다. S3 버킷. AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하는 옵션 C는 Macie를 사용할 때보다 더 많은 개발 노력이 필요합니다. 알림을 트리거하기 위해 Amazon Simple Email Service(SES)를 사용하는 옵션 D도 SNS를 사용할 때보다 더 많은 개발 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2629,7 +2672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2665,11 +2708,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 19일 (월) 06:58">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 19일 월요일 06:58">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2683,7 +2726,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2714,12 +2757,12 @@
 				호라이이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 23:13">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 23:13">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D 자동 수정 때문에 유일한 방법이기 때문에 여기에 문제가 있다고 생각합니다.</div>
+<div class="comment-content">D 자동화된 교정으로 인해 이것이 유일한 방법이기 때문에 여기에 문제가 있다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2728,7 +2771,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2748,15 +2791,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aadi7
+				아디7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 00:46">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 화 00:46">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실이지만 최소한의 개발 노력도 필요합니다. 사용자 지정 람다를 구축하는 것은 이러한 개념에 위배됩니다. 자동 수정 때문에 여전히 D로 표시합니다.</div>
+<div class="comment-content">사실이지만 개발 노력이 가장 적다는 뜻이기도 합니다. 사용자 정의 람다를 구축하는 것은 이러한 개념에 어긋납니다. 자동화된 교정 때문에 여전히 D로 표시하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2765,7 +2808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2804,12 +2847,12 @@
 				침략자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 16:09">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 16:09">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B&amp;D 중에서 어떻게 선택할 수 있습니까? B에는 최소 개발 노력에 응답하는 MACIE 최선의 방법이 있지만 자동 수정은 없습니다 .... D에는 자동 수정이 훌륭하지만 최소 개발 노력과 관련하여 이 요구 사항을 충족하지 않습니다 ....</div>
+<div class="comment-content">B와 D 중에서 어떻게 선택할 수 있나요? B에는 최소 개발 노력에 응답할 수 있는 MACIE 최선의 방법이 있지만 자동 수정은 없습니다. D에는 자동 수정이 훌륭하지만 최소 개발 노력과 관련하여 이 요구 사항을 충족하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2818,7 +2861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2849,12 +2892,12 @@
 				샤샤1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 13:38">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 13:38">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 버킷의 객체를 스캔하는 B Amazon Macie입니다. 객체에 PII가 포함된 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 트리거합니다. 옵션 A는 올바르지 않습니다. 버킷의 객체를 스캔하는 Amazon Inspector가 PII를 감지하는 데 적합하지 않기 때문입니다. 옵션 D도 올바르지 않습니다. AWS Lambda 함수에서 사용자 지정 스캔 알고리즘을 구현하려면 추가 개발 노력이 필요하기 때문입니다. Amazon SES를 사용하여 관리자에게 알림을 트리거하고 S3 수명 주기 정책을 트리거할 필요가 없습니다. 관리자가 PII가 포함된 객체를 수동으로 제거할 수 있기 때문입니다.</div>
+<div class="comment-content">답은 버킷의 객체를 스캔하는 B Amazon Macie입니다. 객체에 PII가 포함되어 있는 경우 Amazon Simple Notification Service(Amazon SNS)를 사용하여 관리자에게 PII가 포함된 객체를 제거하라는 알림을 보냅니다. 옵션 A가 올바르지 않습니다. 이는 버킷의 객체를 스캔하는 Amazon Inspector가 PII를 탐지하는 데 적합하지 않기 때문입니다. 옵션 D도 올바르지 않습니다. AWS Lambda 함수에서 사용자 지정 검색 알고리즘을 구현하려면 추가 개발 노력이 필요하기 때문입니다. 관리자가 PII가 포함된 객체를 수동으로 제거할 수 있으므로 Amazon SES를 사용하여 관리자에게 알림을 트리거하고 S3 수명 주기 정책을 트리거할 필요는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2863,7 +2906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2894,8 +2937,8 @@
 				마지_심슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 23:43">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 23:43">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2909,7 +2952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2940,12 +2983,12 @@
 				베어캔디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 23:11">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 23:11">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">확실히 D 출처: https://aws.amazon.com/blogs/machine-learning/protect-pii-using-amazon-s3-object-lambda-to-process-and-modify-data-during-retrieval/ 'T는 B가 아닙니다. 개선이 자동이 아니기 때문입니다(엔지니어가 수정해야 하므로). B가 최소한의 개발 방법일지라도 요구하는 바를 달성하지 못합니다!! ITS D 여러분 링크 확인하고 읽어주세요!!</div>
+<div class="comment-content">확실히 D 소스: https://aws.amazon.com/blogs/machine-learning/protect-pii-using-amazon-s3-object-lambda-to-process-and-modify-data-during-retrieval/ 가능합니다. 'B가 되지 마세요. 수정이 자동이 아니기 때문에(엔지니어가 수정해야 하기 때문에) - B가 최소한의 개발 방법이라 할지라도 요구하는 바를 달성하지 못합니다!! ITS D 여러분 링크 꼭 확인하고 읽어주세요!!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2954,7 +2997,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2982,16 +3025,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				베나우스
+				베나우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 08:35">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 08:35">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D만이 효율적으로 문제 해결을 자동화합니다.</div>
+<div class="comment-content">D만이 교정을 효과적으로 자동화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3000,7 +3043,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3031,13 +3074,13 @@
 				wh1t4k3r
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 18:46">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 18:46">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">B와 C는 모두 자동화된 수정을 제공하지 않습니다. A는 관리자에게 알림을 제공하지 않습니다. "개발 노력이 덜 든다"는 것을 이해하지만 자동화 요구 사항을 수동으로 조정해야 한다는 의미는 아닙니다.</div>
+<div class="comment-content">B와 C 모두 자동화된 수정을 제공하지 않습니다. A는 관리자에게 알림을 제공하지 않습니다. "개발 노력이 적습니다"라고 말하지만 그렇다고 자동화 요구 사항을 수동으로 조정해야 한다는 의미는 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3046,7 +3089,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3078,11 +3121,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 9일 금요일 18:25">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저도 D가 맞다고 생각합니다</div>
+<div class="comment-content">나도 D가 맞는거 같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3091,7 +3134,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3119,15 +3162,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				popps01
+				팝스01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 9일 금요일 11:11">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 9일 금 11:11">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 자동 수정 답변 D를 달성하는 데 동의합니다.</div>
+<div class="comment-content">자동 교정 답변 D를 달성하는 데 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3136,7 +3179,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3167,8 +3210,8 @@
 				학습자2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 05일 월요일 06:39">
-			8개월, 2주 전
+<span class="comment-date align-middle" title="2022년 12월 5일 (월) 06:39">
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3182,7 +3225,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3213,13 +3256,13 @@
 				jhxetc
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 20:45">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 20:45">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 질문의 조건을 만족하는 유일한 선택입니다. 출처: https://aws.amazon.com/blogs/machine-learning/protect-pii-using-amazon-s3-object-lambda-to-process-and-modify-data-during-retrieval/</div>
+<div class="comment-content">D는 문제의 조건을 만족하는 유일한 선택입니다. 출처: https://aws.amazon.com/blogs/machine-learning/protect-pii-using-amazon-s3-object-lambda-to-process-and-modify-data-during-retrieval/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3228,7 +3271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3259,12 +3302,12 @@
 				jhxetc
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 20:43">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 20:43">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">응답 B는 질문의 PII 부분만 처리합니다. 교정을 자동화하지 않습니다. 또한 Macie는 SNS 알림을 트리거할 수 있는 EventBridge에 조사 결과를 게시하지만 질문의 표현만큼 간단하지는 않습니다. 질문 및/또는 답변 문구가 Macie를 포함한 답변을 올바른 답변으로 만드는 실제 테스트에서 약간 다를 수 있다고 생각합니다. 그러나 이 시나리오에서 D는 모든 조건을 만족하는 옵션입니다.</div>
+<div class="comment-content">B에 답하면 질문의 PII 부분만 다룹니다. 교정을 자동화하지 않습니다. 또한 Macie는 결과를 EventBridge에 게시합니다. 이는 SNS 알림을 트리거할 수 있지만 질문의 표현만큼 간단하지는 않습니다. 나는 질문 및/또는 답변 문구가 Macie를 포함한 답변을 올바른 것으로 만드는 실제 테스트에서 약간 다를 수 있다고 추측합니다. 그러나 이 시나리오에서는 D가 모든 조건을 만족하는 옵션이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3273,7 +3316,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3304,12 +3347,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 14:32">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 14:32">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3318,7 +3361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3349,8 +3392,8 @@
 				칸웽
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 15일 화요일 03:09">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 15일 (화) 03:09">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3364,7 +3407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3396,7 +3439,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 2일 수요일 15:16">
-			9개월, 2주 전
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3410,7 +3453,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3441,8 +3484,8 @@
 				yd_h
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 19일 수 10:03">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 19일 수요일 10:03">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3455,7 +3498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3479,7 +3522,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 2일 수요일 15:15">
-			9개월, 2주 전
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3492,7 +3535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3531,12 +3574,12 @@
 				시크릿013
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 16일 일 14:54">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 16일 일요일 14:54">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Macie는 PII 데이터를 감지하는 솔루션입니다 Answer B</div>
+<div class="comment-content">Macie는 PII 데이터를 탐지하는 솔루션입니다. 답변 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3545,7 +3588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3576,13 +3619,13 @@
 				닌자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 15일 (토) 19:57">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 15일 토요일 19:57">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 아마존 메이시 https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html</div>
+<div class="comment-content">B 아마존 맥시 https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3591,7 +3634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3619,11 +3662,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				마스터로메인
+				마세트로메인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 12:02">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 12:02">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3637,7 +3680,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3692,7 +3735,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 13 Nov 2022 00:17">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3729,7 +3772,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 02:13">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3741,7 +3784,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">2</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -3774,7 +3817,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 00:36">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3819,7 +3862,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 23 Apr 2023 02:57">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3864,7 +3907,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 05 Jan 2023 17:36">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3909,7 +3952,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 04 Jan 2023 22:28">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3955,7 +3998,7 @@ the principale here is  =&gt; wants administrators to be alerted</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 22:29">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4002,7 +4045,7 @@ https://aws.amazon.com/macie/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 12:35">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4039,7 +4082,7 @@ https://aws.amazon.com/macie/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 04 Jan 2023 22:34">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4104,7 +4147,7 @@ https://aws.amazon.com/macie/
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 13 Nov 2022 14:39">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4142,7 +4185,7 @@ https://aws.amazon.com/macie/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 13 Nov 2022 14:44">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4198,7 +4241,7 @@ https://aws.amazon.com/macie/
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 10 Aug 2023 13:48">
-			1 week, 2 days ago
+			2 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4243,7 +4286,7 @@ https://aws.amazon.com/macie/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 13:10">
-			1 week, 3 days ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4291,7 +4334,7 @@ Using an S3 bucket for secure transfer is good. Amazon Macie can scan the object
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 06:44">
-			2 weeks, 1 day ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4337,7 +4380,7 @@ Using an S3 bucket for secure transfer is good. Amazon Macie can scan the object
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 02:19">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4382,7 +4425,7 @@ Using an S3 bucket for secure transfer is good. Amazon Macie can scan the object
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Jul 2023 05:56">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4428,7 +4471,7 @@ Using an S3 bucket for secure transfer is good. Amazon Macie can scan the object
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 21:42">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4474,7 +4517,7 @@ This quota applies only to the Amazon Macie console and the Amazon Macie API. Th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 10:47">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4540,7 +4583,7 @@ https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 13:48">
-			1 day, 2 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4593,7 +4636,7 @@ https://docs.aws.amazon.com/macie/latest/user/macie-quotas.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 10:52">
-			1 month, 4 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4647,7 +4690,7 @@ Therefore, the best option that meets the requirements with the least developmen
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 15:18">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4693,7 +4736,7 @@ Therefore, the best option that meets the requirements with the least developmen
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Jun 2023 19:45">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4739,7 +4782,7 @@ Therefore, the best option that meets the requirements with the least developmen
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 04:20">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4786,7 +4829,7 @@ Requirements with the LEAST development effort-&gt; Eliminate C,D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 17 May 2023 18:44">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4831,7 +4874,7 @@ Requirements with the LEAST development effort-&gt; Eliminate C,D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 01 May 2023 22:45">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4876,7 +4919,7 @@ Requirements with the LEAST development effort-&gt; Eliminate C,D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 00:51">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4922,7 +4965,7 @@ Requirements with the LEAST development effort-&gt; Eliminate C,D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 00:42">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4992,7 +5035,7 @@ If a file is larger than the applicable quota, Macie doesn't analyze any data in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 11:59">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5037,7 +5080,7 @@ If a file is larger than the applicable quota, Macie doesn't analyze any data in
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Apr 2023 09:01">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5085,7 +5128,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 05 Apr 2023 23:12">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5131,7 +5174,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 16:25">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5176,7 +5219,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 16:16">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5214,7 +5257,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 03 May 2023 14:21">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5267,7 +5310,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Mar 2023 12:50">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5312,7 +5355,7 @@ B and C : do not remediate automatically</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 14:28">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5351,7 +5394,7 @@ I'm confused as to which answer is right....maybe B because Macie automates iden
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 10:11">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5404,7 +5447,7 @@ I'm confused as to which answer is right....maybe B because Macie automates iden
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 01:56">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5455,7 +5498,7 @@ Therefore, option D would be the best choice for meeting the requirement of auto
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 08:16">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5502,7 +5545,7 @@ I'm confused with D. But I think S3 lifecycle policy does NOT remove an object b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Feb 2023 16:35">
-			6 months, 1 week ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5548,7 +5591,7 @@ I'm confused with D. But I think S3 lifecycle policy does NOT remove an object b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 30 Jan 2023 09:05">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5594,7 +5637,7 @@ I'm confused with D. But I think S3 lifecycle policy does NOT remove an object b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 15:27">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5640,7 +5683,7 @@ Amazon Macie discovers sensitive data using machine learning and pattern matchin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 02:25">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5686,7 +5729,7 @@ Amazon Macie discovers sensitive data using machine learning and pattern matchin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 04 Jan 2023 00:37">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5732,7 +5775,7 @@ Amazon Macie discovers sensitive data using machine learning and pattern matchin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 09:12">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5778,7 +5821,7 @@ Amazon Macie discovers sensitive data using machine learning and pattern matchin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 04:30">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5824,7 +5867,7 @@ Amazon Macie discovers sensitive data using machine learning and pattern matchin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 31 Dec 2022 12:38">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5871,7 +5914,7 @@ Discover sensitive data across your S3 environment to increase visibility and au
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 31 Dec 2022 09:49">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5916,7 +5959,7 @@ Discover sensitive data across your S3 environment to increase visibility and au
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 01:01">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5965,7 +6008,7 @@ D, SES may be used to send a message to admins but doesn't automatically remove 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:27">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6006,7 +6049,7 @@ Amazon Macie is a security service that uses machine learning to automatically d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 31 Dec 2022 09:57">
-			7 months, 3 weeks ago
+			7 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6044,7 +6087,7 @@ It's an awkward question.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 07:41">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6083,7 +6126,7 @@ Therefore, if the requirement to automate remediation is a must-have, Answer D i
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 07:41">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6148,7 +6191,7 @@ Ultimately, the choice between Answer B and Answer D depends on the specific req
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:28">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6205,7 +6248,7 @@ Option D, using Amazon Simple Email Service (SES) to trigger a notification, wou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 06:58">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6251,7 +6294,7 @@ Option D, using Amazon Simple Email Service (SES) to trigger a notification, wou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 23:13">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6288,7 +6331,7 @@ Option D, using Amazon Simple Email Service (SES) to trigger a notification, wou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 00:46">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6341,7 +6384,7 @@ Option D, using Amazon Simple Email Service (SES) to trigger a notification, wou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 16:09">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6386,7 +6429,7 @@ Option D, using Amazon Simple Email Service (SES) to trigger a notification, wou
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 13:38">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6432,7 +6475,7 @@ Amazon Macie to scan the objects in the bucket. If objects contain PII, use Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 23:43">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6478,7 +6521,7 @@ Amazon Macie to scan the objects in the bucket. If objects contain PII, use Amaz
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 23:11">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6529,7 +6572,7 @@ ITS D guys please check and read the link!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 08:35">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6575,7 +6618,7 @@ ITS D guys please check and read the link!!</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 18:46">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6623,7 +6666,7 @@ I understand that it says "less development effort" but that does not mean you s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Dec 2022 18:25">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6668,7 +6711,7 @@ I understand that it says "less development effort" but that does not mean you s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Dec 2022 11:11">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6713,7 +6756,7 @@ I understand that it says "less development effort" but that does not mean you s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 05 Dec 2022 06:39">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6759,7 +6802,7 @@ I understand that it says "less development effort" but that does not mean you s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 20:45">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6807,7 +6850,7 @@ Source: https://aws.amazon.com/blogs/machine-learning/protect-pii-using-amazon-s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 20:43">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6854,7 +6897,7 @@ I'm guessing the question and/or answer wording may vary slightly on actual test
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 14:32">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6899,7 +6942,7 @@ I'm guessing the question and/or answer wording may vary slightly on actual test
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 15 Nov 2022 03:09">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6945,7 +6988,7 @@ I'm guessing the question and/or answer wording may vary slightly on actual test
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Nov 2022 15:16">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6991,7 +7034,7 @@ I'm guessing the question and/or answer wording may vary slightly on actual test
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 10:03">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7030,7 +7073,7 @@ https://docs.aws.amazon.com/macie/latest/user/findings-monitor.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Nov 2022 15:15">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7083,7 +7126,7 @@ https://docs.aws.amazon.com/macie/latest/user/findings-monitor.html
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Oct 2022 14:54">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7130,7 +7173,7 @@ Answer B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Oct 2022 19:57">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7177,7 +7220,7 @@ https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 12:02">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

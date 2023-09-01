@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 127 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 127 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 127 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 127 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807369">
 <p class="card-text">
 							
-								회사는 웹 계층, 애플리케이션 계층 및 MySQL 데이터베이스 계층으로 구성된 온프레미스 애플리케이션을 실행하고 있습니다. 데이터베이스는 주로 업무 시간에 사용되며 하루 종일 임의 활동이 최고조에 이릅니다. 데이터베이스 전문가는 회사의 AWS 마이그레이션의 일환으로 MySQL 데이터베이스 계층의 가용성을 개선하고 비용을 줄여야 합니다. <br/>이러한 요구 사항을 충족하는 MySQL 데이터베이스 옵션은 무엇입니까?<br/>
+								회사는 웹 계층, 애플리케이션 계층 및 MySQL 데이터베이스 계층으로 구성된 온프레미스 애플리케이션을 실행하고 있습니다. 데이터베이스는 주로 업무 시간 동안 사용되며 하루 종일 무작위로 활동이 최고조에 달합니다. 데이터베이스 전문가는 회사가 AWS로 마이그레이션하는 과정의 일환으로 MySQL 데이터베이스 계층의 가용성을 향상하고 비용을 줄여야 합니다. <br/>이러한 요구 사항을 충족하는 MySQL 데이터베이스 옵션은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807369" type="application/json">[{"voted_answers": "B", "vote_count": 6, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 2, "is_most_voted": false}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											다중 AZ를 사용하는 MySQL용 Amazon RDS
+											다중 AZ를 갖춘 MySQL용 Amazon RDS
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Amazon Aurora Serverless MySQL 클러스터
+											Amazon Aurora 서버리스 MySQL 클러스터
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">B (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">씨 (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 75%; display: flex;" title="">B (75%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">C (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a> 
-							
-							2021 <i>
-							년 4월 2일, 오후 4:52</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a>
-							
-							at <i>
-							April 2, 2021, 4:52 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,14 +291,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 28일 화요일 18:26">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 28일 (화) 18:26">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. Aurora Serverless 두 가지 요구 사항, 비용 및 가용성을 줄입니다. Aurora Serverless는 Aurora 클러스터에 비해 저렴합니다.</div>
+<div class="comment-content">B. Aurora Serverless 두 가지 요구 사항은 비용과 가용성을 줄입니다. Aurora 서버리스는 Aurora 클러스터에 비해 저렴합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -292,7 +335,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 아닌 이유는 무엇입니까? 다중 AZ를 사용하는 MySQL용 Amazon RDS</div>
+<div class="comment-content">왜 A가 아닌가? 다중 AZ를 갖춘 MySQL용 Amazon RDS</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -301,7 +344,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -321,11 +364,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				G마티넬리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 26일 금요일 14:21">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 26일 금 14:21">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -338,7 +381,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -370,11 +413,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 20일 수 20:31">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">알겠습니다.. B 좋아보이네요. ***주로 업무 시간 중이며 하루 종일 임의 활동 피크***</div>
+<div class="comment-content">응..B는 좋아 보이는데. ***주로 업무 시간 동안에 이루어지며 하루 종일 무작위로 활동이 최고조에 달합니다***</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -383,7 +426,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -414,12 +457,12 @@
 				사용자0001
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 27일 일 16:53">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 27일 일요일 16:53">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">비용 효율적이지 않은 HA 광고만 제공</div>
+<div class="comment-content">HA 광고만 제공 비용 효율적이지 않음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -428,7 +471,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,14 +519,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 12월 9일 목요일 03:24">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 9일 (목) 03:24">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 맞습니다. Amazon Aurora Serverless v1은 간헐적이거나 간헐적이거나 예측할 수 없는 워크로드를 위한 간단하고 비용 효율적인 옵션입니다. https://aws.amazon.com/rds/aurora/serverless/</div>
+<div class="comment-content">B가 맞습니다. Amazon Aurora Serverless v1은 드물거나 간헐적이거나 예측할 수 없는 워크로드를 위한 간단하고 비용 효율적인 옵션입니다. https://aws.amazon.com/rds/aurora/serverless/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -492,7 +535,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,7 +570,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 5월 12일 금요일 08:22">
-			3 개월 전에
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,16 +611,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프라풀른
+				프라플른
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 6일 금요일 05:10">
-			7개월, 1주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">"데이터베이스는 주로 업무 시간 동안 사용되며 하루 종일 임의 활동이 최고조에 달합니다."는 Aurora 서버리스를 선택하는 핵심입니다.</div>
+<div class="comment-content">"데이터베이스는 주로 업무 시간 동안 사용되며 하루 종일 무작위로 활동이 최고조에 달합니다"가 Aurora 서버리스를 선택하는 핵심입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,12 +661,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 22일 목요일 03:32">
-			10개월, 4주 전
+			11개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">"AWS로의 회사 마이그레이션의 일부인 MySQL 데이터베이스 계층"이므로 서버리스를 사용할 수 없도록 DB 호스트에 대한 "계층"을 유지해야 합니다. "씨"가 ​​맞습니다</div>
+<div class="comment-content">"회사가 AWS로 마이그레이션하는 과정의 일부인 MySQL 데이터베이스 계층"이므로 Serverless를 사용할 수 없도록 DB 호스트에 대한 "계층"을 유지해야 합니다. "C"가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,13 +706,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 01:27">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 01:27">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">업무 시간 중에 액세스하고 하루 종일 가끔 활동이 급증하여 가용성을 높이고 비용을 최소화합니다.</div>
+<div class="comment-content">업무 시간 동안 액세스할 수 있으며 하루 종일 활동이 가끔 급증하여 가용성을 높이고 비용을 최소화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,13 +752,13 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 23:13">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 23:13">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">비정기적 쿼리 및 최소 비용의 경우 B</div>
+<div class="comment-content">B: 가끔 쿼리하고 최소 비용</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,7 +795,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				야후
+				야후오
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 2월 16일 수 13:34">
@@ -769,7 +812,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -797,15 +840,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				노츠
+				Nots
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 14:51">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아래에 설명된 사용 사례를 고려하면 프로덕션 사용의 경우 트래픽이 거의 없다고 가정합니다. 또한 V2는 현재 프리뷰 단계이기 때문에 양산을 기대할 수 없다. 이를 감안하면 서버리스에 비해 비용이 높지만 Aurora DB 클러스터가 후보로 꼽힌다. https://aws.amazon.com/rds/aurora/serverless/</div>
+<div class="comment-content">아래에 설명하는 사용 사례를 고려하면 프로덕션 용도의 경우 트래픽이 거의 없다고 가정합니다. 또한 V2는 현재 프리뷰 단계이기 때문에 양산에 들어갈 것이라고는 기대할 수 없습니다. 이러한 점을 고려하면 서버리스에 비해 비용이 높지만 Aurora DB 클러스터가 후보로 간주됩니다. https://aws.amazon.com/rds/aurora/serverless/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -814,7 +857,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -845,7 +888,7 @@
 				차우판
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 05일 화요일 22:34">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 22:34">
 			1년, 10개월 전
 		</span>
 </div>
@@ -859,7 +902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -887,10 +930,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 00:11">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 00:11">
 			1년, 10개월 전
 		</span>
 </div>
@@ -904,7 +947,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -959,7 +1002,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 28 Sep 2021 18:26">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1037,7 +1080,7 @@ two requirements, reduce the cost and availability. Aurora Serverless is cheaper
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 26 Nov 2021 14:21">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1082,7 +1125,7 @@ two requirements, reduce the cost and availability. Aurora Serverless is cheaper
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 20 Oct 2021 20:31">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1129,7 +1172,7 @@ two requirements, reduce the cost and availability. Aurora Serverless is cheaper
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 27 Feb 2022 16:53">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1243,7 +1286,7 @@ https://aws.amazon.com/rds/aurora/serverless/</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 12 May 2023 08:22">
-			3 months ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1288,7 +1331,7 @@ https://aws.amazon.com/rds/aurora/serverless/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 06 Jan 2023 05:10">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1334,7 +1377,7 @@ https://aws.amazon.com/rds/aurora/serverless/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Sep 2022 03:32">
-			10 months, 4 weeks ago
+			11 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1427,7 +1470,7 @@ increase the availability and minimize the cost</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 23:13">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1519,7 +1562,7 @@ Aurora Serverless MySQL cluster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 14:51">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

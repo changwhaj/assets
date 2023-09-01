@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 199 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 199 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 199 discussion</h1>
@@ -62,17 +125,17 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
-							질문 번호: 199 <br/>
-							주제 번호: 1
+							질문 #: 199 <br/>
+							주제 #: 1
 						</div>
 </div>
 <div class="question-body mt-3 pt-3 border-top" data-id="850802">
 <p class="card-text">
 							
-								텔레마케팅 회사는 AWS에서 고객 콜 센터 기능을 설계하고 있습니다. 이 회사는 여러 화자 인식을 제공하고 대본 파일을 생성하는 솔루션이 필요합니다. 회사는 비즈니스 패턴을 분석하기 위해 트랜스크립트 파일을 쿼리하려고 합니다. 기록 파일은 감사 목적으로 7년 동안 저장되어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 텔레마케팅 회사가 AWS에서 고객 콜 센터 기능을 설계하고 있습니다. 회사에는 다중 화자 인식 기능을 제공하고 스크립트 파일을 생성하는 솔루션이 필요합니다. 회사는 비즈니스 패턴을 분석하기 위해 기록 파일을 쿼리하려고 합니다. 녹취록 파일은 감사 목적으로 7년 동안 보관해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											여러 화자 인식을 위해 Amazon Rekognition을 사용하십시오. 성적표 파일을 Amazon S3에 저장합니다. 성적표 파일 분석을 위해 기계 학습 모델을 사용합니다.
+											여러 화자를 인식하려면 Amazon Rekognition을 사용하십시오. Amazon S3에 기록 파일을 저장합니다. 대본 파일 분석을 위해 기계 학습 모델을 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											여러 화자 인식을 위해 Amazon Transcribe를 사용합니다. 성적표 파일 분석에 Amazon Athena를 사용합니다.
+											여러 화자를 인식하려면 Amazon Transcribe를 사용하십시오. 기록 파일 분석에는 Amazon Athena를 사용하십시오.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -101,18 +164,18 @@
 													C.
 												</span> 
 											
-											여러 화자 인식을 위해 Amazon Translate를 사용합니다. Amazon Redshift에 기록 파일을 저장합니다. 성적표 파일 분석에 SQL 쿼리를 사용합니다.
+											여러 화자를 인식하려면 Amazon Translate를 사용하십시오. Amazon Redshift에 기록 파일을 저장합니다. 성적 파일 분석을 위해 SQL 쿼리를 사용합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											여러 화자 인식을 위해 Amazon Rekognition을 사용합니다. 성적표 파일을 Amazon S3에 저장합니다. 성적표 파일 분석에 Amazon Textract를 사용하십시오.
+											여러 화자를 인식하려면 Amazon Rekognition을 사용하십시오. Amazon S3에 기록 파일을 저장합니다. 기록 파일 분석에는 Amazon Textract를 사용하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="34 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">B (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="34 votes." data-toggle="tooltip" role="progressbar" style="width: 89%; display: flex;" title="">B (89%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 11%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 5:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 5:02 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,19 +289,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:10">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:10">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B입니다. Amazon Transcribe를 여러 화자 인식에 사용합니다. 성적표 파일 분석에 Amazon Athena를 사용합니다. Amazon Transcribe는 음성 언어를 서면 텍스트로 자동으로 전사하는 서비스입니다. 여러 화자를 처리할 수 있으며 실시간 또는 비동기식으로 대본 파일을 생성할 수 있습니다. 이러한 기록 파일은 장기 저장을 위해 Amazon S3에 저장할 수 있습니다. Amazon Athena는 SQL을 사용하여 Amazon S3에 저장된 데이터를 분석할 수 있는 쿼리 서비스입니다. 이를 사용하여 성적표 파일을 분석하고 데이터의 패턴을 식별할 수 있습니다. Amazon Rekognition은 구어를 전사하는 것이 아니라 이미지와 비디오를 분석하기 위한 서비스이기 때문에 옵션 A는 올바르지 않습니다. Amazon Translate는 구어를 전사하는 것이 아니라 한 언어에서 다른 언어로 텍스트를 번역하는 서비스이기 때문에 옵션 C는 올바르지 않습니다.</div>
+<div class="comment-content">정답은 B: 다중 화자 인식에 Amazon Transcribe를 사용합니다. 기록 파일 분석에는 Amazon Athena를 사용하십시오. Amazon Transcribe는 음성 언어를 서면 텍스트로 자동 변환하는 서비스입니다. 여러 명의 화자를 처리할 수 있으며 실시간 또는 비동기적으로 스크립트 파일을 생성할 수 있습니다. 이러한 기록 파일은 장기간 보관을 위해 Amazon S3에 저장할 수 있습니다. Amazon Athena는 SQL을 사용하여 Amazon S3에 저장된 데이터를 분석할 수 있는 쿼리 서비스입니다. 이를 사용하여 기록 파일을 분석하고 데이터의 패턴을 식별할 수 있습니다. Amazon Rekognition은 음성 언어를 텍스트로 변환하는 것이 아니라 이미지와 비디오를 분석하는 서비스이므로 옵션 A는 올바르지 않습니다. 옵션 C는 올바르지 않습니다. Amazon Translate는 음성 언어를 전사하는 것이 아니라 텍스트를 한 언어에서 다른 언어로 번역하는 서비스이기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -291,11 +334,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 3일 월요일 10:14">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저를 괴롭히는 것은 7년의 보관입니다.</div>
+<div class="comment-content">아쉬운 점은 7년의 보관기간입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,7 +347,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,11 +379,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 16:28">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C입니다. https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html 스트리밍 미디어를 실시간으로 기록하거나 미디어 파일을 업로드하고 기록할 수 있습니다. 각 전사 유형에 지원되는 언어를 확인하려면 지원되는 언어 및 언어별 기능 표를 참조하세요.</div>
+<div class="comment-content">정답은 C입니다. https://docs.aws.amazon.com/transcribe/latest/dg/what-is.html 스트리밍 미디어를 실시간으로 복사하거나 미디어 파일을 업로드하여 복사할 수 있습니다. 각 전사 유형에 대해 지원되는 언어를 확인하려면 지원되는 언어 및 언어별 기능 표를 참조하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -349,7 +392,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -373,11 +416,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 09:53">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">무시. 나는 B를 의미했다</div>
+<div class="comment-content">무시. 내 말은 B를 말한 거야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -386,7 +429,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -418,11 +461,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 09:46">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://aws.amazon.com/about-aws/whats-new/2022/06/amazon-transcribe-supports-automatic-language-identification-multi-lingual-audio/ Amazon Translate는 다국어 식별 서비스입니다. , 오디오 파일에서 말하는 모든 언어를 식별하고 식별된 각 언어를 사용하여 대본을 만듭니다.</div>
+<div class="comment-content">https://aws.amazon.com/about-aws/whats-new/2022/06/amazon-transcribe-supports-automatic-언어-identification-multi-lingual-audio/ Amazon Translate는 다국어 식별을 위한 서비스입니다. 는 오디오 파일에서 사용되는 모든 언어를 식별하고 식별된 각 언어를 사용하여 스크립트를 생성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -431,7 +474,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -455,7 +498,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 09:54">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -468,7 +511,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,12 +570,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:45">
-			19시간 23분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">정답은 B입니다. Amazon Transcribe를 여러 화자 인식에 사용합니다. 성적표 파일 분석에 Amazon Athena를 사용합니다.</div>
+<div class="comment-content">정답은 B: 다중 화자 인식에 Amazon Transcribe를 사용합니다. 기록 파일 분석에는 Amazon Athena를 사용하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,13 +615,13 @@
 				토르네센
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 07:07">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 07:07">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">까다롭거나 불완전한 질문입니다. Transcribe가 음성 통화 처리에 적합한 서비스이기 때문에 B가 답입니다. 그러나 7년의 스토리지는 포함되지 않습니다(S3 스토리지를 추가해야 함). 그리고 Athena 쿼리는 SQL 쿼리일 뿐이므로 비즈니스 패턴을 인식하는 데 큰 도움이 되지 않습니다. 그러기 위해서는 Comprehend와 같은 텍스트 분석 서비스가 필요하다고 생각합니다. 그렇지 않은 경우... Transcribe를 사용하여 전사할 뿐만 아니라 몇 가지 핵심 단어를 인식한 다음 여러 필드가 있는 DB/S3 레코드를 생성합니다. 예를 들어 텔레마케팅 설문지인 경우 각 질문에 대한 답변을 기록합니다. 그런 다음 SQL 쿼리가 유용할 수 있습니다.</div>
+<div class="comment-content">까다롭거나 불완전한 질문입니다. Transcribe가 음성 통화 처리에 적합한 서비스이기 때문에 B가 답입니다. 하지만 7년의 스토리지는 포함되지 않습니다(S3 스토리지 추가 필요) 그리고 Athena 쿼리는 단지 SQL 쿼리일 뿐 비즈니스 패턴을 인식하는 데 큰 도움이 되지 않습니다. 따라서 Comprehend와 같은 텍스트 분석 서비스가 필요할 것이라고 생각합니다. 그렇지 않은 경우... 우리는 Transcribe를 사용하여 전사할 뿐만 아니라 일부 키워드를 인식한 다음 여러 필드가 포함된 DB/S3 레코드를 생성합니다. 예를 들어 텔레마케팅 설문지인 경우 각 질문에 대한 답변을 기록합니다. 그렇다면 SQL 쿼리가 유용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -615,16 +658,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				병소
+				병든
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 03일 월요일 09:15">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 09:15">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Transcribe and (s3) + Athena는 여기로 가는 길입니다. Redshift는 과잉처럼 들립니다.</div>
+<div class="comment-content">전사하고 (s3) + Athena가 여기로 가는 길입니다. Redshift는 과잉처럼 들립니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,11 +708,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:16">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Transcribe는 여러 화자의 오디오 녹음을 정확하게 전사하여 전사 파일을 생성합니다. 이러한 파일은 Amazon S3에 저장할 수 있습니다. 기록을 분석하고 통찰력을 추출하기 위해 Amazon Athena는 저장된 파일의 SQL 기반 쿼리를 허용합니다. A. Amazon Rekognition은 오디오 트랜스크립션이 아닌 이미지 및 비디오 분석을 위한 것입니다. C. Amazon Translate는 화자 인식이나 대본 분석이 아닌 언어 번역을 위한 것입니다. Amazon Redshift는 기록 파일을 저장하고 쿼리하기 위한 최선의 선택이 아닐 수 있습니다. D. Amazon Rekognition은 이미지 및 비디오 분석을 위한 것이고 Amazon Textract는 문서 추출을 위한 것으로 오디오 기록 또는 분석에 적합하지 않습니다. 성적표 파일을 S3에 저장하는 것이 적절하지만 분석에는 Amazon Athena와 같은 다른 서비스가 필요합니다.</div>
+<div class="comment-content">Amazon Transcribe는 여러 명의 화자가 녹음한 오디오 녹음의 정확한 텍스트 변환을 제공하여 텍스트 파일을 생성합니다. 이러한 파일은 Amazon S3에 저장할 수 있습니다. 기록을 분석하고 통찰력을 추출하기 위해 Amazon Athena는 저장된 파일에 대한 SQL 기반 쿼리를 허용합니다. A. Amazon Rekognition은 오디오 전사가 아닌 이미지 및 비디오 분석을 위한 것입니다. C. Amazon Translate는 언어 번역용이지 화자 인식이나 대화 내용 분석용이 아닙니다. Amazon Redshift는 기록 파일을 저장하고 쿼리하는 데 최선의 선택이 아닐 수 있습니다. D. Amazon Rekognition은 이미지 및 영상 분석용이고, Amazon Textract는 문서 추출용이므로 오디오 전사나 분석에는 적합하지 않습니다. S3에 기록 파일을 저장하는 것이 적절하지만 분석에는 Amazon Athena와 같은 다른 서비스가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -710,7 +753,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 25일 목요일 15:18">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -756,12 +799,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 03:32">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -798,11 +841,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라훌빗34
+				Rahulbit34
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 4일 목요일 16:52">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -815,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -846,13 +889,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:55">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:55">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답변 : 비</div>
+<div class="comment-content">답 : ㄴ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -893,7 +936,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 24일 화요일 16:31">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -907,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -939,11 +982,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 7일 토요일 08:04">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 C입니다. 데이터 워하우징에 대한 빅데이터 분석이 가능한 Amazon Redshift를 사용하여 저장하고 분석하는 것이 정답이 아닐까요?</div>
+<div class="comment-content">정답은 C 입니다. 데이터 워하우징에 대한 빅데이터 분석이 가능한 Amazon Redshift를 이용하여 저장하고 분석하는 것이 정답이 아닐까요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -952,7 +995,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -983,12 +1026,12 @@
 				치란탄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 23:15">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 23:15">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B https://aws.amazon.com/transcribe/ Amazon Transcribe 음성을 텍스트로 자동 변환</div>
+<div class="comment-content">B https://aws.amazon.com/transcribe/ Amazon Transcribe 자동으로 음성을 텍스트로 변환</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -997,7 +1040,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1025,16 +1068,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 02:45">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 02:45">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B ashttps://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/view/7/# Rekognition - 이미지 및 비디오 분석 전사 - 텍스트 음성 변환 - 번역 언어에서 다른 언어로의 텍스트 기반 파일</div>
+<div class="comment-content">B만 https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/view/7/# Rekognition - 이미지 및 비디오 분석 전사 - 텍스트 음성 변환 번역 - a 번역 한 언어에서 다른 언어로의 텍스트 기반 파일</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1043,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1075,12 +1118,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 16:51">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Rekognition - 이미지 및 비디오 분석 Transcribe - Text to speech Translate - 텍스트 기반 파일을 한 언어에서 다른 언어로 번역하므로 논리적 추론에 의해 B입니다.</div>
+<div class="comment-content">Rekognition - 이미지 및 비디오 분석 전사 - 텍스트 음성 변환 번역 - 텍스트 기반 파일을 한 언어에서 다른 언어로 번역합니다. 그래서 논리적 추론은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1089,7 +1132,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1117,16 +1160,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 18:35">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 18:35">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답입니다. Transcribe로 S3 버킷을 지정하여 데이터를 7년 동안 저장하고 나중에 분석에 Athena를 사용할 수 있습니다. Transcribe는 다중 화자 인식도 지원합니다.</div>
+<div class="comment-content">B가 정답입니다. Transcribe를 사용하여 S3 버킷을 지정하면 7년 동안 데이터를 저장하고 나중에 분석용 Athena를 사용할 수 있습니다. Transcribe는 다중 화자 인식도 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1135,7 +1178,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1163,11 +1206,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				저스트세이시드
+				방금 말했다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 07:08">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1181,7 +1224,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1213,12 +1256,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 03:55">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답은 B입니다.</div>
+<div class="comment-content">답은 B이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1227,7 +1270,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1259,11 +1302,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 00:18">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 C가 아닌가? "Amazon Translate는 고급 기계 학습 기술을 사용하여 주문형 고품질 번역을 제공하는 텍스트 번역 서비스입니다. Amazon Translate를 사용하여 구조화되지 않은 텍스트 문서를 번역하거나 여러 언어로 작동하는 애플리케이션을 구축할 수 있습니다."</div>
+<div class="comment-content">왜 C가 아닌가? "Amazon Translate는 고급 기계 학습 기술을 사용하여 주문형 고품질 번역을 제공하는 텍스트 번역 서비스입니다. Amazon Translate를 사용하면 구조화되지 않은 텍스트 문서를 번역하거나 여러 언어로 작동하는 애플리케이션을 구축할 수 있습니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1272,7 +1315,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1296,11 +1339,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 00:18">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">무시. 나는 B를 의미했다</div>
+<div class="comment-content">무시. 내 말은 B를 말한 거야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1309,7 +1352,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1349,11 +1392,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 04:22">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 C가 아닌 B인가? 질문은 S3를 사용하여 데이터를 저장하는 것에 대해 언급하지 않았으므로 athena가 될 수 없습니까?</div>
+<div class="comment-content">왜 C가 아니라 B인가요? 질문에는 S3를 사용하여 데이터를 저장하는 것에 대한 언급이 없으므로 athena가 될 수 없습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1362,7 +1405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1382,15 +1425,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:36">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 10일 화 07:36">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">S3 스토리지를 암시하는 "기록 파일은 감사 목적으로 7년 동안 저장되어야 합니다." C는 텍스트 번역(언어 1에서 언어 2로의 텍스트)이며, 오디오 전사(오디오에서 텍스트로)를 요구하는데 이는 완전히 다른 것입니다.</div>
+<div class="comment-content">"기록 파일은 감사 목적으로 7년 동안 저장되어야 합니다." 이는 S3 저장을 암시합니다. C는 텍스트 번역(언어 1에서 언어 2로의 텍스트)이고, 오디오 전사(오디오에서 텍스트로)를 요청하는데 이는 완전히 다른 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1399,7 +1442,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1435,15 +1478,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토니고스트R05
+				TonyghostR05
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 02:38">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 전사</div>
+<div class="comment-content">B 녹취하다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1452,7 +1495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1483,13 +1526,13 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 20:21">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 20:21">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Transcribe는 이제 스트리밍 트랜스크립션을 위한 화자 레이블 지정을 지원합니다. Amazon Transcribe는 음성을 텍스트로 쉽게 변환할 수 있는 자동 음성 인식(ASR) 서비스입니다. 라이브 오디오 전사에서 각 오디오 스트림에는 여러 명의 화자가 포함될 수 있습니다. 이제 화자에게 레이블을 지정하는 기능을 편리하게 켤 수 있으므로 출력 기록에서 누가 무엇을 말하는지 식별하는 데 도움이 됩니다. https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-speaker-labeling-streaming-transcription/</div>
+<div class="comment-content">Amazon Transcribe는 이제 스트리밍 트랜스크립션을 위한 화자 레이블 지정을 지원합니다. Amazon Transcribe는 음성을 텍스트로 쉽게 변환할 수 있는 자동 음성 인식(ASR) 서비스입니다. 라이브 오디오 전사에서 각 오디오 스트림에는 여러 명의 화자가 포함될 수 있습니다. 이제 화자에게 레이블을 지정하는 기능을 편리하게 켤 수 있으므로 출력 내용에서 누가 무엇을 말하고 있는지 식별하는 데 도움이 됩니다. https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-speaker-labeling-streaming-transcription/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1498,7 +1541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1526,16 +1569,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				맨리클레케
+				만리케레케
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 19:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 19:15">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">질문의 저장 부분을 생략하기 때문에 B가 될 수 없습니다.</div>
+<div class="comment-content">질문의 저장 부분을 생략했기 때문에 B가 될 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1544,7 +1587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1564,11 +1607,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:37">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 10일 화 07:37">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1581,7 +1624,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1612,12 +1655,12 @@
 				tdkcumberland
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 30일 수요일 22:00">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 30일 수 22:00">
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"Transcript 파일 분석에 Amazon Athena 사용" -&gt; 이는 데이터가 S3에 상주해야 하므로 스토리지 문제도 처리해야 함을 의미합니다.</div>
+<div class="comment-content">"기록 파일 분석에 Amazon Athena 사용" -&gt; 이는 데이터가 S3에 상주해야 하므로 스토리지 문제도 처리한다는 의미입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1626,7 +1669,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1665,13 +1708,13 @@
 				허양
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 14:13">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 14:13">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Transcribe는 음성을 텍스트로 변환하고 쿼리를 위해 Athena로 변환합니다.</div>
+<div class="comment-content">Amazon은 음성을 텍스트로 변환하고 쿼리를 위해 Athena를 전사합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1680,7 +1723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1711,13 +1754,13 @@
 				길80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 14:05">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 14:05">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">다음과 같은 이유로 Rekognition이 될 수 없습니다. • ML을 사용하여 이미지 및 비디오에서 물체, 사람, 텍스트, 장면 찾기 • 얼굴 분석 및 얼굴 검색을 통해 사용자 확인, 인원 수 계산 • "익숙한 얼굴" 데이터베이스 생성 또는 유명인과 비교 Transcribe • 음성을 텍스트로 자동 변환 • 자동 음성 인식(ASR)이라는 딥 러닝 프로세스를 사용하여 빠르고 정확하게 음성을 텍스트로 변환 • 축소를 사용하여 PII 자동 제거 • 사용 사례: ○ 고객 서비스 전화 기록 ○ 자동 자막 및 자막 ○ 미디어 자산에 대한 메타데이터를 생성하여 완전히 검색 가능한 아카이브 생성</div>
+<div class="comment-content">인식할 수 없습니다. 그 이유는 다음과 같습니다. • ML을 사용하여 이미지 및 비디오에서 객체, 사람, 텍스트, 장면 찾기 • 얼굴 분석 및 얼굴 검색을 통해 사용자 확인, 사람 수 세기 • "익숙한 얼굴"의 데이터베이스 생성 또는 유명인과 비교 용도: • 음성을 텍스트로 자동 변환 • 자동 음성 인식(ASR)이라는 딥 러닝 프로세스를 사용하여 음성을 텍스트로 빠르고 정확하게 변환 • 축소를 사용하여 자동으로 PII 제거 • 사용 사례: ○ 고객 서비스 통화 기록 ○ 자막 처리 자동화 자막 ○ 미디어 자산에 대한 메타데이터를 생성하여 완전히 검색 가능한 아카이브 생성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1726,7 +1769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1757,13 +1800,13 @@
 				JCH760310
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 12:03">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 12:03">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">기록 - https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-speaker-labeling-streaming-transcription/</div>
+<div class="comment-content">전사 - https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-speaker-labeling-streaming-transcription/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1772,7 +1815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1803,8 +1846,8 @@
 				PS_R
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 10:41">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 10:41">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1817,7 +1860,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1848,8 +1891,8 @@
 				KADSM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:15">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:15">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1862,7 +1905,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1893,13 +1936,13 @@
 				TMM369
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 00:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 00:02">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D - 성적표 파일 분석을 위한 Amazon Textract.</div>
+<div class="comment-content">D - 기록 파일 분석을 위한 Amazon Textract.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1908,7 +1951,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1931,12 +1974,12 @@
 				레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 16:44">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 16:44">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Rekognition은 객체 감지에 사용됩니다. transcribe는 음성을 텍스트로 변환하는 데 사용됩니다.</div>
+<div class="comment-content">Amazon Rekognition은 객체 감지에 사용됩니다. Transcribe는 음성을 텍스트로 변환하는 데 사용됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1945,7 +1988,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1984,13 +2027,13 @@
 				레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 17:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:02">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Amazon Transcribe는 음성을 텍스트로 변환합니다.</div>
+<div class="comment-content">Amazon은 음성을 텍스트로 변환합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1999,7 +2042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2054,7 +2097,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:10">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2102,7 +2145,7 @@ Option D is incorrect because Amazon Textract is a service for extracting text a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Apr 2023 10:14">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2147,7 +2190,7 @@ Option D is incorrect because Amazon Textract is a service for extracting text a
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 16:28">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2186,7 +2229,7 @@ You can transcribe streaming media in real time or you can upload and transcribe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 09:53">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2231,7 +2274,7 @@ You can transcribe streaming media in real time or you can upload and transcribe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 09:46">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2269,7 +2312,7 @@ Amazon Translate is a service for multi-language identification, which identifie
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 09:54">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2341,7 +2384,7 @@ Amazon Translate is a service for multi-language identification, which identifie
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:45">
-			19 hours, 23 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2387,7 +2430,7 @@ Amazon Translate is a service for multi-language identification, which identifie
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 07:07">
-			4 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2441,7 +2484,7 @@ Unless... We use Transcribe not only to transcribe, but also to recognize some k
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 09:15">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2488,7 +2531,7 @@ Redshift sounds like an overkill</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:16">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2539,7 +2582,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 15:18">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2585,7 +2628,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 07 May 2023 03:32">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2631,7 +2674,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 04 May 2023 16:52">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2676,7 +2719,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:55">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2722,7 +2765,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 24 Jan 2023 16:31">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2768,7 +2811,7 @@ D. Amazon Rekognition is for image and video analysis, and Amazon Textract is fo
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 08:04">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2814,7 +2857,7 @@ Wouldn't it be the right answer to save and analyze using Amazon Redshift, which
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 23:15">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2863,7 +2906,7 @@ Automatically convert speech to text</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 02:45">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2913,7 +2956,7 @@ Translate - Translate a text-based file from a language to another language</div
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 16:51">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2962,7 +3005,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 18:35">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3008,7 +3051,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 07:08">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3054,7 +3097,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 03:55">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3100,7 +3143,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 00:18">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3138,7 +3181,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 00:18">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3191,7 +3234,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 04:22">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3228,7 +3271,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:36">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3281,7 +3324,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 02:38">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3326,7 +3369,7 @@ So by logical deduction is it B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 20:21">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3374,7 +3417,7 @@ https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-sp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 19:15">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3412,7 +3455,7 @@ https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-sp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:37">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3457,7 +3500,7 @@ https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-sp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 22:00">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3510,7 +3553,7 @@ https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-sp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 14:13">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3556,7 +3599,7 @@ https://aws.amazon.com/about-aws/whats-new/2020/08/amazon-transcribe-supports-sp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 14:05">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3614,7 +3657,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 12:03">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3660,7 +3703,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 10:41">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3705,7 +3748,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:15">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3750,7 +3793,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 00:02">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3788,7 +3831,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 16:44">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3841,7 +3884,7 @@ Transcribe is for:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:02">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

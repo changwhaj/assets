@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C02 주제 1 질문 258 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C02 시험 주제 1 문제 258 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1 question 258 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C02 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C02 시험 문제</a>
 <div>
 							질문 #: 258 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="808231">
 <p class="card-text">
 							
-								한 회사에 많은 Amazon EC2 인스턴스를 사용하여 작업을 완료하는 매우 동적인 배치 처리 작업이 있습니다. 작업은 본질적으로 상태 비저장이며 부정적인 영향 없이 지정된 시간에 언제든지 시작 및 중지할 수 있으며 일반적으로 완료하는 데 총 60분 이상 걸립니다. 회사는 솔루션 아키텍트에게 작업 요구 사항을 충족하는 확장 가능하고 비용 효율적인 솔루션을 설계하도록 요청했습니다. <br/>솔루션 설계자는 무엇을 추천해야 합니까?<br/>
+								한 회사에는 많은 Amazon EC2 인스턴스를 사용하여 완료하는 매우 동적인 일괄 처리 작업이 있습니다. 작업은 본질적으로 상태 비저장이며 부정적인 영향 없이 언제든지 시작 및 중지될 수 있으며 일반적으로 완료하는 데 총 60분 이상이 소요됩니다. 회사는 솔루션 설계자에게 작업 요구 사항을 충족하는 확장 가능하고 비용 효율적인 솔루션을 설계하도록 요청했습니다. <br/>솔루션 설계자는 무엇을 추천해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="808231" type="application/json">[{"voted_answers": "A", "vote_count": 2, "is_most_voted": false}]</script>
@@ -91,7 +154,7 @@
 													B.
 												</span> 
 											
-											EC2 예약 인스턴스를 구매합니다.
+											EC2 예약 인스턴스를 구매하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -109,7 +172,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -119,22 +182,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2020년 11월 3일 오전 <i>
-							3:12 </i><a class="title-username" style="">
-								sctmp
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								sctmp
-							</a>
-							
-							at <i>
-							Nov. 3, 2020, 3:12 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -246,14 +289,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 23일 목요일 00:10">
+<span class="comment-date align-middle" title="2021년 9월 23일 (목) 00:10">
 			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 부정적인 영향 없이 주어진 시간에 작업을 시작하고 중지할 수 있습니다. 완벽한 시나리오.</div>
+<div class="comment-content">A. 작업은 부정적인 영향 없이 언제든지 시작되고 중지될 수 있습니다. 완벽한 시나리오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -285,12 +328,12 @@
 				이스라엘
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 28일 화요일 16:36">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 28일 (화) 16:36">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">@SCTMP, 당신은 락. 나는 당신의 의견과 분석을 좋아합니다.</div>
+<div class="comment-content">@SCTMP, 당신은 훌륭합니다. 나는 당신의 의견과 분석을 좋아합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -327,15 +370,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아가이9
+				aguy9
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 15일 금 22:50">
+<span class="comment-date align-middle" title="2021년 10월 15일 금요일 22:50">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">네 A. 확실히</div>
+<div class="comment-content">응 A. 확실히</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -344,7 +387,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,14 +427,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 23일 (토) 20:00">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 23일 토요일 20:00">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">1월 26일 오늘 시험을 통과했습니다.</div>
+<div class="comment-content">오늘 1월 26일 시험을 통과했습니다. 시험에 이 질문이 있었고, A, 즉 스팟 인스턴스로 표시했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -428,19 +471,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스퀴쉬보카도
+				스퀴시보카도
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 17:02">
-			23시간 9분 전
+			1주 전, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">디즈 너트</div>
+<div class="comment-content">디즈 견과류</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -449,7 +492,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,7 +574,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">람다 최대 15분 ... 나쁨</div>
+<div class="comment-content">람다 최대 15분 ... 불량</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -560,15 +603,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				bora4motion
+				보라포모션
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 7월 19일 화요일 11:52">
+<span class="comment-date align-middle" title="2022년 7월 19일 화 11:52">
 			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">음...15분 동안 람다를 실행한 다음 다시 시작할 수 있습니다. 멈출 때 아무것도 잃지 않습니다....그래서 람다는 아니죠?</div>
+<div class="comment-content">음...15분 동안 람다를 실행한 다음 다시 시작할 수 있습니다. 멈춰도 아무것도 잃지 않습니다....그래서 Lambda는 아닌가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -577,7 +620,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,12 +659,12 @@
 				키논4
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 06일 (토) 09:17">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 6일 토요일 09:17">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아아아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +673,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -661,12 +704,12 @@
 				syu31svc
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 4일 목요일 21:14">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 (목) 21:14">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"주어진 시간에 시작하고 중지할 수 있음" -&gt; 유연한 워크로드이므로 스팟 인스턴스 대답은 A 100%입니다.</div>
+<div class="comment-content">"언제든지 시작 및 중지 가능" -&gt; 유연한 워크로드이므로 스팟 인스턴스 답변은 100%입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -706,8 +749,8 @@
 				유가 수행자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 02일 화요일 13:09">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 13:09">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -720,7 +763,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -748,15 +791,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				디네쉬크
+				디네쉬
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 28일 목요일 12:36">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">스팟 인스턴스는 애플리케이션이 실행되는 시기와 애플리케이션이 중단될 수 있는 경우에 대해 유연할 수 있는 경우 비용 효율적인 선택입니다. 예를 들어 스팟 인스턴스는 데이터 분석, 배치 작업, 백그라운드 처리 및 선택적 작업에 적합합니다.</div>
+<div class="comment-content">스팟 인스턴스는 애플리케이션 실행 시기와 애플리케이션이 중단될 수 있는 시기를 유연하게 조정할 수 있는 경우 비용 효율적인 선택입니다. 예를 들어 스팟 인스턴스는 데이터 분석, 배치 작업, 백그라운드 처리 및 선택적 작업에 매우 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -765,7 +808,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -801,7 +844,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답 D . 이것은 Lambda입니다.. 상태 비저장/확장 가능/비용 효율적</div>
+<div class="comment-content">D라고 대답하세요. 이것이 람다입니다.. 상태 비저장/확장 가능/비용 효율적</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -810,7 +853,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -830,15 +873,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AWSGeeeeeeK
+				AWS아아아아아아아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 23일 (토) 10:04">
+<span class="comment-date align-middle" title="2021년 10월 23일 토요일 10:04">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">잘못된 Lambda는 15분 이상 실행할 수 없습니다(잠시 동안 하하).</div>
+<div class="comment-content">잘못된 Lambda는 15분 이상 실행할 수 없습니다(잠시 동안은 하하)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -878,8 +921,8 @@
 				롭슨치라라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 10:38">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 10:38">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -892,7 +935,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -912,15 +955,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				bora4motion
+				보라포모션
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 7월 19일 화요일 11:54">
+<span class="comment-date align-middle" title="2022년 7월 19일 화 11:54">
 			1년, 1개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">데이터 손실 없이 언제든지 중지할 수 있습니다.... 람다를 사용하면 작업을 완료하기 위해 4번 실행해야 합니다. 나는 그것이 어떻게 잘못되었는지 알지 못합니까?</div>
+<div class="comment-content">데이터 손실 없이 언제든지 중지할 수 있습니다.... 람다를 사용하면 작업을 완료하려면 4번 실행해야 합니다. 모르겠어요 그게 어떻게 잘못된 건가요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -929,7 +972,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -973,15 +1016,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Bbm2020
+				BBM2020
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 21:42">
+<span class="comment-date align-middle" title="2021년 10월 19일 (화) 21:42">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">때때로 다운타임이 허용되는 개발 및 테스트 서버와 같은 모든 STATLESS, 비프로덕션 애플리케이션에 대해 모든 스팟 인스턴스를 사용할 수 있습니다.</div>
+<div class="comment-content">가끔 가동 중지 시간이 허용되는 개발 및 테스트 서버와 같은 모든 STATLESS, 비프로덕션 애플리케이션에 모든 스팟 인스턴스를 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -990,7 +1033,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1018,7 +1061,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				적절한
+				anpt
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 18일 (월) 12:58">
@@ -1026,7 +1069,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아아아아아아아아아아아아아아</div>
+<div class="comment-content">아아아아아아아아아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1063,15 +1106,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				수쿠555
+				스쿠555
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 16:21">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 16:21">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A입니다. 스팟 인스턴스는 비용 효율적이며 질문에 "중지/시작에는 부정적인 영향이 없습니다"가 있습니다.</div>
+<div class="comment-content">대답은 A입니다. 스팟 인스턴스는 비용 효율적이며 "중지/시작은 부정적인 영향이 없습니다"라는 질문이 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1080,7 +1123,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1111,7 +1154,7 @@
 				mark_af
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 05일 화요일 17:19">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 17:19">
 			1년, 10개월 전
 		</span>
 </div>
@@ -1125,7 +1168,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1156,7 +1199,7 @@
 				venh123
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 04일 (월) 04:51">
+<span class="comment-date align-middle" title="2021년 10월 4일 (월) 04:51">
 			1년, 10개월 전
 		</span>
 </div>
@@ -1170,7 +1213,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1201,12 +1244,12 @@
 				다스요다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 26일 일 03:59">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 26일 일요일 03:59">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기 무료 점수, A가 답입니다</div>
+<div class="comment-content">여기 무료 표시, A가 답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1215,7 +1258,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1307,7 +1350,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Sep 2021 16:36">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1408,7 +1451,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 23 Oct 2021 20:00">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1456,7 +1499,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 17:02">
-			23 hours, 9 minutes ago
+			1 week, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1730,7 +1773,7 @@ Answer is A 100%</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 Nov 2021 13:09">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1776,7 +1819,7 @@ Ans=A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 28 Oct 2021 12:36">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1904,7 +1947,7 @@ This is Lambda.. Stateless /Scalable/Cost effective</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 10:38">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2227,7 +2270,7 @@ This is Lambda.. Stateless /Scalable/Cost effective</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Sep 2021 03:59">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

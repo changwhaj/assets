@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 238 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 238 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 238 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 238 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 238 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861662">
 <p class="card-text">
 							
-								회사에서 엔지니어 팀을 위해 개별 AWS 계정을 실험하려고 합니다. 회사는 지정된 달의 Amazon EC2 인스턴스 사용량이 각 계정의 특정 임계값을 초과하는 즉시 알림을 받기를 원합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하기 위해 솔루션 설계자는 무엇을 해야 합니까?
+								회사에서는 엔지니어 팀을 위해 개별 AWS 계정을 실험하려고 합니다. 회사는 특정 달의 Amazon EC2 인스턴스 사용량이 각 계정의 특정 임계값을 초과하는 즉시 알림을 받기를 원합니다. <br/><br/>이 요구 사항을 가장 비용 효율적으로 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											Cost Explorer를 사용하여 서비스별 비용에 대한 일일 보고서를 생성합니다. EC2 인스턴스별로 보고서를 필터링합니다. 임계값을 초과하면 Amazon Simple Email Service(Amazon SES) 알림을 보내도록 Cost Explorer를 구성합니다.
+											비용 탐색기를 사용하여 서비스별 비용에 대한 일일 보고서를 생성하십시오. EC2 인스턴스별로 보고서를 필터링합니다. 임계값이 초과되면 Amazon Simple Email Service(Amazon SES) 알림을 보내도록 Cost Explorer를 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											Cost Explorer를 사용하여 서비스별 월별 비용 보고서를 생성합니다. EC2 인스턴스별로 보고서를 필터링합니다. 임계값을 초과하면 Amazon Simple Email Service(Amazon SES) 알림을 보내도록 Cost Explorer를 구성합니다.
+											비용 탐색기를 사용하여 서비스별 비용에 대한 월별 보고서를 생성합니다. EC2 인스턴스별로 보고서를 필터링합니다. 임계값이 초과되면 Amazon Simple Email Service(Amazon SES) 알림을 보내도록 Cost Explorer를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											AWS 예산을 사용하여 각 계정에 대한 비용 예산을 생성합니다. 기간을 매월로 설정합니다. 범위를 EC2 인스턴스로 설정합니다. 예산에 대한 경고 임계값을 설정합니다. 임계값 초과 시 알림을 받도록 Amazon Simple Notification Service(Amazon SNS) 주제를 구성합니다.
+											AWS 예산을 사용하여 각 계정에 대한 비용 예산을 생성합니다. 기간을 월 단위로 설정하세요. 범위를 EC2 인스턴스로 설정합니다. 예산에 대한 알림 임계값을 설정합니다. 임계값이 초과될 때 알림을 받도록 Amazon Simple 알림 서비스(Amazon SNS) 주제를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											AWS 비용 및 사용 보고서를 사용하여 시간 단위로 보고서를 생성합니다. 보고서 데이터를 Amazon Athena와 통합합니다. Amazon EventBridge를 사용하여 Athena 쿼리를 예약합니다. 임계값 초과 시 알림을 받도록 Amazon Simple Notification Service(Amazon SNS) 주제를 구성합니다.
+											AWS 비용 및 사용 보고서를 사용하여 시간별 세부 보고서를 생성합니다. 보고서 데이터를 Amazon Athena와 통합합니다. Amazon EventBridge를 사용하여 Athena 쿼리를 예약합니다. 임계값이 초과될 때 알림을 받도록 Amazon Simple 알림 서비스(Amazon SNS) 주제를 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">씨 (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="14 votes." data-toggle="tooltip" role="progressbar" style="width: 93%; display: flex;" title="">C (93%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">7%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Morinator
-							</a> 
-							
-							2023 <i>
-							년 1월 13일 오전 10:45</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Morinator
-							</a>
-							
-							at <i>
-							Jan. 13, 2023, 10:45 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 1월 14일 토요일 19:10">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS 예산을 사용하면 AWS 계정에 대한 예산을 생성하고 사용량이 특정 임계값을 초과할 때 알림을 설정할 수 있습니다. 각 계정에 대한 예산을 생성하고 기간을 월 단위로 지정하고 범위를 EC2 인스턴스로 지정하면 각 계정의 EC2 사용량을 효과적으로 추적하고 임계값을 초과할 때 알림을 받을 수 있습니다. 이 솔루션은 Amazon Athena 또는 Amazon EventBridge와 같은 추가 리소스가 필요하지 않기 때문에 가장 비용 효율적인 옵션입니다.</div>
+<div class="comment-content">AWS 예산을 사용하면 AWS 계정에 대한 예산을 생성하고 사용량이 특정 임계값을 초과할 때 알림을 설정할 수 있습니다. 각 계정에 대한 예산을 생성하고 기간을 월간으로 지정하고 범위를 EC2 인스턴스로 지정하면 각 계정의 EC2 사용량을 효과적으로 추적하고 임계값을 초과할 때 알림을 받을 수 있습니다. 이 솔루션은 Amazon Athena 또는 Amazon EventBridge와 같은 추가 리소스가 필요하지 않으므로 가장 비용 효율적인 옵션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -295,19 +338,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				확실한
+				논쟁의 여지가 없는
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 7월 28일 금요일 17:42">
-			2주, 5일 전
+<span class="comment-date align-middle" title="2023년 7월 28일 금 17:42">
+			4주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS 예산을 사용하여 각 계정에 대한 비용 예산을 생성합니다. 기간을 매월로 설정합니다. 범위를 EC2 인스턴스로 설정합니다. 예산에 대한 경고 임계값을 설정합니다. 임계값 초과 시 알림을 받도록 Amazon Simple Notification Service(Amazon SNS) 주제를 구성합니다.</div>
+<div class="comment-content">AWS 예산을 사용하여 각 계정에 대한 비용 예산을 생성합니다. 기간을 월 단위로 설정하세요. 범위를 EC2 인스턴스로 설정합니다. 예산에 대한 알림 임계값을 설정합니다. 임계값이 초과될 때 알림을 받도록 Amazon Simple 알림 서비스(Amazon SNS) 주제를 구성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,13 +390,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 14:37">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 14:37">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">각 계정에 대한 비용 예산을 생성하고 기간을 월 단위로 지정하고 범위를 EC2로 지정하면 EC2와 관련된 비용을 구체적으로 추적하고 모니터링할 수 있습니다. 예산에 경고 임계값을 설정하면 지정된 임계값이 초과될 때 알림이 트리거됩니다. 알림을 받도록 SNS를 구성합니다. 회사에서 구독하면 즉시 알림을 받을 수 있습니다. A와 B는 Cost Explorer를 사용하여 임계값을 초과할 때 실시간 알림을 제공하지 않을 수 있는 보고서를 생성하기 때문에 가장 비용 효율적인 솔루션이 아닙니다. 또한 A.는 일일 보고서 사용을 제안하고 B.는 월별 보고서 사용을 제안합니다. 이는 즉각적인 알림에 대해 원하는 수준의 세분성을 제공하지 않을 수 있습니다. D는 Athena 및 EventBridge와 함께 비용 및 사용 보고서를 사용하는 것과 관련됩니다.</div>
+<div class="comment-content">각 계정에 대한 비용 예산을 생성하고 기간을 월별로 지정하고 범위를 EC2로 지정하면 EC2와 관련된 비용을 구체적으로 추적하고 모니터링할 수 있습니다. 예산에 경고 임계값을 설정하면 지정된 임계값이 초과될 때 알림이 트리거됩니다. 즉시 알림을 받기 위해 회사에서 구독할 수 있는 알림을 받도록 SNS를 구성합니다. A와 B는 Cost Explorer를 사용하여 보고서를 생성하는 것과 관련되어 있어 가장 비용 효과적인 솔루션이 아니며 임계값이 초과될 때 실시간 알림을 제공하지 못할 수 있습니다. 또한 A.는 일일 보고서 사용을 제안하고 B는 월별 보고서 사용을 제안합니다. 이는 즉각적인 알림에 대해 원하는 수준의 세부성을 제공하지 못할 수 있습니다. D에는 Athena 및 EventBridge에서 비용 및 사용 보고서를 사용하는 작업이 포함됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,12 +437,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 22일 수 22:44">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 D와 함께 간다. 그것은 "즉시"라고 쓰여 있고, "일일" 보고서는 내 생각에 기다리는 데 조금 더 긴 시간 프레임인 것 같다.</div>
+<div class="comment-content">저는 D를 선택합니다. "즉시"라고 되어 있고, "일일" 보고서는 기다리는 시간이 조금 더 긴 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,11 +475,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 5일 일요일 15:46">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Athena는 s3에서만 사용할 수 있으므로 D를 버리기에 충분합니다.</div>
+<div class="comment-content">Athena는 s3에서만 사용할 수 있습니다. D를 버리기에 충분합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -445,7 +488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,12 +519,12 @@
 				사무엘03
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 22일 수 22:45">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 22일 수요일 22:45">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실, 나는 그것을 다시 받아들입니다. "비용 효율적"이라고 명확하게 표시되어 있습니다.</div>
+<div class="comment-content">사실, 나는 그것을 취소합니다. "비용 효율적"이라고 분명히 적혀 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,15 +569,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알렉슬리
+				알렉슬리리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 06:48">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C: AWS 예산을 사용하면 계정의 비용 및 사용량에 대한 예산을 설정할 수 있으며 예산 임계값이 요구 사항을 충족하는 실시간으로 초과될 때 알림을 설정할 수 있습니다. B가 아닌 이유: 요구 사항에서 실시간 알림을 요구하지 않는다면 B가 가장 비용 효율적일 것입니다. 일일 또는 월간 보고서 및 알림에 대해 추가 비용이 발생하지 않습니다. 그러나 실시간 알림을 제공하지 않습니다.</div>
+<div class="comment-content">C: AWS 예산을 사용하면 계정의 비용 및 사용량에 대한 예산을 설정할 수 있으며, 요구 사항을 충족하는 예산 임계값이 실시간으로 초과되면 알림을 설정할 수 있습니다. B가 아닌 이유: 요구 사항에서 실시간 알림을 요구하지 않는 경우 B가 가장 비용 효과적입니다. 일일 또는 월간 보고서와 알림에 대한 추가 비용은 발생하지 않습니다. 하지만 실시간 알림은 제공하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -574,8 +617,8 @@
 				mp165
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 19:50">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 19:50">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -589,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,13 +663,13 @@
 				mhmt4438
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 13:06">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 13:06">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답은 C</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -666,8 +709,8 @@
 				베니스1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 06:56">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 06:56">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,16 +752,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				모리네이터
+				모리나토르
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 10:45">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">AWS 예산 IMO, 완료되었습니다.</div>
+<div class="comment-content">AWS 예산 IMO, 완료되었습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -727,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -782,7 +825,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 19:10">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -831,7 +874,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 28 Jul 2023 17:42">
-			2 weeks, 5 days ago
+			4 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -877,7 +920,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 14:37">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -927,7 +970,7 @@ D involves using Cost and Usage Reports with Athena and EventBridge. This soluti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 22:44">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -965,7 +1008,7 @@ D involves using Cost and Usage Reports with Athena and EventBridge. This soluti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Mar 2023 15:46">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1010,7 +1053,7 @@ D involves using Cost and Usage Reports with Athena and EventBridge. This soluti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Feb 2023 22:45">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1063,7 +1106,7 @@ D involves using Cost and Usage Reports with Athena and EventBridge. This soluti
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 06:48">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1110,7 +1153,7 @@ Why not B: B would be the most cost-effective if the requirements didn't ask for
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 19:50">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1156,7 +1199,7 @@ Why not B: B would be the most cost-effective if the requirements didn't ask for
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 13:06">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1202,7 +1245,7 @@ Why not B: B would be the most cost-effective if the requirements didn't ask for
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 06:56">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1248,7 +1291,7 @@ Why not B: B would be the most cost-effective if the requirements didn't ask for
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 10:45">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

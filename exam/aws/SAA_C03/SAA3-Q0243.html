@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 243 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 243 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 243 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 243 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 243 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861667">
 <p class="card-text">
 							
-								의학 연구실에서 새로운 연구와 관련된 데이터를 생성합니다. 연구소는 온프레미스 파일 기반 애플리케이션을 위해 전국의 클리닉에 최소한의 대기 시간으로 데이터를 제공하고자 합니다. 데이터 파일은 각 클리닉에 대한 읽기 전용 권한이 있는 Amazon S3 버킷에 저장됩니다. <br/><br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 무엇을 권장해야 합니까?
+								의학 연구소에서는 새로운 연구와 관련된 데이터를 생성합니다. 연구소에서는 온프레미스 파일 기반 애플리케이션을 위해 전국의 진료소에서 대기 시간을 최소화하면서 데이터를 사용할 수 있도록 하려고 합니다. 데이터 파일은 각 클리닉에 대해 읽기 전용 권한이 있는 Amazon S3 버킷에 저장됩니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 권장해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											각 클리닉에서 온프레미스로 AWS Storage Gateway 파일 게이트웨이를 가상 머신(VM)으로 배포합니다.
+											각 병원의 온프레미스에 AWS Storage Gateway 파일 게이트웨이를 가상 머신(VM)으로 배포합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											처리를 위해 AWS DataSync를 사용하여 각 클리닉의 온프레미스 애플리케이션으로 파일을 마이그레이션합니다.
+											처리를 위해 AWS DataSync를 사용하여 파일을 각 병원의 온프레미스 애플리케이션으로 마이그레이션합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											각 클리닉에서 온프레미스로 AWS Storage Gateway 볼륨 게이트웨이를 가상 머신(VM)으로 배포합니다.
+											AWS Storage Gateway 볼륨 게이트웨이를 각 병원의 온프레미스에 가상 머신(VM)으로 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon Elastic File System(Amazon EFS) 파일 시스템을 각 클리닉의 온프레미스 서버에 연결합니다.
+											Amazon Elastic File System(Amazon EFS) 파일 시스템을 각 진료소의 온프레미스 서버에 연결합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="23 votes." data-toggle="tooltip" role="progressbar" style="width: 92%; display: flex;" title="">A (92%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">8%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="23 votes." data-toggle="tooltip" role="progressbar" style="width: 92%; display: flex;" title="">A (92%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 8%; display: flex;" title="">8%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Morinator
-							</a> 
-							
-							시간: <i>
-							2023년 1월 13일, 오전 11:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Morinator
-							</a>
-							
-							at <i>
-							Jan. 13, 2023, 11:02 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 13:45">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 13:45">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. AWS Storage Gateway 파일 게이트웨이를 각 클리닉의 온프레미스에서 가상 머신(VM)으로 배포 AWS Storage Gateway는 온프레미스 소프트웨어 어플라이언스와 클라우드 기반 스토리지를 연결하여 조직의 온프레미스 간 원활하고 안전한 통합을 제공하는 서비스입니다. -프레미스 IT 환경 및 AWS의 스토리지 인프라. 각 진료소 구내에 파일 게이트웨이를 가상 머신으로 배포함으로써 의료 연구실은 각 진료소에 대한 읽기 전용 권한을 유지하면서 S3 버킷에 저장된 데이터에 대한 짧은 대기 시간 액세스를 제공할 수 있습니다. 이 솔루션을 통해 클리닉은 데이터 전송이나 마이그레이션 없이 온프레미스 파일 기반 애플리케이션에서 직접 데이터 파일에 액세스할 수 있습니다.</div>
+<div class="comment-content">A. AWS Storage Gateway 파일 게이트웨이를 각 병원의 온프레미스에 가상 머신(VM)으로 배포합니다. AWS Storage Gateway는 온프레미스 소프트웨어 어플라이언스를 클라우드 기반 스토리지와 연결하여 조직의 온프레미스 간에 원활하고 안전한 통합을 제공하는 서비스입니다. -프레미스 IT 환경 및 AWS의 스토리지 인프라. 각 병원 구내에 파일 게이트웨이를 가상 머신으로 배포함으로써 의료 연구실은 각 병원에 대한 읽기 전용 권한을 유지하면서 S3 버킷에 저장된 데이터에 대한 지연 시간이 짧은 액세스를 제공할 수 있습니다. 이 솔루션을 사용하면 진료소는 데이터 전송이나 마이그레이션 없이 온프레미스 파일 기반 애플리케이션에서 직접 데이터 파일에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -301,12 +344,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 15:00">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 15:00">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. 클리닉에서 파일 인터페이스를 통해 S3 버킷에 저장된 데이터 파일에 액세스할 수 있습니다. 파일 게이트웨이는 자주 액세스하는 데이터를 로컬로 캐시하여 대기 시간을 줄이고 데이터에 대한 빠른 액세스를 제공합니다. B. AWS DataSync를 사용하여 Amazon S3 버킷에서 각 클리닉의 온프레미스 애플리케이션으로 데이터 파일을 전송하는 작업이 포함됩니다. 이렇게 하면 데이터 마이그레이션이 가능하지만 실시간 액세스를 제공하지 않을 수 있으며 추가 대기 시간이 발생할 수 있습니다. C. 파일 수준의 접근보다는 데이터에 대한 블록 수준의 접근에 적합하다. 파일 기반 애플리케이션을 위한 가장 효율적인 솔루션이 아닐 수도 있습니다. D. 확장 가능한 파일 스토리지 서비스인 Amazon EFS를 사용하여 데이터에 대한 파일 수준 액세스를 제공합니다. 그러나 파일 게이트웨이 솔루션을 사용할 때보다 복잡성과 대기 시간이 추가로 발생할 수 있습니다.</div>
+<div class="comment-content">A. 병원에서는 파일 인터페이스를 통해 S3 버킷에 저장된 데이터 파일에 접근할 수 있습니다. 파일 게이트웨이는 자주 액세스하는 데이터를 로컬에서 캐시하여 대기 시간을 줄이고 데이터에 대한 빠른 액세스를 제공합니다. B. AWS DataSync를 사용하여 Amazon S3 버킷의 데이터 파일을 각 병원의 온프레미스 애플리케이션으로 전송하는 작업이 포함됩니다. 이를 통해 데이터 마이그레이션이 가능하지만 실시간 액세스를 제공하지 못하고 추가 대기 시간이 발생할 수 있습니다. C. 파일 수준 접근보다는 블록 수준 데이터 접근에 적합하다. 파일 기반 응용 프로그램에는 가장 효율적인 솔루션이 아닐 수도 있습니다. D. 확장 가능한 파일 스토리지 서비스인 Amazon EFS를 사용하여 데이터에 대한 파일 수준 액세스를 제공합니다. 그러나 파일 게이트웨이 솔루션을 사용할 때보다 복잡성과 지연 시간이 더 많이 발생할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -315,7 +358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,7 +390,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 31일 수 07:56">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -361,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,11 +436,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 20일 목요일 21:40">
-			3개월, 4주 전
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">파일 기반 애플리케이션의 경우 파일 게이트웨이 사용: (옵션 A)</div>
+<div class="comment-content">파일 기반 애플리케이션의 경우 파일 게이트웨이를 사용하십시오: (옵션 A)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -406,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -438,11 +481,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 06:01">
-			4개월, 4주 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">당연히 A. 관리자의 오답이 많은 이유는 무엇입니까?</div>
+<div class="comment-content">확실히 A. 관리자님 오답이 왜 이렇게 많나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -451,7 +494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -474,12 +517,12 @@
 				매기135
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 1일 (토) 10:56">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 1일 토요일 10:56">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">우리가 읽고 생각하도록 강요해서 답을 외우고 시험을 볼 수는 없습니까?)</div>
+<div class="comment-content">읽고 생각하도록 강요해서 답만 외우고 시험에 갈 수는 없겠죠?)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -488,7 +531,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,12 +571,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 2일 목요일 11:52">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Amazon S3 파일 게이트웨이를 사용하면 데이터 레이크, 백업 및 기계 학습 워크플로를 위해 파일 데이터를 Amazon S3 클라우드 스토리지에 객체로 저장할 수 있습니다. Amazon S3 파일 게이트웨이를 사용하면 각 파일이 파일과 객체 간의 일대일 매핑을 통해 Amazon S3에 객체로 저장됩니다. 볼륨 게이트웨이는 Amazon S3에서 지원하는 iSCSI를 통해 블록 스토리지 볼륨을 제공하고 특정 시점 백업을 Amazon EBS 스냅샷으로 제공합니다. Volume Gateway는 자동화된 중앙 집중식 백업 서비스인 AWS Backup과 통합되어 Storage Gateway 볼륨을 보호합니다. 그래서 그것은 A</div>
+<div class="comment-content">Amazon S3 파일 게이트웨이를 사용하면 데이터 레이크, 백업 및 기계 학습 워크플로를 위해 파일 데이터를 Amazon S3 클라우드 스토리지에 객체로 저장할 수 있습니다. Amazon S3 파일 게이트웨이를 사용하면 각 파일은 파일과 객체 간의 일대일 매핑을 통해 Amazon S3에 객체로 저장됩니다. 볼륨 게이트웨이는 Amazon S3가 지원하는 iSCSI를 통해 블록 스토리지 볼륨을 제공하고 특정 시점 백업을 Amazon EBS 스냅샷으로 제공합니다. Volume Gateway는 자동화된 중앙 집중식 백업 서비스인 AWS Backup과 통합되어 Storage Gateway 볼륨을 보호합니다. 그럼 A야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,13 +616,13 @@
 				Steve_4542636
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 1일 수 18:25">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 1일 수요일 18:25">
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">대답을 위해</div>
+<div class="comment-content">대답은 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,12 +663,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 2일 목요일 19:58">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://cloud.in28minutes.com/aws-certification-aws-storage-gateway</div>
+<div class="comment-content">https://cloud.in28 Minutes.com/aws-certification-aws-storage-gateway</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,11 +705,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				크바루우
+				크바루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 23일 (월) 07:45">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -680,7 +723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -711,13 +754,13 @@
 				이미시올루와
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 18일 수 17:40">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 18일 수요일 17:40">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. %20data%20security.&amp;text=AWS%20Storage%20Gateway%20helps,as%20providing%20data%20security.&amp;text=Gateway%20helps%20in%20connecting,as%20well%20as%20providing https://docs.aws.amazon. com/storagegateway/latest/vgw/WhatIsStorageGateway.html</div>
+<div class="comment-content">정답은 A입니다. https://www.knowledgehut.com/tutorials/aws/aws-storage-gateway#:~:text=AWS%20Storage%20Gateway%20helps%20in%20connecting,as%20well%20as%20providing %20data%20security.&amp;text=AWS%20Storage%20Gateway%20helps,as%20providing%20data%20security.&amp;text=Gateway%20helps%20in%20connecting,as%20well%20as%20providing https://docs.aws.amazon. com/storagegateway/latest/vgw/WhatIsStorageGateway.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,12 +801,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 15일 일요일 07:09">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C(Volume Gateway)가 S3와 비동기식으로 동기화되는 로컬 스토리지를 가질 수 있는 옵션이 있으므로 정확하다고 생각합니다. 이것은 캐시된/최근 파일뿐만 아니라 모든 로컬 파일에 대한 짧은 대기 시간 액세스를 제공합니다.</div>
+<div class="comment-content">제 생각에는 C(볼륨 게이트웨이)가 S3와 비동기식으로 동기화되는 로컬 스토리지를 갖는 옵션이 있기 때문에 정확하다고 생각합니다. 이렇게 하면 캐시된/최근 파일뿐만 아니라 모든 로컬 파일에 대한 짧은 대기 시간 액세스가 제공됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -772,7 +815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -804,7 +847,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 15일 일요일 03:50">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,13 +892,13 @@
 				아니니나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 20:33">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 20:33">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 각 클리닉에서 온프레미스로 AWS Storage Gateway 파일 게이트웨이를 가상 머신(VM)으로 배포합니다.</div>
+<div class="comment-content">A. 각 병원의 온프레미스에 AWS Storage Gateway 파일 게이트웨이를 가상 머신(VM)으로 배포합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -864,7 +907,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -892,16 +935,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				모리네이터
+				모리나토르
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 11:02">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">It's Aimo(파일 게이트왓)</div>
+<div class="comment-content">A imo(파일 게이트왓)입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -910,7 +953,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -965,7 +1008,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 13:45">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1016,7 +1059,7 @@ AWS Storage Gateway is a service that connects an on-premises software appliance
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 15:00">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1067,7 +1110,7 @@ D. It involves using Amazon EFS, which is a scalable file storage service, to pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 07:56">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1113,7 +1156,7 @@ D. It involves using Amazon EFS, which is a scalable file storage service, to pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Apr 2023 21:40">
-			3 months, 4 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1158,7 +1201,7 @@ D. It involves using Amazon EFS, which is a scalable file storage service, to pr
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 06:01">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1196,7 +1239,7 @@ Why are there so many wrong answers by Admins?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 01 Jul 2023 10:56">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1249,7 +1292,7 @@ Why are there so many wrong answers by Admins?</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Mar 2023 11:52">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1299,7 +1342,7 @@ So it's A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 01 Mar 2023 18:25">
-			5 months, 2 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1345,7 +1388,7 @@ So it's A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 02 Feb 2023 19:58">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1391,7 +1434,7 @@ So it's A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 07:45">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1437,7 +1480,7 @@ So it's A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 17:40">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1485,7 +1528,7 @@ https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 07:09">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1531,7 +1574,7 @@ https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 03:50">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1577,7 +1620,7 @@ https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 20:33">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1623,7 +1666,7 @@ https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 11:02">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

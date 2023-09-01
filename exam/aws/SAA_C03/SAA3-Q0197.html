@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 주제 1 질문 197 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 197 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 197 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 197 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850800">
 <p class="card-text">
 							
-								회사에는 온프레미스 Windows Server에서 실행되는 Microsoft .NET 애플리케이션이 있습니다. 애플리케이션은 Oracle Database Standard Edition 서버를 사용하여 데이터를 저장합니다. 이 회사는 AWS로의 마이그레이션을 계획하고 있으며 애플리케이션을 이동하는 동안 개발 변경을 최소화하려고 합니다. AWS 애플리케이션 환경은 가용성이 높아야 합니다. <br/><br/>이러한 요구 사항을 충족하기 위해 회사는 어떤 조합의 조치를 취해야 합니까? (두 가지를 선택하세요.)
+								회사에는 온프레미스 Windows Server에서 실행되는 Microsoft .NET 애플리케이션이 있습니다. 애플리케이션은 Oracle Database Standard Edition 서버를 사용하여 데이터를 저장합니다. 회사는 AWS로의 마이그레이션을 계획하고 있으며 애플리케이션을 이동하는 동안 개발 변경을 최소화하려고 합니다. AWS 애플리케이션 환경은 가용성이 높아야 합니다. <br/><br/>이러한 요구 사항을 충족하기 위해 회사는 어떤 조치 조합을 취해야 합니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -101,27 +164,27 @@
 													C.
 												</span> 
 											
-											Amazon Linux Amazon 머신 이미지(AMI)를 사용하여 Amazon EC2에서 실행되도록 애플리케이션 플랫폼을 변경합니다.
+											Amazon Linux Amazon 머신 이미지(AMI)를 사용하여 Amazon EC2에서 실행되도록 애플리케이션을 다시 플랫폼화합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											다중 AZ 배포에서 AWS DMS(AWS Database Migration Service)를 사용하여 Oracle 데이터베이스에서 Amazon DynamoDB로 마이그레이션합니다.
+											AWS DMS(AWS Database Migration Service)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스에서 Amazon DynamoDB로 마이그레이션합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											다중 AZ 배포에서 AWS Database Migration Service(AWS DMS)를 사용하여 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다.
+											AWS Database Migration Service(AWS DMS)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -131,21 +194,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="29 votes." data-toggle="tooltip" role="progressbar" style="width: 97%; display: flex;" title="">비(97%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="29 votes." data-toggle="tooltip" role="progressbar" style="width: 97%; display: flex;" title="">BE (97%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 3%; display: flex;" title="">삼%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								천식 시간
-							</a> 
-							
-							: <i>
-							2022년 11월 28일 오후 1:42</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -227,16 +280,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								asthman
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 1:42 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -264,19 +307,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				데이비드나미
+				데이비드네이미
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 11일 수 10:00">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 11일 수요일 10:00">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">B. 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E. 다중 AZ 배포에서 AWS Database Migration Service(AWS DMS)를 사용하여 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. .NET 플랫폼을 사용하여 Elastic Beanstalk에서 애플리케이션을 다시 호스팅하면 개발 변경을 최소화할 수 있습니다. Elastic Beanstalk의 다중 AZ 배포는 애플리케이션의 가용성을 높여 고가용성 요구 사항을 충족합니다. AWS Database Migration Service(DMS)를 사용하여 데이터베이스를 Amazon RDS Oracle로 마이그레이션하면 호환성이 보장되므로 애플리케이션은 동일한 데이터베이스 기술을 계속 사용할 수 있고 개발 팀은 기존 기술을 사용할 수 있습니다. 또한 가용성을 처리할 관리 서비스로 마이그레이션되므로 팀에서 걱정할 필요가 없습니다.</div>
+<div class="comment-content">B. 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E. AWS Database Migration Service(AWS DMS)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. .NET 플랫폼을 사용하여 Elastic Beanstalk에서 애플리케이션을 다시 호스팅하면 개발 변경을 최소화할 수 있습니다. Elastic Beanstalk의 다중 AZ 배포는 애플리케이션의 가용성을 높여 고가용성 요구 사항을 충족합니다. AWS Database Migration Service(DMS)를 사용하여 데이터베이스를 Amazon RDS로 마이그레이션하면 Oracle은 호환성을 보장하므로 애플리케이션은 동일한 데이터베이스 기술을 계속 사용할 수 있고 개발 팀은 기존 기술을 사용할 수 있습니다. 또한 가용성을 처리하는 관리형 서비스로 마이그레이션하므로 팀은 이에 대해 걱정할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -285,7 +328,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -320,12 +363,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:34">
-			19시간 34분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B) 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E) 다중 AZ 배포에서 AWS Database Migration Service(AWS DMS)를 사용하여 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. 그 이유는 다음과 같습니다. ° Elastic Beanstalk에서 다시 호스팅하면 최소한의 코드 변경으로 .NET 애플리케이션을 들어올리고 이동할 수 있습니다. 다중 AZ 배포는 고가용성을 제공합니다. ° 다중 AZ 배포에서 DMS를 사용하여 Oracle 데이터를 RDS Oracle로 마이그레이션하면 고가용성을 달성하면서 데이터베이스 변경을 최소화할 수 있습니다. ° 이 "리프트 앤 시프트" 접근 방식은 리팩토링 요구를 최소화하면서 AWS에서 HA를 제공합니다.</div>
+<div class="comment-content">B) 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E) AWS DMS(AWS Database Migration Service)를 사용하여 다중 AZ 배포의 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. 그 이유는 다음과 같습니다. ° Elastic Beanstalk에서 재호스팅하면 최소한의 코드 변경으로 .NET 애플리케이션을 리프트 앤 시프트할 수 있습니다. 다중 AZ 배포는 고가용성을 제공합니다. ° DMS를 사용하여 Oracle 데이터를 RDS로 마이그레이션합니다. 다중 AZ 배포의 Oracle은 고가용성을 달성하는 동시에 데이터베이스 변경을 최소화합니다. ° 이 "리프트 앤 시프트" 접근 방식을 함께 사용하면 AWS에서 HA를 제공하는 동시에 리팩토링 요구 사항이 최소화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -334,7 +377,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -366,12 +409,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 15:08">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">B. 이를 통해 회사는 EBS의 다중 AZ 배포가 제공하는 확장성과 고가용성을 활용하면서 상당한 코드 변경 없이 애플리케이션을 AWS로 마이그레이션할 수 있습니다. E. 이를 통해 회사는 기존 애플리케이션과의 호환성을 유지하고 고가용성을 위해 다중 AZ 배포를 활용하면서 Oracle 데이터베이스를 RDS로 마이그레이션할 수 있습니다. A. 상당한 개발 변경이 필요하며 리호스팅 또는 플랫폼 변경 옵션과 동일한 수준의 호환성을 제공하지 않을 수 있습니다. C.는 여전히 애플리케이션과 기본 인프라를 변경해야 하지만 EBS로 다시 호스팅하면 수정 필요성이 최소화됩니다. D. DynamoDB는 Oracle과 데이터 모델이 다른 NoSQL 데이터베이스이므로 애플리케이션 코드를 크게 변경해야 할 가능성이 높습니다.</div>
+<div class="comment-content">B. 이를 통해 회사는 EBS의 다중 AZ 배포가 제공하는 확장성과 고가용성을 활용하면서 큰 코드 변경 없이 애플리케이션을 AWS로 마이그레이션할 수 있습니다. E. 이를 통해 회사는 기존 애플리케이션과의 호환성을 유지하고 고가용성을 위해 다중 AZ 배포를 활용하면서 Oracle 데이터베이스를 RDS로 마이그레이션할 수 있습니다. A. 상당한 개발 변경이 필요하며 재호스팅 또는 재플랫폼 옵션과 동일한 수준의 호환성을 제공하지 못할 수 있습니다. C. 여전히 애플리케이션과 기본 인프라를 변경해야 하는 반면, EBS로 다시 호스팅하면 수정 필요성이 최소화됩니다. D. DynamoDB는 Oracle과 다른 데이터 모델을 사용하는 NoSQL 데이터베이스이므로 애플리케이션 코드를 크게 변경해야 할 가능성이 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -380,7 +423,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -411,12 +454,12 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 23:01">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 23:01">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 BE입니다. D가 선택된 이유를 모르겠습니다. 이를 위해서는 개발 작업이 필요하고 질문에는 개발 변경을 최소화해야 한다고 명확하게 명시되어 있습니다. db를 Oracle에서 DynamoDB로 변경하는 것은 많은 개발입니다.</div>
+<div class="comment-content">대답은 BE입니다. 왜 D를 선택했는지 모르겠습니다. 개발 작업이 필요하고 개발 변경을 최소화하라는 질문이 명확하게 명시되어 있습니다. DB를 Oracle에서 DynamoDB로 변경하는 것은 많은 개발입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -425,7 +468,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -457,7 +500,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 25일 목요일 14:52">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -471,7 +514,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -503,7 +546,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 05:28">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -517,7 +560,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -545,15 +588,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				니킬시
+				니힐시
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 3일 수요일 05:15">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">왜 C는 아니지?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -562,7 +605,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -582,15 +625,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알란카J
+				알란카르J
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 6일 화요일 20:02">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 6일 (화) 20:02">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그것은 Windows 서버에서 실행되며 전체를 Linux 기반 EC2로 전환하는 것은 추가 작업이며 의미가 없습니다.</div>
+<div class="comment-content">Windows 서버에서 실행되므로 전체를 Linux 기반 EC2로 전환하는 것은 추가 작업이며 의미가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -599,7 +642,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -638,13 +681,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:54">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:54">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">답변 : BE</div>
+<div class="comment-content">답 : BE</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -653,7 +696,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -684,12 +727,12 @@
 				waiyiu9981
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 2일 월요일 12:20">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 2일 (월) 12:20">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 A가 틀렸어?</div>
+<div class="comment-content">A가 왜 틀렸나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -698,7 +741,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -718,15 +761,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				구스타프
+				구스타브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 21:57">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">약간의 개발이 필요하기 때문에,</div>
+<div class="comment-content">개발이 좀 필요하기 때문에</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -735,7 +778,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -771,16 +814,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 21:25">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 21:25">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">B. 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E. 다중 AZ 배포에서 AWS Database Migration Service(AWS DMS)를 사용하여 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. 애플리케이션을 AWS로 이동하는 동안 개발 변경을 최소화하고 높은 수준의 가용성을 보장하기 위해 회사는 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅할 수 있습니다. 이렇게 하면 애플리케이션 코드를 변경할 필요 없이 고가용성 환경에서 애플리케이션을 실행할 수 있습니다. 또한 회사는 AWS Database Migration Service(AWS DMS)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스를 Amazon RDS의 Oracle로 마이그레이션할 수 있습니다. 이를 통해 회사는 여전히 높은 수준의 가용성을 달성하면서 기존 데이터베이스 플랫폼을 유지할 수 있습니다.</div>
+<div class="comment-content">B. 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅합니다. E. AWS Database Migration Service(AWS DMS)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스에서 Amazon RDS의 Oracle로 마이그레이션합니다. 애플리케이션을 AWS로 이동하는 동안 개발 변경을 최소화하고 높은 수준의 가용성을 보장하기 위해 회사는 다중 AZ 배포에서 .NET 플랫폼을 사용하여 AWS Elastic Beanstalk에서 애플리케이션을 다시 호스팅할 수 있습니다. 이렇게 하면 애플리케이션 코드를 변경할 필요 없이 고가용성 환경에서 애플리케이션을 실행할 수 있습니다. 또한 회사는 AWS Database Migration Service(AWS DMS)를 사용하여 다중 AZ 배포에서 Oracle 데이터베이스를 Amazon RDS의 Oracle로 마이그레이션할 수도 있습니다. 이를 통해 회사는 기존 데이터베이스 플랫폼을 유지하면서 여전히 높은 수준의 가용성을 달성할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -789,7 +832,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -817,16 +860,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 19:28">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 19:28">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">B&amp;E 옵션, D는 No-Sql용이므로</div>
+<div class="comment-content">B&amp;E 옵션(D는 No-Sql을 위한 것이므로)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -835,7 +878,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -855,15 +898,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 10일 화요일 07:18">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 10일 화 07:18">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">추가 개발 노력이 필요합니다.</div>
+<div class="comment-content">그리고 추가적인 개발 노력이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -872,7 +915,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -908,11 +951,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 09:10">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 09:10">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -925,7 +968,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -957,11 +1000,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 04:08">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B- AWS 설명서에 따르면 .NET 애플리케이션을 AWS로 마이그레이션하는 가장 간단한 방법은 AWS Elastic Beanstalk 또는 Amazon EC2를 사용하여 애플리케이션을 다시 게시하는 것입니다. E - RDS with Oracle은 간단합니다.</div>
+<div class="comment-content">B- AWS 설명서에 따르면 .NET 애플리케이션을 AWS로 마이그레이션하는 가장 간단한 방법은 AWS Elastic Beanstalk 또는 Amazon EC2를 사용하여 애플리케이션을 다시 게시하는 것입니다. E - Oracle을 사용한 RDS는 당연한 일입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -970,7 +1013,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1001,13 +1044,13 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 20:18">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 20:18">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">다른 사람들과 동일</div>
+<div class="comment-content">다른 사람들과 똑같아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1016,7 +1059,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1047,12 +1090,12 @@
 				KADSM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 06:12">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 06:12">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BE가 정확해야 합니다. 질문에 "개발 변경 최소화"라고 나와 있으므로 동일한 Oracle DB로 이동해야 합니다.</div>
+<div class="comment-content">BE가 정확해야 합니다. 질문에 "개발 변경 최소화"라고 나와 있으므로 동일한 Oracle DB를 사용해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1061,7 +1104,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1092,13 +1135,13 @@
 				미6
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 02:01">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 02:01">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">최소 개발용 B(Elastic BeanStalk) E Oracle 기반 RDS용</div>
+<div class="comment-content">최소 개발용 B(Elastic BeanStalk) Oracle 기반 RDS용 E</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1107,7 +1150,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1135,11 +1178,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:37">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1153,7 +1196,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1185,12 +1228,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 16:56">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">BE가 맞다</div>
+<div class="comment-content">BE가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1199,7 +1242,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1230,8 +1273,8 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 15:10">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 15:10">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1245,7 +1288,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1276,13 +1319,13 @@
 				천식
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 13:42">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 13:42">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>BE</strong></span></div>
-<div class="comment-content">RDS에서 Oracle로 마이그레이션하는 것은 DynamoDB와 쉽게 비교할 수 있습니다.</div>
+<div class="comment-content">RDS에서 oracle로 마이그레이션하는 것은 DynamoDB와 비교하기 쉽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1291,7 +1334,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1346,7 +1389,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 11 Jan 2023 10:00">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1400,7 +1443,7 @@ Using AWS Database Migration Service (DMS) to migrate the database to Amazon RDS
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:34">
-			19 hours, 34 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1454,7 +1497,7 @@ The reasons are:
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 15:08">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1508,7 +1551,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 23:01">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1553,7 +1596,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 14:52">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1599,7 +1642,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 07 May 2023 05:28">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1645,7 +1688,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 03 May 2023 05:15">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1682,7 +1725,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Jun 2023 20:02">
-			2 months, 1 week ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1735,7 +1778,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:54">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1781,7 +1824,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 12:20">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1818,7 +1861,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 21:57">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1871,7 +1914,7 @@ D. would likely require significant changes to the application code, as DynamoDB
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 21:25">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1922,7 +1965,7 @@ The company can also use AWS Database Migration Service (AWS DMS) to migrate the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 19:28">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1960,7 +2003,7 @@ The company can also use AWS Database Migration Service (AWS DMS) to migrate the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 07:18">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2013,7 +2056,7 @@ The company can also use AWS Database Migration Service (AWS DMS) to migrate the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 09:10">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2058,7 +2101,7 @@ The company can also use AWS Database Migration Service (AWS DMS) to migrate the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 04:08">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2104,7 +2147,7 @@ E - RDS with Oracle is a no-brainer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 20:18">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2150,7 +2193,7 @@ E - RDS with Oracle is a no-brainer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 06:12">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2195,7 +2238,7 @@ E - RDS with Oracle is a no-brainer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 02:01">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2242,7 +2285,7 @@ E for RDS with Oracle</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:37">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2288,7 +2331,7 @@ E for RDS with Oracle</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 16:56">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2334,7 +2377,7 @@ E for RDS with Oracle</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 15:10">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2381,7 +2424,7 @@ Oracle to RDS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 13:42">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

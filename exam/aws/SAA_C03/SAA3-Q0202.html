@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 202 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 202 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 202 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 202 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 202 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850805">
 <p class="card-text">
 							
-								회사에서 데이터를 Amazon S3 버킷으로 이동할 계획입니다. 데이터는 S3 버킷에 저장될 때 암호화되어야 합니다. 또한 암호화 키는 매년 자동으로 순환되어야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								한 회사가 데이터를 Amazon S3 버킷으로 이동할 계획입니다. 데이터는 S3 버킷에 저장될 때 암호화되어야 합니다. 또한 암호화 키는 매년 자동으로 교체되어야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다. SSE-S3 암호화 키의 기본 제공 키 회전 동작을 사용합니다.
+											데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다. SSE-S3 암호화 키의 내장 키 순환 동작을 사용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -103,7 +166,7 @@
 													C.
 												</span> 
 											
-											AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. 고객 관리형 KMS 키를 사용하도록 S3 버킷의 기본 암호화 동작을 설정합니다. 데이터를 S3 버킷으로 이동합니다. 매년 KMS 키를 수동으로 교체합니다.
+											AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. 고객 관리형 KMS 키를 사용하도록 S3 버킷의 기본 암호화 동작을 설정합니다. 데이터를 S3 버킷으로 이동합니다. 매년 KMS 키를 수동으로 순환합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -114,7 +177,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,21 +187,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="59 votes." data-toggle="tooltip" role="progressbar" style="width: 63%; display: flex;" title="">B (63%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="35 votes." data-toggle="tooltip" role="progressbar" style="width: 37%; display: flex;" title="">A (37%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="59 votes." data-toggle="tooltip" role="progressbar" style="width: 63%; display: flex;" title="">B (63%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="35 votes." data-toggle="tooltip" role="progressbar" style="width: 37%; display: flex;" title="">A (37%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 3:24</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -213,16 +266,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 3:24 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,19 +293,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 12월 21일 수 01:32">
-			7개월, 4주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">SSE-S3 - 무료이며 AWS 소유 CMK(CMK = 고객 마스터 키)를 사용합니다. 암호화 키는 AWS에서 소유하고 관리하며 여러 계정 간에 공유됩니다. 회전은 여기 표에 표시된 대로 시간에 따라 자동으로 바뀝니다. 시간은 명시적으로 정의되지 않습니다. SSE-KMS - AWS 관리형 CMK의 두 가지 특징이 있습니다. 귀하의 계정에 대해서만 생성된 무료 CMK입니다. 정책을 보고 사용량을 감사할 수만 있고 관리할 수는 없습니다. 교체는 자동입니다. 1095일(3년)당 한 번, 고객이 CMK를 관리합니다. 이것은 사용자가 생성하고 관리할 수 있는 사용자 고유의 키를 사용합니다. 회전은 기본적으로 활성화되어 있지 않습니다. 그러나 활성화하면 1년마다 자동으로 순환됩니다. 이 변형은 사용자가 가져온 키 자료를 사용할 수도 있습니다. 가져온 자료로 이러한 키를 생성하면 자동 회전이 없습니다. 수동 회전만 가능합니다. SSE-C - 고객 제공 키. 암호화 키는 AWS 외부에서 사용자가 완전히 관리합니다. AWS는 이를 교체하지 않습니다.</div>
+<div class="comment-content">SSE-S3 - 무료이며 AWS 소유 CMK(CMK = 고객 마스터 키)를 사용합니다. 암호화 키는 AWS가 소유하고 관리하며 여러 계정에서 공유됩니다. 여기 표에 표시된 것처럼 시간에 따라 회전이 자동으로 이루어집니다. 시간은 명시적으로 정의되지 않습니다. SSE-KMS - AWS 관리형 CMK라는 두 가지 버전이 있습니다. 이는 귀하의 계정에 대해서만 생성된 무료 CMK입니다. 정책을 보고 사용량을 감사할 수만 있고 관리할 수는 없습니다. 교체는 자동으로 이루어집니다. 1095일(3년)에 한 번, 고객이 관리하는 CMK입니다. 이는 귀하가 생성하고 관리할 수 있는 자체 키를 사용합니다. 기본적으로 회전은 활성화되어 있지 않습니다. 하지만 활성화하면 1년마다 자동으로 순환됩니다. 이 변형은 귀하가 가져온 키 자료를 사용할 수도 있습니다. 가져온 자료로 이러한 키를 생성하는 경우 자동 회전이 없습니다. 수동 회전만 가능합니다. SSE-C - 고객이 제공한 키입니다. 암호화 키는 AWS 외부에서 귀하가 완전히 관리합니다. AWS는 이를 교체하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -295,7 +338,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 24일 수 09:46">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,19 +387,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 20:46">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 20:46">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">키워드: 최소한의 운영 오버헤드 데이터가 S3 버킷에 저장될 때 데이터를 암호화하고 최소한의 운영 오버헤드로 매년 암호화 키를 자동으로 교체하기 위해 회사는 Amazon S3 관리형 암호화 키(SSE-S3 ). SSE-S3는 Amazon S3에서 관리하는 키를 사용하며 SSE-S3 암호화 키의 기본 제공 키 교체 동작은 매년 자동으로 키를 교체합니다. 회사의 요구 사항을 충족하기 위해 솔루션 설계자는 데이터를 S3 버킷으로 이동하고 SSE-S3로 서버 측 암호화를 활성화할 수 있습니다. 이 솔루션은 추가 구성이나 유지 관리가 필요하지 않으며 운영 오버헤드가 가장 적습니다. 따라서 정답은 다음과 같습니다. 옵션 A. 데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다.</div>
+<div class="comment-content">키워드: 최소 운영 오버헤드 S3 버킷에 저장된 데이터를 암호화하고 최소한의 운영 오버헤드로 매년 자동으로 암호화 키를 교체하기 위해 회사에서는 Amazon S3 관리형 암호화 키(SSE-S3)를 사용하여 서버 측 암호화를 사용할 수 있습니다. ). SSE-S3는 Amazon S3에서 관리하는 키를 사용하며, SSE-S3 암호화 키의 기본 제공 키 교체 동작은 매년 자동으로 키를 교체합니다. 회사의 요구 사항을 충족하기 위해 솔루션 설계자는 데이터를 S3 버킷으로 이동하고 SSE-S3를 사용하여 서버 측 암호화를 활성화할 수 있습니다. 이 솔루션은 추가 구성이나 유지 관리가 필요하지 않으며 운영 오버헤드가 가장 적습니다. 따라서 정답은 다음과 같습니다. 옵션 A. 데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -389,11 +432,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 19:00">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">제 생각에는 이러한 이벤트의 순서가 여기서 무시되고 있습니다. 데이터를 S3 버킷으로 이동하기 전에 암호화 확인란을 선택해야 합니다. 그렇지 않으면 암호화되지 않습니다. 수동으로 암호화하고 S3 버킷으로 다시 로드해야 합니다. 데이터를 S3로 옮기기 전에 확인란을 선택했다면 잘한 것입니다!</div>
+<div class="comment-content">내 생각에는 이러한 사건의 순서가 여기서 무시되고 있습니다. 데이터를 S3 버킷으로 이동하기 전에 암호화 확인란을 선택해야 합니다. 그렇지 않으면 데이터가 암호화되지 않습니다. 수동으로 암호화하고 S3 버킷으로 다시 로드해야 합니다. 데이터를 S3로 이동하기 전에 확인란을 선택했다면 이제 S3로 이동해도 됩니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -425,12 +468,12 @@
 				똑똑한
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 2일 수 18:55">
-			2주 전
+<span class="comment-date align-middle" title="2023년 8월 2일 수요일 18:55">
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">기본 암호화가 이미 활성화된 새로운 변경 사항을 무시합니다. 데이터를 버킷으로 이동하기 전에 암호화를 구성해야 한다는 데 동의합니다. 그렇지 않으면 기존 개체가 암호화되지 않은 상태로 유지됩니다. 정답은 B입니다. 또한 SSE-S3가 매년 키를 교체한다는 참조(질문의 요구 사항)는 어디에 있습니까?</div>
+<div class="comment-content">기본 암호화가 이미 활성화되어 있다는 새로운 변경 사항을 무시합니다. 데이터를 버킷으로 이동하기 전에 암호화를 구성해야 한다는 데 동의합니다. 그렇지 않으면 기존 객체가 암호화되지 않은 상태로 유지됩니다. 정답은 B입니다. 또한 SSE-S3가 매년 키를 교체한다는 참조는 어디에 있습니까(질문의 요구 사항).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -439,7 +482,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -471,7 +514,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 27일 금요일 19:03">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -484,7 +527,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -520,15 +563,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 20:47">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 20:47">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 B에는 고객 관리형 AWS KMS 키를 사용하고 자동 키 교체를 활성화하는 것이 포함되지만 이를 위해서는 회사에서 KMS 키를 관리하고 키 교체 프로세스를 모니터링해야 합니다. 옵션 C는 고객 관리형 AWS KMS 키를 사용하지만 회사에서 매년 수동으로 키를 교체해야 하므로 추가 운영 오버헤드가 발생합니다. 옵션 D는 고객 키 자료로 데이터를 암호화하고 키 자료 없이 KMS 키를 생성하는 것을 포함하지만, 이 경우 회사에서 고객 키 자료를 관리하고 이를 KMS 키로 가져와야 하므로 추가 운영 오버헤드가 발생합니다.</div>
+<div class="comment-content">옵션 B에는 고객 관리형 AWS KMS 키를 사용하고 자동 키 교체를 활성화하는 것이 포함되지만, 이를 위해서는 회사에서 KMS 키를 관리하고 키 교체 프로세스를 모니터링해야 합니다. 옵션 C에는 고객 관리형 AWS KMS 키를 사용하는 것이 포함되지만 이를 위해서는 회사가 매년 수동으로 키를 교체해야 하므로 추가적인 운영 오버헤드가 발생합니다. 옵션 D에는 고객 키 자료로 데이터를 암호화하고 키 자료 없이 KMS 키를 생성하는 것이 포함되지만, 이를 위해서는 회사가 고객 키 자료를 관리하고 이를 KMS 키로 가져와야 하므로 추가적인 운영 오버헤드가 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -537,7 +580,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -557,15 +600,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 08:09">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">하지만... A의 경우 이러한 키가 순환되는 빈도에 대한 참조가 없으며 새 키로 순환하려면 이를 업로드해야 합니다. 이는 운영 오버헤드입니다. 따라서 '매년 키 교체' 요구 사항을 충족하지 못할 뿐만 아니라 매년 운영 오버헤드가 필요합니다. 더 중요한 것은 질문 상태는 객체를 먼저 이동한 다음 암호화를 구성하지만 ..."기본 암호화가 활성화되기 전에 버킷에 존재했던 객체의 암호화에는 변경 사항이 없습니다." https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html에서 A는 분명히 틀렸습니다. B의 경우 KMS를 한 번 설정해야 하지만 다른 작업은 필요하지 않습니다. 즉, 운영 오버헤드가 가장 적습니다.</div>
+<div class="comment-content">하지만... A의 경우 이러한 키가 얼마나 자주 순환되는지에 대한 참조가 없으며 새 키로 순환하려면 이를 업로드해야 하는데 이는 운영 오버헤드입니다. 따라서 '매년 키 교체' 요구 사항을 반드시 충족할 필요는 없을 뿐만 아니라 매년 운영 오버헤드가 필요합니다. 더 중요한 것은 질문에 객체를 먼저 이동한 다음 암호화를 구성한다고 명시되어 있지만..."기본 암호화가 활성화되기 전에 버킷에 존재했던 객체의 암호화에는 변경 사항이 없습니다." https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html에서 따라서 A는 분명히 틀렸습니다. B의 경우 KMS를 한 번 설정하면 다른 작업을 수행할 필요가 없습니다. 즉, 운영 오버헤드가 가장 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -606,11 +649,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 4일 수요일 06:58">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">신의 축복을 빕니다! 가장 명확하고 이해하기 쉬운 답변. 잘했어요!</div>
+<div class="comment-content">신의 축복이 있기를! 가장 명확하고 이해하기 쉬운 답변입니다. 잘했어요!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -619,7 +662,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -639,15 +682,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 08:09">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">하지만 틀렸어 :)</div>
+<div class="comment-content">하지만 틀렸어요 :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -656,7 +699,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -680,11 +723,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 6일 월요일 19:38">
-			6개월, 1주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">두 번째로 검토했습니다. 그들 중 일부는 실제로 잘못되었습니다.</div>
+<div class="comment-content">두 번째로 검토했습니다. 실제로 그 중 일부는 틀렸습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -693,7 +736,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -753,19 +796,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아이로두스
+				아엘로두스
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 16일 수 08:34">
-			12시간 31분 전
+			1주 전, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">클라우드 개발자 과정을 위해 AWS 사무실에 갔고 트레이너에게 SSE-S3의 키 회전 빈도가 무엇인지 물었습니다. 트레이너는 회전 빈도에 대한 정보가 공개적으로 제공되지 않는다고 언급했습니다. 이것은 의도적으로 수행되었습니다. 진정 알고 싶다면 회사 대표 자격으로 비공개 상담을 해야 한다고도 했다. 다시 질문으로 돌아가서 SSE-S3의 키 회전 빈도를 확인할 수 없기 때문에 이 질문에 대한 가장 좋은 대답은 B입니다. A에 비해 운영 오버헤드가 더 높을 수 있지만 요구 사항을 충족하는 유일한 제품입니다.</div>
+<div class="comment-content">클라우드 개발자 과정을 위해 AWS 사무실에 가서 트레이너에게 SSE-S3의 키 회전 빈도가 무엇인지 물었고 트레이너는 회전 빈도에 대한 정보가 공개적으로 제공되지 않는다고 언급했습니다. 이것은 의도적으로 수행되었습니다. 그리고 우리가 정말로 알고 싶다면 우리 회사 대표로서 그들과 개별적인 상담을 해야 한다고 말했습니다. 질문으로 돌아가서, SSE-S3의 키 순환 빈도를 확인할 수 없기 때문에 이 질문에 대한 가장 좋은 대답은 B입니다. A에 비해 운영 오버헤드가 높을 수 있지만 요구 사항을 충족하는 유일한 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -774,7 +817,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,13 +848,13 @@
 				npraveen
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 7일 (월) 04:49">
-			1주, 2일 전
+<span class="comment-date align-middle" title="2023년 8월 7일 월요일 04:49">
+			2주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">S3 버킷에 대해 SSE-S3 암호화를 활성화하면 Amazon은 365일마다 객체에 대한 데이터 암호화 키를 자동으로 교체합니다. 이는 데이터 암호화 키가 매년 새 키로 자동 교체됨을 의미합니다.</div>
+<div class="comment-content">S3 버킷에 대해 SSE-S3 암호화를 활성화하면 Amazon은 365일마다 객체에 대한 데이터 암호화 키를 자동으로 교체합니다. 이는 데이터 암호화 키가 매년 자동으로 새 키로 교체된다는 의미입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -820,7 +863,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -852,11 +895,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 3일 목요일 16:22">
-			1주, 6일 전
+			3주, 2일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A입니다. 서버 측 암호화를 사용하면 S3가 자동으로 암호화 키와 그 회전을 관리합니다. 질문은 특히 최소한의 운영 오버헤드를 묻는 것입니다. 옵션 B도 유효한 솔루션을 제공하지만 자동 키 교체 활성화 및 구성을 포함하여 고객 관리 AWS Key Management Service(AWS KMS) 키의 수동 구성 및 관리가 더 많이 필요합니다.</div>
+<div class="comment-content">대답은 A입니다. 서버 측 암호화를 사용하면 S3가 자동으로 암호화 키와 순환을 관리합니다. 질문은 특히 최소한의 운영 오버헤드를 요구합니다. 옵션 B도 유효한 솔루션을 제공하지만 자동 키 교체 활성화 및 구성을 포함하여 고객 관리형 AWS Key Management Service(AWS KMS) 키에 대한 수동 구성 및 관리가 더 많이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -865,7 +908,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,12 +940,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 27일 화요일 08:48">
-			1개월, 2주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A. SSE-S3를 사용하는 동안 키 교체는 AWS에서 자동으로 처리합니다. AWS는 사용자를 대신하여 최소 1095일(3년)마다 암호화 키를 교체합니다. B. 자동 키 교체가 활성화된 AWS KMS에서 고객 관리형 키를 사용하고 이 키를 사용하도록 S3 버킷의 기본 암호화 동작을 설정하면 S3 버킷에 저장된 데이터가 암호화되고 암호화 키가 매년 자동으로 교체됩니다. . C. 이 답변은 KMS 키를 매년 수동으로 순환하도록 제안하므로 최적의 솔루션이 아닙니다. 이렇게 하면 수동 개입이 도입되고 운영 오버헤드가 증가합니다. D. 이 답변은 고객 키 자료로 데이터를 암호화하고 키 순환을 수동으로 관리해야 하므로 가장 적합한 옵션이 아닙니다.</div>
+<div class="comment-content">A. SSE-S3를 사용하는 동안 키 교체는 AWS에서 자동으로 처리됩니다. AWS는 사용자를 대신하여 최소 1095일(3년)마다 한 번씩 암호화 키를 교체합니다. B. 자동 키 교체가 활성화된 AWS KMS의 고객 관리형 키를 사용하고 S3 버킷의 기본 암호화 동작을 이 키를 사용하도록 설정하면 S3 버킷에 저장된 데이터가 암호화되고 암호화 키가 매년 자동으로 교체됩니다. . C. 이 답변은 KMS 키를 매년 수동으로 교체하여 수동 개입이 발생하고 운영 오버헤드가 증가하므로 가장 최적의 솔루션은 아닙니다. D. 이 답변은 고객 키 자료로 데이터를 암호화하고 키 순환을 수동으로 관리하는 것과 관련되어 있으므로 가장 적합한 옵션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -911,7 +954,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -943,11 +986,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 24일 토요일 08:37">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">채팅 gpt는 그것이 B라고 말합니다</div>
+<div class="comment-content">채팅 gpt에서는 B라고 하더군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -956,7 +999,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,11 +1027,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				댕댕
+				댕아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 17일 수 03:45">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 17일 수요일 03:45">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1001,7 +1044,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,16 +1072,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 16:56">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 16:56">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 질문은 S3에 기본 암호화가 없을 때 오래되고 작성되었습니다. 이제 Amazon S3가 Amazon S3의 모든 버킷에 대한 기본 암호화 수준으로 Amazon S3 관리형 키(SSE-S3)를 사용하여 서버 측 암호화를 적용하므로 A를 선택합니다. 2023년 1월 5일부터 Amazon S3에 대한 모든 새로운 객체 업로드는 추가 비용 없이 성능에 영향을 주지 않고 자동으로 암호화됩니다.</div>
+<div class="comment-content">이 질문은 오래되었으며 S3에 기본 암호화가 없을 때 작성되었습니다. 이제 Amazon S3가 Amazon S3 관리형 키(SSE-S3)를 사용하여 서버 측 암호화를 Amazon S3의 모든 버킷에 대한 기본 암호화 수준으로 적용하므로 A를 선택합니다. 2023년 1월 5일부터 Amazon S3에 대한 모든 새로운 객체 업로드는 추가 비용 없이 성능에 영향을 주지 않고 자동으로 암호화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1047,7 +1090,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1067,15 +1110,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 17:03">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 17:03">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">방금 버킷을 생성했는데 다음과 같이 표시됩니다. S3 버킷의 기본 암호화 구성은 항상 활성화되어 있으며 최소한 Amazon S3 관리형 키(SSE-S3)를 사용한 서버 측 암호화로 설정되어 있습니다. 서버 측 암호화를 사용하면 Amazon S3는 객체를 디스크에 저장하기 전에 암호화하고 객체를 다운로드할 때 암호를 해독합니다. 암호화는 인증된 사용자로서 데이터에 액세스하는 방식을 변경하지 않습니다. 데이터를 추가로 보호합니다. 버킷에 대한 기본 암호화를 구성할 수 있습니다. Amazon S3 관리형 키(SSE-S3)(기본값)를 사용한 서버 측 암호화 또는 AWS Key Management Service(AWS KMS) 키(SSE-KMS)를 사용한 서버 측 암호화를 사용할 수 있습니다.</div>
+<div class="comment-content">방금 버킷을 생성했는데 다음과 같이 표시됩니다. S3 버킷의 기본 암호화 구성은 항상 활성화되어 있으며 최소한 Amazon S3 관리형 키(SSE-S3)를 사용한 서버 측 암호화로 설정되어 있습니다. 서버 측 암호화를 사용하면 Amazon S3는 객체를 디스크에 저장하기 전에 암호화하고 객체를 다운로드할 때 해독합니다. 암호화는 인증된 사용자로서 데이터에 액세스하는 방식을 변경하지 않습니다. 귀하의 데이터를 더욱 안전하게 보호해 드립니다. 버킷에 대한 기본 암호화를 구성할 수 있습니다. Amazon S3 관리형 키(SSE-S3)(기본값)를 사용한 서버 측 암호화 또는 AWS Key Management Service(AWS KMS) 키(SSE-KMS)를 사용한 서버 측 암호화를 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1084,7 +1127,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1123,12 +1166,12 @@
 				윌리엄호악
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 10일 수 10:11">
-			3개월, 1주 전
+<span class="comment-date align-middle" title="2023년 5월 10일 수요일 10:11">
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 정답입니다. 키워드: 운영 오버헤드가 가장 적고 암호화 키는 매년 자동으로 교체되어야 합니다. SSE-S3: 교체할 수 없습니다. aws 사이트 기반: 키 교체 및 액세스 정책 권한 부여 관리와 같이 키에 대한 더 많은 제어가 필요한 경우 AWS Key Management Service(AWS KMS) 키(SSE-KMS)와 함께 서버 측 암호화를 사용하도록 선택할 수 있습니다.</div>
+<div class="comment-content">B가 정답입니다. 키워드: 최소 운영 오버헤드 및 암호화 키는 매년 자동으로 순환되어야 합니다. SSE-S3: 순환할 수 없습니다. aws 사이트 기반: 키 순환 관리 및 액세스 정책 부여와 같이 키에 대한 추가 제어가 필요한 경우 AWS Key Management Service(AWS KMS) 키(SSE-KMS)와 함께 서버 측 암호화를 사용하도록 선택할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1137,7 +1180,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1169,12 +1212,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 31일 금요일 00:17">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이벤트의 연대기 및 키 순환 프로세스를 유지 관리하는 운영 오버헤드 때문에 저는 B에 투표합니다. 매년 자동 키 순환을 활성화하는 SSE KMS CMK +를 사용하면 모든 요구 사항을 충족할 수 있습니다.</div>
+<div class="comment-content">이벤트의 연대기와 키 순환 프로세스를 유지하는 데 따른 운영 오버헤드 때문에 B에 투표합니다. SSE KMS CMK +를 통해 매년 자동 키 순환을 활성화하면 모든 요구 사항을 충족할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1183,7 +1226,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1214,12 +1257,12 @@
 				산토시43
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 16:23">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 16:23">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">고객 관리형 키에 대한 질문이므로 제 대답은 A..입니다.</div>
+<div class="comment-content">질문에서 고객 관리 키에 대해 물었으므로 내 대답은 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1228,7 +1271,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1260,11 +1303,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 21일 화요일 16:47">
-			4개월, 4주 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 A입니다. 왜? 서버 측 암호화는 미사용 데이터를 보호합니다. Amazon S3는 고유한 키로 각 ​​객체를 암호화합니다. 추가 안전 장치로 정기적으로 순환하는 키를 사용하여 키 자체를 암호화합니다. Amazon S3 서버 측 암호화는 데이터를 암호화하는 데 사용할 수 있는 가장 강력한 블록 암호 중 하나인 256비트 고급 암호화 표준(AES-256)을 사용합니다.</div>
+<div class="comment-content">대답은 A입니다. 왜요? 서버 측 암호화는 미사용 데이터를 보호합니다. Amazon S3는 고유한 키로 각 ​​객체를 암호화합니다. 추가적인 보호 수단으로 정기적으로 순환되는 키로 키 자체를 암호화합니다. Amazon S3 서버 측 암호화는 데이터를 암호화하는 데 사용할 수 있는 가장 강력한 블록 암호 중 하나인 256비트 고급 암호화 표준(AES-256)을 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1273,7 +1316,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1304,12 +1347,12 @@
 				티루크리쉬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 02:33">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 21일 화 02:33">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">암호화 키는 매년 자동으로 순환되어야 함 --&gt; SSE-S3에는 정기적으로 순환되는 기본 순환이 있지만 SSE-KMS의 경우 매년 순환하도록 활성화할 수 있습니다.</div>
+<div class="comment-content">암호화 키는 매년 자동으로 순환되어야 합니다. --&gt; SSE-S3에는 정기적으로 순환되는 기본 순환이 있지만 SSE-KMS의 경우 매년 순환되도록 활성화할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1318,7 +1361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1346,16 +1389,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AravindG
+				아라빈드G
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 14:19">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">최소한의 운영 작업으로 인해 옵션 A를 선택하고 싶습니다.</div>
+<div class="comment-content">운영 작업이 가장 적기 때문에 옵션 A를 선택하고 싶습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1364,7 +1407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1392,15 +1435,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				AravindG
+				아라빈드G
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 17일 금요일 14:18">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">연산 오버헤드가 가장 적기 때문에 답변이 A라고 가정하고 싶습니다.</div>
+<div class="comment-content">최소한의 작업 오버헤드로 인해 대답은 A라고 가정하고 싶습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1409,7 +1452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1441,7 +1484,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 9일 목요일 12:16">
-			5개월, 1주 전
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1455,7 +1498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1486,13 +1529,13 @@
 				스드라주
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 06일 월요일 00:49">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 6일 (월) 00:49">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">Option - A에서: Amazon S3는 고유한 키로 각 ​​객체를 암호화합니다. 추가 안전 장치로 정기적으로 순환하는 키를 사용하여 키 자체를 암호화합니다. 이것은 Amazon이 객체가 암호화된 키를 교체하지 않고 루트 키가 정기적으로 교체된다는 것을 의미합니까?</div>
+<div class="comment-content">옵션 - A에서는 Amazon S3가 고유 키를 사용하여 각 객체를 암호화합니다. 추가적인 보호 수단으로 정기적으로 순환되는 키로 키 자체를 암호화합니다. 이는 Amazon이 객체를 암호화하는 데 사용하는 키를 교체하지 않고, 루트 키가 정기적으로 교체된다는 의미입니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1501,7 +1544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1532,8 +1575,8 @@
 				Steve_4542636
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 28일 화요일 15:03">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 28일 (화) 15:03">
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1547,7 +1590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1575,11 +1618,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				Stanislav4907
+				스타니슬라프4907
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 16:09">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 16:09">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1593,7 +1636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1625,7 +1668,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 18:51">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1639,7 +1682,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1671,12 +1714,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 13:54">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">문서에 따르면 sse-s3 키는 매년 교체되므로 이러한 종류의 암호화를 위해 실제로 아무것도 할 필요가 없으므로 운영 오버헤드가 최소화됩니다.</div>
+<div class="comment-content">문서에 따르면 sse-s3 키는 매년 교체되므로 이러한 종류의 암호화에 대해서는 실제로 아무 작업도 수행할 필요가 없으므로 운영 오버헤드가 최소화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1685,7 +1728,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1717,12 +1760,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 9일 월요일 17:19">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">2022년 5월 AWS KMS는 AWS 관리형 키의 교체 일정을 3년마다(약 1,095일)에서 매년(약 365일)으로 변경했습니다. 새 AWS 관리형 키는 생성 후 1년, 그 이후에는 대략 매년 자동으로 교체됩니다. 기존 AWS 관리형 키는 가장 최근 교체 후 1년, 그 이후에는 매년 자동으로 교체됩니다. https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html#rotate-aws-managed-keys 따라서 AWS 관리형 키가 있는 SSE-KMS는 운영 오버헤드가 가장 적습니다(고객 관리형 CMK와 달리). 여기서 사용자는 회전을 위한 암호화 키 자료를 제공해야 합니다). 자동 회전을 지원합니다(SSE-S3는 자동 회전에 필요한 시간을 지정하지 않음).</div>
+<div class="comment-content">2022년 5월, AWS KMS는 AWS 관리형 키의 교체 일정을 3년마다(약 1,095일)에서 매년(약 365일)로 변경했습니다. 새로운 AWS 관리형 키는 생성된 지 1년 후 자동으로 교체되며 그 이후에는 대략 1년마다 교체됩니다. 기존 AWS 관리형 키는 가장 최근 교체 후 1년이 지나면 자동으로 교체되며 그 이후로는 매년 교체됩니다. https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html#rotate-aws-managed-keys 따라서 AWS 관리형 키를 사용하는 SSE-KMS는 운영 오버헤드가 가장 적습니다(고객 관리형 CMK와 달리). 사용자가 교체를 위해 암호화 키 자료를 제공해야 하는 경우). 자동 회전을 지원합니다(SSE-S3는 자동 회전에 필요한 시간을 지정하지 않습니다).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1731,7 +1774,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1763,7 +1806,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 12:40">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1776,7 +1819,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1807,13 +1850,13 @@
 				HayLLlHuK
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 17:48">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 17:48">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">죄송합니다. SSE-S3 암호화 키 순환에 의존할 수 없습니다. 수많은 정보를 조사했지만 SSE-S3 키 순환 빈도에 대한 구체적인 정보를 찾지 못했습니다. aws 기사에서 언급된 유일한 것은 "정기적으로 회전합니다"입니다. 이를 바탕으로 우리는 SSE에 의존할 수 없습니다. "키는 매년 자동으로 교체되어야 합니다."라는 질문이 있습니다. 저는 B-KMS에 투표하겠습니다.</div>
+<div class="comment-content">죄송합니다. 하지만 우리는 SSE-S3 암호화 키 순환에 의존할 수 없습니다. 수많은 정보를 조사했지만 SSE-S3 키 회전 빈도에 대한 구체적인 정보를 찾지 못했습니다. AWS 기사에서 언급된 유일한 내용은 "정기적으로 회전합니다"입니다. 이를 바탕으로 우리는 SSE에 의존할 수 없습니다. 질문은 "키는 매년 자동으로 순환되어야 합니다."라고 묻습니다. 저는 B-KMS에 투표하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1822,7 +1865,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1845,8 +1888,8 @@
 				HayLLlHuK
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 17:49">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 17:49">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1859,7 +1902,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1882,12 +1925,12 @@
 				HayLLlHuK
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 17:50">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 17:50">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">누군가 SSE-S3 암호화 키 순환 빈도가 매년 순환될 수 있다고 말하는 기사를 발견하면 올바른 해결책은 A입니다. 지금으로서는 A로 가겠습니다.</div>
+<div class="comment-content">누군가 SSE-S3 암호화 키 회전 빈도가 매년 회전될 수 있다는 기사를 발견하면 올바른 해결책은 A입니다. 지금으로서는 A로 가겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1896,7 +1939,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1943,13 +1986,13 @@
 				Zerotn3
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 2일 월요일 08:02">
-			7개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 2일 (월) 08:02">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A입니다. 데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다. SSE-S3 암호화 키의 기본 제공 키 회전 동작을 사용합니다. SSE-S3를 사용하면 암호화 키를 직접 관리할 필요 없이 S3 버킷의 미사용 데이터를 암호화할 수 있습니다. SSE-S3는 암호화 키를 자동으로 교체하므로 매년 수동으로 교체할 필요가 없습니다. 이 옵션은 암호화 키를 관리하거나 수동으로 교체할 필요가 없으므로 운영 오버헤드가 가장 적습니다. 옵션 B는 KMS 키를 매년 수동으로 교체해야 하므로 올바르지 않습니다. 같은 이유로 옵션 C도 올바르지 않습니다. 옵션 D는 SSE-S3를 사용하는 것보다 더 많은 운영 오버헤드가 있는 고객 키 자료를 직접 관리해야 하기 때문에 올바르지 않습니다.</div>
+<div class="comment-content">정답은 A입니다. 데이터를 S3 버킷으로 이동합니다. Amazon S3 관리형 암호화 키(SSE-S3)로 서버 측 암호화를 사용합니다. SSE-S3 암호화 키의 내장 키 순환 동작을 사용합니다. SSE-S3를 사용하면 암호화 키를 직접 관리할 필요 없이 S3 버킷에 저장된 데이터를 암호화할 수 있습니다. SSE-S3는 암호화 키를 자동으로 교체하므로 매년 수동으로 교체하는 것에 대해 걱정할 필요가 없습니다. 이 옵션은 암호화 키를 관리하거나 수동으로 교체할 필요가 없으므로 운영 오버헤드가 가장 적습니다. 옵션 B는 올바르지 않습니다. 왜냐하면 매년 KMS 키를 수동으로 교체해야 하기 때문입니다. 같은 이유로 옵션 C가 올바르지 않습니다. 옵션 D는 고객 키 자료를 직접 관리해야 하기 때문에 올바르지 않습니다. 이는 SSE-S3를 사용하는 것보다 운영 오버헤드가 더 많습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1958,7 +2001,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1990,12 +2033,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 22:14">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">나는 A에 동의합니다. 그러나 aws는 A 또는 B 모두와 관련되기에 충분히 쉽습니다. 이것은 내가 얻지 않기를 바라는 한 가지 질문입니다.</div>
+<div class="comment-content">저는 A에 동의합니다. 그러나 aws는 A나 B 모두와 관련이 있을 만큼 쉽습니다. 이것은 제가 받지 않기를 바라는 질문 중 하나입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2004,7 +2047,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2035,13 +2078,13 @@
 				넥서스2020
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 18일 일 17:04">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 18일 일요일 17:04">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html 고객 관리형 키 자동 키 교체는 고객 관리형 키에서 기본적으로 비활성화되어 있지만 인증된 사용자는 활성화 및 비활성화할 수 있습니다. 자동 키 교체를 활성화(또는 재활성화)하면 AWS KMS는 활성화 날짜로부터 1년(약 365일) 이후부터 매년 KMS 키를 자동으로 교체합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html 고객 관리 키 자동 키 교체는 고객 관리 키에서 기본적으로 비활성화되어 있지만 승인된 사용자는 이를 활성화 및 비활성화할 수 있습니다. 자동 키 교체를 활성화(또는 다시 활성화)하면 AWS KMS는 활성화 날짜로부터 1년(약 365일) 후 그리고 그 이후로는 매년 KMS 키를 자동으로 교체합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2050,7 +2093,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2078,16 +2121,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 05:25">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 05:25">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 정답입니다. 옵션 B는 고객 관리가 가능한 경우 키의 자동 회전이 가능하지만 여기에서 요구 사항으로 언급되지 않았기 때문에 좋은 선택이 아닙니다. 고객이 관리하는 키를 사용하는 경우 키 관리에 대한 고객의 추가 작업 오버헤드가 있습니다.</div>
+<div class="comment-content">A가 정답입니다. 옵션 B는 고객 관리가 가능한 경우 키 자동 순환이 가능하지만 여기서 요구 사항으로 언급되지 않았기 때문에 좋은 선택이 아닙니다. 고객 관리형 키를 사용하는 경우 고객이 키를 관리하기 위한 추가 작업 오버헤드가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2096,7 +2139,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2128,7 +2171,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 15:59">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2142,7 +2185,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2174,12 +2217,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 01:08">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">고객 관리형 키를 사용하는 경우 자동으로 회전할 수 없습니다. 고객이 먼저 키를 업로드해야 합니다! 그래서 A</div>
+<div class="comment-content">고객 관리 키를 사용하면 자동으로 순환할 수 없습니다. 고객은 먼저 키를 업로드해야 합니다! 그래서 A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2188,7 +2231,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2208,15 +2251,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 10일 화요일 08:02">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 10일 (화) 08:02">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html "고객 관리형 KMS 키의 경우 자동 교체는 선택 사항"에서 가능합니다.</div>
+<div class="comment-content">예, https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html에서 가능합니다. "고객 관리형 KMS 키에 대한 자동 교체는 선택 사항입니다."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2225,7 +2268,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2264,12 +2307,12 @@
 				Qjb8m9h
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 07:12">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 07:12">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A입니다. S3 버킷에서 데이터를 암호화하고 키는 운영 오버헤드 없이 매년 순환됩니다. SSE-S3. KMS는 운영 오버헤드를 유발하는 고객이 관리합니다.</div>
+<div class="comment-content">대답은 A입니다. S3 버킷에서 데이터를 암호화하고 키는 운영 오버헤드 없이 매년 순환합니다-SSE-S3. KMS는 운영 오버헤드가 발생하는 고객이 관리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2278,7 +2321,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2301,12 +2344,12 @@
 				Qjb8m9h
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 21:19">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 21:19">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다른 연구를 수행한 후 나머지 답변에 동의합니다. B 암호화 모범 사례는 암호화 키의 광범위한 재사용을 권장하지 않습니다. 고객 관리형 키에 대한 새 암호화 자료를 생성하려면 새 KMS 키를 생성한 다음 애플리케이션 또는 별칭을 변경하여 새 KMS 키를 사용할 수 있습니다. 또는 기존 KMS 키에 대해 자동 키 순환을 활성화할 수 있습니다. KMS 키에 대한 자동 키 교체를 활성화하면 AWS KMS는 매년 KMS 키에 대한 새로운 암호화 자료를 생성합니다. AWS KMS는 모든 이전 버전의 암호화 자료를 영구적으로 저장하므로 해당 KMS 키 https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html로 암호화된 모든 데이터를 해독할 수 있습니다.</div>
+<div class="comment-content">다른 조사를 한 후 나머지 답변에 동의합니다. 대답은 B입니다. 암호화 모범 사례는 암호화 키의 광범위한 재사용을 방지합니다. 고객 관리 키에 대한 새 암호화 자료를 생성하려면 새 KMS 키를 생성한 다음 새 KMS 키를 사용하도록 애플리케이션이나 별칭을 변경하면 됩니다. 또는 기존 KMS 키에 대해 자동 키 순환을 활성화할 수 있습니다. KMS 키에 대해 자동 키 교체를 활성화하면 AWS KMS는 매년 KMS 키에 대한 새로운 암호화 자료를 생성합니다. AWS KMS는 모든 이전 버전의 암호화 자료를 영구적으로 저장하므로 해당 KMS 키로 암호화된 모든 데이터를 해독할 수 있습니다 https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2315,7 +2358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2355,11 +2398,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 11:20">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A Amazon S3 관리형 암호화 키(SSE-S3)와 함께 서버 측 암호화를 사용하고 SSE-S3 암호화 키의 기본 제공 키 회전 동작을 활성화하면 최소한의 운영 오버헤드로 요구 사항을 충족할 수 있습니다. 이 접근 방식은 데이터가 S3 버킷에 저장될 때 자동으로 암호화하고 추가 구성이나 관리 노력 없이 매년 암호화 키를 자동으로 교체합니다. SSE-S3 암호화 키를 사용하는 것과 비교하여 추가 운영 오버헤드가 필요한 고객 관리 키.</div>
+<div class="comment-content">A Amazon S3 관리형 암호화 키(SSE-S3)와 함께 서버 측 암호화를 사용하고 SSE-S3 암호화 키의 내장 키 교체 동작을 활성화하면 최소한의 운영 오버헤드로 요구 사항을 충족할 수 있습니다. 이 접근 방식은 데이터가 S3 버킷에 저장될 때 자동으로 암호화하고 추가 구성이나 관리 노력 없이 매년 암호화 키를 자동으로 교체합니다. SSE-S3 암호화 키를 사용하는 것에 비해 추가 운영 오버헤드가 필요한 고객 관리형 키입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2368,7 +2411,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2399,13 +2442,13 @@
 				인증101
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 11일 일 12:00">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 11일 일요일 12:00">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 운영 오버헤드가 가장 적은 이유는 무엇입니까?</div>
+<div class="comment-content">왜 이것이 최소한의 운영 오버헤드가 아닌가?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2414,7 +2457,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2442,15 +2485,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스텝맨
+				의붓맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 06:21">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 06:21">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">새로운 답변은 A입니다.</div>
+<div class="comment-content">새로운 답변은 A입니다. https://catalog.us-east-1.prod.workshops.aws/workshops/aad9ff1e-b607-45bc-893f-121ea5224f24/en-US/s3/serverside/sses3</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2459,7 +2502,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2482,12 +2525,12 @@
 				kmliuy73
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 11:02">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 11:02">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"매년" 자동으로 순환되어야 함</div>
+<div class="comment-content">"매년" 자동으로 순환되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2496,7 +2539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2520,11 +2563,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 08:27">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">*이 키에 액세스하거나 다른 암호화 처리를 위해 수동으로 사용할 수 없습니다. 키 자체는 정기적으로 순환되는 마스터 키로 암호화됩니다.</div>
+<div class="comment-content">*이 키에 액세스하거나 다른 암호화 처리를 위해 수동으로 사용할 수 없습니다. 키 자체는 정기적으로 교체되는 마스터 키로 암호화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2533,7 +2576,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2577,15 +2620,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				토니고스트R05
+				TonyghostR05
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 03:02">
-			8개월, 2주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이전 질문처럼 B</div>
+<div class="comment-content">이전 질문과 마찬가지로 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2594,7 +2637,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2622,16 +2665,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 17:50">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:50">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B야 -</div>
+<div class="comment-content">B예요 -</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2640,7 +2683,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2671,8 +2714,8 @@
 				레온
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 17:10">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:10">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2686,7 +2729,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2717,13 +2760,13 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 15:24">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 15:24">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답변 : 비</div>
+<div class="comment-content">답 : ㄴ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2732,7 +2775,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2787,7 +2830,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 01:32">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2831,7 +2874,7 @@ SSE-C - customer provided key. The encryption key is fully managed by you outsid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 09:46">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2888,7 +2931,7 @@ SSE-C - customer provided key. The encryption key is fully managed by you outsid
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 20:46">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2934,7 +2977,7 @@ Option A. Move the data to the S3 bucket. Use server-side encryption with Amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 19:00">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2971,7 +3014,7 @@ Option A. Move the data to the S3 bucket. Use server-side encryption with Amazon
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 18:55">
-			2 weeks ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3020,7 +3063,7 @@ Additionally, where is the reference that SSE-S3 will rotate keys every year (wh
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 27 Jan 2023 19:03">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3073,7 +3116,7 @@ Additionally, where is the reference that SSE-S3 will rotate keys every year (wh
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 20:47">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3114,7 +3157,7 @@ Option D involves encrypting the data with customer key material and creating a 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 08:09">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3167,7 +3210,7 @@ For B, whilst you have to set up KMS once, you then don't have to anything else,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 04 Jan 2023 06:58">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3204,7 +3247,7 @@ For B, whilst you have to set up KMS once, you then don't have to anything else,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 08:09">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3241,7 +3284,7 @@ For B, whilst you have to set up KMS once, you then don't have to anything else,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Feb 2023 19:38">
-			6 months, 1 week ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3321,7 +3364,7 @@ For B, whilst you have to set up KMS once, you then don't have to anything else,
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 16 Aug 2023 08:34">
-			12 hours, 31 minutes ago
+			1 week, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3369,7 +3412,7 @@ Going back to the question, since we cannot confirm the frequency of SSE-S3's ke
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 07 Aug 2023 04:49">
-			1 week, 2 days ago
+			2 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3415,7 +3458,7 @@ Going back to the question, since we cannot confirm the frequency of SSE-S3's ke
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 03 Aug 2023 16:22">
-			1 week, 6 days ago
+			3 weeks, 2 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3463,7 +3506,7 @@ Option B also provides a valid solution, but it involves more manual configurati
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 08:48">
-			1 month, 2 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3515,7 +3558,7 @@ D. This answer is not the most suitable option as it involves encrypting the dat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Jun 2023 08:37">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3560,7 +3603,7 @@ D. This answer is not the most suitable option as it involves encrypting the dat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 17 May 2023 03:45">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3606,7 +3649,7 @@ https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 16:56">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3645,7 +3688,7 @@ Choosing A because Amazon S3 now applies server-side encryption with Amazon S3 m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 17:03">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3700,7 +3743,7 @@ You can configure default encryption for a bucket. You can use either server-sid
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 10 May 2023 10:11">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3748,7 +3791,7 @@ Base on aws site: If you need more control over your keys, such as managing key 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 31 Mar 2023 00:17">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3794,7 +3837,7 @@ Base on aws site: If you need more control over your keys, such as managing key 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 16:23">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3839,7 +3882,7 @@ Base on aws site: If you need more control over your keys, such as managing key 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Mar 2023 16:47">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3886,7 +3929,7 @@ Server-side encryption protects data at rest. Amazon S3 encrypts each object wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Mar 2023 02:33">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3931,7 +3974,7 @@ Server-side encryption protects data at rest. Amazon S3 encrypts each object wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 14:19">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3977,7 +4020,7 @@ Server-side encryption protects data at rest. Amazon S3 encrypts each object wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 17 Mar 2023 14:18">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4022,7 +4065,7 @@ Server-side encryption protects data at rest. Amazon S3 encrypts each object wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 09 Mar 2023 12:16">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4068,7 +4111,7 @@ Server-side encryption protects data at rest. Amazon S3 encrypts each object wit
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Mar 2023 00:49">
-			5 months, 1 week ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4115,7 +4158,7 @@ Does this mean Amazon does not rotate the keys with which the objects are encryp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Feb 2023 15:03">
-			5 months, 2 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4161,7 +4204,7 @@ Does this mean Amazon does not rotate the keys with which the objects are encryp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Feb 2023 16:09">
-			6 months ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4207,7 +4250,7 @@ Does this mean Amazon does not rotate the keys with which the objects are encryp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 18:51">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4253,7 +4296,7 @@ Does this mean Amazon does not rotate the keys with which the objects are encryp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 13:54">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4299,7 +4342,7 @@ Does this mean Amazon does not rotate the keys with which the objects are encryp
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 09 Jan 2023 17:19">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4353,7 +4396,7 @@ So, SSE-KMS with AWS-managed keys is least operational overhead (unlike customer
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 12:40">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4398,7 +4441,7 @@ So, SSE-KMS with AWS-managed keys is least operational overhead (unlike customer
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 17:48">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4438,7 +4481,7 @@ Based on it, we can't rely on SSE. The question ask us "key must be automaticall
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 17:49">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4475,7 +4518,7 @@ Based on it, we can't rely on SSE. The question ask us "key must be automaticall
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 17:50">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4537,7 +4580,7 @@ As of now, I'll go for A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 08:02">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4587,7 +4630,7 @@ Option B is incorrect because you would still need to manually rotate the KMS ke
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 22:14">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4633,7 +4676,7 @@ Option B is incorrect because you would still need to manually rotate the KMS ke
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Dec 2022 17:04">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4682,7 +4725,7 @@ Automatic key rotation is disabled by default on customer managed keys but autho
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 05:25">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4729,7 +4772,7 @@ Option B is not a good choice because though Automatic rotation of the keys is p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 15:59">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4775,7 +4818,7 @@ Option B is not a good choice because though Automatic rotation of the keys is p
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 01:08">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4815,7 +4858,7 @@ so A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 08:02">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4869,7 +4912,7 @@ so A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 07:12">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4907,7 +4950,7 @@ KMS is managed by customers with causes operational overhead.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 21:19">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4967,7 +5010,7 @@ https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 11:20">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5013,7 +5056,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Dec 2022 12:00">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5059,7 +5102,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 06:21">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5096,7 +5139,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 11:02">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5133,7 +5176,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 08:27">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5194,7 +5237,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 03:02">
-			8 months, 2 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5239,7 +5282,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:50">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5285,7 +5328,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:10">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5331,7 +5374,7 @@ Using server-side encryption with Amazon S3 managed encryption keys (SSE-S3) and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 15:24">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

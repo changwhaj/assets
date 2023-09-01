@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 23 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 23 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 23 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 23 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807265">
 <p class="card-text">
 							
-								회사는 영구 데이터 저장소에서 MySQL용 Amazon RDS를 사용하는 AWS에서 업무용 애플리케이션을 실행하고 있습니다. 이 회사는 데이터베이스를 Amazon Aurora로 마이그레이션할 때 가동 중지 시간을 최소화하려고 합니다. <br/>데이터베이스 전문가는 어떤 마이그레이션 방법을 사용해야 합니까?<br/>
+								한 회사가 영구 데이터 스토어에서 MySQL용 Amazon RDS를 사용하는 비즈니스 애플리케이션을 AWS에서 실행하고 있습니다. 회사는 데이터베이스를 Amazon Aurora로 마이그레이션할 때 가동 중지 시간을 최소화하려고 합니다. <br/>데이터베이스 전문가는 어떤 마이그레이션 방법을 사용해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807265" type="application/json">[{"voted_answers": "C", "vote_count": 8, "is_most_voted": true}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											RDS for MySQL DB 인스턴스의 스냅샷을 만들고 스냅샷 마이그레이션 옵션을 사용하여 새 Aurora DB 클러스터를 생성합니다.
+											RDS for MySQL DB 인스턴스의 스냅샷을 생성하고 스냅샷 마이그레이션 옵션을 사용하여 새 Aurora DB 클러스터를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											mysqldump 유틸리티를 사용하여 RDS for MySQL DB 인스턴스를 백업하고 새 Aurora DB 클러스터를 생성한 다음 백업을 복원합니다.
+											mysqldump 유틸리티를 사용하여 MySQL DB 인스턴스용 RDS를 백업하고 새 Aurora DB 클러스터를 생성한 후 백업을 복원합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											RDS for MySQL DB 인스턴스에서 Aurora 복제본을 생성하고 Aurora DB 클러스터를 승격합니다.
+											RDS for MySQL DB 인스턴스에서 Aurora 복제본을 생성하고 Aurora DB 클러스터를 승격시킵니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											RDS for MySQL DB 인스턴스의 클론을 생성하고 Aurora DB 클러스터를 승격합니다.
+											RDS for MySQL DB 인스턴스의 복제본을 생성하고 Aurora DB 클러스터를 승격합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>제안된 답변: </strong>
@@ -120,24 +183,14 @@
 <br/>
 </span>
 <span class="answer-description"> 
-								참조: <br/>https://d1.awsstatic.com/whitepapers/RDS/Migrating%20your%20databases%20to%20Amazon%20Aurora.pdf <br/>(10)
+								참조: <br/>https://d1.awsstatic.com/whitepapers/RDS/Migating%20your%20databases%20to%20Amazon%20Aurora.pdf <br/>(10)
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="8 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								chicagomassageseeker
-							</a> 
-							
-							시간: <i>
-							2020년 7월 13일, 오전 8:24</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								chicagomassageseeker
-							</a>
-							
-							at <i>
-							July 13, 2020, 8:24 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,18 +291,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 19일 일 23:05">
+<span class="comment-date align-middle" title="2021년 9월 19일 일요일 23:05">
 			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 C. Aurora 복제본으로 다운타임 최소화. 그러나 이것은 가장 빠르지 않습니다.</div>
+<div class="comment-content">답변 C. Aurora 복제본을 통한 가동 중지 시간 최소화. 그러나 이것이 가장 빠른 것은 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -292,11 +335,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 18:53">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C에 동의합니다. 이 블로그 게시물에서는 읽기 전용 복제본이 중단 시간을 줄이기 때문에 C가 답인 이유를 설명합니다. https://aws.amazon.com/blogs/database/best-practices-for-migrating-rds-for-mysql-databases-to-amazon-aurora/</div>
+<div class="comment-content">C에 동의하세요. 이 블로그 게시물에서는 읽기 복제본이 가동 중지 시간을 줄여주기 때문에 C가 답인 이유를 설명합니다. https://aws.amazon.com/blogs/database/best-practices-for-migating-rds-for-mysql-databases-to-amazon-aurora/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -348,12 +391,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 5월 5일 금요일 18:05">
-			3개월, 1주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">RDS Mysql/Postgres에서 Aurora로 마이그레이션할 때 가장 쉽고 손쉬운 방법은 aurora 복제본을 가져온 다음 독립 실행형으로 승격하는 것입니다. 답은 C입니다.</div>
+<div class="comment-content">RDS Mysql/Postgres에서 Aurora로 마이그레이션할 때 가장 쉽고 쉬운 방법은 (Aurora 복제본을 가져온 다음 독립 실행형으로 승격시키는 것)입니다. 답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,12 +437,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 11:49">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">aws의 이 기사는 C가 정확히 정답이라는 것을 보여줍니다.</div>
+<div class="comment-content">aws의 이 기사에서는 C가 정확한 답변임을 보여줍니다 https://aws.amazon.com/getting-started/hands-on/ migration-rdsmysql-to-auroramysql/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -440,11 +483,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 16:09">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. 아래를 참조하십시오 --- https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Migrating.RDSMySQL.Replica.html " 먼저 MySQL DB 인스턴스의 Aurora MySQL 읽기 전용 복제본 MySQL DB 인스턴스와 Aurora MySQL 읽기 전용 복제본 사이의 복제 지연이 0이면 클라이언트 애플리케이션이 Aurora 읽기 전용 복제본에서 읽도록 지시한 다음 복제를 중지하여 Aurora MySQL 읽기 전용 복제본을 만들 수 있습니다. 읽기 및 쓰기를 위한 독립형 Aurora MySQL DB 클러스터 자세한 내용은 Aurora 읽기 전용 복제본을 사용하여 MySQL DB 인스턴스에서 Amazon Aurora MySQL DB 클러스터로 데이터 마이그레이션 단원을 참조하십시오.</div>
+<div class="comment-content">C. 아래를 참조하십시오. --- https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Migating.RDSMySQL.Replica.html " 먼저 RDS for MySQL DB 인스턴스를 생성하여 마이그레이션할 수 있습니다. MySQL DB 인스턴스의 Aurora MySQL 읽기 전용 복제본 MySQL DB 인스턴스와 Aurora MySQL 읽기 전용 복제본 간의 복제 지연이 0이면 클라이언트 애플리케이션에 Aurora 읽기 전용 복제본을 읽은 다음 복제를 중지하여 Aurora MySQL 읽기 전용 복제본을 만들도록 지시할 수 있습니다. 읽기 전용 복제본 읽기 및 쓰기를 위한 독립형 Aurora MySQL DB 클러스터 자세한 내용은 Aurora 읽기 전용 복제본을 사용하여 MySQL DB 인스턴스에서 Amazon Aurora MySQL DB 클러스터로 데이터 마이그레이션을 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,12 +528,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 08:31">
-			6개월, 4주 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 클라우드 전문가에 따른 답변입니다. 핵심은 다운타임 최소화</div>
+<div class="comment-content">클라우드 전문가에 따르면 C는 답변입니다. 핵심은 가동 중지 시간을 최소화하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,15 +570,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsguys
+				나쁜 놈들
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 5월 21일 토요일 22:10">
-			1년, 2개월 전
+			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C =&gt; 가동 중지 시간을 최소화할 수 있습니다.</div>
+<div class="comment-content">C =&gt; 가동 중지 시간을 최소화하는 것이 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -575,13 +618,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 18:06">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 18:06">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">MySQL DB 인스턴스 -&gt; Aurora 복제본 생성(시간 소요) -&gt; Aurora DB 클러스터 승격(가동 시간 최소화)</div>
+<div class="comment-content">MySQL DB 인스턴스 -&gt; Aurora 복제본 생성(시간이 소요됨) -&gt; Aurora DB 클러스터 승격(다운타임 최소화)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -590,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,11 +665,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 22일 수 21:12">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 옵션 C .. 가동 중지 시간 최소화입니다.</div>
+<div class="comment-content">대답은 옵션 C입니다. 가동 중지 시간이 최소화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,11 +706,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				G마티넬리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 7일 화요일 14:48">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 7일 (화) 14:48">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -712,8 +755,8 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 04일 목요일 12:03">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 4일 목요일 12:03">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -754,15 +797,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				겔스엠
+				젤즘
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 2일 화요일 00:12">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 00:12">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. RDS for MySQL DB 인스턴스에서 Aurora 복제본을 생성하고 Aurora DB 클러스터를 승격합니다. 이것은 가장 빠르지 않을 수 있지만 문제는 "중단 시간 최소화"입니다.</div>
+<div class="comment-content">C. RDS for MySQL DB 인스턴스에서 Aurora 복제본을 생성하고 Aurora DB 클러스터를 승격시킵니다. 이것이 가장 빠르지는 않을 수도 있지만 문제는 "다운타임 최소화"입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -799,11 +842,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 10:41">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 10:41">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -816,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -852,7 +895,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C</div>
+<div class="comment-content">답: C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,7 +932,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지비엘
+				이런비엘
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 18일 (월) 16:52">
@@ -897,7 +940,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A이고 증명하겠습니다 --- 주의 깊게 따라오십시오 최소 가동 중지 시간(가장 빠름)에 대한 요구 사항이 있습니다 --- 저는 A로 갑니다 https://docs.aws.amazon.com/AmazonRDS/latest/ AuroraUserGuide/AuroraPostgreSQL.Migrating.html#AuroraPostgreSQL.Migrating.RDSPostgreSQL.Import.Console 해당 링크에 따르면 "마이그레이션에 시간이 걸릴 준비를 하십시오. 데이터 테비바이트(TiB)당 대략 몇 시간 정도 걸립니다." C를 선택하면 C는 다운타임이 길어지고 A는 그렇지 않습니다.</div>
+<div class="comment-content">대답은 A이고 증명하겠습니다 --- 주의 깊게 따라오십시오. 가동 중지 시간을 최소화해야 한다는 요구 사항이 있습니다(가장 빠름) --- 저는 A를 사용합니다 https://docs.aws.amazon.com/AmazonRDS/latest/ AuroraUserGuide/AuroraPostgreSQL.Migating.html#AuroraPostgreSQL.Migating.RDSPostgreSQL.Import.Console 해당 링크에 따르면 "마이그레이션을 준비하는 데 시간이 좀 걸리며, 데이터 테비바이트(TiB)당 대략 몇 시간이 걸립니다." C를 선택하면 C는 가동 중지 시간이 길어지는 반면 A는 그렇지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -906,7 +949,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -926,15 +969,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				이마 타월
+				이마토웰
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 09:57">
+<span class="comment-date align-middle" title="2021년 10월 19일 (화) 09:57">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">자, 그럼 스냅샵 후 오로라로 스왑하기 전에 소스 RDS에 기록된 데이터는 어떻습니까? 용납할 수 없는 데이터 손실</div>
+<div class="comment-content">그렇다면 Snapshop 이후에 Aurora로 교체하기 전에 소스 RDS에 기록된 데이터는 어떻습니까? 용납할 수 없는 데이터가 손실되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -943,7 +986,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -975,11 +1018,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 17:25">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">최소한의 가동 중지 시간과 가장 빠른 것의 차이를 이해해야 합니다. 둘 다 동일하지 않습니다. 답은 C입니다.</div>
+<div class="comment-content">최소 가동 중지 시간과 가장 빠른 시간의 차이를 이해해야 합니다. 둘 다 동일하지 않습니다. 답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -988,7 +1031,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1032,7 +1075,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C는 다운타임을 최소화하면서 오로라로의 마이그레이션을 용이하게 하기 때문입니다.</div>
+<div class="comment-content">C는 가동 중지 시간을 최소화하면서 Aurora로의 마이그레이션을 용이하게 하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1041,7 +1084,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1072,12 +1115,12 @@
 				물h30
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 08:48">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 08:48">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html#AuroraPostgreSQL.Migrating.RDSPostgreSQL.Replica</div>
+<div class="comment-content">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migating.html#AuroraPostgreSQL.Migating.RDSPostgreSQL.Replica</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1086,7 +1129,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1114,11 +1157,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 30일 목요일 19:32">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 30일 목 19:32">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1131,7 +1174,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,7 +1210,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 C</div>
+<div class="comment-content">답 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1176,7 +1219,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1268,7 +1311,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 18:53">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1326,7 +1369,7 @@ https://aws.amazon.com/blogs/database/best-practices-for-migrating-rds-for-mysql
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 05 May 2023 18:05">
-			3 months, 1 week ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1375,7 +1418,7 @@ answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 11:49">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1421,7 +1464,7 @@ answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 16:09">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1471,7 +1514,7 @@ You can migrate from an RDS for MySQL DB instance by first creating an Aurora My
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 08:31">
-			6 months, 4 weeks ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1517,7 +1560,7 @@ You can migrate from an RDS for MySQL DB instance by first creating an Aurora My
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 21 May 2022 22:10">
-			1 year, 2 months ago
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1610,7 +1653,7 @@ You can migrate from an RDS for MySQL DB instance by first creating an Aurora My
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Dec 2021 21:12">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1792,7 +1835,7 @@ This may not be the fastest but the question is "minimize downtime".</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 10:41">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1969,7 +2012,7 @@ According to that link “Be prepared for migration to take a while, roughly sev
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 17:25">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2112,7 +2155,7 @@ According to that link “Be prepared for migration to take a while, roughly sev
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Sep 2021 19:32">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 53 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 53 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 53 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 53 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 53 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839810">
 <p class="card-text">
 							
-								회사는 회계 기록을 Amazon S3에 저장해야 합니다. 기록은 1년 동안 즉시 액세스할 수 있어야 하며 추가 9년 동안 보관해야 합니다. 관리 사용자 및 루트 사용자를 포함하여 회사의 그 누구도 전체 10년 기간 동안 레코드를 삭제할 수 없습니다. 기록은 최대한 탄력적으로 저장해야 합니다. <br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 회계 기록을 Amazon S3에 저장해야 합니다. 기록은 1년 동안 즉시 접근 가능해야 하며 이후 추가 9년 동안 보관되어야 합니다. 관리 사용자 및 루트 사용자를 포함하여 회사의 어느 누구도 전체 10년 동안 기록을 삭제할 수 없습니다. 기록은 최대 복원력으로 저장되어야 합니다. <br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											전체 10년 동안 S3 Glacier에 레코드를 저장합니다. 액세스 제어 정책을 사용하여 10년 동안 레코드 삭제를 거부합니다.
+											전체 10년 동안 S3 Glacier에 기록을 저장합니다. 접근 제어 정책을 사용하여 10년 동안 기록 삭제를 거부합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											S3 Intelligent-Tiering을 사용하여 레코드를 저장합니다. IAM 정책을 사용하여 레코드 삭제를 거부합니다. 10년 후 삭제를 허용하도록 IAM 정책을 변경합니다.
+											S3 Intelligent-Tiering을 사용하여 기록을 저장합니다. IAM 정책을 사용하여 레코드 삭제를 거부합니다. 10년 후에는 삭제를 허용하도록 IAM 정책을 변경합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											S3 수명 주기 정책을 사용하여 1년 후 레코드를 S3 Standard에서 S3 Glacier Deep Archive로 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다.
+											S3 수명 주기 정책을 사용하여 1년 후에 S3 Standard에서 S3 Glacier Deep Archive로 레코드를 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											S3 수명 주기 정책을 사용하여 1년 후 레코드를 S3 Standard에서 S3 One Zone-Infrequent Access(S3 One Zone-IA)로 전환합니다. 10년 동안 거버넌스 모드에서 S3 객체 잠금을 사용합니다.
+											S3 수명 주기 정책을 사용하여 1년 후에 S3 Standard에서 S3 One Zone-Infrequent Access(S3 One Zone-IA)로 레코드를 전환합니다. 10년 동안 거버넌스 모드에서 S3 객체 잠금을 사용합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="37 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="37 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Rachness
-							</a> 
-							
-							시간: <i>
-							2022년 10월 15일, 오후 7:05</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Rachness
-							</a>
-							
-							at <i>
-							Oct. 15, 2022, 7:05 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -251,13 +294,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 18:12">
-			1주 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 18:12">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">주요 이유는 다음과 같습니다. S3 수명 주기 정책은 장기 보관을 위해 1년 후 데이터를 Glacier Deep Archive로 전환합니다. 규정 준수 모드의 S3 객체 잠금은 지정된 보존 기간 동안 사용자가 객체를 삭제하거나 덮어쓰지 못하도록 합니다. Glacier Deep Archive는 장기 보관을 위한 매우 높은 내구성과 최저 스토리지 비용을 제공합니다. 규정 준수 모드는 정책이 변경되더라도 아무도 보존 설정을 재정의하거나 변경할 수 없도록 합니다. 이것은 모든 요구 사항을 충족합니다 - 1년 동안 즉시 액세스, 9년 동안 보관됨, 10년 동안 삭제할 수 없음, 최대 복원력</div>
+<div class="comment-content">주요 이유는 다음과 같습니다. S3 수명 주기 정책은 장기 보관을 위해 1년 후에 데이터를 Glacier Deep Archive로 전환합니다. 규정 준수 모드의 S3 객체 잠금은 사용자가 지정된 보존 기간 동안 객체를 삭제하거나 덮어쓰는 것을 방지합니다. Glacier Deep Archive는 장기 보관 시 매우 높은 내구성과 최저 스토리지 비용을 제공합니다. 규정 준수 모드에서는 정책이 변경되더라도 누구도 보존 설정을 재정의하거나 변경할 수 없습니다. 이는 1년 동안 즉시 액세스, 9년 동안 보관, 10년 동안 삭제할 수 없음, 최대 복원력 등 모든 요구 사항을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -298,12 +341,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 8일 화요일 06:16">
-			1주, 1일 전
+			2주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">관리 사용자 및 루트 사용자를 포함하여 회사의 어느 누구도 전체 10년 기간 동안 레코드를 삭제할 수 없습니다 = 규정 준수 모드</div>
+<div class="comment-content">관리자 및 루트 사용자를 포함하여 회사 내 어느 누구도 10년 전체 기간 동안 기록을 삭제할 수 없습니다 = 규정 준수 모드</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,15 +383,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				miki111
+				미키111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 19일 수 17:11">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 19일 수요일 17:11">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C가 정답입니다.</div>
+<div class="comment-content">보기 C가 정답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -357,7 +400,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -388,12 +431,12 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 19:12">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 19:12">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 아닌 이유는 무엇입니까? 모든 파일을 S3 Glacier 즉시 검색(S3보다 저렴)으로 옮긴 다음 1년 이상 된 파일을 S3 Deep 아카이브로 옮깁니다.</div>
+<div class="comment-content">A는 왜 안되나요? 모든 파일을 S3 Glacier 즉시 검색(S3보다 저렴함)으로 이동한 다음 1년보다 오래된 파일을 S3 Deep 아카이브로 이동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -402,7 +445,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,13 +476,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 21일 수 12:56">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 21일 수요일 12:56">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">전체 10년 동안 레코드 삭제를 방지하려면 S3 객체 잠금 기능을 활용할 수 있습니다. 규정 준수 모드에서 활성화하면 개체에 대한 보존 기간을 설정하여 관리 및 루트 사용자를 포함한 모든 사용자가 레코드를 삭제하지 못하도록 할 수 있습니다. A: S3 Glacier는 장기 보관에 적합하며 필요에 따라 첫해에는 즉각적인 액세스를 제공하지 못할 수 있습니다. B: Intelligent-Tiering은 연장된 9년 동안 가장 비용 효율적인 아카이브 스토리지 옵션을 제공하지 못할 수 있습니다. 삭제를 허용하도록 10년 후에 IAM 정책을 변경하면 수동 단계와 잠재적인 인적 오류가 발생합니다. D: S3 One Zone-IA는 비용 절감을 제공할 수 있지만 장기 보관을 위한 S3 Glacier Deep Archive와 동일한 수준의 복원력을 제공하지 않습니다.</div>
+<div class="comment-content">10년 동안 기록이 삭제되는 것을 방지하려면 S3 객체 잠금 기능을 활용하세요. 규정 준수 모드에서 활성화하면 개체에 대한 보존 기간을 설정하여 관리자 및 루트 사용자를 포함한 모든 사용자가 레코드를 삭제하지 못하도록 방지할 수 있습니다. A: S3 Glacier는 장기 보관에 적합하지만 필요에 따라 첫 해 동안 즉각적인 액세스를 제공하지 못할 수도 있습니다. B: Intelligent-Tiering은 9년 연장 기간 동안 가장 비용 효율적인 아카이브 스토리지 옵션을 제공하지 못할 수 있습니다. 삭제를 허용하도록 10년 후 IAM 정책을 변경하면 수동 단계가 발생하고 잠재적인 인적 오류도 발생합니다. D: S3 One Zone-IA는 비용 절감 효과를 제공할 수 있지만 장기 보관을 위한 S3 Glacier Deep Archive와 동일한 수준의 복원력을 제공하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,16 +519,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				11팬더맨11
+				11판테맨11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 27일 목요일 01:34">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 27일 목 01:34">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">규정 준수 모드에서는 AWS 계정의 루트 사용자를 포함하여 어떤 사용자도 보호 객체 버전을 덮어쓰거나 삭제할 수 없습니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html</div>
+<div class="comment-content">규정 준수 모드에서는 AWS 계정의 루트 사용자를 포함하여 어떤 사용자도 보호된 객체 버전을 덮어쓰거나 삭제할 수 없습니다. https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -525,13 +568,13 @@
 				아티하
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 11일 (토) 09:33">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 11일 토요일 09:33">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">보존 기간: 기간은 Days &amp; Years로 지정됩니다. 보존 규정 준수 모드를 사용하면 버킷 내의 모든 객체가 잠긴 동안 보존 기간 동안 보존 모드를 변경/조정할 수 없습니다(계정 루트 사용자도). 덜 제한적인 모드인 Retention Governance 모드에서는 S3:BypassGovernanceRetention을 사용하여 잠금 설정을 조정할 수 있는 특별 권한을 사용자 그룹에 부여할 수 있습니다. Legal Hold: 오브젝트 버전의 On/Off 설정입니다. 보관 기간이 없습니다. 특정 개체 버전에서 Legal Hole을 활성화하면 해당 특정 개체 버전을 삭제하거나 재정의할 수 없습니다. 권한으로 S:PutObjectLegalHole이 필요합니다.</div>
+<div class="comment-content">보존 기간: 기간은 일 및 연도별로 지정됩니다. 보존 규정 준수 모드를 사용하면 버킷 내의 모든 객체가 잠겨 있는 동안 보존 기간 동안 보존 모드를 변경/조정할 수 없습니다(계정 루트 사용자라도). 덜 제한적인 모드인 Retention Governance 모드에서는 S3:BypassGovernanceRetention을 사용하여 잠금 설정을 조정할 수 있는 특별한 권한을 사용자 그룹에 부여할 수 있습니다. 법적 보존: 개체 버전의 On/Off 설정입니다. 보유기간은 없습니다. 특정 개체 버전에 대해 법적 허점을 활성화하면 해당 특정 개체 버전을 삭제하거나 재정의할 수 없습니다. 권한으로 S:PutObjectLegalHole이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -568,16 +611,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				어디에서 시작할 수 있습니까?
+				어디서부터 시작할 수 있나요?
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 27일 (월) 01:37">
-			5개월, 2주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">하루종일 S3 Glacier Deep Archive....</div>
+<div class="comment-content">S3 Glacier Deep Archive 하루 종일....</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,13 +660,13 @@
 				사일런트밀리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 02:51">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 02:51">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">S3 수명 주기 정책을 사용하여 1년 후 레코드를 S3 Standard에서 S3 Glacier Deep Archive로 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다.</div>
+<div class="comment-content">S3 수명 주기 정책을 사용하여 1년 후에 S3 Standard에서 S3 Glacier Deep Archive로 레코드를 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,8 +706,8 @@
 				k1kavi1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 10:19">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 10:19">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,13 +752,13 @@
 				파자발
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 22일 목요일 02:00">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 22일 (목) 02:00">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C, 표준에서 Glacier 딥 아카이브로 전환하고 삭제 요구 사항 A, B 및 D에 대해 잠금을 사용하도록 설정된 수명 주기가 요구 사항을 충족하지 않음</div>
+<div class="comment-content">C, 표준에서 Glacier 딥 아카이브로 전환하도록 설정된 수명 주기 및 삭제 요구 사항 A, B, D에 잠금 사용이 요구 사항을 충족하지 않음</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -724,7 +767,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -752,16 +795,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 17:07">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 17:07">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C. S3 수명 주기 정책을 사용하여 1년 후 레코드를 S3 Standard에서 S3 Glacier Deep Archive로 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다. 요구 사항을 충족하기 위해 회사는 S3 수명 주기 정책을 사용하여 1년 후에 레코드를 S3 Standard에서 S3 Glacier Deep Archive로 전환할 수 있습니다. S3 Glacier Deep Archive는 거의 액세스하지 않는 데이터의 장기 보존을 위해 특별히 설계된 Amazon의 가장 저렴한 스토리지 클래스입니다. 이를 통해 회사는 최대한의 탄력성과 최저 비용으로 기록을 저장할 수 있습니다.</div>
+<div class="comment-content">C. S3 수명 주기 정책을 사용하여 1년 후에 S3 Standard에서 S3 Glacier Deep Archive로 레코드를 전환합니다. 10년 동안 규정 준수 모드에서 S3 객체 잠금을 사용합니다. 요구 사항을 충족하기 위해 회사는 S3 수명 주기 정책을 사용하여 1년 후에 S3 Standard에서 S3 Glacier Deep Archive로 레코드를 전환할 수 있습니다. S3 Glacier Deep Archive는 Amazon의 가장 저렴한 스토리지 클래스로, 거의 액세스하지 않는 데이터의 장기 보존을 위해 특별히 설계되었습니다. 이를 통해 회사는 최대한의 탄력성과 최저 비용으로 기록을 저장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -770,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -790,15 +833,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 17:07">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 17:07">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">전체 10년 동안 레코드가 삭제되지 않도록 하기 위해 회사는 규정 준수 모드에서 S3 객체 잠금을 사용할 수 있습니다. S3 개체 잠금을 사용하면 회사에서 S3의 개체에 보존 기간을 적용하여 보존 기간이 만료될 때까지 개체가 삭제되지 않도록 할 수 있습니다. 규정 준수 모드에서 S3 객체 잠금을 사용하면 회사는 전체 10년 동안 관리 사용자와 루트 사용자를 포함하여 그 누구도 레코드를 삭제하지 않도록 할 수 있습니다.</div>
+<div class="comment-content">전체 10년 동안 기록이 삭제되지 않도록 회사는 규정 준수 모드에서 S3 객체 잠금을 사용할 수 있습니다. S3 객체 잠금을 사용하면 회사는 S3의 객체에 보존 기간을 적용하여 보존 기간이 만료될 때까지 객체가 삭제되는 것을 방지할 수 있습니다. 규정 준수 모드에서 S3 객체 잠금을 사용하면 회사는 전체 10년 동안 관리 사용자 및 루트 사용자를 포함하여 누구도 레코드를 삭제하지 않도록 할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -807,7 +850,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -847,12 +890,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 11:50">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A와 B는 1년 동안 액세스할 수 있어야 하고 제어 정책 또는 IAM 정책을 사용하여 관리자 또는 루트가 여전히 삭제할 수 있으므로 제외됩니다. D는 One Zone-IA를 사용하므로 제외되지만 요구 사항에 최대 복원력이 명시되어 있습니다. SO-C가 정답이어야 합니다.</div>
+<div class="comment-content">A와 B는 1년 동안 액세스할 수 있어야 하고 제어 정책이나 IAM 정책을 사용하여 관리자나 루트가 이를 삭제할 수 있으므로 제외됩니다. D는 One Zone-IA를 사용하므로 제외되지만 요구 사항에는 최대 복원력이 명시되어 있습니다. SO-C가 정답이어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -889,11 +932,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 04:30">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -907,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -938,13 +981,13 @@
 				마지_심슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 23:57">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 23:57">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">그들은 Glacier Vault Lock을 옵션 C에 넣어 훨씬 더 분명하게 만들어야 했습니다.</div>
+<div class="comment-content">Glacier Vault Lock을 옵션 C에 넣어 더욱 명확하게 만들었어야 했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +996,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -985,12 +1028,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 7일 수 07:35">
-			8개월, 1주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 1년 즉시 액세스 및 10년 데이터 내구성 요구 사항을 충족하는 답변입니다.</div>
+<div class="comment-content">C는 즉시 접속 1년, 데이터 내구성 10년 요건을 충족하는 답이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -999,7 +1042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1030,12 +1073,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 14:56">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 14:56">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1087,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1072,16 +1115,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에어레이드2010
+				공습2010
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 06일 일요일 10:16">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 6일 일요일 10:16">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A-기록은 첫 해에 즉시 액세스할 수 있어야 하므로 잘못되었습니다. 나. 기록에 대해 한 번도 언급하지 않은 질문은 10년 후 삭제 또는 수정될 수 있습니다. D-Resiliency 확보 조건을 충족하지 못함; 이를 보장하려면 다중 AZ가 필요합니다. 따라서 정답은 C입니다.</div>
+<div class="comment-content">A-첫해에는 기록에 즉시 액세스할 수 있어야 한다는 점에서 틀렸습니다. B-기록과 관련하여 한번도 언급되지 않은 질문은 10년 이후 삭제 또는 수정될 수 있습니다. D-복원력 확보 조건을 충족하지 못한다. 이를 보장하려면 다중 AZ가 필요합니다. 그러므로 답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1090,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1121,13 +1164,13 @@
 				17마스터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 03일 목요일 00:07">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 3일 (목) 00:07">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">ANS는 C이다</div>
+<div class="comment-content">ans는 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1136,7 +1179,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1167,13 +1210,13 @@
 				보보차우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 21일 금요일 04:47">
-			9개월, 4주 전
+<span class="comment-date align-middle" title="2022년 10월 21일 금 04:47">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">확실히 C</div>
+<div class="comment-content">물론 C야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1182,7 +1225,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1213,12 +1256,12 @@
 				퀸101
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 17일 (월) 20:41">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 17일 월요일 20:41">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CCCCCCCC</div>
+<div class="comment-content">CCCCCCCCC</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1227,7 +1270,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1258,8 +1301,8 @@
 				닌자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 15일 (토) 20:50">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 15일 토요일 20:50">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1273,7 +1316,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1301,16 +1344,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라크니스
+				라크네스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 15일 (토) 19:05">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 15일 토요일 19:05">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">규정 준수 잠금은 거버넌스와 달리 제거할 수 없습니다.</div>
+<div class="comment-content">거버넌스와 달리 규정 준수 잠금은 제거할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1319,7 +1362,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1371,7 +1414,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 18:12">
-			1 week ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1423,7 +1466,7 @@ This meets all the requirements - immediate access for 1 year, archived for 9 ye
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 08 Aug 2023 06:16">
-			1 week, 1 day ago
+			2 weeks, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1469,7 +1512,7 @@ This meets all the requirements - immediate access for 1 year, archived for 9 ye
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 17:11">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1514,7 +1557,7 @@ This meets all the requirements - immediate access for 1 year, archived for 9 ye
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 19:12">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1559,7 +1602,7 @@ This meets all the requirements - immediate access for 1 year, archived for 9 ye
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Jun 2023 12:56">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1611,7 +1654,7 @@ D: While S3 One Zone-IA can provide cost savings, it doesn't offer the same leve
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 27 Apr 2023 01:34">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1658,7 +1701,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Mar 2023 09:33">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1708,7 +1751,7 @@ Legal Hold: It’s On/Off setting on an object version. There is no retention pe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Feb 2023 01:37">
-			5 months, 2 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1754,7 +1797,7 @@ Legal Hold: It’s On/Off setting on an object version. There is no retention pe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 02:51">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1800,7 +1843,7 @@ Legal Hold: It’s On/Off setting on an object version. There is no retention pe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 10:19">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1847,7 +1890,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-overview.html<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 02:00">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1894,7 +1937,7 @@ A, B and D don't meet the requirements</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 17:07">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1934,7 +1977,7 @@ To meet the requirements, the company could use an S3 Lifecycle policy to transi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 17:07">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1987,7 +2030,7 @@ To meet the requirements, the company could use an S3 Lifecycle policy to transi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 11:50">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2035,7 +2078,7 @@ SO- C should be the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 04:30">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2081,7 +2124,7 @@ SO- C should be the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 23:57">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2127,7 +2170,7 @@ SO- C should be the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 07 Dec 2022 07:35">
-			8 months, 1 week ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2173,7 +2216,7 @@ SO- C should be the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 14:56">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2218,7 +2261,7 @@ SO- C should be the right answer.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 06 Nov 2022 10:16">
-			9 months, 1 week ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2268,7 +2311,7 @@ Therefore, the answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 03 Nov 2022 00:07">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2314,7 +2357,7 @@ Therefore, the answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Oct 2022 04:47">
-			9 months, 4 weeks ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2360,7 +2403,7 @@ Therefore, the answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Oct 2022 20:41">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2405,7 +2448,7 @@ Therefore, the answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Oct 2022 20:50">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2451,7 +2494,7 @@ Therefore, the answer is C.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Oct 2022 19:05">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

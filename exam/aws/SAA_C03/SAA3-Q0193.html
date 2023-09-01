@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 193 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 193 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 193 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 193 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850796">
 <p class="card-text">
 							
-								회사는 Amazon EC2 인스턴스에서 배치 애플리케이션을 실행하고 있습니다. 애플리케이션은 여러 Amazon RDS 데이터베이스가 있는 백엔드로 구성됩니다. 응용 프로그램으로 인해 데이터베이스에서 많은 수의 읽기가 발생하고 있습니다. 솔루션 설계자는 고가용성을 보장하면서 데이터베이스 읽기 수를 줄여야 합니다. <br/><br/>솔루션 설계자는 이 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								한 회사가 Amazon EC2 인스턴스에서 배치 애플리케이션을 실행하고 있습니다. 애플리케이션은 여러 Amazon RDS 데이터베이스가 포함된 백엔드로 구성됩니다. 애플리케이션으로 인해 데이터베이스에서 많은 읽기가 발생하고 있습니다. 솔루션 설계자는 고가용성을 보장하면서 데이터베이스 읽기 수를 줄여야 합니다. <br/><br/>이 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850796" type="application/json">[{"voted_answers": "A", "vote_count": 72, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 68, "is_most_voted": true}]</script>
+<script id="850796" type="application/json">[{"voted_answers": "A", "vote_count": 72, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 71, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											Amazon RDS 읽기 전용 복제본을 추가합니다.
+											Amazon RDS 읽기 전용 복제본을 추가하세요.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -110,11 +173,11 @@
 													D.
 												</span> 
 											
-											Memcached용 Amazon ElastiCache를 사용합니다.
+											Memcached용 Amazon ElastiCache를 사용하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -124,21 +187,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="72 votes." data-toggle="tooltip" role="progressbar" style="width: 51%; display: flex;" title="">A (51%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 49%; display: flex;" title="">B (49%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="72 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">A (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="71 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">B (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일 오후 4:34</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -160,7 +213,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850796" type="application/json">[{"voted_answers": "A", "vote_count": 72, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 68, "is_most_voted": true}]</script>
+<script id="850796" type="application/json">[{"voted_answers": "A", "vote_count": 72, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 71, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -208,21 +261,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="72 votes." data-toggle="tooltip" role="progressbar" style="width: 51%; display: flex;" title="">A (51%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 49%; display: flex;" title="">B (49%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="72 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">A (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="71 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">B (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leonnnn
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 4:34 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -254,22 +297,22 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 16:34">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">ElastiCache를 사용하여 읽기를 줄이고 redis를 선택하여 고가용성을 보장합니다.</div>
+<div class="comment-content">ElastiCache를 사용하여 읽기를 줄이고 Redis를 선택하여 고가용성을 보장하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">22</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">23</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -294,12 +337,12 @@
 				조관
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 18일 금요일 13:31">
-			1일, 2시간 전
+<span class="comment-date align-middle" title="2023년 8월 18일 금 13:31">
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">자주 액세스하는 데이터 캐싱: ElastiCache를 사용하면 자주 액세스하거나 계산 비용이 많이 드는 데이터를 캐시 노드 내의 인 메모리에 저장할 수 있습니다. 이는 애플리케이션이 데이터를 요청할 때 ElastiCache가 RDS 데이터베이스를 쿼리할 필요 없이 캐시에서 직접 데이터를 제공할 수 있음을 의미합니다. 이렇게 하면 데이터가 더 빠른 메모리 내 캐시에서 검색되기 때문에 RDS 데이터베이스에 대한 읽기 수가 줄어듭니다.</div>
+<div class="comment-content">자주 액세스하는 데이터 캐싱: ElastiCache를 사용하면 자주 액세스하거나 계산 비용이 많이 드는 데이터를 캐시 노드 내의 메모리에 저장할 수 있습니다. 이는 애플리케이션이 데이터를 요청할 때 ElastiCache가 RDS 데이터베이스를 쿼리할 필요 없이 캐시에서 직접 데이터를 제공할 수 있음을 의미합니다. 이렇게 하면 데이터가 더 빠른 메모리 내 캐시에서 검색되므로 RDS 데이터베이스에 대한 읽기 수가 줄어듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,20 +383,20 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 19일 일요일 22:01">
-			6 개월 전
+			6개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">데이터베이스에 오류가 발생하고 캐시 시간이 초과된 경우 고가용성은 어디에 있습니까? 대답은</div>
+<div class="comment-content">데이터베이스에 장애가 발생하고 캐시 시간이 초과되면 고가용성은 어디에 있습니까? 대답은 다음과 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">15</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">15</span> 회
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,8 +419,8 @@
 				미아2009687
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수요일 03:44">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수 03:44">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -390,7 +433,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -422,11 +465,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 29일 월요일 14:02">
-			2개월, 3주 전
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Redis용 Elasticache는 읽기 전용 복제본과 장애 조치가 있는 다중 AZ를 사용하여 고가용성을 보장합니다. 캐시를 사용하기 때문에 더 빠릅니다. https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html</div>
+<div class="comment-content">Redis용 Elasticache는 읽기 전용 복제본과 장애 조치가 포함된 다중 AZ를 사용하여 고가용성을 보장합니다. 캐시를 사용하기 때문에 속도도 더 빠릅니다. https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -435,7 +478,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -466,12 +509,12 @@
 				루키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 17:44">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 17:44">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">요구 사항이 "데이터베이스 읽기 수를 줄입니다"이기 때문에 A는 답이 될 수 없습니다.</div>
+<div class="comment-content">A는 "데이터베이스 읽기 횟수를 줄여달라"는 요구사항이므로 답변이 될 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -480,7 +523,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -528,15 +571,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 4월 10일 (월) 04:48">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 10일 월요일 04:48">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A vs B: A: 메인에서 데이터베이스 읽기 수 줄이기 + 고가용성 제공 B: A가 이기도록 DB 읽기 수만 줄이기</div>
+<div class="comment-content">A 대 B: A: 메인에서 데이터베이스 읽기 수 감소 + 고가용성 제공 B: A가 승리하도록 DB 읽기 수만 줄임</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,6 +589,101 @@
 <span class="ml-2 upvote-text"><span class="upvote-count">13</span> 번
 			 
 				찬성</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988082" id="comment-988082">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				chen0305_099
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 23일 수요일 10:05">
+			3일 12시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
+<div class="comment-content">ElastiCache를 사용하여 選擇redis를 사용합니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987446" id="comment-987446">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				MT마이어
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 22일 화요일 14:49">
+			4일 7시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
+<div class="comment-content">읽는 횟수를 줄여라......</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -576,16 +714,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:12">
-			19시간 57분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 정답입니다. Redis용 ElastiCache를 사용하면 RDS 데이터베이스에서 데이터를 캐싱할 수 있습니다. 이렇게 하면 대신 Redis 캐시에서 반복되는 읽기를 제공하여 데이터베이스에서 필요한 읽기 수가 줄어듭니다. A는 정답이 아닙니다. RDS 읽기 전용 복제본은 읽기 확장에만 도움이 되고 기본 데이터베이스의 전체 읽기를 줄이지 않기 때문입니다.</div>
+<div class="comment-content">B가 정답입니다. Redis용 ElastiCache를 사용하면 RDS 데이터베이스의 데이터를 캐싱할 수 있습니다. 대신 Redis 캐시에서 반복 읽기를 제공하여 데이터베이스에서 필요한 읽기 수를 줄입니다. RDS 읽기 전용 복제본은 읽기 확장에만 도움이 되고 기본 데이터베이스의 전체 읽기를 줄이지 않기 때문에 A는 정답이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -594,7 +729,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,16 +757,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아이로두스
+				아엘로두스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 15일 화요일 02:23">
-			4일, 13시간 전
+<span class="comment-date align-middle" title="2023년 8월 15일 화 02:23">
+			1주, 4일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">일반적으로 데이터베이스 읽기 수를 줄이려면 캐시를 사용해야 합니다. 고가용성을 원하므로 B와 D를 남겨두고 옵션 B와 같이 Redis를 사용해야 합니다.</div>
+<div class="comment-content">일반적으로 데이터베이스 읽기 횟수를 줄이려면 캐시를 사용해야 합니다. 그러면 B와 D가 남습니다. 고가용성을 원하므로 Redis를 사용하여 옵션 B를 사용해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -640,7 +775,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -671,13 +806,13 @@
 				yhonatan2288
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 12일 (토) 20:53">
-			6일, 19시간 전
+<span class="comment-date align-middle" title="2023년 8월 12일 토요일 20:53">
+			2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Agregar réplicas de lectura a Amazon RDS es una estrategia efectiva para reducir la carga en las bases de datos y mejorar el rendimiento. Las réplicas de lectura permiten distribuir las lecturas entre las réplicas, aliviando la carga en la instancia principal de la base de datos. Esto también puede mejorar la latencia para las Consultas de lectura. Además, las réplicas de lectura también contribuyen a la alta disponibilidad, ya que en caso de que la instancia principal falle, una de las réplicas de lectura puede promocionarse para asumir el rol de instancia principal falle.</div>
+<div class="comment-content">Amazon RDS의 학습 자료를 모아서 전략 효율성을 낮추고 데이터 베이스와 주요 렌디미엔토의 카가를 줄일 수 있습니다. Las réplicas de lectura alloweden distribuir las lecturas entre las réplicas, aliviando la carga en la instancia Principal de la base de datos. Esto también puede mejorar la latencia para las Consultas de lectura. Además, las réplicas de lectura también contribuyen a la alta disponibilidad, ya que en caso de que la instancia 교장 falle, una de las réplicas de lectura puede promocionarse para asumir el rol de instancia 교장.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -686,7 +821,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -717,13 +852,13 @@
 				n43u435b543ht2b
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 01:20">
-			1주, 3일 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 01:20">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">읽기 전용 복제본을 생성해도 데이터베이스에서 계산되는 읽기 수는 줄어들지 않으며, 이는 이 솔루션의 목표로 명확하게 나열되어 있습니다. 그러나 Elasticache Redis를 사용하면 읽기 쿼리를 캐싱하므로 데이터베이스나 복제본에서 실행할 필요가 없습니다.</div>
+<div class="comment-content">읽기 전용 복제본을 생성해도 데이터베이스에서 계산되는 읽기 수는 줄어들지 않습니다. 이는 이 솔루션의 목표를 명확하게 나열한 것입니다. 그러나 Elasticache Redis를 사용하면 읽기 쿼리가 캐시되므로 데이터베이스나 복제본에서 쿼리를 실행할 필요가 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -732,7 +867,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -763,13 +898,13 @@
 				ami888
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 2일 수 22:04">
-			2주, 2일 전
+<span class="comment-date align-middle" title="2023년 8월 2일 수요일 22:04">
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">¿ElastiCache for Redis는 고가용성을 보장합니까?... 그렇다면... 읽기 전용 복제본을 사용하는 A가 맞다고 생각합니다. 전역 읽기의 수는 동일하지만 기본 DB는 더 적습니다.</div>
+<div class="comment-content">¿ Redis용 ElastiCache가 고가용성을 보장합니까?... 그러면... 읽기 전용 복제본을 사용하는 A가 맞다고 생각합니다. 전역 읽기 횟수는 동일하더라도 기본 DB의 읽기 횟수는 더 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -778,7 +913,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -809,8 +944,8 @@
 				풀킷
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 22일 (토) 05:05">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 22일 토요일 05:05">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -824,7 +959,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -855,13 +990,13 @@
 				토르네센
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 21일 금요일 06:40">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 21일 금 06:40">
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A: 읽기 복제본을 사용해도 읽기 횟수가 줄어들지 않으므로 이러한 이유로 올바르지 않습니다. B: Redis는 Memcached보다 기능이 더 많습니다. 예를 들어 트랜잭션은 일괄 처리에 필요할 수 있으므로 B가 맞습니다.</div>
+<div class="comment-content">A: 읽기 전용 복제본을 사용해도 읽기 횟수가 줄어들지 않으므로 올바르지 않습니다. B: Redis에는 Memcached보다 더 많은 기능이 있습니다. 예를 들어 트랜잭션은 일괄 처리에 필요할 수 있으므로 B가 정확합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -870,7 +1005,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -902,12 +1037,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 20일 목요일 02:07">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">D는 정답이 아닙니다 https://aws.amazon.com/elasticache/memcached/ . C를 제거하면 Amazon Route 53 DNS가 관련이 없습니다. B, Redis용 Amazon ElasticCache는 관련이 없습니다. A가 선택되었습니다.</div>
+<div class="comment-content">D는 정답이 아닙니다 https://aws.amazon.com/elasticache/memcached/ . C를 제거하면 Amazon Route 53 DNS는 관련이 없습니다. B, Redis용 Amazon ElasticCache는 관련이 없습니다. A가 선택되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -916,7 +1051,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -948,12 +1083,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 13일 목요일 12:25">
-			1개월, 1주 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A - 여전히 동일한 읽기 작업 B - 다중 AZ를 사용한 캐싱 C - 횡설수설 D - 다중 AZ를 사용하지 않은 캐싱</div>
+<div class="comment-content">A - 여전히 동일한 읽기 작업 B - 다중 AZ를 사용한 캐싱 C - gibrish D - 다중 AZ 없이 캐싱</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -962,7 +1097,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -990,16 +1125,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rcarmin
+				르카르민
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 11일 화요일 19:05">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 11일 (화) 19:05">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">우리에게 무엇을 요구합니까? 고가용성을 보장하면서 DATABASE READS의 수를 줄이기 위해. 대답 A: 데이터베이스 읽기만 복제본에 분산합니다. 이것은 총 데이터베이스 읽기 수를 전혀 줄이지 않습니다. 또한 많은 양의 읽기가 대기 시간 문제(이 옵션의 일반적인 시나리오)를 유발한다고 언급된 곳은 없습니다. 대답은 B입니다. ElastiCache를 사용하면 데이터베이스가 아닌 메모리(캐시)에서 읽기가 수행됩니다. Redis는 고가용성을 제공합니다. 이것은 질문에서 요구하는 것을 달성할 것입니다.</div>
+<div class="comment-content">우리에게 무엇을 요구합니까? 고가용성을 보장하면서 DATABASE READS 수를 줄입니다. 답변 A: 데이터베이스 읽기를 복제본에만 분산합니다. 이는 총 데이터베이스 읽기 수를 전혀 줄이지 않습니다. 또한 높은 읽기 볼륨으로 인해 대기 시간 문제가 발생한다는 말은 어디에도 없습니다(이 옵션의 일반적인 시나리오). 답은 B입니다. ElastiCache를 사용하면 읽기가 데이터베이스가 아닌 메모리(캐시)에서 수행됩니다. Redis는 고가용성을 제공합니다. 이것은 질문에서 요구되는 것을 달성할 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1008,7 +1143,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1040,12 +1175,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 4일 화요일 22:09">
-			1개월, 2주 전
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">A는 데이터베이스 읽기 수를 줄이지 않습니다.</div>
+<div class="comment-content">A는 데이터베이스 읽기 횟수를 줄이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1054,7 +1189,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1082,11 +1217,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				병소
+				병든
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 3일 월요일 09:01">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 09:01">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1100,7 +1235,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1131,12 +1266,12 @@
 				벨라데빌
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 11:34">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 11:34">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문으로 B를 사용하려면 특히 데이터베이스 읽기를 줄여야 합니다. Redis용 Elasticache를 통해서만 달성할 수 있습니다.</div>
+<div class="comment-content">B를 질문으로 사용하려면 특히 데이터베이스 읽기를 줄여야 합니다. Redis용 Elasticache를 통해서만 달성 가능</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1145,7 +1280,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1176,13 +1311,13 @@
 				미아2009687
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수요일 03:44">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수 03:44">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">그들은 데이터베이스 읽기의 수를 줄이기를 원합니다. 그래서 ElastiCache. 읽기 전용 복제본은 여전히 ​​DB를 읽습니다.</div>
+<div class="comment-content">그들은 데이터베이스 읽기 횟수를 줄이고 싶어합니다. 그래서 ElastiCache입니다. 읽기 전용 복제본은 여전히 ​​DB를 읽습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1191,7 +1326,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1222,13 +1357,13 @@
 				에데르시올리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 01:32">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 01:32">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변: A - Amazon RDS에서 고가용성을 보장하면서 데이터베이스 읽기 수를 줄이려면 솔루션 설계자가 Amazon RDS 읽기 전용 복제본을 추가해야 합니다. 이렇게 하면 읽기가 복제본 간에 분산되어 각 데이터베이스의 읽기 수를 줄이고 가용성을 높일 수 있습니다.</div>
+<div class="comment-content">답변: A - Amazon RDS에서 고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄이려면 솔루션 설계자가 Amazon RDS 읽기 전용 복제본을 추가해야 합니다. 이를 통해 읽기를 복제본 간에 분산시켜 각 데이터베이스의 읽기 수를 줄이고 가용성을 높일 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1237,7 +1372,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1257,15 +1392,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rcarmin
+				르카르민
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 11일 화요일 18:54">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 11일 화 18:54">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">방금 직접 말씀하셨습니다. 복제본 간에 읽기를 배포합니다. 이것은 읽기 수를 줄이지 않습니다. 대답은 B입니다. ElastiCache를 사용하면 데이터베이스가 아닌 메모리에서 읽기가 수행됩니다. 따라서 요청한 것을 달성합니다.</div>
+<div class="comment-content">방금 직접 말씀하셨네요. 복제본 간에 읽기를 분산합니다. 읽기 횟수는 줄어들지 않습니다. 답은 B입니다. ElastiCache를 사용하면 읽기가 데이터베이스가 아닌 메모리에서 수행됩니다. 따라서 요구되는 것을 달성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1274,7 +1409,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1314,12 +1449,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 14:55">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">Amazon RDS 데이터베이스에 읽기 전용 복제본을 추가하면 읽기 워크로드를 복제본으로 오프로드하여 데이터베이스 읽기 수를 줄이고 성능을 향상할 수 있습니다. 읽기 전용 복제본은 고가용성을 제공하고 읽기 트래픽을 독립적으로 처리하여 로드를 분산하고 기본 데이터베이스의 부담을 줄일 수 있습니다. B. Redis용 Amazon ElastiCache는 주로 캐싱에 사용되는 인 메모리 데이터 스토어로, 읽기 성능을 향상시킬 수 있지만 데이터베이스 읽기 수를 직접적으로 줄이지는 않습니다. C. Amazon Route 53 DNS 캐싱은 DNS 응답을 캐시하는 서비스로, 전체 네트워크 성능을 향상시킬 수 있지만 데이터베이스 읽기 감소를 구체적으로 다루지는 않습니다. D. Memcached용 Amazon ElastiCache는 Redis와 유사한 또 다른 캐싱 서비스이지만 데이터베이스 읽기 감소 문제를 직접적으로 해결하지는 않습니다.</div>
+<div class="comment-content">Amazon RDS 데이터베이스에 읽기 전용 복제본을 추가하면 읽기 워크로드를 복제본으로 오프로드하여 데이터베이스 읽기 횟수를 줄이고 성능을 향상시킬 수 있습니다. 읽기 전용 복제본은 고가용성을 제공하고 읽기 트래픽을 독립적으로 처리하여 로드를 분산하고 기본 데이터베이스의 부담을 줄일 수 있습니다. B. Redis용 Amazon ElastiCache는 주로 캐싱에 사용되는 인 메모리 데이터 스토어로, 읽기 성능을 향상시킬 수 있지만 데이터베이스 읽기 횟수를 직접적으로 줄이지는 않습니다. C. Amazon Route 53 DNS 캐싱은 DNS 응답을 캐시하는 서비스로, 전체 네트워크 성능을 향상시킬 수 있지만 데이터베이스 읽기 감소를 구체적으로 다루지는 않습니다. D. Memcached용 Amazon ElastiCache는 Redis와 유사한 또 다른 캐싱 서비스이지만 데이터베이스 읽기 감소 문제를 직접적으로 해결하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1328,7 +1463,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1359,13 +1494,13 @@
 				브마로디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 11일 일 19:36">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 11일 일요일 19:36">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저는 A를 선택합니다. https://www.certification-questions.com/amazon-exam/aws-certified-solutions-architecture-associate-saa-c02-dumps.html</div>
+<div class="comment-content">저는 A를 선택합니다. https://www.certification-questions.com/amazon-exam/aws-certified-solutions-architect-associate-saa-c02-dumps.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1374,7 +1509,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1402,15 +1537,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알란카J
+				알란카르J
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 6일 화요일 19:29">
-			2개월, 1주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">''A''는 읽기 수를 줄이는 것이 아니라 읽기를 더 많은 복제본으로 확산할 뿐입니다. 캐싱을 통해서만 수행할 수 있는 읽기 수를 구체적으로 줄여야 합니다.</div>
+<div class="comment-content">''A''는 읽기 수를 줄이지 않고 읽기를 더 많은 복제본으로 분산시킵니다. 캐싱을 통해서만 수행할 수 있는 읽기 수를 구체적으로 줄여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1419,7 +1554,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1450,12 +1585,12 @@
 				아브라2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 31일 수 10:46">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 31일 수요일 10:46">
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ElastiCache 읽기 감소</div>
+<div class="comment-content">ElastiCache는 읽기를 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1464,7 +1599,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1495,8 +1630,8 @@
 				아브라2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 28일 일 12:03">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 28일 일요일 12:03">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1509,7 +1644,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1540,13 +1675,13 @@
 				eugene_stalker
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 27일 (토) 20:46">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 27일 토요일 20:46">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A-갈대 양을 줄입니다.</div>
+<div class="comment-content">A- 갈대의 양을 줄이세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1555,7 +1690,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1586,13 +1721,13 @@
 				브마로디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 25일 목요일 09:41">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 25일 (목) 09:41">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 정답입니다.</div>
+<div class="comment-content">보기 A가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1601,7 +1736,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1632,13 +1767,13 @@
 				루키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 17:45">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 17:45">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">대답은 B입니다. A는 유효하지 않습니다(요구 사항은 DATABASE 읽기 수를 줄이는 것입니다).</div>
+<div class="comment-content">답은 B입니다. A는 유효하지 않습니다. (요구 사항은 DATABASE 읽기 횟수를 줄이는 것입니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1647,7 +1782,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1675,16 +1810,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				wRhlH
+				ㅋㅋㅋ
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 22일 월요일 04:17">
-			2개월, 4주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 경우 B와 D는 실제로 동일한 효과를 수행합니다. 그리고 그것은 단일 선택 질문이기 때문에. 정답은 A여야 합니다.</div>
+<div class="comment-content">B와 D는 실제로 이 경우 동일한 효과를 수행합니다. 그리고 그것은 단선택 질문이기 때문입니다. 정답은 A여야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1693,7 +1828,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1721,15 +1856,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 15일 (월) 15:27">
-			3 개월 전에
+<span class="comment-date align-middle" title="2023년 5월 15일 월요일 15:27">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS의 또 다른 논란의 여지가 있는 질문입니다.</div>
+<div class="comment-content">AWS의 또 다른 논란의 여지가 있는 질문입니다. 좋습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1738,7 +1873,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1766,15 +1901,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오스트레일리아
+				호주
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 14일 일요일 03:51">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">더 많은 계층을 가져오면 제공 범위가 줄어듭니다. 100% 사용 가능한 계층은 없습니다. ㅏ</div>
+<div class="comment-content">더 많은 등급을 가져오면 어베일은 감소합니다. 100% 활용 가능한 등급은 없습니다. ㅏ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1783,7 +1918,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1815,12 +1950,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 9일 화요일 16:42">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">- 데이터베이스 읽기 수를 줄입니다. 읽기 복제본(A)의 양을 늘려도 데이터베이스 읽기 양에는 영향을 미치지 않습니다. 더 많은 복제본에 배포됩니다. 요구 사항이 말도 안 되는 것처럼 들리지만(누가 읽기 양을 신경 쓰나요?) 이를 달성하는 유일한 방법은 데이터베이스 앞에 캐시를 두는 것입니다. Redis와 Memcached의 경우: "Redis를 사용하면 Redis 기본 복제본을 여러 개 만들 수 있습니다. 이를 통해 데이터베이스 읽기를 확장하고(!) 고가용성(!) 클러스터를 가질 수 있습니다." https://aws.amazon.com/elasticache/redis-vs-memcached/</div>
+<div class="comment-content">- 데이터베이스 읽기 수를 줄입니다. 읽기 전용 복제본(A)의 양이 늘어나도 데이터베이스 읽기 양에는 영향을 미치지 않습니다. 더 많은 복제본에 배포될 것입니다. 요구 사항이 나에게는 말도 안 되는 것처럼 들리지만(읽기 양에 관심이 있는 사람은 누구입니까?) 이를 달성하는 유일한 방법은 데이터베이스 앞에 캐시를 배치하는 것입니다. Redis와 Memcached의 경우: "Redis를 사용하면 Redis 기본 복제본을 여러 개 생성할 수 있습니다. 이를 통해 데이터베이스 읽기를 확장하고 (!) 고가용성(!) 클러스터를 보유할 수 있습니다." https://aws.amazon.com/elasticache/redis-vs-memcached/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1829,7 +1964,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1857,16 +1992,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rushi0611
+				Rushi0611
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 5일 금요일 17:37">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">솔루션은 데이터베이스에 대한 읽기를 줄여야 하며 이는 캐싱 기술로만 달성할 수 있습니다. 따라서 정답은 B입니다.</div>
+<div class="comment-content">솔루션은 데이터베이스에 대한 읽기를 줄여야 하며 이는 캐싱 기술을 통해서만 달성할 수 있습니다. 그래서 정답은 B입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1875,7 +2010,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1903,16 +2038,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				rag300
+				걸레300
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 19:21">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 19:21">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 좋은 선택이 될 것입니다. 비용은 더 적을 것입니다.</div>
+<div class="comment-content">A는 좋은 선택이 될 것입니다. 비용은 더 낮을 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1921,7 +2056,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1949,15 +2084,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비교
+				컴파커
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 18:51">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 18:51">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">투표 D - Q: Memcached용 Amazon ElastiCache를 Amazon RDS 또는 Amazon DynamoDB와 같은 AWS 영구 데이터 스토어와 함께 사용할 수 있습니까? 예. Amazon ElastiCache는 Amazon RDS 또는 Amazon DynamoDB와 같은 데이터 스토어에 이상적인 프런트 엔드로, 매우 높은 요청률 및/또는 짧은 지연 시간 요구 사항이 있는 애플리케이션에 고성능 미들 티어를 제공합니다. https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
+<div class="comment-content">D 투표 - Q: Amazon RDS 또는 Amazon DynamoDB와 같은 AWS 영구 데이터 스토어와 함께 Amazon ElastiCache for Memcached를 사용할 수 있습니까? 예, Amazon ElastiCache는 Amazon RDS 또는 Amazon DynamoDB와 같은 데이터 스토어에 이상적인 프런트 엔드로, 요청률이 매우 높거나 지연 시간 요구 사항이 짧은 애플리케이션에 고성능 중간 계층을 제공합니다. https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1966,7 +2101,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1997,13 +2132,13 @@
 				꿰매다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 05:56">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 05:56">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A, Red 및 noSQL 사용, 너무 많은 노력, 관계형이 아님, HA는 어디에 있습니까?</div>
+<div class="comment-content">A는 Red이고 noSQL은 관계형이 아닌 너무 많은 노력입니다. HA는 어디에 있습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2012,7 +2147,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2040,16 +2175,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				eboehm2
+				에보엠2
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 19일 수 22:40">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 19일 수요일 22:40">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">확실히 대답은 b입니다... 그들은 읽기를 줄이려고 노력하고 있으며 기본 DB에서 읽기를 줄이는 것에 대해 아무 말도 하지 않습니다. 또한 이미 여러 RDS를 배포했습니다.</div>
+<div class="comment-content">대답은 b입니다. 그들은 읽기를 줄이려고 노력하고 있지만 기본 DB의 읽기 줄이기에 대해서는 아무 말도하지 않습니다. 또한 이미 여러 RDS가 배포되어 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2058,7 +2193,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2086,11 +2221,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				shinejh0528
+				Shinyjh0528
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 15일 (토) 06:37">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 15일 토요일 06:37">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2104,7 +2239,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2132,15 +2267,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				쉘리
+				셸리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 14일 금요일 10:08">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 입니다. 아래는 AWS 학생 가이드에 쓰여 있습니다. 기본 데이터베이스가 읽기 요청으로 과부하되지 않도록 읽기 워크로드를 처리하기 위해 읽기 전용 복제본을 추가할 수 있습니다. 데이터베이스 엔진에 따라 기본 데이터베이스와 다른 리전에 읽기 전용 복제본을 배치할 수도 있습니다. 이를 통해 특정 위치에 더 가까운 읽기 전용 복제본을 가질 수 있습니다.</div>
+<div class="comment-content">대답은 입니다. 아래는 AWS 학생 가이드에 작성되어 있습니다. 기본 데이터베이스가 읽기 요청으로 인해 과부하되지 않도록 읽기 워크로드를 처리하기 위해 읽기 복제본을 추가할 수 있습니다. 데이터베이스 엔진에 따라 기본 데이터베이스와 다른 리전에 읽기 전용 복제본을 배치할 수도 있습니다. 이를 통해 특정 위치에 더 가까운 읽기 복제본을 보유할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2149,7 +2284,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2169,11 +2304,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				쉘리
+				셸리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 14일 금요일 10:10">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2186,7 +2321,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2222,16 +2357,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				ErfanKh
+				에르판크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 11일 화요일 04:46">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 11일 (화) 04:46">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">저는 A도 믿고 ChatGPT도 동의합니다</div>
+<div class="comment-content">나는 A도 믿고 ChatGPT도 이에 동의한다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2240,7 +2375,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2272,12 +2407,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 9일 일요일 16:11">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">HA를 지원하기 때문에 "B"일 수 있습니다(클러스터에 Redis 포함). 그러나 그것은 속임수입니다. "고가용성 보장"이라고 말했을 때 생각하고 있는 솔루션(예: "redis")이 아니라 RDS 자체에 대한 것입니다. A(읽기 복제본)를 선택하면 데이터베이스 HA가 향상되고 ALSO가 과도한 읽기 문제를 최소화하는 데 도움이 됩니다.</div>
+<div class="comment-content">HA(클러스터에 Redis 포함)를 지원하므로 "B"일 수 있는 것으로 보입니다. 그러나 그것은 속임수입니다. "고가용성 보장"이라는 말은 여러분이 생각하고 있는 솔루션(예: "redis")을 의미하는 것이 아니라 RDS 자체를 의미하기 때문입니다. A(읽기 복제본)를 선택하면 데이터베이스 HA가 향상되고 또한 과도한 읽기 문제를 최소화하는 데 도움이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2286,7 +2421,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2314,16 +2449,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				다츠
+				닷츠
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 8일 토요일 08:00">
-			4개월, 1주 전
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변 = A B는 다음과 같은 이유로 잘못되었습니다. Redis는 일반적으로 No SQL 또는 비관계형이라고 하는 데이터베이스 유형입니다. Redis에는 테이블이 없으며 Redis의 데이터를 Redis의 다른 데이터와 연결하는 데이터베이스 정의 또는 강제 방식이 없습니다.</div>
+<div class="comment-content">답변 = A B는 다음과 같은 이유로 틀렸습니다. Redis는 일반적으로 No SQL 또는 비관계형이라고 하는 데이터베이스 유형입니다. Redis에는 테이블이 없으며 Redis의 데이터를 Redis의 다른 데이터와 연결하는 데이터베이스 정의 또는 강제 방식이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2332,7 +2467,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2363,12 +2498,12 @@
 				레카추
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 23:47">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 23:47">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Chargpt도 A를 선택합니다.</div>
+<div class="comment-content">Chargept도 A를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2377,7 +2512,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2408,13 +2543,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:47">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:47">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">답변 : 비</div>
+<div class="comment-content">답 : ㄴ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2423,7 +2558,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2451,15 +2586,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				열광적
+				열광적인
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:02">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:02">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. ElasticCache가 Redis를 언급하지 않고 Redis가 Relational이 아니라면 좋은 해결책이 될 것입니다. 따라서 RDS 데이터베이스에 적용할 수 없습니다.</div>
+<div class="comment-content">A. Redis를 언급하고 Redis가 Relational이 아니라는 점이 아니었다면 ElasticCache는 좋은 솔루션이 될 것입니다. 따라서 RDS 데이터베이스에는 적용할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2468,7 +2603,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2496,15 +2631,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				volkan4242
+				볼칸4242
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 24일 금요일 16:13">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가합니다. Amazon RDS 읽기 전용 복제본을 추가하는 것은 고가용성을 보장하면서 데이터베이스 읽기 수를 줄이는 데 권장되는 솔루션입니다. 읽기 복제본은 기본 데이터베이스에서 읽기 트래픽을 오프로드하는 데 사용할 수 있는 기본 데이터베이스의 복사본입니다. 이는 기본 데이터베이스의 로드를 줄이고 성능을 향상시킬 수 있습니다. 읽기 전용 복제본은 장애 발생 시 기본 데이터베이스로 승격될 수 있으므로 가용성을 향상시키는 데에도 사용할 수 있습니다. chatgpt에 따르면</div>
+<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가하세요. Amazon RDS 읽기 전용 복제본을 추가하는 것은 고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄이는 데 권장되는 솔루션입니다. 읽기 전용 복제본은 기본 데이터베이스에서 읽기 트래픽을 오프로드하는 데 사용할 수 있는 기본 데이터베이스의 복사본입니다. 이렇게 하면 기본 데이터베이스의 로드가 줄어들고 성능이 향상될 수 있습니다. 읽기 전용 복제본은 오류가 발생할 경우 기본 데이터베이스로 승격될 수 있으므로 가용성을 향상시키는 데에도 사용할 수 있습니다. chatgpt에 따르면</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2513,7 +2648,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2545,12 +2680,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 5일 일요일 16:38">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">캐싱은 데이터베이스 읽기를 줄입니다.</div>
+<div class="comment-content">캐싱으로 인해 데이터베이스 읽기가 줄어듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2559,7 +2694,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2587,16 +2722,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				자13
+				Ja13
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 26일 일요일 20:49">
-			5개월, 3주 전
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">성능 향상이 아니라 읽기 수를 줄이도록 요청하므로 Elasticache가 옵션입니다.</div>
+<div class="comment-content">성능을 향상시키기 위해서가 아니라 읽기 횟수를 줄여달라고 요청하므로 elasticache가 선택 사항입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2605,7 +2740,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2636,13 +2771,13 @@
 				옐리자베타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 07:48">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 07:48">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">"솔루션 설계자는 고가용성을 보장하면서 데이터베이스 읽기 수를 줄여야 합니다."!!!!</div>
+<div class="comment-content">"솔루션 아키텍트는 고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄여야 합니다."!!!!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2651,7 +2786,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2679,16 +2814,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				언럭키덕키
+				언럭키더키
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 12일 일요일 14:41">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">이 질문의 핵심은 읽기도 ElastiCache에 저장되므로 ElastiCache로 달성할 수 있는 데이터베이스 읽기 작업을 줄이는 것입니다. 따라서 향후 읽기 퀘스트는 종종 캐시 히트에서 응답을 받아 데이터베이스 읽기 작업이 줄어듭니다. ElastiCache 옵션의 경우 - Redis와 Memcached: 질문은 Memcached가 지원하지 않는 고가용성을 나타냅니다. Redis는 다중 AZ를 지원하므로 고가용성을 보장합니다.</div>
+<div class="comment-content">이 질문의 핵심은 읽기가 ElastiCache에도 저장되므로 ElastiCache로 수행할 수 있는 데이터베이스 읽기 작업을 줄이는 것입니다. 따라서 향후 읽기 퀘스트에서는 종종 캐시 적중에서 응답을 받게 되어 데이터베이스 읽기 작업이 줄어듭니다. ElastiCache 옵션 - Redis 및 Memcached: 질문에 Memcached가 지원하지 않는 고가용성이 명시되어 있습니다. Redis는 다중 AZ를 지원하므로 고가용성을 보장합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2697,7 +2832,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2728,13 +2863,13 @@
 				bdp123
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 8일 수요일 21:46">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 8일 수 21:46">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">RDS와 함께 사용하면 읽기가 줄어들고 HA가 있습니다 https://aws.amazon.com/elasticache/redis/</div>
+<div class="comment-content">RDS와 함께 사용하면 읽기가 줄어들고 HA https://aws.amazon.com/elasticache/redis/가 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2743,7 +2878,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2771,15 +2906,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				차오멍더09
+				카오멍더09
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 12:15">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 12:15">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Elasticache는 모든 사용자가 데이터베이스의 동일한 콘텐츠에 액세스할 때 유용합니다. 따라서 읽기를 개선하기 위해 Elasticache에서 일반적으로 액세스되는 콘텐츠를 캐시합니다. 결국 Elasticache는 내구성 있는 저장소가 아닙니다. IN-MEMORY 예 높은 가용성을 보장하지만 RDS REPLICA와 같은 내구성 있는 저장소는 아닙니다. 따라서 A는 성능/고가용성에서 가장 최적의 솔루션입니다(비용도 질문의 기준이 아니더라도)</div>
+<div class="comment-content">Elasticache는 모든 사용자가 데이터베이스의 동일한 콘텐츠에 액세스할 때 유용합니다. 따라서 읽기 성능을 향상시키기 위해 우리는 Elasticache에서 일반적으로 액세스하는 콘텐츠를 캐시합니다. 결국 Elasticache는 내구성 있는 스토리지가 아니며 IN-MEMORY입니다. 예, 높은 가용성을 보장합니다. 예. 그러나 RDS REPLICA만큼 내구성 있는 스토리지는 아닙니다. 따라서 A는 Performance / High Availability 중에서 가장 최적의 솔루션입니다. (질문의 기준이 아니더라도 비용도 발생합니다.)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2788,7 +2923,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2820,7 +2955,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 13:05">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2834,7 +2969,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2866,12 +3001,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 3일 금요일 07:36">
-			6개월, 2주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">더 이해가 간다</div>
+<div class="comment-content">더 의미가 있습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2880,7 +3015,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2903,12 +3038,12 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 06:22">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 06:22">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Redis용 Amazon ElastiCache는 인터넷 규모의 실시간 애플리케이션을 지원하기 위해 1밀리초 미만의 지연 시간을 제공하는 초고속 인 메모리 데이터 스토어입니다. 오픈 소스 Redis를 기반으로 하고 Redis API와 호환되는 Redis용 ElastiCache는 Redis 클라이언트와 함께 작동하며 개방형 Redis 데이터 형식을 사용하여 데이터를 저장합니다. 자체 관리형 Redis 애플리케이션은 코드 변경 없이 Redis용 ElastiCache와 원활하게 작동할 수 있습니다. Redis용 ElastiCache는 오픈 소스 Redis의 속도, 단순성 및 다양성을 Amazon의 관리 용이성, 보안 및 확장성과 결합하여 게임, 광고 기술, 전자 상거래, 의료, 금융 서비스, 그리고 IoT.</div>
+<div class="comment-content">Redis용 Amazon ElastiCache는 인터넷 규모의 실시간 애플리케이션을 지원하기 위해 밀리초 미만의 지연 시간을 제공하는 매우 빠른 인 메모리 데이터 스토어입니다. 오픈 소스 Redis를 기반으로 구축되었으며 Redis API와 호환되는 Redis용 ElastiCache는 Redis 클라이언트와 작동하며 개방형 Redis 데이터 형식을 사용하여 데이터를 저장합니다. 자체 관리형 Redis 애플리케이션은 코드 변경 없이 Redis용 ElastiCache와 원활하게 작동할 수 있습니다. Redis용 ElastiCache는 오픈 소스 Redis의 속도, 단순성 및 다양성과 Amazon의 관리 용이성, 보안 및 확장성을 결합하여 게임, 광고 기술, 전자 상거래, 의료, 금융 서비스 등에서 가장 까다로운 실시간 애플리케이션을 지원합니다. 그리고 IoT.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2917,7 +3052,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2940,12 +3075,12 @@
 				럭키아로
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 6일 월요일 06:25">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 6일 (월) 06:25">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon RDS 읽기 전용 복제본은 Amazon RDS 데이터베이스(DB) 인스턴스에 향상된 성능과 내구성을 제공합니다. 읽기가 많은 데이터베이스 워크로드에 대해 단일 DB 인스턴스의 용량 제약을 넘어 탄력적으로 쉽게 확장할 수 있습니다. 주어진 원본 DB 인스턴스의 복제본을 하나 이상 생성하고 데이터의 여러 복사본에서 대량의 애플리케이션 읽기 트래픽을 처리하여 전체 읽기 처리량을 높일 수 있습니다. 독립 실행형 DB 인스턴스가 필요한 경우 읽기 전용 복제본을 승격할 수도 있습니다. 읽기 전용 복제본은 Amazon RDS for MySQL, MariaDB, PostgreSQL, Oracle, SQL Server 및 Amazon Aurora에서 사용할 수 있습니다.</div>
+<div class="comment-content">Amazon RDS 읽기 전용 복제본은 Amazon RDS 데이터베이스(DB) 인스턴스에 향상된 성능과 내구성을 제공합니다. 읽기가 많은 데이터베이스 워크로드에 대해 단일 DB 인스턴스의 용량 제약을 넘어 탄력적으로 쉽게 확장할 수 있습니다. 특정 원본 DB 인스턴스의 복제본을 하나 이상 생성하고 여러 데이터 복사본에서 대용량 애플리케이션 읽기 트래픽을 처리하여 총 읽기 처리량을 늘릴 수 있습니다. 읽기 전용 복제본은 필요할 때 독립형 DB 인스턴스로 승격될 수도 있습니다. 읽기 전용 복제본은 MySQL, MariaDB, PostgreSQL, Oracle, SQL Server용 Amazon RDS와 Amazon Aurora에서 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2954,7 +3089,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3001,8 +3136,8 @@
 				우치켄
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 31일 화요일 08:04">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 31일 (화) 08:04">
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3016,7 +3151,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3047,8 +3182,8 @@
 				mhmt4438
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 29일 일 10:59">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 29일 일요일 10:59">
+			6개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3062,7 +3197,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3094,7 +3229,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 28일 토요일 02:41">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3108,7 +3243,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3140,7 +3275,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 16:01">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3154,7 +3289,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3182,15 +3317,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스필리
+				스피리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 02:19">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답이 B라면 D가 가능한 답이 아닌 이유는 무엇입니까? 질문에서 '데이터베이스에 대한 높은 읽기 수'를 줄이는 것은 D(Memcached)가 B(Redis)에 비해 적용하는 더 간단한 방법인 것 같습니다. '읽기 복제본'이 '데이터베이스'에 대한 읽기를 줄이지 않는다는 모든 의견에 동의하지만 선택 항목에서 D(Memcached)가 옵션에서 제거된 이유를 알 수 없습니다.</div>
+<div class="comment-content">답이 B라면 왜 D가 가능한 답이 아닌가? 질문에 따르면 '데이터베이스에 대한 높은 읽기 수'를 줄이기 위해 D(Memcached)가 B(Redis)에 비해 더 간단한 적용 방법인 것 같습니다. 나는 'read-replica'가 'database'에 대한 읽기를 줄이지 않는다는 모든 의견에 동의하지만 선택 항목에서 D(Memcached)가 옵션에서 제거되는 이유를 알 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3199,7 +3334,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3222,12 +3357,12 @@
 				MssP
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 11:21">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 11:21">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Memcached는 Redis에 비해 매우 제한적입니다. "애플리케이션은 여러 Amazon RDS 데이터베이스가 있는 백엔드로 구성됩니다."라는 문장을 보면 고급의 복잡한 데이터 구조와 쿼리를 고려하여 -&gt; Redis를 생각해야 합니다.</div>
+<div class="comment-content">Memcached는 Redis에 비해 매우 제한적입니다. "애플리케이션은 여러 Amazon RDS 데이터베이스가 있는 백엔드로 구성되어 있습니다"라는 문장을 살펴보십시오. 따라서 고급 및 복잡한 데이터 구조와 쿼리에 대해 생각해야 합니다. -&gt; Redis.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3236,7 +3371,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3272,15 +3407,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				켈
+				케를
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 21일 (토) 13:40">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 21일 토요일 13:40">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변:A, "고가용성 보장" &lt;--이것은 키워드입니다.</div>
+<div class="comment-content">답변:A, "고가용성 보장" &lt;--이것이 키워드입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3289,7 +3424,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3309,15 +3444,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				조니비지
+				조니BG
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 22일 일 12:20">
-			6개월, 4주 전
+<span class="comment-date align-middle" title="2023년 1월 22일 일요일 12:20">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">읽기 감소 키워드를 놓쳤습니다! 대답은 B입니다</div>
+<div class="comment-content">당신은 읽기 감소 키워드를 놓치고 있습니다! 답은 B이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3326,7 +3461,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3362,16 +3497,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부엉이
+				올빼미빼기
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 19일 목요일 17:11">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">그것은 A-- 질문 상태 RDS입니다. Redis는 RDS와 별개가 아닙니다.</div>
+<div class="comment-content">그것은 A-- 질문에 RDS가 명시되어 있습니다. Redis는 RDS와 별개가 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3380,7 +3515,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3412,7 +3547,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 18:43">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3426,7 +3561,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3454,16 +3589,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				데이비드나미
+				데이비드네이미
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 11일 수 08:28">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 11일 수요일 08:28">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가합니다. RDS의 읽기 전용 복제본을 사용하면 기본 RDS 인스턴스에서 읽기 트래픽을 오프로드하여 기본 인스턴스의 읽기 수를 줄일 수 있습니다. 실패.</div>
+<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가하세요. RDS의 읽기 전용 복제본을 사용하면 기본 RDS 인스턴스에서 읽기 트래픽을 오프로드하여 기본 인스턴스의 읽기 수를 줄일 수 있습니다. 따라서 읽기 전용 복제본을 기본 인스턴스로 승격시켜 로드를 줄이고 고가용성을 제공할 수 있습니다. 실패.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3472,7 +3607,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3496,11 +3631,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 16:00">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B입니다. https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38fdf3cb</div>
+<div class="comment-content">대답은 B입니다. https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38fdf3cb</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3509,7 +3644,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3549,12 +3684,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 23:12">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">고가용성을 보장하면서 데이터베이스 읽기 수를 줄입니다.</div>
+<div class="comment-content">고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3563,7 +3698,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3595,12 +3730,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 18:20">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가합니다.</div>
+<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3609,7 +3744,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3629,15 +3764,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				유일한왕자
+				유일한 왕자
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 3일 화요일 22:29">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">읽기 전용 복제본은 복제하는 기본 데이터베이스와 정확히 동일한 데이터가 있는 추가 데이터베이스 인스턴스일 뿐이므로 읽기 전용 복제본을 추가해도 데이터베이스 읽기 수가 줄어들지 않습니다. db 읽기 수를 줄이기 위해 일반적으로 캐시가 사용됩니다. 캐시는 크기가 훨씬 작지만 반복 데이터 검색을 위해 훨씬 빠릅니다.</div>
+<div class="comment-content">읽기 전용 복제본은 복제 중인 기본 인스턴스와 정확히 동일한 데이터를 가진 추가 데이터베이스 인스턴스이기 때문에 읽기 전용 복제본을 추가해도 데이터베이스 읽기 수가 줄어들지 않습니다. DB 읽기 수를 줄이기 위해 일반적으로 캐시가 사용됩니다. 캐시는 크기가 훨씬 작지만 반복 데이터 검색에 훨씬 빠릅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3646,7 +3781,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3682,16 +3817,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				미미캡
+				미미캅
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 27일 화요일 16:31">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 27일 (화) 16:31">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">질문은 DB 읽기 수를 줄이는 것에 대해 묻고 있습니다. DB 읽기를 줄이는 Elasticache의 사용 사례라고 생각합니다. 읽기 복제본은 DB 읽기 수를 줄이지 않습니다. 기본 DB에서 복제본으로 읽기만 이동합니다.</div>
+<div class="comment-content">DB 읽기 횟수를 줄이는 것에 대한 질문입니다. DB 읽기를 줄이는 것이 Elasticache의 사용 사례라고 생각합니다. 읽기 전용 복제본은 DB 읽기 수를 줄이지 않습니다. 기본 DB에서 복제본으로 읽기를 이동합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3700,7 +3835,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3732,12 +3867,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 23:46">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">핵심은 고가용성입니다. 솔루션 설계자는 Amazon RDS 읽기 복제본을 추가해야 합니다. 옵션 B는 Redis용 Amazon ElastiCache가 자주 액세스하는 데이터를 캐시에 저장하여 데이터베이스 읽기 수를 줄이는 데 도움이 될 수 있기 때문에 정확하지 않습니다. 그러나 읽기 전용 복제본과 같은 장애 조치 기능을 제공하지 않기 때문에 이 시나리오에서는 고가용성을 위한 솔루션이 아닙니다. 캐시를 사용할 수 없게 되더라도 응용 프로그램은 여전히 ​​데이터베이스 읽기 기능을 수행해야 합니다.</div>
+<div class="comment-content">핵심은 고가용성입니다. 솔루션 설계자는 Amazon RDS 읽기 전용 복제본을 추가해야 합니다. 옵션 B는 올바르지 않습니다. 왜냐하면 Redis용 Amazon ElastiCache가 자주 액세스하는 데이터를 캐시에 저장하여 데이터베이스 읽기 횟수를 줄이는 데 도움이 될 수 있기 때문입니다. 그러나 읽기 전용 복제본처럼 장애 조치 기능을 제공하지 않기 때문에 이 시나리오에서는 고가용성을 위한 솔루션이 아닙니다. 캐시를 사용할 수 없게 되더라도 애플리케이션은 여전히 ​​데이터베이스 읽기 기능을 수행해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3746,7 +3881,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3766,15 +3901,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				차오멍더09
+				카오멍더09
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 7일 화요일 12:45">
-			6개월, 1주 전
+<span class="comment-date align-middle" title="2023년 2월 7일 (화) 12:45">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">더 이상 동의할 수 없습니다. Redis 사람들은 고가용성/성능에 더 집중하고 스토리지의 내구성을 잊어버린 것 같습니다. 일반적으로 IN-MEMORY 스토리지는 스토리지에서 내구성이 없습니다.</div>
+<div class="comment-content">더 이상 동의할 수 없습니다. Redis 사람들은 고가용성/성능에 더 집중하고 스토리지의 내구성을 잊어버린 것 같습니다. 일반적으로 IN-MEMORY 스토리지는 스토리지 내구성이 좋지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3783,7 +3918,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3811,15 +3946,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 13:02">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그러나 B는 HA를 지원합니다. Redis용 Amazon ElastiCache는 Redis 클러스터 모드와 비클러스터 모드를 모두 지원하고 기본 노드 장애를 감지하고 최소한의 영향으로 복제본을 기본 노드로 승격하여 자동 장애 조치 지원을 통해 고가용성을 제공합니다.</div>
+<div class="comment-content">하지만 B는 HA를 지원합니다. Redis용 Amazon ElastiCache는 Redis 클러스터 모드와 비클러스터 모드를 모두 지원하며, 기본 노드 오류를 감지하고 영향을 최소화하면서 복제본을 기본 노드로 승격시켜 자동 장애 조치 지원을 통해 고가용성을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3828,7 +3963,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3868,12 +4003,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 22:00">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 질문에 답이 있습니다. "응용 프로그램이 데이터베이스에서 높은 읽기 수를 유발하고 있습니다." "데이터베이스 읽기 수를 줄여야 합니다." Elasticache는 둘 다 상관 관계가 있는 성능 문제를 위한 것입니다.</div>
+<div class="comment-content">A. 답은 질문에 있습니다. "애플리케이션으로 인해 데이터베이스에서 많은 읽기 수가 발생합니다." "데이터베이스 읽기 수를 줄여야 합니다." Elasticache는 서로 연관된 성능 문제를 위한 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3882,7 +4017,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3913,8 +4048,8 @@
 				버크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 25일 일 07:42">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 25일 일요일 07:42">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3928,7 +4063,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -3956,16 +4091,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 16:20">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 16:20">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">데이터베이스 읽기 수를 줄여야 하므로 탄력적 캐시입니다.</div>
+<div class="comment-content">데이터베이스 읽기 횟수를 줄여야 하므로 탄력적 캐시가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -3974,7 +4109,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4002,16 +4137,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 22:28">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 22:28">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가합니다. 고가용성을 보장하면서 데이터베이스 읽기 수를 줄이는 한 가지 방법은 Amazon RDS 읽기 전용 복제본을 사용하는 것입니다. 읽기 전용 복제본을 사용하면 소스 데이터베이스의 복제본을 하나 이상 만들고 읽기 트래픽을 이러한 복제본으로 보내 읽기 집약적인 워크로드를 확장할 수 있습니다. 이는 소스 데이터베이스의 로드를 줄이고 읽기 집약적인 애플리케이션의 성능을 향상시키는 데 도움이 될 수 있습니다. 아래는 데이터베이스 읽기 횟수를 줄이는 것과 직접적인 관련이 없기 때문에 올바르지 않습니다. B. Redis용 Amazon ElastiCache를 사용합니다. C. Amazon Route 53 DNS 캐싱 사용 D. Memcached용 Amazon ElastiCache 사용.</div>
+<div class="comment-content">A. Amazon RDS 읽기 전용 복제본을 추가하세요. 고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄이는 한 가지 방법은 Amazon RDS 읽기 전용 복제본을 사용하는 것입니다. 읽기 복제본을 사용하면 소스 데이터베이스의 복제본을 하나 이상 생성하고 읽기 트래픽을 이러한 복제본으로 전달하여 읽기 집약적인 워크로드를 확장할 수 있습니다. 이는 소스 데이터베이스의 로드를 줄이고 읽기 중심 애플리케이션의 성능을 향상시키는 데 도움이 될 수 있습니다. 다음은 데이터베이스 읽기 횟수를 줄이는 것과 직접적인 관련이 없기 때문에 잘못된 것입니다. B. Redis용 Amazon ElastiCache를 사용합니다. C. Amazon Route 53 DNS 캐싱을 사용하십시오. D. Memcached용 Amazon ElastiCache를 사용하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4020,7 +4155,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4040,15 +4175,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 22:31">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 22:31">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Redis용 Amazon ElastiCache는 자주 액세스하는 데이터를 캐싱하여 애플리케이션의 성능을 개선하는 데 사용할 수 있는 인메모리 데이터 스토어입니다. Amazon Route 53은 Amazon EC2 인스턴스, Amazon S3 버킷 및 기타 리소스를 비롯한 다양한 리소스로 트래픽을 라우팅하는 데 사용할 수 있는 DNS 서비스입니다. Memcached용 Amazon ElastiCache는 자주 액세스하는 데이터를 캐싱하여 애플리케이션의 성능을 개선하는 데 사용할 수 있는 인 메모리 데이터 스토어입니다.</div>
+<div class="comment-content">Redis용 Amazon ElastiCache는 자주 액세스하는 데이터를 캐싱하여 애플리케이션 성능을 향상시키는 데 사용할 수 있는 인 메모리 데이터 스토어입니다. Amazon Route 53은 Amazon EC2 인스턴스, Amazon S3 버킷 및 기타 리소스를 포함한 다양한 리소스로 트래픽을 라우팅하는 데 사용할 수 있는 DNS 서비스입니다. Memcached용 Amazon ElastiCache는 자주 액세스하는 데이터를 캐싱하여 애플리케이션 성능을 향상시키는 데 사용할 수 있는 인 메모리 데이터 스토어입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4057,7 +4192,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4093,15 +4228,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				투랄름스
+				turalmth
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 20:14">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 20:14">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 B입니다. 이유는 다음과 같습니다. 솔루션 설계자는 고가용성을 보장하면서 데이터베이스 읽기 수를 줄여야 합니다. Redis는 또한 고가용성을 지원합니다.</div>
+<div class="comment-content">정답은 B입니다. 왜냐하면 솔루션 설계자는 고가용성을 보장하면서 데이터베이스 읽기 횟수를 줄여야 하기 때문입니다. Redis는 고가용성도 지원합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4110,7 +4245,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4134,11 +4269,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 15일 일요일 05:15">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">읽기 전용 복제본은 가용성도 증가하므로 옵션 A가 요구 사항과 일치합니다.</div>
+<div class="comment-content">읽기 전용 복제본은 가용성도 높이므로 옵션 A가 요구 사항과 일치합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4147,7 +4282,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4183,16 +4318,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 08:51">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 08:51">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 더 나은 옵션입니다. B는 읽기 수를 줄일 수 있지만 RDS에 대한 읽기 및 쓰기 대기 시간을 모두 줄이려는 경우에 더 유용합니다.</div>
+<div class="comment-content">A가 더 나은 옵션입니다. B는 읽기 수를 줄일 수 있지만 RDS에 대한 읽기 및 쓰기 대기 시간을 모두 줄이려는 경우 더 유용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4201,7 +4336,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4225,11 +4360,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 26일 목요일 16:02">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B입니다. https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38fdf3cb</div>
+<div class="comment-content">대답은 B입니다. https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38fdf3cb</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4238,7 +4373,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4278,11 +4413,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 18:26">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 A</div>
+<div class="comment-content">대답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4291,7 +4426,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4323,12 +4458,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 09:18">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">작업은 언급되지 않은 "데이터베이스 읽기 수를 줄이는 것"이므로 마스터 데이터베이스 읽기를 줄이는 것이므로 캐싱만이 DB 읽기를 줄이는 데 도움이 될 수 있으며 Redis는 완벽하게 적합합니다.</div>
+<div class="comment-content">작업은 언급되지 않은 "데이터베이스 읽기 수를 줄이는" 것입니다. 마스터 데이터베이스 읽기를 줄이므로 캐싱만 DB 읽기를 줄이는 데 도움이 될 수 있으며 Redis는 완벽하게 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4337,7 +4472,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4368,13 +4503,13 @@
 				넥서스2020
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 14일 수 17:53">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 14일 수요일 17:53">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">읽기 횟수를 줄인다(B). DB 성능을 높이려는 것이 아니다(A). 그래서 B</div>
+<div class="comment-content">DB 성능을 높이려면(A), 읽기 횟수(B)를 줄이세요. 그래서 B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4383,7 +4518,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4414,12 +4549,12 @@
 				KADSM
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 08:21">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 08:21">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 A - 더 많은 복제본을 보유함으로써 더 많은 읽기 시나리오 없음 - 여러 데이터 사본으로 인해 가용성도 높아질 수 있습니다.</div>
+<div class="comment-content">답변 A - 더 많은 복제본을 보유함으로써 더 많은 읽기 횟수 시나리오 - 여러 데이터 복사본으로 인해 가용성도 높아질 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4428,7 +4563,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4459,13 +4594,13 @@
 				마지_심슨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 08:05">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 08:05">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">모든 Pro-B-er는 그것이 B라고 확신할 수 있는 충분한 증거를 제공하지 않았습니다. 질문에서 RDS +가 읽기 워크로드를 줄이거나 과도한 읽기를 보인다면 대답은 항상 안전하게 RDS 읽기 복제본이 될 것이라고 생각합니다.</div>
+<div class="comment-content">모든 Pro-B-ers는 그것이 B라고 확신할 만큼 충분한 증거를 제공하지 않았습니다. 질문에서 RDS + 읽기 작업 부하 감소 또는 읽기 무거운 내용이 표시되면 대답은 항상 RDS 읽기 복제본이 될 것이라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4474,7 +4609,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4505,12 +4640,12 @@
 				샤샤1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 09:14">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 09:14">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">해결책은 Amazon RDS 읽기 전용 복제본을 추가하는 것입니다. 이렇게 하면 애플리케이션이 기본 데이터베이스 대신 복제본에서 데이터를 읽을 수 있으므로 데이터베이스 읽기 수가 줄어들기 때문입니다. Redis용 Amazon ElastiCache를 사용한다고 해서 반드시 데이터베이스 읽기 수가 줄어들지는 않기 때문에 답 B는 정답이 아닙니다. ElastiCache는 데이터를 저장하고 검색하는 데 사용할 수 있는 관리형 인 메모리 캐시이지만 RDS 데이터베이스에 직접 연결되지 않으며 데이터베이스의 읽기 수를 줄이지 않습니다.</div>
+<div class="comment-content">해결책은 Amazon RDS 읽기 전용 복제본을 추가하는 것입니다. 이렇게 하면 애플리케이션이 기본 데이터베이스 대신 복제본에서 데이터를 읽을 수 있게 되어 데이터베이스 읽기 횟수가 줄어들기 때문입니다. B는 정답이 아닙니다. Redis용 Amazon ElastiCache를 사용해도 데이터베이스 읽기 횟수가 반드시 줄어드는 것은 아니기 때문입니다. ElastiCache는 데이터를 저장하고 검색하는 데 사용할 수 있는 관리형 인 메모리 캐시이지만 RDS 데이터베이스에 직접 연결되지 않으며 데이터베이스 읽기 수를 줄이지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4519,7 +4654,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4539,15 +4674,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 13:07">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 어떤 식으로든 데이터베이스 읽기를 줄이지 않습니다. 귀하는 단순히 "응용 프로그램이 기본 데이터베이스 대신 복제본에서 데이터를 읽을 수 있도록 허용할 것"이라고 말합니다. 다른 곳에서만 동일한 읽기가 발생하므로 Q의 요구 사항을 충족하지 않습니다. Redis용 Amazon ElastiCache는 밀리초 미만의 응답 시간이 필요한 가장 까다로운 애플리케이션을 지원하는 메모리 내 데이터 저장소로 작동합니다...Redis는 데이터베이스, 캐시, 메시지 브로커, 대기열, 세션 저장소 및 순위표로 사용하기 위해 널리 채택된 인메모리 데이터 저장소 B 읽기를 줄이기 위해 설계된 캐시 역할을 합니다. 또한 HA를 지원하므로 Q 요구 사항을 충족합니다.</div>
+<div class="comment-content">A는 어떤 방식으로든 데이터베이스 읽기를 줄이지 않습니다. 단순히 "애플리케이션이 기본 데이터베이스 대신 복제본에서 데이터를 읽을 수 있도록 허용"한다고 스스로 명시합니다. 다른 곳에서도 동일한 읽기가 발생하므로 이는 Q의 요구 사항을 충족하지 않습니다. Redis용 Amazon ElastiCache는 밀리초 미만의 응답 시간이 필요한 가장 까다로운 애플리케이션을 지원하는 인 메모리 데이터 스토어로 작동합니다. Redis는 데이터베이스, 캐시, 메시지 브로커, 대기열, 세션 저장소 및 순위표로 사용하기 위해 널리 채택된 인 메모리 데이터 저장소 B 읽기를 줄이도록 설계된 캐시 역할을 합니다. HA도 지원하므로 Q 요구 사항을 충족합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4556,7 +4691,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4595,13 +4730,13 @@
 				사힐바이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 12일 (월) 06:58">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 12일 월요일 06:58">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A여야 합니다.</div>
+<div class="comment-content">대답은 A이어야 한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4610,7 +4745,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4638,11 +4773,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스텝맨
+				의붓맨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 04:53">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 04:53">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4655,7 +4790,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4687,11 +4822,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 2일 금요일 11:35">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Ans는 다음과 같은 이유로 A입니다. Amazon RDS 읽기 전용 복제본은 Amazon RDS 데이터베이스(DB) 인스턴스에 향상된 성능과 내구성을 제공합니다. 읽기가 많은 데이터베이스 워크로드에 대해 단일 DB 인스턴스의 용량 제약을 넘어 탄력적으로 쉽게 확장할 수 있습니다.</div>
+<div class="comment-content">답은 A입니다. Amazon RDS 읽기 전용 복제본은 Amazon RDS 데이터베이스(DB) 인스턴스에 향상된 성능과 내구성을 제공합니다. 읽기가 많은 데이터베이스 워크로드에 대해 단일 DB 인스턴스의 용량 제약을 넘어 탄력적으로 쉽게 확장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4700,7 +4835,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4720,11 +4855,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 8일 일요일 13:07">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4737,7 +4872,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4768,8 +4903,8 @@
 				kmliuy73
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 13일 화요일 10:01">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 13일 (화) 10:01">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4782,7 +4917,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4822,12 +4957,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 1일 목요일 04:42">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">대답은 Amazon RDS 읽기 전용 복제본이 Amazon RDS 데이터베이스 인스턴스에 대한 향상된 성능과 내구성을 제공한다는 것입니다. READ-HEAVY DATABASE에 대한 단일 DB 인스턴스의 용량 제약을 넘어 탄력적으로 쉽게 확장할 수 있습니다. 답은 A입니다.</div>
+<div class="comment-content">대답은 Amazon RDS 읽기 전용 복제본이 Amazon RDS 데이터베이스 인스턴스에 향상된 성능과 내구성을 제공한다는 것입니다. 이를 통해 READ-HEAVY DATABASE에 대한 단일 DB 인스턴스의 용량 제약을 넘어 쉽게 탄력적으로 확장할 수 있습니다. 대답은 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4836,7 +4971,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4867,13 +5002,13 @@
 				미6
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 29일 화요일 02:08">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 29일 (화) 02:08">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B 캐싱으로 수행할 수 있는 "REDUCE READS"를 요청하기 때문입니다.</div>
+<div class="comment-content">B. 캐싱으로 수행할 수 있는 "REDUCE READS"를 요청하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4882,7 +5017,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4913,13 +5048,13 @@
 				잠바주스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 21:13">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 21:13">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">DB 읽기 줄이기</div>
+<div class="comment-content">DB 읽기를 줄입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4928,7 +5063,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -4959,12 +5094,12 @@
 				카펠로10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 19:59">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 19:59">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A&gt; 읽기 복제본</div>
+<div class="comment-content">A&gt; 복제본 읽기</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -4973,7 +5108,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -5028,7 +5163,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 16:34">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5041,7 +5176,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">22</span> times
+				upvoted <span class="upvote-count">23</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -5066,7 +5201,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 13:31">
-			1 day, 2 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5111,7 +5246,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 19 Feb 2023 22:01">
-			6 months ago
+			6 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5149,7 +5284,7 @@ The answer is a.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 03:44">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5194,7 +5329,7 @@ The answer is a.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 29 May 2023 14:02">
-			2 months, 3 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5241,7 +5376,7 @@ https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 17:44">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5305,7 +5440,7 @@ https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html</d
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 10 Apr 2023 04:48">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5338,6 +5473,101 @@ so A wins</div>
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988082" id="comment-988082">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				chen0305_099
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Wed 23 Aug 2023 10:05">
+			3 days, 12 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">使用ElastiCache減少讀取，選擇redis保證高可用</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="987446" id="comment-987446">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				mtmayer
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Tue 22 Aug 2023 14:49">
+			4 days, 7 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>B</strong></span></div>
+<div class="comment-content">Reduce the number of reads ......</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="984722" id="comment-984722">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -5353,11 +5583,8 @@ so A wins</div>
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:12">
-			19 hours, 57 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5407,7 +5634,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 15 Aug 2023 02:23">
-			4 days, 13 hours ago
+			1 week, 4 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5453,7 +5680,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 12 Aug 2023 20:53">
-			6 days, 19 hours ago
+			2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5499,7 +5726,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 01:20">
-			1 week, 3 days ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5545,7 +5772,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 22:04">
-			2 weeks, 2 days ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5591,7 +5818,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Jul 2023 05:05">
-			4 weeks ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5637,7 +5864,7 @@ A is incorrect because RDS read replicas only help scale reads and do not reduce
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Jul 2023 06:40">
-			4 weeks, 1 day ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5684,7 +5911,7 @@ B: Redis has more features than Memcached - e.g. transactions, which are probabl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Jul 2023 02:07">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5736,7 +5963,7 @@ A is chosen.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Jul 2023 12:25">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5785,7 +6012,7 @@ D - caching without multi AZ</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Jul 2023 19:05">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5835,7 +6062,7 @@ With ElastiCache, the reads are done at the memory (cache), and not at the datab
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Jul 2023 22:09">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5881,7 +6108,7 @@ With ElastiCache, the reads are done at the memory (cache), and not at the datab
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 09:01">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5927,7 +6154,7 @@ With ElastiCache, the reads are done at the memory (cache), and not at the datab
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 11:34">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -5972,7 +6199,7 @@ With ElastiCache, the reads are done at the memory (cache), and not at the datab
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 03:44">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6019,7 +6246,7 @@ Read Replica still reads DB.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 01:32">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6057,7 +6284,7 @@ Read Replica still reads DB.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Jul 2023 18:54">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6112,7 +6339,7 @@ With ElastiCache, the reads are done at the memory, and not at the database. Thu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 14:55">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6164,7 +6391,7 @@ D. Amazon ElastiCache for Memcached is another caching service similar to Redis,
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 11 Jun 2023 19:36">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6212,7 +6439,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 06 Jun 2023 19:29">
-			2 months, 1 week ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6257,7 +6484,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 31 May 2023 10:46">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6302,7 +6529,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 28 May 2023 12:03">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6347,7 +6574,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 27 May 2023 20:46">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6393,7 +6620,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 09:41">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6439,7 +6666,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 17:45">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6485,7 +6712,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 04:17">
-			2 months, 4 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6531,7 +6758,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 15:27">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6576,7 +6803,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 14 May 2023 03:51">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6621,7 +6848,7 @@ architect-associate-saa-c02-dumps.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 09 May 2023 16:42">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6672,7 +6899,7 @@ https://aws.amazon.com/elasticache/redis-vs-memcached/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 05 May 2023 17:37">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6718,7 +6945,7 @@ https://aws.amazon.com/elasticache/redis-vs-memcached/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 19:21">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6764,7 +6991,7 @@ https://aws.amazon.com/elasticache/redis-vs-memcached/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 18:51">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6811,7 +7038,7 @@ https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 05:56">
-			3 months, 4 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6857,7 +7084,7 @@ https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 22:40">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6903,7 +7130,7 @@ https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Apr 2023 06:37">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6949,7 +7176,7 @@ https://aws.amazon.com/elasticache/faqs/?nc1=h_ls</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Apr 2023 10:08">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -6987,7 +7214,7 @@ You can add read replicas to handle read workloads so your primary database does
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Apr 2023 10:10">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7040,7 +7267,7 @@ You can add read replicas to handle read workloads so your primary database does
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Apr 2023 04:46">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7086,7 +7313,7 @@ You can add read replicas to handle read workloads so your primary database does
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 09 Apr 2023 16:11">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7134,7 +7361,7 @@ Choosing A (read replicas) you improve the databases HA, and ALSO, helps to mini
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 08 Apr 2023 08:00">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7183,7 +7410,7 @@ Redis is a type of database that's commonly referred to as No SQL or non-relatio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 23:47">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7228,7 +7455,7 @@ Redis is a type of database that's commonly referred to as No SQL or non-relatio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:47">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7274,7 +7501,7 @@ Redis is a type of database that's commonly referred to as No SQL or non-relatio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:02">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7319,7 +7546,7 @@ Redis is a type of database that's commonly referred to as No SQL or non-relatio
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Mar 2023 16:13">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7367,7 +7594,7 @@ According to chatgpt</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 05 Mar 2023 16:38">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7413,7 +7640,7 @@ According to chatgpt</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 20:49">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7459,7 +7686,7 @@ According to chatgpt</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Feb 2023 07:48">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7505,7 +7732,7 @@ According to chatgpt</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 12 Feb 2023 14:41">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7555,7 +7782,7 @@ Redis supports Multi-AZ and therefore - ensures high availability.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 08 Feb 2023 21:46">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7602,7 +7829,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 12:15">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7647,7 +7874,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 13:05">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7693,7 +7920,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Feb 2023 07:36">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7731,7 +7958,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Feb 2023 06:22">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7768,7 +7995,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 06 Feb 2023 06:25">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7829,7 +8056,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 31 Jan 2023 08:04">
-			6 months, 2 weeks ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7875,7 +8102,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 29 Jan 2023 10:59">
-			6 months, 3 weeks ago
+			6 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7921,7 +8148,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 28 Jan 2023 02:41">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -7967,7 +8194,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 16:01">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8013,7 +8240,7 @@ https://aws.amazon.com/elasticache/redis/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 02:19">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8053,7 +8280,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 11:21">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8106,7 +8333,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 21 Jan 2023 13:40">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8143,7 +8370,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 12:20">
-			6 months, 4 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8196,7 +8423,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 19 Jan 2023 17:11">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8242,7 +8469,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 18:43">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8288,7 +8515,7 @@ I agree all the comments that 'read-replica' doesn't reduce reads on 'database' 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 11 Jan 2023 08:28">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8328,7 +8555,7 @@ Read replicas in RDS allow to offload read traffic from the primary RDS instance
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 16:00">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8382,7 +8609,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 23:12">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8428,7 +8655,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 18:20">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8466,7 +8693,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 03 Jan 2023 22:29">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8521,7 +8748,7 @@ To reduce the number of db reads, typically a cache is used - which is much smal
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Dec 2022 16:31">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8567,7 +8794,7 @@ To reduce the number of db reads, typically a cache is used - which is much smal
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 23:46">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8608,7 +8835,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Feb 2023 12:45">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8653,7 +8880,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 13:02">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8706,7 +8933,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 22:00">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8754,7 +8981,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 25 Dec 2022 07:42">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8800,7 +9027,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 16:20">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8846,7 +9073,7 @@ option B is incorect because, is it true that Amazon ElastiCache for Redis can h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 22:28">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8892,7 +9119,7 @@ D. Use Amazon ElastiCache for Memcached.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 22:31">
-			7 months, 4 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8949,7 +9176,7 @@ Amazon ElastiCache for Memcached is an in-memory data store that can be used to 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 20:14">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -8988,7 +9215,7 @@ A solutions architect must reduce the number of database reads while ensuring hi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 05:15">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9041,7 +9268,7 @@ A solutions architect must reduce the number of database reads while ensuring hi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 08:51">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9080,7 +9307,7 @@ B can reduce the number of reads but it is more useful when you want to reduce b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 26 Jan 2023 16:02">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9134,7 +9361,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 18:26">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9179,7 +9406,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 09:18">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9225,7 +9452,7 @@ https://amangoeliitb.medium.com/improving-database-performance-with-redis-dbd38f
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 17:53">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9272,7 +9499,7 @@ So B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 08:21">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9317,7 +9544,7 @@ So B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 08:05">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9363,7 +9590,7 @@ So B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 09:14">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9402,7 +9629,7 @@ Answer B is not correct because using Amazon ElastiCache for Redis would not nec
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 13:07">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9459,7 +9686,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 06:58">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9505,7 +9732,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 04:53">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9550,7 +9777,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 02 Dec 2022 11:35">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9587,7 +9814,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 08 Jan 2023 13:07">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9632,7 +9859,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 13 Dec 2022 10:01">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9685,7 +9912,7 @@ B Acts as a cache, which is designed to reduce reads. It also supports HA, so me
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Dec 2022 04:42">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9733,7 +9960,7 @@ Answer is A.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 29 Nov 2022 02:08">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9779,7 +10006,7 @@ Answer is A.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 21:13">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -9825,7 +10052,7 @@ Answer is A.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 19:59">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 188 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 188 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 188 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 188 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="847015">
 <p class="card-text">
 							
-								회사는 Amazon S3를 데이터 레이크로 사용합니다. 회사에는 SFTP를 사용하여 데이터 파일을 업로드해야 하는 새로운 파트너가 있습니다. 솔루션 설계자는 운영 오버헤드를 최소화하는 고가용성 SFTP 솔루션을 구현해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								회사는 Amazon S3를 데이터 레이크로 사용합니다. 회사에는 데이터 파일을 업로드하기 위해 SFTP를 사용해야 하는 새로운 파트너가 있습니다. 솔루션 설계자는 운영 오버헤드를 최소화하는 고가용성 SFTP 솔루션을 구현해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS Transfer Family를 사용하여 공개적으로 액세스할 수 있는 엔드포인트가 있는 SFTP 지원 서버를 구성합니다. S3 데이터 레이크를 대상으로 선택합니다.
+											AWS Transfer Family를 사용하여 공개적으로 액세스 가능한 엔드포인트로 SFTP 지원 서버를 구성하십시오. S3 데이터 레이크를 대상으로 선택합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											Amazon S3 파일 게이트웨이를 SFTP 서버로 사용합니다. S3 파일 게이트웨이 엔드포인트 URL을 새 파트너에게 노출합니다. S3 파일 게이트웨이 엔드포인트를 새 파트너와 공유합니다.
+											Amazon S3 파일 게이트웨이를 SFTP 서버로 사용하십시오. S3 파일 게이트웨이 엔드포인트 URL을 새 파트너에 노출합니다. S3 파일 게이트웨이 엔드포인트를 새 파트너와 공유합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											VPC의 프라이빗 서브넷에서 Amazon EC2 인스턴스를 시작합니다. EC2 인스턴스 앞에 NLB(Network Load Balancer)를 배치합니다. NLB에 대한 SFTP 수신기 포트를 만듭니다. NLB 호스트 이름을 새 파트너와 공유합니다. EC2 인스턴스에서 cron 작업 스크립트를 실행하여 S3 데이터 레이크에 파일을 업로드합니다.
+											VPC의 프라이빗 서브넷에서 Amazon EC2 인스턴스를 시작합니다. EC2 인스턴스 앞에 Network Load Balancer(NLB)를 배치합니다. NLB용 SFTP 수신기 포트를 만듭니다. NLB 호스트 이름을 새 파트너와 공유합니다. EC2 인스턴스에서 cron 작업 스크립트를 실행하여 S3 데이터 레이크에 파일을 업로드합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mabotega
-							</a> 
-							
-							시간: <i>
-							2022년 11월 15일, 오후 10:49</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mabotega
-							</a>
-							
-							at <i>
-							Nov. 15, 2022, 10:49 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,14 +295,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 22:55">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 22:55">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 AWS Transfer Family가 SFTP, FTPS, FTP 및 AS2 프로토콜을 사용하여 AWS 스토리지 서비스로 반복되는 B2B 파일 전송을 안전하게 확장한다는 것입니다. https://aws.amazon.com/aws-transfer-family/</div>
+<div class="comment-content">대답은 A입니다. AWS Transfer Family는 SFTP, FTPS, FTP 및 AS2 프로토콜을 사용하여 반복되는 B2B 파일 전송을 AWS 스토리지 서비스로 안전하게 확장합니다. https://aws.amazon.com/aws-transfer-family/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -292,11 +335,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 2일 수요일 22:12">
-			2주, 2일 전
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답 A는 더 많은 수작업이 필요하기 때문에 대답이 아닙니다. AWS Transfer Family는 SFTP 서버 설정을 단순화하지만 여전히 관리 및 모니터링이 필요합니다. 여기에는 확장, 백업, 패치 및 SFTP 서버 관리와 관련된 기타 관리 작업 처리가 포함됩니다.</div>
+<div class="comment-content">답변 A는 더 많은 노력이 필요하기 때문에 답변이 아닙니다. AWS Transfer Family는 SFTP 서버 설정을 단순화하지만 여전히 관리 및 모니터링이 필요합니다. 여기에는 확장, 백업, 패치 적용 및 SFTP 서버 관리와 관련된 기타 관리 작업 처리가 포함됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -345,10 +388,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 5월 24일 수요일 08:21">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수 08:21">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -395,12 +438,12 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 8월 18일 금요일 13:31">
-			1일, 2시간 전
+<span class="comment-date align-middle" title="2023년 8월 18일 금 13:31">
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 정답입니다. AWS Transfer Family는 S3와 직접 통합할 수 있는 완전 관리형 SFTP 서비스를 제공합니다. 최소한의 오버헤드로 확장, 가용성 및 보안을 자동으로 처리합니다.</div>
+<div class="comment-content">A가 정답입니다. AWS Transfer Family는 S3와 직접 통합할 수 있는 완전관리형 SFTP 서비스를 제공합니다. 최소한의 오버헤드로 확장성, 가용성 및 보안을 자동으로 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -441,11 +484,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 2일 수요일 22:13">
-			2주, 2일 전
+			3주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS Transfer Family는 안전한 파일 전송을 쉽게 설정하고 관리할 수 있는 완전관리형 서비스입니다. 공용 인터넷에서 액세스할 수 있는 고가용성 SFTP 서버를 제공합니다. 그러나 이 솔루션은 솔루션 설계자가 SFTP 서버를 관리해야 하므로 운영 오버헤드를 최소화하지 않습니다.</div>
+<div class="comment-content">AWS Transfer Family는 보안 파일 전송을 쉽게 설정하고 관리할 수 있는 완전관리형 서비스입니다. 공용 인터넷에서 액세스할 수 있는 고가용성 SFTP 서버를 제공합니다. 그러나 이 솔루션은 SFTP 서버를 관리하려면 솔루션 설계자가 필요하므로 운영 오버헤드를 최소화하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -485,13 +528,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 7일 금요일 10:07">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 7일 금 10:07">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">이 솔루션은 수동 관리 또는 운영 오버헤드 없이 고가용성 SFTP 솔루션을 제공합니다. AWS Transfer Family를 사용하면 인증, 권한 부여 및 스토리지 백엔드로 S3와의 통합을 통해 SFTP 서버를 쉽게 설정할 수 있습니다. 옵션 B는 SFTP 액세스가 아닌 NFS 또는 SMB 프로토콜을 통한 S3 스토리지에 대한 파일 기반 액세스에 주로 사용되는 Amazon S3 파일 게이트웨이 사용을 제안하므로 최선의 선택이 아닙니다. 옵션 C는 파일 업로드를 위한 EC2 인스턴스, VPN 설정 및 cron 작업 스크립트의 수동 관리가 필요하여 운영 오버헤드와 잠재적인 복잡성을 유발하므로 최선의 선택이 아닙니다. 옵션 D는 파일 업로드를 위한 EC2 인스턴스, Network Load Balancer 및 cron 작업 스크립트의 수동 관리도 필요하므로 최선의 선택이 아닙니다.</div>
+<div class="comment-content">이 솔루션은 수동 관리나 운영 오버헤드가 필요 없는 고가용성 SFTP 솔루션을 제공합니다. AWS Transfer Family를 사용하면 인증, 승인 및 스토리지 백엔드로 S3와의 통합을 통해 SFTP 서버를 쉽게 설정할 수 있습니다. 옵션 B는 SFTP 액세스가 아닌 NFS 또는 SMB 프로토콜을 통한 S3 스토리지에 대한 파일 기반 액세스에 주로 사용되는 Amazon S3 파일 게이트웨이 사용을 제안하므로 최선의 선택이 아닙니다. 옵션 C는 EC2 인스턴스, VPN 설정, 파일 업로드를 위한 cron 작업 스크립트의 수동 관리가 필요하고 운영 오버헤드와 잠재적인 복잡성이 발생하므로 최선의 선택이 아닙니다. 옵션 D는 EC2 인스턴스, Network Load Balancer 및 파일 업로드를 위한 cron 작업 스크립트를 수동으로 관리해야 하므로 최선의 선택이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,11 +575,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:44">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 솔루션은 수동 관리 또는 운영 오버헤드 없이 고가용성 SFTP 솔루션을 제공합니다. AWS Transfer Family를 사용하면 인증, 권한 부여 및 스토리지 백엔드로 S3와의 통합을 통해 SFTP 서버를 쉽게 설정할 수 있습니다. 옵션 B는 SFTP 액세스가 아닌 NFS 또는 SMB 프로토콜을 통한 S3 스토리지에 대한 파일 기반 액세스에 주로 사용되는 Amazon S3 파일 게이트웨이 사용을 제안하므로 최선의 선택이 아닙니다. 옵션 C는 파일 업로드를 위한 EC2 인스턴스, VPN 설정 및 cron 작업 스크립트의 수동 관리가 필요하여 운영 오버헤드와 잠재적인 복잡성을 유발하므로 최선의 선택이 아닙니다. 옵션 D는 파일 업로드를 위한 EC2 인스턴스, Network Load Balancer 및 cron 작업 스크립트의 수동 관리도 필요하므로 최선의 선택이 아닙니다.</div>
+<div class="comment-content">이 솔루션은 수동 관리나 운영 오버헤드가 필요 없는 고가용성 SFTP 솔루션을 제공합니다. AWS Transfer Family를 사용하면 인증, 승인 및 스토리지 백엔드로 S3와의 통합을 통해 SFTP 서버를 쉽게 설정할 수 있습니다. 옵션 B는 SFTP 액세스가 아닌 NFS 또는 SMB 프로토콜을 통한 S3 스토리지에 대한 파일 기반 액세스에 주로 사용되는 Amazon S3 파일 게이트웨이 사용을 제안하므로 최선의 선택이 아닙니다. 옵션 C는 EC2 인스턴스, VPN 설정, 파일 업로드를 위한 cron 작업 스크립트의 수동 관리가 필요하고 운영 오버헤드와 잠재적인 복잡성이 발생하므로 최선의 선택이 아닙니다. 옵션 D는 EC2 인스턴스, Network Load Balancer 및 파일 업로드를 위한 cron 작업 스크립트를 수동으로 관리해야 하므로 최선의 선택이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -545,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,11 +612,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:44">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -621,12 +664,12 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 18:32">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 18:32">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답이 D인 이유에 대해 머리를 감쌀 수 없습니까? 내가 어디에서 잘못되었는지 확인하는 것이 너무 실망 스럽습니다. 저는 A에 투표합니다.</div>
+<div class="comment-content">왜 답이 D인지 궁금해요. 내가 어디에서 잘못되었는지 보니 너무 실망스럽습니다. 나는 A에게 투표한다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -635,7 +678,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -663,16 +706,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 14일 일요일 22:34">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">운영 오버헤드 최소화 = 서버리스 AWS Transfer Family는 서버리스</div>
+<div class="comment-content">운영 오버헤드 최소화 = 서버리스 AWS Transfer Family는 서버리스입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -709,11 +752,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라훌빗34
+				Rahulbit34
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 4일 목요일 16:07">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -758,12 +801,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 28일 금요일 16:59">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Transfer Family는 다음 프로토콜을 통해 Amazon Simple Storage Service(Amazon S3) 스토리지 또는 Amazon Elastic File System(Amazon EFS) 파일 시스템 안팎으로 파일을 전송하는 데 사용할 수 있는 완전관리형 AWS 서비스입니다. SSH(Secure Shell) 파일 전송 프로토콜(SFTP): 버전 3 FTPS(파일 전송 프로토콜 보안) 파일 전송 프로토콜(FTP) AS2(적용성 선언문 2)</div>
+<div class="comment-content">AWS Transfer Family는 다음 프로토콜을 통해 Amazon Simple Storage Service(Amazon S3) 스토리지 또는 Amazon Elastic File System(Amazon EFS) 파일 시스템 안팎으로 파일을 전송하는 데 사용할 수 있는 완전관리형 AWS 서비스입니다. Secure Shell(SSH) SFTP(파일 전송 프로토콜): 버전 3 FTPS(파일 전송 프로토콜 보안) FTP(파일 전송 프로토콜) 적용 가능성 선언문 2(AS2)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -772,7 +815,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -803,8 +846,8 @@
 				오이즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 12일 수 11:35">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 12일 수요일 11:35">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -818,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -849,12 +892,12 @@
 				착하게 굴 어라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:02">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 05:02">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A - 옵션입니다.</div>
+<div class="comment-content">A - 옵션입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -863,7 +906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -891,11 +934,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 19:20">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 19:20">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -909,7 +952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -941,7 +984,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 30일 수 21:47">
-			8개월, 3주 전
+			8개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -955,7 +998,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -986,13 +1029,13 @@
 				바비배시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 10:10">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 10:10">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">완전관리형 고가용성 SFTP 서비스인 AAAAAAAA AWS Transfer for SFTP. 서버를 생성하고, 사용자 계정을 설정하고, 서버를 하나 이상의 Amazon Simple Storage Service(Amazon S3) 버킷과 연결하기만 하면 됩니다.</div>
+<div class="comment-content">완전 관리형 고가용성 SFTP 서비스인 AAAAAAAA AWS Transfer for SFTP입니다. 간단히 서버를 생성하고, 사용자 계정을 설정하고, 서버를 하나 이상의 Amazon Simple Storage Service(Amazon S3) 버킷과 연결하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1001,7 +1044,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1032,12 +1075,12 @@
 				바비배시
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 10:09">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 10:09">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">완전관리형 고가용성 SFTP 서비스인 AAAAAAAA AWS Transfer for SFTP. 서버를 생성하고, 사용자 계정을 설정하고, 서버를 하나 이상의 Amazon Simple Storage Service(Amazon S3) 버킷과 연결하기만 하면 됩니다.</div>
+<div class="comment-content">완전 관리형 고가용성 SFTP 서비스인 AAAAAAAA AWS Transfer for SFTP입니다. 간단히 서버를 생성하고, 사용자 계정을 설정하고, 서버를 하나 이상의 Amazon Simple Storage Service(Amazon S3) 버킷과 연결하면 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1046,7 +1089,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1078,12 +1121,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 19:39">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A입니다 - https://docs.aws.amazon.com/transfer/latest/userguide/create-server-sftp.html</div>
+<div class="comment-content">A가 대답입니다 - https://docs.aws.amazon.com/transfer/latest/userguide/create-server-sftp.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1092,7 +1135,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1124,7 +1167,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 14:17">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1137,7 +1180,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1165,16 +1208,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				르글루피에
+				르글로피에
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 12:36">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답은 A</div>
+<div class="comment-content">대답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1183,7 +1226,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1214,8 +1257,8 @@
 				마보테가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 15일 화요일 22:49">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 15일 (화) 22:49">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1229,7 +1272,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1284,7 +1327,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 22:55">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1323,7 +1366,7 @@ https://aws.amazon.com/aws-transfer-family/</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 22:12">
-			2 weeks, 2 days ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1379,7 +1422,7 @@ https://aws.amazon.com/aws-transfer-family/</div>
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 24 May 2023 08:21">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1428,7 +1471,7 @@ Whenever you see SFTP , FTP look for "Transfer" in options available</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 13:31">
-			1 day, 2 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1475,7 +1518,7 @@ AWS Transfer Family provides a fully managed SFTP service that can integrate dir
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Aug 2023 22:13">
-			2 weeks, 2 days ago
+			3 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1520,7 +1563,7 @@ AWS Transfer Family provides a fully managed SFTP service that can integrate dir
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Jul 2023 10:07">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1572,7 +1615,7 @@ Option D is not the best choice as it also requires manual management of EC2 ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:44">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1615,7 +1658,7 @@ Option D is not the best choice as it also requires manual management of EC2 ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:44">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1668,7 +1711,7 @@ Option D is not the best choice as it also requires manual management of EC2 ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 18:32">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1713,7 +1756,7 @@ Option D is not the best choice as it also requires manual management of EC2 ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 14 May 2023 22:34">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1760,7 +1803,7 @@ AWS Transfer Family is serverless</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 04 May 2023 16:07">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1805,7 +1848,7 @@ AWS Transfer Family is serverless</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 16:59">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1856,7 +1899,7 @@ Applicability Statement 2 (AS2)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Apr 2023 11:35">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1902,7 +1945,7 @@ Applicability Statement 2 (AS2)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:02">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1947,7 +1990,7 @@ Applicability Statement 2 (AS2)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 19:20">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1993,7 +2036,7 @@ Applicability Statement 2 (AS2)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 30 Nov 2022 21:47">
-			8 months, 3 weeks ago
+			8 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2039,7 +2082,7 @@ Applicability Statement 2 (AS2)</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 10:10">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2086,7 +2129,7 @@ AWS Transfer for SFTP, a fully-managed, highly-available SFTP service. You simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 10:09">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2132,7 +2175,7 @@ AWS Transfer for SFTP, a fully-managed, highly-available SFTP service. You simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 19:39">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2178,7 +2221,7 @@ AWS Transfer for SFTP, a fully-managed, highly-available SFTP service. You simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 14:17">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2223,7 +2266,7 @@ AWS Transfer for SFTP, a fully-managed, highly-available SFTP service. You simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 12:36">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2269,7 +2312,7 @@ AWS Transfer for SFTP, a fully-managed, highly-available SFTP service. You simpl
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 15 Nov 2022 22:49">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

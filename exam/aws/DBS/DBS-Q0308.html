@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 308 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 308 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 308 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 308 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="891185">
 <p class="card-text">
 							
-								회사에서 AWS Organizations를 사용하여 다양한 팀 및 기능에 대해 격리된 계정을 생성하려고 합니다. 회사의 데이터베이스 관리자는 us-east-1 리전의 기본 계정에서 us-west-2 리전의 새 테스트 계정으로 DB 인스턴스를 복사해야 합니다. 데이터베이스 관리자는 기본 계정에서 PostgreSQL 원본 DB 인스턴스용 암호화된 Amazon RDS의 스냅샷을 이미 생성했습니다. <br/><br/>스냅샷을 새 계정에 복사하기 위해 데이터베이스 관리자가 수행해야 하는 단계 조합은 무엇입니까? (3개를 선택하세요.)
+								회사에서는 AWS Organizations를 사용하여 다양한 팀과 기능에 대한 격리된 계정을 생성하려고 합니다. 회사의 데이터베이스 관리자는 us-east-1 지역의 기본 계정에서 us-west-2 지역의 새 테스트 계정으로 DB 인스턴스를 복사해야 합니다. 데이터베이스 관리자는 이미 기본 계정에서 PostgreSQL용 암호화된 Amazon RDS 소스 DB 인스턴스의 스냅샷을 생성했습니다. <br/><br/>데이터베이스 관리자가 스냅샷을 새 계정에 복사하려면 어떤 단계 조합을 수행해야 합니까? (3개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,35 +148,35 @@
 													A.
 												</span> 
 											
-											us-east-1의 기본 계정에서 새로운 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. 키 ID와 키 자료를 us-west-2의 테스트 계정에 복제합니다.
+											us-east-1의 기본 계정에 새로운 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. us-west-2의 테스트 계정에 키 ID와 키 자료를 복제합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											us-east-1의 기본 계정에서 새로운 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. us-west-2의 테스트 계정에 키를 복사합니다.
+											us-east-1의 기본 계정에 새로운 AWS Key Management Service(AWS KMS) 고객 관리형 키를 생성합니다. us-west-2의 테스트 계정에 키를 복사합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											AWS Key Management Service(AWS KMS) 고객 관리 키를 사용하여 원본 DB 인스턴스의 스냅샷을 us-west-2에 복사합니다. 새 스냅샷에서 암호화를 활성화합니다. 테스트 계정과 스냅샷을 공유합니다.
+											AWS Key Management Service(AWS KMS) 고객 관리형 키를 사용하여 소스 DB 인스턴스의 스냅샷을 us-west-2에 복사합니다. 새 스냅샷에서 암호화를 활성화합니다. 스냅샷을 테스트 계정과 공유하세요.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											원본 DB 인스턴스의 스냅샷을 us-east-1의 테스트 계정에 복사합니다. 테스트 계정으로 전환하고 스냅샷을 us-west-2와 공유합니다.
+											원본 DB 인스턴스의 스냅샷을 us-east-1의 테스트 계정에 복사합니다. 테스트 계정으로 전환하고 us-west-2와 스냅샷을 공유합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											테스트 계정에서 공유 스냅샷을 복사하여 최종 스냅샷을 생성합니다. 최종 스냅샷을 사용하여 PostgreSQL DB 인스턴스용 새 RDS를 생성합니다.
+											테스트 계정에서 공유된 스냅샷을 복사하여 최종 스냅샷을 생성합니다. 최종 스냅샷을 사용하여 PostgreSQL DB 인스턴스용 새 RDS를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="F">
@@ -124,7 +187,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -134,20 +197,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">BCF(33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">CDF(33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">CEF(33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">BCF (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">CDF (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 33%; display: flex;" title="">CEF (33%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								TQM__9MD
-							</a> 2023년 7월 14 
-							
-							일 <i>
-							오전 12:50</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -231,16 +284,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								TQM__9MD
-							</a>
-							
-							at <i>
-							July 14, 2023, 12:50 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -271,13 +314,13 @@
 				ssguo100
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 14일 (월) 23:51">
-			1일, 14시간 전
+<span class="comment-date align-middle" title="2023년 8월 14일 월요일 23:51">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>BCF</strong></span></div>
-<div class="comment-content">그것은 BCF입니다</div>
+<div class="comment-content">BCF 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,7 +329,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -317,13 +360,13 @@
 				ssguo100
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 14일 (월) 23:49">
-			1일, 14시간 전
+<span class="comment-date align-middle" title="2023년 8월 14일 월요일 23:49">
+			1주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CDF</strong></span></div>
-<div class="comment-content">그것은 BCF입니다</div>
+<div class="comment-content">BCF 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -332,7 +375,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -363,12 +406,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 18:41">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 18일 화 18:41">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BCF입니다</div>
+<div class="comment-content">BCF 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -377,7 +420,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -409,12 +452,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 14일 금요일 00:50">
-			1 개월 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>CEF</strong></span></div>
-<div class="comment-content">C,E,F가 정답</div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>CEF</strong></span></div>
+<div class="comment-content">C,E,F가 답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -423,7 +466,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -447,11 +490,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 14일 금요일 07:25">
-			1 개월 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BCF가 최고</div>
+<div class="comment-content">BCF가 최고죠</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -460,7 +503,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -483,12 +526,12 @@
 				사티아108
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 09:32">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 09:32">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">어느게 맞나요.. CEF or BCF ??</div>
+<div class="comment-content">어느 것이 맞나요.. CEF 또는 BCF ??</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -497,7 +540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -565,7 +608,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 14 Aug 2023 23:51">
-			1 day, 14 hours ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -611,7 +654,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 14 Aug 2023 23:49">
-			1 day, 14 hours ago
+			1 week, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -657,7 +700,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 18:41">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -702,7 +745,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Jul 2023 00:50">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -740,7 +783,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Jul 2023 07:25">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -777,7 +820,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 09:32">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

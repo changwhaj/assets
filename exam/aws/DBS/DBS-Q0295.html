@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 295 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 295 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 문제 295 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 295 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="875977">
 <p class="card-text">
 							
-								데이터베이스 전문가는 Amazon DynamoDB 테이블을 설정해야 합니다. 테이블은 여러 AWS 리전에 존재해야 하며 데이터의 지정 시간 복구를 제공해야 합니다. <br/><br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하기 위해 데이터베이스 전문가가 수행해야 하는 단계의 조합은 무엇입니까? (3개를 선택하세요.)
+								데이터베이스 전문가가 Amazon DynamoDB 테이블을 설정해야 합니다. 테이블은 여러 AWS 리전에 존재해야 하며 데이터의 특정 시점 복구를 제공해야 합니다. <br/><br/>데이터베이스 전문가는 최소한의 운영 오버헤드로 이러한 요구 사항을 충족하기 위해 어떤 단계 조합을 수행해야 합니까? (3개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											전역 테이블에 대해 DynamoDB 스트림을 활성화합니다. 보기 유형을 새 이미지와 이전 이미지로 설정합니다.
+											글로벌 테이블에 대해 DynamoDB 스트림을 활성화합니다. 보기 유형을 새 이미지와 이전 이미지로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,21 +162,21 @@
 													C.
 												</span> 
 											
-											각 지역에 대한 복제본 테이블을 추가합니다. 테이블 이름이 각 복제 리전에서 이미 사용되고 있지 않은지 확인하십시오.
+											각 지역에 대한 복제본 테이블을 추가합니다. 각 복제본 리전에서 테이블 이름이 이미 사용되고 있지 않은지 확인하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											각 테이블 이름에 임의의 접미사가 추가된 각 지역에 대한 복제본 테이블을 추가합니다.
+											각 테이블 이름에 임의의 접미사를 추가하여 각 지역에 대한 복제본 테이블을 추가합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="E">
 													E.
 												</span> 
 											
-											전역 테이블에 대해 지정 시간 복구를 활성화합니다.
+											글로벌 테이블에 대한 특정 시점 복구를 활성화합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="F">
@@ -124,7 +187,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -134,22 +197,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">ACF(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">ACF (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a> 
-							
-							시간: <i>
-							2023년 3월 26일, 오후 4:44</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -235,16 +288,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a>
-							
-							at <i>
-							March 26, 2023, 4:44 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -275,12 +318,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 19일 수 12:09">
-			4주 전
+<span class="comment-date align-middle" title="2023년 7월 19일 수요일 12:09">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ACF입니다</div>
+<div class="comment-content">ACF 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -289,7 +332,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -320,12 +363,12 @@
 				르디아즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 16:44">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 16:44">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택된 답변: <span><strong>ACF</strong></span></div>
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>ACF</strong></span></div>
 <div class="comment-content">A https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables.tutorial.html C https://aws.amazon.com/dynamodb/global-tables/ F https://docs.aws. amazon.com/amazondynamodb/latest/developerguide/pointintimerecovery_beforeyoubegin.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
@@ -335,7 +378,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -359,11 +402,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 13일 목요일 11:23">
-			4 개월 전에
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">전역 테이블 생성(AWS CLI) 다음 단계에 따라 AWS CLI를 사용하여 전역 테이블 Music을 생성합니다. 다음 예에서는 미국과 유럽에 복제본 테이블이 있는 전역 테이블을 생성합니다. DynamoDB Streams를 활성화(NEW_AND_OLD_IMAGES)하여 미국 동부(오하이오)에서 새 테이블(Music)을 생성합니다.</div>
+<div class="comment-content">전역 테이블 생성(AWS CLI) 다음 단계에 따라 AWS CLI를 사용하여 전역 테이블 Music을 생성합니다. 다음 예에서는 미국과 유럽의 복제본 테이블을 사용하여 전역 테이블을 만듭니다. DynamoDB Streams가 활성화된(NEW_AND_OLD_IMAGES) 미국 동부(오하이오)에 새 테이블(Music)을 생성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -372,7 +415,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,7 +475,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 12:09">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -477,7 +520,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 16:44">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -517,7 +560,7 @@ F https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/pointintimere
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Apr 2023 11:23">
-			4 months ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

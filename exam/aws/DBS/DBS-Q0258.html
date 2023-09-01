@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 258 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 258 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 258 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 258 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807500">
 <p class="card-text">
 							
-								회사에서 블로그 플랫폼을 운영하고 있습니다. 보안 감사는 플랫폼에서 사용하는 Amazon RDS DB 인스턴스가 유휴 데이터를 암호화하도록 구성되지 않았음을 확인합니다. 회사는 30일 이내에 DB 인스턴스를 암호화해야 합니다. <br/>가동 중지 시간을 최소화하면서 이 요구 사항을 충족하려면 데이터베이스 전문가가 무엇을 해야 합니까?<br/>
+								한 회사에서 블로그 플랫폼을 운영하고 있습니다. 보안 감사에서는 플랫폼에서 사용되는 Amazon RDS DB 인스턴스가 저장 데이터를 암호화하도록 구성되지 않았음을 확인합니다. 회사는 30일 이내에 DB 인스턴스를 암호화해야 합니다. <br/>가동 중지 시간을 최소화하면서 이 요구 사항을 충족하려면 데이터베이스 전문가가 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807500" type="application/json">[{"voted_answers": "C", "vote_count": 10, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 6, "is_most_voted": false}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											DB 인스턴스의 읽기 전용 복제본을 생성하고 암호화를 활성화합니다. 읽기 전용 복제본을 사용할 수 있으면 읽기 전용 복제본을 승격하고 애플리케이션에서 사용하는 엔드포인트를 업데이트합니다. 암호화되지 않은 DB 인스턴스를 삭제합니다.
+											DB 인스턴스의 읽기 전용 복제본을 생성하고 암호화를 활성화합니다. 읽기 전용 복제본을 사용할 수 있으면 읽기 전용 복제본을 승격하고 애플리케이션에서 사용하는 엔드포인트를 업데이트하세요. 암호화되지 않은 DB 인스턴스를 삭제합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											DB 인스턴스의 스냅샷을 찍습니다. 스냅샷의 암호화된 복사본을 만듭니다. 암호화된 스냅샷을 복원합니다. 새 DB 인스턴스를 사용할 수 있으면 애플리케이션에서 사용하는 엔드포인트를 업데이트합니다. 암호화되지 않은 DB 인스턴스를 삭제합니다.
+											DB 인스턴스의 스냅샷을 찍습니다. 스냅샷의 암호화된 복사본을 만듭니다. 암호화된 스냅샷을 복원합니다. 새 DB 인스턴스를 사용할 수 있게 되면 애플리케이션에서 사용하는 엔드포인트를 업데이트하십시오. 암호화되지 않은 DB 인스턴스를 삭제합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											암호화된 새로운 DB 인스턴스를 생성합니다. 초기 데이터 로드를 수행하고 두 DB 인스턴스 간에 논리적 복제를 설정합니다. 새 DB 인스턴스가 원본 DB 인스턴스와 동기화되면 애플리케이션에서 사용하는 엔드포인트를 업데이트합니다. 암호화되지 않은 DB 인스턴스를 삭제합니다.
+											새로운 암호화된 DB 인스턴스를 생성한다. 초기 데이터 로드를 수행하고 두 DB 인스턴스 간의 논리적 복제를 설정합니다. 새 DB 인스턴스가 원본 DB 인스턴스와 동기화되면 애플리케이션에서 사용하는 엔드포인트를 업데이트합니다. 암호화되지 않은 DB 인스턴스를 삭제합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -111,7 +174,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,21 +184,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 63%; display: flex;" title="">씨 (63%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 38%; display: flex;" title="">B (38%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="10 votes." data-toggle="tooltip" role="progressbar" style="width: 63%; display: flex;" title="">C (63%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 38%; display: flex;" title="">B (38%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 9월 8 일 <i>
-							, 오전 10:13 </i><a class="title-username" style="">
-								mbar94
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								mbar94
-							</a>
-							
-							at <i>
-							Sept. 8, 2022, 10:13 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,16 +287,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 24일 수 12:30">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 24일 수요일 12:30">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">B도 작동하지만 가동 중지 시간이 (상당히) 더 많이 발생합니다.</div>
+<div class="comment-content">B도 작동하지만 (상당히) 더 많은 가동 중지 시간이 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -262,7 +305,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -290,11 +333,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				redman50
+				레드맨50
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 18:36">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -308,7 +351,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -328,15 +371,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				이시오05
+				Isio05
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 30일 일 11:46">
-			2주, 3일 전
+			3주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">노력이 아니라 가동 중지 시간입니다. B는 C보다 중단 시간이 더 많습니다. 따라서 C가 정답입니다.</div>
+<div class="comment-content">노력이 아니라 가동 중지 시간에 관한 것입니다. B는 C보다 다운타임이 더 깁니다. 따라서 C가 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -345,7 +388,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -381,15 +424,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				누더기1482
+				넝마1482
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 29일 (토) 17:38">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 29일 토요일 17:38">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html 답변: B</div>
+<div class="comment-content">https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html 답변 : B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,16 +469,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				awsjjj
+				으읏
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 16일 일 15:06">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 16일 일요일 15:06">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">가동 중지 시간 최소화. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
+<div class="comment-content">최소 가동 중지 시간. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +487,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,13 +518,13 @@
 				창화
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 11일 화요일 14:41">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 11일 (화) 14:41">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">DB 인스턴스의 암호화된 새 복사본을 사용할 수 있게 되면 애플리케이션이 새 데이터베이스를 가리키도록 할 수 있습니다. 그러나 프로젝트에서 이 활동에 상당한 중단 시간을 허용하지 않는 경우 중단 시간을 최소화하는 데 도움이 되는 대체 접근 방식이 필요합니다. 이 패턴은 AWS DMS(AWS Database Migration Service)를 사용하여 데이터를 마이그레이션하고 지속적으로 복제하므로 가동 중지 시간을 최소화하면서 암호화된 새 데이터베이스로 전환할 수 있습니다.</div>
+<div class="comment-content">DB 인스턴스의 암호화된 새 복사본을 사용할 수 있게 되면 애플리케이션이 새 데이터베이스를 가리키도록 할 수 있습니다. 그러나 프로젝트에서 이 활동에 대한 상당한 가동 중지 시간을 허용하지 않는 경우 가동 중지 시간을 최소화하는 데 도움이 되는 대체 접근 방식이 필요합니다. 이 패턴은 AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 마이그레이션하고 지속적으로 복제하므로 가동 중지 시간을 최소화하면서 암호화된 새 데이터베이스로의 전환을 수행할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -518,16 +561,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				클라우드 선라이저
+				구름 일출
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 27일 화요일 21:12">
-			10개월, 3주 전
+<span class="comment-date align-middle" title="2022년 9월 27일 화 21:12">
+			11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">솔루션은 최소한의 다운타임을 기대합니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
+<div class="comment-content">솔루션은 가동 중지 시간을 최소화할 것으로 예상합니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -536,7 +579,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -564,16 +607,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				소남딩라
+				소남딩그라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 9월 14일 (수) 12:00">
-			11개월 전
+<span class="comment-date align-middle" title="2022년 9월 14일 수요일 12:00">
+			11개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B가 맞다</div>
+<div class="comment-content">B가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -582,7 +625,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,7 +657,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 9일 금요일 18:40">
-			11개월, 1주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -628,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -660,7 +703,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 8일 목요일 15:27">
-			11개월, 1주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -705,12 +748,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 9월 8일 목요일 10:13">
-			11개월, 1주 전
+			11개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C에 동의합니다.</div>
+<div class="comment-content">C의 의견에 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -719,7 +762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -771,7 +814,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 24 May 2023 12:30">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -817,7 +860,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 18:36">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -855,7 +898,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Jul 2023 11:46">
-			2 weeks, 3 days ago
+			3 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -908,7 +951,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Oct 2022 17:38">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -955,7 +998,7 @@ Answer : B</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Oct 2022 15:06">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1002,7 +1045,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Oct 2022 14:41">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1048,7 +1091,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Sep 2022 21:12">
-			10 months, 3 weeks ago
+			11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1096,7 +1139,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Sep 2022 12:00">
-			11 months ago
+			11 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1142,7 +1185,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 09 Sep 2022 18:40">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1188,7 +1231,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 08 Sep 2022 15:27">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1233,7 +1276,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 08 Sep 2022 10:13">
-			11 months, 1 week ago
+			11 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

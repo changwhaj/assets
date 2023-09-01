@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 181 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 181 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 181 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 181 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807423">
 <p class="card-text">
 							
-								금융 서비스 회사는 Amazon Aurora PostgreSQL DB 클러스터를 사용하는 애플리케이션을 AWS에 배포했습니다. 최근 감사에서 데이터베이스 관리자 활동이 포함된 로그 파일이 없는 것으로 나타났습니다. 데이터베이스 전문가는 데이터베이스 액세스 및 활동 로그를 제공하는 솔루션을 추천해야 합니다. 솔루션은 최소한의 노력을 사용하고 성능에 미치는 영향을 최소화해야 합니다. <br/>데이터베이스 전문가는 어떤 솔루션을 추천해야 합니까?<br/>
+								금융 서비스 회사에는 Amazon Aurora PostgreSQL DB 클러스터를 사용하는 애플리케이션이 AWS에 배포되어 있습니다. 최근 감사에서는 데이터베이스 관리자 활동이 포함된 로그 파일이 없는 것으로 나타났습니다. 데이터베이스 전문가는 데이터베이스 액세스 및 활동 로그를 제공하는 솔루션을 추천해야 합니다. 솔루션은 최소한의 노력을 기울여야 하며 성능에 최소한의 영향을 주어야 합니다. <br/>데이터베이스 전문가는 어떤 솔루션을 추천해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807423" type="application/json">[{"voted_answers": "C", "vote_count": 4, "is_most_voted": false}]</script>
@@ -84,35 +147,35 @@
 													A.
 												</span> 
 											
-											동기식 모드의 데이터베이스에서 Aurora 데이터베이스 활동 스트림을 활성화합니다. Amazon Kinesis 데이터 스트림을 Kinesis Data Firehose에 연결합니다. Kinesis Data Firehose 대상을 Amazon S3 버킷으로 설정합니다.
+											동기 모드의 데이터베이스에서 Aurora 데이터베이스 활동 스트림을 활성화합니다. Amazon Kinesis 데이터 스트림을 Kinesis Data Firehose에 연결합니다. Kinesis Data Firehose 대상을 Amazon S3 버킷으로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											데이터베이스가 실행되는 리전에서 AWS CloudTrail 추적을 생성합니다. 데이터베이스 활동 로그를 추적과 연결하십시오.
+											데이터베이스가 실행되는 지역에 AWS CloudTrail 추적을 생성합니다. 데이터베이스 활동 로그를 추적과 연결합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											비동기 모드의 데이터베이스에서 Aurora 데이터베이스 활동 스트림을 활성화합니다. Amazon Kinesis 데이터 스트림을 Kinesis Data Firehose에 연결합니다. Firehose 대상을 Amazon S3 버킷으로 설정합니다.
+											비동기 모드로 데이터베이스에서 Aurora 데이터베이스 활동 스트림을 활성화합니다. Amazon Kinesis 데이터 스트림을 Kinesis Data Firehose에 연결합니다. Firehose 대상을 Amazon S3 버킷으로 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											배스천 호스트를 통해서만 DB 클러스터에 대한 연결을 허용합니다. 배스천 호스트 및 애플리케이션 서버에 대한 데이터베이스 액세스를 제한합니다. CloudWatch Logs 에이전트를 사용하여 배스천 호스트 로그를 Amazon CloudWatch Logs로 푸시합니다.
+											배스천 호스트를 통해서만 DB 클러스터에 대한 연결을 허용합니다. 배스천 호스트 및 애플리케이션 서버에 대한 데이터베이스 액세스를 제한합니다. CloudWatch Logs 에이전트를 사용하여 배스천 호스트 로그를 Amazon CloudWatch Logs에 푸시합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>제안된 답변: </strong>
+<span class="correct-answer-box"><strong>추천 답변: </strong>
 <span class="correct-answer">C </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -120,22 +183,12 @@
 <span class="answer-description"> 
 								참조 - <br/>https://aws.amazon.com/blogs/database/filter-amazon-aurora-database-activity-stream-data-for-segregation-and-monitoring/
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a> 
-							
-							시간: <i>
-							2021년 11월 14일 오후 6:51</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								leunamE
-							</a>
-							
-							at <i>
-							Nov. 14, 2021, 6:51 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -244,7 +287,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				그냥 fmm
+				그냥
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 6월 7일 화요일 07:39">
@@ -252,7 +295,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문에 성능에 미치는 영향이 미미할 수 있다고 명시되어 있으면 성능보다 정확성을 우선시하므로 동기화 모드를 대신 사용해야 합니까? 비동기 모드는 활동 스트림의 정확성보다 데이터베이스 성능을 선호합니다. 동기 모드는 데이터베이스 성능보다 활동 스트림의 정확성을 선호합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Overview.html#DBActivityStreams.Overview.sync-mode 대답은 동기화 모드여야 한다고 생각합니다.</div>
+<div class="comment-content">질문에 성능에 미미한 영향을 미칠 수 있다고 명시되어 있는 경우 성능보다 정확성을 우선시하므로 대신 동기화 모드를 사용해야 합니까? 비동기 모드는 활동 스트림의 정확성보다 데이터베이스 성능을 선호합니다. 동기 모드는 데이터베이스 성능보다 활동 스트림의 정확성을 선호합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Overview.html#DBActivityStreams.Overview.sync-mode 대답은 동기화 모드여야 한다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -261,7 +304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,13 +335,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 01:40">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 01:40">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">- 솔루션이 성능에 미치는 영향이 미미해야 하기 때문에 비동기 모드</div>
+<div class="comment-content">- 우리 솔루션이 성능에 미미한 영향을 미치기 때문에 비동기 모드</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -307,7 +350,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,8 +381,8 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 24일 목요일 23:17">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 24일 (목) 23:17">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -353,7 +396,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,12 +427,12 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 27일 (토) 20:55">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 27일 토요일 20:55">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: C .. 자세한 내용은 다음과 같습니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Overview.html</div>
+<div class="comment-content">답변 : C .. 자세한 내용은 다음과 같습니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/DBActivityStreams.Overview.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,15 +469,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				leunamE
+				르남E
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 14일 일 18:51">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 14일 일요일 18:51">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">솔루션이 성능에 미치는 영향이 미미해야 하므로 옵션 C 비동기 모드</div>
+<div class="comment-content">옵션 C 비동기 모드는 솔루션이 성능에 미미한 영향을 미치기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -443,7 +486,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -594,7 +637,7 @@ I believe the answer should be sync mode.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Feb 2022 23:17">
-			1 year, 5 months ago
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -640,7 +683,7 @@ I believe the answer should be sync mode.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 27 Nov 2021 20:55">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

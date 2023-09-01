@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 259 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 259 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 259 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 259 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 259 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861683">
 <p class="card-text">
 							
-								회사는 Amazon RDS DB 인스턴스에서 실행되는 모든 데이터베이스에 대해 새로운 데이터 보존 정책을 구현하고 있습니다. 회사는 최소 2년 동안 일일 백업을 유지해야 합니다. 백업은 일관되고 복원 가능해야 합니다. <br/><br/>이러한 요구 사항을 충족하기 위해 솔루션 설계자는 어떤 솔루션을 권장해야 합니까?
+								한 회사가 Amazon RDS DB 인스턴스에서 실행되는 모든 데이터베이스에 대해 새로운 데이터 보존 정책을 구현하고 있습니다. 회사는 최소 2년 동안 일일 백업을 보관해야 합니다. 백업은 일관되고 복원 가능해야 합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 어떤 솔루션을 권장해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											RDS 백업을 유지하기 위해 AWS Backup에서 백업 볼트를 생성합니다. 일일 일정과 생성 후 2년의 만료 기간으로 새 백업 계획을 생성합니다. 백업 계획에 RDS DB 인스턴스를 할당합니다.
+											RDS 백업을 보관하려면 AWS Backup에 백업 볼트를 생성하십시오. 일일 일정과 생성 후 만료 기간이 2년인 새 백업 계획을 생성합니다. RDS DB 인스턴스를 백업 계획에 할당합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											일일 스냅샷을 위해 RDS DB 인스턴스의 백업 기간을 구성합니다. 각 RDS DB 인스턴스에 2년의 스냅샷 보존 정책을 할당합니다. Amazon DLM(Amazon Data Lifecycle Manager)을 사용하여 스냅샷 삭제를 예약합니다.
+											일일 스냅샷을 위해 RDS DB 인스턴스의 백업 기간을 구성합니다. 각 RDS DB 인스턴스에 2년의 스냅샷 보존 정책을 할당합니다. Amazon Data Lifecycle Manager(Amazon DLM)를 사용하여 스냅샷 삭제를 예약합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											AWS Database Migration Service(AWS DMS) 복제 작업을 구성합니다. 복제 인스턴스를 배포하고 변경 데이터 캡처(CDC) 작업을 구성하여 데이터베이스 변경 사항을 대상으로 Amazon S3에 스트리밍합니다. 2년 후 스냅샷을 삭제하도록 S3 수명 주기 정책을 구성합니다.
+											AWS Database Migration Service(AWS DMS) 복제 작업을 구성합니다. 복제 인스턴스를 배포하고 데이터베이스 변경 사항을 Amazon S3 대상으로 스트리밍하도록 변경 데이터 캡처(CDC) 작업을 구성합니다. 2년 후에 스냅샷을 삭제하도록 S3 수명 주기 정책을 구성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="16 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bamishr
-							</a> 
-							
-							시간: <i>
-							2023년 1월 13일, 오후 1:11</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								bamishr
-							</a>
-							
-							at <i>
-							Jan. 13, 2023, 1:11 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,16 +291,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				애니팬1
+				애니메이션팬1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 3일 월요일 14:55">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 14:55">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">백업은 EBS, FSX, RDS에서 작동합니다. 백업 보존을 더 잘 제어할 수 있는 관리 및 보관 옵션이 있을 수 있습니다.</div>
+<div class="comment-content">백업은 EBS, FSX, RDS에서 작동합니다. 관리형 및 보관 옵션을 통해 백업 보존을 보다 효율적으로 제어할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -298,12 +341,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 09:13">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 중앙 집중식 백업 관리 서비스인 AWS Backup을 사용하여 RDS 백업을 유지할 것을 제안합니다. 백업 볼트가 생성되고 일일 일정과 2년의 백업 보존 기간으로 백업 계획이 정의됩니다. RDS DB 인스턴스가 이 백업 계획에 할당됩니다. B. 일관되고 복원 가능한 백업에 대한 요구 사항을 다루지 않습니다. 스냅샷은 시점 백업이며 원하는 수준의 일관성을 제공하지 못할 수 있습니다. C. 데이터베이스에 필요한 백업 및 복원 기능을 제공하도록 설계되지 않았습니다. 백업의 일관성을 보장하거나 쉬운 복원 메커니즘을 제공하지 않습니다. D. 일일 백업 및 일관된 백업 보존에 대한 요구 사항을 다루지 않습니다. 백업 및 복원보다는 복제 및 변경 데이터 캡처에 더 중점을 둡니다.</div>
+<div class="comment-content">A. 중앙 집중식 백업 관리 서비스인 AWS Backup을 사용하여 RDS 백업을 보관할 것을 제안합니다. 백업 볼트가 생성되고, 일일 일정과 백업 보관 기간 2년으로 백업 계획이 정의됩니다. RDS DB 인스턴스는 이 백업 계획에 할당됩니다. B. 일관되고 복원 가능한 백업에 대한 요구 사항을 다루지 않습니다. 스냅샷은 특정 시점 백업이므로 원하는 수준의 일관성을 제공하지 못할 수 있습니다. C. 데이터베이스에 필요한 백업 및 복원 기능을 제공하도록 설계되지 않았습니다. 백업의 일관성을 보장하거나 쉬운 복원 메커니즘을 제공하지 않습니다. D. 일일 백업 및 일관된 백업 보존에 대한 요구 사항을 다루지 않습니다. 백업 및 복원보다는 복제 및 변경 데이터 캡처에 더 중점을 둡니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -343,21 +386,21 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 20일 화요일 03:47">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 20일 (화) 03:47">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 아닌 이유는 무엇입니까?</div>
+<div class="comment-content">B는 왜 안되나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,12 +432,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 28일 일요일 04:27">
-			2개월, 2주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -431,15 +474,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				앞발
+				안트로포
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 25일 목요일 07:50">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 25일 (목) 07:50">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 아닌 이유는 무엇입니까? AWS DMS를 사용하여 지속적인 복제를 위한 작업 생성: 소스 데이터 스토어에서 지속적인 변경 사항을 캡처하는 AWS DMS 작업을 생성할 수 있습니다. 데이터를 마이그레이션하는 동안 이 캡처를 수행할 수 있습니다. 지원되는 대상 데이터 저장소로의 초기(전체 로드) 마이그레이션을 완료한 후 진행 중인 변경 사항을 캡처하는 작업을 생성할 수도 있습니다. 이 프로세스를 지속적 복제 또는 변경 데이터 캡처(CDC)라고 합니다. AWS DMS는 소스 데이터 스토어에서 진행 중인 변경 사항을 복제할 때 이 프로세스를 사용합니다.</div>
+<div class="comment-content">D는 왜 안되나요? AWS DMS를 사용하여 지속적인 복제를 위한 작업 생성: 소스 데이터 스토어에서 지속적인 변경 사항을 캡처하는 AWS DMS 작업을 생성할 수 있습니다. 데이터를 마이그레이션하는 동안 이 캡처를 수행할 수 있습니다. 지원되는 대상 데이터 저장소로의 초기(전체 로드) 마이그레이션을 완료한 후 지속적인 변경 사항을 캡처하는 작업을 생성할 수도 있습니다. 이 프로세스를 지속적인 복제 또는 변경 데이터 캡처(CDC)라고 합니다. AWS DMS는 소스 데이터 스토어에서 지속적인 변경 사항을 복제할 때 이 프로세스를 사용합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -480,12 +523,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 27일 (월) 22:01">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. RDS 백업을 유지하기 위해 AWS Backup에서 백업 볼트를 생성합니다. 일일 일정과 생성 후 2년의 만료 기간으로 새 백업 계획을 생성합니다. 백업 계획에 RDS DB 인스턴스를 할당합니다.</div>
+<div class="comment-content">A. RDS 백업을 보관하려면 AWS Backup에 백업 볼트를 생성하십시오. 일일 일정과 생성 후 만료 기간이 2년인 새 백업 계획을 생성합니다. RDS DB 인스턴스를 백업 계획에 할당합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -494,7 +537,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -522,16 +565,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 18일 수 00:41">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 올바른 선택입니다</div>
+<div class="comment-content">A는 옳은 선택이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -540,7 +583,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,13 +614,13 @@
 				아니니나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 21:15">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 21:15">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AAAAAA</div>
+<div class="comment-content">아아아아아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -586,7 +629,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -617,13 +660,13 @@
 				mhmt4438
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 17:31">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 17:31">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">정답은 A</div>
+<div class="comment-content">정답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,7 +675,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,12 +707,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 13:11">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">RDS 백업을 유지하기 위해 AWS Backup에서 백업 볼트를 생성합니다. 일일 일정과 생성 후 2년의 만료 기간으로 새 백업 계획을 생성합니다. 백업 계획에 RDS DB 인스턴스를 할당합니다.</div>
+<div class="comment-content">RDS 백업을 보관하려면 AWS Backup에 백업 볼트를 생성하세요. 일일 일정과 생성 후 만료 기간이 2년인 새 백업 계획을 생성합니다. RDS DB 인스턴스를 백업 계획에 할당합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -730,7 +773,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 14:55">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -776,7 +819,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 09:13">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -828,7 +871,7 @@ D. it does not address the requirement for daily backups and retention of consis
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Jun 2023 03:47">
-			1 month, 3 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -840,7 +883,7 @@ D. it does not address the requirement for daily backups and retention of consis
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -873,7 +916,7 @@ D. it does not address the requirement for daily backups and retention of consis
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 28 May 2023 04:27">
-			2 months, 2 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -919,7 +962,7 @@ D. it does not address the requirement for daily backups and retention of consis
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 25 May 2023 07:50">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -966,7 +1009,7 @@ Creating tasks for ongoing replication using AWS DMS: You can create an AWS DMS 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Mar 2023 22:01">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1012,7 +1055,7 @@ Creating tasks for ongoing replication using AWS DMS: You can create an AWS DMS 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 00:41">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1058,7 +1101,7 @@ Creating tasks for ongoing replication using AWS DMS: You can create an AWS DMS 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 21:15">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1104,7 +1147,7 @@ Creating tasks for ongoing replication using AWS DMS: You can create an AWS DMS 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 17:31">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1150,7 +1193,7 @@ Creating tasks for ongoing replication using AWS DMS: You can create an AWS DMS 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 13:11">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

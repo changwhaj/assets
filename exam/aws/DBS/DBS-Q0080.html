@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 80 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 80 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 80 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 80 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807322">
 <p class="card-text">
 							
-								회사에서 워크로드를 위해 MySQL용 Amazon RDS를 실행하고 있습니다. Amazon RDS에서 지정한 유지 관리 기간 동안 AWS 운영 체제 패치를 적용하면 가동 중지 시간이 있습니다. <br/>다운타임을 피하기 위해 취해야 할 가장 비용 효율적인 조치는 무엇입니까?<br/>
+								한 회사에서 워크로드를 위해 Amazon RDS for MySQL을 실행하고 있습니다. Amazon RDS에서 지정한 유지 관리 기간 동안 AWS 운영 체제 패치를 적용하면 가동 중지 시간이 발생합니다. <br/>다운타임을 방지하기 위해 취해야 할 가장 비용 효과적인 조치는 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807322" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}]</script>
@@ -91,27 +154,27 @@
 													B.
 												</span> 
 											
-											교차 리전 읽기 복제본을 활성화하고 Amazon RDS가 다운되었을 때 읽기 트래픽을 지시합니다.
+											Amazon RDS가 다운되면 지역 간 읽기 복제본을 활성화하고 읽기 트래픽을 해당 복제본으로 전달합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon RDS가 다운되었을 때 읽기 전용 복제본을 활성화하고 읽기 트래픽을 이 복제본으로 보냅니다.
+											읽기 전용 복제본을 활성화하고 Amazon RDS가 다운되면 읽기 트래픽을 해당 복제본으로 전달합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											Amazon RDS for MySQL 다중 AZ 구성 활성화
+											MySQL 다중 AZ 구성용 Amazon RDS 활성화
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,22 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								pan24
-							</a> 
-							
-							시간: <i>
-							2020년 7월 9일, 오전 9:11</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -209,16 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								pan24
-							</a>
-							
-							at <i>
-							July 9, 2020, 9:11 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 03:04">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">지금은 D로 이동 https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/ 가동 중지 시간을 최소화하려면 Amazon RDS DB 인스턴스를 다중 AZ 배포로 수정하십시오. 다중 AZ 배포의 경우 OS 유지 관리가 먼저 보조 인스턴스에 적용된 다음 인스턴스가 장애 조치되고 기본 인스턴스가 업데이트됩니다. 가동 중지 시간은 장애 조치 중입니다. 자세한 내용은 다중 AZ 배포 유지 관리 단원을 참조하십시오. https://aws.amazon.com/rds/faqs/ 다중 AZ의 가용성 이점은 계획된 유지 관리에도 적용됩니다. 예를 들어 자동 백업을 사용하면 백업이 대기에서 수행되기 때문에 원하는 백업 기간 동안 기본에서 I/O 활동이 더 이상 일시 중지되지 않습니다. 패치 적용 또는 DB 인스턴스 클래스 조정의 경우 이러한 작업은 자동 장애 조치 전에 대기에서 먼저 발생합니다. 결과적으로,</div>
+<div class="comment-content">지금은 D를 사용하세요 https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/ 가동 중지 시간을 최소화하려면 Amazon RDS DB 인스턴스를 다중 AZ 배포로 수정하세요. 다중 AZ 배포의 경우 OS 유지 관리가 먼저 보조 인스턴스에 적용된 다음 인스턴스가 장애 조치되고 기본 인스턴스가 업데이트됩니다. 가동 중지 시간은 장애 조치(failover) 중에 발생합니다. 자세한 내용은 다중 AZ 배포 유지 관리를 참조하십시오. https://aws.amazon.com/rds/faqs/ 다중 AZ의 가용성 이점은 계획된 유지 관리에도 적용됩니다. 예를 들어 자동 백업을 사용하면 백업이 대기에서 수행되므로 원하는 백업 기간 동안 기본에서 I/O 활동이 더 이상 일시 중지되지 않습니다. 패치 적용 또는 DB 인스턴스 클래스 조정의 경우 이러한 작업은 자동 장애 조치에 앞서 대기 인스턴스에서 먼저 발생합니다. 결과적으로,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -298,10 +341,10 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 24일 금 19:06">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 24일 금요일 19:06">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,19 +385,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				IhorK
+				이호르K
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 6일 일요일 13:14">
-			1주, 3일 전
+			2주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">OS 유지 관리("AWS 운영 체제 패치가 적용됨")의 경우 보조 인스턴스에 OS 유지 관리가 먼저 적용된 다음 인스턴스가 장애 조치되고 기본 인스턴스가 업데이트됩니다. https://repost.aws/knowledge-center/rds-required-maintenance</div>
+<div class="comment-content">OS 유지 관리("AWS 운영 체제 패치가 적용됨")의 경우 OS 유지 관리가 보조 인스턴스에 먼저 적용된 다음 인스턴스가 장애 조치되고 기본 인스턴스가 업데이트됩니다. https://repost.aws/knowledge-center/rds-required-maintenance</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -363,7 +406,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -395,7 +438,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 30일 금요일 04:55">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -409,7 +452,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -437,11 +480,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프라풀른
+				프라플른
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 5월 22일 일 15:22">
-			1년, 2개월 전
+<span class="comment-date align-middle" title="2022년 5월 22일 일요일 15:22">
+			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -455,7 +498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -486,13 +529,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 22:59">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 22:59">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">워크로드가 읽기 전용인 경우 C가 정답입니다. D는 가동 중단을 줄이면서 R+W 워크로드에 대한 유지 관리를 수행하는 해답입니다.</div>
+<div class="comment-content">워크로드가 읽기 전용인 경우 C가 답입니다. D는 가동 중단을 줄이면서 R+W 워크로드에 대한 유지 관리를 수행하는 답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -501,7 +544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -533,11 +576,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 11월 3일 수 17:08">
-			1년 9개월 전
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 맞습니다. "단일 AZ 배포는 몇 분 동안 사용할 수 없습니다. 가용 영역이 유지 관리의 영향을 받는 경우 인스턴스를 장애 조치하는 데 걸리는 시간(일반적으로 약 60초) 동안 다중 AZ 배포를 사용할 수 없습니다. 보조 가용 영역이 영향을 받으면 장애 조치 또는 다운타임이 없습니다. " https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/</div>
+<div class="comment-content">D가 맞습니다. "단일 AZ 배포는 몇 분 동안 사용할 수 없습니다. 가용 영역이 유지 관리의 영향을 받는 경우 인스턴스를 장애 조치하는 데 걸리는 시간(일반적으로 약 60초) 동안 다중 AZ 배포를 사용할 수 없습니다. 보조 가용 영역이 영향을 받은 경우 장애 조치나 가동 중지 시간이 없습니다." https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,12 +620,12 @@
 				딥11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 2일 화요일 09:40">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 2일 (화) 09:40">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">물론입니다.</div>
+<div class="comment-content">D 물론이죠.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -591,7 +634,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -622,12 +665,12 @@
 				샨테스트1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 18:02">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 18:02">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답: 디</div>
+<div class="comment-content">답: D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -636,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -668,11 +711,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 25일 (월) 19:26">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">-답:디</div>
+<div class="comment-content">-답: D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -681,7 +724,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -712,12 +755,12 @@
 				조빈아카조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 23일 (토) 17:01">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 23일 토요일 17:01">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A. MySQL용 Amazon RDS에서 Amazon DynamoDB로 워크로드 마이그레이션 DynamoDB는 RDS 워크로드를 인계받는 데 적합하지 않습니다. B. 교차 리전 읽기 복제본을 활성화하고 Amazon RDS가 다운될 때 읽기 트래픽을 지시합니다. 쓰기는 어떻습니까? 동일한 리전에 읽기 전용 복제본이 있을 수 있는데 왜 교차 리전이 필요한가요? C. 읽기 전용 복제본을 활성화하고 Amazon RDS가 다운되었을 때 읽기 트래픽을 이 복제본으로 보내십시오. 쓰기 워크로드는 어떻습니까? D. Amazon RDS for MySQL 다중 AZ 구성 활성화 유지 관리(단지 장애 조치)에 필요한 중단을 줄이는 데 도움이 됩니다. 워크로드가 읽기 전용인 경우 C가 정답입니다. D는 가동 중단을 줄이면서 R+W 워크로드에 대한 유지 관리를 수행하는 해답입니다.</div>
+<div class="comment-content">A. Amazon RDS for MySQL에서 Amazon DynamoDB로 워크로드 마이그레이션 DynamoDB는 RDS 워크로드를 인계하는 데 적합하지 않습니다. B. 교차 지역 읽기 복제본을 활성화하고 Amazon RDS가 다운되면 읽기 트래픽을 해당 지점으로 직접 전달합니다. 쓰기는 어떻습니까? 동일한 지역에 읽기 전용 복제본이 있을 수 있는데 교차 지역이 필요한 이유는 무엇입니까? C. Amazon RDS가 다운되면 읽기 전용 복제본을 활성화하고 읽기 트래픽을 해당 지역으로 전달합니다. 쓰기 워크로드는 어떻습니까? D. MySQL 다중 AZ 구성용 Amazon RDS를 활성화합니다. 유지 관리에 필요한 중단을 줄이는 데 도움이 됩니다(장애 조치만 해당). 워크로드가 읽기 전용인 경우 C가 답입니다. D는 가동 중단을 줄이면서 R+W 워크로드에 대한 유지 관리를 수행하는 답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +769,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -754,15 +797,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 22일 금 13:48">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">네 D입니다</div>
+<div class="comment-content">응 D야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,12 +845,12 @@
 				빌하디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 17일 일 02:54">
+<span class="comment-date align-middle" title="2021년 10월 17일 일요일 02:54">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">안은 D</div>
+<div class="comment-content">안스는 D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -816,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -847,12 +890,12 @@
 				에비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 16일 (토) 19:30">
+<span class="comment-date align-middle" title="2021년 10월 16일 토요일 19:30">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 D</div>
+<div class="comment-content">답은 D이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -861,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -892,12 +935,12 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 5일 화요일 03:52">
+<span class="comment-date align-middle" title="2021년 10월 5일 (화) 03:52">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">라. 100%</div>
+<div class="comment-content">D. 100%</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -906,7 +949,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -937,12 +980,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 28일 화요일 07:57">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 28일 (화) 07:57">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">네 디 맞습니다</div>
+<div class="comment-content">응 D가 맞아</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -951,7 +994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1006,7 +1049,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 03:04">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1058,7 +1101,7 @@ The availability benefits of Multi-AZ also extend to planned maintenance. For ex
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 24 Sep 2021 19:06">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1107,7 +1150,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Sun 06 Aug 2023 13:14">
-			1 week, 3 days ago
+			2 weeks, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1154,7 +1197,7 @@ https://repost.aws/knowledge-center/rds-required-maintenance</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 30 Jun 2023 04:55">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1200,7 +1243,7 @@ https://repost.aws/knowledge-center/rds-required-maintenance</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 May 2022 15:22">
-			1 year, 2 months ago
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1384,7 +1427,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 18:02">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1429,7 +1472,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 25 Oct 2021 19:26">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1474,7 +1517,7 @@ https://aws.amazon.com/premiumsupport/knowledge-center/rds-required-maintenance/
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 23 Oct 2021 17:01">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1529,7 +1572,7 @@ D is the answer to do the maintenance for R+W workload with reduced outage</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 22 Oct 2021 13:48">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1709,7 +1752,7 @@ D is the answer to do the maintenance for R+W workload with reduced outage</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Sep 2021 07:57">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

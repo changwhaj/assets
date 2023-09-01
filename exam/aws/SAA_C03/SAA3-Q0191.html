@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 191 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 191 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 191 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 191 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="850794">
 <p class="card-text">
 							
-								회사에는 MySQL용 Amazon RDS에 고객 정보를 저장하는 주문 애플리케이션이 있습니다. 정규 업무 시간 동안 직원은 보고 목적으로 일회성 쿼리를 실행합니다. 보고 쿼리를 실행하는 데 시간이 오래 걸리기 때문에 주문 처리 중에 시간 초과가 발생합니다. 회사는 직원이 쿼리를 수행하는 것을 막지 않으면서 시간 초과를 제거해야 합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
+								한 회사에 MySQL용 Amazon RDS에 고객 정보를 저장하는 주문 애플리케이션이 있습니다. 정규 업무 시간 동안 직원은 보고 목적으로 일회성 쿼리를 실행합니다. 보고 쿼리를 실행하는 데 오랜 시간이 걸리기 때문에 주문 처리 중에 시간 초과가 발생합니다. 회사는 직원이 쿼리를 수행하는 것을 방해하지 않고 시간 초과를 제거해야 합니다. <br/><br/>솔루션 설계자는 이러한 요구 사항을 충족하기 위해 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850794" type="application/json">[{"voted_answers": "A", "vote_count": 26, "is_most_voted": true}]</script>
+<script id="850794" type="application/json">[{"voted_answers": "A", "vote_count": 27, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -94,25 +157,25 @@
 													B.
 												</span> 
 											
-											읽기 전용 복제본을 생성합니다. 주문 애플리케이션을 기본 DB 인스턴스와 읽기 전용 복제본에 배포합니다.
+											읽기 전용 복제본을 생성합니다. 기본 DB 인스턴스와 읽기 전용 복제본에 순서 지정 애플리케이션을 배포합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											주문형 용량이 있는 Amazon DynamoDB로 주문 애플리케이션을 마이그레이션합니다.
+											주문형 용량을 갖춘 Amazon DynamoDB로 주문 애플리케이션을 마이그레이션합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											사용량이 적은 시간에 보고 쿼리를 예약합니다.
+											사용량이 많지 않은 시간에 대한 보고 쿼리를 예약합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="26 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a> 
-							
-							시간: <i>
-							2022년 11월 28일, 오후 2:53</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="850794" type="application/json">[{"voted_answers": "A", "vote_count": 26, "is_most_voted": true}]</script>
+<script id="850794" type="application/json">[{"voted_answers": "A", "vote_count": 27, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -205,22 +258,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="26 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="27 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Nigma
-							</a>
-							
-							at <i>
-							Nov. 28, 2022, 2:53 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,23 +295,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 05:00">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 05:00">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 정답입니다. 이것은 내 시험에 있었다</div>
+<div class="comment-content">A가 정답입니다. 이거 내 시험에 있었어</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">15</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">15</span> 회
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,11 +335,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 01:03">
-			5 개월 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문들이 시험에 도움이 되었습니까?</div>
+<div class="comment-content">이 질문들이 시험에 도움이 되었나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -348,21 +391,21 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 20:05">
-			20시간 5분 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 정답입니다. RDS MySQL 읽기 전용 복제본을 만들면 기본 주문 애플리케이션의 성능에 영향을 주지 않고 보고 쿼리를 격리하고 실행할 수 있습니다. 읽기 복제본을 사용하면 기본 쓰기 워크로드와의 경합을 제거하면서 읽기 전용 워크로드를 확장할 수 있습니다.</div>
+<div class="comment-content">A가 정답입니다. RDS MySQL 읽기 전용 복제본을 생성하면 기본 주문 애플리케이션의 성능에 영향을 주지 않고 보고 쿼리를 격리하고 실행할 수 있습니다. 읽기 복제본을 사용하면 기본 쓰기 워크로드와의 경합을 제거하면서 읽기 전용 워크로드를 확장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -394,12 +437,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 20일 목요일 01:26">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">D로 한 질문 키워드 "정기 영업 시간"이 잘못되었습니다. Amazon DynamoDB(No-SQL)로의 C 마이그레이션은 의미가 없습니다. C를 제거합니다. 답 B, "읽기 복제본"을 생성합니다. 괜찮지만 "읽기 복제본을 가리키는 애플리케이션 주문"은 올바르지 않습니다. A가 정답입니다. 쉬운 질문입니다.</div>
+<div class="comment-content">D로 만든 질문 키워드 '정규 영업 시간'이 올바르지 않습니다. C는 Amazon DynamoDB(No-SQL)로 마이그레이션하는 것은 의미가 없습니다. C를 제거합니다. B에 대답하고 "읽기 복제본"을 생성합니다. 괜찮지만 "읽기 복제본을 가리키는 애플리케이션 주문"은 올바르지 않습니다. A가 정답입니다. 쉬운 질문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,16 +479,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				병소
+				병든
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 03일 (월) 08:55">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 08:55">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">맞는 소리</div>
+<div class="comment-content">A 맞는 것 같다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -454,7 +497,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -486,12 +529,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 10:51">
-			1개월, 3주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">기본 인스턴스를 사용하면 문제가 계속 발생합니다.</div>
+<div class="comment-content">기본 인스턴스를 사용해도 문제가 계속 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -500,7 +543,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -532,12 +575,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:57">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A. 보고 쿼리를 읽기 전용 복제본으로 이동하면 주문 처리에 사용되는 기본 DB 인스턴스가 장기 실행 보고 쿼리의 영향을 받지 않습니다. 이렇게 하면 주문 처리 중 시간 초과를 제거하는 동시에 직원이 애플리케이션 성능에 영향을 주지 않고 쿼리를 수행할 수 있습니다. B. 이것은 일정 수준의 부하 분산을 제공할 수 있지만 주문 처리 중 쿼리 보고로 인해 발생하는 시간 초과 문제를 구체적으로 다루지는 않습니다. C. DynamoDB는 확장성과 성능상의 이점을 제공하지만 애플리케이션의 데이터 모델 및 쿼리 접근 방식을 크게 변경해야 할 수 있습니다. D. 이 접근 방식은 주문 처리에 미치는 영향을 완화하는 데 도움이 될 수 있지만 직원이 쿼리를 수행하는 것을 막지 않고 시간 초과를 제거해야 하는 요구 사항을 해결하지는 못합니다.</div>
+<div class="comment-content">A. 보고 쿼리를 읽기 전용 복제본으로 이동하면 주문 처리에 사용되는 기본 DB 인스턴스가 장기 실행 보고 쿼리의 영향을 받지 않습니다. 이를 통해 직원이 애플리케이션 성능에 영향을 주지 않고 쿼리를 수행할 수 있도록 하면서 주문 처리 중 시간 초과를 방지할 수 있습니다. B. 이는 일정 수준의 부하 분산을 제공할 수 있지만 주문 처리 중 보고 쿼리로 인해 발생하는 시간 초과 문제를 구체적으로 해결하지는 않습니다. C. DynamoDB는 확장성과 성능상의 이점을 제공하지만 애플리케이션의 데이터 모델과 쿼리 접근 방식을 크게 변경해야 할 수도 있습니다. D. 이 접근 방식은 주문 처리에 미치는 영향을 완화하는 데 도움이 될 수 있지만 직원이 쿼리를 수행하는 것을 방지하지 않고 시간 초과를 제거해야 하는 요구 사항을 해결하지는 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -546,7 +589,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -577,8 +620,8 @@
 				스티브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 12일 (월) 08:26">
-			2개월, 1주 전
+<span class="comment-date align-middle" title="2023년 6월 12일 월요일 08:26">
+			2개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -592,7 +635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,7 +667,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 7일 일요일 05:31">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -670,12 +713,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 28일 금요일 17:17">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">읽기 복제본을 생성하면 회사에서 보고 쿼리를 별도의 데이터베이스 인스턴스로 오프로드하여 주문 처리에 사용되는 기본 데이터베이스의 로드를 줄일 수 있습니다. 보고 쿼리를 읽기 전용 복제본으로 이동하면 기본 DB 인스턴스에서 실행 중인 주문 애플리케이션이 장기 실행 보고 쿼리로 인한 제한 시간 없이 주문을 계속 처리할 수 있습니다. 옵션 B는 주문 애플리케이션을 기본 DB 인스턴스와 읽기 전용 복제본에 배포하는 것이 주문 처리 중 시간 초과를 유발하는 장기 실행 보고 쿼리 문제를 해결하지 못하기 때문에 좋은 솔루션이 아닙니다.</div>
+<div class="comment-content">읽기 전용 복제본을 생성하면 회사는 보고 쿼리를 별도의 데이터베이스 인스턴스로 오프로드하여 주문 처리에 사용되는 기본 데이터베이스의 로드를 줄일 수 있습니다. 보고 쿼리를 읽기 전용 복제본으로 이동하면 기본 DB 인스턴스에서 실행 중인 주문 애플리케이션이 장기 실행 보고 쿼리로 인한 시간 초과 없이 주문을 계속 처리할 수 있습니다. 옵션 B는 주문 애플리케이션을 기본 DB 인스턴스와 읽기 전용 복제본에 배포하는 것이 주문 처리 중 시간 초과를 발생시키는 장기 실행 보고 쿼리 문제를 해결하지 못하기 때문에 좋은 솔루션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -716,11 +759,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 18일 화요일 12:39">
-			4 개월 전에
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DM 기고자 액세스: yi.liiiii520@gmail.com</div>
+<div class="comment-content">기여자 접속 DM 부탁드립니다: yi.liiiii520@gmail.com</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -729,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -749,15 +792,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				암미보이
+				아미보이
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 28일 금요일 21:41">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 28일 금 21:41">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">브로 기여자 액세스가 필요합니다</div>
+<div class="comment-content">형, 기여자 액세스가 필요해요 제발</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -766,7 +809,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -805,13 +848,13 @@
 				헝23
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 07:51">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 07:51">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변: A</div>
+<div class="comment-content">답: A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -820,7 +863,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -851,13 +894,13 @@
 				k33
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 04:44">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 04:44">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변 : A</div>
+<div class="comment-content">답 : A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -866,7 +909,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -897,13 +940,13 @@
 				주름
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 22:15">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 22:15">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">SUMMA SUMMA KICK ERUDHAE ! ULUKULAE NALA BHODHA ERUDHAE!</div>
+<div class="comment-content">SUMMA SUMMA KICK 에루드해! ULUKULAE NALA BHODHA ERUDHAE!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -912,7 +955,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -940,16 +983,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				idriskameni
+				이드리스카메니
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 15일 수 20:04">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 15일 수요일 20:04">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A가 맞다</div>
+<div class="comment-content">A가 맞습니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -958,7 +1001,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -986,16 +1029,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 16:33">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 16:33">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">읽기 복제본에 쓰기 부하를 분산할 수 없습니다.</div>
+<div class="comment-content">쓰기 로드를 읽기 전용 복제본에 분산할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1004,7 +1047,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1032,16 +1075,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 08:34">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 08:34">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A가 정답입니다.</div>
+<div class="comment-content">보기 A가 정답입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1050,7 +1093,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1082,12 +1125,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 09:09">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A - 복제에서 약간의 지연이 있는 복제된 데이터에서 보고가 실행될 수 있기 때문에 정확합니다. B - 기본 앱이 쓰기 작업을 처리하기 위해 읽기 복제를 가리킬 수 없고(읽기 복제본에서 허용되지 않음) 거기에서 읽기 작업만 수행된다는 언급이 없기 때문에 올바르지 않습니다.</div>
+<div class="comment-content">A - 복제가 약간 지연된 상태에서 복제된 데이터에 대해 보고를 실행해도 괜찮기 때문에 정답입니다. B - 기본 앱이 쓰기 작업을 처리하기 위해 읽기 복제를 가리킬 수 없고(읽기 복제본에서는 허용되지 않음) 읽기 작업만 수행된다는 언급이 없기 때문에 잘못된 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1096,7 +1139,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1127,12 +1170,12 @@
 				카펠로10
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 19:54">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 19:54">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A가 정답이다</div>
+<div class="comment-content">A가 정답이에요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1141,7 +1184,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1169,11 +1212,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 17:20">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1187,7 +1230,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1219,12 +1262,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 28일 (월) 16:26">
-			8개월, 3주 전
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">쿼리로 인해 시간 초과가 발생합니다. 따라서 쿼리에 읽기 전용 복제본을 사용하는 것이 정답입니다.</div>
+<div class="comment-content">쿼리로 인해 시간 초과가 발생했습니다. 따라서 쿼리에 대한 읽기 복제본을 사용하면 정답이 됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1233,7 +1276,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1264,13 +1307,13 @@
 				자얀쿠루위타
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 15:10">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 15:10">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">복제본을 읽으려면 읽기 로드여야 ​​합니다.</div>
+<div class="comment-content">복제본을 읽으려면 읽기 로드가 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1279,7 +1322,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1310,13 +1353,13 @@
 				니그마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 28일 월요일 14:53">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 28일 (월) 14:53">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변 : A</div>
+<div class="comment-content">답 : A</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1325,7 +1368,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1380,7 +1423,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 05:00">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1417,7 +1460,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 01:03">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1473,7 +1516,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 20:05">
-			20 hours, 5 minutes ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1490,7 +1533,7 @@ Read replicas allow read-only workloads to be scaled out while eliminating conte
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1523,7 +1566,7 @@ Read replicas allow read-only workloads to be scaled out while eliminating conte
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Jul 2023 01:26">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1575,7 +1618,7 @@ A is correct answer. Easy question.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 08:55">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1621,7 +1664,7 @@ A is correct answer. Easy question.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 10:51">
-			1 month, 3 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1667,7 +1710,7 @@ A is correct answer. Easy question.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:57">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1719,7 +1762,7 @@ D. While this approach can help alleviate the impact on order processing, it doe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Jun 2023 08:26">
-			2 months, 1 week ago
+			2 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1765,7 +1808,7 @@ D. While this approach can help alleviate the impact on order processing, it doe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 07 May 2023 05:31">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1811,7 +1854,7 @@ D. While this approach can help alleviate the impact on order processing, it doe
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 17:17">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1859,7 +1902,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 12:39">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1896,7 +1939,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Apr 2023 21:41">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1949,7 +1992,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Apr 2023 07:51">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1995,7 +2038,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 04:44">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2041,7 +2084,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 22:15">
-			4 months, 4 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2087,7 +2130,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 15 Mar 2023 20:04">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2133,7 +2176,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 16:33">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2179,7 +2222,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 08:34">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2225,7 +2268,7 @@ Option B is not a good solution because distributing the ordering application to
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 09:09">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2272,7 +2315,7 @@ B - is incorrect because main app cannot pointed to read replicate to handle wri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 19:54">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2317,7 +2360,7 @@ B - is incorrect because main app cannot pointed to read replicate to handle wri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 17:20">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2363,7 +2406,7 @@ B - is incorrect because main app cannot pointed to read replicate to handle wri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 16:26">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2409,7 +2452,7 @@ B - is incorrect because main app cannot pointed to read replicate to handle wri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 15:10">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2455,7 +2498,7 @@ B - is incorrect because main app cannot pointed to read replicate to handle wri
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 28 Nov 2022 14:53">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

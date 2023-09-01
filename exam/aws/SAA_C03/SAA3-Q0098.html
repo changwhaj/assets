@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 98 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 98 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 98 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 98 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 98 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839855">
 <p class="card-text">
 							
-								이미지 처리 회사에는 사용자가 이미지를 업로드하는 데 사용하는 웹 애플리케이션이 있습니다. 애플리케이션은 이미지를 Amazon S3 버킷에 업로드합니다. 회사는 객체 생성 이벤트를 Amazon Simple Queue Service(Amazon SQS) 표준 대기열에 게시하도록 S3 이벤트 알림을 설정했습니다. SQS 대기열은 이미지를 처리하고 이메일을 통해 사용자에게 결과를 보내는 AWS Lambda 함수의 이벤트 소스 역할을 합니다. <br/>사용자는 업로드된 모든 이미지에 대해 여러 개의 이메일 메시지를 받고 있다고 보고합니다. 솔루션 아키텍트는 SQS 메시지가 Lambda 함수를 두 번 이상 호출하여 여러 이메일 메시지가 생성되었음을 확인합니다. <br/>최소한의 운영 오버헤드로 이 문제를 해결하려면 솔루션 설계자가 무엇을 해야 합니까?
+								이미지 처리 회사에는 사용자가 이미지를 업로드하는 데 사용하는 웹 애플리케이션이 있습니다. 애플리케이션은 이미지를 Amazon S3 버킷에 업로드합니다. 회사는 Amazon Simple Queue Service(Amazon SQS) 표준 대기열에 객체 생성 이벤트를 게시하도록 S3 이벤트 알림을 설정했습니다. SQS 대기열은 이미지를 처리하고 결과를 이메일을 통해 사용자에게 보내는 AWS Lambda 함수의 이벤트 소스 역할을 합니다. <br/>사용자들은 업로드된 모든 이미지에 대해 여러 개의 이메일 메시지를 받고 있다고 보고합니다. 솔루션 아키텍트는 SQS 메시지가 Lambda 함수를 두 번 이상 호출하여 여러 이메일 메시지가 생성되었음을 확인합니다. <br/>최소한의 운영 오버헤드로 이 문제를 해결하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839855" type="application/json">[{"voted_answers": "C", "vote_count": 67, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": false}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="839855" type="application/json">[{"voted_answers": "C", "vote_count": 68, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": false}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											ReceiveMessage 대기 시간을 30초로 늘려 SQS 대기열에서 긴 폴링을 설정합니다.
+											ReceiverMessage 대기 시간을 30초로 늘려 SQS 대기열에서 긴 폴링을 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											SQS 표준 대기열을 SQS FIFO 대기열로 변경합니다. 중복 메시지를 삭제하려면 메시지 중복 제거 ID를 사용하십시오.
+											SQS 표준 대기열을 SQS FIFO 대기열로 변경합니다. 중복 메시지를 삭제하려면 메시지 중복 제거 ID를 사용하세요.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											SQS 대기열의 가시성 제한 시간을 기능 제한 시간과 배치 창 제한 시간의 합계보다 큰 값으로 늘립니다.
+											SQS 대기열의 표시 제한 시간을 함수 제한 시간과 일괄 창 제한 시간의 합계보다 큰 값으로 늘립니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -112,7 +175,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="67 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">씨 (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">C (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">다른</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a>
-							
-							2022년 10월 11 일 <i>
-							, 오후 8:50 </i><a class="title-username" style="">
-								MXB05
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839855" type="application/json">[{"voted_answers": "C", "vote_count": 67, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": false}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="839855" type="application/json">[{"voted_answers": "C", "vote_count": 68, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 9, "is_most_voted": false}, {"voted_answers": "D", "vote_count": 5, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="67 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">C (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">Other</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 82%; display: flex;" title="">C (82%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 18%; display: flex;" title="">Other</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								MXB05
-							</a>
-							
-							at <i>
-							Oct. 11, 2022, 8:50 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -250,15 +293,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 10월 24일 (월) 23:19">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답은 C여야 합니다. -&gt; lambda가 메시지를 폴링하고 메시지 처리를 시작하기 때문에 사용자는 중복 메시지를 받습니다. 그러나 첫 번째 Lambda가 메시지 처리를 완료하기 전에 SQS에서 가시성 제한 시간이 초과되고 SQS가 메시지를 폴링에 반환하여 다른 Lambda 노드가 동일한 메시지를 처리하게 합니다. 가시성 제한 시간을 늘림으로써 Lambda가 메시지 처리를 마치기 전에 SQS가 메시지를 투표로 다시 반환하지 않도록 해야 합니다.</div>
+<div class="comment-content">대답은 C여야 합니다. -&gt; 람다가 메시지를 폴링하고 메시지 처리를 시작하기 때문에 사용자는 중복된 메시지를 받습니다. 그러나 첫 번째 람다가 메시지 처리를 완료하기 전에 SQS에서 가시성 제한 시간이 초과되고 SQS가 메시지를 폴링에 반환하여 다른 Lambda 노드가 동일한 메시지를 처리하게 됩니다. 가시성 제한 시간을 늘림으로써 Lambda가 메시지 처리를 완료하기 전에 SQS가 메시지를 폴링으로 다시 반환하는 것을 방지해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -290,12 +333,12 @@
 				조관
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 14:51">
-			1주 전
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 14:51">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">FIFO SQS는 대기열의 항목에 순서가 필요한 다른 문제를 해결하기 위한 것입니다. 단순히 표준 대기열에서 fifo 대기열로 전환할 수는 없습니다. 중복 이메일은 표준 대기열의 일반적인 문제입니다. 문서는 중복 이메일이 발생할 수 있음을 일관되게 상기시키며 솔루션은 FIFO 대기열을 생성하는 것이 아니라 그에 따라 구성 매개변수를 조정하는 것입니다.</div>
+<div class="comment-content">FIFO SQS는 대기열의 항목에 순서가 필요한 다른 문제를 해결하기 위한 것입니다. 단순히 표준 대기열에서 fifo 대기열로 전환할 수는 없습니다. 중복 이메일은 표준 대기열에서 흔히 발생하는 문제입니다. 문서에서는 이메일 중복이 발생할 수 있다는 점을 일관되게 상기시켜 주며 해결책은 FIFO 대기열을 생성하는 것이 아니라 그에 따라 구성 매개변수를 조정하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -304,13 +347,58 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988842" id="comment-988842">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				PLN6302
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 24일 목요일 06:57">
+			2일, 14시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">Amazon s3는 FIFO 대기열을 지원하지 않습니다</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -335,12 +423,12 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 12일 수 13:41">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 12일 수요일 13:41">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS FIFO가 의미가 있다고 생각하기 때문에 솔루션이 C인 것 같다는 데 동의합니다. 대기열에 메시지를 넣는 시스템이 S3 이벤트이기 때문에 중복 제거 ID는 의미가 없습니다. 내가 아는 한 S3는 중복 이벤트를 보내지 않습니다. 또한 사용자가 각 이메일에 대해 여러 개의 이메일을 받는 것에 대해 불평하고 있다는 질문에 언급되어 있는데, 이는 때때로 반복되는 이메일을 받는다는 것과는 다릅니다. 그래서 내 추측은 SQS FIFO가 필요하지 않다는 것입니다.</div>
+<div class="comment-content">대기열에 메시지를 넣는 시스템이 S3 이벤트이기 때문에 SQS FIFO가 중복 제거 ID가 의미가 없다고 생각했기 때문에 솔루션이 C인 것 같다는 데 동의합니다. 그리고 내가 아는 한 S3는 중복된 이벤트를 보내지 않습니다. 또한 질문에는 사용자가 각 이메일에 대해 여러 이메일을 받는 것에 대해 불평하고 있다고 언급되어 있습니다. 이는 때때로 반복되는 이메일을 받는다는 것과 다릅니다. 내 생각에는 SQS FIFO가 필요하지 않은 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -349,7 +437,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -380,12 +468,12 @@
 				엘로2023
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 20:58">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 20:58">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 혼란스럽다. 이메일이 이미 여러 번 전송된 경우 왜 더 많은 시간이 필요합니까? 나는 SQS Queue Fifo가 순서대로 유지되고 동일한 ID를 가진 모든 중복 항목이 삭제될 것이라고 믿습니다. 내가 어디로 잘못 가고 있는지 말해 줄 수 있습니까? 감사해요</div>
+<div class="comment-content">나는 혼란스럽다. 이메일이 이미 여러 번 전송된 경우 왜 시간이 더 필요합니까? 나는 SQS 대기열 Fifo가 순서대로 유지되고 동일한 ID를 가진 중복 항목이 삭제될 것이라고 믿습니다. 내가 어디로 잘못 가고 있는지 말해 줄 수 있습니까? 감사해요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -394,7 +482,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -414,15 +502,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로브투투
+				로브로투투
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 16일 일 04:22">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 16일 일요일 04:22">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">가시성 제한 시간을 늘리면 람다 함수가 메시지 처리를 완료할 시간이 생기고 메시지가 대기열에서 사라지므로 사용자에게 이메일이 하나만 전송됩니다. 람다 함수가 메시지를 처리하는 동안 가시성 제한 시간이 종료되면 메시지가 대기열로 반환되고 다른 람다 함수가 이를 선택하여 다시 처리하므로 사용자는 메시지에 대한 두 개 이상의 이메일을 받게 됩니다. 같은 것.</div>
+<div class="comment-content">제한 시간 초과를 늘리면 람다 함수가 메시지 처리를 완료할 시간이 주어져 메시지가 대기열에서 사라지므로 사용자에게 하나의 이메일만 전송됩니다. 람다 함수가 메시지를 처리하는 동안 표시 제한 시간이 종료되면 메시지가 대기열로 반환되고 다른 람다 함수가 이를 선택하여 다시 처리하므로 사용자는 메시지에 대한 두 개 이상의 이메일을 받게 됩니다. 같은 것.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -431,7 +519,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -454,12 +542,12 @@
 				압두1604
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 12일 (토) 21:57">
-			3일, 22시간 전
+<span class="comment-date align-middle" title="2023년 8월 12일 토요일 21:57">
+			1주, 6일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">문제가 업로드된 이미지에 대해 여러 번 수신된 이메일이기 때문에 동의합니다.</div>
+<div class="comment-content">문제는 업로드된 이미지에 대한 이메일이 여러 번 수신되었기 때문에 동의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -468,7 +556,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -496,15 +584,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aadityaravi8
+				아디티야라비8
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 08:36">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 설명에 동의합니다.</div>
+<div class="comment-content">귀하의 답변 설명에 동의합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -513,7 +601,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -552,12 +640,12 @@
 				MrAWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 04:59">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 04:59">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 당신에게 동의하는 경향이 있습니다. 위의 내 의견을 참조하십시오.</div>
+<div class="comment-content">나는 당신의 의견에 동의하는 경향이 있습니다. 위의 내 의견을 참조하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -566,7 +654,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -610,19 +698,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				브러첵
+				브러쉬크
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 10월 13일 목요일 06:37">
-			10개월, 1주 전
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html 이것은 중요한 부분입니다. 메시지를 받은 직후 메시지는 대기열에 남아 있습니다. 다른 소비자가 메시지를 다시 처리하지 못하도록 Amazon SQS는 Amazon SQS가 다른 소비자가 메시지를 수신하고 처리하지 못하도록 하는 기간인 가시성 제한 시간을 설정합니다. 메시지의 기본 가시성 제한 시간은 30초입니다. 최소값은 0초입니다. 최대값은 12시간입니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html 이는 중요한 부분입니다. 메시지가 수신된 직후에는 대기열에 남아 있습니다. 다른 소비자가 메시지를 다시 처리하는 것을 방지하기 위해 Amazon SQS는 다른 소비자가 메시지를 수신하고 처리하지 못하도록 하는 기간인 가시성 제한 시간을 설정합니다. 메시지의 기본 공개 제한 시간은 30초입니다. 최소값은 0초입니다. 최대 시간은 12시간입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -632,6 +720,100 @@
 <span class="ml-2 upvote-text"><span class="upvote-count">13</span> 번
 			 
 				찬성</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990138" id="comment-990138">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				kwang312
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 25일 금 16:06">
+			1일 5시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">D는 오답입니다. 왜냐하면 Lamda는 프로세스가 완료되면 자동으로 대기열에서 메시지를 삭제하기 때문입니다.</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988831" id="comment-988831">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				타리크킵케메이
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 24일 목요일 06:40">
+			2일 15시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
+<div class="comment-content">메시지가 수신된 직후에는 대기열에 남아 있습니다. 다른 소비자가 메시지를 다시 처리하는 것을 방지하기 위해 Amazon SQS는 모든 소비자가 메시지를 수신하고 처리하지 못하도록 하는 기간인 가시성 제한 시간을 설정합니다. 메시지의 기본 공개 제한 시간은 30초입니다. 최소값은 0초입니다. 최대 시간은 12시간입니다. https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html#:~:text=SQS%20sets%20a-,visibility%20timeout,-%2C%20a%20기간% 20의</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,16 +844,13 @@
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="2023년 8월 11일 금요일 17:19">
-			5일, 3시간 전
+			2주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 C와 함께 갈 것이다.</div>
+<div class="comment-content">나는 C로 갈 것이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -680,7 +859,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -708,15 +887,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				올라운파제드
+				올라운파즈드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 27일 화요일 01:29">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 27일 (화) 01:29">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 BB입니다. SQS 표준 대기열을 SQS FIFO 대기열로 변경합니다. 중복 메시지를 삭제하려면 메시지 중복 제거 ID를 사용하십시오. SQS 표준 대기열을 SQS FIFO(선입선출) 대기열로 변경하면 메시지가 수신된 순서대로 처리되고 각 메시지가 한 번만 처리되도록 할 수 있습니다. FIFO 대기열은 정확히 한 번 처리를 제공하고 중복을 제거합니다. SQS FIFO 대기열의 메시지 중복 제거 ID 기능을 사용하여 각 메시지에 고유 식별자(예: S3 객체 키)를 할당할 수 있습니다. SQS는 수신 메시지의 중복 제거 ID를 확인하고 중복 제거 ID가 동일한 중복 메시지를 폐기합니다. 이렇게 하면 고유한 메시지만 Lambda 함수에서 처리됩니다.</div>
+<div class="comment-content">대답은 BB입니다. SQS 표준 대기열을 SQS FIFO 대기열로 변경합니다. 중복 메시지를 삭제하려면 메시지 중복 제거 ID를 사용하세요. SQS 표준 대기열을 SQS FIFO(선입선출) 대기열로 변경하면 메시지가 수신된 순서대로 처리되고 각 메시지가 한 번만 처리되도록 할 수 있습니다. FIFO 대기열은 정확히 한 번만 처리하고 중복을 제거합니다. SQS FIFO 대기열의 메시지 중복 제거 ID 기능을 사용하면 각 메시지에 고유 식별자(예: S3 객체 키)를 할당할 수 있습니다. SQS는 수신 메시지의 중복 제거 ID를 확인하고 동일한 중복 제거 ID를 가진 중복 메시지를 삭제합니다. 이렇게 하면 고유한 메시지만 Lambda 함수에서 처리됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -725,7 +904,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -757,12 +936,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 22일 목요일 10:21">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A. 긴 폴링은 동일한 메시지에 대해 Lambda를 여러 번 호출하는 문제를 직접적으로 해결하지 않습니다. ReceiveMessage를 늘리면 중복 호출이 완전히 방지되지 않을 수 있습니다. B. 대기열 유형을 표준에서 FIFO로 변경하려면 추가 고려 사항과 애플리케이션 아키텍처 변경이 필요합니다. 여기에는 이벤트 구성 수정 및 메시지 중복 제거 ID 처리가 포함될 수 있으며 이로 인해 운영 오버헤드가 발생할 수 있습니다. D. 메시지를 읽은 후 즉시 삭제하면 Lambda에서 오류가 발생하거나 이미지를 성공적으로 처리하지 못하는 경우 메시지가 손실될 수 있습니다. 메시지 처리를 보장하지 않으며 데이터 손실이 발생할 수 있습니다. C. Lambda가 이미지를 처리하고 이메일을 보내는 데 필요한 총 시간보다 큰 값으로 가시성 제한 시간을 설정함으로써, 메시지가 처리 중에 다른 소비자에게 표시되지 않도록 합니다. 이것은 동일한 메시지에 대한 Lambda의 중복 호출을 방지합니다.</div>
+<div class="comment-content">A. 긴 폴링은 동일한 메시지에 대한 Lambda의 여러 호출 문제를 직접적으로 해결하지 않습니다. receiveMessage를 늘리면 중복 호출을 완전히 방지할 수는 없습니다. B. 대기열 유형을 표준에서 FIFO로 변경하려면 애플리케이션 아키텍처에 대한 추가 고려 사항과 변경이 필요합니다. 여기에는 이벤트 구성 수정 및 메시지 중복 제거 ID 처리가 포함될 수 있으며 이로 인해 운영 오버헤드가 발생할 수 있습니다. D. 메시지를 읽은 후 즉시 삭제하면 Lambda에서 오류가 발생하거나 이미지를 성공적으로 처리하지 못하는 경우 메시지가 손실될 수 있습니다. 메시지 처리를 보장하지 않으며 데이터 손실이 발생할 수 있습니다. C. 가시성 제한 시간을 Lambda가 이미지를 처리하고 이메일을 보내는 데 필요한 총 시간보다 큰 값으로 설정함으로써, 처리 중에 메시지가 다른 소비자에게 표시되지 않도록 해야 합니다. 이렇게 하면 동일한 메시지에 대한 Lambda의 중복 호출을 방지할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +950,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,12 +981,12 @@
 				아브라2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 22일 월요일 09:30">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 22일 (월) 09:30">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">FIFO - 솔루션이지만 운영 오버헤드가 필요합니다. 가시성 시간 초과 증가 - 훨씬 적은 운영 오버헤드가 필요합니다.</div>
+<div class="comment-content">FIFO - 솔루션이지만 운영상의 오버헤드가 필요합니다. 가시성 시간 초과 증가 - 필요한 운영 오버헤드가 훨씬 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -816,7 +995,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -848,12 +1027,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 20:15">
-			2개월, 3주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">저는 옵션 C를 선택합니다.</div>
+<div class="comment-content">저는 옵션 C를 선택하겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -862,7 +1041,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -890,15 +1069,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				라훌빗34
+				Rahulbit34
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 2일 화요일 19:04">
-			3개월, 2주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS VISIBILITY TIMEOUT은 대기열에서 메시지 재처리를 방지하는 데 도움이 될 수 있습니다. 기본적으로 타임아웃은 30초, 최소값은 0, 최대값은 12시간입니다.</div>
+<div class="comment-content">SQS VISIBILITY TIMEOUT은 대기열의 메시지 재처리를 방지하는 데 도움이 될 수 있습니다. 기본적으로 시간 제한은 30초, 최소 0, 최대 12시간입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -907,7 +1086,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -935,16 +1114,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				콴부이
+				취안부이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 26일 수 04:48">
-			3개월, 3주 전
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">ccccccc</div>
+<div class="comment-content">ㅋㅋㅋㅋㅋㅋ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -953,7 +1132,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -984,12 +1163,12 @@
 				티키타카
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 19일 수 09:11">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 19일 수요일 09:11">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사과, 나는 A가 틀렸다는 것을 의미했다</div>
+<div class="comment-content">사과드립니다. A가 틀렸다는 뜻입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -998,7 +1177,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,12 +1208,12 @@
 				티키타카
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 19일 수 09:10">
-			3개월, 4주 전
+<span class="comment-date align-middle" title="2023년 4월 19일 수요일 09:10">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 틀렸습니다: 'ReceiveMessage API 작업에 대한 대기 시간이 0보다 크면 긴 폴링이 적용됩니다. 최대 긴 폴링 대기 시간은 20초입니다.'</div>
+<div class="comment-content">C는 틀렸습니다. 'ReceiveMessage API 작업의 대기 시간이 0보다 크면 긴 폴링이 적용됩니다. 최대 긴 폴링 대기 시간은 20초입니다.'</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1043,7 +1222,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1074,12 +1253,12 @@
 				쿨스91
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 16일 일 12:51">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 16일 일요일 12:51">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">2023년 4월에 시험을 봤는데 65개의 질문 중 25-30개만 덤프에서 나왔습니다. 나는 합격했지만(820!) 이 덤프는 전적으로 신뢰할 수 없습니다. 이러한 질문을 통해 답을 찾는 것이 실제 시험에 합격하는 데 도움이 될 것이라고 확신합니다.</div>
+<div class="comment-content">저는 2023년 4월에 시험을 쳤는데, 65개 문제 중 25~30개만 덤프에서 나왔습니다. 나는 통과했지만(820!) 이 덤프는 단독으로 신뢰할 수 없습니다. 나는 확신합니다. 이러한 질문을 풀고 답을 찾기 위해 스스로 노력하면 실제 시험에 합격하는 데 도움이 될 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1088,7 +1267,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1108,15 +1287,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				이퀸테로
+				lquintero
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 30일 일 16:11">
-			3개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 30일 일요일 16:11">
+			3개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Hola KUl91, cual otra fuente de test de estudio utilizaste?</div>
+<div class="comment-content">안녕하세요 KUl91, 스튜디오 활용 테스트에 대한 유용한 정보가 있나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1125,7 +1304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1164,8 +1343,8 @@
 				크라켄21
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 12:06">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 12:06">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1179,7 +1358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1211,12 +1390,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 28일 화요일 14:32">
-			4개월, 3주 전
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">중복 메시지를 배제할 수 있는 유일한 옵션은 B) 문서 "표준 대기열과 달리 FIFO 대기열은 중복 메시지를 도입하지 않습니다. FIFO 대기열은 중복 메시지를 대기열에 보내는 것을 방지하는 데 도움이 됩니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html Answer C는 작업 오버헤드가 적지만 여러 번 전송하는 이벤트를 배제한다고 보장하지 않습니다. 동일한 이미지와 관련된 이메일. 이렇게 하면 동일한 메시지를 두 번 이상 처리하는 것을 방지(최소화)할 수 있지만 중복 메시지 문제는 해결되지 않습니다.</div>
+<div class="comment-content">중복된 메시지를 배제할 수 있는 유일한 옵션은 B) "표준 대기열과 달리 FIFO 대기열은 중복 메시지를 도입하지 않습니다. FIFO 대기열은 중복 메시지를 대기열로 보내는 것을 방지하는 데 도움이 됩니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues-exactly-once-processing.html 답변 C는 작업 오버헤드가 적지만 여러 개를 보내는 이벤트를 배제하는 것을 보장하지 않습니다. 동일한 이미지와 관련된 이메일. 이렇게 하면 동일한 메시지를 두 번 이상 처리하는 것을 방지(최소화)할 수 있지만 메시지 중복 문제는 해결되지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1225,7 +1404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1249,11 +1428,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 10일 (월) 22:02">
-			1 개월 전
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대기열을 만든 후에는 대기열 유형을 변경할 수 없습니다.</div>
+<div class="comment-content">대기열을 생성한 후에는 대기열 유형을 변경할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1262,7 +1441,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1298,15 +1477,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				OSMK
+				osmk
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 14일 화요일 22:27">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 14일 (화) 22:27">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C 로드가 많거나 트래픽 패턴이 급증하는 애플리케이션에서는 다음을 수행하는 것이 좋습니다. 대기열의 가시성 제한 시간을 함수 제한 시간 값의 최소 6배로 설정합니다. 이렇게 하면 이전 배치를 처리하는 동안 함수 실행이 제한되는 경우 함수 시간이 각 레코드 배치를 처리할 수 있습니다.https://docs.aws.amazon.com/lambda/latest/operatorguide/sqs-retries.html</div>
+<div class="comment-content">C 부하가 높거나 트래픽 패턴이 급증하는 애플리케이션에서는 다음을 수행하는 것이 좋습니다. 대기열의 표시 제한 시간을 함수 제한 시간 값의 6배 이상으로 설정합니다. 이를 통해 이전 배치를 처리하는 동안 함수 실행이 조절되는 경우 함수가 각 레코드 배치를 처리할 시간을 허용합니다.https://docs.aws.amazon.com/lambda/latest/operatorguide/sqs-retries.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1315,7 +1494,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1343,16 +1522,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				러브라저
+				러브라자르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 14일 화요일 08:06">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 14일 (화) 08:06">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">사용자가 최소한의 운영 오버헤드로 업로드된 모든 이미지에 대해 여러 이메일 메시지를 받는 문제를 해결하려면 SQS 대기열에서 가시성 제한 시간을 늘리는 것이 가장 좋은 솔루션입니다. 이는 추가 구성이 필요하지 않으므로 다른 옵션에 비해 운영 오버헤드가 가장 적습니다. 그러나 이 솔루션은 중복을 완전히 방지하지 못하므로 여전히 중복 이메일이 전송될 가능성이 있습니다. FIFO 대기열을 사용하면 중복을 방지할 수 있지만 추가 구성이 필요하므로 운영 오버헤드가 더 높을 수 있습니다.</div>
+<div class="comment-content">사용자가 최소한의 운영 오버헤드로 업로드된 모든 이미지에 대해 여러 이메일 메시지를 받는 문제를 해결하려면 SQS 대기열의 표시 제한 시간을 늘리는 것이 가장 좋은 솔루션입니다. 이는 추가 구성이 필요하지 않으므로 다른 옵션에 비해 운영 오버헤드가 가장 적습니다. 그러나 이 솔루션은 중복을 완전히 방지하지 못하므로 중복된 이메일이 전송될 가능성은 여전히 ​​존재합니다. FIFO 대기열을 사용하면 중복을 방지할 수 있지만 추가 구성이 필요하므로 운영 오버헤드가 더 높아질 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1361,7 +1540,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1392,12 +1571,12 @@
 				Steve_4542636
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 26일 일 15:53">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 26일 일요일 15:53">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기 https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html 그것은 sqs 표준에 대해 이렇게 말합니다. 표준 대기열의 경우 가시성 제한 시간은 메시지를 두 번 수신하지 않도록 보장하지 않습니다. 자세한 내용은 최소 1회 전달을 참조하세요.</div>
+<div class="comment-content">여기 https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html에는 sqs 표준에 대해 다음과 같이 나와 있습니다. 표준 대기열의 경우 표시 제한 시간은 메시지를 두 번 수신하는 것을 보장하지 않습니다. 자세한 내용은 최소 1회 전송을 참조하세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1406,7 +1585,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1437,12 +1616,12 @@
 				MrAWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 05:17">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 05:17">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">중복 제거를 해결하는 유일한 방법은 FIFO 대기열을 사용하거나 멱등성을 코드에 코딩하는 것입니다. 가시성 제한 시간을 늘리는 것은 처리 중이던 메시지를 삭제할 수 있다는 의미일 뿐이며 중복을 처리하지 않으므로 "솔루션 설계자가 이 문제를 해결하기 위해 무엇을 해야 합니까?"라는 질문에 답하지 않습니다.</div>
+<div class="comment-content">중복 제거를 해결하는 유일한 방법은 FIFO 대기열을 사용하거나 코드에 멱등성을 코딩하는 것입니다. 표시 제한 시간을 늘리면 처리 중인 메시지를 삭제할 수 있을 뿐이며 중복을 처리하지 않으므로 "이 문제를 해결하려면 솔루션 설계자가 무엇을 해야 합니까?"라는 질문에 대답하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1451,7 +1630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1471,15 +1650,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로브투투
+				로브로투투
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 16일 일 04:24">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 16일 일요일 04:24">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 이것이 중복이 발생하는 경우 이를 처리하는 것보다 중복이 발생하지 않도록 방지하는 것에 더 가깝다고 생각합니다.</div>
+<div class="comment-content">나는 이것이 중복이 발생할 경우 어떻게 처리할지에 대한 것보다 중복이 발생하지 않도록 방지하는 것에 더 가깝다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1488,7 +1667,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1519,8 +1698,8 @@
 				ces26015
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 25일 수 16:29">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 25일 수요일 16:29">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1533,7 +1712,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1572,13 +1751,13 @@
 				MrAWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 04:59">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 04:59">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">가시성 제한 시간을 늘리면 해당 메시지가 처리 및 삭제될 때까지 대기열의 다른 사용자가 해당 메시지를 볼 수 없게 됩니다. 그러나 우리의 경우 - 대기열에 중복 메시지가 있습니다!! 따라서 가시성을 높이는 것이 이 문제를 어떻게 처리하는지 알 수 없습니다. - 질문은 '표준 대기열'이 사용되고 있으므로 독자가 표준 대기열로 인해 발생하는 이 문제를 생각할 수 있도록 명확하게 요청합니다. 주문 및 중복 제거 순서입니다. 또한 성능을 문제로 언급하지 않으므로 FIFO를 사용하지 않는 이유가 될 수 있습니다. 대답으로 'B'에 대한 유일한 문제는 표준을 FIFO로 '변경'하는 것입니다. 기술적으로 일단 생성된 FIFO 대기열로 전환할 수는 없지만 더 높은 수준에서 FIFO 대기열을 사용하도록 아키텍처를 변경할 수 있습니다.</div>
+<div class="comment-content">제한 시간 초과를 늘리면 해당 메시지가 처리 및 삭제될 때까지 대기열의 다른 소비자만 해당 메시지를 볼 수 없습니다. 그러나 우리의 경우에는 대기열에 중복된 메시지가 있습니다!! 따라서 가시성을 높이면 이 문제가 어떻게 처리되는지 알 수 없습니다. - 질문은 '표준 대기열'이 사용되고 있음을 명확하게 명시하므로 독자는 표준 대기열, 즉 순서 및 중복 제거로 인해 발생하는 문제를 생각할 것입니다. 또한 성능을 문제로 언급하지 않았으며 이는 FIFO를 사용하지 않는 이유가 될 수 있습니다. 대답으로 'B'에 대한 유일한 문제는 표준을 FIFO로 '변경'한다는 것입니다. 기술적으로 일단 생성된 FIFO 대기열로 전환할 수는 없지만 더 높은 수준에서 FIFO 대기열을 사용하도록 아키텍처를 변경할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1587,7 +1766,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1615,15 +1794,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 28일 수 01:37">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기에서 C가 정답입니다 https://www.examtopics.com/discussions/amazon/view/83096-exam-aws-certified-solutions-architect-associate-saa-c02/</div>
+<div class="comment-content">여기서 C가 정답입니다 https://www.examtopics.com/discussions/amazon/view/83096-exam-aws-certified-solutions-architect-associate-saa-c02/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1632,7 +1811,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1663,13 +1842,13 @@
 				패스나우1234
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 27일 화요일 00:42">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 27일 화 00:42">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html 여전히 유효함</div>
+<div class="comment-content">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html은 여전히 ​​유효합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1678,7 +1857,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1701,12 +1880,12 @@
 				MrAWS
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 05:13">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 05:13">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">링크한 페이지도 읽어보십시오. "표준 대기열의 경우 가시성 제한 시간은 메시지를 두 번 수신하는 것을 보장하지 않습니다. 자세한 내용은 At-least-once 전달을 참조하십시오."</div>
+<div class="comment-content">링크한 페이지를 읽어보세요. "표준 대기열의 경우 표시 제한 시간은 메시지를 두 번 수신하는 것을 보장하지 않습니다. 자세한 내용은 최소 한 번 전달을 참조하세요."</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1715,7 +1894,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1754,13 +1933,13 @@
 				psr83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 21:05">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 21:05">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/sqs/faqs/ SQS - LongPolling은 효율성을 높이고 애플리케이션의 지연 시간을 줄이면서 SQS에 대한 API 호출 수를 줄입니다. 긴 폴링은 Amazon SQS가 대기하도록 허용하여 빈 응답 수를 줄입니다. 응답을 보내기 전에 큐에서 메시지를 사용할 수 있게 되는 지정된 시간입니다. 또한 긴 폴링은 서버 샘플링 대신 모든 서버를 쿼리하여 잘못된 빈 응답을 제거합니다.</div>
+<div class="comment-content">https://aws.amazon.com/sqs/faqs/ SQS - LongPolling은 애플리케이션의 효율성을 높이고 지연 시간을 줄이는 동시에 SQS에 대한 API 호출 수를 줄입니다. 긴 폴링은 Amazon SQS가 대기하도록 허용하여 빈 응답 수를 줄입니다. 응답을 보내기 전에 대기열에서 메시지를 사용할 수 있게 되는 지정된 시간입니다. 또한 긴 폴링은 서버를 샘플링하는 대신 모든 서버를 쿼리하여 잘못된 빈 응답을 제거합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1769,7 +1948,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1800,8 +1979,8 @@
 				나베
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 23일 금요일 18:52">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 23일 금 18:52">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1815,7 +1994,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1843,16 +2022,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 21:02">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 21:02">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D, 솔루션 설계자는 처리 전에 메시지를 읽은 직후 SQS 대기열에서 각 메시지를 삭제하도록 Lambda 함수를 수정해야 합니다. 이것은 SQS 대기열이나 추가 구성을 변경할 필요가 없기 때문에 운영 오버헤드가 가장 적은 솔루션입니다.</div>
+<div class="comment-content">옵션 D, 솔루션 설계자는 메시지를 읽은 후 처리하기 전에 즉시 SQS 대기열에서 각 메시지를 삭제하도록 Lambda 함수를 수정해야 합니다. 이는 SQS 대기열이나 추가 구성을 변경할 필요가 없기 때문에 운영상의 오버헤드가 가장 적은 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1861,7 +2040,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1881,15 +2060,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 21:03">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 21:03">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ReceiveMessage 대기 시간을 30초로 늘려 SQS 대기열에서 긴 폴링을 설정하는 옵션 A는 잠재적으로 Lambda 함수가 수신하는 중복 메시지 수를 줄일 수 있지만 메시지 전달 지연 시간을 늘리고 잠재적으로 비용을 증가시킵니다. SQS 표준 대기열을 SQS FIFO 대기열로 변경하고 메시지 중복 제거 ID를 사용하여 중복 메시지를 삭제하는 옵션 B는 대기열을 변경해야 하며 올바르게 구현되지 않은 경우 잠재적으로 애플리케이션 중단을 유발할 수 있습니다. 메시지 중복 제거 ID를 관리하기 위해 추가 오버헤드가 필요할 수도 있습니다.</div>
+<div class="comment-content">옵션 A(ReceiveMessage 대기 시간을 30초로 늘려 SQS 대기열에서 긴 폴링을 설정)는 잠재적으로 Lambda 함수가 수신하는 중복 메시지 수를 줄일 수 있지만 메시지 전달 지연 시간을 늘리고 잠재적으로 비용을 증가시킬 수도 있습니다. SQS 표준 대기열을 SQS FIFO 대기열로 변경하고 메시지 중복 제거 ID를 사용하여 중복 메시지를 삭제하는 옵션 B는 대기열을 변경해야 하며 올바르게 구현되지 않으면 애플리케이션이 중단될 가능성이 있습니다. 메시지 중복 제거 ID를 관리하려면 추가 오버헤드가 필요할 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1898,7 +2077,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1918,15 +2097,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 21일 수 21:03">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 21일 수요일 21:03">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS 대기열의 가시성 제한 시간을 함수 제한 시간과 배치 창 제한 시간의 합계보다 큰 값으로 늘리는 옵션 C도 잠재적으로 Lambda 함수에서 수신하는 중복 메시지 수를 줄일 수 있지만 증가할 수도 있습니다. 기능이 실패할 경우 메시지를 다시 처리할 수 있는 데 걸리는 시간입니다. 이로 인해 대기 시간이 증가하고 잠재적으로 비용이 높아질 수 있습니다.</div>
+<div class="comment-content">SQS 대기열의 제한 시간 초과를 함수 제한 시간과 배치 창 제한 시간의 합계보다 큰 값으로 늘리는 옵션 C는 잠재적으로 Lambda 함수가 수신하는 중복 메시지 수를 줄일 수도 있지만 증가할 수도 있습니다. 기능이 실패할 경우 메시지를 다시 처리할 수 있을 때까지 걸리는 시간입니다. 이로 인해 대기 시간이 늘어나고 잠재적으로 비용이 높아질 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1935,7 +2114,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1971,15 +2150,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 28일 수 01:36">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">처리가 실패하면 어떻게 됩니까 ???</div>
+<div class="comment-content">처리가 실패하면 어떻게 되나요 ???</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1988,7 +2167,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2027,13 +2206,13 @@
 				난단747
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 06:17">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 화 06:17">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">처음에는 대답이 B여야 한다고 생각했습니다. 그들이 구체적으로 그것이 표준 대기열이라고 언급했기 때문에 우리는 표준 대기열에서 일부 중복을 얻는다는 것을 알고 있습니다. 그러나 여기서 진짜 문제는 사용자가 복제될 때마다 발생합니다. 따라서 하나의 Lambda에 의한 처리가 완료되고 동시에 처리를 위해 다른 기능에 의해 선택되기 전에 메시지가 대기열로 되돌아갈 때마다 충분히 길지 않은 VisibilityTimeout 문제여야 합니다.</div>
+<div class="comment-content">처음에는 대답이 B여야 한다고 생각했습니다. 왜냐하면 그들이 그것이 표준 대기열이라고 구체적으로 언급했고 우리는 Std 대기열에서 일부 중복이 발생한다는 것을 알고 있기 때문입니다. 하지만 여기서 진짜 문제는 사용자가 중복될 때마다 발생한다는 것입니다. 따라서 VisibilityTimeout 문제가 너무 길지 않아 하나의 Lambda에 의한 처리가 완료되기 전에 메시지가 대기열로 돌아갈 때마다 동시에 다른 함수에 의해 처리를 위해 선택됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2042,7 +2221,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2073,8 +2252,8 @@
 				리차쿠아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 02:57">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 화 02:57">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2088,7 +2267,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2116,16 +2295,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 18일 일 23:49">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 18일 일요일 23:49">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C가 가장 가능성이 높은 경우입니다. 옵션 B도 일부 중복을 유발할 수 있지만 이것이 모든 요청/사용자 C에 대해 발생하는 경우 C는 실제 원인인 것 같습니다.</div>
+<div class="comment-content">옵션 C가 가장 가능성이 높은 경우입니다. 옵션 B도 일부 중복을 일으킬 수 있지만 이것이 모든 요청/사용자에 대해 발생한다는 점을 고려하면 C가 실제 근본 원인인 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2134,7 +2313,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2165,12 +2344,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 17:59">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 17:59">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2179,7 +2358,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2210,8 +2389,8 @@
 				헝키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 2일 수요일 02:09">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 2일 수 02:09">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2225,7 +2404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2257,11 +2436,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 21일 금 09:21">
-			9개월, 4주 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">폴링을 제외하는 이유는--&gt;"최대 긴 폴링 대기 시간은 20초" https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html</div>
+<div class="comment-content">폴링을 제외합니다. 왜냐하면--&gt;"최대 긴 폴링 대기 시간은 20초입니다." https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2270,7 +2449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2301,13 +2480,13 @@
 				MXB05
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 11일 화요일 20:50">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 11일 (화) 20:50">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">A는 정확하지 않습니다. 긴 폴링은 모든 이미지가 한 번의 쿼리로 모든 SQS 서버에서 검색되도록만 보장합니다. 동일한 메시지가 람다 함수를 두 번 트리거하는 경우 가시성 제한 시간이 충분히 길지 않고 람다가 메시지 삭제와 함께 시간 내에 응답하지 않았기 때문일 수 있습니다. -&gt;&gt; C가 정확합니다.</div>
+<div class="comment-content">A는 정확할 수 없습니다. 긴 폴링은 한 번의 쿼리로 모든 SQS 서버에서 모든 이미지가 검색되도록 보장합니다. 동일한 메시지가 람다 함수를 두 번 트리거하는 경우 표시 제한 시간이 충분히 길지 않고 람다가 메시지 삭제에 맞춰 제때 응답하지 않았기 때문일 가능성이 높습니다. -&gt;&gt; C가 정확합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2316,7 +2495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2371,7 +2550,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 24 Oct 2022 23:19">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2412,7 +2591,7 @@ By increasing the visibility timeout, it should prevent SQS from returning a mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 14:51">
-			1 week ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2432,6 +2611,51 @@ By increasing the visibility timeout, it should prevent SQS from returning a mes
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988842" id="comment-988842">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				PLN6302
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Thu 24 Aug 2023 06:57">
+			2 days, 14 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">amazon s3 doesn't support fifo queues</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -2457,7 +2681,7 @@ By increasing the visibility timeout, it should prevent SQS from returning a mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Jul 2023 13:41">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2502,7 +2726,7 @@ By increasing the visibility timeout, it should prevent SQS from returning a mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 20:58">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2540,7 +2764,7 @@ I believe SQS Queue Fifo will keep in order and any duplicates with same ID will
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Apr 2023 04:22">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2578,7 +2802,7 @@ If the visibility timeout ends while the lambda function is still processing the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 12 Aug 2023 21:57">
-			3 days, 22 hours ago
+			1 week, 6 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2623,7 +2847,7 @@ If the visibility timeout ends while the lambda function is still processing the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 08:36">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2676,7 +2900,7 @@ If the visibility timeout ends while the lambda function is still processing the
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 04:59">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2740,7 +2964,7 @@ If the visibility timeout ends while the lambda function is still processing the
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 13 Oct 2022 06:37">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2773,6 +2997,102 @@ Immediately after a message is received, it remains in the queue. To prevent oth
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="990138" id="comment-990138">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				kwang312
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Fri 25 Aug 2023 16:06">
+			1 day, 5 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">D is an incorrect answer because Lamda automatically deletes message from the queue when finish process</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="988831" id="comment-988831">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				TariqKipkemei
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Thu 24 Aug 2023 06:40">
+			2 days, 15 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>C</strong></span></div>
+<div class="comment-content">Immediately after a message is received, it remains in the queue. To prevent other consumers from processing the message again, Amazon SQS sets a visibility timeout, a period of time during which Amazon SQS prevents all consumers from receiving and processing the message. The default visibility timeout for a message is 30 seconds. The minimum is 0 seconds. The maximum is 12 hours.
+
+https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html#:~:text=SQS%20sets%20a-,visibility%20timeout,-%2C%20a%20period%20of</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="978753" id="comment-978753">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -2788,11 +3108,8 @@ Immediately after a message is received, it remains in the queue. To prevent oth
 				Guru4Cloud
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Fri 11 Aug 2023 17:19">
-			5 days, 3 hours ago
+			2 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2838,7 +3155,7 @@ Immediately after a message is received, it remains in the queue. To prevent oth
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Jun 2023 01:29">
-			1 month, 2 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2891,7 +3208,7 @@ This solution requires minimal operational overhead as it mainly involves changi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Jun 2023 10:21">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2943,7 +3260,7 @@ C. By setting the visibility timeout to a value greater than the total time requ
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 22 May 2023 09:30">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2989,7 +3306,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 May 2023 20:15">
-			2 months, 3 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3035,7 +3352,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 02 May 2023 19:04">
-			3 months, 2 weeks ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3080,7 +3397,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 04:48">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3126,7 +3443,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 09:11">
-			3 months, 4 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3171,7 +3488,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Apr 2023 09:10">
-			3 months, 4 weeks ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3217,7 +3534,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Apr 2023 12:51">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3254,7 +3571,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 30 Apr 2023 16:11">
-			3 months, 2 weeks ago
+			3 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3307,7 +3624,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 12:06">
-			4 months, 2 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3353,7 +3670,7 @@ INCREASING VISIBILITY TIMEOUT -  REQUIRES FAR LESS OPERATIONAL OVERHEAD.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 14:32">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3394,7 +3711,7 @@ Answer C, though with less ops overheads, doesn't guarantee to rule out the even
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Jul 2023 22:02">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3447,7 +3764,7 @@ Answer C, though with less ops overheads, doesn't guarantee to rule out the even
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Mar 2023 22:27">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3494,7 +3811,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 14 Mar 2023 08:06">
-			5 months ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3540,7 +3857,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Feb 2023 15:53">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3585,7 +3902,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 05:17">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3624,7 +3941,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Apr 2023 04:24">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3669,7 +3986,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 25 Jan 2023 16:29">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3722,7 +4039,7 @@ Set the queue’s visibility timeout to at least six times the function timeout 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 04:59">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3779,7 +4096,7 @@ The only issue I have with 'B' as an answer is it says
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 01:37">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3825,7 +4142,7 @@ https://www.examtopics.com/discussions/amazon/view/83096-exam-aws-certified-solu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 27 Dec 2022 00:42">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3865,7 +4182,7 @@ still valid</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 05:13">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3920,7 +4237,7 @@ still valid</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 21:05">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3968,7 +4285,7 @@ Long polling reduces the number of empty responses by allowing Amazon SQS to wai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Dec 2022 18:52">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4014,7 +4331,7 @@ Long polling reduces the number of empty responses by allowing Amazon SQS to wai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 21:02">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4052,7 +4369,7 @@ Long polling reduces the number of empty responses by allowing Amazon SQS to wai
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 21:03">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4091,7 +4408,7 @@ Option B, changing the SQS standard queue to an SQS FIFO queue and using the mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 21 Dec 2022 21:03">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4144,7 +4461,7 @@ Option B, changing the SQS standard queue to an SQS FIFO queue and using the mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Dec 2022 01:36">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4197,7 +4514,7 @@ Option B, changing the SQS standard queue to an SQS FIFO queue and using the mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 06:17">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4243,7 +4560,7 @@ Option B, changing the SQS standard queue to an SQS FIFO queue and using the mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 02:57">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4289,7 +4606,7 @@ Option B, changing the SQS standard queue to an SQS FIFO queue and using the mes
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Dec 2022 23:49">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4336,7 +4653,7 @@ Though option B can also cause some duplicates but given this is happening for e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 17:59">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4381,7 +4698,7 @@ Though option B can also cause some duplicates but given this is happening for e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 02 Nov 2022 02:09">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4427,7 +4744,7 @@ Though option B can also cause some duplicates but given this is happening for e
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 21 Oct 2022 09:21">
-			9 months, 4 weeks ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4473,7 +4790,7 @@ https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 11 Oct 2022 20:50">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

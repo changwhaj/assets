@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 316 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 문제 316 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 316 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="891193">
 <p class="card-text">
 							
-								미국에 위치한 한 회사가 아시아에서 사업을 확장하기를 원합니다. us-west-2 리전의 회사 데이터는 Amazon DynamoD8 테이블에 저장됩니다. ap-northeast-1 지역에 있는 회사의 개발 팀은 us-west-2의 프로덕션 데이터 사본을 사용하여 사용자 승인 테스트(UAT) 및 기타 여러 성능 타당성 테스트를 수행해야 합니다. 타당성 테스트는 실시간으로 업데이트되는 데이터에서 실행할 필요가 없습니다. <br/><br/>가장 비용 효율적으로 us-west-2에서 ap-northeast-1까지 데이터를 사용할 수 있게 해주는 솔루션은 무엇입니까?
+								미국에 위치한 한 회사가 아시아에서 사업을 확장하려고 합니다. us-west-2 지역의 회사 데이터는 Amazon DynamoD8 테이블에 저장됩니다. ap-northeast-1 지역의 회사 개발 팀은 us-west-2의 프로덕션 데이터 사본을 사용하여 UAT(사용자 승인 테스트) 및 기타 여러 성능 타당성 테스트를 수행해야 합니다. 실시간으로 업데이트되는 데이터에 대해서는 타당성 테스트를 실행할 필요가 없습니다. <br/><br/>us-west-2에서 ap-northeast-1까지 가장 비용 효과적으로 데이터를 사용할 수 있게 해주는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,14 +148,14 @@
 													A.
 												</span> 
 											
-											ap-northeast-1에서 새 DynamoDB 테이블을 생성합니다. us-west-2의 DynamoDB 테이블에서 데이터 내보내기를 수행할 AWS Glue 작업을 생성합니다. 동일한 데이터를 ap-northeast-1의 DynamoDB 테이블로 가져옵니다.
+											ap-northeast-1에 새 DynamoDB 테이블을 생성합니다. us-west-2의 DynamoDB 테이블에서 데이터 내보내기를 수행하는 AWS Glue 작업을 생성합니다. 동일한 데이터를 ap-northeast-1의 DynamoDB 테이블로 가져옵니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											us-west-2의 DynamoDB 테이블에서 DynamoDB 스트림을 활성화합니다. ap-northeast-1에서 새 DynamoDB 테이블을 생성합니다. us-west-2에서 DynamoDB 테이블 스트림을 폴링하고 스트림에서 ap-northeast-1의 새 DynamoDB 테이블로 배치 레코드를 전달하는 AWS Lambda 함수를 생성합니다.
+											us-west-2의 DynamoDB 테이블에서 DynamoDB 스트림을 활성화합니다. ap-northeast-1에 새 DynamoDB 테이블을 생성합니다. us-west-2에서 DynamoDB 테이블 스트림을 폴링하고 스트림의 배치 레코드를 ap-northeast-1의 새 DynamoDB 테이블로 전달하는 AWS Lambda 함수를 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -110,7 +173,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,21 +183,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">씨 (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">디 (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">C (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 50%; display: flex;" title="">D (50%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								TQM__9MD
-							</a> 2023년 7월 14일 
-							
-							오전 <i>
-							1:06</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -205,16 +258,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								TQM__9MD
-							</a>
-							
-							at <i>
-							July 14, 2023, 1:06 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -245,13 +288,13 @@
 				잔시에
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 19일 (토) 17:17">
-			9시간 27분 전
+<span class="comment-date align-middle" title="2023년 8월 19일 토요일 17:17">
+			1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">또한 C에 투표하십시오. AWS DDB 콘솔에서 테스트되었습니다.</div>
+<div class="comment-content">또한 C에 투표하세요. AWS DDB 콘솔에서 테스트되었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -260,7 +303,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -291,12 +334,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 12:26">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 18일 화 12:26">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 가성비 좋다고 생각합니다. 스트림은 비용이 듭니다.</div>
+<div class="comment-content">C가 비용 효율적이라고 생각합니다. 스트림에는 비용이 듭니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -336,13 +379,13 @@
 				TQM__9MD
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 14일 금요일 01:06">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 14일 금 01:06">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">us-west-2의 DynamoDB 테이블에서 DynamoDB 스트림을 활성화하고 DynamoDB 글로벌 테이블 구성에서 ap-northeast-1을 리전으로 추가하면 데이터를 us-west-2에서 ap-northeast-1로 효율적으로 복제할 수 있습니다. 실시간. DynamoDB Streams는 테이블에 대한 변경 사항을 캡처하고 글로벌 테이블 구성은 여러 리전에 대한 자동 복제를 보장합니다. 이 솔루션을 사용하면 수동 데이터 내보내기 및 가져오기 프로세스가 필요하지 않으며 us-west-2에서 ap-northeast-1로 데이터를 지속적으로 복제할 수 있습니다. 이를 통해 ap-northeast-1 개발 팀은 사용자 승인 테스트(UAT) 및 성능 타당성 테스트를 위한 최신 데이터에 액세스할 수 있습니다. 따라서 us-west-2에서 ap-northeast-1까지 데이터를 가장 비용 효율적으로 활용하는 솔루션은 옵션 D입니다.</div>
+<div class="comment-content">us-west-2의 DynamoDB 테이블에서 DynamoDB 스트림을 활성화하고 DynamoDB 전역 테이블 구성에서 ap-northeast-1을 리전으로 추가하면 us-west-2에서 ap-northeast-1로 데이터를 효율적으로 복제할 수 있습니다. 실시간. DynamoDB Streams는 테이블에 대한 변경 사항을 캡처하고 글로벌 테이블 구성은 여러 리전에 대한 자동 복제를 보장합니다. 이 솔루션을 사용하면 수동 데이터 내보내기 및 가져오기 프로세스가 필요하지 않으며 us-west-2에서 ap-northeast-1로 데이터를 지속적으로 복제할 수 있습니다. 이를 통해 ap-northeast-1 개발팀은 UAT(사용자 승인 테스트) 및 성능 타당성 테스트를 위한 최신 데이터에 액세스할 수 있습니다. 따라서 us-west-2에서 ap-northeast-1까지의 데이터를 가장 비용 효율적으로 활용하는 솔루션은 옵션 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -403,7 +446,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 19 Aug 2023 17:17">
-			9 hours, 27 minutes ago
+			1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -449,7 +492,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 12:26">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -494,7 +537,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 14 Jul 2023 01:06">
-			1 month, 1 week ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

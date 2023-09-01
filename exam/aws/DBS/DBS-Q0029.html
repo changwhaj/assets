@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 29 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 29 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 29 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 29 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807271">
 <p class="card-text">
 							
-								회사에서 기존 온프레미스 Oracle 데이터베이스를 Amazon Aurora PostgreSQL로 마이그레이션하려고 합니다. AWS DMS를 사용하여 가동 중지 시간을 최소화하면서 마이그레이션을 완료해야 합니다. 데이터베이스 전문가는 컷오버 전에 데이터가 원본에서 대상으로 정확하게 마이그레이션되었는지 확인해야 합니다. 마이그레이션은 소스 데이터베이스의 성능에 최소한의 영향을 미쳐야 합니다. <br/>MOST가 이러한 요구 사항을 효과적으로 충족하는 접근 방식은 무엇입니까?<br/>
+								한 회사에서 기존 온프레미스 Oracle 데이터베이스를 Amazon Aurora PostgreSQL로 마이그레이션하려고 합니다. AWS DMS를 사용하여 가동 중지 시간을 최소화하면서 마이그레이션을 완료해야 합니다. 데이터베이스 전문가는 컷오버 전에 데이터가 원본에서 대상으로 정확하게 마이그레이션되었는지 검증해야 합니다. 마이그레이션은 원본 데이터베이스의 성능에 최소한의 영향을 주어야 합니다. <br/>이러한 요구 사항을 가장 효과적으로 충족하는 접근 방식은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807271" type="application/json">[{"voted_answers": "D", "vote_count": 5, "is_most_voted": true}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											AWS Schema Conversion Tool(AWS SCT)을 사용하여 원본 Oracle 데이터베이스 스키마를 대상 Aurora DB 클러스터로 변환합니다. 열의 데이터 유형을 확인하십시오.
+											AWS SCT(AWS Schema Conversion Tool)를 사용하여 소스 Oracle 데이터베이스 스키마를 대상 Aurora DB 클러스터로 변환합니다. 열의 데이터 유형을 확인합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -105,16 +168,16 @@
 													D.
 												</span> 
 											
-											작업에 대한 AWS DMS 데이터 검증을 활성화하여 AWS DMS 작업이 소스와 대상 레코드를 비교하고 불일치를 보고하도록 합니다.
+											AWS DMS 작업이 소스와 대상 레코드를 비교하고 불일치를 보고하도록 작업에서 AWS DMS 데이터 검증을 활성화합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">D </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html<br/><img class="in-exam-image" src="/assets/media/exam-media/04237/0001900001.jpg"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								2025flakyt
-							</a> 
-							
-							2021 <i>
-							년 12월 9일 오후 2:54</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								2025flakyt
-							</a>
-							
-							at <i>
-							Dec. 9, 2021, 2:54 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,18 +291,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				greek001
+				grekh001
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 12월 13일 (월) 16:12">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"데이터가 원본에서 대상으로 정확하게 마이그레이션되었는지 확인하려면 데이터 유효성 검사를 사용하는 것이 좋습니다." https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html 정답은 D입니다.</div>
+<div class="comment-content">"데이터가 원본에서 대상으로 정확하게 마이그레이션되었는지 확인하려면 데이터 유효성 검사를 사용하는 것이 좋습니다." https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html 대답은 ​​D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -268,7 +311,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -307,7 +350,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS DMS의 테이블 지표는 DMS 작업에 대해 수동으로 확인할 수 있습니다. 이러한 메트릭을 읽고 모든 것이 잘 되었는지 확인하는 자동화 기능을 제공하는 메커니즘은 없습니다. 100개 이상의 테이블을 작업하는 경우 DMS 데이터 유효성 검사가 유일한 옵션입니다. D가 가장 적합합니다.</div>
+<div class="comment-content">DMS 작업에 대해 AWS DMS의 테이블 지표를 수동으로 확인할 수 있습니다. 이러한 측정항목을 자동으로 읽고 모든 것이 제대로 진행되었는지 확인하는 메커니즘은 없습니다. 100개 이상의 테이블을 작업하는 경우 DMS 데이터 검증이 유일한 옵션입니다. D가 가장 적합하다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -316,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -347,13 +390,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 14:59">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 14:59">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 행을 비교하기 위해 원본 및 대상에서 선택 쿼리를 실행하므로 일부 로드 B도 좋은 후보가 되지만 "DMS 작업의 데이터 유효성 검사 옵션은 DMS 이전에 활성화해야 합니다."에서 개별 테이블 메트릭을 찾을 수 있습니다. 각 개별 작업에 대한 테이블 통계 탭. 이러한 지표에는 다음 수치가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다. B. 데이터 마이그레이션을 위해 생성된 AWS DMS 작업의 테이블 지표를 사용하여 마이그레이션 중인 테이블에 대한 통계를 확인하고 데이터 정의 언어(DDL) 문이 완료되었는지 확인합니다. D. 작업에 대한 AWS DMS 데이터 검증을 활성화하여 AWS DMS 작업이 소스와 대상 레코드를 비교하고 불일치를 보고하도록 합니다.</div>
+<div class="comment-content">D는 소스 및 대상에서 선택 쿼리를 실행하여 행을 비교하므로 일부 로드 B도 좋은 후보이지만 오히려 더 좋지만 "DMS 작업의 데이터 유효성 검사 옵션은 DMS 전에 활성화되어야 합니다"에서 개별 테이블 메트릭을 찾을 수 있습니다. 각 개별 작업에 대한 테이블 통계 탭. 이러한 측정항목에는 다음 숫자가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다. B. 데이터 마이그레이션을 위해 생성된 AWS DMS 작업의 테이블 지표를 사용하여 마이그레이션 중인 테이블에 대한 통계를 확인하고 데이터 정의 언어(DDL) 문이 완료되었는지 확인합니다. D. AWS DMS 작업이 소스와 대상 레코드를 비교하고 불일치를 보고하도록 작업에서 AWS DMS 데이터 검증을 활성화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -393,8 +436,8 @@
 				예인선
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 25일 금요일 04:07">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="2022년 2월 25일 금 04:07">
+			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,15 +479,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				SMAZ
+				스마즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 26일 일 17:19">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 26일 일요일 17:19">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html 데이터 검증 중에 AWS DMS는 소스의 각 행을 대상의 해당 행과 비교하고 행에 동일한 데이터가 포함되어 있는지 확인합니다. 모든 불일치를 보고합니다. 이를 달성하기 위해 AWS DMS는 적절한 쿼리를 발행하여 데이터를 검색합니다. 이러한 쿼리는 소스 및 대상에서 추가 리소스와 추가 네트워크 리소스를 사용합니다. 따라서 대답은 B여야 합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html 데이터 검증 중에 AWS DMS는 소스의 각 행을 대상의 해당 행과 비교하고, 행에 동일한 데이터가 포함되어 있는지 확인하고, 불일치가 있으면 보고합니다. 이를 달성하기 위해 AWS DMS는 적절한 쿼리를 실행하여 데이터를 검색합니다. 이러한 쿼리는 소스 및 대상의 추가 리소스는 물론 추가 네트워크 리소스도 소비합니다. 그럼 답은 B가 되어야지</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -481,7 +524,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 D여야 합니다. DMS 작업의 데이터 유효성 검사 옵션은 DMS가 SMAZ가 작성한 것을 수행하기 전에 활성화되어야 합니다. B는 활성화에 대해 언급하지 않습니다.</div>
+<div class="comment-content">답은 D여야 합니다. DMS가 SMAZ가 작성한 내용을 수행하기 전에 DMS 작업의 데이터 유효성 검사 옵션을 활성화해야 합니다. B는 활성화에 대해 아무 언급도 하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,15 +569,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				SMAZ
+				스마즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 25일 (토) 15:12">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 25일 토요일 15:12">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">'마이그레이션은 원본 데이터베이스의 성능에 거의 영향을 미치지 않습니다.' 대답은 'B'여야 한다고 생각합니다. 테이블 메트릭 각 개별 작업에 대한 테이블 통계 탭에서 개별 테이블 메트릭을 찾을 수 있습니다. 이러한 지표에는 다음 수치가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다.</div>
+<div class="comment-content">'마이그레이션은 원본 데이터베이스의 성능에 미미한 영향을 미칩니다.' 대답은 'B'여야 한다고 생각합니다. 테이블 메트릭 각 개별 작업에 대한 테이블 통계 탭에서 개별 테이블 메트릭을 찾을 수 있습니다. 이러한 측정항목에는 다음 숫자가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -563,15 +606,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 5일 (토) 18:44">
+<span class="comment-date align-middle" title="2022년 3월 5일 토요일 18:44">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">작업 유효성 검사를 통해서만 데이터 유효성 검사를 수행할 수 없으며 DMS 작업이 시작되기 전과 마이그레이션이 완료된 후에 활성화해야 합니다. 매우 일반적인 질문입니다. D가 올바른 선택입니다</div>
+<div class="comment-content">데이터 유효성 검사는 작업 유효성 검사를 통해서만 수행할 수 있으며 DMS 작업 시작 전과 마이그레이션이 완료된 후에 활성화해야 합니다. 매우 일반적인 질문입니다. D가 올바른 선택입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -580,7 +623,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,11 +663,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 9일 목요일 14:54">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 정답입니다</div>
+<div class="comment-content">D가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,7 +702,7 @@
 <a class="badge reveal-comment" href="#">Show Comments</a>
 <a class="badge hide-comment d-none" href="#">Hide Comments</a>
 <div class="discussion-page-comments-section-en" data-discussion-question-id="67416" style="display: none">
-<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">코멘트</h4></div>
+<div class="mt-4 ml-2 font-"><h4 class="mb-0" id="comment-section-title">Comments</h4></div>
 <!-- discussion.html -->
 <!-- Discussion start -->
 <div class="container outer-discussion-container">
@@ -681,27 +724,30 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				grek001
+				grekh001
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 12월 13일 (월) 16:12">
-			1년 8개월 전
+<span class="comment-date align-middle" title="Mon 13 Dec 2021 16:12">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"데이터가 원본에서 대상으로 정확하게 마이그레이션되었는지 확인하려면 데이터 유효성 검사를 사용하는 것이 좋습니다." https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html 정답은 D입니다.</div>
+<div class="comment-content">"To ensure that your data was migrated accurately from the source to the target, we highly recommend that you use data validation." 
+https://docs.aws.amazon.com/dms/latest/userguide/CHAP_BestPractices.html
+
+Answer is D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">7</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -729,27 +775,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				사친
+				sachin
 			</h5>
 </a>
 <span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
+				Most Recent <i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 6월 29일 수 03:58">
-			1년, 1개월 전
+<span class="comment-date align-middle" title="Wed 29 Jun 2022 03:58">
+			1 year, 1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS DMS의 테이블 지표는 DMS 작업에 대해 수동으로 확인할 수 있습니다. 이러한 메트릭을 읽고 모든 것이 잘 되었는지 확인하는 자동화 기능을 제공하는 메커니즘은 없습니다. 100개 이상의 테이블을 작업하는 경우 DMS 데이터 유효성 검사가 유일한 옵션입니다. D가 가장 적합합니다.</div>
+<div class="comment-content">table metrics of the AWS DMS can be verified manully for DMS task.  There is no mechanism which provided an automated for reading these metric and providing confirmation if every thing went well. If you are working 100+ tables then DMS Data Validation is the only option. 
+D is best fit</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -777,25 +824,35 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				초보자_전문가
+				novice_expert
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 14:59">
-			1년, 3개월 전
+<span class="comment-date align-middle" title="Sat 30 Apr 2022 14:59">
+			1 year, 3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 행을 비교하기 위해 원본 및 대상에서 선택 쿼리를 실행하므로 일부 로드 B도 좋은 후보가 되지만 "DMS 작업의 데이터 유효성 검사 옵션은 DMS 이전에 활성화해야 합니다."에서 개별 테이블 메트릭을 찾을 수 있습니다. 각 개별 작업에 대한 테이블 통계 탭. 이러한 지표에는 다음 수치가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다. B. 데이터 마이그레이션을 위해 생성된 AWS DMS 작업의 테이블 지표를 사용하여 마이그레이션 중인 테이블에 대한 통계를 확인하고 데이터 정의 언어(DDL) 문이 완료되었는지 확인합니다. D. 작업에 대한 AWS DMS 데이터 검증을 활성화하여 AWS DMS 작업이 소스와 대상 레코드를 비교하고 불일치를 보고하도록 합니다.</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">D would run select queries on source &amp; target to compare rows, so some load
+
+B is also good candidate, rather better but it needed "The data validation option in the DMS task has to be activated before DMS "
+You can find individual table metrics on the Table statistics tab for each individual task. These metrics include these numbers:
+Rows loaded during the full load.
+Inserts, updates, and deletes since the task started.
+DDL operations since the task started.
+
+B. Use the table metrics of the AWS DMS task created for migrating the data to verify the statistics for the tables being migrated and to verify that the data definition language (DDL) statements are completed.
+
+D. Enable AWS DMS data validation on the task so the AWS DMS task compares the source and target records, and reports any mismatches.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -823,25 +880,25 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				예인선
+				tugboat
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 25일 금요일 04:07">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="Fri 25 Feb 2022 04:07">
+			1 year, 6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">데이터 검증을 위한 D</div>
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">D for data validation</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -872,21 +929,24 @@
 				SMAZ
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 26일 일 17:19">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Sun 26 Dec 2021 17:19">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html 데이터 검증 중에 AWS DMS는 소스의 각 행을 대상의 해당 행과 비교하고 행에 동일한 데이터가 포함되어 있는지 확인합니다. 모든 불일치를 보고합니다. 이를 달성하기 위해 AWS DMS는 적절한 쿼리를 발행하여 데이터를 검색합니다. 이러한 쿼리는 소스 및 대상에서 추가 리소스와 추가 네트워크 리소스를 사용합니다. 따라서 대답은 B여야 합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html
+During data validation, AWS DMS compares each row in the source with its corresponding row at the target, verifies the rows contain the same data, and reports any mismatches. To accomplish this AWS DMS issues appropriate queries to retrieve the data. Note that these queries will consume additional resources at the source and target as well as additional network resources.
+
+So Answer should be B</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -906,24 +966,26 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				괴물
+				awsmonster
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 11일 화요일 08:58">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Tue 11 Jan 2022 08:58">
+			1 year, 7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 D여야 합니다. DMS 작업의 데이터 유효성 검사 옵션은 DMS가 SMAZ가 작성한 것을 수행하기 전에 활성화되어야 합니다. B는 활성화에 대해 언급하지 않습니다.</div>
+<div class="comment-content">Answer should be D:
+
+The data validation option in the DMS task has to be activated before DMS performs what SMAZ has written. B does not mention anything about enabling it.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -962,21 +1024,27 @@
 				SMAZ
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 25일 (토) 15:12">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="Sat 25 Dec 2021 15:12">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">'마이그레이션은 원본 데이터베이스의 성능에 거의 영향을 미치지 않습니다.' 대답은 'B'여야 한다고 생각합니다. 테이블 메트릭 각 개별 작업에 대한 테이블 통계 탭에서 개별 테이블 메트릭을 찾을 수 있습니다. 이러한 지표에는 다음 수치가 포함됩니다. 전체 로드 중에 로드된 행. 작업이 시작된 이후 삽입, 업데이트 및 삭제합니다. 작업이 시작된 이후의 DDL 작업입니다.</div>
+<div class="comment-content">'The migration should have a negligible effect on the source database's performance.'
+I believe answer should be 'B'
+Table metrics
+You can find individual table metrics on the Table statistics tab for each individual task. These metrics include these numbers:
+Rows loaded during the full load.
+Inserts, updates, and deletes since the task started.
+DDL operations since the task started.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">2</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -996,24 +1064,24 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				RotterDam
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 5일 (토) 18:44">
-			1년, 5개월 전
+<span class="comment-date align-middle" title="Sat 05 Mar 2022 18:44">
+			1 year, 5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">작업 유효성 검사를 통해서만 데이터 유효성 검사를 수행할 수 없으며 DMS 작업이 시작되기 전과 마이그레이션이 완료된 후에 활성화해야 합니다. 매우 일반적인 질문입니다. D가 올바른 선택입니다</div>
+<div class="comment-content">No  datavalidation can ONLY be done using Task Validation  and it has to be  enabled before DMS tasks start and after migration is finished. Its a very common question. D is the correct choice</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1052,21 +1120,21 @@
 				2025flakyt
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 9일 목요일 14:54">
-			1년 8개월 전
+<span class="comment-date align-middle" title="Thu 09 Dec 2021 14:54">
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 정답입니다</div>
+<div class="comment-content">D is the correct answer</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">3</span> times
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">

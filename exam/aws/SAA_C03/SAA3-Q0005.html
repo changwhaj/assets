@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 5 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 주제 1 질문 5 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 5 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 5 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 5 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839762">
 <p class="card-text">
 							
-								회사는 사용자가 업로드한 문서를 Amazon EBS 볼륨에 저장하는 단일 Amazon EC2 인스턴스를 사용하여 AWS에서 웹 애플리케이션을 호스팅하고 있습니다. 더 나은 확장성과 가용성을 위해 회사는 아키텍처를 복제하고 다른 가용 영역에 두 번째 EC2 인스턴스와 EBS 볼륨을 생성하여 둘 다 Application Load Balancer 뒤에 배치했습니다. 이 변경을 완료한 후 사용자는 웹 사이트를 새로 고칠 때마다 문서의 하위 집합 또는 다른 하위 집합을 볼 수 있지만 동시에 모든 문서를 볼 수는 없다고 보고했습니다. <br/>사용자가 모든 문서를 한 번에 볼 수 있도록 하기 위해 솔루션 설계자는 무엇을 제안해야 합니까?
+								한 회사는 사용자가 업로드한 문서를 Amazon EBS 볼륨에 저장하는 단일 Amazon EC2 인스턴스를 사용하여 AWS에서 웹 애플리케이션을 호스팅하고 있습니다. 확장성과 가용성을 높이기 위해 회사는 아키텍처를 복제하고 다른 가용 영역에 두 번째 EC2 인스턴스와 EBS 볼륨을 생성하여 둘 다 Application Load Balancer 뒤에 배치했습니다. 이 변경을 완료한 후 사용자들은 웹 사이트를 새로 고칠 때마다 문서의 하위 집합 중 하나를 볼 수 있지만 동시에 모든 문서를 볼 수는 없다고 보고했습니다. <br/>사용자가 모든 문서를 한 번에 볼 수 있도록 솔루션 설계자는 무엇을 제안해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839762" type="application/json">[{"voted_answers": "C", "vote_count": 67, "is_most_voted": true}]</script>
+<script id="839762" type="application/json">[{"voted_answers": "C", "vote_count": 68, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -92,7 +155,7 @@
 													B.
 												</span> 
 											
-											문서가 있는 서버로 사용자를 안내하도록 Application Load Balancer 구성
+											사용자를 문서가 있는 서버로 연결하도록 Application Load Balancer를 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											두 서버 모두에 요청을 보내도록 Application Load Balancer를 구성합니다. 올바른 서버에서 각 문서 반환
+											두 서버 모두에 요청을 보내도록 Application Load Balancer를 구성합니다. 올바른 서버에서 각 문서를 반환합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,22 +185,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="67 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								D2w
-							</a> 2022년 
-							
-							10 <i>
-							월 10일 오전 11:39</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -159,7 +212,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839762" type="application/json">[{"voted_answers": "C", "vote_count": 67, "is_most_voted": true}]</script>
+<script id="839762" type="application/json">[{"voted_answers": "C", "vote_count": 68, "is_most_voted": true}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -205,22 +258,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="67 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="68 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								D2w
-							</a>
-							
-							at <i>
-							Oct. 10, 2022, 11:39 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,22 +295,22 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 10일 (월) 11:39">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 10일 월요일 11:39">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">동시 또는 동시에 EFS의 키워드</div>
+<div class="comment-content">EFS에 대한 동시 또는 동시 키워드</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">26</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">27</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -297,14 +340,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				mikey2000
+				마이키2000
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 11월 15일 화요일 23:26">
-			9개월 전
+<span class="comment-date align-middle" title="2022년 11월 15일 (화) 23:26">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -315,7 +358,7 @@
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">18</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">19</span> 번
 			 
 				찬성</span>
 <span class="comment-control-error ml-2"></span>
@@ -341,20 +384,20 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 6일 토요일 20:50">
-			3개월, 1주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그리고 다른 사람들에게 명확히 하기 위해 EBS 스냅샷을 통해 하나의 AZ와 다른 AZ에 동일한 EBS 볼륨의 COPIES를 가질 수 있지만 동시 복사 메커니즘이 있는 일종의 글로벌 기능이 있다는 개념과 혼동하지 마십시오.</div>
+<div class="comment-content">다른 사람들에게 명확히 설명하기 위해 EBS 스냅샷을 통해 하나의 AZ와 다른 AZ에서 동일한 EBS 볼륨의 사본을 가질 수 있지만 이를 동시 복사 메커니즘이 있는 일종의 글로벌 기능을 갖는다는 개념과 혼동하지 마십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -397,7 +440,7 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 27일 목요일 06:37">
-			2주, 6일 전
+			1 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -411,7 +454,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -443,12 +486,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 17일 (월) 17:00">
-			1 개월 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">대답은 C입니다. 두 EBS 볼륨의 데이터를 Amazon EFS로 복사합니다. 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 현재 아키텍처는 각 EC2 인스턴스에 대해 하나씩 두 개의 개별 EBS 볼륨을 사용하고 있습니다. 즉, 각 인스턴스에는 문서의 하위 집합만 있습니다. 사용자가 웹사이트를 새로고침하면 Application Load Balancer는 무작위로 두 인스턴스 중 하나로 사용자를 안내합니다. 사용자의 문서가 지정된 인스턴스에 없으면 문서를 볼 수 없습니다.</div>
+<div class="comment-content">대답은 C입니다. 두 EBS 볼륨의 데이터를 Amazon EFS로 복사합니다. 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 현재 아키텍처는 EC2 인스턴스당 하나씩, 두 개의 개별 EBS 볼륨을 사용하고 있습니다. 즉, 각 인스턴스에는 문서의 하위 집합만 있습니다. 사용자가 웹 사이트를 새로 고치면 Application Load Balancer는 사용자를 무작위로 두 인스턴스 중 하나로 연결합니다. 사용자의 문서가 지정된 인스턴스에 없으면 해당 문서를 볼 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -457,7 +500,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -488,13 +531,13 @@
 				제임스2033
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 15일 (토) 07:57">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 15일 토요일 07:57">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">키워드 "사용자 업로드 문서 저장". Application Load Balancer 뒤에 있는 두 개의 EC2 인스턴스. https://docs.aws.amazon.com/efs/latest/ug/how-it-works.html#efs-regional-ec2 를 참조하십시오. 다이어그램에서 다른 가용 영역의 Per Amazon EC2 및 Amazon Elastic File System이 이 사례를 지원합니다. 솔루션: Amazon Elastic File System, https://aws.amazon.com/efs/ 참조. "Amazon EFS 파일 시스템 생성, 마운트 및 설정" https://www.youtube.com/watch?v=Aux37Nwe5nc . "Amazon EFS 개요" https://www.youtube.com/watch?v=vAV4ASDnbN0 .</div>
+<div class="comment-content">키워드는 "사용자가 업로드한 문서를 저장합니다"입니다. Application Load Balancer 뒤에 있는 두 개의 EC2 인스턴스. https://docs.aws.amazon.com/efs/latest/ug/how-it-works.html#efs-regional-ec2 를 참조하십시오. 다이어그램에서 다른 가용 영역의 Amazon EC2 기준과 Amazon Elastic File System은 이 사례를 지원합니다. 해결 방법: Amazon Elastic File System은 https://aws.amazon.com/efs/를 참조하세요. "Amazon EFS 파일 시스템 생성, 마운트 및 설정" https://www.youtube.com/watch?v=Aux37Nwe5nc . "Amazon EFS 개요" https://www.youtube.com/watch?v=vAV4ASDnbN0 .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -503,7 +546,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -531,15 +574,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				miki111
+				미키111
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 12일 수 17:42">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 12일 수요일 17:42">
+			1개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C는 요구 사항을 충족했습니다.</div>
+<div class="comment-content">옵션 C가 요구 사항을 충족했습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -548,7 +591,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -576,15 +619,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				프로저
+				프로조르
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 06일 목요일 14:41">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 6일 목요일 14:41">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">EFS를 사용하지 않으려면 EBS에서 Sicky 세션을 사용할 수 있습니다.</div>
+<div class="comment-content">EFS를 사용하고 싶지 않은 경우 EBS에서 Sicky 세션을 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -593,7 +636,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -624,12 +667,12 @@
 				카피노
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 03일 월요일 18:40">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 7월 3일 (월) 18:40">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">EFS 대기 시간을 줄이고 모든 사용자가 한 번에 모든 파일을 볼 수 있습니다.</div>
+<div class="comment-content">EFS 대기 시간을 줄이고 모든 사용자가 모든 파일을 한 번에 볼 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -638,7 +681,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -669,13 +712,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 18:28">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 18:28">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Application Load Balancer 뒤에 여러 EC2 인스턴스 및 EBS 볼륨이 있는 복제된 아키텍처에서 사용자가 모든 문서를 한 번에 볼 수 있도록 하려면 가장 적합한 솔루션은 옵션 C입니다. 두 EBS 볼륨의 데이터를 Amazon EFS(Elastic File System)로 복사 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 요약하면 Amazon EFS에 데이터를 복사하고 문서 저장에 Amazon EFS를 사용하도록 애플리케이션을 수정하는 옵션 C는 사용자가 복제된 아키텍처에서 모든 문서를 한 번에 볼 수 있도록 하는 가장 적합한 솔루션입니다. Amazon EFS는 확장성, 가용성 및 공유 액세스를 제공하므로 두 EC2 인스턴스 모두 문서에 원활하게 액세스하고 동기화할 수 있습니다.</div>
+<div class="comment-content">사용자가 Application Load Balancer 뒤에 여러 EC2 인스턴스와 EBS 볼륨이 있는 복제 아키텍처에서 모든 문서를 한 번에 볼 수 있도록 하기 위해 가장 적합한 솔루션은 옵션 C입니다. 두 EBS 볼륨의 데이터를 Amazon EFS(Elastic File System)로 복사합니다. 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 요약하면, Amazon EFS에 데이터를 복사하고 Amazon EFS를 문서 저장으로 사용하도록 애플리케이션을 수정하는 옵션 C는 사용자가 복제된 아키텍처에서 모든 문서를 한 번에 볼 수 있도록 하는 가장 적합한 솔루션입니다. Amazon EFS는 확장성, 가용성 및 공유 액세스를 제공하므로 두 EC2 인스턴스 모두 문서에 원활하게 액세스하고 동기화할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -684,7 +727,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -712,11 +755,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				알버트무넨
+				알베르무넨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 16일 금요일 11:27">
-			2 달전
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -729,7 +772,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -761,7 +804,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 1일 목요일 14:56">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -775,7 +818,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -806,13 +849,13 @@
 				Praveen_Ch
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 23일 화요일 22:07">
-			2개월, 3주 전
+<span class="comment-date align-middle" title="2023년 5월 23일 (화) 22:07">
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 다른 옵션이 모든 데이터를 한 곳에 두지 않기 때문입니다.</div>
+<div class="comment-content">C는 다른 옵션이 모든 데이터를 한 곳에 저장하지 않기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -821,7 +864,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -853,7 +896,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 21일 일요일 02:12">
-			2개월, 3주 전
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -866,7 +909,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -894,15 +937,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				abhishek2021
+				2021년 아비셰크
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 20일 (토) 03:28">
-			2개월, 4주 전
+<span class="comment-date align-middle" title="2023년 5월 20일 토요일 03:28">
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 최소값에 정렬된 B입니다. 흑백 사용 및 소요 시간은 옵션 C에 따라 1G 인터넷을 통해 전송하는 것과 거의 같은 6-7일입니다.</div>
+<div class="comment-content">min에 정렬되어 있으므로 대답은 B입니다. 흑백 사용량과 소요 시간은 6~7일로 옵션 C에 따라 1G 인터넷을 통해 전송하는 것과 거의 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -911,7 +954,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -943,12 +986,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 14일 일요일 08:30">
-			3 개월 전에
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -957,7 +1000,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -988,12 +1031,12 @@
 				[제거됨]
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 26일 수 17:59">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 26일 수요일 17:59">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">기여자 액세스를 기꺼이 공유하려는 사람이 있으면 vinaychethi99@gmail.com으로 편지를 보내주십시오.</div>
+<div class="comment-content">기여자 액세스 권한을 공유하고 싶은 사람이 있으면 vinaychethi99@gmail.com으로 이메일을 보내주세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1002,7 +1045,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1033,12 +1076,12 @@
 				IMTechguy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 22일 (토) 21:44">
-			3개월, 3주 전
+<span class="comment-date align-middle" title="2023년 4월 22일 토요일 21:44">
+			4 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">두 볼륨에 데이터를 복사하면 데이터의 일관성이 보장되지 않기 때문에 옵션 A는 좋은 솔루션이 아닙니다. 옵션 B는 로드 밸런서가 어떤 문서가 어떤 서버에 저장되어 있는지 알고 있어야 하므로 유지 관리가 어렵습니다. 옵션 C는 실행 가능한 솔루션이지만 EBS 대신 Amazon EFS를 사용하도록 애플리케이션을 수정해야 할 수 있습니다. 옵션 D는 두 서버에 요청을 분배하고 올바른 서버에서 올바른 문서를 반환하기 때문에 좋은 솔루션입니다. 일관성을 위해 각 사용자의 요청이 동일한 서버로 전달되도록 로드 밸런서에서 세션 고정성을 구성하여 이를 달성할 수 있습니다. 따라서 정답은 D입니다.</div>
+<div class="comment-content">옵션 A는 데이터를 두 볼륨 모두에 복사하면 데이터의 일관성이 보장되지 않으므로 좋은 솔루션이 아닙니다. 옵션 B에서는 어떤 문서가 어떤 서버에 저장되어 있는지를 Load Balancer가 알아야 하므로 유지 관리가 어렵습니다. 옵션 C는 실행 가능한 솔루션이지만 EBS 대신 Amazon EFS를 사용하려면 애플리케이션을 수정해야 할 수도 있습니다. 옵션 D는 요청을 두 서버 모두에 분산하고 올바른 서버에서 올바른 문서를 반환하므로 좋은 솔루션입니다. 이는 일관성을 위해 각 사용자의 요청이 동일한 서버로 전달되도록 Load Balancer에서 세션 고정성을 구성하여 달성할 수 있습니다. 따라서 정답은 D이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1047,7 +1090,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1075,16 +1118,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				푹부
+				푸크부
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 03:17">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 화 03:17">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">키워드: 두 번째 EC2 인스턴스 및 EBS 볼륨. 그들은 문서의 한 하위 집합 또는 다른 하위 집합을 볼 수 있지만 동시에 모든 문서를 볼 수는 없습니다. EBS: 하나의 인스턴스에 연결(특수 EBS io1, io2는 여러 인스턴스에 연결할 수 있지만 많지 않음) EFS: 여러 인스턴스에 연결할 수 있음 A: 부정확 - EBS 볼륨에는 실행 중인 EBS 볼륨에서 실행 중인 EBS 볼륨으로 데이터를 복사하는 기능이 없습니다. . B: 부정확 - 고정 세션을 사용하여 동일한 사용자를 동일한 서버로 전달할 수 있지만 사용자가 세션을 잃으면 사용자는 다른 서버로 전달될 수 있습니다. C: 맞습니다. 이제 2개의 인스턴스가 하나의 EFS 데이터 스토리지를 가리키기 때문에 사용자는 두 데이터를 모두 볼 수 있습니다. D: 틀림 - 트래픽 미러링만 사용하여 두 서버에 요청을 보냅니다. Application Load Balancer는 서버 간에 워크로드의 균형을 맞추도록 설계되었기 때문에 두 서버에 대한 요청 전송을 지원하지 않습니다. 또한 ALB는 두 서버의 문서를 결합하여 반환할 수 없습니다.</div>
+<div class="comment-content">키워드: 두 번째 EC2 인스턴스 및 EBS 볼륨. 그들은 문서의 하위 집합 중 하나를 볼 수 있지만 동시에 모든 문서를 볼 수는 없습니다. EBS: 하나의 인스턴스에 연결됨(특수 EBS io1, io2는 여러 인스턴스에 연결될 수 있지만 많지는 않음) EFS: 여러 인스턴스에 연결될 수 있음 A: 올바르지 않음 - EBS 볼륨에는 실행 중인 EBS 볼륨에서 실행 중인 EBS 볼륨으로 데이터를 복사하는 기능이 없습니다. . B: 올바르지 않음 - 고정 세션을 사용하여 동일한 사용자를 동일한 서버로 전달할 수 있지만 사용자가 세션을 잃으면 사용자가 다른 서버로 전달될 수 있습니다. C: 정답 - 이제 2개의 인스턴스가 하나의 EFS 데이터 스토리지를 가리키므로 사용자는 두 데이터를 모두 볼 수 있습니다. D: 틀림 - 트래픽 미러링만 사용하여 두 서버 모두에 요청을 보냈습니다. Application Load Balancer는 서버 간 작업 부하의 균형을 맞추도록 설계되었기 때문에 두 서버 모두에 대한 요청 보내기를 지원하지 않습니다. 또한 ALB는 두 서버의 문서를 결합하여 반환할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1093,7 +1136,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1125,12 +1168,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 30일 목요일 18:53">
-			4개월, 2주 전
+			4개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 두 EBS 볼륨의 데이터를 Amazon EFS로 복사하고 애플리케이션을 수정하여 새 문서를 EFS에 저장하도록 제안합니다. 이렇게 하면 EFS가 여러 인스턴스에 동시에 탑재할 수 있는 공유 파일 저장소 서비스이므로 두 서버에서 모든 문서에 액세스할 수 있습니다. 또한 새 문서를 EFS에 저장하도록 응용 프로그램을 수정하면 두 서버에서 새 문서를 모두 사용할 수 있습니다.</div>
+<div class="comment-content">옵션 C는 두 EBS 볼륨의 데이터를 Amazon EFS로 복사하고 새 문서를 EFS에 저장하도록 애플리케이션을 수정하는 것을 제안합니다. EFS는 여러 인스턴스에 동시에 탑재할 수 있는 공유 파일 스토리지 서비스이므로 이렇게 하면 두 서버 모두에서 모든 문서에 액세스할 수 있습니다. 또한 새 문서를 EFS에 저장하도록 애플리케이션을 수정하면 새 문서를 두 서버 모두에서 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1139,7 +1182,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1170,8 +1213,8 @@
 				알렉시스클라우드
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 04:24">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 화 04:24">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1184,7 +1227,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1215,13 +1258,13 @@
 				티엔호보스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 07:59">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 07:59">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EBS AZ 잠김 bạn ơi :)</div>
+<div class="comment-content">EBS AZ가 잠겼습니다 :)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1230,7 +1273,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1258,16 +1301,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				iamRohan카우식
+				iamRohanKaushik
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 21일 화요일 05:49">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 21일 (화) 05:49">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답은 C입니다.</div>
+<div class="comment-content">답은 C이다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1276,7 +1319,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1307,13 +1350,13 @@
 				빌렐500
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 23일 목요일 13:44">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 23일 (목) 13:44">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EFS는 사용자가 파일을 업로드하고 삭제할 때 자동으로 확장됩니다. EBS 볼륨은 볼륨 유형을 재구성하여 수직으로 확장하고 추가 EC2 볼륨을 관리하여 수평으로 확장할 수 있습니다.</div>
+<div class="comment-content">EFS는 사용자가 파일을 업로드하고 삭제함에 따라 자동으로 확장됩니다. EBS 볼륨은 볼륨 유형을 재구성하여 수직으로 확장할 수 있고, 추가 EC2 볼륨을 관리하여 수평으로 확장할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1322,7 +1365,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1353,8 +1396,8 @@
 				부이두부
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 13일 (월) 04:28">
-			6 개월 전
+<span class="comment-date align-middle" title="2023년 2월 13일 월요일 04:28">
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1368,7 +1411,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1396,11 +1439,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				dvoaviarison
+				드보아비아리슨
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 10일 금요일 04:49">
-			6개월, 1주 전
+			6개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1414,7 +1457,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1446,11 +1489,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 2월 4일 토요일 03:38">
-			6개월, 1주 전
+			6개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C가 의미가 있습니다.</div>
+<div class="comment-content">옵션 C가 합리적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1459,7 +1502,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1491,12 +1534,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 6일 금요일 15:56">
-			7개월, 1주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Amazon Elastic File System(EFS)은 사용자가 Amazon 클라우드에서 데이터를 저장하고 액세스할 수 있도록 하는 완전 관리형 파일 스토리지 서비스입니다. EFS는 네트워크를 통해 액세스할 수 있으며 여러 Amazon EC2 인스턴스에 탑재할 수 있습니다. 두 EBS 볼륨의 데이터를 EFS로 복사하고 애플리케이션을 수정하여 새 문서를 EFS에 저장하면 사용자는 모든 문서에 동시에 액세스할 수 있습니다.</div>
+<div class="comment-content">Amazon Elastic File System(EFS)은 사용자가 Amazon 클라우드에 데이터를 저장하고 액세스할 수 있게 해주는 완전 관리형 파일 스토리지 서비스입니다. EFS는 네트워크를 통해 액세스할 수 있으며 여러 Amazon EC2 인스턴스에 탑재될 수 있습니다. 두 EBS 볼륨의 데이터를 EFS로 복사하고 새 문서를 EFS에 저장하도록 애플리케이션을 수정하면 사용자는 동시에 모든 문서에 액세스할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1505,7 +1548,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1533,16 +1576,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 06:23">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 (화) 06:23">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">사용자가 모든 문서를 한 번에 볼 수 있도록 솔루션 설계자는 옵션 C: 두 EBS 볼륨에서 Amazon EFS로 데이터 복사를 제안해야 합니다. 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 옵션 C에는 두 EBS 볼륨의 데이터를 Amazon EFS(Elastic File System)로 복사하고 새 문서를 EFS에 저장하도록 애플리케이션을 수정하는 작업이 포함됩니다. Amazon EFS는 여러 EC2 인스턴스의 파일을 동시에 저장하고 액세스할 수 있는 확장 가능한 완전 관리형 파일 스토리지 서비스입니다. 데이터를 EFS로 이동하고 응용 프로그램을 수정하여 새 문서를 EFS에 저장하면 응용 프로그램은 단일 중앙 위치에서 모든 문서에 액세스할 수 있으므로 사용자는 모든 문서를 한 번에 볼 수 있습니다. 전반적인,</div>
+<div class="comment-content">사용자가 모든 문서를 한 번에 볼 수 있도록 솔루션 설계자는 옵션 C를 제안해야 합니다. 두 EBS 볼륨의 데이터를 Amazon EFS로 복사합니다. 새 문서를 Amazon EFS에 저장하도록 애플리케이션을 수정합니다. 옵션 C에는 두 EBS 볼륨의 데이터를 Amazon Elastic File System(EFS)으로 복사하고 새 문서를 EFS에 저장하도록 애플리케이션을 수정하는 작업이 포함됩니다. Amazon EFS는 여러 EC2 인스턴스의 파일을 동시에 저장하고 액세스할 수 있는 확장 가능한 완전 관리형 파일 스토리지 서비스입니다. 데이터를 EFS로 이동하고 새 문서를 EFS에 저장하도록 애플리케이션을 수정하면 애플리케이션은 단일 중앙 위치에서 모든 문서에 액세스할 수 있으므로 사용자는 모든 문서를 한 번에 볼 수 있습니다. 전반적인,</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1551,7 +1594,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1571,15 +1614,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 20일 화요일 06:24">
-			7개월, 4주 전
+<span class="comment-date align-middle" title="2022년 12월 20일 화 06:24">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">***잘못됨*** 옵션 A에는 두 EBS 볼륨에 모든 문서가 포함되도록 데이터를 복사하는 작업이 포함됩니다. 이 옵션은 데이터가 여전히 두 개의 별도 EBS 볼륨에 저장되어 있고 애플리케이션이 모든 문서를 검색하기 위해 여전히 두 볼륨에서 읽어야 하기 때문에 문제를 해결하지 못합니다. 옵션 B에는 문서가 있는 서버로 사용자를 안내하도록 Application Load Balancer를 구성하는 작업이 포함됩니다. 이 옵션은 사용자가 찾고 있는 문서가 있는 서버로 항상 연결되지 않을 수 있으므로 문제를 해결하지 못합니다. 옵션 D에는 두 서버 모두에 요청을 보내고 올바른 서버에서 각 문서를 반환하도록 Application Load Balancer를 구성하는 작업이 포함됩니다. 이 옵션은 애플리케이션이 두 서버 모두에 요청을 보내고 두 서버로부터 응답을 수신 및 처리해야 하므로 효율적인 솔루션이 아닙니다.</div>
+<div class="comment-content">***잘못됨*** 옵션 A에는 두 EBS 볼륨에 모든 문서가 포함되도록 데이터를 복사하는 작업이 포함됩니다. 데이터가 여전히 두 개의 별도 EBS 볼륨에 저장되어 있고 애플리케이션이 모든 문서를 검색하려면 두 볼륨에서 읽어야 하기 때문에 이 옵션은 문제를 해결하지 못합니다. 옵션 B에는 사용자를 문서가 있는 서버로 연결하도록 Application Load Balancer를 구성하는 작업이 포함됩니다. 사용자가 찾고 있는 문서가 있는 서버로 연결되지 않을 수도 있으므로 이 옵션은 문제를 해결하지 못합니다. 옵션 D에는 두 서버 모두에 요청을 보내고 올바른 서버에서 각 문서를 반환하도록 Application Load Balancer를 구성하는 작업이 포함됩니다. 이 옵션은 애플리케이션이 두 서버 모두에 요청을 보내고 두 서버로부터 응답을 수신 및 처리해야 하므로 효율적인 솔루션이 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1588,7 +1631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1627,13 +1670,13 @@
 				파자발
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 19일 (월) 13:27">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 19일 월요일 13:27">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EFS는 여러 AZ의 파일을 단일 스토리지에 저장하는 데 유용합니다. 반면에 EBS 파일은 EBS 볼륨과 동일한 AZ 내에 있어야 합니다.</div>
+<div class="comment-content">EFS는 여러 AZ의 파일을 단일 스토리지에 저장하는 데 유용합니다. 반면, EBS 파일의 경우 EBS 볼륨과 동일한 AZ 내에 있어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1642,7 +1685,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1674,12 +1717,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 19일 (월) 07:37">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">https://aws.amazon.com/efs/when-to-choose-efs/ Amazon EFS는 AWS 클라우드 및 온프레미스 서버의 컴퓨팅 인스턴스와 함께 사용할 공유 파일 스토리지를 제공합니다. 공유 파일 액세스가 필요한 애플리케이션은 Amazon EFS를 사용하여 수천 명의 클라이언트에 동시에 높은 집계 처리량을 제공하는 안정적인 파일 스토리지를 사용할 수 있습니다.</div>
+<div class="comment-content">https://aws.amazon.com/efs/when-to-choose-efs/ Amazon EFS는 AWS 클라우드 및 온프레미스 서버의 컴퓨팅 인스턴스와 함께 사용할 수 있는 공유 파일 스토리지를 제공합니다. 공유 파일 액세스가 필요한 애플리케이션은 Amazon EFS를 사용하여 수천 개의 클라이언트에 동시에 높은 집계 처리량을 제공하는 안정적인 파일 스토리지를 사용할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1688,7 +1731,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1720,12 +1763,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금요일 17:52">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">EFS는 AZ 전체에서 여러 EC2 인스턴스에 탑재할 수 있습니다. 성능은 대기 시간 및 처리량이 더 높습니다.</div>
+<div class="comment-content">EFS는 AZ 전반에 걸쳐 여러 EC2 인스턴스에 탑재될 수 있습니다. 성능은 대기 시간 및 처리량이 더 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1734,7 +1777,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1766,7 +1809,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 16일 금 13:03">
-			8개월 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1780,7 +1823,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1808,16 +1851,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				javitech83
+				자비텍83
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 4일 일요일 10:33">
-			8개월, 2주 전
+			8개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">씨가 맞다</div>
+<div class="comment-content">ㄷ이 맞다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1826,7 +1869,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1857,13 +1900,13 @@
 				치즈929
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 22일 화요일 15:06">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 22일 (화) 15:06">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C는 이치에 맞는 유일한 솔루션입니다.</div>
+<div class="comment-content">C는 의미가 있는 유일한 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1872,7 +1915,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1903,12 +1946,12 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 21일 월요일 13:22">
-			8개월, 4주 전
+<span class="comment-date align-middle" title="2022년 11월 21일 (월) 13:22">
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">다 맞다</div>
+<div class="comment-content">C가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1917,7 +1960,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1948,12 +1991,12 @@
 				아제자
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 9일 수요일 01:58">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 9일 수 01:58">
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Amazon Elastic File System은 확장 가능하고 탄력적이며 동시성을 제공하도록 설계된 Amazon Web Services에서 제공하는 클라우드 스토리지 서비스입니다. 답은 C</div>
+<div class="comment-content">Amazon Elastic File System은 확장 가능하고 탄력적이며 동시성을 제공하도록 설계된 Amazon Web Services에서 제공하는 클라우드 스토리지 서비스입니다. 답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1962,7 +2005,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1990,15 +2033,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오후2229
+				pm2229
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 19:31">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 19:31">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C입니다. EFS는 AZ 전체에서 여러 EC2 인스턴스에 탑재할 수 있습니다. 성능은 대기 시간 및 처리량이 더 높습니다.</div>
+<div class="comment-content">C이며 EFS는 AZ 전체의 여러 EC2 인스턴스에 탑재될 수 있습니다. 성능은 대기 시간 및 처리량이 더 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2007,7 +2050,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2039,12 +2082,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 29일 토요일 00:03">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">안은 C</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2053,7 +2096,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2085,12 +2128,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 19일 수 00:39">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">답은 C입니다. 적응형 처리량 – EFS의 성능은 스토리지에 따라 인라인으로 확장할 수 있으며 갑작스러운 대용량 파일 덤프에 대해 더 높은 처리량으로 작동하여 최대 500,000 IOPS 또는 초당 10GB에 도달합니다. 추가 접근성 – EFS는 다른 EC2 인스턴스에서 탑재할 수 있지만 VPC 피어링을 사용하여 AWS 지역 경계를 넘을 수도 있습니다.</div>
+<div class="comment-content">대답은 C입니다. 적응형 처리량 – EFS의 성능은 스토리지에 맞춰 인라인으로 확장될 수 있으며 갑작스러운 대용량 파일 덤프에 대해 더 높은 처리량으로 작동하여 최대 500,000 IOPS 또는 초당 10GB에 도달합니다. 완전히 탄력적입니다. 일단 실행되면 EFS 인스턴스를 설치하면 애플리케이션 성능 저하나 프로비저닝에 대한 걱정 없이 파일을 추가할 수 있습니다. 추가 접근성 – EFS는 다른 EC2 인스턴스에서 마운트될 수 있지만 VPC 피어링을 사용하여 AWS 지역 경계를 넘을 수도 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2099,7 +2142,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2130,8 +2173,8 @@
 				퀸101
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 16일 일 20:52">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 16일 일요일 20:52">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2144,7 +2187,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2175,13 +2218,13 @@
 				보보차우
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 12일 수 04:37">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 12일 수요일 04:37">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">ALB가 세션 ID 같은 것을 구성할 수 있는지 확실하지 않으므로 C를 선택합니다.</div>
+<div class="comment-content">ALB가 세션 ID와 같은 구성을 할 수 있는지 확신할 수 없으므로 C를 선택합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2190,7 +2233,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2245,7 +2288,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 10 Oct 2022 11:39">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2258,7 +2301,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">26</span> times
+				upvoted <span class="upvote-count">27</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2294,7 +2337,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 15 Nov 2022 23:26">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2306,7 +2349,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">18</span> times
+				upvoted <span class="upvote-count">19</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2331,7 +2374,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 06 May 2023 20:50">
-			3 months, 1 week ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2343,7 +2386,7 @@
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">3</span> times
+				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2387,7 +2430,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 27 Jul 2023 06:37">
-			2 weeks, 6 days ago
+			1 month ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2433,7 +2476,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 17:00">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2481,7 +2524,7 @@ The current architecture is using two separate EBS volumes, one for each EC2 ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 15 Jul 2023 07:57">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2529,7 +2572,7 @@ Solution: Amazon Elastic File System, see https://aws.amazon.com/efs/ . "Amazon 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Jul 2023 17:42">
-			1 month ago
+			1 month, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2574,7 +2617,7 @@ Solution: Amazon Elastic File System, see https://aws.amazon.com/efs/ . "Amazon 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 06 Jul 2023 14:41">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2619,7 +2662,7 @@ Solution: Amazon Elastic File System, see https://aws.amazon.com/efs/ . "Amazon 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 03 Jul 2023 18:40">
-			1 month, 2 weeks ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2664,7 +2707,7 @@ Solution: Amazon Elastic File System, see https://aws.amazon.com/efs/ . "Amazon 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 18:28">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2712,7 +2755,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Jun 2023 11:27">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2757,7 +2800,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 01 Jun 2023 14:56">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2803,7 +2846,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 23 May 2023 22:07">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2849,7 +2892,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 May 2023 02:12">
-			2 months, 3 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2894,7 +2937,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 20 May 2023 03:28">
-			2 months, 4 weeks ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2939,7 +2982,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 14 May 2023 08:30">
-			3 months ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2985,7 +3028,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Apr 2023 17:59">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3030,7 +3073,7 @@ In summary, Option C, which involves copying the data to Amazon EFS and modifyin
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 22 Apr 2023 21:44">
-			3 months, 3 weeks ago
+			4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3083,7 +3126,7 @@ Therefore, the correct answer is D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 03:17">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3138,7 +3181,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Mar 2023 18:53">
-			4 months, 2 weeks ago
+			4 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3184,7 +3227,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 04:24">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3229,7 +3272,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 07:59">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3275,7 +3318,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 21 Mar 2023 05:49">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3321,7 +3364,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Feb 2023 13:44">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3367,7 +3410,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 13 Feb 2023 04:28">
-			6 months ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3413,7 +3456,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 10 Feb 2023 04:49">
-			6 months, 1 week ago
+			6 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3459,7 +3502,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Feb 2023 03:38">
-			6 months, 1 week ago
+			6 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3504,7 +3547,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 06 Jan 2023 15:56">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3550,7 +3593,7 @@ D: Incorrect - We only use Traffic Mirroring to sent request to both servers. Ap
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 06:23">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3592,7 +3635,7 @@ Overall, Option C is the most effective solution for ensuring that users see all
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 20 Dec 2022 06:24">
-			7 months, 4 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3650,7 +3693,7 @@ Option D involves configuring the Application Load Balancer to send the request 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 13:27">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3696,7 +3739,7 @@ Option D involves configuring the Application Load Balancer to send the request 
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Dec 2022 07:37">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3743,7 +3786,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 17:52">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3789,7 +3832,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 16 Dec 2022 13:03">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3835,7 +3878,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 04 Dec 2022 10:33">
-			8 months, 2 weeks ago
+			8 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3881,7 +3924,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 22 Nov 2022 15:06">
-			8 months, 3 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3927,7 +3970,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 21 Nov 2022 13:22">
-			8 months, 4 weeks ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3972,7 +4015,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 09 Nov 2022 01:58">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4017,7 +4060,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 19:31">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4062,7 +4105,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 29 Oct 2022 00:03">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4108,7 +4151,7 @@ Amazon EFS provides shared file storage for use with compute instances in the AW
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 00:39">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4157,7 +4200,7 @@ Additional accessibility – EFS can be mounted from different EC2 instances, bu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 16 Oct 2022 20:52">
-			10 months ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4202,7 +4245,7 @@ Additional accessibility – EFS can be mounted from different EC2 instances, bu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 12 Oct 2022 04:37">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

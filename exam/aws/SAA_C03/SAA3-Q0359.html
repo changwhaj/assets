@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 359 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 359 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 359 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 359 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 359 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="869488">
 <p class="card-text">
 							
-								병원은 환자 기록을 Amazon S3 버킷에 저장해야 합니다. 병원의 규정 준수 팀은 모든 PHI(보호된 건강 정보)가 전송 및 저장 중에 암호화되도록 해야 합니다. 규정 준수 팀은 미사용 데이터에 대한 암호화 키를 관리해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
+								병원은 Amazon S3 버킷에 환자 기록을 저장해야 합니다. 병원의 규정 준수 팀은 모든 보호 건강 정보(PHI)가 전송 중이거나 저장되지 않았는지 확인해야 합니다. 규정 준수 팀은 저장 데이터의 암호화 키를 관리해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											AWS Certificate Manager(ACM)에서 퍼블릭 SSL/TLS 인증서를 생성합니다. 인증서를 Amazon S3와 연결합니다. AWS KMS 키(SSE-KMS)로 서버 측 암호화를 사용하도록 각 S3 버킷에 대한 기본 암호화를 구성합니다. KMS 키를 관리할 규정 준수 팀을 할당합니다.
+											ACM(AWS Certificate Manager)에서 공개 SSL/TLS 인증서를 생성합니다. 인증서를 Amazon S3와 연결합니다. AWS KMS 키(SSE-KMS)로 서버 측 암호화를 사용하도록 각 S3 버킷에 대한 기본 암호화를 구성합니다. KMS 키를 관리할 규정 준수 팀을 할당합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -108,11 +171,11 @@
 													D.
 												</span> 
 											
-											S3 버킷 정책에서 aws:SecureTransport 조건을 사용하여 HTTPS(TLS)를 통한 암호화된 연결만 허용합니다. Amazon Macie를 사용하여 Amazon S3에 저장된 민감한 데이터를 보호하십시오. Macie를 관리할 규정 준수 팀을 지정합니다.
+											S3 버킷 정책에서 aws:SecureTransport 조건을 사용하여 HTTPS(TLS)를 통한 암호화된 연결만 허용합니다. Amazon Macie를 사용하여 Amazon S3에 저장된 민감한 데이터를 보호하세요. Macie를 관리할 규정 준수 팀을 할당합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 79%; display: flex;" title="">씨 (79%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">디 (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="15 votes." data-toggle="tooltip" role="progressbar" style="width: 79%; display: flex;" title="">C (79%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="3 votes." data-toggle="tooltip" role="progressbar" style="width: 16%; display: flex;" title="">D (16%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 5%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								NolaHOla
-							</a> 
-							
-							2023 <i>
-							년 2월 21일 오후 2:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								NolaHOla
-							</a>
-							
-							at <i>
-							Feb. 21, 2023, 2:02 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,23 +291,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 2월 21일 화요일 14:02">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 21일 (화) 14:02">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C는 규정 준수 팀이 서버 쪽 암호화에 사용되는 KMS 키를 관리할 수 있도록 하여 암호화 키에 필요한 제어 기능을 제공하므로 올바른 것입니다. 또한 버킷 정책에서 "aws:SecureTransport" 조건을 사용하면 S3 버킷에 대한 모든 연결이 전송 중에 암호화됩니다. 옵션 B는 오해의 소지가 있지만 SSE-S3를 사용하면 암호화 키가 규정 준수 팀이 아닌 AWS에서 관리됩니다.</div>
+<div class="comment-content">옵션 C는 규정 준수 팀이 서버 측 암호화에 사용되는 KMS 키를 관리할 수 있게 하여 암호화 키에 대해 필요한 제어를 제공하므로 정확합니다. 또한 버킷 정책에서 "aws:SecureTransport" 조건을 사용하면 S3 버킷에 대한 모든 연결이 전송 중에 암호화됩니다. 옵션 B는 오해의 소지가 있을 수 있지만 SSE-S3를 사용하면 암호화 키는 규정 준수 팀이 아닌 AWS에서 관리됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -287,8 +330,8 @@
 				로노잭
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 24일 금요일 16:00">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 24일 금 16:00">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -301,7 +344,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -344,12 +387,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 5월 18일 목요일 15:22">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">D - 될 수 없는 이유 - Amazon Macie는 기계 학습(ML) 및 패턴 일치를 사용하여 중요한 데이터를 검색하고 보호하는 데 도움이 되는 데이터 보안 서비스입니다. Macie는 민감한 정보를 발견하고 보호에 도움이 될 수 있지만 보호할 수는 없습니다.</div>
+<div class="comment-content">D - 그럴 수 없습니다. - Amazon Macie는 기계 학습(ML) 및 패턴 일치를 사용하여 민감한 데이터를 검색하고 보호하는 데이터 보안 서비스입니다. Macie는 민감한 정보를 발견하고 보호하는 데 도움을 줄 수 있지만 보호할 수는 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -390,12 +433,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 12일 금요일 06:29">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">B는 암호화 키에 대한 제어를 원하지 않는 경우 작동할 수 있습니다.</div>
+<div class="comment-content">B는 암호화 키에 대한 제어를 원하지 않으면 작업할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -404,7 +447,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -432,16 +475,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				러스99
+				Russs99
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 28일 화요일 00:03">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 28일 화 00:03">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">옵션 A는 AWS Certificate Manager에서 퍼블릭 SSL/TLS 인증서를 생성하고 이를 Amazon S3와 연결할 것을 제안합니다. 이 단계는 데이터가 전송 중에 암호화되도록 합니다. 그러면 각 S3 버킷의 기본 암호화가 AWS KMS 키(SSE-KMS)를 사용한 서버 측 암호화를 사용하도록 구성되어 S3에 저장된 데이터에 유휴 암호화를 제공합니다. 이 솔루션에서 규정 준수 팀은 KMS 키를 관리하여 미사용 데이터의 암호화 키를 제어하도록 합니다.</div>
+<div class="comment-content">옵션 A는 AWS Certificate Manager에서 공개 SSL/TLS 인증서를 생성하고 이를 Amazon S3와 연결하는 것을 제안합니다. 이 단계에서는 전송 중에 데이터가 암호화됩니다. 그런 다음 각 S3 버킷의 기본 암호화는 AWS KMS 키(SSE-KMS)를 사용한 서버 측 암호화를 사용하도록 구성됩니다. 이는 S3에 저장된 데이터에 대해 저장 암호화를 제공합니다. 이 솔루션에서는 규정 준수 팀이 KMS 키를 관리하여 미사용 데이터의 암호화 키를 제어하도록 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -450,7 +493,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,12 +516,12 @@
 				슈레스트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 18일 화요일 02:05">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 18일 (화) 02:05">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">ACM은 Amazon S3 버킷과 직접 통합할 수 없습니다.</div>
+<div class="comment-content">ACM은 Amazon S3 버킷과 직접 통합될 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -487,7 +530,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -526,13 +569,13 @@
 				보피
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 25일 (토) 18:09">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 25일 토요일 18:09">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C가 정답인 것 같습니다. 옵션 A도 가깝지만 ACM은 Amazon S3 버킷과 직접 통합할 수 없으므로 TLS를 S3에 연결할 수 없습니다. ALB, API 게이트웨이 및 CloudFront 및 Global Accelerator에만 TLS 인증서를 연결할 수 있지만 EC2 인스턴스 및 S3 버킷에는 확실히 연결할 수 없습니다.</div>
+<div class="comment-content">옵션 C가 정답인 것 같습니다. 옵션 A도 비슷하지만 ACM은 Amazon S3 버킷과 직접 통합할 수 없으므로 TLS를 S3에 연결할 수 없습니다. ALB, API Gateway, CloudFront 및 Global Accelerator에만 TLS 인증서를 연결할 수 있지만 EC2 인스턴스 및 S3 버킷에는 연결할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -541,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -569,16 +612,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				캡잭스패로우
+				캡잭참새
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 16일 목요일 19:00">
-			5 개월 전
+<span class="comment-date align-middle" title="2023년 3월 16일 (목) 19:00">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">D는 말이 되지 않습니다.</div>
+<div class="comment-content">D는 말이 안 돼요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -587,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -618,13 +661,13 @@
 				도디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 9일 목요일 02:51">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 9일 (목) 02:51">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Amazon Macie는 AWS 암호화 솔루션을 사용하여 유휴 데이터를 안전하게 저장하기 때문에 정답은 "C" "D"가 정답이 아닙니다. Macie는 AWS Key Management Service(AWS KMS)의 AWS 관리형 키를 사용하여 결과와 같은 데이터를 암호화합니다. 그러나 질문에는 컴플라이언스 팀이 미사용 데이터에 대한 암호화 키를 관리해야 한다는 요구 사항이 있습니다. https://docs.aws.amazon.com/macie/latest/user/data-protection.html</div>
+<div class="comment-content">정답은 "C"입니다. Amazon Macie는 AWS 암호화 솔루션을 사용하여 저장 데이터를 안전하게 저장하므로 "D"는 정답이 아닙니다. Macie는 AWS Key Management Service(AWS KMS)의 AWS 관리형 키를 사용하여 결과와 같은 데이터를 암호화합니다. 하지만 문제에는 규정 준수팀이 미사용 데이터에 대한 암호화 키를 관리해야 한다는 요구 사항이 있습니다. https://docs.aws.amazon.com/macie/latest/user/data-protection.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,12 +708,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 7일 화요일 03:49">
-			5개월, 1주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">옵션 C는 요구 사항을 충족합니다. 설명: 규정 준수 팀은 PHI(보호된 건강 정보)가 전송 및 저장 중에 암호화되도록 하기 위해 저장 데이터에 대한 암호화 키를 관리해야 합니다. 따라서 AWS KMS 키(SSE-KMS)로 서버 측 암호화를 사용해야 합니다. 버킷의 모든 새 객체가 KMS 키로 암호화되도록 SSE-KMS를 사용하도록 각 S3 버킷의 기본 암호화를 구성할 수 있습니다. 또한 aws:SecureTransport 조건을 사용하여 HTTPS(TLS)를 통한 암호화된 연결만 허용하도록 S3 버킷 정책을 구성할 수 있습니다. 이렇게 하면 데이터가 전송 중에 암호화됩니다.</div>
+<div class="comment-content">옵션 C는 요구 사항을 충족합니다. 설명: 규정 준수 팀은 PHI(보호 건강 정보)가 전송 중 및 저장 중 암호화되도록 보장하기 위해 저장 중인 데이터에 대한 암호화 키를 관리해야 합니다. 따라서 AWS KMS 키(SSE-KMS)와 함께 서버 측 암호화를 사용해야 합니다. 각 S3 버킷의 기본 암호화는 SSE-KMS를 사용하여 버킷의 모든 새 객체가 KMS 키로 암호화되도록 구성할 수 있습니다. 또한 aws:SecureTransport 조건을 사용하여 HTTPS(TLS)를 통한 암호화된 연결만 허용하도록 S3 버킷 정책을 구성할 수 있습니다. 이렇게 하면 전송 중에 데이터가 암호화됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -679,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -711,12 +754,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 4일 토요일 14:49">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">우리는 전송 및 유휴 상태에서 암호화를 제공해야 합니다. Macie는 모든 PII 또는 보호된 건강 정보를 발견하고 인식하는 데 필요합니다. 우리는 이미 병원이 민감한 데이터로 작업하고 있음을 알고 있으므로 KMS 및 SSL로 보호합니다. 답 D는 불필요하다</div>
+<div class="comment-content">전송 중 및 저장 중 암호화된 정보를 제공해야 합니다. Macie는 PII 또는 보호 건강 정보를 검색하고 인식하는 데 필요합니다. 우리는 병원이 민감한 데이터를 처리하고 있다는 것을 이미 알고 있으므로 KMS와 SSL을 사용하여 이를 보호하세요. D라는 대답은 불필요하다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -725,7 +768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -756,13 +799,13 @@
 				Steve_4542636
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 4일 (토) 01:34">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 4일 토요일 01:34">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">Macie는 https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html과 같이 데이터를 암호화하지 않습니다. 또한 SSE-S3 암호화는 AWS에서 완전히 관리하므로 규정 준수 팀에서 관리할 수 없습니다.</div>
+<div class="comment-content">Macie는 https://docs.aws.amazon.com/macie/latest/user/what-is-macie.html 질문처럼 데이터를 암호화하지 않습니다. 또한 SSE-S3 암호화는 AWS에서 완전히 관리하므로 규정 준수 팀에서는 이를 관리할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -799,16 +842,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아비니트9148232
+				Abhineet9148232
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 3일 금요일 17:04">
-			5개월, 2주 전
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C [정확]: Https 전용 트래픽(암호화된 전송)을 보장하고 규정 준수 팀이 암호화 키를 관리할 수 있도록 합니다. D [잘못됨]: 오해의 소지가 있음; PHI는 발견되지 않고 암호화되어야 합니다. 메이스는 검색 서비스입니다. (https://aws.amazon.com/macie/)</div>
+<div class="comment-content">C [올바름]: Https 전용 트래픽(암호화된 전송)을 보장하고 규정 준수 팀이 암호화 키를 관리할 수 있도록 합니다. D [잘못됨]: 오해의 소지가 있음; PHI는 검색되지 않고 암호화되어야 합니다. Maice는 검색 서비스입니다. (https://aws.amazon.com/macie/)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -817,7 +860,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -848,13 +891,13 @@
 				넬8
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 28일 화요일 05:10">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 2월 28일 (화) 05:10">
+			5개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D여야 합니다. "Amazon Macie를 사용하여 민감한 데이터를 보호하십시오..." 요구 사항에 따르면 "병원의 규정 준수 팀은 모든 PHI(보호된 건강 정보)가 전송 및 저장 중에 암호화되도록 해야 합니다." Macie는 PHI와 같은 개인 기록을 보호합니다. Macie는 S3 버킷의 인벤토리를 제공하고 보안 및 액세스 제어를 위해 버킷을 자동으로 평가 및 모니터링합니다. Macie가 공개적으로 액세스할 수 있는 버킷과 같이 데이터의 보안 또는 개인 정보 보호와 관련된 잠재적인 문제를 감지하면 Macie는 필요에 따라 검토하고 수정할 수 있는 결과를 생성합니다.</div>
+<div class="comment-content">정답은 D여야 합니다. "Amazon Macie를 사용하여 민감한 데이터를 보호하세요..." 요구 사항에 따르면 "병원의 규정 준수 팀은 모든 보호 건강 정보(PHI)가 전송 중 및 저장 중에 암호화되도록 해야 합니다." Macie는 PHI와 같은 개인 기록을 보호합니다. Macie는 S3 버킷의 인벤토리를 제공하고 보안 및 액세스 제어를 위해 버킷을 자동으로 평가하고 모니터링합니다. Macie가 공개적으로 액세스할 수 있는 버킷과 같이 데이터의 보안 또는 개인 정보 보호와 관련된 잠재적인 문제를 감지하는 경우 Macie는 필요에 따라 사용자가 검토하고 수정할 수 있도록 결과를 생성합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -863,7 +906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -891,15 +934,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				드레이엔25
+				드레옌25
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 2월 25일 (토) 10:41">
-			5개월, 3주 전
+<span class="comment-date align-middle" title="2023년 2월 25일 토요일 10:41">
+			6 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C는</div>
+<div class="comment-content">옵션 C는 다음과 같아야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -908,7 +951,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -963,7 +1006,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 21 Feb 2023 14:02">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1001,7 +1044,7 @@ option B might be misleading but using SSE-S3, the encryption keys are managed b
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Feb 2023 16:00">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1057,7 +1100,7 @@ option B might be misleading but using SSE-S3, the encryption keys are managed b
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 18 May 2023 15:22">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1104,7 +1147,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 12 May 2023 06:29">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1150,7 +1193,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Mar 2023 00:03">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1188,7 +1231,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Apr 2023 02:05">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1241,7 +1284,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Mar 2023 18:09">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1287,7 +1330,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 16 Mar 2023 19:00">
-			5 months ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1333,7 +1376,7 @@ Macie discovers sensitive information, can help in protection but can't protect<
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 09 Mar 2023 02:51">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1381,7 +1424,7 @@ https://docs.aws.amazon.com/macie/latest/user/data-protection.html</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 07 Mar 2023 03:49">
-			5 months, 1 week ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1433,7 +1476,7 @@ Additionally, we can configure the S3 bucket policies to allow only encrypted co
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Mar 2023 14:49">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1479,7 +1522,7 @@ Additionally, we can configure the S3 bucket policies to allow only encrypted co
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Mar 2023 01:34">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1528,7 +1571,7 @@ Also, SSE-S3 encryption is fully managed by AWS so the Compliance Team can't adm
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 03 Mar 2023 17:04">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1575,7 +1618,7 @@ D [Incorrect]: Misleading; PHI is required to be encrypted not discovered. Maice
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Feb 2023 05:10">
-			5 months, 2 weeks ago
+			5 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1624,7 +1667,7 @@ Macie protects personal record such as PHI. Macie provides you with an inventory
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Feb 2023 10:41">
-			5 months, 3 weeks ago
+			6 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

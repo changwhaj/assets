@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 167 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 167 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 167 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 167 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807409">
 <p class="card-text">
 							
-								데이터베이스 전문가는 900초 후에 비활성 상태가 되는 비대화형 연결을 닫도록 Amazon RDS for MySQL DB 인스턴스를 구성해야 합니다. <br/>데이터베이스 전문가는 이 작업을 수행하기 위해 무엇을 해야 합니까?<br/>
+								데이터베이스 전문가는 900초 후에 비활성 상태인 비대화형 연결을 닫도록 MySQL DB 인스턴스용 Amazon RDS를 구성해야 합니다. <br/>데이터베이스 전문가는 이 작업을 수행하기 위해 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807409" type="application/json">[{"voted_answers": "A", "vote_count": 9, "is_most_voted": true}]</script>
@@ -107,11 +170,11 @@
 													D.
 												</span> 
 											
-											기본 DB 파라미터 그룹을 수정하고 wait_timeout 파라미터 값을 900으로 설정합니다.
+											기본 DB 파라미터 그룹을 수정하고 wait_timeout 파라미터 값을 900으로 설정한다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>제안 답변: </strong>
@@ -120,24 +183,14 @@
 <br/>
 </span>
 <span class="answer-description"> 
-								세션에 대해 wait_timeout 변수를 설정하면 특정 세션에만 유효합니다. 그러나 wait_timeout 변수를 전역적으로 설정하면 모든 세션에 대해 유효합니다. <br/>참조: <br/>https://dilsichandrasena.medium.com/
-							 changing-mysql-wait-timeout-variable-f16ebed1efce</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+								세션에 wait_timeout 변수를 설정하면 특정 세션에만 유효합니다. 그러나 wait_timeout 변수를 전역적으로 설정하면 모든 세션에 유효합니다. <br/>참조: <br/>https://dilsichandrasena.medium.com/changing-mysql-wait-timeout-variable-f16ebed1efce
+							</span>
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="9 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								johnconnor
-							</a> 
-							
-							2021 <i>
-							년 11월 21일 오후 6:51</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								johnconnor
-							</a>
-							
-							at <i>
-							Nov. 21, 2021, 6:51 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -266,7 +309,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -303,7 +346,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">A는 정답입니다. 여러 번 수행되었습니다 ....</div>
+<div class="comment-content">A가 정답입니다. 여러 번 그렇게 했습니다....</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -312,7 +355,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,11 +383,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				슌핀
+				순핀
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 28일 화요일 11:21">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 28일 (화) 11:21">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -389,12 +432,12 @@
 				odba2014
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 25일 (토) 14:26">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 25일 토요일 14:26">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A는 답이다</div>
+<div class="comment-content">A가 답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,12 +477,12 @@
 				MBO80
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 11일 (토) 22:26">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 11일 토요일 22:26">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">저에게 답은 A입니다. to-security-operational-manageability-and-connectivity-timeout/</div>
+<div class="comment-content">내 대답은 A https://aws.amazon.com/fr/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-3-parameters-관련-입니다. 보안 운영 관리 효율성 및 연결 시간 초과/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -468,15 +511,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				grek001
+				grekh001
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 15일 수 19:50">
-			1년 8개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예, 정답은 A입니다. 해당 블로그 시리즈의 1부: "매개변수 그룹을 사용하여 전역적으로 매개변수를 설정할 수 있습니다. 또는 SET 명령을 사용하여 특정 세션에 대해 매개변수를 설정할 수 있습니다." https://aws.amazon.com/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-1-parameters-related-to-performance/ RDS 서버에서 직접 파일 편집, SET 명령 또는 매개변수 그룹을 사용해야 함</div>
+<div class="comment-content">예, 정답은 A입니다. 해당 블로그 시리즈의 1부에서: "매개변수 그룹을 사용하여 전역적으로 매개변수를 설정할 수 있습니다. 또는 SET 명령을 사용하여 특정 세션에 대해 매개변수를 설정할 수 있습니다." https://aws.amazon.com/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-1-parameters-관련-to-performance/ RDS 서버에서 직접 파일을 편집하려면 SET 명령이나 매개변수 그룹을 사용해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -485,7 +528,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,12 +567,12 @@
 				신시아
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 02일 목요일 11:24">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 2일 목요일 11:24">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C. 정답은 틀렸지만 링크는 맞습니다!</div>
+<div class="comment-content">C. 정답은 틀렸는데 링크는 맞네요!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -538,7 +581,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -561,12 +604,12 @@
 				주피터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 24일 금 19:25">
-			1년, 7개월 전
+<span class="comment-date align-middle" title="2021년 12월 24일 금요일 19:25">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이것은 Amazon 관리형 서비스이므로 my.cnf 파일을 직접 편집할 수 없습니다. 정답은 A입니다.</div>
+<div class="comment-content">이는 Amazon 관리형 서비스이므로 my.cnf 파일을 직접 편집할 수 없습니다. 정답은 A이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -575,7 +618,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -614,12 +657,12 @@
 				Sp230
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 27일 (토) 18:52">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 27일 토요일 18:52">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 B여야 합니다.</div>
+<div class="comment-content">답은 B여야 한다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -628,7 +671,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -659,12 +702,12 @@
 				존코너
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 21일 일 18:58">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 21일 일요일 18:58">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">사실, RDS에서 .cnf 파일을 편집하지 않기로 되어 있기 때문에 모든 대답이 틀릴 수 있다고 생각하지만 SET GLOBAL wait_timeout = xxxx를 사용하여 전역적으로 매개 변수를 설정할 수 있습니다. 그것에 대한 옵션이 있어야합니다</div>
+<div class="comment-content">실제로 RDS에서 .cnf 파일을 편집해서는 안 되지만 SET GLOBAL wait_timeout = xxxx;를 사용하여 전역적으로 매개변수를 설정할 수 있기 때문에 모든 대답이 틀릴 수 있다고 생각합니다. 그것에 대한 옵션이 있어야합니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -673,7 +716,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -704,12 +747,12 @@
 				존코너
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 21일 일 18:52">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 21일 일요일 18:52">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C여야 합니다!</div>
+<div class="comment-content">C여야 해요!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -718,7 +761,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -749,12 +792,12 @@
 				존코너
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 21일 일 18:51">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 11월 21일 일요일 18:51">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변이 틀렸습니다. /etc/mysql에서 my.cnf 파일을 연 다음 service mysql restart로 서버를 다시 시작해야 합니다.</div>
+<div class="comment-content">대답이 틀렸습니다. /etc/mysql에서 my.cnf 파일을 연 다음 service mysql restart로 서버를 다시 시작해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -763,7 +806,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -909,7 +952,7 @@ wait_timeout: The number of seconds the server waits for activity on a non-inter
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 28 Dec 2021 11:21">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -956,7 +999,7 @@ wait_timeout: The number of seconds the server waits for activity on a non-inter
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Dec 2021 14:26">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1133,7 +1176,7 @@ You can't edit files directly on the RDS servers, must use SET command or Parame
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 24 Dec 2021 19:25">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1186,7 +1229,7 @@ You can't edit files directly on the RDS servers, must use SET command or Parame
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 27 Nov 2021 18:52">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1231,7 +1274,7 @@ You can't edit files directly on the RDS servers, must use SET command or Parame
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 Nov 2021 18:58">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1276,7 +1319,7 @@ You can't edit files directly on the RDS servers, must use SET command or Parame
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 Nov 2021 18:52">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1321,7 +1364,7 @@ You can't edit files directly on the RDS servers, must use SET command or Parame
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 21 Nov 2021 18:51">
-			1 year, 8 months ago
+			1 year, 9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

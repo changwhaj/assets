@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 66 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 66 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 66 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 66 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807308">
 <p class="card-text">
 							
-								회사는 나중에 사용할 수 있도록 안전하게 저장할 임의의 자격 증명을 사용하여 보안 테스트 데이터베이스 생성을 자동화하려고 합니다. 자격 증명에는 연결을 시작하고 자동화된 자격 증명 회전을 수행하기 위해 각 테스트 데이터베이스에 대한 충분한 정보가 있어야 합니다. 자격 증명은 암호화되지 않은 형식으로 기록되거나 저장되어서는 안 됩니다. <br/>데이터베이스 전문가가 AWS CloudFormation 템플릿을 사용하여 이러한 요구 사항을 충족하려면 어떤 단계를 수행해야 합니까?<br/>
+								회사에서는 나중에 사용할 수 있도록 안전하게 저장하기 위해 임의의 자격 증명을 사용하여 보안 테스트 데이터베이스 생성을 자동화하려고 합니다. 자격 증명에는 연결을 시작하고 자동화된 자격 증명 순환을 수행하기 위해 각 테스트 데이터베이스에 대한 충분한 정보가 있어야 합니다. 자격 증명은 암호화되지 않은 형태로 어디에도 기록되거나 저장되어서는 안 됩니다. <br/>AWS CloudFormation 템플릿을 사용하여 이러한 요구 사항을 충족하려면 데이터베이스 전문가가 수행해야 하는 단계는 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807308" type="application/json">[{"voted_answers": "C", "vote_count": 5, "is_most_voted": true}]</script>
@@ -84,21 +147,21 @@
 													A.
 												</span> 
 											
-											MasterUserName 및 MasterUserPassword 속성을 기본값으로 설정하여 데이터베이스를 만듭니다. 그런 다음 동일한 기본값으로 설정된 사용자 이름과 비밀번호로 시크릿을 생성합니다. SecretId 및 TargetId 속성이 암호 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 Secret Target Attachment 리소스를 추가합니다. 마지막으로, GenerateSecretString 속성에 의해 설정된 임의로 생성된 문자열로 암호의 암호 값을 업데이트합니다.
+											MasterUserName 및 MasterUserPassword 속성을 기본값으로 설정하여 데이터베이스를 생성합니다. 그런 다음 동일한 기본값으로 설정된 사용자 이름과 비밀번호를 사용하여 비밀을 만듭니다. 비밀 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 SecretId 및 TargetId 속성을 사용하여 비밀 대상 연결 리소스를 추가합니다. 마지막으로, GeneratorSecretString 속성에 의해 설정된 무작위로 생성된 문자열로 비밀의 암호 값을 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											데이터베이스 Amazon 리소스 이름(ARN)의 매핑 속성을 비밀 ARN에 추가합니다. 그런 다음 선택한 사용자 이름과 GenerateSecretString 속성에 의해 설정된 임의로 생성된 암호를 사용하여 암호를 생성합니다. MasterUserName 및 MasterUserPassword 속성이 암호의 사용자 이름으로 설정된 데이터베이스를 추가합니다.
+											데이터베이스 Amazon 리소스 이름(ARN)의 매핑 속성을 비밀 ARN에 추가합니다. 그런 다음 선택한 사용자 이름과 GeneratorSecretString 속성에 의해 설정된 무작위로 생성된 암호를 사용하여 비밀을 만듭니다. MasterUserName 및 MasterUserPassword 속성이 보안 암호의 사용자 이름으로 설정된 데이터베이스를 추가합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											AWS::SecretsManager::Secret 유형의 리소스를 추가하고 GenerateSecretString 속성을 지정합니다. 그런 다음 SecureStringTemplate 템플릿에서 데이터베이스 사용자 이름을 정의합니다. 데이터베이스에 대한 리소스를 만들고 MasterUserName 및 MasterUserPassword 속성에 대한 암호 문자열을 참조합니다. 그런 다음 SecretId 및 TargetId 속성이 암호 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 AWS::SecretsManagerSecretTargetAttachment 유형의 리소스를 추가합니다.
+											AWS::SecretsManager::Secret 유형의 리소스를 추가하고 generateSecretString 속성을 지정합니다. 그런 다음 SecureStringTemplate 템플릿에서 데이터베이스 사용자 이름을 정의합니다. 데이터베이스에 대한 리소스를 생성하고 MasterUserName 및 MasterUserPassword 속성에 대한 비밀 문자열을 참조합니다. 그런 다음 SecretId 및 TargetId 속성이 암호 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 AWS::SecretsManagerSecretTargetAttachment 유형의 리소스를 추가합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -107,14 +170,14 @@
 													D.
 												</span> 
 											
-											선택한 사용자 이름과 GenerateSecretString 속성에 의해 설정된 임의로 생성된 암호로 비밀을 생성합니다. SecretId 속성이 암호의 ARN(Amazon 리소스 이름)으로 설정되고 TargetId 속성이 원하는 데이터베이스 ARN과 일치하는 파라미터 값으로 설정된 SecretTargetAttachment 리소스를 추가합니다. 그런 다음 MasterUserName 및 MasterUserPassword 속성이 암호에서 이전에 만든 값으로 설정된 데이터베이스를 만듭니다.
+											선택한 사용자 이름과 GeneratorSecretString 속성에 의해 설정된 무작위로 생성된 비밀번호를 사용하여 비밀을 생성합니다. SecretId 속성을 암호의 Amazon 리소스 이름(ARN)으로 설정하고 TargetId 속성을 원하는 데이터베이스 ARN과 일치하는 매개변수 값으로 설정하여 SecretTargetAttachment 리소스를 추가합니다. 그런 다음 MasterUserName 및 MasterUserPassword 속성을 이전에 암호에서 만든 값으로 설정하여 데이터베이스를 만듭니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">C </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-secretsmanager-secrettargetattachment.html<br/><img class="in-exam-image" src="/assets/media/exam-media/04237/0004600001.jpg"/>
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								BillyC
-							</a> 
-							
-							2020 <i>
-							년 7월 27일 오후 2:32</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								BillyC
-							</a>
-							
-							at <i>
-							July 27, 2020, 2:32 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -252,23 +295,23 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2021년 9월 24일 금 21:51">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 C가 맞습니다.</div>
+<div class="comment-content">Ans C가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,11 +335,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 30일 목요일 17:40">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">BillyC, 이 사이트에서 AWS 데이터베이스 전문 시험을 찾기 어려운 이유/404 오류가 있는 이유를 아십니까?</div>
+<div class="comment-content">BillyC, 왜 이 사이트에서 AWS 데이터베이스 전문 시험을 찾기 어려운지 / 왜 404 오류가 발생하는지 아시나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -328,12 +371,12 @@
 				지라잔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 03일 수 06:48">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 3일 수 06:48">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">기여자 액세스 권한이 있는 경우에만 표시되는 새로운 요구 사항</div>
+<div class="comment-content">새로운 요구 사항은 기여자 액세스 권한이 있는 경우에만 표시됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -342,7 +385,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,14 +429,14 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				IhorK
+				이호르K
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 20:50">
-			1주, 4일 전
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -407,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -435,11 +478,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				IhorK
+				이호르K
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 8월 4일 금요일 20:44">
-			1주, 4일 전
+			3주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -490,7 +533,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">불완전하거나 잘못된 정보이지만 대답에는 C로만 된 SecretsManager가 필요합니다. AWS::SecretsManager::Secret 유형의 리소스 추가 -&gt; GenerateSecretString 속성 지정 -&gt; SecureStringTemplate 템플릿에서 데이터베이스 사용자 이름 정의. -&gt; 데이터베이스에 대한 리소스 만들기 -&gt; MasterUserName 및 MasterUserPassword 속성에 대한 비밀 문자열 참조. -&gt; SecretId 및 TargetId 속성이 암호 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 AWS::SecretsManagerSecretTargetAttachment 유형의 리소스를 추가합니다.</div>
+<div class="comment-content">불완전하거나 잘못된 정보이지만 답변에는 C로만 있는 SecretsManager가 필요합니다. AWS::SecretsManager::Secret 유형의 리소스 추가 -&gt; GenerateSecretString 속성 지정 -&gt; SecureStringTemplate 템플릿에서 데이터베이스 사용자 이름을 정의합니다. -&gt; 데이터베이스에 대한 리소스 생성 -&gt; MasterUserName 및 MasterUserPassword 속성에 대한 비밀 문자열을 참조합니다. -&gt; 비밀 및 데이터베이스의 Amazon 리소스 이름(ARN)으로 설정된 SecretId 및 TargetId 속성을 사용하여 AWS::SecretsManagerSecretTargetAttachment 유형의 리소스를 추가합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -499,7 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -527,15 +570,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 02:49">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 02:49">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">(다) 맞습니다</div>
+<div class="comment-content">(ㄷ) 맞다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -544,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -572,15 +615,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 31일 일 09:45">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 31일 일요일 09:45">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">네, C입니다</div>
+<div class="comment-content">응, C야</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -589,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -620,12 +663,12 @@
 				에비
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 1일 금 09:19">
+<span class="comment-date align-middle" title="2021년 10월 1일 금요일 09:19">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 C</div>
+<div class="comment-content">답은 C이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -689,7 +732,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 24 Sep 2021 21:51">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -726,7 +769,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 30 Sep 2021 17:40">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -827,7 +870,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 20:50">
-			1 week, 4 days ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -873,7 +916,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 04 Aug 2023 20:44">
-			1 week, 4 days ago
+			3 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

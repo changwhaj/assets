@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 139 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 139 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 139 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 139 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 139 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="839896">
 <p class="card-text">
 							
-								보고 팀은 매일 Amazon S3 버킷에서 파일을 받습니다. 보고 팀은 Amazon QuickSight에서 사용하기 위해 매일 동시에 이 초기 S3 버킷에서 분석 S3 버킷으로 파일을 수동으로 검토하고 복사합니다. 더 많은 팀이 더 큰 크기의 더 많은 파일을 초기 S3 버킷으로 보내기 시작했습니다. <br/>보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 파일 분석 S3 버킷을 이동하려고 합니다. 보고 팀은 또한 AWS Lambda 함수를 사용하여 복사된 데이터에서 패턴 일치 코드를 실행하려고 합니다. 또한 보고 팀은 데이터 파일을 Amazon SageMaker Pipelines의 파이프라인으로 보내려고 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
+								보고 팀은 매일 Amazon S3 버킷으로 파일을 받습니다. 보고 팀은 Amazon QuickSight에서 사용하기 위해 매일 동시에 이 초기 S3 버킷의 파일을 수동으로 검토하고 분석 S3 버킷에 복사합니다. 추가 팀이 더 큰 크기의 더 많은 파일을 초기 S3 버킷으로 보내기 시작했습니다. <br/>보고 팀은 파일이 초기 S3 버킷에 들어갈 때 S3 버킷을 자동으로 분석하여 파일을 이동하려고 합니다. 또한 보고 팀은 AWS Lambda 함수를 사용하여 복사된 데이터에 대해 패턴 일치 코드를 실행하려고 합니다. 또한 보고 팀은 데이터 파일을 Amazon SageMaker 파이프라인의 파이프라인으로 보내려고 합니다. <br/>최소한의 운영 오버헤드로 이러한 요구 사항을 충족하려면 솔루션 설계자가 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839896" type="application/json">[{"voted_answers": "D", "vote_count": 57, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 19, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="839896" type="application/json">[{"voted_answers": "D", "vote_count": 58, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 19, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											분석 S3 버킷에 파일을 복사하는 Lambda 함수를 생성합니다. 분석 S3 버킷에 대한 S3 이벤트 알림을 생성합니다. 이벤트 알림의 대상으로 Lambda 및 SageMaker 파이프라인을 구성합니다. s3:ObjectCreated:Put을 이벤트 유형으로 구성합니다.
+											분석 S3 버킷에 파일을 복사하는 Lambda 함수를 생성합니다. 분석 S3 버킷에 대한 S3 이벤트 알림을 생성합니다. Lambda 및 SageMaker 파이프라인을 이벤트 알림 대상으로 구성합니다. s3:ObjectCreated:Put을 이벤트 유형으로 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											S3 버킷 간에 S3 복제를 구성합니다. 분석 S3 버킷에 대한 S3 이벤트 알림을 생성합니다. 이벤트 알림의 대상으로 Lambda 및 SageMaker 파이프라인을 구성합니다. s3:ObjectCreated:Put을 이벤트 유형으로 구성합니다.
+											S3 버킷 간에 S3 복제를 구성합니다. 분석 S3 버킷에 대한 S3 이벤트 알림을 생성합니다. Lambda 및 SageMaker 파이프라인을 이벤트 알림 대상으로 구성합니다. s3:ObjectCreated:Put을 이벤트 유형으로 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="57 votes." data-toggle="tooltip" role="progressbar" style="width: 70%; display: flex;" title="">D (70%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="58 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">D (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								LeGloupier
-							</a> 
-							
-							시간: <i>
-							2022년 10월 19일, 오전 9:02</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -157,7 +210,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="839896" type="application/json">[{"voted_answers": "D", "vote_count": 57, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 19, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
+<script id="839896" type="application/json">[{"voted_answers": "D", "vote_count": 58, "is_most_voted": true}, {"voted_answers": "B", "vote_count": 19, "is_most_voted": false}, {"voted_answers": "C", "vote_count": 4, "is_most_voted": false}, {"voted_answers": "A", "vote_count": 1, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -203,20 +256,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="57 votes." data-toggle="tooltip" role="progressbar" style="width: 70%; display: flex;" title="">D (70%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 7%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="58 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">D (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 23%; display: flex;" title="">B (23%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="5%" data-toggle="tooltip" role="progressbar" style="width: 6%; display: flex;" title="">5%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								LeGloupier
-							</a>
-							
-							at <i>
-							Oct. 19, 2022, 9:02 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,24 +291,24 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 10월 26일 수 18:49">
-			9개월, 3주 전
+<span class="comment-date align-middle" title="2022년 10월 26일 수요일 18:49">
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">나는 여기서 D로 이동합니다. A와 B는 람다를 사용하여 파일을 다른 버킷에 복사한다고 말합니다. C와 D는 S3 복제를 사용하여 파일을 복사합니다. C와 D는 람다 설정이 필요하지 않은 반면 정확히 동일한 작업을 수행합니다. , 더 효율적이어야 합니다 질문에 따르면 팀이 수동으로 파일을 복사하고 자동으로 파일을 복제하는 것이 수동으로 복사하거나 람다를 사용하여 복사하는 것보다 가장 효율적인 방법이어야 합니다.</div>
+<div class="comment-content">여기 D로 갑니다. A와 B는 람다를 사용하여 파일을 다른 버킷에 복사한다고 말합니다. C와 D는 S3 복제를 사용하여 파일을 복사합니다. C와 D는 람다 설정이 필요하지 않지만 정확히 동일한 작업을 수행합니다. , 더 효율적이어야 합니다. 질문에 따르면 팀이 파일을 수동으로 복사하고 파일을 자동으로 복제하는 것이 람다를 사용하여 수동으로 복사하거나 복사하는 것보다 가장 효율적인 방법이어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">20</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">20</span> 회
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -288,21 +331,21 @@
 				비표다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 19일 (월) 06:27">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 06:27">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">예 d 최소한의 운영 오버헤드와 s3 이벤트 알림으로 인해 sns.sqs.and lambda로만 보낼 수 있으며 sagemaker.eventbridge는 sagemaker로 보낼 수 없습니다.</div>
+<div class="comment-content">예 d 운영 오버헤드가 최소화되고 s3 이벤트 알림도 sns.sqs.and 람다로만 보낼 수 있고 sagemaker.eventbridge는 sagemaker로 보낼 수 없기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -342,15 +385,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="2022년 10월 20일 목요일 10:55">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">C와 D는 답이 아닙니다. S3 버킷을 복제하는 것이 효율적이지 않기 때문입니다. 다른 팀에서 보고와 관련 없는 더 큰 문서를 저장하는 데 사용하기 시작하여 복제가 유용하지 않기 때문입니다. Amazon SageMaker Pipelines, ...가 이제 Amazon EventBridge에서 이벤트 라우팅을 위한 대상으로 지원되므로 답은 B https://aws.amazon.com/about-aws/whats-new/2021/04/new입니다. -옵션-트리거-amazon-sagemaker-파이프라인-실행/</div>
+<div class="comment-content">C와 D는 S3 버킷 복제가 효율적이지 않기 때문에 답이 아닙니다. 다른 팀에서는 이를 사용하여 보고와 관련 없는 더 큰 문서를 저장하기 시작하여 복제가 유용하지 않기 때문입니다. Amazon SageMaker Pipelines, ...가 이제 Amazon EventBridge에서 이벤트 라우팅의 대상으로 지원되므로 대답은 B https://aws.amazon.com/about-aws/whats-new/2021/04/new입니다. -옵션-트리거-amazon-sagemaker-파이프라인-실행/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -382,8 +425,8 @@
 				비표다
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 19일 (월) 06:28">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 19일 월요일 06:28">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -396,7 +439,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -428,11 +471,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 16일 (월) 01:01">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문 어디에도 다른 파일이 보고와 관련이 없다고 언급하지 않았습니다. .... "보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 파일을 분석 S3 버킷으로 이동하려고 합니다." 어디에서 파일이 관련이 없다고 말했습니까? 추측을 제외하고.</div>
+<div class="comment-content">질문 어디에도 다른 파일이 보고와 관련이 없다고 언급되지 않았습니다.... "보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 파일을 분석 S3 버킷으로 이동하려고 합니다." 어디에서 관련 없는 파일이라고 말했습니까? 추측을 제외하고.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -441,7 +484,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -472,12 +515,12 @@
 				jdr75
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 7일 금요일 10:07">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 7일 금 10:07">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">당신은 그것을 잘못 해석합니다 ... 보고 팀은 과부하입니다. 더 많은 팀이 버킷에 더 많은 데이터를 업로드하는 서비스를 요청하기 때문입니다. 이것이 보고 팀이 프로세스를 자동화해야 하는 이유입니다. 따라서 모든 버킷 객체를 다른 버킷으로 복사해야 하며 복제는 Lambda를 사용하는 것보다 저렴합니다. 그래서 답은 D입니다.</div>
+<div class="comment-content">잘못 해석하시네요... 보고 팀이 과부하 상태입니다. 더 많은 팀이 버킷에 더 많은 데이터를 업로드하는 서비스를 요청하기 때문입니다. 이것이 보고팀이 프로세스를 자동화해야 하는 이유입니다. 따라서 모든 버킷 객체를 다른 버킷에 복사해야 하며 복제는 Lambda를 사용하는 것보다 저렴합니다. 그럼 답은 D 입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -486,7 +529,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -514,15 +557,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 13:39">
-			7개월, 3주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 당신이 질문을 잘못 해석하고 있다고 생각합니다. 다른 팀에서 제공한 파일을 포함하여 모든 파일을 사용해야 한다고 생각합니다. 그렇지 않으면 어떤 파일을 복사할지 어떻게 알 수 있습니까? 이 설명의 요점은 파일의 두 소스를 구별할 필요가 있다고 제안하는 것이 아니라 더 많은 파일이 사용 중이고 다른 시간에 복사되고 있음을 보여주는 것이라고 생각합니다.</div>
+<div class="comment-content">나는 당신이 질문을 잘못 해석하고 있다고 생각합니다. 다른 팀에서 제공하는 파일을 포함하여 모든 파일을 사용해야 할 것 같습니다. 그렇지 않으면 어떤 파일을 복사할지 어떻게 알 수 있습니까? 이 설명의 요점은 파일의 두 소스를 구별해야 한다고 제안하는 것이 아니라 더 많은 파일이 사용 중이고 서로 다른 시간에 복사되고 있음을 보여주는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -531,7 +574,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -563,11 +606,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 11일 금요일 06:04">
-			9개월, 1주 전
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">시간 제한이 있는 대용량 파일을 람다가 얼마나 처리할 수 있는지 확실하지 않습니다.</div>
+<div class="comment-content">시간 제한이 있는 경우 람다가 더 큰 파일을 얼마나 처리할 수 있는지 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -576,7 +619,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -591,6 +634,55 @@
 	</div>
 </div>
 </div>
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="982906" id="comment-982906">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 16일 수요일 20:56">
+			1주 전, 3일 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
+<div class="comment-content">옵션 D는 운영 오버헤드가 가장 적은 솔루션입니다. 버킷 간 S3 복제 사용 EventBridge에 S3 이벤트 보내기 Lambda 및 SageMaker를 EventBridge 규칙 대상으로 추가 오버헤드가 가장 적은 이유: S3 복제는 새 객체를 분석 버킷에 자동으로 복사합니다. EventBridge를 사용하면 쉽게 추가할 수 있습니다. 이벤트에 대한 여러 대상 객체 복사에 사용자 지정 Lambda 기능이 필요하지 않음 이벤트 처리를 위해 관리형 서비스 활용</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
 <!-- Nesting end -->
 </div>
 </div>
@@ -615,16 +707,13 @@
 				다중 에이전트
 			</h5>
 </a>
-<span class="badge badge-primary">
-				가장 최근<i class="fa fa-clock-o"></i>
-</span>
-<span class="comment-date align-middle" title="2023년 7월 17일 (월) 18:31">
-			1 개월 전
+<span class="comment-date align-middle" title="2023년 7월 17일 월요일 18:31">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">올바른 예: D B &amp; D는 Sagemaker가 S3 이벤트의 대상으로 지원되지 않기 때문에 유일하게 가능합니다. D 멘션으로 버킷 복제를 사용하는 것이 람다를 B 멘션으로 사용하는 것보다 더 효율적입니다.</div>
+<div class="comment-content">정답: Sagemaker는 S3 이벤트의 대상으로 지원되지 않으므로 D B &amp; D만 가능합니다. D 언급으로 버킷 복제를 사용하는 것이 B 언급으로 람다를 사용하는 것보다 더 효율적입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,13 +753,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 23일 금요일 10:38">
-			1개월, 3주 전
+<span class="comment-date align-middle" title="2023년 6월 23일 금 10:38">
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D는 S3 복제, 이벤트 알림 및 Amazon EventBridge를 결합하여 초기 S3 버킷에서 분석 S3 버킷으로 파일 복사를 자동화하기 때문에 올바른 것입니다. 또한 Lambda 함수를 실행하고 SageMaker 파이프라인과 통합할 수 있습니다. 옵션 A는 Lambda 함수 및 이벤트 알림을 사용하여 파일을 수동으로 복사하도록 제안하지만 자동화를 위해 S3 복제 또는 EventBridge를 활용하지 않기 때문에 올바르지 않습니다. 옵션 B는 EventBridge와 함께 S3 이벤트 알림을 직접 사용하도록 제안하기 때문에 올바르지 않지만 S3 복제를 포함하지 않거나 파일 복사를 위해 Lambda를 활용하지 않습니다. 옵션 C는 추가 처리를 위해 EventBridge 또는 Lambda 함수를 활용하지 않고 S3 복제 및 이벤트 알림만 포함하기 때문에 올바르지 않습니다.</div>
+<div class="comment-content">옵션 D는 S3 복제, 이벤트 알림 및 Amazon EventBridge를 결합하여 초기 S3 버킷에서 분석 S3 버킷으로 파일 복사를 자동화하므로 정확합니다. 또한 Lambda 기능을 실행하고 SageMaker 파이프라인과 통합할 수 있습니다. 옵션 A는 Lambda 함수 및 이벤트 알림을 사용하여 파일을 수동으로 복사하도록 제안하지만 자동화를 위해 S3 복제 또는 EventBridge를 활용하지 않기 때문에 올바르지 않습니다. 옵션 B는 EventBridge에서 S3 이벤트 알림을 직접 사용하도록 제안하지만 S3 복제를 포함하지 않거나 파일 복사에 Lambda를 활용하지 않기 때문에 올바르지 않습니다. 옵션 C는 추가 처리를 위해 EventBridge 또는 Lambda 기능을 활용하지 않고 S3 복제 및 이벤트 알림만 포함하므로 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -679,7 +768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -707,16 +796,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 10일 수요일 00:27">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html#supported-notification-destinations S3는 SageMaker에 이벤트 알림을 보낼 수 없습니다. 이것은 C를 배제합니다. 먼저 Amazon EventBridge로 보낸 다음 SageMaker로 보내야 합니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html#supported-notification-destinations S3는 SageMaker에 이벤트 알림을 보낼 수 없습니다. 이는 C를 배제합니다. • 먼저 Amazon EventBridge로 보낸 다음 SageMaker로 보내야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -725,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -753,16 +842,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에엔디
+				엔디
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 10일 (월) 08:16">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 10일 월요일 08:16">
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C가 아니라고 믿는 이유는 무엇입니까? 여기서 핵심은 s3:ObjectCreated:"Put"에 있습니다. 복제는 s3:ObjectCreated:Put을 실행하지 않습니다. 이벤트. 여기 링크 참조: https://aws.amazon.com/blogs/aws/s3-event-notification/</div>
+<div class="comment-content">왜 C가 아니라고 생각합니까? 여기서 핵심은 s3:ObjectCreated:"Put"에 있습니다. 복제는 s3:ObjectCreated:Put을 실행하지 않습니다. 이벤트. 여기 링크를 참조하세요: https://aws.amazon.com/blogs/aws/s3-event-notification/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -771,7 +860,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,13 +891,13 @@
 				크라켄21
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 29일 수 21:39">
-			4개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 29일 수요일 21:39">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D는 자동화된 이동을 처리하고 패턴 일치를 위한 람다는 D에서 효율적으로 다룹니다.</div>
+<div class="comment-content">D는 자동화된 이동을 처리하고 패턴 매칭을 위한 람다는 D에서 효율적으로 다룹니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -817,7 +906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -845,11 +934,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스케투콜리
+				수케투콜리
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 3월 20일 (월) 08:27">
-			4개월, 4주 전
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -862,7 +951,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -893,13 +982,13 @@
 				그메라
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 11일 (토) 02:09">
-			5개월, 1주 전
+<span class="comment-date align-middle" title="2023년 3월 11일 토요일 02:09">
+			5개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">대답은 A입니다. 파일을 이동하라는 명령문입니다. 복제는 파일을 이동하지 않고 복사본만 생성합니다. 그래서 분명히 C와 D는 아웃입니다. 이벤트 알림 및 Lambda를 사용할 때 더 많은 서비스로 EVent 브리지가 필요한 이유. 답은 A입니다</div>
+<div class="comment-content">대답은 A입니다. 문에는 파일을 이동하라고 나와 있습니다. 복제는 파일을 이동하지 않고 복사본만 생성합니다. 그래서 분명히 C와 D는 아웃되었습니다. 이벤트 알림 및 Lambda를 사용할 때 더 많은 서비스로 EVENT 브리지가 필요한 이유 그럼 답은 A 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -908,7 +997,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -931,12 +1020,12 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 17일 (토) 02:10">
-			2 달전
+<span class="comment-date align-middle" title="2023년 6월 17일 토요일 02:10">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">S3 설명서를 검색했지만 s3 이벤트 알림이 sagemaker 파이프라인을 트리거할 수 있는 위치를 찾을 수 없습니다. 그것은 SNS, SQS 및 람다 수 있습니다. A가 올바른 선택인지 확신할 수 없습니다.</div>
+<div class="comment-content">S3 문서를 검색했는데 s3 이벤트 알림이 Sagemaker 파이프라인을 트리거할 수 있는 위치를 찾을 수 없습니다. SNS, SQS 및 람다가 가능합니다. A가 올바른 선택인지 확신할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -945,7 +1034,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -977,11 +1066,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 2일 일요일 14:33">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 B는 다음과 같이 말합니다. COPY할 람다 함수도 만듭니다. 그런 다음 귀하의 아이디어에 따라 A와 B도 나갑니다 ... ;) 분명히이 질문에서 이동 인수가 정확하지 않습니다</div>
+<div class="comment-content">A와 B는 다음과 같이 말합니다. COPY할 람다 함수도 만듭니다. 그러면 당신의 생각에 따라 A와 B도 탈락합니다... ;) 분명히 이 질문에서는 이동 주장이 정확하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -990,7 +1079,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1029,13 +1118,13 @@
 				Steve_4542636
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 4일 (토) 23:28">
-			5개월, 2주 전
+<span class="comment-date align-middle" title="2023년 3월 4일 토요일 23:28">
+			5개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">람다를 사용하는 것은 요구 사항 중 하나입니다. Sns, sqs, lambda 및 이벤트 브리지는 유일한 s3 알림 대상(https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html)입니다.</div>
+<div class="comment-content">람다를 사용하는 것은 요구 사항 중 하나입니다. Sns, sqs, 람다 및 이벤트 브리지는 https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html의 유일한 s3 알림 대상입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1044,7 +1133,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1076,11 +1165,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 22일 일요일 00:39">
-			6개월, 3주 전
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 및 D 옵션 모두 자동 이벤트 기반 메커니즘(S3 이벤트 알림 및 EventBridge 규칙)을 사용하여 Lambda 함수를 트리거하고 파일을 분석 S3 버킷에 복사하므로 운영 오버헤드를 최소화하면서 요구 사항을 충족할 수 있습니다. 그러면 Lambda 함수가 패턴 일치 코드를 실행할 수 있고 파일을 SageMaker 파이프라인으로 보낼 수 있습니다. Lambda 함수를 사용하여 파일을 분석 S3 버킷에 직접 복사하는 옵션 A는 더 간단합니다. S3 복제 및 EventBridge 규칙을 사용하는 옵션 D는 보다 유연하고 더 복잡한 이벤트 기반 흐름을 사용할 수 있으므로 더 강력할 수 있습니다. .</div>
+<div class="comment-content">A와 D 옵션 모두 자동 이벤트 기반 메커니즘(S3 이벤트 알림 및 EventBridge 규칙)을 사용하여 Lambda 함수를 트리거하고 파일을 분석 S3 버킷에 복사하므로 최소한의 운영 오버헤드로 요구 사항을 충족할 수 있습니다. 그러면 Lambda 함수가 패턴 일치 코드를 실행할 수 있고 파일은 SageMaker 파이프라인으로 전송될 수 있습니다. Lambda 함수를 사용하여 파일을 분석 S3 버킷에 직접 복사하는 옵션 A는 더 간단하며, S3 복제 및 EventBridge 규칙을 사용하는 옵션 D는 더 복잡한 이벤트 중심 흐름을 사용할 수 있으므로 더 유연하고 더 강력할 수 있습니다. .</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1089,7 +1178,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1121,11 +1210,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 12일 목요일 22:28">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: D S3 이벤트 알림은 SQS에만 알림을 보낼 수 있습니다. SNS 및 Lambda, 하지만 Sagamaker는 아님 https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html S3 이벤트 알림은 SageMaker가 아닌 SNS, SQS 및 Lambda에 알림을 보낼 수 있음</div>
+<div class="comment-content">답변: D S3 이벤트 알림은 SQS에만 알림을 보낼 수 있습니다. SNS 및 Lambda(Sagamaker는 아님) https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html S3 이벤트 알림은 SNS, SQS 및 Lambda에 알림을 보낼 수 있지만 SageMaker에는 보낼 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1166,12 +1255,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 10일 화요일 17:18">
-			7개월, 1주 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">A와 B는 복사를 수행하기 위해 추가 Lambda 작업이 필요하고 S3 복제가 오버헤드가 거의 또는 전혀 없이 이를 처리하므로 제외됩니다. Sagemake 파이프라인(https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html#supported- 알림 대상)</div>
+<div class="comment-content">복사를 수행하려면 추가 Lambda 작업이 필요하고 S3 복제는 오버헤드가 거의 또는 전혀 없이 복사를 처리하므로 A와 B는 제외됩니다. C는 올바르지 않습니다. Sagemake 파이프라인(https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-types-and-destinations.html#supported-)에서는 S3 알림이 지원되지 않기 때문입니다. 알림 대상)</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1180,7 +1269,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1211,13 +1300,13 @@
 				마하데바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 7일 (토) 01:04">
-			7개월, 1주 전
+<span class="comment-date align-middle" title="2023년 1월 7일 토요일 01:04">
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">이미 S3 버킷에서 작업하고 있으므로 S3 이벤트 알림(evet 유형: s3:ObjectCreated:Put)을 구성하는 것이 EventBridge(이 경우 추가 서비스)를 통해 동일한 작업을 수행하는 것보다 훨씬 쉽습니다. 운영 오버헤드가 적습니다.</div>
+<div class="comment-content">이미 S3 버킷에 대해 작업하고 있으므로 S3 이벤트 알림(evet 유형: s3:ObjectCreated:Put 사용)을 구성하는 것은 EventBridge(이 경우 추가 서비스)를 통해 동일한 작업을 수행하는 것보다 훨씬 쉽습니다. 운영 오버헤드가 적습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1226,7 +1315,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1254,11 +1343,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				구스타프
+				구스타브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 2일 월요일 17:04">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1272,7 +1361,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1304,12 +1393,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 10:34">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">최소한의 운영 오버헤드로 요구 사항을 충족하는 가장 효율적인 방법이므로 옵션 D를 권장합니다. 옵션 D는 파일이 추가될 때 초기 S3 버킷에서 분석 S3 버킷으로 파일을 자동으로 복사하는 두 S3 버킷 간의 S3 복제 구성과 관련됩니다. 이렇게 하면 매일 파일을 수동으로 복사할 필요가 없으며 분석 S3 버킷에 항상 최신 데이터가 유지됩니다.</div>
+<div class="comment-content">최소한의 운영 오버헤드로 요구 사항을 충족하는 가장 효율적인 방법인 옵션 D를 권장합니다. 옵션 D에는 두 개의 S3 버킷 간에 S3 복제를 구성하는 작업이 포함됩니다. 이 복제는 파일이 추가될 때 초기 S3 버킷의 파일을 분석 S3 버킷에 자동으로 복사합니다. 이렇게 하면 매일 파일을 수동으로 복사할 필요가 없으며 분석 S3 버킷에 항상 최신 데이터가 유지됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1318,7 +1407,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1342,11 +1431,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 1일 일요일 10:35">
-			7개월, 2주 전
+			7개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">또한 Amazon EventBridge(CloudWatch Events)에 이벤트 알림을 보내도록 분석 S3 버킷을 구성하고 ObjectCreated 규칙을 생성하면 분석 S3 버킷에 새 객체가 생성될 때 Lambda 함수 및 SageMaker 파이프라인을 트리거할 수 있습니다. 이렇게 하면 복사된 데이터가 분석 S3 버킷에 추가될 때 자동으로 패턴 일치 및 데이터 처리를 수행할 수 있습니다. 옵션 A와 옵션 C에는 파일을 분석 S3 버킷에 수동으로 복사하는 작업이 포함되며, 이는 보고 팀이 예상하는 증가된 데이터 볼륨을 고려할 때 효율적인 솔루션이 아닙니다. 옵션 B는 S3 복제를 포함하지 않으므로 데이터를 분석 S3 버킷에 자동으로 복사해야 하는 요구 사항을 다루지 않습니다.</div>
+<div class="comment-content">또한 Amazon EventBridge(CloudWatch Events)에 이벤트 알림을 보내도록 분석 S3 버킷을 구성하고 ObjectCreated 규칙을 생성하면 분석 S3 버킷에 새 객체가 생성될 때 Lambda 함수 및 SageMaker 파이프라인을 트리거할 수 있습니다. 이를 통해 복사된 데이터가 분석 S3 버킷에 추가될 때 자동으로 패턴 일치 및 데이터 처리를 수행할 수 있습니다. 옵션 A와 옵션 C에는 파일을 분석 S3 버킷에 수동으로 복사하는 작업이 포함되는데, 이는 보고 팀이 예상하는 데이터 양의 증가를 고려할 때 효율적인 솔루션이 아닙니다. 옵션 B에는 S3 복제가 포함되지 않으므로 데이터를 분석 S3 버킷에 자동으로 복사해야 하는 요구 사항을 해결하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1355,7 +1444,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1391,16 +1480,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				부루구두이스턴스투구둔스투이
+				Buruguduystunstugudunstuy
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 29일 목요일 05:48">
-			7개월, 2주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 A와 B는 불필요한 분석 S3 버킷에 파일을 복사하는 Lambda 함수를 생성해야 하기 때문에 올바르지 않습니다. 요구 사항은 파일이 초기 S3 버킷에 추가되는 즉시 자동으로 분석 S3 버킷으로 파일을 이동하는 것입니다. 이는 옵션 A와 B에 언급되지 않은 S3 복제를 사용하여 보다 효율적으로 달성할 수 있습니다. 옵션 C는 올바르지만 S3 버킷 간에 S3 복제를 구성해야 하기 때문에 올바르지 않습니다. 그러나 이벤트 알림을 Amazon EventBridge(CloudWatch Events)로 보내도록 분석 S3 버킷을 구성하는 작업은 포함되지 않습니다. 이는 후속 작업(예: Lambda 함수를 사용하여 패턴 일치 코드 실행 및 SageMaker Pipelines의 파이프라인으로 데이터 파일 전송)을 트리거하는 데 필요합니다. 따라서 정답은 옵션 D입니다.</div>
+<div class="comment-content">옵션 A와 B는 불필요한 분석 S3 버킷에 파일을 복사하는 Lambda 함수 생성을 포함하므로 올바르지 않습니다. 요구 사항은 파일이 초기 S3 버킷에 추가되는 즉시 자동으로 분석 S3 버킷으로 이동하는 것입니다. 이는 옵션 A와 B에 언급되지 않은 S3 복제를 사용하여 보다 효율적으로 달성할 수 있습니다. 옵션 C는 S3 버킷 간의 S3 복제 구성을 포함하므로 올바르지 않습니다. 이는 올바른 것입니다. 그러나 Amazon EventBridge(CloudWatch Events)에 이벤트 알림을 보내도록 분석 S3 버킷을 구성하는 작업은 포함되지 않습니다. 이는 후속 작업(예: Lambda 함수를 사용하여 패턴 일치 코드 실행 및 SageMaker 파이프라인의 파이프라인으로 데이터 파일 전송)을 트리거하는 데 필요합니다. 따라서 정답은 선택 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1409,7 +1498,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1437,16 +1526,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 26일 (월) 21:17">
-			7개월, 3주 전
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D와 함께 가기</div>
+<div class="comment-content">D와 함께 가다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1455,7 +1544,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1487,12 +1576,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 14일 수 07:27">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">S3 버킷 간에 데이터를 복사하기 위한 람다 기능이 과도하게 사용되어 S3 복제만 사용할 수 있을 때 약간의 비용이 발생했습니다.</div>
+<div class="comment-content">S3 버킷 간 데이터 복사를 위한 람다 함수가 과도하게 사용되어 S3 복제만 사용할 수 있을 때 약간의 비용이 발생함</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1501,7 +1590,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1533,11 +1622,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 23:09">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. 검토는 분석과 동일하며 Lamba가 필요하며 분석 후 S3에 복사하도록 Lamba를 구성할 수 있습니다. 그리고 서버리스이므로 오버헤드가 제거됩니다.</div>
+<div class="comment-content">B. 검토는 분석과 동일하므로 Lamba가 필요하며 분석 후 S3에 복사하도록 Lamba를 구성할 수 있습니다. 그리고 서버리스이므로 오버헤드가 제거됩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1546,7 +1635,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1570,11 +1659,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 14일 수 05:44">
-			8개월 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"보고 팀은 파일이 초기 S3 버킷에 들어갈 때 파일을 자동으로 분석 S3 버킷으로 옮기기를 원합니다." 필수 .. IT의 D</div>
+<div class="comment-content">"보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 S3 버킷을 분석하여 파일을 이동하려고 합니다." 이 줄에 따르면 대답은 D라고 생각합니다. 그들은 복사하기 전에 파일을 분석하려고 하지 않으므로 Lamba는 그렇지 않습니다. 필수..IT's D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1583,7 +1672,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1623,7 +1712,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 12일 (월) 02:20">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1636,7 +1725,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1656,11 +1745,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 13:40">
-			7개월, 3주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1673,7 +1762,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1712,13 +1801,13 @@
 				라파키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 09:35">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 09:35">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B. 팀에서 검토한 후 분석 버킷에 복사합니다. 검토는 복사하기 전에 람다가 필요함을 의미합니다.</div>
+<div class="comment-content">B. 팀이 검토한 후 분석 버킷에 복사하고 있습니다. 검토는 복사하기 전에 람다가 필요함을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1727,7 +1816,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1747,15 +1836,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 22일 목요일 13:42">
-			7개월, 3주 전
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 파일 분석 S3 버킷을 이동하려고 합니다." 파일을 검토하기 전에 즉시 복사하기를 원함을 의미합니다.</div>
+<div class="comment-content">"보고 팀은 파일이 초기 S3 버킷에 들어갈 때 자동으로 분석 S3 버킷으로 파일을 이동하려고 합니다." 즉, 검토되기 전에 파일을 즉시 복사하기를 원한다는 의미입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1764,7 +1853,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1803,12 +1892,12 @@
 				라파키
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 10일 (토) 09:34">
-			8개월, 1주 전
+<span class="comment-date align-middle" title="2022년 12월 10일 토요일 09:34">
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B. 팀에서 검토한 후 분석 버킷에 복사합니다. 검토는 복사하기 전에 람다가 필요함을 의미합니다.</div>
+<div class="comment-content">B. 팀이 검토한 후 분석 버킷에 복사하고 있습니다. 검토는 복사하기 전에 람다가 필요함을 의미합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1817,7 +1906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1845,15 +1934,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				nhlegend
+				전설
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 12일 토요일 05:09">
-			9개월, 1주 전
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D여야 합니다 수동으로 데이터를 복사하고 S3 복제를 사용하여 파일을 복사합니다(A와 B 제거). S3 이벤트 알림은 SNS, SQS 및 Lambda로만 보낼 수 있으므로 C는 올바르지 않습니다. /latest/userguide/NotificationHowTo.html 따라서 D가 맞습니다.</div>
+<div class="comment-content">D여야 합니다. 수동으로 데이터를 복사하고, S3 복제를 사용하여 파일을 복사합니다(A와 B 제거). S3 이벤트 알림은 SNS, SQS 및 Lambda로만 보낼 수 있으므로 C는 올바르지 않습니다. https://docs.aws.amazon.com/AmazonS3 /latest/userguide/NotificationHowTo.html 따라서 D가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1862,7 +1951,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">7</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1894,11 +1983,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 11일 금요일 06:18">
-			9개월, 1주 전
+			9개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 D - 파일이 커지고 운영 오버헤드가 줄어들고 있으므로 S3 복제를 선택합니다. 이벤트 브리지는 S3 이벤트 알림보다 훨씬 고급이며 여러 대상을 지원합니다. S3 이벤트 알림은 Sagemaker를 지원하지 않을 수 있습니다. 이벤트 브리지에서 필터링 및 패턴 일치도 가능합니다. 그래서 대답 D</div>
+<div class="comment-content">답변 D - 파일이 커지고 운영 오버헤드가 줄어들므로 S3 복제를 선택합니다. 이벤트 브리지는 S3 이벤트 알림보다 훨씬 더 발전되었으며 여러 대상을 지원합니다. S3 이벤트 알림은 Sagemaker를 지원하지 않을 수 있습니다. 이벤트 브리지에서는 필터링 및 패턴 매칭도 가능합니다. 그럼 D라고 대답해</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1938,13 +2027,13 @@
 				백벤처2022
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 06일 일요일 01:25">
-			9개월, 1주 전
+<span class="comment-date align-middle" title="2022년 11월 6일 일요일 01:25">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">옵션 D는 오버헤드가 가장 적고 제 생각에는 정답이어야 합니다.</div>
+<div class="comment-content">옵션 D는 오버헤드가 가장 적고 내 의견으로는 정답이어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1953,7 +2042,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1981,16 +2070,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				르글루피에
+				르글로피에
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 19일 수 09:02">
-			10개월 전
+<span class="comment-date align-middle" title="2022년 10월 19일 수요일 09:02">
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D 더 이해가</div>
+<div class="comment-content">D가 더 이해가 되네요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2023,11 +2112,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 20일 목요일 10:58">
-			10개월 전
+			10개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">보고 팀과 관련이 없는 문서를 복제하면 더 많은 리소스를 소비하고(필요하지 않은 문서의 복제 저장소) 이러한 추가 문서가 분석 프로세스에 도입되기 때문에 폐기 오버헤드, 노이즈 또는 보고 결과 깨짐이 발생할 수 있습니다.</div>
+<div class="comment-content">보고 팀과 관련되지 않은 문서를 복제하면 더 많은 리소스를 소비하게 되고(필요하지 않은 문서의 저장 공간 복제) 이러한 추가 문서가 분석 프로세스에 도입되므로 폐기 오버헤드, 노이즈 또는 보고 결과 중단이 발생할 가능성이 높습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2036,7 +2125,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2056,15 +2145,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오니몰
+				오니몰레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 12:26">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 12:26">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">그들은 이미 그것을 복제하고 있고 다른 버킷에 있어야 합니까?</div>
+<div class="comment-content">이미 복제하고 있어서 다른 버킷에 넣어야 하지 않나요?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2073,7 +2162,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2101,15 +2190,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오니몰
+				오니몰레
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 05일 (토) 12:27">
-			9개월, 2주 전
+<span class="comment-date align-middle" title="2022년 11월 5일 토요일 12:27">
+			9개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">함수를 만드는 사람은 추가적인 오버헤드입니다. CRR 복제는 aws 기능입니다.</div>
+<div class="comment-content">누군가 함수를 만드는 것은 추가적인 오버헤드입니다. CRR 복제는 AWS 기능입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -2118,7 +2207,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -2189,7 +2278,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Wed 26 Oct 2022 18:49">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2233,7 +2322,7 @@ The question says the team is manually copying the files, automatically replicat
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Jun 2023 06:27">
-			1 month, 4 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2245,7 +2334,7 @@ The question says the team is manually copying the files, automatically replicat
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">4</span> times
+				upvoted <span class="upvote-count">5</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2289,7 +2378,7 @@ The question says the team is manually copying the files, automatically replicat
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 20 Oct 2022 10:55">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2329,7 +2418,7 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 19 Jun 2023 06:28">
-			1 month, 4 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2374,7 +2463,7 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 01:01">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2420,7 +2509,7 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 07 Apr 2023 10:07">
-			4 months, 1 week ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2465,7 +2554,7 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 13:39">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2510,7 +2599,7 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 11 Nov 2022 06:04">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2547,6 +2636,65 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 </div>
 </div>
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="982906" id="comment-982906">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				Guru4Cloud
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="Wed 16 Aug 2023 20:56">
+			1 week, 3 days ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">Option D is the solution with the least operational overhead:
+
+Use S3 replication between buckets
+Send S3 events to EventBridge
+Add Lambda and SageMaker as EventBridge rule targets
+The reasons this has the least overhead:
+
+S3 replication automatically copies new objects to analysis bucket
+EventBridge allows easily adding multiple targets for events
+No custom Lambda function needed for copying objects
+Leverages managed services for event processing</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="954375" id="comment-954375">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -2562,11 +2710,8 @@ https://aws.amazon.com/about-aws/whats-new/2021/04/new-options-trigger-amazon-sa
 				MutiverseAgent
 			</h5>
 </a>
-<span class="badge badge-primary">
-				Most Recent <i class="fa fa-clock-o"></i>
-</span>
 <span class="comment-date align-middle" title="Mon 17 Jul 2023 18:31">
-			1 month ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2613,7 +2758,7 @@ B &amp; D the only possible as Sagemaker is not supported as target for S3 event
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 23 Jun 2023 10:38">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2662,7 +2807,7 @@ Option C is incorrect because it only involves S3 replication and event notifica
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 10 May 2023 00:27">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2709,7 +2854,7 @@ S3 can NOT send event notification to SageMaker. This rules out C. you have to s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Apr 2023 08:16">
-			4 months, 1 week ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2755,7 +2900,7 @@ S3 can NOT send event notification to SageMaker. This rules out C. you have to s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Mar 2023 21:39">
-			4 months, 2 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2801,7 +2946,7 @@ S3 can NOT send event notification to SageMaker. This rules out C. you have to s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 08:27">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2846,7 +2991,7 @@ S3 can NOT send event notification to SageMaker. This rules out C. you have to s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 11 Mar 2023 02:09">
-			5 months, 1 week ago
+			5 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2885,7 +3030,7 @@ The statement says move the file. Replication won't move the file it will just c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Jun 2023 02:10">
-			2 months ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2930,7 +3075,7 @@ The statement says move the file. Replication won't move the file it will just c
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 02 Apr 2023 14:33">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2984,7 +3129,7 @@ obviously move argument isn't accute in this question</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 04 Mar 2023 23:28">
-			5 months, 2 weeks ago
+			5 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3031,7 +3176,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/notification-how-to-event-
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 22 Jan 2023 00:39">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3077,7 +3222,7 @@ Option A, directly copying the files to the analysis S3 bucket using a Lambda fu
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 12 Jan 2023 22:28">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3127,7 +3272,7 @@ S3 event notification can send notification to SNS, SQS and Lambda, but not Sage
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 10 Jan 2023 17:18">
-			7 months, 1 week ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3174,7 +3319,7 @@ C is incorrect because, S3 notifcations are not supported on Sagemake pipeline (
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 07 Jan 2023 01:04">
-			7 months, 1 week ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3220,7 +3365,7 @@ C is incorrect because, S3 notifcations are not supported on Sagemake pipeline (
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 02 Jan 2023 17:04">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3266,7 +3411,7 @@ C is incorrect because, S3 notifcations are not supported on Sagemake pipeline (
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 01 Jan 2023 10:34">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3306,7 +3451,7 @@ Option D involves configuring S3 replication between the two S3 buckets, which w
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 01 Jan 2023 10:35">
-			7 months, 2 weeks ago
+			7 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3361,7 +3506,7 @@ Option A and option C involve manually copying the files to the analysis S3 buck
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 29 Dec 2022 05:48">
-			7 months, 2 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3411,7 +3556,7 @@ Therefore, the correct answer is Option D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Dec 2022 21:17">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3457,7 +3602,7 @@ Therefore, the correct answer is Option D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 07:27">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3503,7 +3648,7 @@ Therefore, the correct answer is Option D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 23:09">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3540,7 +3685,7 @@ Therefore, the correct answer is Option D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 14 Dec 2022 05:44">
-			8 months ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3594,7 +3739,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 12 Dec 2022 02:20">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3631,7 +3776,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 13:40">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3684,7 +3829,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 09:35">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3722,7 +3867,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 22 Dec 2022 13:42">
-			7 months, 3 weeks ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3775,7 +3920,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 10 Dec 2022 09:34">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3820,7 +3965,7 @@ IT's D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 12 Nov 2022 05:09">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3869,7 +4014,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 11 Nov 2022 06:18">
-			9 months, 1 week ago
+			9 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3914,7 +4059,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 06 Nov 2022 01:25">
-			9 months, 1 week ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3960,7 +4105,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Oct 2022 09:02">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3998,7 +4143,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 20 Oct 2022 10:58">
-			10 months ago
+			10 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4035,7 +4180,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 12:26">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -4080,7 +4225,7 @@ So D is correct</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 05 Nov 2022 12:27">
-			9 months, 2 weeks ago
+			9 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

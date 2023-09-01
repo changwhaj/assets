@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 293 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 293 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 문제 293 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 293 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="875975">
 <p class="card-text">
 							
-								온라인 소매업체는 제품 카탈로그 및 주문 데이터에 Amazon DynamoDB를 사용합니다. 일부 인기 있는 항목으로 인해 데이터에서 자주 액세스하는 키가 발생했으며 회사는 자주 액세스하는 키를 처리하기 위한 캐싱 솔루션으로 DynamoDB Accelerator(DAX)를 사용하고 있습니다. 인기 있는 제품의 수가 증가함에 따라 회사는 더 많은 항목을 캐시해야 함을 깨닫습니다. 회사는 높은 캐시 미스율을 관찰하고 이 문제를 해결하기 위한 솔루션이 필요합니다. <br/><br/>DAX에 대한 변화하는 요구 사항을 수용하기 위해 데이터베이스 전문가는 무엇을 해야 합니까?
+								온라인 소매업체는 제품 카탈로그 및 주문 데이터를 위해 Amazon DynamoDB를 사용합니다. 일부 인기 항목으로 인해 데이터에서 자주 액세스되는 키가 발생했으며, 회사에서는 자주 액세스되는 키를 처리하기 위한 캐싱 솔루션으로 DynamoDB Accelerator(DAX)를 사용하고 있습니다. 인기 있는 제품의 수가 증가함에 따라 회사는 더 많은 항목을 캐시해야 한다는 사실을 깨달았습니다. 회사는 높은 캐시 누락률을 관찰했으며 이 문제를 해결하기 위한 솔루션이 필요합니다. <br/><br/>DAX에 대한 변화하는 요구 사항을 수용하려면 데이터베이스 전문가는 무엇을 해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -92,14 +155,14 @@
 													B.
 												</span> 
 											
-											더 많은 노드로 새 DAX 클러스터를 만듭니다. 새 클러스터를 가리키도록 애플리케이션의 DAX 엔드포인트를 변경합니다.
+											더 많은 노드를 포함하는 새 DAX 클러스터를 생성합니다. 새 클러스터를 가리키도록 애플리케이션의 DAX 엔드포인트를 변경합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											더 큰 노드 유형을 사용하여 새 DAX 클러스터를 만듭니다. 새 클러스터를 가리키도록 애플리케이션의 DAX 엔드포인트를 변경합니다.
+											더 큰 노드 유형을 사용하여 새 DAX 클러스터를 생성합니다. 새 클러스터를 가리키도록 애플리케이션의 DAX 엔드포인트를 변경합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -110,7 +173,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +183,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="4 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a> 
-							
-							시간: <i>
-							2023년 3월 26일, 오후 4:27</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								rdiaz
-							</a>
-							
-							at <i>
-							March 26, 2023, 4:27 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,7 +291,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 7월 19일 수 01:52">
-			4주 전
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -261,7 +304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -293,7 +336,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 11일 목요일 13:48">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -306,7 +349,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -338,11 +381,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 13일 목요일 13:15">
-			4 개월 전에
+			4개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 또는 B 또는 C가 유효한 솔루션입니다.</div>
+<div class="comment-content">A, B 또는 C가 유효한 솔루션입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -351,7 +394,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -382,13 +425,13 @@
 				르디아즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 16:27">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 16:27">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">노드가 클수록 클러스터는 메모리에 더 많은 데이터를 저장할 수 있으므로 캐시 미스를 줄이고 애플리케이션의 전반적인 애플리케이션 성능을 향상시킬 수 있습니다. 실행 중인 DAX 클러스터에서는 노드 유형을 수정할 수 없습니다. 대신 원하는 노드 유형으로 새 클러스터를 생성해야 합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.cluster-management.html#DAX.cluster-management.scaling</div>
+<div class="comment-content">노드가 클수록 클러스터는 더 많은 데이터를 메모리에 저장할 수 있으므로 캐시 누락이 줄어들고 애플리케이션의 전반적인 애플리케이션 성능이 향상됩니다. 실행 중인 DAX 클러스터에서는 노드 유형을 수정할 수 없습니다. 대신 원하는 노드 유형으로 새 클러스터를 생성해야 합니다. https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.cluster-management.html#DAX.cluster-management.scaling</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -397,7 +440,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -421,11 +464,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 4월 4일 화요일 13:51">
-			4개월, 2주 전
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">DAX 클러스터 조정 DAX 클러스터를 조정하는 데 사용할 수 있는 두 가지 옵션이 있습니다. 첫 번째 옵션은 읽기 전용 복제본을 클러스터에 추가하는 수평 확장입니다. 두 번째 옵션은 다른 노드 유형을 선택하는 수직 확장입니다.</div>
+<div class="comment-content">DAX 클러스터 확장 DAX 클러스터 확장에는 두 가지 옵션을 사용할 수 있습니다. 첫 번째 옵션은 클러스터에 읽기 전용 복제본을 추가하는 수평 확장입니다. 두 번째 옵션은 다양한 노드 유형을 선택하는 수직 확장입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -434,7 +477,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -454,15 +497,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				씨엠씨
+				CNC
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 26일 금요일 16:30">
-			2개월, 3주 전
+			3 개월 전에
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">왜 답변에 잘못된 정보를 일관되게 퍼뜨리나요... 노드에는 동일한 데이터 집합이 포함되어 있습니다... 노드를 수평으로 확장하면 단순히 처리량이 증가합니다. 캐시 누락이 있는 경우 더 큰 노드 유형이 필요합니다.</div>
+<div class="comment-content">왜 답변에 잘못된 정보를 일관되게 퍼뜨리나요? 노드에는 동일한 데이터 세트가 포함되어 있습니다. 수평으로 확장하면 처리량이 늘어납니다. 캐시 누락이 있는 경우 더 큰 노드 유형이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -471,7 +514,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -539,7 +582,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 19 Jul 2023 01:52">
-			4 weeks ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -584,7 +627,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 11 May 2023 13:48">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -629,7 +672,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 13 Apr 2023 13:15">
-			4 months ago
+			4 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -674,7 +717,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 16:27">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -716,7 +759,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.cluster-man
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 13:51">
-			4 months, 2 weeks ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -754,7 +797,7 @@ There are two options available for scaling a DAX cluster. The first option is h
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 26 May 2023 16:30">
-			2 months, 3 weeks ago
+			3 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

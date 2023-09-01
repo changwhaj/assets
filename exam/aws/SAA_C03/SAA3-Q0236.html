@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 236 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 질문 236 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 문제 236 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 236 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 236 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861660">
 <p class="card-text">
 							
-								회사에 이미지 공유를 위한 3계층 애플리케이션이 있습니다. 이 애플리케이션은 프런트 엔드 계층에 Amazon EC2 인스턴스를 사용하고, 애플리케이션 계층에 또 다른 EC2 인스턴스를 사용하고, MySQL 데이터베이스에 세 번째 EC2 인스턴스를 사용합니다. 솔루션 설계자는 응용 프로그램에 최소한의 변경만 필요한 확장 가능하고 가용성이 높은 솔루션을 설계해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
+								회사에는 이미지 공유를 위한 3계층 애플리케이션이 있습니다. 애플리케이션은 프런트엔드 계층에 Amazon EC2 인스턴스, 애플리케이션 계층에 또 다른 EC2 인스턴스, MySQL 데이터베이스에 세 번째 EC2 인스턴스를 사용합니다. 솔루션 설계자는 애플리케이션 변경이 최소화되는 확장 가능하고 가용성이 높은 솔루션을 설계해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,21 +148,21 @@
 													A.
 												</span> 
 											
-											Amazon S3를 사용하여 프런트 엔드 계층을 호스팅하십시오. 애플리케이션 계층에 AWS Lambda 함수를 사용합니다. 데이터베이스를 Amazon DynamoDB 테이블로 이동합니다. Amazon S3를 사용하여 사용자 이미지를 저장하고 제공합니다.
+											Amazon S3를 사용하여 프런트엔드 계층을 호스팅하십시오. 애플리케이션 계층에 AWS Lambda 함수를 사용합니다. 데이터베이스를 Amazon DynamoDB 테이블로 이동합니다. Amazon S3를 사용하여 사용자 이미지를 저장하고 제공합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											프런트엔드 계층과 애플리케이션 계층에 로드 밸런싱된 다중 AZ AWS Elastic Beanstalk 환경을 사용합니다. 데이터베이스를 여러 읽기 전용 복제본이 있는 Amazon RDS DB 인스턴스로 이동하여 사용자 이미지를 제공합니다.
+											프런트엔드 계층과 애플리케이션 계층에 로드 밸런싱된 다중 AZ AWS Elastic Beanstalk 환경을 사용합니다. 사용자의 이미지를 제공하기 위해 여러 읽기 복제본이 있는 Amazon RDS DB 인스턴스로 데이터베이스를 이동합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											Amazon S3를 사용하여 프런트 엔드 계층을 호스팅합니다. 애플리케이션 계층에 대한 Auto Scaling 그룹의 EC2 인스턴스 플릿을 사용합니다. 데이터베이스를 메모리 최적화 인스턴스 유형으로 이동하여 사용자 이미지를 저장하고 제공합니다.
+											Amazon S3를 사용하여 프런트엔드 계층을 호스팅합니다. 애플리케이션 계층에 대한 Auto Scaling 그룹의 EC2 인스턴스 플릿을 사용합니다. 사용자의 이미지를 저장하고 제공하기 위해 데이터베이스를 메모리 최적화 인스턴스 유형으로 이동합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -112,7 +175,7 @@
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,20 +185,10 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">디 (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">B (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="17 votes." data-toggle="tooltip" role="progressbar" style="width: 71%; display: flex;" title="">D (71%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="6 votes." data-toggle="tooltip" role="progressbar" style="width: 25%; display: flex;" title="">B (25%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="1 votes." data-toggle="tooltip" role="progressbar" style="width: 4%; display: flex;" title="">4%</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i></a><i>
-							2023년 1월 13일, 오전 9:53</i> 
-							
-							의 <a class="title-username" style="">
-								Morinator
-							</a><i></i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Morinator
-							</a>
-							
-							at <i>
-							Jan. 13, 2023, 9:53 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,15 +291,15 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2023년 1월 28일 (토) 17:34">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 28일 토요일 17:34">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>B</strong></span></div>
-<div class="comment-content">B와 D는 D가 '최고의' 솔루션인 것과 매우 유사하지만 DB 대신 S3에 이미지를 저장하도록 애플리케이션을 변경해야 하므로 최소한의 개발 변경이 필요한 것은 아닙니다.</div>
+<div class="comment-content">B와 D는 D가 '최상의' 솔루션이라는 점에서 매우 유사하지만 DB 대신 S3에 이미지를 저장하려면 애플리케이션을 변경해야 하므로 개발 변경이 가장 적게 필요한 솔루션은 아닙니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -300,12 +343,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 29일 목요일 06:08">
-			1개월, 2주 전
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">AWS Elastic Beanstalk를 사용하면 개발자가 AWS 클라우드에서 애플리케이션을 빠르고 쉽게 배포하고 관리할 수 있습니다. 개발자가 애플리케이션을 업로드하기만 하면 Elastic Beanstalk가 용량 프로비저닝, 로드 밸런싱, 자동 확장 및 애플리케이션 상태 모니터링의 배포 세부 정보를 자동으로 처리합니다. 사람들이 D를 선택하는 이유를 잘 모르겠습니다.</div>
+<div class="comment-content">AWS Elastic Beanstalk를 사용하면 개발자가 AWS 클라우드에서 애플리케이션을 더욱 쉽게 신속하게 배포하고 관리할 수 있습니다. 개발자는 애플리케이션을 업로드하기만 하면 Elastic Beanstalk가 용량 프로비저닝, 로드 밸런싱, 자동 크기 조정, 애플리케이션 상태 모니터링 등의 배포 세부 정보를 자동으로 처리합니다. 사람들이 왜 D를 선택하는지 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -314,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -345,13 +388,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 14:22">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 14:22">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">로드 밸런싱된 다중 AZ AWS EBS를 사용하면 애플리케이션을 크게 변경하지 않고도 두 계층 모두에 대한 확장성과 고가용성을 얻을 수 있습니다. DB를 RDS 다중 AZ DB로 이동하면 고가용성과 자동 장애 조치가 보장됩니다. S3를 통해 사용자 이미지를 저장하고 제공하면 확장 가능하고 가용성이 높은 솔루션을 제공합니다. 프런트 엔드 계층에 S3를 사용하고 애플리케이션 계층에 Lambda를 사용하려면 애플리케이션 아키텍처를 크게 변경해야 하므로 A는 정답이 아닙니다. DB를 DynamoDB로 이동하려면 DB 관련 코드를 다시 작성해야 합니다. 이미지를 제공하기 위해 로드 밸런싱된 다중 AZ AWS EBS 환경과 읽기 전용 복제본이 있는 RDS DB를 사용하는 것이 더 적합한 솔루션이기 때문에 B는 틀렸습니다. 읽기 전용 복제본이 있는 RDS는 이러한 용도로 S3를 사용하는 것보다 이미지 제공 워크로드를 더 효율적으로 처리할 수 있습니다. 프런트 엔드 계층에 S3를 사용하고 애플리케이션 계층에 EC2의 ASG를 사용하려면 애플리케이션 아키텍처를 수정해야 하므로 C는 올바르지 않습니다. 메모리 최적화 EC2 유형의 이미지를 저장하고 제공하는 것은 S3를 사용할 때보다 가장 효율적이고 확장 가능한 접근 방식이 아닐 수 있습니다.</div>
+<div class="comment-content">로드 밸런싱된 다중 AZ AWS EBS를 사용하면 애플리케이션을 크게 변경하지 않고도 두 계층 모두에 대한 확장성과 고가용성을 얻을 수 있습니다. DB를 RDS 다중 AZ DB로 이동하면 고가용성과 자동 장애 조치가 보장됩니다. S3를 통해 사용자의 이미지를 저장하고 제공하면 확장 가능하고 가용성이 높은 솔루션이 제공됩니다. A는 정답이 아닙니다. 프런트엔드 계층에 S3를 사용하고 애플리케이션 계층에 Lambda를 사용하려면 애플리케이션 아키텍처에 상당한 변경이 필요하기 때문입니다. DB를 DynamoDB로 이동하려면 DB 관련 코드를 다시 작성해야 합니다. 로드 밸런싱된 다중 AZ AWS EBS 환경과 이미지 제공을 위한 읽기 전용 복제본이 있는 RDS DB를 사용하는 것이 더 적합한 솔루션이기 때문에 B는 정답이 아닙니다. 읽기 전용 복제본이 있는 RDS는 이러한 목적으로 S3를 사용하는 것보다 이미지 제공 워크로드를 더 효율적으로 처리할 수 있습니다. 프런트엔드 계층에 S3를 사용하고 애플리케이션 계층에 EC2의 ASG를 사용하려면 애플리케이션 아키텍처를 수정해야 하기 때문에 C는 올바르지 않습니다. 메모리 최적화 EC2 유형의 이미지를 저장하고 제공하는 것은 S3를 사용하는 것에 비해 가장 효율적이고 확장 가능한 접근 방식이 아닐 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -360,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -391,12 +434,12 @@
 				markw92
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 18일 일 20:37">
-			1개월, 4주 전
+<span class="comment-date align-middle" title="2023년 6월 18일 일요일 20:37">
+			2개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"응용 프로그램에 대한 최소한의 변경." - A에는 많은 변경 사항이 있으며, 응용 프로그램과 많은 새로운 부분을 완전히 개편했습니다. D는 바로 이동하는 이미지를 저장하기 위해 s3만 추가하면 가장 가깝습니다. 어쨌든 이미지가 데이터베이스에 저장되는 것을 원하지 않습니다.</div>
+<div class="comment-content">"애플리케이션에 최소한의 변경만 적용됩니다." - A에는 많은 변경 사항이 있으며, 애플리케이션을 완전히 개편하고 많은 새로운 부분이 있습니다. D는 올바른 이동 이미지를 저장하기 위해 s3만 추가하면 가장 가깝습니다. 어쨌든 이미지가 어떤 데이터베이스에도 저장되는 것을 원하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -405,13 +448,58 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985457" id="comment-985457">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				아론셀레스틴
+			</h5>
+</a>
+<span class="comment-date align-middle" title="2023년 8월 20일 일요일 00:49">
+			6일, 21시간 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">그게 내가 생각한 것이지만 질문에는 사용자의 이미지를 어디에나 저장하는 것에 대한 언급이 없습니다. 그것이 나쁜 생각임에도 불구하고 이미지를 DB에 저장하고 싶다고 가정해야 합니까?</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -437,7 +525,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 30일 화요일 18:56">
-			2개월, 2주 전
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -451,7 +539,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -482,12 +570,12 @@
 				그레이스83
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 20일 월요일 05:40">
-			4개월, 4주 전
+<span class="comment-date align-middle" title="2023년 3월 20일 (월) 05:40">
+			5개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -496,7 +584,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -524,16 +612,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				focus_23
+				포커스_23
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 28일 (토) 10:46">
-			6개월, 2주 전
+<span class="comment-date align-middle" title="2023년 1월 28일 토요일 10:46">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">RDS 다중 AZ.</div>
+<div class="comment-content">RDS 멀티 AZ.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -542,7 +630,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -573,13 +661,13 @@
 				wmp7039
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 14:35">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 14:35">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">응용 프로그램 변경이 최소한으로 필요하므로 D가 정확합니다.</div>
+<div class="comment-content">애플리케이션 변경이 최소화되어야 하므로 D가 맞습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -619,13 +707,13 @@
 				mhmt4438
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 12:58">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 12:58">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D</div>
+<div class="comment-content">정답은 D 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -634,7 +722,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -665,13 +753,13 @@
 				아니니나
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 19:03">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 19:03">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">"고가용성"의 경우: 다중 AZ 및 "애플리케이션에 대한 최소 변경 사항"의 경우: Elastic Beanstalk가 용량 프로비저닝, 로드 밸런싱, 자동 확장에서 애플리케이션 상태 모니터링에 이르기까지 배포를 자동으로 처리합니다.</div>
+<div class="comment-content">"고가용성": 다중 AZ 및 "애플리케이션에 대한 최소한의 변경": Elastic Beanstalk는 용량 프로비저닝, 로드 밸런싱, Auto Scaling부터 애플리케이션 상태 모니터링까지 배포를 자동으로 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -680,7 +768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -708,16 +796,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				모리네이터
+				모리나토르
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 09:53">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">https://www.examtopics.com/discussions/amazon/view/24840-exam-aws-certified-solutions-architect-associate-saa-c02/ ExamTopics에서 답변을 검토하십시오.</div>
+<div class="comment-content">https://www.examtopics.com/discussions/amazon/view/24840-exam-aws-certified-solutions-architect-associate-saa-c02/ ExamTopics를 확인하고 답변을 검토해 보세요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -726,7 +814,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -781,7 +869,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 28 Jan 2023 17:34">
-			6 months, 2 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -830,7 +918,7 @@
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Thu 29 Jun 2023 06:08">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -878,7 +966,7 @@ I don't quite understand why people choose D.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 14:22">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -930,7 +1018,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 18 Jun 2023 20:37">
-			1 month, 4 weeks ago
+			2 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -950,6 +1038,51 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 </div>
 <div class="comment-replies">
 <!-- Nesting start -->
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="985457" id="comment-985457">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				aaroncelestin
+			</h5>
+</a>
+<span class="comment-date align-middle" title="Sun 20 Aug 2023 00:49">
+			6 days, 21 hours ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-content">Thats what I was thinking, but the question doesn't mention anything about storing users' images anywhere. Are we supposed to just assume that they wanted to store the images in a DB even though that is a bad idea?</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">1</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- Nesting end -->
 </div>
 </div>
@@ -975,7 +1108,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 30 May 2023 18:56">
-			2 months, 2 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1021,7 +1154,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 20 Mar 2023 05:40">
-			4 months, 4 weeks ago
+			5 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1066,7 +1199,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 28 Jan 2023 10:46">
-			6 months, 2 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1112,7 +1245,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 14:35">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1158,7 +1291,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 12:58">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1204,7 +1337,7 @@ C is incorrect because using S3 for the front-end layer and an ASG of EC2 for th
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 19:03">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1253,7 +1386,7 @@ application health monitoring</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 09:53">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

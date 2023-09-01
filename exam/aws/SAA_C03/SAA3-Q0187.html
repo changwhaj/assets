@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 187 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect - Associate SAA-C03 시험 주제 1 문제 187 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 187 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 187 <br/>
 							주제 #: 1
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="847014">
 <p class="card-text">
 							
-								한 회사에서 로드 밸런싱된 프런트 엔드, 컨테이너 기반 애플리케이션 및 관계형 데이터베이스로 구성될 전자상거래 애플리케이션을 개발하고 있습니다. 솔루션 설계자는 가능한 한 적은 수동 개입으로 작동하는 고가용성 솔루션을 만들어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까? (두 가지를 선택하세요.)
+								한 회사는 로드 밸런싱된 프런트 엔드, 컨테이너 기반 애플리케이션 및 관계형 데이터베이스로 구성되는 전자 상거래 애플리케이션을 개발하고 있습니다. 솔루션 설계자는 수동 개입을 최대한 최소화하면서 작동하는 가용성이 뛰어난 솔루션을 만들어야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까? (2개를 선택하세요.)
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -94,7 +157,7 @@
 													B.
 												</span> 
 											
-											다른 가용 영역에서 Amazon RDS DB 인스턴스와 하나 이상의 복제본을 생성합니다.
+											다른 가용 영역에 Amazon RDS DB 인스턴스와 하나 이상의 복제본을 생성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -108,7 +171,7 @@
 													D.
 												</span> 
 											
-											동적 애플리케이션 로드를 처리하기 위해 Fargate 시작 유형으로 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다.
+											동적 애플리케이션 로드를 처리하기 위해 Fargate 시작 유형을 사용하여 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -117,36 +180,26 @@
 													E.
 												</span> 
 											
-											동적 애플리케이션 로드를 처리하기 위해 Amazon EC2 시작 유형으로 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다.
+											동적 애플리케이션 로드를 처리하기 위해 Amazon EC2 시작 유형을 사용하여 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
-<span class="correct-answer">AD </span>
+<span class="correct-answer">광고 </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">공격력(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">광고 (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Danny23132412141_2312
-							</a> 2022년 11월 16 
-							
-							일 <i>
-							오후 10:29</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -229,16 +282,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Danny23132412141_2312
-							</a>
-							
-							at <i>
-							Nov. 16, 2022, 10:29 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -266,28 +309,28 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 12월 24일 (토) 17:52">
-			7개월, 3주 전
+<span class="comment-date align-middle" title="2022년 12월 24일 토요일 17:52">
+			8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">https://containersonaws.com/introduction/ec2-or-aws-fargate/ A.(O) multi-az &lt;= '작은 개입' B.(X) 읽기 복제본 &lt;= 읽기 복제본을 독립 실행형 DB로 승격 인스턴스 읽기 전용 복제본을 독립 실행형 DB 인스턴스로 승격할 수 있습니다. 읽기 전용 복제본을 승격하면 DB 인스턴스가 사용 가능해지기 전에 재부팅됩니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html C.(X) 사람의 개입이 거의 없는 EC2 기반 도커 대신 Amazon ECS 사용 D.(O) AWS Fargate의 Amazon ECS : AWS Fargate는 Amazon EC2 인스턴스의 서버 또는 클러스터를 관리할 필요 없이 컨테이너를 실행하기 위해 Amazon ECS와 함께 사용할 수 있는 기술입니다. 이자형.</div>
+<div class="comment-content">https://containersonaws.com/introduction/ec2-or-aws-fargate/ A.(O) multi-az &lt;= '약간의 개입' B.(X) 읽기 전용 복제본 &lt;= 읽기 전용 복제본을 독립형 DB로 승격 인스턴스 읽기 전용 복제본을 독립형 DB 인스턴스로 승격할 수 있습니다. 읽기 전용 복제본을 승격하면 DB 인스턴스가 사용 가능해지기 전에 재부팅됩니다. https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html C.(X) 사람의 개입이 거의 없도록 EC2 기반 도커 대신 Amazon ECS를 사용합니다. D.(O) AWS Fargate의 Amazon ECS: AWS Fargate는 Amazon ECS와 함께 사용하여 Amazon EC2 인스턴스의 서버나 클러스터를 관리할 필요 없이 컨테이너를 실행할 수 있는 기술입니다. 이자형.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">10</span> 번
-			 
-				찬성</span>
+<span class="ml-2 upvote-text">
+				추천 <span class="upvote-count">10</span> 번
+			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -322,12 +365,12 @@
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 8월 18일 금요일 13:26">
-			1일, 2시간 전
+			1주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">정답은 A와 D입니다. A) 다중 AZ 모드에서 RDS DB 인스턴스를 생성하면 다른 가용 영역에 있는 대기 복제본으로 자동 장애 조치를 제공하여 고가용성을 제공합니다. D) ECS Fargate를 사용하면 EC2 인스턴스를 프로비저닝하고 관리할 필요가 없어 수요에 따라 동적으로 서비스를 확장할 수 있습니다. ECS는 즉시 로드 밸런싱 및 가용성을 처리합니다.</div>
+<div class="comment-content">정답은 A와 D입니다. A) 다중 AZ 모드에서 RDS DB 인스턴스를 생성하면 다른 가용 영역에 있는 예비 복제본에 대한 자동 장애 조치가 제공되어 고가용성을 제공합니다. D) ECS Fargate를 사용하면 EC2 인스턴스를 프로비저닝하고 관리할 필요가 없으므로 수요에 따라 서비스를 동적으로 확장할 수 있습니다. ECS는 즉시 로드 밸런싱과 가용성을 처리합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -336,7 +379,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -367,13 +410,13 @@
 				jkirancdev
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 28일 금요일 11:37">
-			3주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 28일 금 11:37">
+			4주, 1일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">AD가 정답입니다</div>
+<div class="comment-content">AD가 정답이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -382,7 +425,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -414,12 +457,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 6월 26일 (월) 13:40">
-			1개월, 3주 전
+			2 달전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">A. 다중 AZ 모드에서 Amazon RDS DB 인스턴스를 생성합니다. 이렇게 하면 다른 가용 영역에 있는 대기 복제본으로의 자동 장애 조치를 통해 데이터베이스의 가용성이 높아집니다. D. 동적 애플리케이션 로드를 처리하기 위해 Fargate 시작 유형으로 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다. Fargate는 기본 인프라를 추상화하여 컨테이너를 자동으로 확장 및 관리하므로 가용성이 높고 유지 관리가 적은 옵션입니다. 옵션 B는 다중 AZ 모드에서 제공하는 자동 장애 조치 기능 없이 다른 가용 영역에만 복제본을 생성하므로 최선의 선택이 아닙니다. EC2 인스턴스에서 Docker 클러스터를 관리하려면 옵션 D에서 Fargate의 서버리스 기능을 사용하는 것과 비교하여 더 많은 수동 개입이 필요하므로 옵션 C는 최선의 선택이 아닙니다. 옵션 E는 EC2 인스턴스를 수동으로 관리하고 확장해야 하는 EC2 시작 유형을 사용하므로 최선의 선택이 아닙니다. 옵션 D에서 언급한 Fargate는 보다 자동화되고 확장 가능한 솔루션을 제공합니다.</div>
+<div class="comment-content">A. 다중 AZ 모드에서 Amazon RDS DB 인스턴스를 생성합니다. 이렇게 하면 다른 가용 영역에 있는 대기 복제본에 대한 자동 장애 조치를 통해 데이터베이스의 가용성이 높아집니다. D. 동적 애플리케이션 로드를 처리하기 위해 Fargate 시작 유형을 사용하여 Amazon Elastic Container Service(Amazon ECS) 클러스터를 생성합니다. Fargate는 기본 인프라를 추상화하여 컨테이너를 자동으로 확장 및 관리하므로 가용성이 높고 유지 관리가 적은 옵션입니다. 옵션 B는 다중 AZ 모드에서 제공하는 자동 장애 조치 기능 없이 다른 가용 영역에만 복제본을 생성하므로 최선의 선택이 아닙니다. EC2 인스턴스에서 Docker 클러스터를 관리하려면 옵션 D에서 Fargate의 서버리스 기능을 사용하는 것에 비해 더 많은 수동 개입이 필요하므로 옵션 C는 최선의 선택이 아닙니다. 옵션 E는 EC2 인스턴스를 수동으로 관리하고 확장해야 하는 EC2 시작 유형을 사용하므로 최선의 선택이 아닙니다. 옵션 D에서 언급한 바와 같이 Fargate는 더욱 자동화되고 확장 가능한 솔루션을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -428,7 +471,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -456,16 +499,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 14일 일요일 22:04">
-			3 개월 전에
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>AD</strong></span></div>
-<div class="comment-content">약간의 수동 개입 = 서버리스</div>
+<div class="comment-content">수동 개입이 거의 없음 = 서버리스</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -474,7 +517,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -502,11 +545,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				경력360전문가
+				커리어360구루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 12월 17일 (토) 19:13">
-			8개월 전
+<span class="comment-date align-middle" title="2022년 12월 17일 토요일 19:13">
+			8개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -520,7 +563,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -552,7 +595,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 12월 15일 목요일 14:20">
-			8개월, 1주 전
+			8개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -566,7 +609,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -594,11 +637,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				갑스90
+				가브스90
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 26일 (토) 18:07">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 26일 토요일 18:07">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -612,7 +655,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -643,8 +686,8 @@
 				Wpcorgan
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 11월 24일 목요일 22:02">
-			8개월, 3주 전
+<span class="comment-date align-middle" title="2022년 11월 24일 (목) 22:02">
+			9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -657,7 +700,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -689,11 +732,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 18일 금요일 12:29">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A와 D는 옵션입니다.</div>
+<div class="comment-content">A와 D는 옵션입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -702,7 +745,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -734,7 +777,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 11월 16일 수 22:29">
-			9개월 전
+			9개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -747,7 +790,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -802,7 +845,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Sat 24 Dec 2022 17:52">
-			7 months, 3 weeks ago
+			8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -859,7 +902,7 @@ The EC2 launch type can be used to run your containerized applications on Amazon
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 18 Aug 2023 13:26">
-			1 day, 2 hours ago
+			1 week, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -909,7 +952,7 @@ D) Using ECS Fargate removes the need to provision and manage EC2 instances, all
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 28 Jul 2023 11:37">
-			3 weeks, 1 day ago
+			4 weeks, 1 day ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -955,7 +998,7 @@ D) Using ECS Fargate removes the need to provision and manage EC2 instances, all
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 26 Jun 2023 13:40">
-			1 month, 3 weeks ago
+			2 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1009,7 +1052,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 14 May 2023 22:04">
-			3 months ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1055,7 +1098,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 17 Dec 2022 19:13">
-			8 months ago
+			8 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1101,7 +1144,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 15 Dec 2022 14:20">
-			8 months, 1 week ago
+			8 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1147,7 +1190,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 26 Nov 2022 18:07">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1193,7 +1236,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 24 Nov 2022 22:02">
-			8 months, 3 weeks ago
+			9 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1238,7 +1281,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 18 Nov 2022 12:29">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1283,7 +1326,7 @@ Option E is not the best choice as it uses the EC2 launch type, which requires m
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 16 Nov 2022 22:29">
-			9 months ago
+			9 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

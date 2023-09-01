@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 210 discussion - ExamTopics</title>
+<title>Exam AWS Certified Solutions Architect</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 솔루션스 아키텍트 – 어소시에이트 SAA-C03 주제 1 문제 210 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>AWS Certified Solutions Architect – Associate SAA-C03 시험 주제 1 질문 210 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1 question 210 discussion</h1>
@@ -62,8 +125,8 @@
 <!-- Question -->
 <div class="question-discussion-header">
 						
-							Amazon의
-						 <a class="discussion-link">AWS 공인 솔루션스 아키텍트 - 어소시에이트 SAA-C03 시험 문제</a>
+							Amazon
+						 <a class="discussion-link">AWS Certified Solutions Architect - Associate SAA-C03 시험 문제</a>
 <div>
 							질문 #: 210 <br/>
 							주제 #: 1
@@ -72,11 +135,11 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="861634">
 <p class="card-text">
 							
-								빠르게 성장하고 있는 음식 배달 서비스를 제공하는 회사가 있습니다. 성장으로 인해 회사의 주문 처리 시스템은 최대 트래픽 시간 동안 확장 문제를 겪고 있습니다. 현재 아키텍처에는 다음이 포함됩니다. <br/><br/>• 애플리케이션에서 주문을 수집하기 위해 Amazon EC2 Auto Scaling 그룹에서 실행되는 Amazon EC2 인스턴스 그룹 <br/>• 주문을 이행하기 위해 Amazon EC2 Auto Scaling 그룹에서 실행되는 다른 EC2 인스턴스 그룹 <br/><br/>주문 수집 프로세스는 빠르게 진행되지만 주문 이행 프로세스는 더 오래 걸릴 수 있습니다. 스케일링 이벤트로 인해 데이터가 손실되어서는 안 됩니다.<br/><br/>솔루션 설계자는 주문 수집 프로세스와 주문 이행 프로세스가 트래픽이 가장 많은 시간에 적절하게 확장될 수 있는지 확인해야 합니다. 솔루션은 회사의 AWS 리소스 활용을 최적화해야 합니다. <br/><br/>어떤 솔루션이 이러한 요구 사항을 충족합니까?
+								한 회사에서 빠르게 성장하고 있는 음식 배달 서비스를 제공하고 있습니다. 성장으로 인해 회사의 주문 처리 시스템은 트래픽이 가장 많은 시간대에 확장 문제를 겪고 있습니다. 현재 아키텍처에는 다음이 포함됩니다. <br/><br/>• 애플리케이션에서 주문을 수집하기 위해 Amazon EC2 Auto Scaling 그룹에서 실행되는 Amazon EC2 인스턴스 그룹 <br/>• 주문을 이행하기 위해 Amazon EC2 Auto Scaling 그룹에서 실행되는 또 다른 EC2 인스턴스 그룹 <br/><br/>주문 수집 프로세스는 빠르게 진행되지만 주문 이행 프로세스는 더 오래 걸릴 수 있습니다. 확장 이벤트로 인해 데이터가 손실되어서는 안 됩니다.<br/><br/>솔루션 설계자는 주문 수집 프로세스와 주문 이행 프로세스가 트래픽이 가장 많은 시간 동안 적절하게 확장될 수 있는지 확인해야 합니다. 솔루션은 회사의 AWS 리소스 활용도를 최적화해야 합니다. <br/><br/>이러한 요구 사항을 충족하는 솔루션은 무엇입니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="861634" type="application/json">[{"voted_answers": "D", "vote_count": 18, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": false}]</script>
+<script id="861634" type="application/json">[{"voted_answers": "D", "vote_count": 19, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -92,27 +155,27 @@
 													B.
 												</span> 
 											
-											Amazon CloudWatch 지표를 사용하여 Auto Scaling 그룹에 있는 각 인스턴스의 CPU를 모니터링합니다. 요청 시 추가 Auto Scaling 그룹을 생성하는 Amazon Simple Notification Service(Amazon SNS) 주제를 호출하도록 CloudWatch 경보를 구성합니다.
+											Amazon CloudWatch 지표를 사용하여 Auto Scaling 그룹에 있는 각 인스턴스의 CPU를 모니터링합니다. 필요에 따라 추가 Auto Scaling 그룹을 생성하는 Amazon Simple Notification Service(Amazon SNS) 주제를 호출하도록 CloudWatch 경보를 구성합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
 													C.
 												</span> 
 											
-											두 개의 Amazon Simple Queue Service(Amazon SQS) 대기열을 프로비저닝합니다. 하나는 주문 수집용이고 다른 하나는 주문 이행용입니다. 각 대기열을 폴링하도록 EC2 인스턴스를 구성합니다. 대기열이 보내는 알림을 기반으로 Auto Scaling 그룹을 조정합니다.
+											두 개의 Amazon Simple Queue Service(Amazon SQS) 대기열을 프로비저닝합니다. 하나는 주문 수집용이고 다른 하나는 주문 이행용입니다. 해당 대기열을 폴링하도록 EC2 인스턴스를 구성합니다. 대기열이 보내는 알림을 기반으로 Auto Scaling 그룹을 조정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
 													D.
 												</span> 
 											
-											2개의 Amazon Simple Queue Service(Amazon SQS) 대기열을 프로비저닝합니다. 하나는 주문 수집용이고 다른 하나는 주문 이행용입니다. 각 대기열을 폴링하도록 EC2 인스턴스를 구성합니다. 인스턴스 계산당 백로그를 기반으로 지표를 만듭니다. 이 지표를 기반으로 Auto Scaling 그룹을 조정합니다.
+											두 개의 Amazon Simple Queue Service(Amazon SQS) 대기열을 프로비저닝합니다. 하나는 주문 수집용이고 다른 하나는 주문 이행용입니다. 해당 대기열을 폴링하도록 EC2 인스턴스를 구성합니다. 인스턴스당 백로그 계산을 기반으로 지표를 생성합니다. 이 지표를 기반으로 Auto Scaling 그룹을 조정합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -122,21 +185,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">디 (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">C (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 79%; display: flex;" title="">D (79%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">C (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								senthil21
-							</a> 
-							
-							시간: <i>
-							2023년 1월 13일, 오전 10:04</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -158,7 +211,7 @@
 							
 						</p>
 <div class="voted-answers-tally d-none">
-<script id="861634" type="application/json">[{"voted_answers": "D", "vote_count": 18, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": false}]</script>
+<script id="861634" type="application/json">[{"voted_answers": "D", "vote_count": 19, "is_most_voted": true}, {"voted_answers": "C", "vote_count": 5, "is_most_voted": false}]</script>
 </div>
 <div class="question-choices-container">
 <ul>
@@ -204,21 +257,11 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="18 votes." data-toggle="tooltip" role="progressbar" style="width: 78%; display: flex;" title="">D (78%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 22%; display: flex;" title="">C (22%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>Community vote distribution</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="19 votes." data-toggle="tooltip" role="progressbar" style="width: 79%; display: flex;" title="">D (79%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 21%; display: flex;" title="">C (21%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">Other
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								senthil21
-							</a>
-							
-							at <i>
-							Jan. 13, 2023, 10:04 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -233,6 +276,55 @@
 <!-- New comment start -->
 <!-- New comment end -->
 <div class="discussion-container">
+<!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="830840" id="comment-830840">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				텅팜
+			</h5>
+</a>
+<span class="badge badge-primary">
+				높은 투표율<i class="fa fa-thumbs-up"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 3월 6일 (월) 14:31">
+			5개월, 3주 전
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
+<div class="comment-content">인스턴스당 백로그가 목표값에 도달하면 scale-out 이벤트가 발생합니다. 인스턴스당 백로그가 이미 메시지 150개(메시지 1,500개/인스턴스 10개)이므로 그룹이 확장되고, 목표 값 비율을 유지하기 위해 인스턴스 5개씩 확장됩니다. 인스턴스당 백로그: 인스턴스당 백로그를 계산하려면 ApproximateNumberOfMessages 대기열 속성으로 시작하여 SQS 대기열의 길이(대기열에서 검색할 수 있는 메시지 수)를 결정합니다. 이 숫자를 플릿의 실행 용량(Auto Scaling 그룹의 경우 InService 상태의 인스턴스 수)으로 나누어 인스턴스당 백로그를 얻습니다. https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text"><span class="upvote-count">5</span> 번
+			 
+				찬성함</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
 <!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="976169" id="comment-976169">
 <a class="minimize-comment comment-toggle" href="#">
@@ -249,13 +341,16 @@
 				n43u435b543ht2b
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 8월 9일 수 04:08">
-			1주 전
+<span class="badge badge-primary">
+				가장 최근<i class="fa fa-clock-o"></i>
+</span>
+<span class="comment-date align-middle" title="2023년 8월 9일 수요일 04:08">
+			2주, 3일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C는 "알림"의 수를 기반으로 하는 스케일링이 논리적으로 의미가 없기 때문에 올바르지 않습니다. 즉, 주문 수집 및 이행 인스턴스가 동시에 확장되지만 이행이 어려움을 겪고 있는 동안 수집이 빠르게 처리되고 있다고 분명히 말했습니다. 따라서 들어오는 요청 수를 기반으로 하는 것이 아니라 각 대기열에 백로그 빌드가 있을 때 풀을 확장해야 합니다.</div>
+<div class="comment-content">C는 "알림" 수에 따른 크기 조정이 논리적으로 맞지 않기 때문에 올바르지 않습니다. 이는 주문 수집과 이행 인스턴스가 모두 병렬로 확장된다는 것을 의미하지만, 이행이 어려움을 겪는 동안 수집이 빠르게 처리되고 있음을 분명히 밝혔습니다. 따라서 들어오는 요청 수를 기준으로 하는 것이 아니라 각 대기열에 백로그 건물이 있는 경우 풀을 확장해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -264,7 +359,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -295,12 +390,12 @@
 				argl1995
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수 09:17">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수요일 09:17">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">SQS는 기본적으로 자동 확장되므로 명시적으로 언급할 필요가 없다고 생각합니다. 옵션 D가 정확해야 합니다.</div>
+<div class="comment-content">SQS는 기본적으로 자동 확장되므로 명시적으로 언급할 필요는 없을 것 같습니다. 옵션 D가 정확해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -309,7 +404,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -340,13 +435,13 @@
 				쿠키씨
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 6월 28일 수요일 07:54">
-			1개월, 2주 전
+<span class="comment-date align-middle" title="2023년 6월 28일 수 07:54">
+			1개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">A. 이 접근 방식은 CPU 사용률에만 초점을 맞추므로 주문 수집 및 이행 프로세스의 확장 요구 사항을 정확하게 반영하지 못할 수 있습니다. 분리 및 신뢰할 수 있는 메시지 처리에 대한 요구 사항은 다루지 않습니다. B. 이 접근 방식은 경보를 통합하여 추가 Auto Scaling 그룹을 트리거하지만 SQS 대기열을 사용하여 제공되는 분리 및 안정적인 메시지 처리가 부족합니다. 비효율적인 확장 및 잠재적인 데이터 손실이 발생할 수 있습니다. C. SQS 대기열을 사용하는 것이 올바른 방향으로 나아가는 단계이지만 대기열 알림만을 기준으로 확장하는 것은 최적의 리소스 활용을 제공하지 못할 수 있습니다. 인스턴스당 백로그를 고려하지 않으며 조정에 대한 세밀한 제어를 허용하지 않습니다. 전반적으로 주문 수집 및 이행을 위해 SQS 대기열을 사용하는 옵션 D는</div>
+<div class="comment-content">A. 이 접근 방식은 CPU 사용률에만 초점을 맞추므로 주문 수집 및 이행 프로세스의 확장 요구 사항을 정확하게 반영하지 못할 수 있습니다. 분리 및 안정적인 메시지 처리에 대한 요구 사항은 다루지 않습니다. B. 이 접근 방식에는 추가 Auto Scaling 그룹을 트리거하는 경보가 포함되어 있지만 SQS 대기열을 사용하여 제공되는 분리 및 안정적인 메시지 처리 기능이 부족합니다. 이는 비효율적인 확장 및 잠재적인 데이터 손실로 이어질 수 있습니다. C. SQS 대기열을 사용하는 것이 올바른 방향으로 나아가는 단계이기는 하지만 대기열 알림만을 기반으로 한 확장은 최적의 리소스 활용도를 제공하지 못할 수 있습니다. 인스턴스당 백로그를 고려하지 않으며 확장에 대한 세밀한 제어를 허용하지 않습니다. 전반적으로 주문 수집 및 이행을 위해 SQS 대기열을 사용하는 옵션 D는</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -355,7 +450,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -383,16 +478,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				스터디노플레이
+				공부하다
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 15일 월요일 22:13">
-			3 개월 전에
+			3개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C는 틀렸습니다. "대기열이 보내는 알림에 따라" SQS가 알림을 보내지 않음</div>
+<div class="comment-content">C는 틀렸습니다. "대기열이 보내는 알림을 기반으로" SQS는 알림을 보내지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -401,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -433,12 +528,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 5일 금요일 15:10">
-			3개월, 1주 전
+			3개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">D는 더 간단하고 비용 효율적인 옵션 C보다 운영 오버헤드와 복잡성이 더 많이 필요하기 때문에 올바르지 않습니다. Amazon SQS에서 제공하는 기존 대기열 지표를 사용하며 사용자 지정 지표를 생성하거나 게시할 필요가 없습니다. 대상 추적 조정 정책을 사용하여 직접 계산하거나 모니터링할 필요 없이 인스턴스 비율당 원하는 백로그를 자동으로 유지할 수 있습니다.</div>
+<div class="comment-content">D는 더 간단하고 비용 효율적인 옵션 C보다 더 많은 운영 오버헤드와 복잡성을 요구하기 때문에 정확하지 않습니다. Amazon SQS에서 제공하는 기존 대기열 지표를 사용하며 사용자 지정 지표를 생성하거나 게시할 필요가 없습니다. 대상 추적 조정 정책을 사용하면 직접 계산하거나 모니터링할 필요 없이 원하는 인스턴스당 백로그 비율을 자동으로 유지할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -447,53 +542,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
-<span class="comment-control-error ml-2"></span>
-</div>
-<div class="new-comment-box-container mt-2">
-</div>
-<div class="comment-replies">
-<!-- Nesting start -->
-<!-- Nesting end -->
-</div>
-</div>
-<div class="comment-ellipsis comment-toggled">
-		...
-	</div>
-</div>
-</div>
-<!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="830840" id="comment-830840">
-<a class="minimize-comment comment-toggle" href="#">
-<i class="fa fa-minus-square-o mr-2 mt-1"></i>
-</a>
-<a class="maximize-comment comment-toggle" href="#">
-<i class="fa fa-plus-square-o mr-2 mt-1"></i>
-</a>
-<div class="media-body">
-<div class="comment-head">
-<i class="fa fa-user mr-1 mt-1"></i>
-<a>
-<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				퉁팜
-			</h5>
-</a>
-<span class="comment-date align-middle" title="2023년 3월 6일 월요일 14:31">
-			5개월, 1주 전
-		</span>
-</div>
-<div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">인스턴스당 백로그가 목표 값에 도달하면 scale-out 이벤트가 발생합니다. 인스턴스당 백로그가 이미 150개 메시지(1500개 메시지/10개 인스턴스)이기 때문에 그룹이 확장되고 대상 값에 대한 비율을 유지하기 위해 5개의 인스턴스로 확장됩니다. 인스턴스당 백로그: 인스턴스당 백로그를 계산하려면 ApproximateNumberOfMessages 대기열 속성으로 시작하여 SQS 대기열의 길이(대기열에서 검색할 수 있는 메시지 수)를 결정합니다. Auto Scaling 그룹의 경우 인스턴스당 백로그를 가져오려면 InService 상태의 인스턴스 수인 플릿의 실행 용량으로 이 숫자를 나눕니다. https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</div>
-<div class="comment-control">
-<span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
-</span>
-<span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
-			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -521,16 +570,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 23일 (월) 16:22">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 23일 월요일 16:22">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">대기열 길이에 따라 확장</div>
+<div class="comment-content">대기열 길이에 따른 확장</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -539,7 +588,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -570,12 +619,12 @@
 				루드라만
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 18일 수 11:48">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 18일 수요일 11:48">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 D입니다. 질문을 다시 읽으십시오</div>
+<div class="comment-content">답은 D입니다. 질문을 다시 읽어보세요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -584,7 +633,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,12 +665,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 18일 수 06:46">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Auto Scaling 그룹의 인스턴스 수는 메시지를 처리하는 데 걸리는 시간과 허용 가능한 지연 시간(대기열 지연)에 따라 결정될 수 있습니다. 해결책은 유지 관리할 인스턴스당 허용 가능한 백로그인 대상 값과 함께 인스턴스 메트릭당 백로그를 사용하는 것입니다.</div>
+<div class="comment-content">Auto Scaling 그룹의 인스턴스 수는 메시지를 처리하는 데 걸리는 시간과 허용되는 지연 시간(대기열 지연)에 따라 결정될 수 있습니다. 해결책은 인스턴스당 백로그 지표를 유지 관리할 수 있는 인스턴스당 백로그 목표 값으로 사용하는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -630,7 +679,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -662,12 +711,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 18일 수 00:23">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -676,7 +725,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -707,8 +756,8 @@
 				루드라만
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 17일 화요일 03:15">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 17일 화 03:15">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -721,7 +770,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -741,15 +790,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 23일 (월) 16:22">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 23일 월요일 16:22">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">"대기열이 보내는 알림을 기반으로 Auto Scaling 그룹 조정"을 기준으로 조정하는 이유는 무엇입니까? 기본 돈 대기열 길이 "인스턴스 계산당 백로그를 기반으로 메트릭 만들기"를 확장하는 것이 1000배 더 합리적이지 않습니까?</div>
+<div class="comment-content">"대기열이 보내는 알림을 기준으로 Auto Scaling 그룹 크기 조정"을 기준으로 크기를 조정하는 이유는 무엇입니까? 기본 돈 대기열 길이를 확장하는 "인스턴스당 백로그 계산을 기반으로 지표 생성"이 1000배 더 의미가 있지 않습니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -758,7 +807,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -794,16 +843,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 14:19">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 14:19">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">여기에서 각 EC2 인스턴스의 로드를 계산하기 위해 새 지표를 생성하는 D라고 생각합니다.</div>
+<div class="comment-content">여기에서는 각 EC2 인스턴스의 로드를 계산하기 위해 새로운 측정항목을 생성하므로 D라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -812,7 +861,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -840,15 +889,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				기술
+				테크브
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 14:18">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 14:18">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">여기에서 각 EC2 인스턴스의 로드를 계산하기 위해 새 지표를 생성하는 D라고 생각합니다.</div>
+<div class="comment-content">여기에서는 각 EC2 인스턴스의 로드를 계산하기 위해 새로운 측정항목을 생성하므로 D라고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -857,7 +906,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -888,13 +937,13 @@
 				wmp7039
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 16일 (월) 12:18">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 16일 월요일 12:18">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C는 SQS가 알림을 보내지 않고 소비자가 폴링해야 하므로 올바르지 않습니다.</div>
+<div class="comment-content">SQS는 알림을 보내지 않고 소비자가 폴링해야 하므로 C는 올바르지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -903,7 +952,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,12 +983,12 @@
 				KM01
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 09:02">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 09:02">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">내 생각엔 디</div>
+<div class="comment-content">내 생각엔, D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -948,7 +997,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -976,16 +1025,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				볼프강
+				스볼프강
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 15일 일 08:46">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 15일 일요일 08:46">
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 c라고 생각하지만 둘 다 문제를 해결할 수 있다고 생각하는지 확신할 수 없습니다.</div>
+<div class="comment-content">나는 c라고 생각하지만 둘 다 문제를 해결한다고 생각하는지 잘 모르겠습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -994,7 +1043,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1014,15 +1063,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				JayBee65
+				제이비65
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 23일 (월) 16:24">
-			6개월, 3주 전
+<span class="comment-date align-middle" title="2023년 1월 23일 월요일 16:24">
+			7 달 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">아니오. 메시지를 보내는 대기열을 기준으로 얼마나 정확하게 확장하시겠습니까? 메시지를 보낼 때 확장하시겠습니까? 메시지를 보낼 때마다 확장하시겠습니까? 이것은 메시지가 처리되는 속도를 고려하지 않습니다.</div>
+<div class="comment-content">아니요. 그렇지 않습니다. 메시지를 보내는 대기열을 기준으로 정확히 얼마나 확장하시겠습니까? 메시지를 보낼 때 확장하시겠습니까? 메시지를 보낼 때마다 확장하시겠습니까? 이는 메시지가 얼마나 빨리 처리되는지를 고려하지 않습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1031,7 +1080,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1070,13 +1119,13 @@
 				mhmt4438
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 17:32">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 17:32">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">나는 C라고 생각한다</div>
+<div class="comment-content">내 생각엔 C</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1085,7 +1134,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1113,16 +1162,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				크바루우
+				크바루
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 1월 14일 (토) 10:10">
-			7 달 전
+<span class="comment-date align-middle" title="2023년 1월 14일 토요일 10:10">
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">디가 맞다</div>
+<div class="comment-content">D가 맞아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1131,7 +1180,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1163,11 +1212,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 13일 금요일 10:04">
-			7 달 전
+			7개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D</div>
+<div class="comment-content">정답은 D 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1176,7 +1225,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1212,6 +1261,57 @@
 <!-- New comment end -->
 <div class="discussion-container">
 <!-- single_comment.html -->
+<div class="media comment-container" data-comment-id="830840" id="comment-830840">
+<a class="minimize-comment comment-toggle" href="#">
+<i class="fa fa-minus-square-o mr-2 mt-1"></i>
+</a>
+<a class="maximize-comment comment-toggle" href="#">
+<i class="fa fa-plus-square-o mr-2 mt-1"></i>
+</a>
+<div class="media-body">
+<div class="comment-head">
+<i class="fa fa-user mr-1 mt-1"></i>
+<a>
+<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
+				TungPham
+			</h5>
+</a>
+<span class="badge badge-primary">
+				Highly Voted <i class="fa fa-thumbs-up"></i>
+</span>
+<span class="comment-date align-middle" title="Mon 06 Mar 2023 14:31">
+			5 months, 3 weeks ago
+		</span>
+</div>
+<div class="comment-body comment-toggled">
+<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
+<div class="comment-content">When the backlog per instance reaches the target value, a scale-out event will happen. Because the backlog per instance is already 150 messages (1500 messages / 10 instances), your group scales out, and it scales out by five instances to maintain proportion to the target value.
+Backlog per instance: To calculate your backlog per instance, start with the ApproximateNumberOfMessages queue attribute to determine the length of the SQS queue (number of messages available for retrieval from the queue). Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the InService state, to get the backlog per instance.
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</div>
+<div class="comment-control">
+<span class="comment-control-buttons d-print-none">
+<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
+<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
+<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
+</span>
+<span class="ml-2 upvote-text">
+				upvoted <span class="upvote-count">5</span> times
+			</span>
+<span class="comment-control-error ml-2"></span>
+</div>
+<div class="new-comment-box-container mt-2">
+</div>
+<div class="comment-replies">
+<!-- Nesting start -->
+<!-- Nesting end -->
+</div>
+</div>
+<div class="comment-ellipsis comment-toggled">
+		...
+	</div>
+</div>
+</div>
+<!-- single_comment.html -->
 <div class="media comment-container" data-comment-id="976169" id="comment-976169">
 <a class="minimize-comment comment-toggle" href="#">
 <i class="fa fa-minus-square-o mr-2 mt-1"></i>
@@ -1227,8 +1327,11 @@
 				n43u435b543ht2b
 			</h5>
 </a>
+<span class="badge badge-primary">
+				Most Recent <i class="fa fa-clock-o"></i>
+</span>
 <span class="comment-date align-middle" title="Wed 09 Aug 2023 04:08">
-			1 week ago
+			2 weeks, 3 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1274,7 +1377,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 09:17">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1319,7 +1422,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 28 Jun 2023 07:54">
-			1 month, 2 weeks ago
+			1 month, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1371,7 +1474,7 @@ Overall, option D, which involves using SQS queues for order collection and fulf
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 15 May 2023 22:13">
-			3 months ago
+			3 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1417,7 +1520,7 @@ Overall, option D, which involves using SQS queues for order collection and fulf
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 05 May 2023 15:10">
-			3 months, 1 week ago
+			3 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1431,54 +1534,6 @@ Overall, option D, which involves using SQS queues for order collection and fulf
 </span>
 <span class="ml-2 upvote-text">
 				upvoted <span class="upvote-count">2</span> times
-			</span>
-<span class="comment-control-error ml-2"></span>
-</div>
-<div class="new-comment-box-container mt-2">
-</div>
-<div class="comment-replies">
-<!-- Nesting start -->
-<!-- Nesting end -->
-</div>
-</div>
-<div class="comment-ellipsis comment-toggled">
-		...
-	</div>
-</div>
-</div>
-<!-- single_comment.html -->
-<div class="media comment-container" data-comment-id="830840" id="comment-830840">
-<a class="minimize-comment comment-toggle" href="#">
-<i class="fa fa-minus-square-o mr-2 mt-1"></i>
-</a>
-<a class="maximize-comment comment-toggle" href="#">
-<i class="fa fa-plus-square-o mr-2 mt-1"></i>
-</a>
-<div class="media-body">
-<div class="comment-head">
-<i class="fa fa-user mr-1 mt-1"></i>
-<a>
-<h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				TungPham
-			</h5>
-</a>
-<span class="comment-date align-middle" title="Mon 06 Mar 2023 14:31">
-			5 months, 1 week ago
-		</span>
-</div>
-<div class="comment-body comment-toggled">
-<div class="comment-selected-answers badge badge-warning">Selected Answer: <span><strong>D</strong></span></div>
-<div class="comment-content">When the backlog per instance reaches the target value, a scale-out event will happen. Because the backlog per instance is already 150 messages (1500 messages / 10 instances), your group scales out, and it scales out by five instances to maintain proportion to the target value.
-Backlog per instance: To calculate your backlog per instance, start with the ApproximateNumberOfMessages queue attribute to determine the length of the SQS queue (number of messages available for retrieval from the queue). Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the InService state, to get the backlog per instance.
-https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</div>
-<div class="comment-control">
-<span class="comment-control-buttons d-print-none">
-<a class="comment-upvote requires-login" title="Upvote"><i class="fa fa-thumbs-up"></i></a>
-<a class="ml-2 comment-reply-to requires-login" title="Reply"><i class="fa fa-reply"></i></a>
-<a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
-</span>
-<span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">4</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -1511,7 +1566,7 @@ https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 16:22">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1557,7 +1612,7 @@ https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-using-sqs-queue.html</d
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 11:48">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1603,7 +1658,7 @@ read question again</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 06:46">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1650,7 +1705,7 @@ The solution is to use a backlog per instance metric with the target value being
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 18 Jan 2023 00:23">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1696,7 +1751,7 @@ The solution is to use a backlog per instance metric with the target value being
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 03:15">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1735,7 +1790,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 16:22">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1788,7 +1843,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 14:19">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1834,7 +1889,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 14:18">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1879,7 +1934,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 16 Jan 2023 12:18">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1925,7 +1980,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 09:02">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1970,7 +2025,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 15 Jan 2023 08:46">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2008,7 +2063,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 23 Jan 2023 16:24">
-			6 months, 3 weeks ago
+			7 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2061,7 +2116,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 17:32">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2107,7 +2162,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 14 Jan 2023 10:10">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2153,7 +2208,7 @@ Scale Queue of SQS</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 13 Jan 2023 10:04">
-			7 months ago
+			7 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

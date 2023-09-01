@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 121 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 121 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 121 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 121 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807363">
 <p class="card-text">
 							
-								회사에서 새로운 웹 애플리케이션을 개발하고 있습니다. 빌드 프로세스의 일부로 AWS CloudFormation 템플릿이 생성되었습니다. <br/>최근에 템플릿의 AWS::RDS::DBInstance 리소스가 변경되었습니다. 응용 프로그램이 국제 텍스트를 처리할 수 있도록 CharacterSetName 속성이 변경되었습니다. 업그레이드 중에 기존 DB 인스턴스를 교체해야 함을 나타내는 새 템플릿을 사용하여 변경 세트가 생성되었습니다. <br/>스택 업그레이드 중 데이터 손실을 방지하기 위해 데이터베이스 전문가는 어떻게 해야 합니까?<br/>
+								한 회사에서 새로운 웹 애플리케이션을 개발 중입니다. AWS CloudFormation 템플릿은 빌드 프로세스의 일부로 생성되었습니다. <br/>최근 템플릿의 AWS::RDS::DBInstance 리소스가 변경되었습니다. 응용 프로그램이 국제 텍스트를 처리할 수 있도록 CharacterSetName 속성이 변경되었습니다. 새 템플릿을 사용하여 변경 세트가 생성되었으며, 이는 업그레이드 중에 기존 DB 인스턴스를 교체해야 함을 나타냅니다. <br/>스택 업그레이드 중 데이터 손실을 방지하려면 데이터베이스 전문가는 무엇을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807363" type="application/json">[{"voted_answers": "D", "vote_count": 2, "is_most_voted": false}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											DB 인스턴스의 스냅샷을 생성합니다. 템플릿을 수정하여 DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가합니다. 스택을 업데이트합니다.
+											DB 인스턴스의 스냅샷을 생성합니다. DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가하도록 템플릿을 수정합니다. 스택을 업데이트합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -105,14 +168,14 @@
 													D.
 												</span> 
 											
-											DB 인스턴스를 사용 중인 모든 애플리케이션을 비활성화합니다. DB 인스턴스의 스냅샷을 생성합니다. 템플릿을 수정하여 DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가합니다. 스택을 업데이트하고 애플리케이션을 다시 활성화합니다.
+											DB 인스턴스를 사용하는 모든 애플리케이션을 비활성화합니다. DB 인스턴스의 스냅샷을 생성합니다. DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가하도록 템플릿을 수정합니다. 스택을 업데이트하고 애플리케이션을 다시 활성화하십시오.
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">D </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -120,22 +183,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-rds-database-instance.html
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a> 
-							
-							2021 <i>
-							년 4월 8일, 오후 2:54</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								shantest1
-							</a>
-							
-							at <i>
-							April 8, 2021, 2:54 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,14 +291,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 9일 (토) 08:23">
+<span class="comment-date align-middle" title="2021년 10월 9일 토요일 08:23">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. 나열된 URL을 기반으로 올바른 것으로 보입니다.</div>
+<div class="comment-content">D. 나열된 URL에 따르면 올바른 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -298,13 +341,13 @@
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
-<span class="comment-date align-middle" title="2022년 4월 30일 (토) 16:49">
+<span class="comment-date align-middle" title="2022년 4월 30일 토요일 16:49">
 			1년, 3개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">DB 인스턴스를 사용 중인 모든 애플리케이션을 비활성화합니다. -&gt; DB 인스턴스의 스냅샷을 생성합니다. -&gt; 템플릿을 수정하여 DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가합니다. -&gt; 스택을 업데이트하고 -&gt; 애플리케이션을 다시 활성화합니다.</div>
+<div class="comment-content">DB 인스턴스를 사용하는 모든 애플리케이션을 비활성화합니다. -&gt; DB 인스턴스의 스냅샷을 생성합니다. -&gt; DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가하도록 템플릿을 수정합니다. -&gt; 스택 업데이트 -&gt; 애플리케이션을 다시 활성화합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -313,7 +356,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,15 +384,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 5일 (토) 20:51">
+<span class="comment-date align-middle" title="2022년 3월 5일 토요일 20:51">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 정답인 것 같습니다.</div>
+<div class="comment-content">D가 정답인 것 같아요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -358,7 +401,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -386,15 +429,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				TonyGe
+				토니지
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 02:55">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 02:55">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. 데이터를 보존하려면 다음 절차를 수행하십시오. 1. DB 인스턴스에서 활동이 없도록 DB 인스턴스를 사용 중인 모든 애플리케이션을 비활성화합니다. 2. DB 인스턴스의 스냅샷을 생성합니다. DB 스냅샷 생성에 대한 자세한 내용은 3. DB 스냅샷을 사용하여 인스턴스를 복원하려면 DB 인스턴스 변경 사항으로 업데이트된 템플릿을 수정하고 사용하려는 DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가합니다. 4. 업데이트 스택.</div>
+<div class="comment-content">D. 데이터를 보존하려면 다음 절차를 수행하십시오. 1. DB 인스턴스에서 활동이 없도록 DB 인스턴스를 사용하는 모든 애플리케이션을 비활성화합니다. 2.DB 인스턴스의 스냅샷을 생성합니다. DB 스냅샷 생성에 대한 자세한 내용은 3.DB 스냅샷을 사용하여 인스턴스를 복원하려면 업데이트된 템플릿을 DB 인스턴스 변경 사항으로 수정하고 사용하려는 DB 스냅샷의 ID로 DBSnapshotIdentifier 속성을 추가하세요. 4.업데이트 스택.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -403,7 +446,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -434,12 +477,12 @@
 				조회수_23
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 17일 일 06:28">
+<span class="comment-date align-middle" title="2021년 10월 17일 일요일 06:28">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">정답은 D</div>
+<div class="comment-content">정답은 D 입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -448,7 +491,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -476,10 +519,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 13일 수 15:00">
+<span class="comment-date align-middle" title="2021년 10월 13일 수요일 15:00">
 			1년, 10개월 전
 		</span>
 </div>
@@ -493,7 +536,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -691,7 +734,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 02:55">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 77 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 77 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 77 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 77 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807319">
 <p class="card-text">
 							
-								데이터베이스 전문가가 AWS DMS를 사용하여 PostgreSQL용 Amazon RDS로 온프레미스 Microsoft SQL Server 애플리케이션 데이터베이스를 마이그레이션하고 있습니다. 애플리케이션은 RDS DB 인스턴스가 활성화될 때 가동 중지 시간을 최소화해야 합니다. <br/>데이터베이스 전문가는 마이그레이션을 활성화하기 위해 어떤 변경을 수행해야 합니까?<br/>
+								데이터베이스 전문가가 AWS DMS를 사용하여 온프레미스 Microsoft SQL Server 애플리케이션 데이터베이스를 PostgreSQL용 Amazon RDS로 마이그레이션하고 있습니다. RDS DB 인스턴스가 활성화되면 애플리케이션 가동 중지 시간이 최소화됩니다. <br/>마이그레이션을 활성화하려면 데이터베이스 전문가가 어떤 변경을 해야 합니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807319" type="application/json">[{"voted_answers": "A", "vote_count": 5, "is_most_voted": true}]</script>
@@ -84,7 +147,7 @@
 													A.
 												</span> 
 											
-											지속적인 변경 데이터 캡처(CDC)와 함께 AWS DMS 전체 로드의 소스 역할을 하도록 온프레미스 애플리케이션 데이터베이스를 구성합니다.
+											지속적인 변경 데이터 캡처(CDC)를 통해 AWS DMS 전체 로드의 소스 역할을 하도록 온프레미스 애플리케이션 데이터베이스를 구성합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
@@ -93,7 +156,7 @@
 													B.
 												</span> 
 											
-											전체 로드와 지속적인 변경 데이터 캡처(CDC)를 모두 허용하도록 AWS DMS 복제 인스턴스를 구성합니다.
+											전체 로드 및 지속적인 변경 데이터 캡처(CDC)를 모두 허용하도록 AWS DMS 복제 인스턴스를 구성합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -111,10 +174,10 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
-<span class="correct-answer-box"><strong>추천 답변: </strong>
+<span class="correct-answer-box"><strong>제안 답변: </strong>
 <span class="correct-answer">A </span>
 <a class="vote-answer-button ml-1 d-print-none" data-original-title="Vote an answer" data-toggle="tooltip" href="#" title="">🗳️</a>
 <br/>
@@ -122,22 +185,12 @@
 <span class="answer-description"> 
 								참조: <br/>https://aws.amazon.com/premiumsupport/knowledge-center/rds-import-data/
 							</span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="5 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">A (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mohitrecdgp
-							</a> 
-							
-							시간: <i>
-							2020년 7월 31일, 오후 2:10</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -211,16 +264,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								Mohitrecdgp
-							</a>
-							
-							at <i>
-							July 31, 2020, 2:10 p.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -248,18 +291,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				황량한
+				awscamus
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 10월 03일 일 12:05">
+<span class="comment-date align-middle" title="2021년 10월 3일 일요일 12:05">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">죄송합니다. A를 의미합니다. 복제 인스턴스에서 전체 로드 또는 CDC를 정의할 수 없습니다.</div>
+<div class="comment-content">죄송합니다. A를 의미합니다. 복제 인스턴스에서는 전체 로드 또는 CDC를 정의할 수 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -268,7 +311,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">9</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -288,15 +331,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				가마자니
+				카마자니
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 14일 목요일 08:52">
+<span class="comment-date align-middle" title="2021년 10월 14일 (목) 08:52">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B가 답입니다..... 복제 작업을 생성할 때 전체 로드 및 CDC를 정의합니다.</div>
+<div class="comment-content">B가 답이다.....복제 작업을 생성할 때 전체 로드와 CDC를 정의합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -305,7 +348,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -341,19 +384,19 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				비행사
+				비행가
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 6월 2일 금요일 09:06">
-			2개월, 2주 전
+			2개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">답변이 명확하게 명시되어 있지는 않지만 A가 최선의 선택입니다. A는 AWS DMS 전체 로드 및 데이터 캡처를 위해 소스 인스턴스를 구성해야 한다고 제안합니다. 바이너리 로깅(트랜잭션 로그)을 활성화해야 하므로 사실이 있습니다. xB는 전체 로드 및 CDC에 대해 구성된 인스턴스라고 제안하지만 실제로 xC는 전체 로그를 생성하도록 구성해야 하는 작업을 제안합니까? xD 구성 양방향 통신</div>
+<div class="comment-content">대답은 명확하게 명시되어 있지 않지만 A가 가장 좋은 옵션입니다. A는 AWS DMS 전체 로드 및 데이터 캡처를 위해 소스 인스턴스를 구성해야 한다고 제안합니다. 바이너리 로깅(트랜잭션 로그)을 활성화해야 하기 때문에 어느 정도 사실이 있습니다. xB는 전체 로드 및 CDC용으로 구성된 인스턴스라고 제안하지만 실제로는 xC가 전체 로그를 생성하도록 작업을 구성해야 한다고 제안하는 작업입니다. xD 양방향 통신 구성</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -362,7 +405,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -399,7 +442,7 @@
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>A</strong></span></div>
-<div class="comment-content">C&amp;D 관련 없음 A. "진행 중인 변경 데이터 캡처(CDC)가 있는 AWS DMS 전체 로드"(WI는 작업 1개를 의미) B. 전체 로드 및 진행 중인 변경 데이터 캡처(CDC)를 모두 허용(참고 AND는 작업 2개를 의미) 두 가지가 있습니다. 진행 중인 복제 작업 유형: 전체 로드 및 CDC - 이 작업은 기존 데이터를 마이그레이션한 다음 소스 데이터베이스의 변경 사항에 따라 대상 데이터베이스를 업데이트합니다. CDC 전용 – 작업은 대상 데이터베이스에 데이터가 있는 후 진행 중인 변경 사항을 마이그레이션합니다. https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.html</div>
+<div class="comment-content">C&amp;D 관련 없음 A. "지속적인 변경 데이터 캡처(CDC)가 포함된 AWS DMS 전체 로드"(참고 WITH는 1개의 작업을 의미함) B. 전체 로드 및 지속적인 변경 데이터 캡처(CDC)를 모두 허용합니다(AND는 2개의 작업을 의미함). 지속적인 복제 작업 유형: 전체 로드 및 CDC – 작업은 기존 데이터를 마이그레이션한 다음 소스 데이터베이스의 변경 사항에 따라 대상 데이터베이스를 업데이트합니다. CDC 전용 – 대상 데이터베이스에 데이터가 있으면 작업이 지속적인 변경 사항을 마이그레이션합니다. https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -408,7 +451,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -436,15 +479,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 05:26">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 05:26">
 			1년, 5개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문을하는 사람은 아마도 냉정하지 않을 것입니다. 답변 선택 (A)은 어리 석다는 점에서 매우 명백합니다. 어떤 ELSE가 출처가 될까요? 선택 항목(B)은 전체 로드 + CDC를 허용하도록 복제 인스턴스를 구성해야 한다고 말합니다. 인스턴스는 이 작업을 수행하지 않습니다. 호스팅하는 작업이 수행합니다! 그들은 둘 다 하나이고 같은 것을 의도합니까?</div>
+<div class="comment-content">이러한 질문을 하는 사람은 아마도 냉정하지 않을 것입니다. 답변 선택(A)은 어리석을 정도로 매우 명백합니다. 소스는 무엇입니까? 답변 선택(B)에는 전체 로드 + CDC를 허용하도록 복제 인스턴스를 구성해야 한다고 나와 있습니다. INSTANCE는 이 작업을 수행하지 않습니다. 호스트하는 작업이 수행합니다! 그들은 둘 다 하나이고 동일해지려고 합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -453,7 +496,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -484,7 +527,7 @@
 				괴물
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 1월 12일 수 14:07">
+<span class="comment-date align-middle" title="2022년 1월 12일 수요일 14:07">
 			1년, 7개월 전
 		</span>
 </div>
@@ -498,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -529,12 +572,12 @@
 				딥11
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 07일 일 06:28">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 7일 일요일 06:28">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문이 명확하지 않습니다. A가 더 적절해 보입니다.</div>
+<div class="comment-content">질문이 명확하지 않습니다. A가 더 관련성이 높은 것 같습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -543,7 +586,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -571,15 +614,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				에스테틱
+				에스테트
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 01일 월요일 09:43">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 1일 (월) 09:43">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">CDC를 수행하려면 "RDS DB 인스턴스가 가동될 때 최소한의 가동 중지 시간이 필요합니다.": "LogMiner에 정보를 제공하려면 먼저 ARCHIVELOG MODE가 켜져 있는지 확인해야 합니다. AWS DMS는 LogMiner를 사용하여 아카이브 로그에서 정보를 읽어 AWS DMS가 다음을 수행할 수 있도록 합니다. 변경 사항 캡처" 그래서 제 대답은 A입니다.</div>
+<div class="comment-content">CDC를 수행하려면 "RDS DB 인스턴스가 활성화될 때 최소한의 가동 중지 시간이 필요합니다.": "먼저 ARCHIVELOG 모드가 켜져 있는지 확인하여 LogMiner에 정보를 제공해야 합니다. AWS DMS는 LogMiner를 사용하여 아카이브 로그에서 정보를 읽어 AWS DMS가 변경 사항 캡처" 그래서 내 대답은 A입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -588,7 +631,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -616,15 +659,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				중카이
+				종카이
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 30일 토요일 07:10">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/dms/latest/sbs/chap-oracle2postgresql.steps.configureoracle.html은 "변경 사항(CDC)을 캡처하고 적용하려면 다음 권한도 필요합니다."라고 말합니다. 그래서 A가 정답이다</div>
+<div class="comment-content">https://docs.aws.amazon.com/dms/latest/sbs/chap-oracle2postgresql.steps.configureoracle.html에는 "변경 사항을 캡처하고 적용하려면(CDC) 다음 권한도 필요합니다."라고 나와 있습니다. 그럼 A가 정답이군요</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -633,7 +676,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -664,12 +707,12 @@
 				조빈아카조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 00:10">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 00:10">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 질문은 약간 모호합니다. 나는 A와 함께 갈 것이다</div>
+<div class="comment-content">이 질문은 좀 모호합니다. 나는 A와 함께 갈 것이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -678,7 +721,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -706,10 +749,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 8일 금 23:56">
+<span class="comment-date align-middle" title="2021년 10월 8일 금요일 23:56">
 			1년, 10개월 전
 		</span>
 </div>
@@ -723,7 +766,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -751,15 +794,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				황량한
+				awscamus
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 19:04">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">B 이후 기존 데이터를 마이그레이션하고 진행 중인 변경 사항 복제(전체 로드 + 변경 데이터 캡처(CDC)) – 다운타임을 최소화하면서 데이터를 마이그레이션하기 위해 AWS DMS는 기존 데이터를 마이그레이션하고 컷오버까지 데이터 변경 사항을 소스에서 대상으로 복제할 수 있습니다. 이 마이그레이션 유형은 컷오버 기간 동안만 지속되는 가동 중지 시간을 최소화해야 하는 중소형 데이터베이스에 가장 적합합니다.</div>
+<div class="comment-content">B 이후 기존 데이터를 마이그레이션하고 지속적인 변경 사항을 복제합니다(전체 로드 + 변경 데이터 캡처(CDC)) – 가동 중지 시간을 최소화하면서 데이터를 마이그레이션하기 위해 AWS DMS는 기존 데이터를 마이그레이션하고 컷오버까지 소스에서 대상으로 데이터 변경 사항을 복제할 수 있습니다. 이 마이그레이션 유형은 컷오버 기간 동안만 지속되는 가동 중지 시간을 최소화해야 하는 중소형 데이터베이스에 가장 적합합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -768,7 +811,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -788,15 +831,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				다중 AZ
+				다중AZ
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 02:54">
+<span class="comment-date align-middle" title="2021년 10월 19일 화 02:54">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 A입니다. "full+cdc"인 DMS 작업이 필요합니다. 이것은 B의 DMS 인스턴스와 관련이 없습니다.</div>
+<div class="comment-content">대답은 A입니다. "full+cdc"인 DMS 작업이 필요합니다. 이는 B의 DMS 인스턴스와 아무 관련이 없습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -805,7 +848,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -833,15 +876,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				참조111
+				111 참조
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 05:35">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 05:35">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">대답은 복제 인스턴스가 전체를 수행할 수 없고 cdc 작업은 dms만 수행할 수 있다는 것입니다.</div>
+<div class="comment-content">대답은 복제 인스턴스가 전체 작업을 수행할 수 없고 cdc 작업은 dms만 수행한다는 것입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -850,7 +893,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -873,12 +916,12 @@
 				Jiang_aws1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 10월 10일 (월) 17:46">
-			10개월, 1주 전
+<span class="comment-date align-middle" title="2022년 10월 10일 월요일 17:46">
+			10개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">https://docs.aws.amazon.com/dms/latest/sbs/chap-rdsoracle2aurora.steps.createreplicationinstance.html DMS 복제 인스턴스는 원본과 대상 간에 실제 데이터 마이그레이션을 수행합니다. 복제 인스턴스는 마이그레이션 중에 트랜잭션 로그도 캐시합니다. 복제 인스턴스의 CPU 및 메모리 용량은 마이그레이션에 필요한 전체 시간에 영향을 미칩니다.</div>
+<div class="comment-content">https://docs.aws.amazon.com/dms/latest/sbs/chap-rdsoracle2aurora.steps.createreplicationinstance.html DMS 복제 인스턴스는 소스와 대상 간의 실제 데이터 마이그레이션을 수행합니다. 복제 인스턴스는 마이그레이션 중에 트랜잭션 로그도 캐시합니다. 복제 인스턴스의 CPU 및 메모리 용량은 마이그레이션에 필요한 전체 시간에 영향을 미칩니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -887,7 +930,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -934,8 +977,8 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 25일 (토) 13:57">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 25일 토요일 13:57">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -948,7 +991,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -979,12 +1022,12 @@
 				Mohitrecdgp
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 19일 일 23:36">
+<span class="comment-date align-middle" title="2021년 9월 19일 일요일 23:36">
 			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">A 괜찮아 보인다</div>
+<div class="comment-content">A 괜찮아 보이는데</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -993,7 +1036,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1142,7 +1185,7 @@ when creating the replication task</div>
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Fri 02 Jun 2023 09:06">
-			2 months, 2 weeks ago
+			2 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1435,7 +1478,7 @@ So my answer is A</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 30 Oct 2021 07:10">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1571,7 +1614,7 @@ so A is the correct answer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 19:04">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1653,7 +1696,7 @@ so A is the correct answer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 05:35">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1690,7 +1733,7 @@ so A is the correct answer</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 10 Oct 2022 17:46">
-			10 months, 1 week ago
+			10 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1753,7 +1796,7 @@ A DMS replication instance performs the actual data migration between source and
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Sep 2021 13:57">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

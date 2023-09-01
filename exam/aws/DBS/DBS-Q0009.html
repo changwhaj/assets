@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 9 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 분야 주제 1 질문 9 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 질문 9 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 9 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="807251">
 <p class="card-text">
 							
-								회사에서 PostgreSQL DB 인스턴스용 Amazon RDS를 실행 중이며 이를 Amazon Aurora PostgreSQL DB 클러스터로 마이그레이션하려고 합니다. 현재 데이터베이스 크기는 1TB입니다. 마이그레이션에는 다운타임이 최소화되어야 합니다. <br/>이것을 달성하는 가장 빠른 방법은 무엇입니까?<br/>
+								한 회사에서 PostgreSQL DB 인스턴스용 Amazon RDS를 실행 중이며 이를 Amazon Aurora PostgreSQL DB 클러스터로 마이그레이션하려고 합니다. 현재 데이터베이스의 크기는 1TB입니다. 마이그레이션에는 가동 중지 시간이 최소화되어야 합니다. <br/>이를 달성하는 가장 빠른 방법은 무엇입니까?<br/>
 </p>
 <div class="voted-answers-tally d-none">
 <script id="807251" type="application/json">[{"voted_answers": "D", "vote_count": 7, "is_most_voted": true}]</script>
@@ -84,14 +147,14 @@
 													A.
 												</span> 
 											
-											Aurora PostgreSQL DB 클러스터를 생성합니다. AWS DMS를 사용하여 원본 RDS for PostgreSQL DB 인스턴스에서 대상 DB 클러스터로의 복제를 설정합니다.
+											Aurora PostgreSQL DB 클러스터를 생성합니다. AWS DMS를 사용하여 PostgreSQL용 원본 RDS DB 인스턴스에서 대상 DB 클러스터로의 복제를 설정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="B">
 													B.
 												</span> 
 											
-											pg_dump 및 pg_restore 유틸리티를 사용하여 RDS for PostgreSQL DB 인스턴스를 추출하고 Aurora PostgreSQL DB 클러스터로 복원합니다.
+											pg_dump 및 pg_restore 유틸리티를 사용하여 PostgreSQL용 RDS DB 인스턴스를 추출하고 Aurora PostgreSQL DB 클러스터로 복원합니다.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="C">
@@ -105,13 +168,13 @@
 													D.
 												</span> 
 											
-											Aurora 복제본을 사용하여 RDS for PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 데이터를 마이그레이션합니다. 컷오버 동안 복제본을 승격합니다.
+											Aurora 복제본을 사용하여 RDS for PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 데이터를 마이그레이션합니다. 컷오버 중에 복제본을 승격합니다.
 										<span class="badge badge-success most-voted-answer-badge" data-original-title="This answer is currently the most voted for in the discussion" style="display: none;" title="">
                 최다 투표
             </span></li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -121,16 +184,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">디(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="7 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">D (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							작성자: [삭제] <i>
-							2020년 7월 8일 오전 11:34</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -203,14 +262,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-								[deleted]
-							
-							at <i>
-							July 8, 2020, 11:34 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -242,14 +293,14 @@
 			</h5>
 </a>
 <span class="badge badge-primary">
-				높은 투표<i class="fa fa-thumbs-up"></i>
+				높은 투표율<i class="fa fa-thumbs-up"></i>
 </span>
-<span class="comment-date align-middle" title="2021년 9월 21일 화요일 07:08">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 21일 (화) 07:08">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. C가 작동하는 동안 요구 사항은 최소한의 중단 시간입니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html</div>
+<div class="comment-content">D. C는 작동하지만 최소한의 가동 중지 시간이 요구됩니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migating.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -286,18 +337,18 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				IhorK
+				이호르K
 			</h5>
 </a>
 <span class="badge badge-primary">
 				가장 최근<i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="2023년 7월 31일 (월) 14:37">
-			2주, 2일 전
+			3주, 5일 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D RDS PostgreSQL에서 Aurora PostgreSQL로 마이그레이션. RDS PostgreSQL에서 Aurora PostgreSQL로 데이터를 마이그레이션할 때 두 가지 옵션이 있습니다. - RDS PostgreSQL 스냅샷 사용 - RDS PostgreSQL용 Aurora 읽기 전용 복제본 사용 https://aws.amazon.com/blogs/database/migrate-to-an-amazon -aurora-postgresql-instance-from-another-postgresql-source/</div>
+<div class="comment-content">D RDS PostgreSQL에서 Aurora PostgreSQL로 마이그레이션. RDS PostgreSQL에서 Aurora PostgreSQL로 데이터를 마이그레이션할 때 두 가지 옵션이 있습니다. - RDS PostgreSQL 스냅샷 사용 - RDS PostgreSQL용 Aurora 읽기 전용 복제본 사용 https://aws.amazon.com/blogs/database/ migration-to-an-amazon -aurora-postgresql-인스턴스-from-another-postgresql-source/</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -306,7 +357,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -337,13 +388,13 @@
 				므라론시몬
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 4일 화요일 09:45">
-			1개월, 1주 전
+<span class="comment-date align-middle" title="2023년 7월 4일 (화) 09:45">
+			1개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">정답은 D입니다. 키워드는 "가장 빠름" ~ 가동 중지 시간 최소화/최소 노력 "Aurora Read Replica를 사용하여 기존 Amazon RDS MySQL 데이터베이스를 Amazon Aurora로 마이그레이션할 수 있습니다. 이 솔루션은 완벽하게 관리되고 수동 구성이 필요하지 않기 때문에 유용합니다. 마이그레이션 중 가동 중지 시간을 줄이기 위한 복제 기능." "PostgreSQL은 이전에 마이그레이션을 위해 MySQL에 대해 설명한 것과 동일한 프로세스를 따릅니다." https://docs.aws.amazon.com/whitepapers/latest/migrating-databases-to-amazon-aurora/migration-using-aurora-read-replica.html</div>
+<div class="comment-content">정답은 D입니다. 키워드는 "FASTEST" ~ 최소 가동 중지 시간 / 최소 노력 "Aurora 읽기 전용 복제본을 사용하여 기존 Amazon RDS MySQL 데이터베이스를 Amazon Aurora로 마이그레이션할 수 있습니다. 이 솔루션은 완전히 관리되며 수동 구성이 필요하지 않기 때문에 유용합니다. 마이그레이션 중 가동 중지 시간을 줄이기 위한 복제 기능입니다." "PostgreSQL은 마이그레이션을 위해 이전에 MySQL에 대해 설명한 것과 동일한 프로세스를 따릅니다." https://docs.aws.amazon.com/whitepapers/latest/migating-databases-to-amazon-aurora/migration-using-aurora-read-replica.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -352,7 +403,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -384,12 +435,12 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 1월 17일 화요일 13:37">
-			7 달 전
+			7개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">Udemy.com 연습 시험의 저자는 D가 정답이라고 말합니다.</div>
+<div class="comment-content">Udemy.com 연습 테스트의 작성자는 D가 정답이라고 말합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -398,7 +449,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -426,16 +477,16 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				서판
+				시르판
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2022년 10월 26일 수 06:06">
-			9개월, 3주 전
+			10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">D가 올바른 옵션입니다.</div>
+<div class="comment-content">D가 올바른 선택이다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -444,7 +495,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -475,13 +526,13 @@
 				초보자_전문가
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 4월 28일 목요일 22:49">
-			1년, 3개월 전
+<span class="comment-date align-middle" title="2022년 4월 28일 목 22:49">
+			1년, 4개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>D</strong></span></div>
-<div class="comment-content">C - 스냅샷에 시간이 걸리고 새 트랜잭션이 손실됨 D- 복제가 빠름</div>
+<div class="comment-content">C - 스냅샷에 시간이 걸리고 새 트랜잭션이 손실됨 D - 복제본이 빠름</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -490,7 +541,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -518,10 +569,10 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				로테르담
+				로터댐
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 3월 6일 일요일 01:05">
+<span class="comment-date align-middle" title="일 2022년 3월 6일 01:05">
 			1년, 5개월 전
 		</span>
 </div>
@@ -536,7 +587,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -567,12 +618,12 @@
 				pcpcpc888
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2022년 2월 15일 화요일 14:44">
+<span class="comment-date align-middle" title="2022년 2월 15일 (화) 14:44">
 			1년, 6개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">가장 빠른 솔루션이 필요하지만 합리적인 솔루션도 필요합니다. B를 선택할 때 데이터베이스를 복원할 때 데이터베이스 변경 사항을 어떻게 처리합니까? AWS는 D를 선택할 때 해당 작업을 수행합니다.</div>
+<div class="comment-content">우리에게는 가장 빠른 솔루션이 필요하지만 합리적인 솔루션도 필요합니다. B를 선택할 때 데이터베이스를 복원할 때 데이터베이스 변경 사항을 어떻게 처리합니까? D를 선택할 때 AWS가 해당 작업을 수행합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -581,7 +632,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -613,11 +664,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 12월 22일 수 22:26">
-			1년, 7개월 전
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">Keywords : 매끄럽고 빠른.. 정답 : Option D</div>
+<div class="comment-content">키워드 : 원활하고 가장 빠르다. 답변 : 옵션 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -626,7 +677,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -654,11 +705,11 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지마티넬리
+				G마티넬리
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 12월 7일 화요일 19:37">
-			1년 8개월 전
+<span class="comment-date align-middle" title="2021년 12월 7일 (화) 19:37">
+			1년, 8개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -672,7 +723,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -700,15 +751,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아누락드바
+				아누라그드바
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 05일 금 19:11">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 5일 금요일 19:11">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D: 질문에서 최소 중단 시간에 대해 이야기하기 때문입니다.</div>
+<div class="comment-content">D: 문제는 최소 가동 중지 시간에 대해 이야기하기 때문입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -717,7 +768,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -745,15 +796,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				aws4myself
+				aws4나 자신
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 03일 수 05:54">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 3일 수 05:54">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D가 정답, 읽기 전용 복제본이 스냅샷보다 빠름</div>
+<div class="comment-content">D가 정답이고, 읽기 전용 복제본이 스냅샷보다 빠릅니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -762,7 +813,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -793,12 +844,12 @@
 				guru_ji
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 11월 3일 수요일 00:45">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 11월 3일 수 00:45">
+			1년, 9개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D ==&gt;&gt; 정답.</div>
+<div class="comment-content">D ==&gt;&gt; 정답입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -807,7 +858,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -835,15 +886,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				jayshah7
+				제이샤7
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 30일 (토) 10:08">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 30일 토요일 10:08">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C가 가장 빠르다고 하면 스냅샷이 전송되고 대상에 적용되는 동안 원본 서버에 대한 변경 사항을 처리하는 방법은 무엇입니까?</div>
+<div class="comment-content">C가 가장 빠르다면 스냅샷이 전송되고 대상에 적용되는 동안 소스 서버에 대한 변경 사항을 어떻게 처리합니까?</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -852,7 +903,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -880,15 +931,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				최대값
+				LMax
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 27일 수 07:38">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 D</div>
+<div class="comment-content">답 D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -897,7 +948,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -928,12 +979,12 @@
 				지라잔
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 07:27">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 07:27">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변 D. 스냅샷을 찍을 때 I/O 서비스가 일시적으로 중단됩니다. 지금은 몇 초 이상이 될 수 있지만 우리의 크기는 1TB이므로 다운타임이 있을 것이므로 대답은 D입니다.</div>
+<div class="comment-content">답변 D. 스냅샷을 찍으면 I/O 서비스가 일시적으로 중단됩니다. 지금은 몇 초 이상이 걸릴 수 있지만 크기가 1TB이므로 가동 중지 시간이 있으므로 이에 따라 대답은 D입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -942,7 +993,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -973,21 +1024,21 @@
 				뮤트란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 26일 화요일 00:57">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 26일 (화) 00:57">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답: 디</div>
+<div class="comment-content">답: D</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
 <a class="ml-2 comment-reply-to requires-login" title="회신하다"><i class="fa fa-reply"></i></a>
 <a class="ml-2 comment-flag-report requires-login" title="보고서"><i class="fa fa-flag"></i></a>
 </span>
-<span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
+<span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1019,11 +1070,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 23일 토요일 07:43">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">옵션 C(스냅샷 사용)는 D(오로라 복제본 생성)보다 약간 더 빠른 옵션으로 보이지만 D는 필요한 다운타임(최소)을 고려할 때 가장 좋은 옵션입니다. 또한 D는 이 요구 사항에 권장되는 옵션입니다. 가장 좋은 대답은 D입니다.</div>
+<div class="comment-content">옵션 C(스냅샷 사용)는 D(오로라 복제본 생성)보다 약간 빠른 옵션으로 보입니다. 그러나 필요한 가동 중지 시간(최소)을 고려하면 D가 가장 좋은 옵션입니다. 또한 이 요구 사항에는 D가 권장되는 옵션입니다. 가장 좋은 대답은 D입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1032,7 +1083,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1052,15 +1103,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				지비엘
+				이런비엘
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 24일 일 17:51">
-			1년 9개월 전
+<span class="comment-date align-middle" title="2021년 10월 24일 일요일 17:51">
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">혼란스러워요. 당신은 C가 가장 빠르다고 말했는데 왜 D를 선택해야 합니까? 그들은 가장 빠른 것을 요구하고 있습니다!</div>
+<div class="comment-content">혼란스럽습니다. C가 가장 빠르다고 하셨는데 왜 D를 선택하시나요? 가장 빠른 것을 요구하고 있습니다!</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1069,7 +1120,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1105,15 +1156,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				킬카
+				킬카르
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 22일 금 10:42">
-			1년 9개월 전
+			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답변: D Aurora 읽기 전용 복제본을 사용하여 RDS PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 데이터를 마이그레이션합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html#AuroraPostgreSQL.Migrating.RDSPostgreSQ</div>
+<div class="comment-content">답변: D Aurora 읽기 전용 복제본을 사용하여 RDS PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 데이터를 마이그레이션합니다. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migating.html#AuroraPostgreSQL.Migating.RDSPostgreSQ</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1122,7 +1173,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1150,7 +1201,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				아쇽
+				아쇽스
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 20일 수 10:55">
@@ -1158,7 +1209,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D. 다운타임 최소화</div>
+<div class="comment-content">D. 가동 중지 시간 최소화</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1167,7 +1218,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1203,7 +1254,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 올바른 링크를 가진 다른 사람들이 지적한 대로 정확합니다. 1. 복제본 마이그레이션은 AWS에서 권장하는 방법입니다. 2. 복제본 마이그레이션은 백그라운드에서 스냅샷을 생성하므로 Option C/D도 이와 다르지 않습니다. 3. 복제본 마이그레이션의 차이점은 복제본이 실행되면 원본 RDS와 동기화된다는 것입니다. 일관성을 유지하기 위한 옵션 C의 경우 마이그레이션 중에 이 마이그레이션 프로세스 동안 모든 활동을 중지해야 하므로 다운타임이 발생합니다.</div>
+<div class="comment-content">D는 올바른 링크로 다른 사람들이 지적한 대로 정확합니다. 1. 복제본 마이그레이션은 AWS에서 권장하는 방법입니다. 2. 복제본 마이그레이션은 백그라운드에서 스냅샷을 생성하므로 옵션 C/D도 이와 다르지 않습니다. 3. 복제본 마이그레이션과의 차이점은 복제본이 실행되면 소스 RDS와 동기화된다는 것입니다. 일관성을 유지하기 위한 옵션 C의 경우 마이그레이션 중에 마이그레이션 프로세스 중에 모든 활동을 중지해야 하므로 가동 중지 시간이 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1212,7 +1263,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">3</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1243,12 +1294,12 @@
 				소노밥
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 19일 화요일 18:46">
+<span class="comment-date align-middle" title="2021년 10월 19일 화 18:46">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나도 D와 함께 갈거야. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migrating.html#AuroraPostgreSQL.Migrating.RDSPostgreSQL.Replica</div>
+<div class="comment-content">나도 D랑 같이 갈게. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Migating.html#AuroraPostgreSQL.Migating.RDSPostgreSQL.Replica</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1257,7 +1308,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1288,12 +1339,12 @@
 				jnassp1
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 15일 금 03:45">
+<span class="comment-date align-middle" title="2021년 10월 15일 금요일 03:45">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C - 가장 빠릅니다. 스냅샷은 몇 분 정도 소요되며 가동 중지 시간이 최소화됩니다. D - 가장 느립니다. 초 단위로 다운타임이 발생합니다.</div>
+<div class="comment-content">C - 가장 빠릅니다. 스냅샷은 몇 분 정도 소요되며 가동 중지 시간이 최소화됩니다. D - 가장 느림. 몇 초 안에 가동 중지 시간이 발생합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1302,7 +1353,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1325,12 +1376,12 @@
 				빌리C
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 15일 금 14:03">
+<span class="comment-date align-middle" title="2021년 10월 15일 금요일 14:03">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D... 원인: 마이그레이션에는 가동 중지 시간이 최소화되어야 합니다.</div>
+<div class="comment-content">D... 원인: 마이그레이션은 가동 중지 시간을 최소화해야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1339,7 +1390,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1378,12 +1429,12 @@
 				할롤
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 05:40">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 05:40">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 최소 가동 중지 시간이 아닌 최소 가동 중지 시간을 요구하므로 최소한의 가동 중지 시간을 제공합니다.</div>
+<div class="comment-content">D는 최소 시간이 아닌 최소 가동 중지 시간을 요구하므로 최소 가동 중지 시간을 제공합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1392,7 +1443,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1420,15 +1471,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				도우미
+				헬퍼
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 10월 12일 화요일 01:11">
+<span class="comment-date align-middle" title="2021년 10월 12일 (화) 01:11">
 			1년, 10개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나를 위해 D.</div>
+<div class="comment-content">나한테는 D.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1437,7 +1488,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1469,11 +1520,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 27일 (월) 03:06">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 나를 위한 것입니다. Amazon RDS for PostgreSQL DB 인스턴스에서 Amazon Aurora PostgreSQL DB 클러스터로 마이그레이션하려면 원본 PostgreSQL DB 인스턴스의 Aurora 복제본을 생성합니다. PostgreSQL DB 인스턴스와 Aurora PostgreSQL 복제본 간의 복제 지연이 0이면 Aurora 복제본을 독립형 Aurora PostgreSQL DB 클러스터로 승격할 수 있습니다.</div>
+<div class="comment-content">나에게는 D가 적합합니다. Amazon RDS for PostgreSQL DB 인스턴스에서 Amazon Aurora PostgreSQL DB 클러스터로 마이그레이션하려면 소스 PostgreSQL DB 인스턴스의 Aurora 복제본을 생성하세요. PostgreSQL DB 인스턴스와 Aurora PostgreSQL 복제본 간의 복제 지연이 0이면 Aurora 복제본을 독립형 Aurora PostgreSQL DB 클러스터로 승격할 수 있습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1482,7 +1533,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1502,15 +1553,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 29일 수 16:52">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">AWS 사용 설명서에는 옵션 C에 대해 "데이터의 테비바이트(TiB)당 대략 몇 시간 정도 소요되는 마이그레이션에 대비해야 합니까?"라고 언급되어 있습니까? 위의 전체 의견을 참조하십시오. 그래서 저는 C가 가장 빠르지 않다고 생각합니다.</div>
+<div class="comment-content">AWS 사용자 가이드에서는 옵션 C에 대해 "데이터 테비바이트(TiB)당 대략 몇 시간 정도 소요되는 마이그레이션을 준비해야 합니다"라고 언급합니까? 위의 전체 의견을 참조하세요. 그래서 나는 C가 가장 빠르지 않다고 생각합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1519,7 +1570,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1539,7 +1590,7 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 10월 9일 토요일 22:09">
@@ -1547,7 +1598,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 D가 가장 빠르지 않지만 C가 가장 빠르다는 것을 의미했습니다.</div>
+<div class="comment-content">내 말은 D가 가장 빠르지는 않지만 C가 가장 빠르다는 뜻입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1556,7 +1607,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1584,7 +1635,7 @@
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">마이그레이션에는 다운타임이 최소화되어야 합니다.</div>
+<div class="comment-content">마이그레이션에는 가동 중지 시간이 최소화되어야 합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1593,7 +1644,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1645,15 +1696,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2021년 9월 25일 (토) 23:16">
-			1년, 10개월 전
+<span class="comment-date align-middle" title="2021년 9월 25일 토요일 23:16">
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">기본적으로 질문에 FASTEEST migratiton이라고 표시되면 C를 선택합니다. C가 가장 빠르지만 백업을 수행할 때 몇 초에서 몇 분 동안 지속될 수 있는 짧은 I/O 일시 중단이 있습니다. 설정이 multiAZ인 경우 백업이 대기 상태에서 수행되므로 I/O가 일시 중단되지 않습니다. 질문에 최소 가동 중지 시간이 표시된 경우 D를 선택하십시오. D는 빠르지 않으며 1TB를 완료하는 데 몇 시간이 걸리지만 가동 중지 시간은 최소입니다.</div>
+<div class="comment-content">기본적으로 질문에 FASTEEST migratiton 이라고 표시되면 C를 선택합니다. C는 FASTEST이지만 백업을 수행할 때 몇 초에서 몇 분까지 지속될 수 있는 짧은 I/O 일시 중지가 있습니다. 설정이 다중 AZ인 경우 백업이 대기 모드에서 수행되므로 I/O 일시 중단이 발생하지 않습니다. 질문에 최소 가동 중지 시간이라고 표시된 경우 D를 선택하세요. D는 빠르지 않고 1TB라도 완료하는 데 몇 시간이 걸리지만 가동 중지 시간은 최소입니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1662,7 +1713,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1690,15 +1741,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				시카고 마사지 시커
+				시카고마사지시커
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2021년 9월 22일 수 02:15">
-			1년, 10개월 전
+			1년, 11개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">답은 C입니다. C가 가장 빠릅니다. Aurora 읽기 전용 복제본을 사용하여 데이터 마이그레이션은 아래와 같이 1TB에 대해 완료하는 데 몇 시간이 걸립니다. Aurora 읽기 전용 복제본을 사용한 데이터 마이그레이션의 복제본 개요: RDS PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 마이그레이션하려면 원본 PostgreSQL DB 인스턴스의 Aurora 읽기 전용 복제본을 생성하는 것이 좋습니다. PostgreSQL DB 인스턴스와 Aurora PostgreSQL 읽기 전용 복제본 사이의 복제 지연이 0이면 복제를 중지할 수 있습니다. 이 시점에서 Aurora 읽기 전용 복제본을 독립형 Aurora PostgreSQL DB 클러스터로 승격할 수 있습니다. 그러면 이 독립 실행형 DB 클러스터가 쓰기 로드를 수락할 수 있습니다. 시간이 걸리는 마이그레이션을 준비하십시오. 데이터의 테비바이트(TiB)당 대략 몇 시간입니다. 마이그레이션이 진행되는 동안 Amazon RDS PostgreSQL 인스턴스는 WAL(Write Ahead Log) 세그먼트를 누적합니다. Amazon RDS 인스턴스에 이러한 세그먼트에 대한 스토리지 용량이 충분한지 확인하십시오.</div>
+<div class="comment-content">답은 C입니다. C가 가장 빠릅니다. Aurora 읽기 전용 복제본을 사용하여 데이터 마이그레이션을 완료하려면 아래와 같이 1TB를 완료하는 데 몇 시간이 걸립니다. Aurora 읽기 전용 복제본을 사용한 데이터 마이그레이션에 대한 복제본 개요: RDS PostgreSQL DB 인스턴스에서 Aurora PostgreSQL DB 클러스터로 마이그레이션하려면 소스 PostgreSQL DB 인스턴스의 Aurora 읽기 전용 복제본을 생성하는 것이 좋습니다. PostgreSQL DB 인스턴스와 Aurora PostgreSQL 읽기 전용 복제본 간의 복제 지연이 0이면 복제를 중지할 수 있습니다. 이 시점에서 Aurora 읽기 전용 복제본을 독립형 Aurora PostgreSQL DB 클러스터로 승격할 수 있습니다. 그러면 이 독립 실행형 DB 클러스터가 쓰기 로드를 수용할 수 있습니다. 마이그레이션 준비에는 시간이 좀 걸립니다. 데이터 테비바이트(TiB)당 대략 몇 시간 정도 소요됩니다. 마이그레이션이 진행되는 동안 Amazon RDS PostgreSQL 인스턴스는 WAL(미리 쓰기 로그) 세그먼트를 축적합니다. Amazon RDS 인스턴스에 이러한 세그먼트를 위한 충분한 스토리지 용량이 있는지 확인하십시오.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -1707,7 +1758,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">4</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -1762,7 +1813,7 @@
 				Highly Voted <i class="fa fa-thumbs-up"></i>
 </span>
 <span class="comment-date align-middle" title="Tue 21 Sep 2021 07:08">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1811,7 +1862,7 @@ https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Mi
 				Most Recent <i class="fa fa-clock-o"></i>
 </span>
 <span class="comment-date align-middle" title="Mon 31 Jul 2023 14:37">
-			2 weeks, 2 days ago
+			3 weeks, 5 days ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1861,7 +1912,7 @@ https://aws.amazon.com/blogs/database/migrate-to-an-amazon-aurora-postgresql-ins
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Jul 2023 09:45">
-			1 month, 1 week ago
+			1 month, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1911,7 +1962,7 @@ https://docs.aws.amazon.com/whitepapers/latest/migrating-databases-to-amazon-aur
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 17 Jan 2023 13:37">
-			7 months ago
+			7 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -1957,7 +2008,7 @@ https://docs.aws.amazon.com/whitepapers/latest/migrating-databases-to-amazon-aur
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 26 Oct 2022 06:06">
-			9 months, 3 weeks ago
+			10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2003,7 +2054,7 @@ https://docs.aws.amazon.com/whitepapers/latest/migrating-databases-to-amazon-aur
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 28 Apr 2022 22:49">
-			1 year, 3 months ago
+			1 year, 4 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2141,7 +2192,7 @@ D- Replica is fast</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Dec 2021 22:26">
-			1 year, 7 months ago
+			1 year, 8 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2368,7 +2419,7 @@ Answer : Option D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 30 Oct 2021 10:08">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2413,7 +2464,7 @@ Answer : Option D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 27 Oct 2021 07:38">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2458,7 +2509,7 @@ Answer : Option D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 07:27">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2503,7 +2554,7 @@ Answer : Option D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 26 Oct 2021 00:57">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2515,7 +2566,7 @@ Answer : Option D</div>
 <a class="ml-2 comment-flag-report requires-login" title="Report"><i class="fa fa-flag"></i></a>
 </span>
 <span class="ml-2 upvote-text">
-				upvoted <span class="upvote-count">1</span> times
+				upvoted <span class="upvote-count">2</span> times
 			</span>
 <span class="comment-control-error ml-2"></span>
 </div>
@@ -2548,7 +2599,7 @@ Answer : Option D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 23 Oct 2021 07:43">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2588,7 +2639,7 @@ Best answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 24 Oct 2021 17:51">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -2641,7 +2692,7 @@ Best answer is D</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Fri 22 Oct 2021 10:42">
-			1 year, 9 months ago
+			1 year, 10 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3008,7 +3059,7 @@ D - Slowest. Will have downtime in secs.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 27 Sep 2021 03:06">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3048,7 +3099,7 @@ a standalone Aurora PostgreSQL DB cluster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 29 Sep 2021 16:52">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3191,7 +3242,7 @@ a standalone Aurora PostgreSQL DB cluster</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sat 25 Sep 2021 23:16">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -3238,7 +3289,7 @@ If the question said MINIMAL Downtime, then Choose D.  D is NOT fast and takes s
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Wed 22 Sep 2021 02:15">
-			1 year, 10 months ago
+			1 year, 11 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">

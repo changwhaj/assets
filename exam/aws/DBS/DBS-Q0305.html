@@ -8,7 +8,7 @@
 <body class="home2"><div style="position:relative;">
 <!-- meta tag -->
 <meta charset="utf-8"/>
-<title>Exam AWS Certified Database - Specialty topic 1 question 305 discussion - ExamTopics</title>
+<title>Exam AWS Certified Database</title>
 <!-- responsive tag -->
 <meta content="ie=edge" http-equiv="x-ua-compatible"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -41,13 +41,76 @@
 </style>
 <div class="sec-spacer pt-20">
 <div class="container">
-<a class="badge show-english" href="#">English</a>
-<a class="badge show-korean d-none" href="#">한국어</a>
+<div class="container action-row-container mb-4">
+<div class="container action-row clearfix d-flex">
+<i class="fa fm fa-language mr-2"></i>
+<a class="btn show-english" href="#">English</a>
+<a class="btn show-korean d-none" href="#">한국어</a>
+<span class="pagination-container ml-auto">
+<span id="page-indicator"><strong></strong></span>
+<!--p id="page-indicator"></p-->
+<span class="pagination-nav ml-4">
+<a class="btn btn-sm" href="#" id="prevLink"><i class="fa fm fa-arrow-circle-left mr-2"></i>이전</a>
+<select class="discussion-list-page-select form-control form-control-sm" id="pageSelect">
+</select>
+<a class="btn btn-sm" href="#" id="nextLink">다음<i class="fa fm fa-arrow-circle-right ml-2"></i></a>
+</span>
+</span>
+</div>
+</div>
+<script src="/assets/js/questions.js"></script> <!-- Link to the external JavaScript file -->
+<script>
+	var curPageName = getCurrentPageName();
+	var curPageDir = getCurrentPageDir(curPageName);
+	var curPageNo = getCurrentPageNumber(curPageName);
+	var pagePrefix = getCurrentPagePrefix(curPageName);
+	var totalPages = getQuestionLength(pagePrefix);
+
+	var prevPageNo = curPageNo - 1;
+	var nextPageNo = curPageNo + 1;
+
+	var prevLink = document.getElementById('prevLink');
+	var pageSelect = document.getElementById('pageSelect');
+	var nextLink = document.getElementById('nextLink');
+	var pageInfo = document.getElementById('page-indicator');
+	
+	if (prevPageNo >= 1) {
+		prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		prevLink.style.display = 'none';
+	}
+
+	if (nextPageNo <= totalPages) {
+		nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+	} else {
+		nextLink.style.display = 'none';
+	}
+
+	// Display current page number and total page count
+	pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+	// Dynamically populate the page selection dropdown
+	for (var i = 1; i <= totalPages; i++) {
+		var option = document.createElement('option');
+		option.value = i;
+		option.text = i;
+		pageSelect.appendChild(option);
+	}
+
+	// Set the default selected option
+	pageSelect.value = curPageNo;
+
+	// Event listener for page selection
+	pageSelect.addEventListener('change', function() {
+		var selectedPage = parseInt(this.value);
+		window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+	});
+</script>
 <!-- BEGIN Discussions header / title -->
 <div class="row">
 <div class="col-12">
 <div class="discussion-list-header">
-<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 - 전문 주제 1 질문 305 토론</h1>
+<h1><i class="fa fa-file-text-o mr-3"></i>시험 AWS 공인 데이터베이스 – 전문 분야 주제 1 문제 305 토론</h1>
 </div>
 <div class="discussion-list-header-en" style="display: none;">
 <h1><i class="fa fa-file-text-o mr-3"></i>Exam AWS Certified Database - Specialty topic 1 question 305 discussion</h1>
@@ -72,7 +135,7 @@
 <div class="question-body mt-3 pt-3 border-top" data-id="875987">
 <p class="card-text">
 							
-								회사에서 PostgreSQL DB 인스턴스용 1TB Amazon RDS를 사용하여 사용자 데이터를 저장하고 있습니다. 보안 검토 중에 보안 엔지니어는 DB 인스턴스가 유휴 상태에서 암호화되지 않았음을 확인합니다. <br/><br/>데이터베이스 전문가는 가동 중지 시간을 최소화하고 데이터 손실 없이 이 문제를 어떻게 해결해야 합니까?
+								한 회사는 PostgreSQL DB 인스턴스용 1TB Amazon RDS를 사용하여 사용자 데이터를 저장하고 있습니다. 보안 검토 중에 보안 엔지니어는 DB 인스턴스가 저장 상태에서 암호화되지 않은 것을 확인합니다. <br/><br/>데이터베이스 전문가는 가동 중지 시간을 최소화하고 데이터 손실 없이 이 문제를 어떻게 해결해야 합니까?
 							
 						</p>
 <div class="voted-answers-tally d-none">
@@ -85,7 +148,7 @@
 													A.
 												</span> 
 											
-											RDS 관리 콘솔을 사용하여 DB 인스턴스를 수정하고 암호화를 활성화하십시오. 변경 사항을 즉시 적용하십시오.
+											RDS 관리 콘솔을 사용하여 DB 인스턴스를 수정하고 암호화를 활성화합니다. 변경 사항을 즉시 적용하십시오.
 										</li>
 <li class="multi-choice-item correct-hidden">
 <span class="multi-choice-letter" data-choice-letter="B">
@@ -99,7 +162,7 @@
 													C.
 												</span> 
 											
-											새로운 암호화된 DB 인스턴스를 생성하고 AWS DMS(AWS Database Migration Service)를 사용하여 기존 데이터베이스를 암호화된 DB 인스턴스로 마이그레이션합니다. 인스턴스가 동기화되면 애플리케이션을 수정하여 새 DB 인스턴스에 연결합니다.
+											새로운 암호화된 DB 인스턴스를 생성하고 AWS Database Migration Service(AWS DMS)를 사용하여 기존 데이터베이스를 암호화된 DB 인스턴스로 마이그레이션합니다. 인스턴스가 동기화되면 새 DB 인스턴스에 연결하도록 애플리케이션을 수정합니다.
 										</li>
 <li class="multi-choice-item">
 <span class="multi-choice-letter" data-choice-letter="D">
@@ -110,7 +173,7 @@
 										</li>
 </ul>
 </div>
-<a class="btn btn-primary reveal-solution" href="#">추천 답변 보기</a>
+<a class="btn btn-primary reveal-solution" href="#">제안된 답변 표시</a>
 <a class="btn btn-primary hide-solution d-none" href="#">답변 숨기기</a>
 <div class="card-text question-answer bg-light white-text" style="display: none;">
 <span class="correct-answer-box"><strong>추천 답변: </strong>
@@ -120,22 +183,12 @@
 </span>
 <span class="answer-description">
 </span>
-<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분포</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C(100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">씨 (25%)
+<div class="voting-summary col-12 col-sm-6 col-lg-4 pt-2 pb-2" style="font-size: 0.9em"><i>커뮤니티 투표 분배</i><!-- Additional optional vote button: <a href="javascript:void(0)" data-toggle="tooltip" class="vote-answer-button" title="Vote an answer">🗳️</a>--><div class="progress vote-distribution-bar"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="15" class="vote-bar progress-bar bg-primary" data-original-title="2 votes." data-toggle="tooltip" role="progressbar" style="width: 100%; display: flex;" title="">C (100%)</div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-info" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">C (25%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="vote-bar progress-bar bg-success" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 25%; display: none;" title="">B (20%)
                 </div><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="vote-bar progress-bar bg-warning" data-original-title="" data-toggle="tooltip" role="progressbar" style="width: 15%; display: none;" title="">다른
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							~에 의해
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								openkg
-							</a> 
-							
-							2023 <i>
-							년 3월 23일 오전 11:23</i>
-</div>
 </div>
 <div class="discussion-header-container-en" style="display: none;">
 <!-- Question -->
@@ -207,16 +260,6 @@
                 </div></div></div></div>
 </div>
 <!-- / Question  -->
-<div class="discussion-meta-data mt-3 pt-1 border-top">
-							by
-							
-							<a class="title-username" style=""><i class="fa fa-user-o"></i>
-								openkg
-							</a>
-							
-							at <i>
-							March 23, 2023, 11:23 a.m.</i>
-</div>
 </div>
 <div class="comments-wrapper">
 <a class="badge reveal-comment" href="#">댓글 표시</a>
@@ -247,12 +290,12 @@
 				깜짝 놀란
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 7월 18일 화요일 18:53">
-			4주, 1일 전
+<span class="comment-date align-middle" title="2023년 7월 18일 화 18:53">
+			1개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">C야</div>
+<div class="comment-content">C입니다</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -261,7 +304,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -292,13 +335,13 @@
 				코도마
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 5월 29일 (월) 17:27">
-			2개월, 2주 전
+<span class="comment-date align-middle" title="2023년 5월 29일 월요일 17:27">
+			2개월, 4주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">C가 맞습니다.</div>
+<div class="comment-content">C 말이 맞아요.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -307,7 +350,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -339,11 +382,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 11일 목요일 15:01">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">D는 1TB 크기와 최소 다운타임 요구 사항을 고려할 때 올바른 선택으로 보입니다. 이러한 구체적인 힌트가 없으면 스냅샷이 좋습니다(옵션 B).</div>
+<div class="comment-content">1TB 크기와 최소 가동 중지 시간 요구 사항을 고려하면 D가 올바른 선택인 것 같습니다. 이러한 특정 힌트가 없으면 스냅샷이 좋습니다(옵션 B).</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -352,7 +395,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -376,11 +419,11 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="2023년 5월 11일 목요일 15:02">
-			3개월, 1주 전
+			3개월, 2주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">나는 C(D...가 아니라 뚱뚱한 손가락에 대해 미안합니다)가 옳다고 말하고 싶었습니다.</div>
+<div class="comment-content">제 말은 C(D...손가락이 두꺼워서 죄송합니다.)가 옳다는 뜻이었습니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -389,7 +432,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -428,12 +471,12 @@
 				SeemaDataReader
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 17일 (월) 01:59">
-			4 개월 전에
+<span class="comment-date align-middle" title="2023년 4월 17일 월요일 01:59">
+			4개월, 1주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">이 패턴은 AWS DMS(AWS Database Migration Service)를 사용하여 데이터를 마이그레이션하고 지속적으로 복제하므로 가동 중지 시간을 최소화하면서 암호화된 새 데이터베이스로 전환할 수 있습니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
+<div class="comment-content">이 패턴은 AWS Database Migration Service(AWS DMS)를 사용하여 데이터를 마이그레이션하고 지속적으로 복제하므로 가동 중지 시간을 최소화하면서 암호화된 새 데이터베이스로의 전환을 수행할 수 있습니다. https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-existing-amazon-rds-for-postgresql-db-instance.html</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -442,7 +485,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -473,13 +516,13 @@
 				르디아즈
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 26일 일 17:16">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 26일 일요일 17:16">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
 <div class="comment-selected-answers badge badge-warning">선택한 답변: <span><strong>C</strong></span></div>
-<div class="comment-content">다운타임이 없습니다. DM</div>
+<div class="comment-content">가동 중지 시간이 없습니다. DM</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -488,7 +531,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -511,12 +554,12 @@
 				민트워터
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 4월 4일 화요일 21:49">
-			4개월, 1주 전
+<span class="comment-date align-middle" title="2023년 4월 4일 (화) 21:49">
+			4개월, 3주 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">질문 요구 사항은 "최소한의 중단 시간과 데이터 손실 없음"입니다. 따라서 C를 선택합니다. 또는 B가 작동할 수 있지만 DOWN TIME이 필요합니다.</div>
+<div class="comment-content">질문 요구 사항은 "다운타임이 최소화되고 데이터 손실이 없음"입니다. 따라서 C를 선택하겠습니다. 또는 B가 작동할 수도 있지만 DOWN TIME이 필요합니다.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -525,7 +568,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">2</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -561,15 +604,15 @@
 <i class="fa fa-user mr-1 mt-1"></i>
 <a>
 <h5 class="mt-0 mb-0 align-middle d-inline-block comment-username">
-				오픈키
+				openkg
 			</h5>
 </a>
-<span class="comment-date align-middle" title="2023년 3월 23일 목요일 11:23">
-			4개월, 3주 전
+<span class="comment-date align-middle" title="2023년 3월 23일 (목) 11:23">
+			5 개월 전
 		</span>
 </div>
 <div class="comment-body comment-toggled">
-<div class="comment-content">PostgreSQL DB용 1TB Amazon RDS는 B와 함께 오래 걸릴 것입니다. 그래서 저는 DMS를 사용하여 할 것입니다. 따라서 C.</div>
+<div class="comment-content">PostgreSQL DB용 1TB Amazon RDS는 B를 사용하면 시간이 오래 걸립니다. 따라서 DMS를 사용하여 수행하겠습니다. 그러므로 C.</div>
 <div class="comment-control">
 <span class="comment-control-buttons d-print-none">
 <a class="comment-upvote requires-login" title="찬성"><i class="fa fa-thumbs-up"></i></a>
@@ -578,7 +621,7 @@
 </span>
 <span class="ml-2 upvote-text"><span class="upvote-count">1</span> 번
 			 
-				찬성</span>
+				찬성함</span>
 <span class="comment-control-error ml-2"></span>
 </div>
 <div class="new-comment-box-container mt-2">
@@ -630,7 +673,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 18 Jul 2023 18:53">
-			4 weeks, 1 day ago
+			1 month, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -675,7 +718,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 29 May 2023 17:27">
-			2 months, 2 weeks ago
+			2 months, 4 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -721,7 +764,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 11 May 2023 15:01">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -758,7 +801,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 11 May 2023 15:02">
-			3 months, 1 week ago
+			3 months, 2 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -811,7 +854,7 @@
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Mon 17 Apr 2023 01:59">
-			4 months ago
+			4 months, 1 week ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -857,7 +900,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Sun 26 Mar 2023 17:16">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -895,7 +938,7 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/encrypt-an-exi
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Tue 04 Apr 2023 21:49">
-			4 months, 1 week ago
+			4 months, 3 weeks ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
@@ -950,7 +993,7 @@ Or B could work, but DOWN TIME is needed.</div>
 			</h5>
 </a>
 <span class="comment-date align-middle" title="Thu 23 Mar 2023 11:23">
-			4 months, 3 weeks ago
+			5 months ago
 		</span>
 </div>
 <div class="comment-body comment-toggled">
