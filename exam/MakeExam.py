@@ -453,7 +453,7 @@ def make_filename(qtitle, qid, dataid):
     findexam = next((exam for exam in exams if exam["qtitle"] == qtitle), None)
 
     if findexam:
-        if dataid > 0 & dataid < findexam["first_id"]:
+        if (dataid > 0) & (dataid < findexam["first_id"]):
             return fname
         fname = findexam["prefname"] + format(int(qid), '04') + '.html'
     else:
@@ -612,6 +612,7 @@ def refresh_from_forum(discuss_list, forum_name):
             did = int(url.split('/')[4].split('-')[0])
             replace = False    
             print(qtitle+"\t"+str(qid)+"\t"+str(did)+"\t"+str(last_post)+"\t"+url, end=' ', flush=True)
+            data_id = 0
             if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
                 print("Same question found !!!")
 
@@ -632,7 +633,6 @@ def refresh_from_forum(discuss_list, forum_name):
                     # df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
             else:
                 print("New question found !!!")
-                data_id = 0
 
             # try:
             fname = make_filename(qtitle, qid, data_id)
@@ -858,13 +858,13 @@ if __name__ == "__main__":
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    AMAZON_DISCUSS = 'AmazonDiscuss.txt'
-    FORUM_NAME = 'amazon'
-    refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
+    # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
+    # FORUM_NAME = 'amazon'
+    # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
 
-    # ISACA_DISCUSS = 'IsacaDiscuss.txt'
-    # FORUM_NAME = 'isaca'
-    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    ISACA_DISCUSS = 'IsacaDiscuss.txt'
+    FORUM_NAME = 'isaca'
+    refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     
     # df = read_discuss_list(AMAZON_DISCUSS)
     # write_discuss_list(df, AMAZON_DISCUSS)
