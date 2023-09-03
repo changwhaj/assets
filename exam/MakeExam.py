@@ -112,10 +112,12 @@ def read_discuss_list(fname):
                     names=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'], 
                     index_col=False)
     
+    df['ExamType'] = df['ExamType'].str.strip()
     df['ExamNo'] = df['ExamNo'].astype(int)
     df['DiscussNo'] = df['DiscussNo'].astype(int)
     df['DataID'] = df['DataID'].astype(int)
     df['LastPost'] = pd.to_datetime(df['LastPost'], format='%Y-%m-%d %H:%M')
+    df['DiscussURL'] = df['DiscussURL'].str.strip()
 
     df.drop_duplicates(inplace=True)
     return df.sort_values(by=['LastPost', 'DiscussNo'], ascending=[False, False])
@@ -412,7 +414,7 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 134,
+            "qlength": 137,
             "first_id": 879465,
         },
         {
@@ -424,7 +426,7 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
             "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 583,
+            "qlength": 599,
             "first_id": 839758,
         },
         {
@@ -442,7 +444,7 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
             "prefname": "aws/SOA_C02/SOA2-Q",
-            "qlength": 377,
+            "qlength": 379,
             "first_id": 809742,
         },
         # aws/MLS_C01/MLS-Q	Exam AWS Certified Machine Learning - Specialty topic 1
@@ -858,9 +860,9 @@ if __name__ == "__main__":
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    # AMAZON_DISCUSS = 'AmazonDiscuss.txt'
-    # FORUM_NAME = 'amazon'
-    # refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
+    AMAZON_DISCUSS = 'AmazonDiscuss.txt'
+    FORUM_NAME = 'amazon'
+    refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
 
     ISACA_DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'
