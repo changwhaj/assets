@@ -1,7 +1,7 @@
 import time
 import re
 import os
-import winsound
+import platform
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -31,7 +31,10 @@ def sleep_random_sec(sec):
     print('\r', end='')
 
 def set_chrome_driver():
-    service = Service(executable_path=r'c:/temp/chromedriver.exe')
+    if platform.system() == "Darwin":
+        service = Service(executable_path=r'./chromedriver')
+    elif platform.system() == "Windows":
+        service = Service(executable_path=r'c:/temp/chromedriver.exe')
     userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)s Chrome/92.0.4515.131 Safari/537.36"
     options = webdriver.ChromeOptions()
     options.add_argument(f"user-agent={userAgent}")
@@ -49,15 +52,12 @@ def set_translate_to_kr(driver):
     actionChains = ActionChains(driver)
     actionChains.context_click().perform()
 
-    pyautogui.moveTo(x=150, y=345, duration=1)
+    if platform.system() == "Darwin":
+        pyautogui.moveTo(x=150, y=350, duration=1)
+    elif platform.system() == "Windows":
+        pyautogui.moveTo(x=150, y=345, duration=1)
     pyautogui.click()
     time.sleep(1)
-
-    # for i in range(3):
-    #     pyautogui.press('up')
-
-    # pyautogui.press('enter')
-    # pyautogui.sleep(1)
 
 def scroll_page(driver):
     # Set the interval between scrolls in seconds
@@ -157,7 +157,10 @@ def open_exam(driver, discuss_url):
         div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})
         if (driver.title == 'Error 404 (Not Found)!!1'):
             break
-        winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
+
+        if platform.system() == "Windows":
+            import winsound
+            winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
         time.sleep(3)
     
     return
@@ -508,7 +511,10 @@ def make_question_file(driver, fname, url, did):
     return data_id
 
 def translate_page_to_kr(driver, fname):
-    url = f'file:///E:/MyProjects/ExamTopics/assets/exam/{fname}'
+    if platform.system() == "Windows":
+        url = f'file:///E:/MyProjects/ExamTopics/assets/exam/{fname}'
+    elif platform.system() == "Darwin":
+        url = f'file:///Users/changwhaj/MyProjects/ExamTopics/assets/exam/{fname}'
     driver.get(url)
     driver.switch_to.window(driver.window_handles[0])
 
@@ -779,7 +785,7 @@ def refresh_all_exam(exam_list_file, qtitle):
         idx_from = int(file.read())
     err = False
 
-    for i in range(len(df))[idx_from:2]:
+    for i in range(len(df))[idx_from:]:
         qid = int(df.at[i, 'ExamNo'])
         did = int(df.at[i, 'DiscussNo'])
         dataid = int(df.at[i, 'DataNo'])
