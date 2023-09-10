@@ -55,8 +55,15 @@ def set_translate_to_kr(driver):
     if platform.system() == "Darwin":
         pyautogui.moveTo(x=150, y=350, duration=1)
     elif platform.system() == "Windows":
-        pyautogui.moveTo(x=150, y=345, duration=1)
-    pyautogui.click()
+        for i in range(3):
+            pyautogui.press('up')
+
+        pyautogui.press('enter')
+        # pyautogui.sleep(1)
+        
+        # pyautogui.moveTo(x=150, y=345, duration=1)
+        # pyautogui.moveTo(x=150, y=365, duration=1)
+        # pyautogui.click()
     time.sleep(1)
 
 def scroll_page(driver):
@@ -192,6 +199,7 @@ def remove_exam_element(driver):
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.action-row-container.mb-4'))
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'all-questions-link'));
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'discussion-meta-data'));
+        driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'vote-answer-button'));        
         driver.execute_script("arguments[0].removeAttribute('class');", driver.find_element(By.TAG_NAME, 'html'))
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'discussion-link'))
         driver.execute_script("arguments[0].removeAttribute('href');", driver.find_element(By.CLASS_NAME, 'title-username'))
@@ -361,6 +369,12 @@ def save_html(driver, did, fname):
         # Create the directory
         os.makedirs(dir)
 
+    comment_spans = bs.find_all("span", {"class": "comment-date"})
+    for comment_span in comment_spans:
+        title = comment_span.get('title')
+        if title:
+            comment_span.string = title
+
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs))
         # file.write('<!DOCTYPE html>\n' + str(bs))
@@ -515,6 +529,7 @@ def translate_page_to_kr(driver, fname):
         url = f'file:///E:/MyProjects/ExamTopics/assets/exam/{fname}'
     elif platform.system() == "Darwin":
         url = f'file:///Users/changwhaj/MyProjects/ExamTopics/assets/exam/{fname}'
+    # url = f'http://127.0.0.1:5500/assets/exam/{fname}'
     driver.get(url)
     driver.switch_to.window(driver.window_handles[0])
 
@@ -550,6 +565,8 @@ def save_kr(driver, fname):
     container_contents = re.sub(pattern, '', container_contents)
     discussion_contents = bs.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
     discussion_contents = re.sub(pattern, '', discussion_contents)
+    # pattern = r'<!-- Additional optional vote button: <a href=.+</a>-->'
+    # container_contents = re.sub(pattern, '', container_contents)
 
     with open(fname, "r", encoding='utf-8') as file:
         html = file.read()
@@ -648,6 +665,10 @@ def refresh_from_forum(discuss_list, forum_name):
                 new_data_id = 0
             else:
                 new_data_id = make_question_file(driver, fname, url, did)
+                print(f'data_id={data_id}, new_data_id={new_data_id}, fname={fname}')
+                if (data_id > 0 ) & (data_id != new_data_id):
+                    found = True
+                    break
                 translate_page_to_kr(driver, fname)
                 # fname_kr = fname[:-5] + '-KR.html'
                 # fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
