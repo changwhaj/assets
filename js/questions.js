@@ -33,19 +33,21 @@ function getCurrentPageName() {
 
 // Function to extract the current page number from the URL
 function getCurrentPageNumber(pageName) {
-    var pageNumber = parseInt(pageName.match(/.+-Q(\d+)\.html/)[1]); // Extract the page number using a regular expression
+    var pageArr = pageName.match(/.+-Q(\d+)\.html/)
+    var pageNumber = (pageArr && parseInt(pageArr[1])) || 1
     return pageNumber;
 }
 
 function getCurrentPageDir(pageName) {
     var currentPagePath = window.location.pathname; // Get the current page's path
-    var pageDirectory = currentPagePath.replace(pageName, '').match(/((\/[^/]+){4}\/$)/)[1]; // Extract the page dir path
+    var pathArr = currentPagePath.replace(pageName, '').match(/((\/[^/]+){4}\/$)/)
+    var pageDirectory = (pathArr && pathArr[1]) || '/';
     return pageDirectory;
 }
 
 function getCurrentPagePrefix(pageName) {
-    var pagePrefix = pageName.match(/(.+-Q)\d+\.html/)[1];
+    var pageArr = pageName.match(/(.+-Q)\d+\.html/)
+    var pagePrefix = (pageArr && pageArr[1]) || '';
+    // var pagePrefix = pageName.match(/(.+-Q)\d+\.html/)[1];
     return pagePrefix;
 }
-
-

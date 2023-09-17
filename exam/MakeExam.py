@@ -266,6 +266,13 @@ def open_discuss(driver, discuss_id):
     driver.close();
     driver.switch_to.window(driver.window_handles[0]);
 
+    comment_spans = bs.find_all('span', class_='comment-date')
+    for comment_span in comment_spans:
+        title = comment_span.get('title')
+        if title:
+            kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
+            comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
+
     div = bs.find('div', attrs={'class': 'container outer-discussion-container'})
     
     return div
@@ -281,6 +288,12 @@ def replace_duscuss(driver, discuss_id):
     else:
         remove_discuss_element(driver)
         bs = BeautifulSoup(driver.page_source, 'html.parser')
+        comment_spans = bs.find_all('span', class_='comment-date')
+        for comment_span in comment_spans:
+            title = comment_span.get('title')
+            if title:
+                kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
+                comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
 
     return bs
 
@@ -369,11 +382,7 @@ def save_html(driver, did, fname):
         # Create the directory
         os.makedirs(dir)
 
-    comment_spans = bs.find_all("span", {"class": "comment-date"})
-    for comment_span in comment_spans:
-        title = comment_span.get('title')
-        if title:
-            comment_span.string = title
+    # print(f'save_html(driver, f{did}, f{fname}')
 
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs))
@@ -593,23 +602,15 @@ def save_kr(driver, fname):
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs_en))
 
-def refresh_from_forum(discuss_list, forum_name):
+def refresh_from_forum(discuss_list, forum_name, forumIdx):
 
     df = read_discuss_list(discuss_list)
     refresh = False
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
 
-    fn = "forum.txt"
-    idx_from = 0
-    with open(fn, "r") as file:
-        idx_from = int(file.read())
     found = False
-    for p in range(1000)[idx_from:]:
-        my_file = Path(fn)
-        # file does not exists. Okay to overwrite
-        if not my_file.is_file(): found = True
-
+    for p in range(1000)[forumIdx:]:
         if found == True: break
         pageno = p + 1
 
@@ -694,7 +695,10 @@ def refresh_from_forum(discuss_list, forum_name):
     #     # Write data rows
     #     file.write(str(p) + '\n')
 
+    driver.close()
+    time.sleep(1)
     driver.quit()
+    time.sleep(1)
 
     write_discuss_list(df, discuss_list)
 
@@ -887,14 +891,40 @@ if __name__ == "__main__":
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    AMAZON_DISCUSS = 'AmazonDiscuss.txt'
+    DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(AMAZON_DISCUSS, FORUM_NAME)
-
-    ISACA_DISCUSS = 'IsacaDiscuss.txt'
-    FORUM_NAME = 'isaca'
-    refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    # DISCUSS = 'IsacaDiscuss.txt'
+    # FORUM_NAME = 'isaca'
     
+    fn = "forum.txt"
+    idx_from = 0
+    with open(fn, "r") as file:
+        idx_from = int(file.read())
+
+    for i in reversed(range(idx_from)):
+        my_file = Path(fn)
+        # file does not exists. Stop
+        if not my_file.is_file(): break
+
+        refresh_from_forum(DISCUSS, FORUM_NAME, i)
+
+    # ISACA_DISCUSS = 'IsacaDiscuss.txt'
+    # FORUM_NAME = 'isaca'
+    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
+    DISCUSS = 'IsacaDiscuss.txt'
+    FORUM_NAME = 'isaca'
+    
+    # fn = "forum.txt"
+    # idx_from = 0
+    # with open(fn, "r") as file:
+    #     idx_from = int(file.read())
+    idx_from = 30
+    for i in reversed(range(idx_from)):
+        my_file = Path(fn)
+        # file does not exists. Stop
+        if not my_file.is_file(): break
+
+        refresh_from_forum(DISCUSS, FORUM_NAME, i)    
     # df = read_discuss_list(AMAZON_DISCUSS)
     # write_discuss_list(df, AMAZON_DISCUSS)
     # refresh_forum_list('AmazonDiscussNew.txt', 'amazon')
