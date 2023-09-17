@@ -51,3 +51,49 @@ function getCurrentPagePrefix(pageName) {
     // var pagePrefix = pageName.match(/(.+-Q)\d+\.html/)[1];
     return pagePrefix;
 }
+
+var curPageName = getCurrentPageName();
+var curPageDir = getCurrentPageDir(curPageName);
+var curPageNo = getCurrentPageNumber(curPageName);
+var pagePrefix = getCurrentPagePrefix(curPageName);
+var totalPages = getQuestionLength(pagePrefix);
+
+var prevPageNo = curPageNo - 1;
+var nextPageNo = curPageNo + 1;
+
+var prevLink = document.getElementById('prevLink');
+var pageSelect = document.getElementById('pageSelect');
+var nextLink = document.getElementById('nextLink');
+var pageInfo = document.getElementById('page-indicator');
+
+if (prevPageNo >= 1) {
+    prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+} else {
+    prevLink.style.display = 'none';
+}
+
+if (nextPageNo <= totalPages) {
+    nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+} else {
+    nextLink.style.display = 'none';
+}
+
+// Display current page number and total page count
+pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+
+// Dynamically populate the page selection dropdown
+for (var i = 1; i <= totalPages; i++) {
+    var option = document.createElement('option');
+    option.value = i;
+    option.text = i;
+    pageSelect.appendChild(option);
+}
+
+// Set the default selected option
+pageSelect.value = curPageNo;
+
+// Event listener for page selection
+pageSelect.addEventListener('change', function() {
+    var selectedPage = parseInt(this.value);
+    window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+});
