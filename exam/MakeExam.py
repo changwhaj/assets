@@ -918,7 +918,7 @@ if __name__ == "__main__":
     # idx_from = 0
     # with open(fn, "r") as file:
     #     idx_from = int(file.read())
-    idx_from = 5
+    idx_from = 10
     for i in reversed(range(idx_from)):
         my_file = Path(fn)
         # file does not exists. Stop
