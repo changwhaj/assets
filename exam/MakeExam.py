@@ -48,7 +48,7 @@ def set_chrome_driver():
     
     return driver
 
-def set_translate_to_kr(driver):
+def set_translate_to_kr_old(driver):
     actionChains = ActionChains(driver)
     actionChains.context_click().perform()
 
@@ -65,6 +65,31 @@ def set_translate_to_kr(driver):
         # pyautogui.moveTo(x=150, y=365, duration=1)
         # pyautogui.click()
     time.sleep(1)
+
+def set_translate_to_kr(driver):
+    while True:
+        # actionChains = ActionChains(driver)
+        # actionChains.context_click().perform()
+        pyautogui.hotkey('shift', 'f10')
+        pyautogui.hotkey('T')
+        time.sleep(1)
+
+        pattern = r'>영어<'
+        bs = BeautifulSoup(driver.page_source, 'html.parser')
+        match = re.search(pattern, str(bs))
+        if match:
+            return
+        
+        if platform.system() == "Windows":
+            import winsound
+            winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
+        time.sleep(3)
+
+        try:
+            driver.switch_to.window(driver.window_handles[1])
+            driver.close()
+        except Exception as e:
+            pass
 
 def scroll_page(driver):
     # Set the interval between scrolls in seconds
