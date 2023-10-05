@@ -25,12 +25,6 @@ function getQuestionLength(questionName) {
     return questionDetails[questionName].qLength;
 }
 
-function getCurrentPageName() {
-    var currentPagePath = window.location.pathname; // Get the current page's path
-    var pageName = currentPagePath.substring(currentPagePath.lastIndexOf('/') + 1); // Extract the page name
-    return pageName;
-}
-
 // Function to extract the current page number from the URL
 function getCurrentPageNumber(pageName) {
     var pageArr = pageName.match(/.+-Q(\d+)\.html/)
@@ -38,22 +32,16 @@ function getCurrentPageNumber(pageName) {
     return pageNumber;
 }
 
-function getCurrentPageDir(pageName) {
-    var currentPagePath = window.location.pathname; // Get the current page's path
-    var pathArr = currentPagePath.replace(pageName, '').match(/((\/[^/]+){4}\/$)/)
-    var pageDirectory = (pathArr && pathArr[1]) || '/';
-    return pageDirectory;
-}
-
 function getCurrentPagePrefix(pageName) {
     var pageArr = pageName.match(/(.+-Q)\d+\.html/)
     var pagePrefix = (pageArr && pageArr[1]) || '';
-    // var pagePrefix = pageName.match(/(.+-Q)\d+\.html/)[1];
     return pagePrefix;
 }
 
-var curPageName = getCurrentPageName();
-var curPageDir = getCurrentPageDir(curPageName);
+var pathSegments = window.location.pathname.split("/");
+var curPageName = pathSegments.pop();
+var curPageDir = pathSegments.join("/");
+
 var curPageNo = getCurrentPageNumber(curPageName);
 var pagePrefix = getCurrentPagePrefix(curPageName);
 var totalPages = getQuestionLength(pagePrefix);
@@ -67,13 +55,13 @@ var nextLink = document.getElementById('nextLink');
 var pageInfo = document.getElementById('page-indicator');
 
 if (prevPageNo >= 1) {
-    prevLink.href = curPageDir + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
+    prevLink.href = curPageDir + "/" + pagePrefix + prevPageNo.toString().padStart(4, '0') + '.html';
 } else {
     prevLink.style.display = 'none';
 }
 
 if (nextPageNo <= totalPages) {
-    nextLink.href = curPageDir + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
+    nextLink.href = curPageDir + "/" + pagePrefix + nextPageNo.toString().padStart(4, '0') + '.html';
 } else {
     nextLink.style.display = 'none';
 }
