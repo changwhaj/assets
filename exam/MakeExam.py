@@ -43,7 +43,7 @@ def set_chrome_driver():
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--lang=kr')  # set your language here
     driver = webdriver.Chrome(service=service, options=options)
-
+    driver.set_window_size(1200, driver.get_window_rect()["height"])
     # driver.set_window_size(1400, 1040)
     
     return driver
@@ -68,16 +68,18 @@ def set_translate_to_kr_old(driver):
 
 def set_translate_to_kr(driver):
     while True:
-        # actionChains = ActionChains(driver)
-        # actionChains.context_click().perform()
-        pyautogui.hotkey('shift', 'f10')
+        actionChains = ActionChains(driver)
+        actionChains.context_click().perform()
+        # pyautogui.hotkey('shift', 'f10')
+        # time.sleep(1)
         pyautogui.hotkey('T')
         time.sleep(1)
 
-        pattern = r'>영어<'
+        pattern = r'>답변 숨기기<'
         bs = BeautifulSoup(driver.page_source, 'html.parser')
         match = re.search(pattern, str(bs))
         if match:
+            pyautogui.hotkey('ESC')
             return
         
         if platform.system() == "Windows":
@@ -95,8 +97,7 @@ def scroll_page(driver):
     # Set the interval between scrolls in seconds
     scroll_interval = 1
 
-    # Get the initial height of the page
-    last_height = driver.execute_script("return document.body.scrollHeight")
+    current_scroll_position = driver.execute_script("return window.scrollY;")
 
     while True:
         # Send the down arrow key to scroll down the page
@@ -104,17 +105,12 @@ def scroll_page(driver):
         
         # Wait for the specified interval
         time.sleep(scroll_interval)
-        
-        # Calculate the new height of the page after scrolling
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        
-        # Check if the page has reached the end
-        if new_height == last_height:
+        prev_scroll_position = current_scroll_position
+        current_scroll_position = driver.execute_script("return window.scrollY;")
+
+        if current_scroll_position == prev_scroll_position:
             break
         
-        # Update the previous height
-        last_height = new_height
-
 def save_page(driver, fname):
     bs = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -560,10 +556,10 @@ def make_question_file(driver, fname, url, did):
 
 def translate_page_to_kr(driver, fname):
     if platform.system() == "Windows":
-        url = f'file:///E:/MyProjects/ExamTopics/assets/exam/{fname}'
+        url = f'file:///E:/MyProjects/ExamTopics/exam-assets/exam/{fname}'
     elif platform.system() == "Darwin":
-        url = f'file:///Users/changwhaj/MyProjects/ExamTopics/assets/exam/{fname}'
-    # url = f'http://127.0.0.1:5500/assets/exam/{fname}'
+        url = f'file:///Users/changwhaj/MyProjects/ExamTopics/exam-assets/exam/{fname}'
+    # url = f'http://127.0.0.1:5500/exam-assets/exam/{fname}'
     driver.get(url)
     driver.switch_to.window(driver.window_handles[0])
 
@@ -879,8 +875,8 @@ def refresh_all_exam(exam_list_file, qtitle):
 
 if __name__ == "__main__":
     # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
-    # refresh_all_exam('SAA3_Exam.csv', SAA_C03)    # OK 583
-
+    # refresh_all_exam('SAA3_Exam_imsi.csv', SAA_C03)    # OK 583
+    # exit()
     # SAP_C02 = 'Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1'
     # refresh_all_exam('SAP2_Exam.csv', SAP_C02)    # OK 298
 
