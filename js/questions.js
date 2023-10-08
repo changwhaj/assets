@@ -83,5 +83,5 @@ pageSelect.value = curPageNo;
 // Event listener for page selection
 pageSelect.addEventListener('change', function() {
     var selectedPage = parseInt(this.value);
-    window.location.href = curPageDir + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
+    window.location.href = curPageDir + "/" + pagePrefix + selectedPage.toString().padStart(4, '0') + '.html';
 });
