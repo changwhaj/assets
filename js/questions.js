@@ -67,7 +67,7 @@ if (nextPageNo <= totalPages) {
 }
 
 // Display current page number and total page count
-pageInfo.textContent = 'Question ' + curPageNo + ' of ' + totalPages;
+pageInfo.textContent = 'Q# ' + curPageNo + ' of ' + totalPages;
 
 // Dynamically populate the page selection dropdown
 for (var i = 1; i <= totalPages; i++) {
