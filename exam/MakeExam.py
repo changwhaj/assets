@@ -26,9 +26,9 @@ from dateutil import parser
 
 def sleep_random_sec(sec):
     for t in reversed(range(randint(1, sec))):
-        print(str(t), end='', flush=True)
+    #    print(str(t), end='', flush=True)
         time.sleep(1)
-    print('\r', end='')
+    # print('\r', end='')
 
 def set_chrome_driver():
     if platform.system() == "Darwin":
