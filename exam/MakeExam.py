@@ -86,10 +86,9 @@ def set_translate_to_kr_old(driver):
         # pyautogui.click()
     time.sleep(1)
 
-import ctypes
-# import win32con
-
 def send_key_to_background_window(window_title, key):
+    import ctypes
+
     # Define constants
     WM_KEYDOWN = 0x0100
     WM_KEYUP = 0x0101
