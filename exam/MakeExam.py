@@ -8,13 +8,16 @@ from datetime import datetime, timedelta
 import pyautogui
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver import ActionChains
-from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.common.by import By
+
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager    # 크롬 드라이버 자동 업데이트
+
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver import ActionChains
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -31,18 +34,35 @@ def sleep_random_sec(sec):
     # print('\r', end='')
 
 def set_chrome_driver():
-    if platform.system() == "Darwin":
-        service = Service(executable_path=r'./chromedriver')
-    elif platform.system() == "Windows":
-        service = Service(executable_path=r'c:/temp/chromedriver.exe')
-    userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)s Chrome/92.0.4515.131 Safari/537.36"
+    #if platform.system() == "Darwin":
+    #    service = Service(executable_path=r'./chromedriver')
+    #elif platform.system() == "Windows":
+    #    service = Service(executable_path=r'c:/temp/chromedriver.exe')
+    
+    # Setup options
     options = webdriver.ChromeOptions()
-    options.add_argument(f"user-agent={userAgent}")
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_argument("disable-infobars")    # 정보 표시줄 사용 안함
+    options.add_argument("disable-extensions")    # 확장 사용 안함
+    options.add_argument("disable-gpu")    # GPU 사용 안함
+    # options.add_argument('headless') # 해드리스 사용
+    # options.add_argument('start-maximized') # 시작시 전체 화면
     options.add_argument('--no-sandbox')
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--lang=kr')  # set your language here
-    driver = webdriver.Chrome(service=service, options=options)
+    userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)s Chrome/92.0.4515.131 Safari/537.36"
+    options.add_argument(f"user-agent={userAgent}")
+
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])  # 불필요한 에러 메시지 제거
+    options.add_experimental_option("detach", True)     # 브라우저 꺼짐 방지 코드
+    
+    # Selenium 4.0 -- load webdriver
+    try:
+        service = Service(ChromeDriverManager().install())    # CDM 설치 및 사용
+        driver = webdriver.Chrome(service=service, options=options)
+    except Exception as e:
+        print(e)
+        return
+    
     driver.set_window_size(1200, driver.get_window_rect()["height"])
     # driver.set_window_size(1400, 1040)
     
@@ -66,13 +86,33 @@ def set_translate_to_kr_old(driver):
         # pyautogui.click()
     time.sleep(1)
 
+import ctypes
+# import win32con
+
+def send_key_to_background_window(window_title, key):
+    # Define constants
+    WM_KEYDOWN = 0x0100
+    WM_KEYUP = 0x0101
+
+    # Find the window by title
+    target_window = ctypes.windll.user32.FindWindowW(None, window_title + " - Chrome")
+
+    if target_window == 0:
+        print(f"Window '{window_title}' not found")
+        return
+
+    # Send key press without activating the window
+    vk_code = ord(key)
+    ctypes.windll.user32.PostMessageW(target_window, WM_KEYDOWN, vk_code, 0)
+    ctypes.windll.user32.PostMessageW(target_window, WM_KEYUP, vk_code, 0)
+
 def set_translate_to_kr(driver):
     while True:
         actionChains = ActionChains(driver)
         actionChains.context_click().perform()
-        # pyautogui.hotkey('shift', 'f10')
-        # time.sleep(1)
-        pyautogui.hotkey('T')
+        
+        send_key_to_background_window(driver.title, "T")
+        # pyautogui.hotkey('T')
         time.sleep(1)
 
         pattern = r'>답변 숨기기<'
@@ -85,7 +125,7 @@ def set_translate_to_kr(driver):
         if platform.system() == "Windows":
             import winsound
             winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
-        time.sleep(3)
+        time.sleep(1)
 
         try:
             driver.switch_to.window(driver.window_handles[1])
@@ -127,11 +167,11 @@ def set_headless_mode(driver, headless):
     service = Service(executable_path=r'c:/temp/chromedriver.exe')
     options = Options()
     if headless:
-        options.add_argument("--headless")
+        options.add_argument("--headless=new")
     else:
         # Copy the existing arguments except for the "--headless" argument
         for arg in driver.options.arguments:
-            if arg != "--headless":
+            if arg != "--headless=new":
                 options.add_argument(arg)
     return webdriver.Chrome(service=service, options=options)
 
@@ -162,7 +202,7 @@ def open_forum(driver, forum_name, pageno):
     # forum: { isaca | amazon }
     forum_url = 'https://www.examtopics.com/discussions/' + forum_name + '/' + str(pageno) + '/'
     driver.get(forum_url)
-    sleep_random_sec(2)
+    sleep_random_sec(1)
     return
 
 def open_exam(driver, discuss_url):
@@ -175,7 +215,7 @@ def open_exam(driver, discuss_url):
     exam_url = 'https://www.examtopics.com' + discuss_url
 
     driver.get(exam_url)
-    sleep_random_sec(2)
+    sleep_random_sec(1)
 
     bs = BeautifulSoup(driver.page_source, 'html.parser')
     div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})
@@ -189,7 +229,7 @@ def open_exam(driver, discuss_url):
         if platform.system() == "Windows":
             import winsound
             winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
-        time.sleep(3)
+        time.sleep(1)
     
     return
 
@@ -939,7 +979,7 @@ if __name__ == "__main__":
     # idx_from = 0
     # with open(fn, "r") as file:
     #     idx_from = int(file.read())
-    idx_from = 10
+    idx_from = 1
     for i in reversed(range(idx_from)):
         my_file = Path(fn)
         # file does not exists. Stop
