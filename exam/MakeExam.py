@@ -662,15 +662,17 @@ def save_kr(driver, fname):
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs_en))
 
-def refresh_from_forum(discuss_list, forum_name, forumIdx):
+def refresh_from_forum(discuss_list, forum_name):
 
     df = read_discuss_list(discuss_list)
     refresh = False
     driver = set_chrome_driver()
     # driver.set_window_position(1800,10)
-
+    prev_last_post = df['LastPost'][0]
+    new_df = pd.DataFrame(columns=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'])
+    
     found = False
-    for p in range(1000)[forumIdx:]:
+    for p in range(1000):
         if found == True: break
         pageno = p + 1
 
@@ -686,9 +688,10 @@ def refresh_from_forum(discuss_list, forum_name, forumIdx):
         span = bs.find_all("span", {"class": "recent-post-time"})
     
         for i in range(len(a)):
-            if found == True: break
-            
             last_post = parser.parse(str(span[i*2+1]["title"]).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m."))
+            if ((p > 20)& (last_post <= prev_last_post)): 
+                found = True
+                break
 
             split_text = str(a[i].text.strip()).split()
 
@@ -696,157 +699,64 @@ def refresh_from_forum(discuss_list, forum_name, forumIdx):
             qid = int(split_text[-2])
             url = str(a[i]["href"])
             did = int(url.split('/')[4].split('-')[0])
-            replace = False    
-            print(qtitle+"\t"+str(qid)+"\t"+str(did)+"\t"+str(last_post)+"\t"+url, end=' ', flush=True)
-            data_id = 0
-            if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
-                print("Same question found !!!")
 
-                data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
-                LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
-                if LastPost == last_post:
-                    print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
-                    found = True
-                    break
+            new_row = { 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': 0, 'LastPost': last_post, 'DiscussURL': url }
+            new_df = pd.concat([new_df, pd.DataFrame([new_row])], ignore_index=True) 
 
-                # Old post found. Skip this.
-                if LastPost > last_post: continue
+    for index in range(len(new_df)-1, -1, -1):
+        row = new_df.iloc[index]
+        qtitle = row['ExamType']
+        qid = row['ExamNo']
+        did = row['DiscussNo']
+        url = row['DiscussURL']
+        last_post = row['LastPost']
+        print(qtitle+"\t"+str(qid)+"\t"+str(did)+"\t"+str(last_post)+"\t"+url, end=' ', flush=True)
 
-                # Recent discussion post found. Remove old discussion list and add new discussion
-                if LastPost < last_post:
-                    replace = True
-                    # print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
-                    # df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
-            else:
-                print("New question found !!!")
+        replace = False    
+        data_id = 0
+        if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
+            print("Same question found !!!")
 
-            # try:
-            fname = make_filename(qtitle, qid, data_id)
-            if (len(fname) <= 0): 
-                new_data_id = 0
-            else:
-                new_data_id = make_question_file(driver, fname, url, did)
-                print(f'data_id={data_id}, new_data_id={new_data_id}, fname={fname}')
-                if (data_id > 0 ) & (data_id != new_data_id):
-                    found = True
-                    break
-                translate_page_to_kr(driver, fname)
-                # fname_kr = fname[:-5] + '-KR.html'
-                # fname_kr = '/'.join(fname_kr.split('/')[:-1]) + '/kr/' + fname_kr.split('/')[-1]
-                # save_page(driver, fname_kr)
-                save_kr(driver, fname)
+            data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
+            LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
+            if LastPost == last_post:
+                print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
+                break
 
-            # except Exception as e:
-            #     print("Error:", str(e))
-            #     print(f"*** Make question error !!! {e}")
-            #     pass
+            # Old post found. Skip this.
+            if LastPost > last_post: continue
 
-            # finally:
-            if (replace == True):    
-                data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
-                if (LastPost < last_post):
-                    print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
-                    df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
+            # Recent discussion post found. Remove old discussion list and add new discussion
+            if LastPost < last_post:
+                replace = True
+        else:
+            print("New question found !!!")
 
-            new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': new_data_id, 'LastPost': last_post, 'DiscussURL': url }]
-            df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)            
+        fname = make_filename(qtitle, qid, data_id)
+        if (len(fname) <= 0): 
+            new_data_id = 0
+        else:
+            new_data_id = make_question_file(driver, fname, url, did)
+            print(f'data_id={data_id}, new_data_id={new_data_id}, fname={fname}')
+            if (data_id > 0 ) & (data_id != new_data_id):
+                break
+            translate_page_to_kr(driver, fname)
+            save_kr(driver, fname)
 
-    # with open(fn, 'w') as file:
-    #     # Write data rows
-    #     file.write(str(p) + '\n')
+        if (replace == True):    
+            data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
+            if (LastPost < last_post):
+                print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
+                df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
+
+        new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': new_data_id, 'LastPost': last_post, 'DiscussURL': url }]
+        df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)            
+        write_discuss_list(df, discuss_list)
 
     driver.close()
     time.sleep(1)
     driver.quit()
     time.sleep(1)
-
-    write_discuss_list(df, discuss_list)
-
-def refresh_forum_list(discuss_list, forum_name):
-
-    df = read_discuss_list(discuss_list)
-    refresh = False
-    driver = set_chrome_driver()
-    # driver.set_window_position(1800,10)
-
-    fn = "forum.txt"
-    idx_from = 0
-    with open(fn, "r") as file:
-        idx_from = int(file.read())
-    found = False
-    try:
-        for p in range(1000)[idx_from:600]:
-            my_file = Path(fn)
-            # file does not exists. Okay to overwrite
-            if not my_file.is_file(): found = True
-
-            if found == True: break
-            pageno = p + 1
-
-            open_forum(driver, forum_name, pageno)
-
-            driver.switch_to.window(driver.window_handles[0])
-
-            print(driver.title + "-" + str(pageno))
-            if (driver.title == '404 - Page not found'): break
-
-            bs = BeautifulSoup(driver.page_source, 'html.parser')
-            a = bs.find_all("a", {"class": "discussion-link"})
-            span = bs.find_all("span", {"class": "recent-post-time"})
-        
-            for i in range(len(a)):
-                if found == True: break
-                
-                last_post = parser.parse(str(span[i*2+1]["title"]).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m."))
-
-                split_text = str(a[i].text.strip()).split()
-
-                qtitle = ' '.join(split_text[:len(split_text)-3])
-                qid = int(split_text[-2])
-                url = str(a[i]["href"])
-                did = int(url.split('/')[4].split('-')[0])
-                replace = False    
-                print(qtitle+"\t"+str(qid)+"\t"+str(did)+"\t"+str(last_post)+"\t"+url, end=' ', flush=True)
-                if ((refresh != True) & len(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]) > 0):
-                    print("Same question found !!!")
-
-                    LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
-                    if LastPost == last_post:
-                        print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
-
-                    # Old post found. Skip this.
-                    if LastPost > last_post: continue
-
-                    # Recent discussion post found. Remove old discussion list and add new discussion
-                    if LastPost < last_post:
-                        replace = True
-                        # print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
-                        # df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
-                else:
-                    print("New question found !!!")
-
-                if (replace == True):    
-                    data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
-                    if (LastPost < last_post):
-                        print('Recent discussion post : ' + str(LastPost) + ' ==> ' + str(last_post))
-                        df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
-
-                new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': 0, 'LastPost': last_post, 'DiscussURL': url }]
-                df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)            
-    except Exception as e:
-        print("Error:", str(e))
-        print(f"*** Make question error !!! {e}")
-        pass
-
-    finally:
-        write_discuss_list(df, discuss_list)
-
-    with open(fn, 'w') as file:
-        # Write data rows
-        file.write(str(p) + '\n')
-
-    driver.quit()
-
 
 def read_Exam_list(fname):
 
@@ -953,38 +863,8 @@ if __name__ == "__main__":
     
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    # DISCUSS = 'IsacaDiscuss.txt'
-    # FORUM_NAME = 'isaca'
+    refresh_from_forum(DISCUSS, FORUM_NAME)
     
-    fn = "forum.txt"
-    idx_from = 0
-    with open(fn, "r") as file:
-        idx_from = int(file.read())
-
-    for i in reversed(range(idx_from)):
-        my_file = Path(fn)
-        # file does not exists. Stop
-        if not my_file.is_file(): break
-
-        refresh_from_forum(DISCUSS, FORUM_NAME, i)
-
-    # ISACA_DISCUSS = 'IsacaDiscuss.txt'
-    # FORUM_NAME = 'isaca'
-    # refresh_from_forum(ISACA_DISCUSS, FORUM_NAME)
     DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'
-    
-    # fn = "forum.txt"
-    # idx_from = 0
-    # with open(fn, "r") as file:
-    #     idx_from = int(file.read())
-    idx_from = 2
-    for i in reversed(range(idx_from)):
-        my_file = Path(fn)
-        # file does not exists. Stop
-        if not my_file.is_file(): break
-
-        refresh_from_forum(DISCUSS, FORUM_NAME, i)    
-    # df = read_discuss_list(AMAZON_DISCUSS)
-    # write_discuss_list(df, AMAZON_DISCUSS)
-    # refresh_forum_list('AmazonDiscussNew.txt', 'amazon')
+    refresh_from_forum(DISCUSS, FORUM_NAME)    
