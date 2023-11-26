@@ -750,7 +750,7 @@ def refresh_from_forum(discuss_list, forum_name):
                 df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
 
         new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': new_data_id, 'LastPost': last_post, 'DiscussURL': url }]
-        df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)            
+        df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)     
         write_discuss_list(df, discuss_list)
 
     driver.close()
