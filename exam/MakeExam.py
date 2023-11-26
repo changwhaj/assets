@@ -720,8 +720,8 @@ def refresh_from_forum(discuss_list, forum_name):
             data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
             LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
             if LastPost == last_post:
-                print('Same discussion post, exit!!! LastPost: ' + str(LastPost))
-                break
+                print('Same discussion post, continue!!! LastPost: ' + str(LastPost))
+                continue
 
             # Old post found. Skip this.
             if LastPost > last_post: continue
