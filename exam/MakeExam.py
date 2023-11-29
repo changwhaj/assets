@@ -201,7 +201,7 @@ def open_forum(driver, forum_name, pageno):
     # forum: { isaca | amazon }
     forum_url = 'https://www.examtopics.com/discussions/' + forum_name + '/' + str(pageno) + '/'
     driver.get(forum_url)
-    sleep_random_sec(1)
+    # sleep_random_sec(1)
     return
 
 def open_exam(driver, discuss_url):
@@ -662,7 +662,7 @@ def save_kr(driver, fname):
     with open(fname, "w", encoding='utf-8') as file:
         file.write(str(bs_en))
 
-def refresh_from_forum(discuss_list, forum_name):
+def refresh_from_forum(discuss_list, forum_name, last_page):
 
     df = read_discuss_list(discuss_list)
     refresh = False
@@ -672,7 +672,7 @@ def refresh_from_forum(discuss_list, forum_name):
     new_df = pd.DataFrame(columns=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'])
     
     found = False
-    for p in range(1000):
+    for p in range(1000)[:]:
         if found == True: break
         pageno = p + 1
 
@@ -689,7 +689,7 @@ def refresh_from_forum(discuss_list, forum_name):
     
         for i in range(len(a)):
             last_post = parser.parse(str(span[i*2+1]["title"]).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m."))
-            if ((p > 20)& (last_post <= prev_last_post)): 
+            if ((p >= last_page)& (last_post <= prev_last_post)): 
                 found = True
                 break
 
@@ -863,8 +863,8 @@ if __name__ == "__main__":
     
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME)
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'
-    refresh_from_forum(DISCUSS, FORUM_NAME)    
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
