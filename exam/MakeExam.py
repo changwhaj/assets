@@ -863,7 +863,7 @@ if __name__ == "__main__":
     
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    refresh_from_forum(DISCUSS, FORUM_NAME, 22)
     
     DISCUSS = 'IsacaDiscuss.txt'
     FORUM_NAME = 'isaca'

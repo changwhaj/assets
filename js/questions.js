@@ -7,10 +7,10 @@ var questionDetails = {
 
     'ANS-Q': { qLength: 167, qDirectory: 'aws/ANS_C01' },
     'DAS-Q': { qLength: 164, qDirectory: 'aws/DAS_C01' },
-    'DBS-Q': { qLength: 327, qDirectory: 'aws/DBS' },
+    'DBS-Q': { qLength: 347, qDirectory: 'aws/DBS' },
     'DVA-Q': { qLength: 443, qDirectory: 'aws/DVA' },
     'DVA2-Q': { qLength: 254, qDirectory: 'aws/DVA_C02' },
-    'DOP2-Q': { qLength: 137, qDirectory: 'aws/DOP_C02' },
+    'DOP2-Q': { qLength: 148, qDirectory: 'aws/DOP_C02' },
     'SAA2-Q': { qLength: 822, qDirectory: 'aws/SAA_C02' },
     'SAA3-Q': { qLength: 669, qDirectory: 'aws/SAA_C03' },
     'SAP-Q': { qLength: 1019, qDirectory: 'aws/SAP' },
