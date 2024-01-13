@@ -2,22 +2,23 @@
 
 // Define the associative array for question details
 var questionDetails = {
-    'CISM-Q': { qLength: 1016, qDirectory: 'isaca/CISM' },
+    'CISM-Q': { qLength: 1032, qDirectory: 'isaca/CISM' },
     'CISA-Q': { qLength: 1188, qDirectory: 'isaca/CISA' },
+
+    'DBS-Q': { qLength: 347, qDirectory: 'aws/DBS' },
+    'DVA2-Q': { qLength: 254, qDirectory: 'aws/DVA_C02' },
+    'DOP2-Q': { qLength: 194, qDirectory: 'aws/DOP_C02' },
+    'SAA3-Q': { qLength: 684, qDirectory: 'aws/SAA_C03' },
+    'SAP2-Q': { qLength: 411, qDirectory: 'aws/SAP_C02' },
+    'SOA2-Q': { qLength: 420, qDirectory: 'aws/SOA_C02' },
 
     'ANS-Q': { qLength: 167, qDirectory: 'aws/ANS_C01' },
     'DAS-Q': { qLength: 164, qDirectory: 'aws/DAS_C01' },
-    'DBS-Q': { qLength: 347, qDirectory: 'aws/DBS' },
     'DVA-Q': { qLength: 443, qDirectory: 'aws/DVA' },
-    'DVA2-Q': { qLength: 254, qDirectory: 'aws/DVA_C02' },
-    'DOP2-Q': { qLength: 148, qDirectory: 'aws/DOP_C02' },
     'SAA2-Q': { qLength: 822, qDirectory: 'aws/SAA_C02' },
-    'SAA3-Q': { qLength: 669, qDirectory: 'aws/SAA_C03' },
     'SAP-Q': { qLength: 1019, qDirectory: 'aws/SAP' },
-    'SAP2-Q': { qLength: 410, qDirectory: 'aws/SAP_C02' },
-    'SOA2-Q': { qLength: 379, qDirectory: 'aws/SOA_C02' },
+    'SCS2-Q': { qLength: 0, qDirectory: 'aws/SES_C02' },
     'MLS-Q': { qLength: 0, qDirectory: 'aws/MLS_C01' },
-    'SES-Q': { qLength: 0, qDirectory: 'aws/SES' },
     'DOP-Q': { qLength: 0, qDirectory: 'aws/DOP_C01' },
 };
 
