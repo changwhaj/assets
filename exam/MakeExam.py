@@ -855,11 +855,11 @@ if __name__ == "__main__":
     # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
     # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
     
+    SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1"
+    refresh_all_exam('SCS2_Exam.csv', SCS2)
+    
     CLF2 = "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1"
     refresh_all_exam('CLF2_Exam.csv', CLF2)
-    
-    SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
-    refresh_all_exam('SCS2_Exam.csv', SCS2)
     
     # SOA2 = "Exam AWS Certified SysOps Administrator - Associate topic 1"
     # refresh_all_exam('SOA2_Exam.csv', SOA2)       # NOK 377 -340, -341
