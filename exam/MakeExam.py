@@ -482,55 +482,55 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified Database - Specialty topic 1",
             "prefname": "aws/DBS/DBS-Q",
-            "qlength": 327,
+            "qlength": 347,
             "first_id": 807243,
         },
         {
-            "qtitle": "Exam AWS Certified Developer Associate topic 1",
-            "prefname": "aws/DVA/DVA-Q",
-            "qlength": 443,
-            "first_id": 807501,
+            "qtitle": "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1",
+            "prefname": "aws/CLF_C02/CLF2-Q",
+            "qlength": 377,
+            "first_id": 898791,
         },
         {
             "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
             "prefname": "aws/DVA_C02/DVA2-Q",
-            "qlength": 142,
+            "qlength": 254,
             "first_id": 874573,
         },
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 137,
+            "qlength": 194,
             "first_id": 879465,
         },
         {
-            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1",
-            "prefname": "aws/SAA_C02/SAA2-Q",
-            "qlength": 822,
-            "first_id": 807974,
+            "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1",
+            "prefname": "aws/SCS_C02/SCS2-Q",
+            "qlength": 115,
+            "first_id": 897420,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
             "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 599,
+            "qlength": 684,
             "first_id": 839758,
         },
         {
-            "qtitle": "Exam AWS Certified Solutions Architect - Professional topic 1",
-            "prefname": "aws/SAP/SAP-Q",
-            "qlength": 1019,
-            "first_id": 808796,
+            "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
+            "prefname": "aws/MLS_C01/MLS-Q",
+            "qlength": 287,
+            "first_id": 781931,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
             "prefname": "aws/SAP_C02/SAP2-Q",
-            "qlength": 298,
+            "qlength": 411,
             "first_id": 856116,
         },
         {
             "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
             "prefname": "aws/SOA_C02/SOA2-Q",
-            "qlength": 379,
+            "qlength": 420,
             "first_id": 809742,
         },
         # aws/MLS_C01/MLS-Q	Exam AWS Certified Machine Learning - Specialty topic 1
@@ -560,22 +560,36 @@ def make_filename(qtitle, qid, dataid):
         #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
         elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
             fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1":
+            fname = 'aws/ANS_C01/ANS-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Data Analytics - Specialty topic 1":
+            fname = 'aws/DAS-C01/DAS-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
+            fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1":
+            fname = 'aws/CLF_C02/CLF2-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
+        #     fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Developer - Associate DVA-C02 topic 1":
+            fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1":
+            fname = 'aws/DOP_C02/DOP2-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1":
+            fname = 'aws/SCS_C02/SCS2-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
         #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
         elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
             fname = 'aws/SAA_C03/SAA3-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
-            fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified Machine Learning - Specialty topic 1":
+            fname = 'aws/MLS_C01/MLS-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
+        #     fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
         #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
         elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
             fname = 'aws/SAP_C02/SAP2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
-            fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == 'Exam AWS Certified Developer - Associate DVA-C02 topic 1':
-            fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
-            fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
+        elif qtitle == "Exam AWS Certified SysOps Administrator - Associate topic 1":
+            fname = 'aws/SOA_C02/SOA2-Q' + format(int(qid), '04') + '.html'
 
     return fname
 
@@ -841,11 +855,11 @@ if __name__ == "__main__":
     # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
     # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
     
-    # SAA2 = "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1"
-    # refresh_all_exam('SAA2_Exam.csv', SAA2)
+    CLF2 = "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1"
+    refresh_all_exam('CLF2_Exam.csv', CLF2)
     
-    # SAP = "Exam AWS Certified Solutions Architect - Professional topic 1"
-    # refresh_all_exam('SAP_Exam.csv', SAP)
+    SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
+    refresh_all_exam('SCS2_Exam.csv', SCS2)
     
     # SOA2 = "Exam AWS Certified SysOps Administrator - Associate topic 1"
     # refresh_all_exam('SOA2_Exam.csv', SOA2)       # NOK 377 -340, -341
@@ -853,18 +867,18 @@ if __name__ == "__main__":
     # DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
     # refresh_all_exam('DVA2_Exam.csv', DVA2)       # OK 142
 
-    # DVA = 'Exam AWS Certified Developer Associate topic 1'
-    # refresh_all_exam('DVA_Exam.csv', DVA)         # OK 443
+    MLS = 'Exam AWS Certified Machine Learning - Specialty topic 1'
+    refresh_all_exam('MLS_Exam.csv', MLS)
 
     # CISM = 'Exam CISM topic 1'
     # refresh_all_exam('CISM_Exam.csv', CISM)
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    DISCUSS = 'AmazonDiscuss.txt'
-    FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    # DISCUSS = 'AmazonDiscuss.txt'
+    # FORUM_NAME = 'amazon'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
-    DISCUSS = 'IsacaDiscuss.txt'
-    FORUM_NAME = 'isaca'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+    # DISCUSS = 'IsacaDiscuss.txt'
+    # FORUM_NAME = 'isaca'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
