@@ -504,7 +504,7 @@ def make_filename(qtitle, qid, dataid):
             "first_id": 879465,
         },
         {
-            "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1",
+            "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 topic 1",
             "prefname": "aws/SCS_C02/SCS2-Q",
             "qlength": 115,
             "first_id": 897420,
@@ -574,7 +574,7 @@ def make_filename(qtitle, qid, dataid):
             fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
         elif qtitle == "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1":
             fname = 'aws/DOP_C02/DOP2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1":
+        elif qtitle == "Exam AWS Certified Security - Specialty SCS-C02 topic 1":
             fname = 'aws/SCS_C02/SCS2-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
         #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
@@ -855,7 +855,7 @@ if __name__ == "__main__":
     # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
     # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
     
-    # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1"
+    # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
     # refresh_all_exam('SCS2_Exam.csv', SCS2)
     
     # CLF2 = "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1"
