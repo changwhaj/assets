@@ -855,11 +855,11 @@ if __name__ == "__main__":
     # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
     # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
     
-    SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1"
-    refresh_all_exam('SCS2_Exam.csv', SCS2)
+    # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 Exam topic 1"
+    # refresh_all_exam('SCS2_Exam.csv', SCS2)
     
-    CLF2 = "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1"
-    refresh_all_exam('CLF2_Exam.csv', CLF2)
+    # CLF2 = "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1"
+    # refresh_all_exam('CLF2_Exam.csv', CLF2)
     
     # SOA2 = "Exam AWS Certified SysOps Administrator - Associate topic 1"
     # refresh_all_exam('SOA2_Exam.csv', SOA2)       # NOK 377 -340, -341
@@ -867,18 +867,18 @@ if __name__ == "__main__":
     # DVA2 = 'Exam AWS Certified Developer - Associate DVA-C02 topic 1'
     # refresh_all_exam('DVA2_Exam.csv', DVA2)       # OK 142
 
-    MLS = 'Exam AWS Certified Machine Learning - Specialty topic 1'
-    refresh_all_exam('MLS_Exam.csv', MLS)
+    # MLS = 'Exam AWS Certified Machine Learning - Specialty topic 1'
+    # refresh_all_exam('MLS_Exam.csv', MLS)
 
     # CISM = 'Exam CISM topic 1'
     # refresh_all_exam('CISM_Exam.csv', CISM)
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    # DISCUSS = 'AmazonDiscuss.txt'
-    # FORUM_NAME = 'amazon'
-    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    DISCUSS = 'AmazonDiscuss.txt'
+    FORUM_NAME = 'amazon'
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
-    # DISCUSS = 'IsacaDiscuss.txt'
-    # FORUM_NAME = 'isaca'
-    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+    DISCUSS = 'IsacaDiscuss.txt'
+    FORUM_NAME = 'isaca'
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
