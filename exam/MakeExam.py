@@ -458,13 +458,13 @@ def make_filename(qtitle, qid, dataid):
         { 
             "qtitle": "Exam CISM topic 1",
             "prefname": "isaca/CISM/CISM-Q",
-            "qlength": 920,
+            "qlength": 1041,
             "first_id": 818826,
         },
         { 
             "qtitle": "Exam CISA topic 1",
             "prefname": "isaca/CISA/CISA-Q",
-            "qlength": 1195,
+            "qlength": 1390,
             "first_id": 818026,
         },
         {
@@ -533,7 +533,6 @@ def make_filename(qtitle, qid, dataid):
             "qlength": 420,
             "first_id": 809742,
         },
-        # aws/MLS_C01/MLS-Q	Exam AWS Certified Machine Learning - Specialty topic 1
         # aws/SES/SES-Q	Exam AWS Certified Security - Specialty topic 1
         # aws/DOP_C01/DOP-Q	Exam AWS DevOps Engineer Professional topic 1
     ]
@@ -545,52 +544,26 @@ def make_filename(qtitle, qid, dataid):
             return fname
         fname = findexam["prefname"] + format(int(qid), '04') + '.html'
     else:
-        if qtitle == "Exam CISM topic 1":
-            fname = 'isaca/CISM/CISM-Q'  + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam CISM topic 2":
+        if qtitle == "Exam CISM topic 2":
             fname = 'isaca/CISM2/CISM-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam CISA topic 1":
-            fname = 'isaca/CISA/CISA-Q'  + format(int(qid), '04') + '.html'
         elif qtitle == "Exam CISA topic 2":
             fname = 'isaca/CISA2/CISA-Q' + format(int(qid), '04') + '.html'
         
-        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
-        #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
-        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
-        #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
-            fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1":
-            fname = 'aws/ANS_C01/ANS-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Data Analytics - Specialty topic 1":
-            fname = 'aws/DAS-C01/DAS-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Database - Specialty topic 1":
-            fname = 'aws/DBS/DBS-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1":
-            fname = 'aws/CLF_C02/CLF2-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
         #     fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Developer - Associate DVA-C02 topic 1":
-            fname = 'aws/DVA_C02/DVA2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1":
-            fname = 'aws/DOP_C02/DOP2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Security - Specialty SCS-C02 topic 1":
-            fname = 'aws/SCS_C02/SCS2-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
+        #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
         #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1":
-            fname = 'aws/SAA_C03/SAA3-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Machine Learning - Specialty topic 1":
-            fname = 'aws/MLS_C01/MLS-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
+        #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
+        # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
+        #     fname = 'aws/SAA_C02/SAA2-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 1":
         #     fname = 'aws/SAP/SAP-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Professional topic 2":
         #     fname = 'aws/SAP2/SAP-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1":
-            fname = 'aws/SAP_C02/SAP2-Q' + format(int(qid), '04') + '.html'
-        elif qtitle == "Exam AWS Certified SysOps Administrator - Associate topic 1":
-            fname = 'aws/SOA_C02/SOA2-Q' + format(int(qid), '04') + '.html'
-
+        
     return fname
 
 def make_question_file(driver, fname, url, did):
