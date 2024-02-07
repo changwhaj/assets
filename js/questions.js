@@ -13,7 +13,7 @@ var questionDetails = {
     'DOP2-Q': { qLength: 208, qDirectory: 'aws/DOP_C02' },
     'MLS-Q': { qLength: 287, qDirectory: 'aws/MLS_C01' },
     'SCS2-Q': { qLength: 115, qDirectory: 'aws/SCS_C02' },
-    'SAA3-Q': { qLength: 684, qDirectory: 'aws/SAA_C03' },
+    'SAA3-Q': { qLength: 798, qDirectory: 'aws/SAA_C03' },
     'SAP2-Q': { qLength: 442, qDirectory: 'aws/SAP_C02' },
     'SOA2-Q': { qLength: 420, qDirectory: 'aws/SOA_C02' },
 
