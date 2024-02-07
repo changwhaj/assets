@@ -474,6 +474,12 @@ def make_filename(qtitle, qid, dataid):
             "first_id": 875171,
         },
         {
+            "qtitle": "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1",
+            "prefname": "aws/CLF_C02/CLF2-Q",
+            "qlength": 377,
+            "first_id": 898791,
+        },
+        {
             "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
             "prefname": "aws/DAS-C01/DAS-Q",
             "qlength": 164,
@@ -486,12 +492,6 @@ def make_filename(qtitle, qid, dataid):
             "first_id": 807243,
         },
         {
-            "qtitle": "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1",
-            "prefname": "aws/CLF_C02/CLF2-Q",
-            "qlength": 377,
-            "first_id": 898791,
-        },
-        {
             "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
             "prefname": "aws/DVA_C02/DVA2-Q",
             "qlength": 254,
@@ -500,8 +500,14 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 194,
+            "qlength": 208,
             "first_id": 879465,
+        },
+        {
+            "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
+            "prefname": "aws/MLS_C01/MLS-Q",
+            "qlength": 287,
+            "first_id": 781931,
         },
         {
             "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 topic 1",
@@ -516,15 +522,9 @@ def make_filename(qtitle, qid, dataid):
             "first_id": 839758,
         },
         {
-            "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
-            "prefname": "aws/MLS_C01/MLS-Q",
-            "qlength": 287,
-            "first_id": 781931,
-        },
-        {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
             "prefname": "aws/SAP_C02/SAP2-Q",
-            "qlength": 411,
+            "qlength": 442,
             "first_id": 856116,
         },
         {
