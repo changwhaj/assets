@@ -63,7 +63,7 @@ def set_chrome_driver():
         print(e)
         return
     
-    driver.set_window_size(1200, driver.get_window_rect()["height"])
+    driver.set_window_size(1500, driver.get_window_rect()["height"])
     # driver.set_window_size(1400, 1040)
     
     return driver
