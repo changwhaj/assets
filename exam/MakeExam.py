@@ -518,13 +518,13 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
             "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 798,
+            "qlength": 891,
             "first_id": 839758,
         },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
             "prefname": "aws/SAP_C02/SAP2-Q",
-            "qlength": 442,
+            "qlength": 483,
             "first_id": 856116,
         },
         {
