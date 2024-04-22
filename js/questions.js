@@ -2,20 +2,20 @@
 
 // Define the associative array for question details
 var questionDetails = {
-    'CISM-Q': { qLength: 1041, qDirectory: 'isaca/CISM' },
-    'CISA-Q': { qLength: 1390, qDirectory: 'isaca/CISA' },
+    'CISM-Q': { qLength: 1152, qDirectory: 'isaca/CISM' },
+    'CISA-Q': { qLength: 1511, qDirectory: 'isaca/CISA' },
 
-    'ANS-Q': { qLength: 167, qDirectory: 'aws/ANS_C01' },
-    'CLF2-Q': { qLength: 377, qDirectory: 'aws/CLF_C02' },
+    'ANS-Q': { qLength: 189, qDirectory: 'aws/ANS_C01' },
+    'CLF2-Q': { qLength: 401, qDirectory: 'aws/CLF_C02' },
     'DAS-Q': { qLength: 164, qDirectory: 'aws/DAS_C01' },
-    'DBS-Q': { qLength: 347, qDirectory: 'aws/DBS' },
-    'DVA2-Q': { qLength: 328, qDirectory: 'aws/DVA_C02' },
-    'DOP2-Q': { qLength: 208, qDirectory: 'aws/DOP_C02' },
-    'MLS-Q': { qLength: 309, qDirectory: 'aws/MLS_C01' },
+    'DBS-Q': { qLength: 359, qDirectory: 'aws/DBS' },
+    'DVA2-Q': { qLength: 357, qDirectory: 'aws/DVA_C02' },
+    'DOP2-Q': { qLength: 222, qDirectory: 'aws/DOP_C02' },
+    'MLS-Q': { qLength: 332, qDirectory: 'aws/MLS_C01' },
     'SCS2-Q': { qLength: 118, qDirectory: 'aws/SCS_C02' },
-    'SAA3-Q': { qLength: 881, qDirectory: 'aws/SAA_C03' },
-    'SAP2-Q': { qLength: 476, qDirectory: 'aws/SAP_C02' },
-    'SOA2-Q': { qLength: 420, qDirectory: 'aws/SOA_C02' },
+    'SAA3-Q': { qLength: 882, qDirectory: 'aws/SAA_C03' },
+    'SAP2-Q': { qLength: 481, qDirectory: 'aws/SAP_C02' },
+    'SOA2-Q': { qLength: 444, qDirectory: 'aws/SOA_C02' },
 
     'DVA-Q': { qLength: 443, qDirectory: 'aws/DVA' },
     'SAA2-Q': { qLength: 822, qDirectory: 'aws/SAA_C02' },
