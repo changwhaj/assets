@@ -338,22 +338,22 @@ def open_discuss(driver, discuss_id):
     return div
 
 def replace_duscuss(driver, discuss_id):
-    # bs = BeautifulSoup(driver.page_source, 'html.parser')
-    # loadfull = bs.find_all("a", {"class": "load-full-discussion-button ml-3"})
-    # if (len(loadfull) > 0):
-    #     div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})[0]
-    #     div_full_discuss = open_discuss(driver, discuss_id)
-    #     if ((len(div_discuss) > 0) & (len(div_full_discuss) > 0)):
-    #         div_discuss.contents = [BeautifulSoup(div_full_discuss.decode_contents(), 'html.parser')]
-    # else:
-    remove_discuss_element(driver)
     bs = BeautifulSoup(driver.page_source, 'html.parser')
-    comment_spans = bs.find_all('span', class_='comment-date')
-    for comment_span in comment_spans:
-        title = comment_span.get('title')
-        if title:
-            kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
-            comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
+    loadfull = bs.find_all("a", {"class": "load-full-discussion-button ml-3"})
+    if (len(loadfull) > 0):
+        div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})[0]
+        div_full_discuss = open_discuss(driver, discuss_id)
+        if ((len(div_discuss) > 0) & (len(div_full_discuss) > 0)):
+            div_discuss.contents = [BeautifulSoup(div_full_discuss.decode_contents(), 'html.parser')]
+    else:
+        remove_discuss_element(driver)
+        bs = BeautifulSoup(driver.page_source, 'html.parser')
+        comment_spans = bs.find_all('span', class_='comment-date')
+        for comment_span in comment_spans:
+            title = comment_span.get('title')
+            if title:
+                kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
+                comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
 
     return bs
 
@@ -858,9 +858,9 @@ if __name__ == "__main__":
     FORUM_NAME = 'cncf'
     refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
-    DISCUSS = 'AmazonDiscuss.txt'
-    FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    # DISCUSS = 'AmazonDiscuss.txt'
+    # FORUM_NAME = 'amazon'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
