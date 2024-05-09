@@ -338,22 +338,22 @@ def open_discuss(driver, discuss_id):
     return div
 
 def replace_duscuss(driver, discuss_id):
+    # bs = BeautifulSoup(driver.page_source, 'html.parser')
+    # loadfull = bs.find_all("a", {"class": "load-full-discussion-button ml-3"})
+    # if (len(loadfull) > 0):
+    #     div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})[0]
+    #     div_full_discuss = open_discuss(driver, discuss_id)
+    #     if ((len(div_discuss) > 0) & (len(div_full_discuss) > 0)):
+    #         div_discuss.contents = [BeautifulSoup(div_full_discuss.decode_contents(), 'html.parser')]
+    # else:
+    remove_discuss_element(driver)
     bs = BeautifulSoup(driver.page_source, 'html.parser')
-    loadfull = bs.find_all("a", {"class": "load-full-discussion-button ml-3"})
-    if (len(loadfull) > 0):
-        div_discuss = bs.find_all("div", {"class": "container outer-discussion-container"})[0]
-        div_full_discuss = open_discuss(driver, discuss_id)
-        if ((len(div_discuss) > 0) & (len(div_full_discuss) > 0)):
-            div_discuss.contents = [BeautifulSoup(div_full_discuss.decode_contents(), 'html.parser')]
-    else:
-        remove_discuss_element(driver)
-        bs = BeautifulSoup(driver.page_source, 'html.parser')
-        comment_spans = bs.find_all('span', class_='comment-date')
-        for comment_span in comment_spans:
-            title = comment_span.get('title')
-            if title:
-                kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
-                comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
+    comment_spans = bs.find_all('span', class_='comment-date')
+    for comment_span in comment_spans:
+        title = comment_span.get('title')
+        if title:
+            kst_time = parser.parse(str(title).replace("midnight", "12:00 a.m.").replace("noon", "12:00 p.m.")) + timedelta(hours=9)
+            comment_span.string = kst_time.strftime("%Y-%m-%d %H:%M")
 
     return bs
 
@@ -456,41 +456,47 @@ def make_filename(qtitle, qid, dataid):
 
     exams = [
         { 
-            "qtitle": "Exam CISM topic 1",
-            "prefname": "isaca/CISM/CISM-Q",
-            "qlength": 1152,
-            "first_id": 818826,
+            "qtitle": "Exam CKA topic 1",
+            "prefname": "cncf/CKA/CKA-Q",
+            "qlength": 23,
+            "first_id": 830058,
         },
-        { 
-            "qtitle": "Exam CISA topic 1",
-            "prefname": "isaca/CISA/CISA-Q",
-            "qlength": 1511,
-            "first_id": 818026,
-        },
-        {
-            "qtitle": "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1",
-            "prefname": "aws/ANS_C01/ANS-Q",
-            "qlength": 189,
-            "first_id": 875171,
-        },
-        {
-            "qtitle": "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1",
-            "prefname": "aws/CLF_C02/CLF2-Q",
-            "qlength": 401,
-            "first_id": 898791,
-        },
+        # { 
+        #     "qtitle": "Exam CISM topic 1",
+        #     "prefname": "isaca/CISM/CISM-Q",
+        #     "qlength": 1152,
+        #     "first_id": 818826,
+        # },
+        # { 
+        #     "qtitle": "Exam CISA topic 1",
+        #     "prefname": "isaca/CISA/CISA-Q",
+        #     "qlength": 1511,
+        #     "first_id": 818026,
+        # },
+        # {
+        #     "qtitle": "Exam AWS Certified Advanced Networking - Specialty ANS-C01 topic 1",
+        #     "prefname": "aws/ANS_C01/ANS-Q",
+        #     "qlength": 189,
+        #     "first_id": 875171,
+        # },
+        # {
+        #     "qtitle": "Exam AWS Certified Cloud Practitioner CLF-C02 topic 1",
+        #     "prefname": "aws/CLF_C02/CLF2-Q",
+        #     "qlength": 501,
+        #     "first_id": 898791,
+        # },
         {
             "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
             "prefname": "aws/DAS-C01/DAS-Q",
             "qlength": 164,
             "first_id": 781767,
         },
-        {
-            "qtitle": "Exam AWS Certified Database - Specialty topic 1",
-            "prefname": "aws/DBS/DBS-Q",
-            "qlength": 359,
-            "first_id": 807243,
-        },
+        # {
+        #     "qtitle": "Exam AWS Certified Database - Specialty topic 1",
+        #     "prefname": "aws/DBS/DBS-Q",
+        #     "qlength": 359,
+        #     "first_id": 807243,
+        # },
         {
             "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
             "prefname": "aws/DVA_C02/DVA2-Q",
@@ -503,22 +509,22 @@ def make_filename(qtitle, qid, dataid):
             "qlength": 222,
             "first_id": 879465,
         },
-        {
-            "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
-            "prefname": "aws/MLS_C01/MLS-Q",
-            "qlength": 332,
-            "first_id": 781931,
-        },
-        {
-            "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 topic 1",
-            "prefname": "aws/SCS_C02/SCS2-Q",
-            "qlength": 118,
-            "first_id": 897420,
-        },
+        # {
+        #     "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
+        #     "prefname": "aws/MLS_C01/MLS-Q",
+        #     "qlength": 332,
+        #     "first_id": 781931,
+        # },
+        # {
+        #     "qtitle": "Exam AWS Certified Security - Specialty SCS-C02 topic 1",
+        #     "prefname": "aws/SCS_C02/SCS2-Q",
+        #     "qlength": 173,
+        #     "first_id": 897420,
+        # },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
             "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 882,
+            "qlength": 904,
             "first_id": 839758,
         },
         {
@@ -527,12 +533,12 @@ def make_filename(qtitle, qid, dataid):
             "qlength": 481,
             "first_id": 856116,
         },
-        {
-            "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
-            "prefname": "aws/SOA_C02/SOA2-Q",
-            "qlength": 444,
-            "first_id": 809742,
-        },
+        # {
+        #     "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
+        #     "prefname": "aws/SOA_C02/SOA2-Q",
+        #     "qlength": 444,
+        #     "first_id": 809742,
+        # },
         # aws/SES/SES-Q	Exam AWS Certified Security - Specialty topic 1
         # aws/DOP_C01/DOP-Q	Exam AWS DevOps Engineer Professional topic 1
     ]
@@ -848,10 +854,15 @@ if __name__ == "__main__":
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
+    DISCUSS = 'CncfDiscuss.txt'
+    FORUM_NAME = 'cncf'
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
     refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
-    DISCUSS = 'IsacaDiscuss.txt'
-    FORUM_NAME = 'isaca'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+    # DISCUSS = 'IsacaDiscuss.txt'
+    # FORUM_NAME = 'isaca'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+
