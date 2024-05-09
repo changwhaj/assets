@@ -2,6 +2,8 @@
 
 // Define the associative array for question details
 var questionDetails = {
+    'CKA-Q': { qLength: 23, qDirectory: 'cncf/CKA' },
+
     'CISM-Q': { qLength: 1152, qDirectory: 'isaca/CISM' },
     'CISA-Q': { qLength: 1511, qDirectory: 'isaca/CISA' },
 
