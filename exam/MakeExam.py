@@ -858,9 +858,9 @@ if __name__ == "__main__":
     FORUM_NAME = 'cncf'
     refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
-    # DISCUSS = 'AmazonDiscuss.txt'
-    # FORUM_NAME = 'amazon'
-    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    DISCUSS = 'AmazonDiscuss.txt'
+    FORUM_NAME = 'amazon'
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
