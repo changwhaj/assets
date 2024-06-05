@@ -485,30 +485,30 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 501,
         #     "first_id": 898791,
         # },
-        {
-            "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
-            "prefname": "aws/DAS-C01/DAS-Q",
-            "qlength": 164,
-            "first_id": 781767,
-        },
+                # {
+                #     "qtitle": "Exam AWS Certified Data Analytics - Specialty topic 1",
+                #     "prefname": "aws/DAS-C01/DAS-Q",
+                #     "qlength": 164,
+                #     "first_id": 781767,
+                # },
         # {
         #     "qtitle": "Exam AWS Certified Database - Specialty topic 1",
         #     "prefname": "aws/DBS/DBS-Q",
         #     "qlength": 359,
         #     "first_id": 807243,
         # },
-        {
-            "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
-            "prefname": "aws/DVA_C02/DVA2-Q",
-            "qlength": 357,
-            "first_id": 874573,
-        },
-        {
-            "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
-            "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 222,
-            "first_id": 879465,
-        },
+                # {
+                #     "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
+                #     "prefname": "aws/DVA_C02/DVA2-Q",
+                #     "qlength": 357,
+                #     "first_id": 874573,
+                # },
+                # {
+                #     "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
+                #     "prefname": "aws/DOP_C02/DOP2-Q",
+                #     "qlength": 222,
+                #     "first_id": 879465,
+                # },
         # {
         #     "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
         #     "prefname": "aws/MLS_C01/MLS-Q",
@@ -521,12 +521,12 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 173,
         #     "first_id": 897420,
         # },
-        {
-            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
-            "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 904,
-            "first_id": 839758,
-        },
+                # {
+                #     "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
+                #     "prefname": "aws/SAA_C03/SAA3-Q",
+                #     "qlength": 904,
+                #     "first_id": 839758,
+                # },
         {
             "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
             "prefname": "aws/SAP_C02/SAP2-Q",
@@ -727,7 +727,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
 
         fname = make_filename(qtitle, qid, data_id)
         if (len(fname) <= 0): 
-            new_data_id = 0
+            new_data_id = data_id
         else:
             new_data_id = make_question_file(driver, fname, url, did)
             print(f'data_id={data_id}, new_data_id={new_data_id}, fname={fname}')
@@ -743,9 +743,11 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
                 df = df.drop(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)].index)
 
         new_row = [{ 'ExamType': qtitle, 'ExamNo': qid, 'DiscussNo': did, 'DataID': new_data_id, 'LastPost': last_post, 'DiscussURL': url }]
-        df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)     
-        write_discuss_list(df, discuss_list)
+        df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)
+        if index % 20 == 0:
+            write_discuss_list(df, discuss_list)
 
+    write_discuss_list(df, discuss_list)
     driver.close()
     time.sleep(1)
     driver.quit()
@@ -854,9 +856,9 @@ if __name__ == "__main__":
     # CISA = 'Exam CISA topic 1'
     # refresh_all_exam('CISA_Exam.csv', CISA)
     
-    DISCUSS = 'CncfDiscuss.txt'
-    FORUM_NAME = 'cncf'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
+    # DISCUSS = 'CncfDiscuss.txt'
+    # FORUM_NAME = 'cncf'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
