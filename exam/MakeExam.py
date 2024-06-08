@@ -558,9 +558,9 @@ def make_filename(qtitle, qid, dataid):
         # elif qtitle == 'Exam AWS Certified Developer Associate topic 1':
         #     fname = 'aws/DVA/DVA-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 2":
+        #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 1":
         #     fname = 'aws/SAA/SAA-Q' + format(int(qid), '04') + '.html'
-        #     fname = 'aws/SAA_C02_t2/SAA-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate topic 2":
         #     fname = 'aws/SAA2/SAA-Q' + format(int(qid), '04') + '.html'
         # elif qtitle == "Exam AWS Certified Solutions Architect - Associate SAA-C02 topic 1":
@@ -862,7 +862,7 @@ if __name__ == "__main__":
 
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    refresh_from_forum(DISCUSS, FORUM_NAME, 38)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
