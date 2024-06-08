@@ -497,18 +497,18 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 359,
         #     "first_id": 807243,
         # },
-        {
-            "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
-            "prefname": "aws/DVA_C02/DVA2-Q",
-            "qlength": 357,
-            "first_id": 874573,
-        },
                 # {
-                #     "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
-                #     "prefname": "aws/DOP_C02/DOP2-Q",
-                #     "qlength": 222,
-                #     "first_id": 879465,
+                #     "qtitle": "Exam AWS Certified Developer - Associate DVA-C02 topic 1",
+                #     "prefname": "aws/DVA_C02/DVA2-Q",
+                #     "qlength": 357,
+                #     "first_id": 874573,
                 # },
+        {
+            "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
+            "prefname": "aws/DOP_C02/DOP2-Q",
+            "qlength": 222,
+            "first_id": 879465,
+        },
         # {
         #     "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
         #     "prefname": "aws/MLS_C01/MLS-Q",
@@ -521,18 +521,18 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 173,
         #     "first_id": 897420,
         # },
-        {
-            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
-            "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 904,
-            "first_id": 839758,
-        },
                 # {
-                #     "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
-                #     "prefname": "aws/SAP_C02/SAP2-Q",
-                #     "qlength": 481,
-                #     "first_id": 856116,
+                #     "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
+                #     "prefname": "aws/SAA_C03/SAA3-Q",
+                #     "qlength": 904,
+                #     "first_id": 839758,
                 # },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
+            "prefname": "aws/SAP_C02/SAP2-Q",
+            "qlength": 481,
+            "first_id": 856116,
+        },
         # {
         #     "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
         #     "prefname": "aws/SOA_C02/SOA2-Q",
@@ -862,7 +862,7 @@ if __name__ == "__main__":
 
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 38)
+    refresh_from_forum(DISCUSS, FORUM_NAME, 50)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
