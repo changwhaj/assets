@@ -712,7 +712,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
 
             data_id = int(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['DataID'].iloc[0])
             LastPost = parser.parse(str(df[(df['ExamType'] == qtitle) & (df['ExamNo'] == qid) & (df['DiscussNo'] == did)]['LastPost'].iloc[0]))
-            if LastPost == last_post:
+            if (data_id > 0) & (LastPost == last_post):
                 print('Same discussion post, continue!!! LastPost: ' + str(LastPost))
                 continue
 
@@ -720,7 +720,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
             if LastPost > last_post: continue
 
             # Recent discussion post found. Remove old discussion list and add new discussion
-            if LastPost < last_post:
+            if (data_id == 0) | (LastPost < last_post):
                 replace = True
         else:
             print("New question found !!!")
