@@ -57,8 +57,11 @@ def set_chrome_driver():
     
     # Selenium 4.0 -- load webdriver
     try:
-        service = Service(ChromeDriverManager().install())    # CDM 설치 및 사용
-        driver = webdriver.Chrome(service=service, options=options)
+        # service = Service(ChromeDriverManager().install())    # CDM 설치 및 사용
+        # driver = webdriver.Chrome(service=service, options=options)
+        driver_path = ChromeDriverManager().install()
+        correct_driver_path = os.path.join(os.path.dirname(driver_path), "chromedriver.exe")
+        driver = webdriver.Chrome(service=Service(executable_path=correct_driver_path), options=options)
     except Exception as e:
         print(e)
         return
