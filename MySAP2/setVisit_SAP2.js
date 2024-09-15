@@ -79,25 +79,27 @@ function setVlist(question_id, vlist, toggle) {
     
     var idx = varray.indexOf(question_id);
     if (idx < 0) {
-        return vlist + "," + question_id 
+        vlist = vlist + "," + question_id;
+        return vlist.split(',').sort().join(",");
     } else if (toggle == true) {
         varray.splice(idx, 1)
         // console.log("varray: " + varray + ", vlist: " + vlist)
-        return varray.join(",");
+        return varray.sort().join(",");
     } else {
-        return vlist
+        return varray.sort().join(",")
     }
 }
 
 function VisitExam(question_id) {
-    var seq = 1 // document.getElementById("seq").innerHTML
+    var seq = 2 // document.getElementById("seq").innerHTML
     var vlist = getCookie(EXAMKEY+seq);
     var varray = []
             
+    // console.log("question_id:" + question_id)
     if (vlist != undefined) {
         varray = vlist.split(',');
     }
-    // console.log("Clicked QID: " + question_id + ", DID: " + discuss_id)
+    // console.log("Clicked QID: " + question_id + " : " + vlist)
     
     if (cntrlIsPressed || seq == "X") {
         let newList = setVlist(question_id, vlist, true);
@@ -108,6 +110,13 @@ function VisitExam(question_id) {
             setSequence(seq, newList)
         }
     }
+    // // Manually set the window location hash for correct scrolling behavior
+    // if (document.getElementById("Q"+question_id)) {
+    //     // document.getElementById("Q"+question_id).scrollIntoView({ behavior: "smooth" });
+    //     document.getElementById("Q"+question_id).scrollIntoView();
+    // } else {
+    //     console.log("Element with ID 'Q" + question_id + "' not found.");
+    // }
 }
 
 var passwd = getCookie(PASSKEY);
