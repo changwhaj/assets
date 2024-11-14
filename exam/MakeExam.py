@@ -509,7 +509,7 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 222,
+            "qlength": 332,
             "first_id": 879465,
         },
         # {
@@ -524,18 +524,18 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 173,
         #     "first_id": 897420,
         # },
-                # {
-                #     "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
-                #     "prefname": "aws/SAA_C03/SAA3-Q",
-                #     "qlength": 904,
-                #     "first_id": 839758,
-                # },
         {
-            "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
-            "prefname": "aws/SAP_C02/SAP2-Q",
-            "qlength": 481,
-            "first_id": 856116,
+            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
+            "prefname": "aws/SAA_C03/SAA3-Q",
+            "qlength": 1019,
+            "first_id": 839758,
         },
+        # {
+        #     "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
+        #     "prefname": "aws/SAP_C02/SAP2-Q",
+        #     "qlength": 529,
+        #     "first_id": 856116,
+        # },
         # {
         #     "qtitle": "Exam AWS Certified SysOps Administrator - Associate topic 1",
         #     "prefname": "aws/SOA_C02/SOA2-Q",
