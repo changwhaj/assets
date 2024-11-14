@@ -668,7 +668,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
     new_df = pd.DataFrame(columns=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'])
     
     found = False
-    for p in range(1000)[:]:
+    for p in range(1000)[120:]:
         if found == True: break
         pageno = p + 1
 
