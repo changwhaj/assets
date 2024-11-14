@@ -12,10 +12,10 @@ var questionDetails = {
     'DAS-Q': { qLength: 164, qDirectory: 'aws/DAS_C01' },
     'DBS-Q': { qLength: 359, qDirectory: 'aws/DBS' },
     'DVA2-Q': { qLength: 357, qDirectory: 'aws/DVA_C02' },
-    'DOP2-Q': { qLength: 222, qDirectory: 'aws/DOP_C02' },
+    'DOP2-Q': { qLength: 332, qDirectory: 'aws/DOP_C02' },
     'MLS-Q': { qLength: 332, qDirectory: 'aws/MLS_C01' },
     'SCS2-Q': { qLength: 118, qDirectory: 'aws/SCS_C02' },
-    'SAA3-Q': { qLength: 904, qDirectory: 'aws/SAA_C03' },
+    'SAA3-Q': { qLength: 1019, qDirectory: 'aws/SAA_C03' },
     'SAP2-Q': { qLength: 529, qDirectory: 'aws/SAP_C02' },
     'SOA2-Q': { qLength: 444, qDirectory: 'aws/SOA_C02' },
 
