@@ -257,7 +257,7 @@ def remove_exam_element(driver):
         driver.execute_script("arguments[0].remove();", driver.find_element(By.XPATH, '/html/head/style'))
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.full-width-header'))
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, '#rs-footer'))
-        driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.row'));
+        driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.contrib__ulimited'));
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.row'));
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CSS_SELECTOR, 'div.action-row-container.mb-4'))
         driver.execute_script("arguments[0].remove();", driver.find_element(By.CLASS_NAME, 'all-questions-link'));
@@ -668,7 +668,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
     new_df = pd.DataFrame(columns=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'])
     
     found = False
-    for p in range(1000)[120:]:
+    for p in range(1000)[134:]:
         if found == True: break
         pageno = p + 1
 
