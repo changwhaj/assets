@@ -749,7 +749,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
         df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)
         if index % 20 == 0:
             write_discuss_list(df, discuss_list)
-            print(f'Write Discuss List {index} / {len(new_df)-1}')
+            print(f'Write Discuss List {index} / {len(new_df)}')
 
     write_discuss_list(df, discuss_list)
     driver.close()
