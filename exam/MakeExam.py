@@ -127,7 +127,7 @@ def set_translate_to_kr(driver):
         if platform.system() == "Windows":
             import winsound
             winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
-        time.sleep(1)
+        ###time.sleep(1)
 
         try:
             driver.switch_to.window(driver.window_handles[1])
@@ -668,7 +668,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
     new_df = pd.DataFrame(columns=['ExamType', 'ExamNo', 'DiscussNo', 'DataID', 'LastPost', 'DiscussURL'])
     
     found = False
-    for p in range(1000)[110:]:
+    for p in range(1000)[90:]:
         if found == True: break
         pageno = p + 1
 
@@ -749,6 +749,7 @@ def refresh_from_forum(discuss_list, forum_name, last_page):
         df = pd.concat([df, pd.DataFrame(new_row)], ignore_index=True)
         if index % 20 == 0:
             write_discuss_list(df, discuss_list)
+            print(f'Write Discuss List {index} / {len(new_df)-1}')
 
     write_discuss_list(df, discuss_list)
     driver.close()
@@ -865,7 +866,7 @@ if __name__ == "__main__":
 
     DISCUSS = 'AmazonDiscuss.txt'
     FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 110)
+    refresh_from_forum(DISCUSS, FORUM_NAME, 90)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
