@@ -278,22 +278,6 @@ def remove_discuss_element(driver):
     except Exception as e:
         pass
 
-    # driver.execute_script("""
-    #     function removeElement(element) {
-    #         if (element !== undefined && element !== null) {
-    #             element.remove();
-    #         }
-    #     }
-    #     function removeElemAttr(element, attr) {
-    #         if (element !== undefined && element !== null) {
-    #             element.removeAttribute(attr);
-    #         }
-    #     }
-    #     removeElement(document.getElementsByClassName('create-comment-base d-print-none')[0]);
-    #     removeElemAttr(document.getElementsByClassName('title-username')[0], "href");
-    # """)
-    
-    # remove user a link
     driver.execute_script("""
         var divs = document.getElementsByClassName('comment-head');
 
