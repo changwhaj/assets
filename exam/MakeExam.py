@@ -628,11 +628,12 @@ def save_kr(driver, fname):
     header.contents = [BeautifulSoup(header_contents, 'html.parser')]
 
     container = bs_en.find("div", {"class": "discussion-header-container"})
-    progress_en = container.find("div", {"class": "progress"})
-    container.contents = [BeautifulSoup(container_contents, 'html.parser')]
-    progress = BeautifulSoup(container_contents, 'html.parser').find("div", {"class": "progress"})
-    progress.contents = [BeautifulSoup(progress_en.decode_contents(), 'html.parser')]
-
+    progress_contents = container.find("div", {"class": "progress"}).decode_contents()
+    container_kr = [BeautifulSoup(container_contents, 'html.parser')]
+    progress = container_kr.find("div", {"class": "progress"})
+    progress.contents = [BeautifulSoup(progress_contents, 'html.parser')]
+    container.contents = [BeautifulSoup(container_kr.decode_contents(), 'html.parser')]
+ 
     discussion_contents_en = bs_en.find("div", {"class": "discussion-page-comments-section"}).decode_contents()
     discussion = bs_en.find("div", {"class": "discussion-page-comments-section-en"})
     discussion.contents = [BeautifulSoup(discussion_contents_en, 'html.parser')]
