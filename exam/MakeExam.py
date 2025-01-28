@@ -759,7 +759,7 @@ def refresh_all_exam(exam_list_file, qtitle):
     df = read_Exam_list(exam_list_file)
 
     driver = set_chrome_driver()
-    # driver.set_window_position(1800,10)
+    driver.set_window_position(1800,10)
 
     fn = "exam.txt"
     idx_from = 0
@@ -825,8 +825,8 @@ if __name__ == "__main__":
     # DAS = "Exam AWS Certified Data Analytics - Specialty topic 1"
     # refresh_all_exam('DAS_Exam.csv', DAS)         # OK 164
     
-    # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
-    # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
+    DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
+    refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
     
     # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
     # refresh_all_exam('SCS2_Exam.csv', SCS2)
@@ -852,9 +852,9 @@ if __name__ == "__main__":
     # FORUM_NAME = 'cncf'
     # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
-    DISCUSS = 'AmazonDiscuss.txt'
-    FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    # DISCUSS = 'AmazonDiscuss.txt'
+    # FORUM_NAME = 'amazon'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
