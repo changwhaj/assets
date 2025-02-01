@@ -493,8 +493,14 @@ def make_filename(qtitle, qid, dataid):
         {
             "qtitle": "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1",
             "prefname": "aws/DOP_C02/DOP2-Q",
-            "qlength": 332,
+            "qlength": 353,
             "first_id": 879465,
+        },
+        {
+            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
+            "prefname": "aws/SAA_C03/SAA3-Q",
+            "qlength": 1019,
+            "first_id": 839758,
         },
         # {
         #     "qtitle": "Exam AWS Certified Machine Learning - Specialty topic 1",
@@ -508,12 +514,6 @@ def make_filename(qtitle, qid, dataid):
         #     "qlength": 173,
         #     "first_id": 897420,
         # },
-        {
-            "qtitle": "Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1",
-            "prefname": "aws/SAA_C03/SAA3-Q",
-            "qlength": 1019,
-            "first_id": 839758,
-        },
         # {
         #     "qtitle": "Exam AWS Certified Solutions Architect - Professional SAP-C02 topic 1",
         #     "prefname": "aws/SAP_C02/SAP2-Q",
@@ -750,7 +750,6 @@ def read_Exam_list(fname):
     df = pd.read_csv(fname, delimiter='\t', encoding='utf-8', header=None,
                     names=['ExamNo', 'DiscussNo', 'DataNo', 'DiscussURL'],
                     index_col=False)
-    print(df)
 
     return df
 
@@ -809,6 +808,99 @@ def refresh_all_exam(exam_list_file, qtitle):
     driver.close()
     driver.quit()
 
+def get_answer_description(text):
+    # 정답 추출 (예: "정답: A", "정답: B, AC")
+    answer_match = re.search(r"정답:\s*([\w, ]+)", text)
+    answer = answer_match.group(1).strip() if answer_match else ""
+
+    # 설명 추출 (정답 이후 모든 텍스트)
+    description_match = re.search(r"설명:\s*(.+)", text, re.DOTALL)
+    description = description_match.group(1).strip() if description_match else ""
+
+    return answer, description
+
+def find_exam_no(text):
+    # 정답 패턴 찾기 (예: "정답: A", "정답: B", "정답: AC")
+    exam_match = re.search(r".+/DOP_C02/DOP2-Q([0-9]+).html", text)
+
+    if exam_match:
+        exam_no = int(exam_match.group(1).strip())
+        
+    return exam_no
+def read_Exam_answer(fname):
+
+    df = pd.read_csv(fname, delimiter=',', encoding='euc-kr', header=None,
+                    names=['Exam', 'Answer'],
+                    index_col=False)
+    
+    for i in range(len(df)):
+        examno = find_exam_no(df.at[i, 'Exam'])
+        answer, description = get_answer_description(df.at[i, 'Answer'])
+        df.at[i, 'Exam'] = examno
+        df.at[i, 'Answer'] = answer
+        df.at[i, 'Description'] = description.replace("\n", "<br>\n")
+        #print(f"Q {examno} : {answer}")
+
+    return df
+
+def refresh_all_exam_answer(exam_list_file, exam_answer_file, qtitle):
+    start_time = time.time()
+    df = read_Exam_list(exam_list_file)
+    df_answer = read_Exam_answer(exam_answer_file)
+
+    for i in range(len(df))[:]:
+        qid = int(df.at[i, 'ExamNo'])
+        did = int(df.at[i, 'DiscussNo'])
+        dataid = int(df.at[i, 'DataNo'])
+        if did == 0:
+            continue
+
+        try:
+            fname = make_filename(qtitle, qid, dataid)
+            if (len(fname) <= 0): 
+                continue
+
+            with open(fname, "r", encoding='utf-8') as file:
+                html = file.read()
+                file.close()
+                    
+            bs = BeautifulSoup(html, 'html.parser')
+
+            container = bs.find("div", {"class": "discussion-header-container"})
+            match = re.match(r"^([A-Za-z]+)", container.find("div", {"class": "vote-bar"}).string)
+            vote = match.group(1) if match else ""
+            answer = container.find("span", {"class": "correct-answer"})
+            description = container.find("span", {"class": "answer-description"})
+
+            if answer:
+                if answer.string != df_answer.at[qid-1, 'Answer']:
+                    answer.string = f"{answer.string} ==> {df_answer.at[qid-1, 'Answer']}"
+                elif answer.string != vote:
+                    answer.string = f"{answer.string} @@@ {vote}"
+                else:
+                    answer.string = f"{answer.string} (OK)"
+
+            if description:
+                # description.string = '<div class="col-12 pt-2 pb-2">' + df_answer.at[qid-1, 'Description'] + '</div>'
+                description.contents = [BeautifulSoup('<div class="col-12 pt-2 pb-2">' + df_answer.at[qid-1, 'Description'] + '</div>', 'html.parser')]
+
+            with open("my"+fname, "w", encoding='utf-8') as file:
+                file.write(str(bs))
+            print(fname, flush=True)
+
+
+        except Exception as e:
+            print("Error:", str(e))
+            print(f"*** Make question error !!! {e}")
+            err = True
+            break
+        
+    end_time = time.time()
+    duration = end_time - start_time
+    formatted_duration = timedelta(seconds=duration)
+
+    print(f"Function duration: {formatted_duration}")
+
 if __name__ == "__main__":
     # SAA_C03 = 'Exam AWS Certified Solutions Architect - Associate SAA-C03 topic 1'
     # refresh_all_exam('SAA3_Exam_imsi.csv', SAA_C03)    # OK 583
@@ -825,8 +917,9 @@ if __name__ == "__main__":
     # DAS = "Exam AWS Certified Data Analytics - Specialty topic 1"
     # refresh_all_exam('DAS_Exam.csv', DAS)         # OK 164
     
-    DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
-    refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
+    # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
+    # # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
+    # refresh_all_exam_answer('DOP2_Exam.csv', 'DOP2_Answer.csv', DOP2)
     
     # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
     # refresh_all_exam('SCS2_Exam.csv', SCS2)
@@ -852,9 +945,9 @@ if __name__ == "__main__":
     # FORUM_NAME = 'cncf'
     # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
-    # DISCUSS = 'AmazonDiscuss.txt'
-    # FORUM_NAME = 'amazon'
-    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    DISCUSS = 'AmazonDiscuss.txt'
+    FORUM_NAME = 'amazon'
+    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
