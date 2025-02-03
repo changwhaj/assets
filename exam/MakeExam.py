@@ -917,9 +917,9 @@ if __name__ == "__main__":
     # DAS = "Exam AWS Certified Data Analytics - Specialty topic 1"
     # refresh_all_exam('DAS_Exam.csv', DAS)         # OK 164
     
-    # DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
-    # # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
-    # refresh_all_exam_answer('DOP2_Exam.csv', 'DOP2_Answer.csv', DOP2)
+    DOP2 = "Exam AWS Certified DevOps Engineer - Professional DOP-C02 topic 1"
+    # refresh_all_exam('DOP2_Exam.csv', DOP2)       # OK 134
+    refresh_all_exam_answer('DOP2_Exam.csv', 'DOP2_Answer.csv', DOP2)
     
     # SCS2 = "Exam AWS Certified Security - Specialty SCS-C02 topic 1"
     # refresh_all_exam('SCS2_Exam.csv', SCS2)
@@ -945,9 +945,9 @@ if __name__ == "__main__":
     # FORUM_NAME = 'cncf'
     # refresh_from_forum(DISCUSS, FORUM_NAME, 1)    
 
-    DISCUSS = 'AmazonDiscuss.txt'
-    FORUM_NAME = 'amazon'
-    refresh_from_forum(DISCUSS, FORUM_NAME, 1)
+    # DISCUSS = 'AmazonDiscuss.txt'
+    # FORUM_NAME = 'amazon'
+    # refresh_from_forum(DISCUSS, FORUM_NAME, 1)
     
     # DISCUSS = 'IsacaDiscuss.txt'
     # FORUM_NAME = 'isaca'
